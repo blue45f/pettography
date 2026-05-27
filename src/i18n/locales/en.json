@@ -53,6 +53,7 @@
     "backup": "Backup",
     "routine": "Routine",
     "calendar": "Calendar",
+    "insurance": "Insurance",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -871,6 +872,34 @@
     "toDark": "Switch to dark mode",
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
+  },
+  "insurance": {
+    "title": "Pet insurance & emergency reserve",
+    "subtitle": "Korean pet insurance is dog/cat-only. Owners of reptiles, amphibians and arthropods almost never qualify; we recommend building an emergency reserve instead.",
+    "exoticWarningTitle": "Heads up — exotic pets rarely qualify",
+    "exoticWarningBody": "Your current category is excluded from most Korean pet insurance products. 100% of emergency vet bills are out of pocket, so building a reserve below is strongly recommended.",
+    "reserveTitle": "Emergency reserve",
+    "reserveDesc": "Set aside a fixed amount each month for unexpected vet bills. Start date and total are stored in this browser.",
+    "reserveSuggestion": "Target ~₩{{amount}} (3× {{name}}'s recommended monthly budget) to cover 1–2 emergency visits.",
+    "monthlyContribution": "Monthly contribution (KRW)",
+    "save": "Save",
+    "savedToast": "Contribution saved",
+    "startedAt": "Started",
+    "monthsRunning": "Months running",
+    "accumulated": "Total saved",
+    "errors": {
+      "contribution": "Contribution must be a non-negative number."
+    },
+    "providersTitle": "5 Korean pet insurers (dog/cat only)",
+    "providersDesc": "Tap a card to open the official site. Actual premiums depend on breed, age and add-ons.",
+    "coversDogCat": "Dog/cat OK",
+    "noDogCat": "Not offered",
+    "coversExotic": "Exotic OK",
+    "noExotic": "Exotic excluded",
+    "perMonth": "/mo",
+    "openSite": "Open site",
+    "compareLinksTitle": "External comparison resources",
+    "disclaimer": "Premiums and coverage are governed by the insurer's official terms. This page is a curated guide."
   },
   "calendar": {
     "title": "Calendar",

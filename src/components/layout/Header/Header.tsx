@@ -58,6 +58,7 @@ function Header() {
         { path: '/petid', label: t('nav.petid') },
         { path: '/routine', label: t('nav.routine') },
         { path: '/calendar', label: t('nav.calendar') },
+        { path: '/insurance', label: t('nav.insurance') },
         { path: '/backup', label: t('nav.backup') },
         { path: '/sos', label: t('nav.sos') },
       ]

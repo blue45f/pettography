@@ -145,6 +145,11 @@ export const routes = [
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Calendar')),
       },
+      {
+        path: 'insurance',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Insurance')),
+      },
       { path: '*', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/NotFound')) },
     ],
   },

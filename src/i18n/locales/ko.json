@@ -53,6 +53,7 @@
     "backup": "데이터 백업",
     "routine": "일과 체크",
     "calendar": "통합 일정",
+    "insurance": "펫보험·비상금",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -871,6 +872,34 @@
     "toDark": "다크 모드로 전환",
     "lightMode": "라이트 모드",
     "darkMode": "다크 모드"
+  },
+  "insurance": {
+    "title": "펫보험 & 비상금 가이드",
+    "subtitle": "국내 펫보험은 강아지·고양이 위주입니다. 파충류·양서류·절지류 사육자에게는 보험 적용이 사실상 어렵기 때문에 응급 진료비를 미리 적립해 두는 비상금 운영을 권장합니다.",
+    "exoticWarningTitle": "주의 — 희귀펫 보험 가입 거의 불가",
+    "exoticWarningBody": "현재 선택한 카테고리는 대부분의 국내 펫보험 가입 대상이 아닙니다. 응급 시 자기부담이 100%이므로 아래 비상금 적립을 강력히 권장합니다.",
+    "reserveTitle": "비상금 적립",
+    "reserveDesc": "월별 일정 금액을 응급 진료비 대비로 적립하세요. 누적 금액과 시작일을 이 브라우저에 저장합니다.",
+    "reserveSuggestion": "{{name}} 권장 월 예산의 3배 (약 ₩{{amount}})를 비상금 목표로 적립해 두면 응급 1~2회 진료비를 커버합니다.",
+    "monthlyContribution": "월 적립 금액 (원)",
+    "save": "저장",
+    "savedToast": "적립 금액을 저장했습니다",
+    "startedAt": "시작일",
+    "monthsRunning": "경과 개월수",
+    "accumulated": "누적 금액",
+    "errors": {
+      "contribution": "적립 금액은 0원 이상의 숫자여야 합니다."
+    },
+    "providersTitle": "국내 펫보험 5사 비교 (강아지·고양이 위주)",
+    "providersDesc": "각 카드를 누르면 보험사 공식 사이트로 이동합니다. 보험료는 종·연령·보장 옵션에 따라 변동합니다.",
+    "coversDogCat": "강아지·고양이 가입",
+    "noDogCat": "미가입",
+    "coversExotic": "희귀펫 가입",
+    "noExotic": "희귀펫 불가",
+    "perMonth": "/월",
+    "openSite": "공식 사이트 열기",
+    "compareLinksTitle": "보험 비교 외부 자료",
+    "disclaimer": "보험료·보장 범위는 공식 약관이 최종 기준입니다. 본 페이지는 큐레이션 가이드입니다."
   },
   "calendar": {
     "title": "통합 일정",
