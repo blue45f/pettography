@@ -790,6 +790,12 @@
     "noRelatedHospitals": "No vets registered for this category yet.",
     "noRelatedShops": "No shops registered for this category yet.",
     "noRelatedSpecies": "More species coming soon.",
+    "compareTickAdd": "Add {{name}} to compare",
+    "compareTickRemove": "Remove from compare",
+    "compareBarLabel": "Compare cart",
+    "compareBarPicked": "{{count}}/{{max}} picked",
+    "compareBarClear": "Clear",
+    "compareBarGo": "Compare",
     "gallery": {
       "title": "{{name}} photo wall",
       "subtitle": "Bookmark photo URLs you've spotted on Instagram, Korean cafes or DC galleries. We don't host images, we just keep the link and credit the source.",

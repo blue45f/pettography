@@ -790,6 +790,12 @@
     "noRelatedHospitals": "이 카테고리를 진료하는 등록 병원이 아직 없어요.",
     "noRelatedShops": "이 카테고리를 다루는 등록 샵이 아직 없어요.",
     "noRelatedSpecies": "다른 종이 곧 추가됩니다.",
+    "compareTickAdd": "{{name}}을(를) 비교에 추가",
+    "compareTickRemove": "비교에서 제거",
+    "compareBarLabel": "비교 카트",
+    "compareBarPicked": "{{count}}/{{max}}종 선택됨",
+    "compareBarClear": "초기화",
+    "compareBarGo": "비교하기",
     "gallery": {
       "title": "{{name}} 사진 모음",
       "subtitle": "인스타·카페·DC 갤러리에서 본 사진의 URL을 모아두면 같은 종을 키우는 다른 사용자도 참고합니다. 자체 호스팅 없이 외부 URL만 기록합니다.",

@@ -111,3 +111,107 @@
   font-weight: 600;
   font-size: var(--font-size-sm);
 }
+
+.gridItem {
+  position: relative;
+}
+
+.compareTick {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color var(--motion-fast),
+    border-color var(--motion-fast),
+    color var(--motion-fast);
+  z-index: 1;
+}
+
+.compareTick:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.compareTickOn {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.compareTick:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.compareBar {
+  position: sticky;
+  bottom: calc(var(--safe-pad-bottom) + var(--spacing-sm));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lg);
+  flex-wrap: wrap;
+  z-index: 80;
+}
+
+@media (max-width: 860px) {
+  .compareBar {
+    bottom: calc(72px + var(--safe-pad-bottom) + var(--spacing-xs));
+  }
+}
+
+.compareBarLabel {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.compareBarActions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.compareBarClear,
+.compareBarGo {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: var(--spacing-2xs) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+}
+
+.compareBarClear {
+  color: var(--color-text-secondary);
+}
+
+.compareBarClear:hover {
+  color: var(--color-error);
+}
+
+.compareBarGo {
+  background: var(--color-primary);
+  color: white;
+}
+
+.compareBarGo:hover {
+  background: var(--color-primary-hover);
+}
