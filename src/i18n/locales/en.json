@@ -588,7 +588,8 @@
         "title": "Experience",
         "hint": "How experienced are you with pets so far?",
         "options": {
-          "beginner": "Brand new or only dogs/cats",
+          "novice": "Never owned any pet",
+          "beginner": "Only dogs or cats so far",
           "intermediate": "Small animals (hamsters, hedgehogs etc.)",
           "advanced": "Exotic species (reptiles, parrots etc.)"
         }

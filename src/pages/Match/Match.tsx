@@ -17,7 +17,7 @@ const STEPS: readonly StepId[] = ['experience', 'space', 'handling', 'activity',
 type Draft = Partial<QuizAnswers>
 
 const QUESTION_OPTIONS: Record<StepId, readonly string[]> = {
-  experience: ['beginner', 'intermediate', 'advanced'],
+  experience: ['novice', 'beginner', 'intermediate', 'advanced'],
   space: ['small', 'medium', 'large'],
   handling: ['low', 'medium', 'high'],
   activity: ['nocturnal', 'diurnal', 'no-preference'],
