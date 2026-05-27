@@ -4,6 +4,7 @@ import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Skeleton from '@components/common/Skeleton'
 import { useAdoptionList } from '@features/adoption'
+import { compareAgainstRecommended, monthBreakdown, useBudgetStore } from '@features/budget'
 import { useCareGuide } from '@features/care-guides'
 import { useCommunitiesList } from '@features/communities'
 import { diaryStats, useDiaryStore, type DiaryCategory } from '@features/diary'
@@ -12,11 +13,14 @@ import {
   type SpeciesCategory as ExtSpeciesCategory,
 } from '@features/external-links'
 import { useFuneralList } from '@features/funeral'
+import { detectBreaches, recommendationFor, useHabitatStore } from '@features/habitat'
+import { upcomingDues, useHealthStore, weightTrend } from '@features/health'
 import { useHospitalsList } from '@features/hospitals'
 import { LOCATION_PRESETS, findPreset } from '@features/location'
 import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
 import { useShopsList } from '@features/shops'
 import { useSpecies } from '@features/species'
+import { supplyStatus, useSuppliesStore } from '@features/supplies'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useAppStore } from '@store/index'
 import { useMemo } from 'react'
@@ -66,6 +70,43 @@ function Dashboard() {
   const diaryEntries = useDiaryStore((s) => s.entries)
   const diaryAggregate = useMemo(() => diaryStats(diaryEntries), [diaryEntries])
   const recentDiary = diaryEntries.slice(0, 2)
+
+  const weights = useHealthStore((s) => s.weights)
+  const vaccinations = useHealthStore((s) => s.vaccinations)
+  const habitatEntries = useHabitatStore((s) => s.entries)
+  const budgetEntries = useBudgetStore((s) => s.entries)
+  const supplyItems = useSuppliesStore((s) => s.items)
+
+  const healthSummary = useMemo(() => {
+    const trend = weightTrend(weights)
+    const dues = upcomingDues(vaccinations, 30)
+    return { trend, nextDue: dues[0] ?? null }
+  }, [weights, vaccinations])
+
+  const habitatSummary = useMemo(() => {
+    const range = recommendationFor(profile.category)
+    const sortedEntries = [...habitatEntries].sort((a, b) =>
+      b.measuredAt.localeCompare(a.measuredAt)
+    )
+    const latest = sortedEntries[0] ?? null
+    const breaches = detectBreaches(latest, range)
+    return { latest, breaches, hasRange: !!range }
+  }, [habitatEntries, profile.category])
+
+  const budgetSummary = useMemo(() => {
+    const month = monthBreakdown(budgetEntries)
+    const compare = compareAgainstRecommended(month.totalKrw, species?.monthlyBudgetKrw ?? null)
+    return { month, compare }
+  }, [budgetEntries, species?.monthlyBudgetKrw])
+
+  const suppliesSummary = useMemo(() => {
+    if (supplyItems.length === 0)
+      return { worst: null as null | (typeof supplyItems)[number], status: null }
+    const ranked = supplyItems
+      .map((item) => ({ item, status: supplyStatus(item) }))
+      .sort((a, b) => a.status.daysLeft - b.status.daysLeft)
+    return { worst: ranked[0].item, status: ranked[0].status }
+  }, [supplyItems])
 
   if (!isOnboardingComplete(profile)) {
     return <Navigate to="/onboarding" replace />
@@ -162,6 +203,133 @@ function Dashboard() {
               <span className={styles.stepLabel}>{t(`lifecycle.stages.${stage.id}`)}</span>
             </Link>
           ))}
+        </div>
+      </section>
+
+      <section aria-labelledby="condition-heading">
+        <header className={styles.sectionHeader}>
+          <h2 id="condition-heading">{t('dashboard.conditionTitle')}</h2>
+          <p className={styles.sectionSubtitle}>{t('dashboard.conditionSubtitle')}</p>
+        </header>
+        <div className={styles.conditionGrid}>
+          <Link to="/health" className={styles.conditionTile}>
+            <div className={styles.conditionHeader}>
+              <span aria-hidden="true" className={styles.conditionEmoji}>
+                ⚖️
+              </span>
+              <span className={styles.conditionLabel}>{t('dashboard.condition.health.label')}</span>
+            </div>
+            {healthSummary.trend.latest === null ? (
+              <p className={styles.conditionEmpty}>{t('dashboard.condition.health.empty')}</p>
+            ) : (
+              <>
+                <p className={styles.conditionValue}>
+                  {healthSummary.trend.latest.toLocaleString('ko')} g
+                </p>
+                <p className={styles.conditionMeta}>
+                  {healthSummary.nextDue
+                    ? t('dashboard.condition.health.nextDue', {
+                        label: healthSummary.nextDue.vaccination.name,
+                        days: healthSummary.nextDue.daysLeft,
+                      })
+                    : t('dashboard.condition.health.noUpcoming')}
+                </p>
+              </>
+            )}
+          </Link>
+
+          <Link to="/habitat" className={styles.conditionTile}>
+            <div className={styles.conditionHeader}>
+              <span aria-hidden="true" className={styles.conditionEmoji}>
+                🌡️
+              </span>
+              <span className={styles.conditionLabel}>
+                {t('dashboard.condition.habitat.label')}
+              </span>
+            </div>
+            {!habitatSummary.latest ? (
+              <p className={styles.conditionEmpty}>{t('dashboard.condition.habitat.empty')}</p>
+            ) : (
+              <>
+                <p className={styles.conditionValue}>
+                  {habitatSummary.latest.temperatureC ?? '—'}°C ·{' '}
+                  {habitatSummary.latest.humidityPct ?? '—'}%
+                </p>
+                {habitatSummary.breaches.length > 0 ? (
+                  <p className={`${styles.conditionMeta} ${styles.conditionAlert}`}>
+                    {t('dashboard.condition.habitat.breach', {
+                      count: habitatSummary.breaches.length,
+                    })}
+                  </p>
+                ) : (
+                  <p className={styles.conditionMeta}>
+                    {habitatSummary.hasRange
+                      ? t('dashboard.condition.habitat.inRange')
+                      : t('dashboard.condition.habitat.noRange')}
+                  </p>
+                )}
+              </>
+            )}
+          </Link>
+
+          <Link to="/budget" className={styles.conditionTile}>
+            <div className={styles.conditionHeader}>
+              <span aria-hidden="true" className={styles.conditionEmoji}>
+                💴
+              </span>
+              <span className={styles.conditionLabel}>{t('dashboard.condition.budget.label')}</span>
+            </div>
+            {budgetSummary.month.count === 0 ? (
+              <p className={styles.conditionEmpty}>{t('dashboard.condition.budget.empty')}</p>
+            ) : (
+              <>
+                <p className={styles.conditionValue}>
+                  ₩{budgetSummary.month.totalKrw.toLocaleString('ko')}
+                </p>
+                <p
+                  className={`${styles.conditionMeta} ${
+                    budgetSummary.compare.status === 'over' ? styles.conditionAlert : ''
+                  }`}
+                >
+                  {budgetSummary.compare.percent !== null
+                    ? t(`dashboard.condition.budget.${budgetSummary.compare.status}`, {
+                        percent: budgetSummary.compare.percent,
+                      })
+                    : t('dashboard.condition.budget.noRecommended')}
+                </p>
+              </>
+            )}
+          </Link>
+
+          <Link to="/supplies" className={styles.conditionTile}>
+            <div className={styles.conditionHeader}>
+              <span aria-hidden="true" className={styles.conditionEmoji}>
+                🥣
+              </span>
+              <span className={styles.conditionLabel}>
+                {t('dashboard.condition.supplies.label')}
+              </span>
+            </div>
+            {!suppliesSummary.worst || !suppliesSummary.status ? (
+              <p className={styles.conditionEmpty}>{t('dashboard.condition.supplies.empty')}</p>
+            ) : (
+              <>
+                <p className={styles.conditionValue}>{suppliesSummary.worst.name}</p>
+                <p
+                  className={`${styles.conditionMeta} ${
+                    suppliesSummary.status.level === 'critical' ||
+                    suppliesSummary.status.level === 'depleted'
+                      ? styles.conditionAlert
+                      : ''
+                  }`}
+                >
+                  {t(`dashboard.condition.supplies.${suppliesSummary.status.level}`, {
+                    days: suppliesSummary.status.daysLeft,
+                  })}
+                </p>
+              </>
+            )}
+          </Link>
         </div>
       </section>
 

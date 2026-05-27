@@ -161,7 +161,40 @@
     "locationPickerTitle": "빠른 위치 변경",
     "diaryTitle": "최근 사육 일지",
     "diaryEmpty": "아직 기록된 일지가 없어요. /diary에서 첫 기록을 남겨보세요.",
-    "viewDiary": "일지 전체 보기"
+    "viewDiary": "일지 전체 보기",
+    "conditionTitle": "오늘의 컨디션",
+    "conditionSubtitle": "건강·환경·지출·재고를 한눈에. 카드를 누르면 상세로 이동합니다.",
+    "condition": {
+      "health": {
+        "label": "체중·접종",
+        "empty": "체중을 기록하면 변화를 추적합니다",
+        "nextDue": "{{label}} D-{{days}}",
+        "noUpcoming": "30일 안 예정된 접종 없음"
+      },
+      "habitat": {
+        "label": "사육 환경",
+        "empty": "온도·습도를 기록해 보세요",
+        "breach": "권장 범위 이탈 {{count}}건",
+        "inRange": "권장 범위 안",
+        "noRange": "종 카테고리 권장 범위 없음"
+      },
+      "budget": {
+        "label": "이번 달 지출",
+        "empty": "지출을 기록하면 권장 예산과 비교합니다",
+        "under": "권장 대비 {{percent}}%",
+        "on-track": "권장 대비 {{percent}}%",
+        "over": "권장 대비 {{percent}}% 초과",
+        "noRecommended": "종 권장 예산 미설정"
+      },
+      "supplies": {
+        "label": "사료·재고",
+        "empty": "재고를 추가해 보세요",
+        "ok": "남은 일수 약 {{days}}일",
+        "warning": "남은 일수 약 {{days}}일",
+        "critical": "재고 위급 (약 {{days}}일)",
+        "depleted": "재고 소진"
+      }
+    }
   },
   "hospitals": {
     "title": "특수동물 병원",

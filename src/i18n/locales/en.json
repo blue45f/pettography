@@ -161,7 +161,40 @@
     "locationPickerTitle": "Quick location switch",
     "diaryTitle": "Recent husbandry log",
     "diaryEmpty": "No diary entries yet. Open /diary to add your first.",
-    "viewDiary": "All diary entries"
+    "viewDiary": "All diary entries",
+    "conditionTitle": "Today's condition",
+    "conditionSubtitle": "Health, habitat, spend and stock at a glance. Tap a card for detail.",
+    "condition": {
+      "health": {
+        "label": "Weight & shots",
+        "empty": "Log a weight to start tracking",
+        "nextDue": "{{label}} in {{days}}d",
+        "noUpcoming": "No shots due in 30d"
+      },
+      "habitat": {
+        "label": "Habitat",
+        "empty": "Log temperature & humidity",
+        "breach": "{{count}} reading outside range",
+        "inRange": "Within recommended range",
+        "noRange": "No recommended range for this category"
+      },
+      "budget": {
+        "label": "This month",
+        "empty": "Log an expense to compare with recommended",
+        "under": "{{percent}}% of recommended",
+        "on-track": "{{percent}}% of recommended",
+        "over": "{{percent}}% over recommended",
+        "noRecommended": "No recommended budget for this species"
+      },
+      "supplies": {
+        "label": "Supplies",
+        "empty": "Add a supply item to start",
+        "ok": "~{{days}}d left",
+        "warning": "~{{days}}d left",
+        "critical": "Critical (~{{days}}d)",
+        "depleted": "Out of stock"
+      }
+    }
   },
   "hospitals": {
     "title": "Specialist vets",
