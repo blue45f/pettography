@@ -170,8 +170,41 @@ function Dashboard() {
     if (urgent.length > 0) {
       toast(t('dashboard.urgentToast', { count: urgent.length }), 'warning')
       alertedRef.current = true
+      if (
+        typeof Notification !== 'undefined' &&
+        Notification.permission === 'granted' &&
+        document.visibilityState !== 'visible'
+      ) {
+        try {
+          new Notification('Pettography', {
+            body: t('dashboard.urgentToast', { count: urgent.length }),
+            tag: 'pettography-urgent',
+          })
+        } catch {
+          /* notification ctor failures are non-fatal */
+        }
+      }
     }
   }, [upcomingPreview, toast, t])
+
+  function askNotificationPermission() {
+    if (typeof Notification === 'undefined') {
+      toast(t('dashboard.notifyUnsupported'), 'error')
+      return
+    }
+    if (Notification.permission === 'granted') {
+      toast(t('dashboard.notifyAlreadyOn'), 'success')
+      return
+    }
+    if (Notification.permission === 'denied') {
+      toast(t('dashboard.notifyDenied'), 'error')
+      return
+    }
+    void Notification.requestPermission().then((res) => {
+      if (res === 'granted') toast(t('dashboard.notifyEnabled'), 'success')
+      else toast(t('dashboard.notifyDenied'), 'error')
+    })
+  }
 
   if (!isOnboardingComplete(profile)) {
     return <Navigate to="/onboarding" replace />
@@ -270,6 +303,12 @@ function Dashboard() {
           ))}
         </div>
       </section>
+
+      <div className={styles.notifyRow}>
+        <button type="button" className={styles.notifyButton} onClick={askNotificationPermission}>
+          🔔 {t('dashboard.notifyButton')}
+        </button>
+      </div>
 
       {routineSummary.total > 0 && (
         <section aria-labelledby="routine-heading" className={styles.routineSummary}>
