@@ -6,6 +6,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  padding-top: var(--safe-pad-top);
   transition:
     background-color var(--motion-base),
     border-color var(--motion-base);
@@ -15,9 +16,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
+  max-width: var(--layout-max);
   margin: 0 auto;
-  padding: var(--spacing-md) var(--spacing-xl);
+  padding: var(--spacing-sm) calc(var(--layout-pad) + var(--safe-pad-right)) var(--spacing-sm)
+    calc(var(--layout-pad) + var(--safe-pad-left));
   gap: var(--spacing-md);
 }
 
@@ -34,6 +36,7 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  flex-shrink: 0;
 }
 
 .logo:hover {
@@ -43,7 +46,9 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .navList {
@@ -59,6 +64,7 @@
   color: var(--color-text-secondary);
   padding: var(--spacing-xs) var(--spacing-md);
   border-radius: var(--radius-pill);
+  white-space: nowrap;
   transition:
     color var(--motion-fast),
     background-color var(--motion-fast),
@@ -98,7 +104,7 @@
   right: 0;
   display: flex;
   flex-direction: column;
-  min-width: 220px;
+  min-width: min(260px, 80vw);
   padding: var(--spacing-sm);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -133,8 +139,8 @@
   display: none;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -151,7 +157,7 @@
 
 .hamburger {
   display: block;
-  width: 18px;
+  width: 20px;
   height: 2px;
   background-color: var(--color-text);
   position: relative;
@@ -162,7 +168,7 @@
 .hamburger::after {
   content: '';
   position: absolute;
-  width: 18px;
+  width: 20px;
   height: 2px;
   background-color: var(--color-text);
   left: 0;
@@ -191,7 +197,7 @@
   transform: rotate(-45deg);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 860px) {
   .menuButton {
     display: flex;
   }
@@ -202,12 +208,17 @@
     left: 0;
     right: 0;
     flex-direction: column;
+    align-items: stretch;
     background-color: var(--color-surface);
     border-bottom: 1px solid var(--color-border);
     box-shadow: var(--shadow-md);
-    padding: var(--spacing-md) var(--spacing-xl);
+    padding: var(--spacing-md) calc(var(--layout-pad) + var(--safe-pad-right))
+      calc(var(--spacing-md) + var(--safe-pad-bottom))
+      calc(var(--layout-pad) + var(--safe-pad-left));
     gap: var(--spacing-md);
     display: none;
+    max-height: calc(100dvh - 64px);
+    overflow-y: auto;
   }
 
   .actions.open {
@@ -223,5 +234,17 @@
   .navLink {
     display: block;
     width: 100%;
+  }
+
+  .moreItem {
+    width: 100%;
+  }
+
+  .moreMenu {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    background: var(--color-surface-muted);
+    margin-top: var(--spacing-xs);
   }
 }

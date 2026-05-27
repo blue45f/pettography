@@ -2,18 +2,16 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .main {
   flex: 1;
-  padding: 2rem 1.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
   width: 100%;
-}
-
-@media (max-width: 640px) {
-  .main {
-    padding: 1.25rem;
-  }
+  max-width: var(--layout-max);
+  margin: 0 auto;
+  padding: var(--spacing-xl) calc(var(--layout-pad) + var(--safe-pad-right))
+    calc(var(--spacing-xl) + var(--safe-pad-bottom)) calc(var(--layout-pad) + var(--safe-pad-left));
+  container-type: inline-size;
+  container-name: main;
 }
