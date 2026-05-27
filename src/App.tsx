@@ -1,6 +1,7 @@
 import ErrorBoundary from '@components/common/ErrorBoundary'
 import Loading from '@components/common/Loading'
 import SkipLink from '@components/common/SkipLink'
+import BottomNav from '@components/layout/BottomNav'
 import Footer from '@components/layout/Footer'
 import Header from '@components/layout/Header'
 import { Suspense } from 'react'
@@ -21,6 +22,7 @@ function App() {
         </ErrorBoundary>
       </main>
       <Footer />
+      <BottomNav />
     </div>
   )
 }
