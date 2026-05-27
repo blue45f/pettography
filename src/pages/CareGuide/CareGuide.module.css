@@ -1,0 +1,135 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.summaryCard {
+  border: 1px solid var(--color-border);
+}
+
+.summaryHeader {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.emoji {
+  font-size: 3rem;
+}
+
+.speciesName {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+}
+
+.scientific {
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.badges {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+  margin-top: var(--spacing-xs);
+}
+
+.summary {
+  color: var(--color-text);
+  margin-bottom: var(--spacing-md);
+}
+
+.dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.dl dt {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.dl dd {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.tagRow {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.sectionTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+}
+
+.checklist {
+  list-style: none;
+  counter-reset: cl;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.checklist li {
+  counter-increment: cl;
+  position: relative;
+}
+
+.checklist li::before {
+  content: counter(cl);
+  position: absolute;
+  left: -2.25rem;
+  top: var(--spacing-md);
+  width: 1.75rem;
+  height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-primary-alpha);
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+}
+
+.itemTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+}
+
+.references ul {
+  list-style: disc inside;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.linkAction {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .checklist li::before {
+    left: -1.75rem;
+  }
+}

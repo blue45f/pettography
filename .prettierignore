@@ -1,0 +1,11 @@
+node_modules
+dist
+build
+coverage
+storybook-static
+test-results
+playwright-report
+.playwright
+*.tsbuildinfo
+package-lock.json
+.husky/_

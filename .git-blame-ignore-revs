@@ -1,0 +1,7 @@
+# 이 파일에는 git blame이 무시해야 할 커밋 SHA를 한 줄에 하나씩 적는다.
+# 일반적으로 전체 reformat·대량 자동 수정 등 의미가 없는 대규모 변경을 등록해
+# `git blame --ignore-revs-file=.git-blame-ignore-revs`(또는 git config
+# blame.ignoreRevsFile)로 실제 변경자 추적이 흐려지지 않도록 한다.
+
+# Prettier 도입 직후 전 파일 일괄 포맷 + ESLint --fix import 그룹 정렬
+cd185ed8e71d2217c6dcae6aaf85139176e68eef

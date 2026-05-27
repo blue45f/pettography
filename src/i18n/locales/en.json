@@ -1,0 +1,244 @@
+{
+  "common": {
+    "appName": "Pettography",
+    "appTagline": "Rare-pet lifecycle portal — pick, vet, shop, farewell — starting in Songpa.",
+    "skipToContent": "Skip to main content",
+    "loading": "Loading...",
+    "error": "Something went wrong.",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "add": "Add",
+    "search": "Search",
+    "language": "Language",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "skip": "Skip",
+    "viewMore": "View more",
+    "openMap": "Open in map",
+    "openLink": "Open link",
+    "distanceKm": "{{km}}km",
+    "phone": "Phone",
+    "address": "Address"
+  },
+  "nav": {
+    "dashboard": "My portal",
+    "hospitals": "Vets",
+    "shops": "Shops",
+    "care": "Care guide",
+    "communities": "Community",
+    "adoption": "Adopt",
+    "funeral": "Farewell",
+    "onboarding": "First pick"
+  },
+  "onboarding": {
+    "title": "Pick your first pet",
+    "description": "Choose a rare animal and we'll wire up vets, food, care, community and farewell for you.",
+    "steps": {
+      "category": "Category",
+      "species": "Species",
+      "location": "Location",
+      "review": "Review"
+    },
+    "stepIndicator": "Step {{current}} of {{total}}",
+    "categoryTitle": "Which animal draws you?",
+    "categoryHint": "Each category gets its own specialist vets, shops and community feed.",
+    "speciesTitle": "Which species feels right?",
+    "speciesHint": "Your dashboard curates everything around this pick.",
+    "locationTitle": "Where are you based?",
+    "locationHint": "We default to Songpa-gu, Seoul. Pick another area or use your current location.",
+    "useCurrent": "Use current location",
+    "currentDetecting": "Detecting location...",
+    "currentFailed": "Couldn't detect — falling back to Songpa-gu.",
+    "presetLabel": "Suggested areas",
+    "manualLabel": "Manual",
+    "manualLat": "Latitude",
+    "manualLng": "Longitude",
+    "reviewTitle": "Confirm your picks",
+    "reviewCategory": "Category",
+    "reviewSpecies": "Species",
+    "reviewLocation": "Location",
+    "finish": "Open my portal",
+    "restart": "Start over",
+    "savedAt": "Saved",
+    "errors": {
+      "selectCategory": "Pick a category first.",
+      "selectSpecies": "Pick a species first.",
+      "invalidCoord": "Invalid coordinate."
+    }
+  },
+  "categories": {
+    "reptile": "Reptiles",
+    "arthropod": "Arthropods",
+    "bird": "Rare birds",
+    "amphibian": "Amphibians",
+    "mammal": "Small mammals",
+    "reptileDesc": "Lizards, snakes, turtles — cold-blooded friends",
+    "arthropodDesc": "Tarantulas, scorpions, exotic insects",
+    "birdDesc": "Parrots, raptors and rare small birds",
+    "amphibianDesc": "Frogs, salamanders and more",
+    "mammalDesc": "Beyond hamsters — sugar gliders, ferrets etc."
+  },
+  "difficulty": {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
+  },
+  "lifecycle": {
+    "title": "Pet lifecycle",
+    "subtitle": "From your first pick to a respectful farewell.",
+    "stages": {
+      "pick": "Pick",
+      "adopt": "Adopt",
+      "raise": "Raise",
+      "vet": "Vet",
+      "daily": "Daily",
+      "senior": "Senior",
+      "funeral": "Farewell"
+    },
+    "stageDesc": {
+      "pick": "Finalize species and location in onboarding",
+      "adopt": "Rescue, breeders and adoption hubs",
+      "raise": "Environment, diet and husbandry checkpoints",
+      "vet": "Location-aware specialist vets",
+      "daily": "Recurring food and gear sources",
+      "senior": "Senior care, nutrition and check-ups",
+      "funeral": "Government-registered crematoriums and memorials"
+    },
+    "openStage": "Open stage"
+  },
+  "dashboard": {
+    "title": "{{name}}'s portal",
+    "subtitle": "Curated around the species you picked.",
+    "selectedSpecies": "Your species",
+    "speciesChange": "Change species",
+    "nearHospitalsTitle": "Vets near you",
+    "nearShopsTitle": "Shops near you",
+    "careGuideTitle": "Today's care tip",
+    "communitiesTitle": "Find your people",
+    "adoptionTitle": "Adoption guide",
+    "funeralTitle": "Farewell guide",
+    "externalTitle": "More external resources",
+    "viewAllHospitals": "All vets",
+    "viewAllShops": "All shops",
+    "viewCareGuide": "Full care guide",
+    "viewCommunities": "All communities",
+    "viewAdoption": "All adoption info",
+    "viewFuneral": "All farewell info",
+    "emptyHospitals": "No vets matched your category yet.",
+    "emptyShops": "No shops matched your category yet.",
+    "guest": "Guest",
+    "locationNote": "Based on: {{label}}"
+  },
+  "hospitals": {
+    "title": "Specialist vets",
+    "subtitle": "Sorted by distance from your location",
+    "filterByCategory": "Filter by category",
+    "filterAll": "All",
+    "emergencyBadge": "24h emergency",
+    "supports": "Treats",
+    "hours": "Hours",
+    "noResult": "No vets match the current filter.",
+    "mapPlaceholder": "Map preview (real KakaoMap renders when API key is configured)"
+  },
+  "shops": {
+    "title": "Food & gear shops",
+    "subtitle": "Offline stores and online retailers in one place.",
+    "kindFood": "Food",
+    "kindEquipment": "Gear",
+    "kindBoth": "Food & gear",
+    "online": "Online",
+    "offline": "Offline",
+    "noResult": "No shops match the current filter.",
+    "visitSite": "Visit site"
+  },
+  "care": {
+    "title": "Care guide",
+    "subtitle": "Environment, diet and health checkpoints for your species",
+    "sectionsTitle": "Husbandry checklist",
+    "referencesTitle": "References",
+    "notFound": "No care guide registered for this species yet.",
+    "speciesSummary": "About this species",
+    "environment": "Environment",
+    "diet": "Diet",
+    "lifespan": "Lifespan",
+    "lifespanYears": "{{min}}–{{max}} years",
+    "tagsTitle": "Tags"
+  },
+  "communities": {
+    "title": "Community",
+    "subtitle": "External forums, cafes and channels for your category",
+    "noResult": "No community registered for this category yet.",
+    "kindForum": "Forum",
+    "kindCafe": "Cafe",
+    "kindDiscord": "Discord",
+    "kindYoutube": "YouTube"
+  },
+  "adoption": {
+    "title": "Adoption & rescue",
+    "subtitle": "Vetted rescue groups, breeders and adoption hubs",
+    "kindRescue": "Rescue",
+    "kindBreeder": "Breeder",
+    "kindCafe": "Cafe/Community",
+    "kindMarketplace": "Marketplace",
+    "noResult": "No adoption channel registered for this category yet."
+  },
+  "funeral": {
+    "title": "Farewell & memorial",
+    "subtitle": "Government-registered services and memorial options",
+    "kindCremation": "Crematorium",
+    "kindMemorial": "Memorial",
+    "kindPickup": "Pickup",
+    "kindDirectory": "Directory",
+    "certified": "Gov-registered",
+    "uncertified": "Unregistered — caution",
+    "noResult": "No farewell service registered for this category yet."
+  },
+  "species": {
+    "scientificName": "Scientific name",
+    "lifespan": "Lifespan",
+    "difficulty": "Difficulty",
+    "category": "Category",
+    "selectThis": "Start with this species"
+  },
+  "landing": {
+    "title": "A whole lifecycle with rare pets — Pettography",
+    "description": "Pick → adopt → raise → vet → farewell, all set up from a single choice.",
+    "primaryCta": "Start first pick",
+    "secondaryCta": "Browse sample",
+    "featureSpeciesTitle": "Species-first curation",
+    "featureSpeciesDesc": "Reptiles, arthropods, rare birds and more — at species granularity",
+    "featureLocationTitle": "Location-aware",
+    "featureLocationDesc": "Vets and shops near Songpa-gu coordinates by default",
+    "featureCareTitle": "Care guide",
+    "featureCareDesc": "Environment, diet and health checkpoints on a single screen",
+    "featureLifecycleTitle": "Full lifecycle",
+    "featureLifecycleDesc": "Adoption to farewell — every stage links to vetted external resources"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you requested does not exist or has been moved.",
+    "goHome": "Go home"
+  },
+  "header": {
+    "primaryNav": "Primary navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "footer": {
+    "copyright": "© {{year}} Pettography. Location data is mock around Songpa-gu.",
+    "privacy": "Privacy policy",
+    "terms": "Terms of service",
+    "contact": "Contact"
+  },
+  "theme": {
+    "toLight": "Switch to light mode",
+    "toDark": "Switch to dark mode",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode"
+  }
+}
