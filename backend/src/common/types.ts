@@ -155,3 +155,33 @@ export interface VetMessage {
   body: string;
   createdAt: string;
 }
+
+export type WildlifeFilingKey = 'keeping' | 'transfer' | 'death' | 'microchip';
+
+export interface WildlifeFiling {
+  key: WildlifeFilingKey;
+  title: string;
+  description: string;
+  dueWindowDays: number;
+  officialUrl: string;
+}
+
+export interface RegistryLinks {
+  wildlifeRegistry: string;
+  animalRegistry: string;
+  envMinistry: string;
+}
+
+export type CompareDimensionType =
+  | 'category'
+  | 'difficulty'
+  | 'range'
+  | 'enum'
+  | 'currency'
+  | 'text';
+
+export interface CompareDimension {
+  key: string;
+  label: string;
+  type: CompareDimensionType;
+}
