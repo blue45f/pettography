@@ -151,6 +151,7 @@ export const routes = [
         lazy: lazyPage(() => import('@pages/Insurance')),
       },
       { path: 'setup', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Setup')) },
+      { path: 'morphs', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Morphs')) },
       { path: '*', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/NotFound')) },
     ],
   },

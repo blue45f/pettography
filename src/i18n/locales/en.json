@@ -55,6 +55,7 @@
     "calendar": "Calendar",
     "insurance": "Insurance",
     "setup": "Setup cost",
+    "morphs": "Morphs",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -873,6 +874,20 @@
     "toDark": "Switch to dark mode",
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
+  },
+  "morphs": {
+    "title": "Popular morph catalog",
+    "subtitle": "Common morphs (color and pattern variants) sold in Korea with 2025–26 average price bands. Pick a base species to see morph cards and breeder sites.",
+    "pickSpecies": "Pick a species",
+    "empty": "No species to show.",
+    "openDetail": "Open species detail",
+    "rarity": {
+      "common": "Common",
+      "mid": "Mid",
+      "rare": "Rare"
+    },
+    "breedersTitle": "Korean breeders & shops",
+    "disclaimer": "Bands are 2025–26 market estimates. Actual prices vary by baby/adult, het/homozygous, and morph combinations."
   },
   "setup": {
     "title": "Enclosure setup estimator",

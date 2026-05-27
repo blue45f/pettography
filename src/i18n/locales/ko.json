@@ -55,6 +55,7 @@
     "calendar": "통합 일정",
     "insurance": "펫보험·비상금",
     "setup": "셋업 견적",
+    "morphs": "모프 카탈로그",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -873,6 +874,20 @@
     "toDark": "다크 모드로 전환",
     "lightMode": "라이트 모드",
     "darkMode": "다크 모드"
+  },
+  "morphs": {
+    "title": "인기 모프 카탈로그",
+    "subtitle": "한국에서 흔히 분양되는 모프(색·패턴 변이)와 2025~26년 평균 가격대. 베이스 종을 고르면 모프 카드와 분양 사이트가 표시됩니다.",
+    "pickSpecies": "종 선택",
+    "empty": "표시할 종이 없습니다.",
+    "openDetail": "종 상세 보기",
+    "rarity": {
+      "common": "흔함",
+      "mid": "중간",
+      "rare": "희귀"
+    },
+    "breedersTitle": "한국 브리더·분양 사이트",
+    "disclaimer": "가격대는 2025~26년 시장 평균 추정치입니다. 실제 분양가는 베이비/성체, 헤테로/호모, 모프 콤보 여부에 따라 크게 다릅니다."
   },
   "setup": {
     "title": "사육장 초기 셋업 견적",
