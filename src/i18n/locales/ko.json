@@ -231,7 +231,13 @@
     "lifespan": "수명",
     "difficulty": "난이도",
     "category": "분류",
-    "selectThis": "이 종으로 시작하기"
+    "selectThis": "이 종으로 시작하기",
+    "relatedHospitalsTitle": "이 종을 진료할 수 있는 가까운 병원",
+    "relatedShopsTitle": "관련 먹이·용품 샵",
+    "relatedSpeciesTitle": "같은 카테고리의 다른 종",
+    "noRelatedHospitals": "이 카테고리를 진료하는 등록 병원이 아직 없어요.",
+    "noRelatedShops": "이 카테고리를 다루는 등록 샵이 아직 없어요.",
+    "noRelatedSpecies": "다른 종이 곧 추가됩니다."
   },
   "landing": {
     "title": "희귀 동물과 함께하는 라이프사이클, Pettography",

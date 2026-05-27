@@ -67,3 +67,68 @@
   font-weight: 600;
   text-decoration: none;
 }
+
+.relatedSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.sectionHeader h2 {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.sectionLink {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.itemTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+}
+
+.itemMeta {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+.itemDesc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.siblingCardLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.siblingHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.siblingEmoji {
+  font-size: 2.25rem;
+}

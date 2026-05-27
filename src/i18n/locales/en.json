@@ -231,7 +231,13 @@
     "lifespan": "Lifespan",
     "difficulty": "Difficulty",
     "category": "Category",
-    "selectThis": "Start with this species"
+    "selectThis": "Start with this species",
+    "relatedHospitalsTitle": "Nearby vets that treat this species",
+    "relatedShopsTitle": "Related food & gear shops",
+    "relatedSpeciesTitle": "Other species in this category",
+    "noRelatedHospitals": "No vets registered for this category yet.",
+    "noRelatedShops": "No shops registered for this category yet.",
+    "noRelatedSpecies": "More species coming soon."
   },
   "landing": {
     "title": "A whole lifecycle with rare pets — Pettography",

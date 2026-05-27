@@ -4,9 +4,12 @@ import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Skeleton from '@components/common/Skeleton'
 import { useToast } from '@components/common/Toast'
+import { useHospitalsList } from '@features/hospitals'
 import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies } from '@features/species'
+import { useShopsList } from '@features/shops'
+import { useSpecies, useSpeciesList } from '@features/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router'
 
@@ -17,12 +20,24 @@ function SpeciesDetail() {
   const navigate = useNavigate()
   const { toast } = useToast()
   const params = useParams<{ idOrSlug: string }>()
+  const profile = useOnboardingStore((s) => s.profile)
   const setCategory = useOnboardingStore((s) => s.setCategory)
   const setSpecies = useOnboardingStore((s) => s.setSpecies)
   const complete = useOnboardingStore((s) => s.complete)
 
   const { data: species, isLoading } = useSpecies(params.idOrSlug)
   useDocumentTitle(species?.koreanName ?? t('common.appName'))
+
+  const origin = useMemo(
+    () => (profile.location ? { lat: profile.location.lat, lng: profile.location.lng } : undefined),
+    [profile.location]
+  )
+
+  const hospitalsQuery = useHospitalsList(
+    species ? { category: species.category, origin } : { origin }
+  )
+  const shopsQuery = useShopsList(species ? { category: species.category, origin } : { origin })
+  const siblingsQuery = useSpeciesList(species ? { category: species.category } : {})
 
   if (isLoading) return <Skeleton variant="rectangular" height={200} lines={3} />
   if (!species) return <EmptyState icon="🐾" title={t('care.notFound')} />
@@ -35,6 +50,8 @@ function SpeciesDetail() {
     toast(t('onboarding.finish'), 'success')
     navigate('/dashboard')
   }
+
+  const siblings = siblingsQuery.data?.filter((s) => s.id !== species.id) ?? []
 
   return (
     <section className={styles.page}>
@@ -89,6 +106,93 @@ function SpeciesDetail() {
           {t('care.title')} →
         </Link>
       </div>
+
+      <section aria-labelledby="related-hospitals-heading" className={styles.relatedSection}>
+        <header className={styles.sectionHeader}>
+          <h2 id="related-hospitals-heading">{t('species.relatedHospitalsTitle')}</h2>
+          <Link to="/hospitals" className={styles.sectionLink}>
+            {t('dashboard.viewAllHospitals')} →
+          </Link>
+        </header>
+        {hospitalsQuery.isLoading && <Skeleton variant="rectangular" height={80} lines={2} />}
+        {hospitalsQuery.data && hospitalsQuery.data.length === 0 && (
+          <EmptyState icon="🏥" title={t('species.noRelatedHospitals')} />
+        )}
+        <div className={styles.cardGrid}>
+          {hospitalsQuery.data?.slice(0, 3).map((h) => (
+            <Card key={h.id} padding="md">
+              <Card.Body>
+                <h3 className={styles.itemTitle}>{h.name}</h3>
+                <p className={styles.itemMeta}>
+                  {h.district}
+                  {Number.isFinite(h.distanceKm) && ` · ${h.distanceKm}km`}
+                </p>
+                <p className={styles.itemDesc}>{h.hours}</p>
+                {h.hasEmergency && <Badge variant="error">{t('hospitals.emergencyBadge')}</Badge>}
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section aria-labelledby="related-shops-heading" className={styles.relatedSection}>
+        <header className={styles.sectionHeader}>
+          <h2 id="related-shops-heading">{t('species.relatedShopsTitle')}</h2>
+          <Link to="/shops" className={styles.sectionLink}>
+            {t('dashboard.viewAllShops')} →
+          </Link>
+        </header>
+        {shopsQuery.isLoading && <Skeleton variant="rectangular" height={80} lines={2} />}
+        {shopsQuery.data && shopsQuery.data.length === 0 && (
+          <EmptyState icon="🛒" title={t('species.noRelatedShops')} />
+        )}
+        <div className={styles.cardGrid}>
+          {shopsQuery.data?.slice(0, 3).map((shop) => (
+            <Card key={shop.id} padding="md">
+              <Card.Body>
+                <h3 className={styles.itemTitle}>{shop.name}</h3>
+                <p className={styles.itemMeta}>
+                  {shop.district ?? t('shops.online')}
+                  {shop.distanceKm !== null && ` · ${shop.distanceKm}km`}
+                </p>
+                <p className={styles.itemDesc}>{shop.notes}</p>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section aria-labelledby="related-species-heading" className={styles.relatedSection}>
+        <header className={styles.sectionHeader}>
+          <h2 id="related-species-heading">{t('species.relatedSpeciesTitle')}</h2>
+        </header>
+        {siblingsQuery.isLoading && <Skeleton variant="rectangular" height={80} lines={2} />}
+        {!siblingsQuery.isLoading && siblings.length === 0 && (
+          <EmptyState icon="🐾" title={t('species.noRelatedSpecies')} />
+        )}
+        <div className={styles.cardGrid}>
+          {siblings.slice(0, 4).map((s) => (
+            <Link key={s.id} to={`/species/${s.slug}`} className={styles.siblingCardLink}>
+              <Card padding="md" hoverable>
+                <Card.Body>
+                  <div className={styles.siblingHeader}>
+                    <span aria-hidden="true" className={styles.siblingEmoji}>
+                      {s.heroEmoji}
+                    </span>
+                    <div>
+                      <h3 className={styles.itemTitle}>{s.koreanName}</h3>
+                      <p className={styles.scientific}>{s.scientificName}</p>
+                    </div>
+                  </div>
+                  <div className={styles.badges}>
+                    <Badge variant="default">{t(`difficulty.${s.difficulty}`)}</Badge>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
     </section>
   )
 }
