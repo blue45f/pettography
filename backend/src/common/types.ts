@@ -133,3 +133,25 @@ export interface PartnerApplication {
   status: PartnerStatus;
   createdAt: string;
 }
+
+export type VetStatus = 'online' | 'busy' | 'offline';
+export type VetMessageRole = 'user' | 'vet';
+
+export interface Vet {
+  id: string;
+  name: string;
+  clinic: string;
+  specialties: string[];
+  yearsOfExperience: number;
+  status: VetStatus;
+  avatarEmoji: string;
+  hourlyKrw: number;
+}
+
+export interface VetMessage {
+  id: string;
+  vetId: string;
+  role: VetMessageRole;
+  body: string;
+  createdAt: string;
+}

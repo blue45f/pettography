@@ -8,4 +8,6 @@ playwright-report
 .playwright
 *.tsbuildinfo
 package-lock.json
+pnpm-lock.yaml
 .husky/_
+backend
