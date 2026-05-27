@@ -110,6 +110,9 @@ function Match() {
                     <Badge variant="default">
                       ₩{m.species.monthlyBudgetKrw.toLocaleString('ko')}/월
                     </Badge>
+                    {m.species.filingStatus === 'regulated' && (
+                      <Badge variant="warning">{t('registry.filingStatus.regulated')}</Badge>
+                    )}
                   </div>
                   <Link to={`/species/${m.species.slug}`} className={styles.openLink}>
                     {t('match.openSpecies')} →

@@ -100,6 +100,19 @@ function SpeciesDetail() {
                 max: species.lifespanMaxYears,
               })}
             </Badge>
+            {species.filingStatus && (
+              <Badge
+                variant={
+                  species.filingStatus === 'regulated'
+                    ? 'warning'
+                    : species.filingStatus === 'white-list'
+                      ? 'success'
+                      : 'default'
+                }
+              >
+                {t(`registry.filingStatus.${species.filingStatus}`)}
+              </Badge>
+            )}
           </div>
         </div>
       </header>
