@@ -298,7 +298,7 @@ describe('api', () => {
     vi.unstubAllGlobals()
   })
 
-  it.skip('fetch 자체 에러는 ApiError(0, 원본 메시지)로 감싼다', async () => {
+  it.todo('fetch 자체 에러는 ApiError(0, 원본 메시지)로 감싼다', async () => {
     const fetchSpy = vi
       .spyOn(globalThis, 'fetch')
       .mockRejectedValue(new TypeError('Failed to fetch'))
@@ -314,7 +314,7 @@ describe('api', () => {
     fetchSpy.mockRestore()
   })
 
-  it.skip('비-Error rejection은 "Network error" 메시지로 감싼다', async () => {
+  it.todo('비-Error rejection은 "Network error" 메시지로 감싼다', async () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockRejectedValue('boom')
 
     try {

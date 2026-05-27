@@ -19,7 +19,7 @@ import { useSpecies } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Diary.module.css'
@@ -41,9 +41,9 @@ function Diary() {
 
   const {
     register,
+    control,
     handleSubmit,
     reset,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<DiaryFormValues>({
     resolver: zodResolver(diaryFormSchema),
@@ -55,7 +55,7 @@ function Diary() {
     },
   })
 
-  const watchedCategory = watch('category')
+  const watchedCategory = useWatch({ control, name: 'category' })
   const stats = useMemo(() => diaryStats(entries), [entries])
 
   const onSubmit = handleSubmit((values) => {
