@@ -51,6 +51,7 @@
     "compare": "종 비교",
     "petid": "펫 ID 카드",
     "backup": "데이터 백업",
+    "routine": "일과 체크",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -840,6 +841,34 @@
     "toDark": "다크 모드로 전환",
     "lightMode": "라이트 모드",
     "darkMode": "다크 모드"
+  },
+  "routine": {
+    "title": "일과 체크리스트",
+    "subtitle": "종 카테고리별 기본 일과(사료·미스팅·UVB 등) + 사용자 정의 task를 daily/weekly/monthly 단위로 체크하세요. 체크는 cadence 주기 안에서만 'done' 상태로 유지됩니다.",
+    "progressLabel": "오늘의 진척도",
+    "noCategory": "온보딩에서 카테고리를 선택하면 기본 일과가 자동으로 채워집니다.",
+    "addTitle": "내 task 추가",
+    "add": "추가",
+    "addedToast": "task를 추가했습니다",
+    "builtIn": "기본",
+    "remove": "삭제",
+    "empty": "이 주기에는 등록된 task가 없습니다.",
+    "cadence": {
+      "daily": "매일",
+      "weekly": "주간",
+      "monthly": "월간"
+    },
+    "fields": {
+      "label": "task 내용",
+      "cadence": "주기"
+    },
+    "placeholders": {
+      "label": "예: 사육장 분무 확인"
+    },
+    "errors": {
+      "labelRequired": "task 이름을 입력해주세요.",
+      "labelMax": "task 이름은 60자 이내로 작성해주세요."
+    }
   },
   "backup": {
     "title": "데이터 백업·복원",

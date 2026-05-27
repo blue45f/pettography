@@ -51,6 +51,7 @@
     "compare": "Compare",
     "petid": "Pet ID card",
     "backup": "Backup",
+    "routine": "Routine",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -840,6 +841,34 @@
     "toDark": "Switch to dark mode",
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
+  },
+  "routine": {
+    "title": "Daily routine",
+    "subtitle": "Category-default tasks (feeding, misting, UVB, etc.) plus your own, grouped by daily/weekly/monthly cadence. A check stays 'done' only within the cadence window.",
+    "progressLabel": "Progress",
+    "noCategory": "Pick a category in onboarding to auto-populate built-in tasks.",
+    "addTitle": "Add your own task",
+    "add": "Add",
+    "addedToast": "Task added",
+    "builtIn": "Built-in",
+    "remove": "Remove",
+    "empty": "No tasks at this cadence yet.",
+    "cadence": {
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly"
+    },
+    "fields": {
+      "label": "Task",
+      "cadence": "Cadence"
+    },
+    "placeholders": {
+      "label": "e.g. Check enclosure spray"
+    },
+    "errors": {
+      "labelRequired": "Enter a task label.",
+      "labelMax": "Keep the task under 60 characters."
+    }
   },
   "backup": {
     "title": "Backup & restore",
