@@ -33,6 +33,7 @@
     "communities": "Community",
     "adoption": "Adopt",
     "funeral": "Farewell",
+    "resources": "Resources",
     "onboarding": "First pick"
   },
   "onboarding": {
@@ -186,6 +187,33 @@
     "kindCafe": "Cafe/Community",
     "kindMarketplace": "Marketplace",
     "noResult": "No adoption channel registered for this category yet."
+  },
+  "resources": {
+    "title": "External resources",
+    "subtitle": "32 vetted Korean links — government, market and community sources for rare pets",
+    "filterByLinkCategory": "Resource category",
+    "filterByCategory": "Species filter",
+    "filterAll": "All",
+    "searchPlaceholder": "Search name, description or region",
+    "noResult": "No external resource matches the current filter.",
+    "categories": {
+      "adoption": "Adoption",
+      "shopping": "Shopping",
+      "medical": "Medical",
+      "funeral": "Funeral",
+      "community": "Community",
+      "reference": "Reference"
+    },
+    "speciesCategories": {
+      "general": "All species",
+      "reptile": "Reptiles",
+      "arthropod": "Arthropods",
+      "bird": "Birds",
+      "amphibian": "Amphibians",
+      "mammal": "Mammals"
+    },
+    "regionLabel": "Region",
+    "openLink": "Open"
   },
   "funeral": {
     "title": "Farewell & memorial",

@@ -6,6 +6,10 @@ import Skeleton from '@components/common/Skeleton'
 import { useAdoptionList } from '@features/adoption'
 import { useCareGuide } from '@features/care-guides'
 import { useCommunitiesList } from '@features/communities'
+import {
+  useExternalLinks,
+  type SpeciesCategory as ExtSpeciesCategory,
+} from '@features/external-links'
 import { useFuneralList } from '@features/funeral'
 import { useHospitalsList } from '@features/hospitals'
 import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
@@ -53,6 +57,9 @@ function Dashboard() {
   )
   const adoptionQuery = useAdoptionList(profile.category ? { category: profile.category } : {})
   const funeralQuery = useFuneralList(profile.category ? { category: profile.category } : {})
+  const externalLinksQuery = useExternalLinks(
+    profile.category ? { speciesCategory: profile.category as ExtSpeciesCategory } : {}
+  )
 
   if (!isOnboardingComplete(profile)) {
     return <Navigate to="/onboarding" replace />
@@ -267,6 +274,38 @@ function Dashboard() {
                   <Badge variant="warning">{t('funeral.uncertified')}</Badge>
                 )}{' '}
                 <a className={styles.externalLink} href={f.url} target="_blank" rel="noreferrer">
+                  {t('common.openLink')} ↗
+                </a>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section className={styles.gridSection} aria-labelledby="external-heading">
+        <header className={styles.sectionHeader}>
+          <h2 id="external-heading">{t('dashboard.externalTitle')}</h2>
+          <Link to="/resources" className={styles.sectionLink}>
+            {t('nav.resources')} →
+          </Link>
+        </header>
+        {externalLinksQuery.isLoading && <Skeleton variant="rectangular" height={80} lines={2} />}
+        <div className={styles.cardGrid}>
+          {externalLinksQuery.data?.slice(0, 4).map((link) => (
+            <Card key={link.id} padding="md">
+              <Card.Body>
+                <h3 className={styles.itemTitle}>{link.name}</h3>
+                <p className={styles.itemMeta}>
+                  <Badge variant="default">{t(`resources.categories.${link.category}`)}</Badge>
+                  {link.badge && (
+                    <>
+                      {' '}
+                      <Badge variant="success">{link.badge}</Badge>
+                    </>
+                  )}
+                </p>
+                <p className={styles.itemDesc}>{link.description}</p>
+                <a className={styles.externalLink} href={link.url} target="_blank" rel="noreferrer">
                   {t('common.openLink')} ↗
                 </a>
               </Card.Body>

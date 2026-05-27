@@ -33,6 +33,7 @@
     "communities": "커뮤니티",
     "adoption": "입양·분양",
     "funeral": "장례·추모",
+    "resources": "외부 자료",
     "onboarding": "처음 선택"
   },
   "onboarding": {
@@ -186,6 +187,33 @@
     "kindCafe": "카페/커뮤니티",
     "kindMarketplace": "분양 마켓",
     "noResult": "선택한 카테고리에 맞는 입양 채널이 아직 등록되지 않았어요."
+  },
+  "resources": {
+    "title": "외부 자료 모음",
+    "subtitle": "정부·민간·커뮤니티에서 검증된 한국 외부 링크 32개 (희귀종 포함)",
+    "filterByLinkCategory": "카테고리 필터",
+    "filterByCategory": "동물 카테고리 필터",
+    "filterAll": "전체",
+    "searchPlaceholder": "이름·설명·지역으로 검색",
+    "noResult": "조건에 맞는 외부 자료가 없습니다.",
+    "categories": {
+      "adoption": "입양·분양",
+      "shopping": "쇼핑",
+      "medical": "의료",
+      "funeral": "장례",
+      "community": "커뮤니티",
+      "reference": "참고 자료"
+    },
+    "speciesCategories": {
+      "general": "전체 공통",
+      "reptile": "파충류",
+      "arthropod": "절지류",
+      "bird": "조류",
+      "amphibian": "양서류",
+      "mammal": "포유류"
+    },
+    "regionLabel": "지역",
+    "openLink": "바로 가기"
   },
   "funeral": {
     "title": "장례·추모",

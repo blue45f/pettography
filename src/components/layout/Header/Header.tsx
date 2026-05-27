@@ -23,11 +23,13 @@ function Header() {
         { path: '/adoption', label: t('nav.adoption') },
         { path: '/communities', label: t('nav.communities') },
         { path: '/funeral', label: t('nav.funeral') },
+        { path: '/resources', label: t('nav.resources') },
       ]
     : [
         { path: '/onboarding', label: t('nav.onboarding') },
         { path: '/hospitals', label: t('nav.hospitals') },
         { path: '/shops', label: t('nav.shops') },
+        { path: '/resources', label: t('nav.resources') },
       ]
 
   return (
