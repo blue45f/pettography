@@ -45,6 +45,7 @@
     "health": "Health log",
     "habitat": "Habitat",
     "budget": "Budget",
+    "supplies": "Supplies",
     "onboarding": "First pick"
   },
   "onboarding": {
@@ -264,6 +265,56 @@
     "certified": "Gov-registered",
     "uncertified": "Unregistered, caution",
     "noResult": "No farewell service registered for this category yet."
+  },
+  "supplies": {
+    "title": "Supply tracker",
+    "subtitle": "Live food lasts 1~2 weeks. We compute days-left from your weekly consumption and warn before stock runs out.",
+    "addTitle": "Add item",
+    "name": "Name",
+    "namePlaceholder": "e.g. Cricket M, Dubia roach, CGD",
+    "kind": "Kind",
+    "unit": "Unit",
+    "unitPlaceholder": "e.g. count, g, tub",
+    "lastRestockedAt": "Last restocked",
+    "lastQuantity": "Restocked quantity",
+    "weeklyConsumption": "Weekly consumption",
+    "preferredVendor": "Preferred vendor (optional)",
+    "preferredVendorPlaceholder": "e.g. Songpa Reptile Shop, Insect Harmony",
+    "save": "Add item",
+    "empty": "No supplies yet. Start with live food.",
+    "remaining": "Remaining",
+    "daysLeft": "{{count}} days left",
+    "depleted": "Out of stock",
+    "restockShort": "Restock",
+    "remove": "Remove",
+    "lastRestocked": "Last restocked",
+    "weekly": "{{count}}/week",
+    "addRestock": "Restock amount",
+    "kinds": {
+      "live-food": "Live food",
+      "dry-food": "Dry food",
+      "supplement": "Supplement",
+      "substrate": "Substrate",
+      "equipment": "Equipment"
+    },
+    "level": {
+      "ok": "Fine",
+      "warning": "Soon",
+      "critical": "Critical",
+      "depleted": "Out"
+    },
+    "errors": {
+      "nameRequired": "Enter a name.",
+      "nameMax": "Name must be 60 characters or fewer.",
+      "unitRequired": "Enter a unit.",
+      "unitMax": "Unit must be 20 characters or fewer.",
+      "dateRequired": "Pick a date.",
+      "qtyNumber": "Quantity must be a number.",
+      "qtyPositive": "Quantity must be positive.",
+      "consumptionNumber": "Consumption must be a number.",
+      "consumptionPositive": "Consumption must be positive.",
+      "vendorMax": "Vendor must be 60 characters or fewer."
+    }
   },
   "budget": {
     "title": "Budget tracker",
