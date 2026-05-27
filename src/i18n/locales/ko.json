@@ -509,7 +509,9 @@
   "header": {
     "primaryNav": "메인 네비게이션",
     "openMenu": "메뉴 열기",
-    "closeMenu": "메뉴 닫기"
+    "closeMenu": "메뉴 닫기",
+    "more": "더보기",
+    "moreLabel": "추가 메뉴"
   },
   "footer": {
     "copyright": "© {{year}} Pettography. 위치 데이터는 송파구 인근 mock입니다.",

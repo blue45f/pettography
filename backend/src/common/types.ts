@@ -101,3 +101,35 @@ export interface FuneralService {
   certified: boolean;
   phone?: string;
 }
+
+export interface ForumPost {
+  id: string;
+  category: SpeciesCategory;
+  title: string;
+  author: string;
+  body: string;
+  createdAt: string;
+}
+
+export interface ForumReply {
+  id: string;
+  postId: string;
+  author: string;
+  body: string;
+  createdAt: string;
+}
+
+export type PartnerKind = 'shop' | 'hospital' | 'treat-shop';
+export type PartnerStatus = 'pending' | 'approved' | 'rejected';
+
+export interface PartnerApplication {
+  id: string;
+  kind: PartnerKind;
+  name: string;
+  contact: string;
+  region: string;
+  description: string;
+  url: string | null;
+  status: PartnerStatus;
+  createdAt: string;
+}

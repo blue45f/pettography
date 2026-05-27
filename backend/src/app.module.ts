@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { AdoptionModule } from './adoption/adoption.module';
 import { CareGuidesModule } from './care-guides/care-guides.module';
 import { CommunitiesModule } from './communities/communities.module';
+import { ForumModule } from './forum/forum.module';
 import { FuneralModule } from './funeral/funeral.module';
 import { HealthModule } from './health/health.module';
 import { HospitalsModule } from './hospitals/hospitals.module';
+import { PartnersModule } from './partners/partners.module';
 import { ShopsModule } from './shops/shops.module';
 import { SpeciesModule } from './species/species.module';
 
@@ -18,6 +20,8 @@ import { SpeciesModule } from './species/species.module';
     CommunitiesModule,
     AdoptionModule,
     FuneralModule,
+    ForumModule,
+    PartnersModule,
   ],
 })
 export class AppModule {}
