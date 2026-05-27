@@ -22,6 +22,7 @@ function Header() {
         { path: '/care', label: t('nav.care') },
         { path: '/adoption', label: t('nav.adoption') },
         { path: '/communities', label: t('nav.communities') },
+        { path: '/diary', label: t('nav.diary') },
         { path: '/funeral', label: t('nav.funeral') },
         { path: '/resources', label: t('nav.resources') },
       ]

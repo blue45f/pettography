@@ -34,6 +34,7 @@
     "adoption": "Adopt",
     "funeral": "Farewell",
     "resources": "Resources",
+    "diary": "Diary",
     "onboarding": "First pick"
   },
   "onboarding": {
@@ -235,6 +236,43 @@
     "certified": "Gov-registered",
     "uncertified": "Unregistered — caution",
     "noResult": "No farewell service registered for this category yet."
+  },
+  "diary": {
+    "title": "Husbandry diary",
+    "subtitle": "Log feeding, weight, shedding and vet visits. Everything stays in this browser.",
+    "newEntry": "New entry",
+    "addEntry": "Add entry",
+    "category": "Category",
+    "occurredAt": "Date",
+    "body": "Note",
+    "weight": "Weight (g, optional)",
+    "weightOptional": "Weight is collected on the 'weight' category only.",
+    "emptyTitle": "No entries yet",
+    "emptyDesc": "Your first entry powers senior-stage care later.",
+    "stats": {
+      "title": "Last 30 days",
+      "total": "Total entries",
+      "recent30": "Last 30 days",
+      "latestWeight": "Latest weight",
+      "noWeight": "No weight logged"
+    },
+    "categories": {
+      "feeding": "Feeding",
+      "weight": "Weight",
+      "shed": "Shed/Molt",
+      "vet": "Vet visit",
+      "behavior": "Behavior",
+      "note": "Note"
+    },
+    "errors": {
+      "dateRequired": "Pick a date.",
+      "bodyRequired": "Enter a note.",
+      "bodyMax": "Keep notes under 500 characters.",
+      "weightNumber": "Weight must be a number.",
+      "weightPositive": "Weight must be positive."
+    },
+    "remove": "Remove",
+    "speciesUnknown": "(no species selected)"
   },
   "species": {
     "scientificName": "Scientific name",
