@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Pettography backend: rare pet species directory for Songpa-gu",
   "private": true,
+  "packageManager": "pnpm@10.4.1",
   "license": "UNLICENSED",
   "engines": {
     "node": ">=22",
@@ -13,6 +14,7 @@
     "build": "nest build",
     "start": "nest start",
     "start:prod": "node dist/main.js",
+    "clean": "rm -rf dist coverage",
     "lint": "eslint \"{src,test}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
