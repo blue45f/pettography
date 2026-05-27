@@ -17,6 +17,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "clean": "rm -rf dist coverage storybook-static",
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
