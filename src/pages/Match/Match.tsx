@@ -11,16 +11,37 @@ import { Link } from 'react-router'
 
 import styles from './Match.module.css'
 
-type StepId = 'experience' | 'space' | 'handling' | 'activity' | 'budget'
-const STEPS: readonly StepId[] = ['experience', 'space', 'handling', 'activity', 'budget'] as const
+type StepId =
+  | 'experience'
+  | 'difficultyAppetite'
+  | 'space'
+  | 'handling'
+  | 'activity'
+  | 'noiseSensitivity'
+  | 'lifespanCommitment'
+  | 'budget'
+
+const STEPS: readonly StepId[] = [
+  'experience',
+  'difficultyAppetite',
+  'space',
+  'handling',
+  'activity',
+  'noiseSensitivity',
+  'lifespanCommitment',
+  'budget',
+] as const
 
 type Draft = Partial<QuizAnswers>
 
 const QUESTION_OPTIONS: Record<StepId, readonly string[]> = {
   experience: ['novice', 'beginner', 'intermediate', 'advanced'],
+  difficultyAppetite: ['easy-only', 'moderate', 'any-challenge'],
   space: ['small', 'medium', 'large'],
   handling: ['low', 'medium', 'high'],
   activity: ['nocturnal', 'diurnal', 'no-preference'],
+  noiseSensitivity: ['quiet-required', 'tolerant', 'no-preference'],
+  lifespanCommitment: ['short', 'medium', 'long'],
   budget: ['low', 'medium', 'high'],
 }
 

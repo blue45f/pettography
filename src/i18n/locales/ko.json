@@ -594,6 +594,33 @@
           "advanced": "파충류·앵무 등 특수 동물 사육 경험"
         }
       },
+      "difficultyAppetite": {
+        "title": "사육 난이도 선호",
+        "hint": "경험과 별개로, 도전하고 싶은 난이도는?",
+        "options": {
+          "easy-only": "입문 등급만 보여줘",
+          "moderate": "입문~중급까지 OK",
+          "any-challenge": "어려운 종도 도전하고 싶음"
+        }
+      },
+      "noiseSensitivity": {
+        "title": "소음 허용",
+        "hint": "사육 환경에서 소음에 얼마나 민감하세요?",
+        "options": {
+          "quiet-required": "조용해야 함 (집에서 일·공부)",
+          "tolerant": "어느 정도 소리는 OK",
+          "no-preference": "상관없음"
+        }
+      },
+      "lifespanCommitment": {
+        "title": "장수 책임",
+        "hint": "함께할 수 있는 기간을 어느 정도 보세요?",
+        "options": {
+          "short": "5~10년 정도",
+          "medium": "10~20년 정도",
+          "long": "20년 이상도 좋음"
+        }
+      },
       "space": {
         "title": "사육 공간",
         "hint": "사육장을 둘 수 있는 공간 크기는?",

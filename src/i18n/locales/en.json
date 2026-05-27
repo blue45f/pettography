@@ -594,6 +594,33 @@
           "advanced": "Exotic species (reptiles, parrots etc.)"
         }
       },
+      "difficultyAppetite": {
+        "title": "Difficulty appetite",
+        "hint": "Independent of experience, how challenging do you want?",
+        "options": {
+          "easy-only": "Show me beginner species only",
+          "moderate": "Beginner and intermediate OK",
+          "any-challenge": "Bring on the hard ones"
+        }
+      },
+      "noiseSensitivity": {
+        "title": "Noise tolerance",
+        "hint": "How sensitive are you to noise in your habitat?",
+        "options": {
+          "quiet-required": "Needs to stay quiet (WFH/study)",
+          "tolerant": "Some noise is fine",
+          "no-preference": "Don't mind"
+        }
+      },
+      "lifespanCommitment": {
+        "title": "Commitment span",
+        "hint": "How long do you want to commit?",
+        "options": {
+          "short": "Around 5~10 years",
+          "medium": "10~20 years",
+          "long": "20+ years is great"
+        }
+      },
       "space": {
         "title": "Space",
         "hint": "How much space can the enclosure take?",
