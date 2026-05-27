@@ -41,6 +41,7 @@
     "forum": "커뮤니티 포럼",
     "partners": "입점 신청",
     "admin": "어드민",
+    "sos": "응급 SOS",
     "onboarding": "처음 선택"
   },
   "onboarding": {
@@ -260,6 +261,25 @@
     "certified": "정부 등록",
     "uncertified": "미등록 주의",
     "noResult": "선택한 카테고리에 맞는 장묘업체가 아직 등록되지 않았어요."
+  },
+  "sos": {
+    "title": "응급 SOS",
+    "subtitle": "체크리스트로 1분 안에 위험 등급 판단 후, 가장 가까운 24시 응급 병원으로 바로 전화하세요.",
+    "noCategoryTitle": "온보딩에서 종 카테고리를 먼저 선택해주세요",
+    "noCategoryDesc": "카테고리 정보가 있어야 종별 응급 체크리스트를 보여드릴 수 있어요.",
+    "startOnboarding": "처음 선택 열기",
+    "callNow": "지금 전화",
+    "openMap": "지도 열기",
+    "nearbyTitle": "가까운 24시 응급 병원",
+    "noEmergency": "내 카테고리 진료 가능한 24시 응급 병원이 등록되어 있지 않아요. 일반 병원으로 안내합니다.",
+    "checklistTitle": "응급 체크리스트",
+    "hotlineTitle": "정부·구조 단체 핫라인",
+    "severity": {
+      "critical": "위급",
+      "high": "신속",
+      "watch": "관찰"
+    },
+    "disclaimer": "이 페이지는 1차 분류용입니다. 망설이면 진료가 정답."
   },
   "consult": {
     "title": "수의사 실시간 상담",

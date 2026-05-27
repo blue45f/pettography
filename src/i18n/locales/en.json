@@ -41,6 +41,7 @@
     "forum": "Forum",
     "partners": "Become partner",
     "admin": "Admin",
+    "sos": "Emergency",
     "onboarding": "First pick"
   },
   "onboarding": {
@@ -260,6 +261,25 @@
     "certified": "Gov-registered",
     "uncertified": "Unregistered, caution",
     "noResult": "No farewell service registered for this category yet."
+  },
+  "sos": {
+    "title": "Emergency SOS",
+    "subtitle": "Triage in under a minute, then call the nearest 24h emergency vet with one tap.",
+    "noCategoryTitle": "Pick a species category in onboarding first",
+    "noCategoryDesc": "We need the category to show species-specific triage steps.",
+    "startOnboarding": "Open onboarding",
+    "callNow": "Call now",
+    "openMap": "Open map",
+    "nearbyTitle": "Nearest 24h emergency vets",
+    "noEmergency": "No registered 24h emergency vets in your category. Showing general vets instead.",
+    "checklistTitle": "Triage checklist",
+    "hotlineTitle": "Government and rescue hotlines",
+    "severity": {
+      "critical": "Critical",
+      "high": "Urgent",
+      "watch": "Watch"
+    },
+    "disclaimer": "First-pass triage only. If in doubt, go to the vet."
   },
   "consult": {
     "title": "Vet live consult",

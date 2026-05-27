@@ -49,11 +49,13 @@ function Header() {
         { path: '/resources', label: t('nav.resources') },
         { path: '/partners', label: t('nav.partners') },
         { path: '/admin', label: t('nav.admin') },
+        { path: '/sos', label: t('nav.sos') },
       ]
     : [
         { path: '/forum', label: t('nav.forum') },
         { path: '/resources', label: t('nav.resources') },
         { path: '/partners', label: t('nav.partners') },
+        { path: '/sos', label: t('nav.sos') },
       ]
 
   useEffect(() => {
@@ -77,6 +79,9 @@ function Header() {
       <div className={styles.container}>
         <Link to="/" className={styles.logo} aria-label={t('common.appName')}>
           <span aria-hidden="true">🐾</span> {t('common.appName')}
+        </Link>
+        <Link to="/sos" className={styles.sosChip} aria-label={t('nav.sos')}>
+          {t('nav.sos')}
         </Link>
         <div className={`${styles.actions} ${menuOpen ? styles.open : ''}`}>
           <nav aria-label={t('header.primaryNav')}>
