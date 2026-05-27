@@ -54,6 +54,7 @@ function Header() {
         { path: '/partner-dashboard', label: t('nav.partnerDashboard') },
         { path: '/admin', label: t('nav.admin') },
         { path: '/registry', label: t('nav.registry') },
+        { path: '/compare', label: t('nav.compare') },
         { path: '/sos', label: t('nav.sos') },
       ]
     : [
@@ -61,6 +62,7 @@ function Header() {
         { path: '/resources', label: t('nav.resources') },
         { path: '/partners', label: t('nav.partners') },
         { path: '/registry', label: t('nav.registry') },
+        { path: '/compare', label: t('nav.compare') },
         { path: '/sos', label: t('nav.sos') },
       ]
 

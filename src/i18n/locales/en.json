@@ -48,6 +48,7 @@
     "supplies": "Supplies",
     "partnerDashboard": "Partner desk",
     "registry": "Wildlife filings",
+    "compare": "Compare",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -833,6 +834,46 @@
     "toDark": "Switch to dark mode",
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
+  },
+  "compare": {
+    "title": "Compare species",
+    "subtitle": "Pick up to {{max}} species and compare difficulty, lifespan, space, handling and monthly cost in one table. Share the URL.",
+    "pickerTitle": "Pick species to compare ({{current}}/{{max}})",
+    "clear": "Clear selection",
+    "gridTitle": "Comparison",
+    "empty": "Pick at least one species to compare.",
+    "rows": {
+      "category": "Category",
+      "difficulty": "Difficulty",
+      "lifespan": "Lifespan",
+      "space": "Space",
+      "handling": "Handling",
+      "activity": "Activity",
+      "budget": "Monthly cost",
+      "beginnerTip": "Beginner tip",
+      "commonProblem": "Common issue"
+    },
+    "units": {
+      "years": "y",
+      "perMonth": "/mo"
+    },
+    "values": {
+      "space": {
+        "small": "Small (desktop)",
+        "medium": "Medium (dedicated enclosure)",
+        "large": "Large (room-scale)"
+      },
+      "handling": {
+        "low": "Observe only",
+        "medium": "Occasional handling",
+        "high": "Frequent handling"
+      },
+      "activity": {
+        "nocturnal": "Nocturnal",
+        "diurnal": "Diurnal",
+        "mixed": "Mixed"
+      }
+    }
   },
   "registry": {
     "title": "Wildlife filing guide (KR)",

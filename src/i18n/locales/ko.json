@@ -48,6 +48,7 @@
     "supplies": "사료·재고",
     "partnerDashboard": "파트너 대시보드",
     "registry": "보관신고 가이드",
+    "compare": "종 비교",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -833,6 +834,46 @@
     "toDark": "다크 모드로 전환",
     "lightMode": "라이트 모드",
     "darkMode": "다크 모드"
+  },
+  "compare": {
+    "title": "종 비교",
+    "subtitle": "최대 {{max}}종을 골라 난이도·수명·공간·터치·예산을 한 표로 비교합니다. URL을 그대로 공유할 수 있습니다.",
+    "pickerTitle": "비교할 종 선택 ({{current}}/{{max}})",
+    "clear": "선택 초기화",
+    "gridTitle": "비교 결과",
+    "empty": "비교할 종을 1개 이상 선택해 보세요.",
+    "rows": {
+      "category": "분류",
+      "difficulty": "난이도",
+      "lifespan": "수명",
+      "space": "공간",
+      "handling": "터치",
+      "activity": "활동",
+      "budget": "월 예산",
+      "beginnerTip": "입문 팁",
+      "commonProblem": "흔한 트러블"
+    },
+    "units": {
+      "years": "년",
+      "perMonth": "/월"
+    },
+    "values": {
+      "space": {
+        "small": "소형 (책상 위)",
+        "medium": "중형 (별도 사육장)",
+        "large": "대형 (전용 공간)"
+      },
+      "handling": {
+        "low": "관상 위주",
+        "medium": "가끔 핸들링",
+        "high": "자주 핸들링"
+      },
+      "activity": {
+        "nocturnal": "야행성",
+        "diurnal": "주행성",
+        "mixed": "혼합"
+      }
+    }
   },
   "registry": {
     "title": "야생동물 보관신고 가이드",
