@@ -106,6 +106,27 @@ export const routes = [
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Admin')),
       },
+      { path: 'sos', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Sos')) },
+      {
+        path: 'health',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Health')),
+      },
+      {
+        path: 'habitat',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Habitat')),
+      },
+      {
+        path: 'budget',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Budget')),
+      },
+      {
+        path: 'supplies',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Supplies')),
+      },
       { path: '*', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/NotFound')) },
     ],
   },
