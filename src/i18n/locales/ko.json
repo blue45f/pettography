@@ -47,6 +47,7 @@
     "budget": "비용 트래커",
     "supplies": "사료·재고",
     "partnerDashboard": "파트너 대시보드",
+    "registry": "보관신고 가이드",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -818,5 +819,48 @@
     "toDark": "다크 모드로 전환",
     "lightMode": "라이트 모드",
     "darkMode": "다크 모드"
+  },
+  "registry": {
+    "title": "야생동물 보관신고 가이드",
+    "subtitle": "지정관리 야생동물(포유류·조류·파충류·양서류)을 키우거나 거래·폐사할 때 환경부 신고가 필요합니다. 본인 펫의 신고 상태를 체크리스트로 관리하세요.",
+    "effectiveNote": "시행: 2025년 12월 14일 (야생생물 보호 및 관리에 관한 법률)",
+    "categoryStatusLabel": "내 펫 카테고리",
+    "regulatedBadge": "신고 대상",
+    "unregulatedBadge": "신고 대상 아님",
+    "noCategory": "온보딩에서 카테고리를 먼저 선택하세요",
+    "checklistProgress": "체크리스트 진척도",
+    "filingsTitle": "필수 신고 4종",
+    "linksTitle": "정부·공식 사이트",
+    "markDone": "완료 체크",
+    "markedDone": "완료됨",
+    "reset": "체크리스트 초기화",
+    "filings": {
+      "keeping": {
+        "title": "보관 신고",
+        "desc": "지정관리 야생동물을 처음 키우기 시작했을 때 환경부 야생동물 거래·보관 신고 시스템에 등록합니다.",
+        "when": "사육 시작 후 30일 이내"
+      },
+      "transfer": {
+        "title": "양도·양수 신고",
+        "desc": "다른 사람에게 분양·양도하거나 양수받을 때 양쪽 모두 신고합니다. 양수자는 사육 환경 사진을 첨부합니다.",
+        "when": "거래 발생 후 30일 이내"
+      },
+      "death": {
+        "title": "폐사 신고",
+        "desc": "키우던 야생동물이 죽었을 때 폐사 사실과 처리 방법(매장·동물 장례 등)을 신고합니다.",
+        "when": "폐사 확인 후 30일 이내"
+      },
+      "microchip": {
+        "title": "마이크로칩(선택)",
+        "desc": "법적 의무는 아니지만 RFID 칩 시술 시 종·등록번호를 기록하면 분실·도난 시 회수율이 높아집니다.",
+        "when": "시술 후 사육 일지에 기록"
+      }
+    },
+    "links": {
+      "wildlifeRegistry": "환경부 야생생물 통합포털 (wildlife.go.kr)",
+      "animalRegistry": "국가동물보호정보시스템 (animal.go.kr)",
+      "envMinistry": "환경부 (me.go.kr) 야생동물 보관신고 안내"
+    },
+    "disclaimer": "법령 해석은 환경부 공식 안내가 최종 기준입니다. 본 가이드는 사용자 편의를 위한 요약입니다."
   }
 }

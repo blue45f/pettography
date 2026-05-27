@@ -127,6 +127,11 @@ export const routes = [
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Supplies')),
       },
+      {
+        path: 'registry',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Registry')),
+      },
       { path: '*', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/NotFound')) },
     ],
   },

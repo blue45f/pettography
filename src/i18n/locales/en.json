@@ -47,6 +47,7 @@
     "budget": "Budget",
     "supplies": "Supplies",
     "partnerDashboard": "Partner desk",
+    "registry": "Wildlife filings",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -818,5 +819,48 @@
     "toDark": "Switch to dark mode",
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
+  },
+  "registry": {
+    "title": "Wildlife filing guide (KR)",
+    "subtitle": "Regulated wildlife (mammals, birds, reptiles, amphibians) require Ministry of Environment filings when kept, transferred, or deceased. Track your own filing status here.",
+    "effectiveNote": "Effective: 14 Dec 2025 (Wildlife Protection & Management Act, KR)",
+    "categoryStatusLabel": "Your pet category",
+    "regulatedBadge": "Filing required",
+    "unregulatedBadge": "Not regulated",
+    "noCategory": "Pick a category in onboarding first",
+    "checklistProgress": "Checklist progress",
+    "filingsTitle": "4 required filings",
+    "linksTitle": "Official sites",
+    "markDone": "Mark done",
+    "markedDone": "Done",
+    "reset": "Reset checklist",
+    "filings": {
+      "keeping": {
+        "title": "Keeping filing",
+        "desc": "Register with the Ministry of Environment wildlife system when you first begin keeping a regulated animal.",
+        "when": "Within 30 days of acquisition"
+      },
+      "transfer": {
+        "title": "Transfer filing",
+        "desc": "Both parties file when an animal is sold or transferred; the receiver attaches enclosure photos.",
+        "when": "Within 30 days of transfer"
+      },
+      "death": {
+        "title": "Death filing",
+        "desc": "Report the death and disposition method (burial, cremation, agency) when your wildlife pet dies.",
+        "when": "Within 30 days of death"
+      },
+      "microchip": {
+        "title": "Microchip (optional)",
+        "desc": "Not legally required, but logging species and chip ID after RFID implantation improves recovery if the animal is lost.",
+        "when": "Log into your husbandry diary"
+      }
+    },
+    "links": {
+      "wildlifeRegistry": "Wildlife portal (wildlife.go.kr)",
+      "animalRegistry": "Animal protection system (animal.go.kr)",
+      "envMinistry": "Ministry of Environment (me.go.kr) filing guide"
+    },
+    "disclaimer": "Ministry of Environment guidance is the final authority. This is a user-facing summary, not legal advice."
   }
 }

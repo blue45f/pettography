@@ -53,12 +53,14 @@ function Header() {
         { path: '/partners', label: t('nav.partners') },
         { path: '/partner-dashboard', label: t('nav.partnerDashboard') },
         { path: '/admin', label: t('nav.admin') },
+        { path: '/registry', label: t('nav.registry') },
         { path: '/sos', label: t('nav.sos') },
       ]
     : [
         { path: '/forum', label: t('nav.forum') },
         { path: '/resources', label: t('nav.resources') },
         { path: '/partners', label: t('nav.partners') },
+        { path: '/registry', label: t('nav.registry') },
         { path: '/sos', label: t('nav.sos') },
       ]
 
