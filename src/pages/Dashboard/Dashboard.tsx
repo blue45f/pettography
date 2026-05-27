@@ -14,12 +14,14 @@ import {
   type SpeciesCategory as ExtSpeciesCategory,
 } from '@features/external-links'
 import { useFuneralList } from '@features/funeral'
+import { useGalleryStore } from '@features/gallery'
 import { detectBreaches, recommendationFor, useHabitatStore } from '@features/habitat'
 import { upcomingDues, useHealthStore, weightTrend } from '@features/health'
 import { useHospitalsList } from '@features/hospitals'
 import { LOCATION_PRESETS, findPreset } from '@features/location'
 import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
 import { useRegistryStore, REGISTRY_FILINGS } from '@features/registry'
+import { BUILTIN_ROUTINES, isDoneWithinWindow, useRoutineStore } from '@features/routine'
 import { useShopsList } from '@features/shops'
 import { useSpecies } from '@features/species'
 import { supplyStatus, useSuppliesStore } from '@features/supplies'
@@ -80,6 +82,9 @@ function Dashboard() {
   const budgetEntries = useBudgetStore((s) => s.entries)
   const supplyItems = useSuppliesStore((s) => s.items)
   const registryDone = useRegistryStore((s) => s.done)
+  const galleryPhotos = useGalleryStore((s) => s.photos)
+  const routineCustom = useRoutineStore((s) => s.customTasks)
+  const routineCompletions = useRoutineStore((s) => s.completions)
 
   const healthSummary = useMemo(() => {
     const trend = weightTrend(weights)
@@ -111,6 +116,19 @@ function Dashboard() {
       .sort((a, b) => a.status.daysLeft - b.status.daysLeft)
     return { worst: ranked[0].item, status: ranked[0].status }
   }, [supplyItems])
+
+  const routineSummary = useMemo(() => {
+    const builtIn = profile.category ? (BUILTIN_ROUTINES[profile.category] ?? []) : []
+    const all = [...builtIn, ...routineCustom]
+    if (all.length === 0) return { done: 0, total: 0 }
+    const done = all.filter((t) => isDoneWithinWindow(routineCompletions[t.id], t.cadence)).length
+    return { done, total: all.length }
+  }, [profile.category, routineCustom, routineCompletions])
+
+  const galleryPreview = useMemo(() => {
+    if (!profile.speciesId) return [] as typeof galleryPhotos
+    return galleryPhotos.filter((p) => p.speciesId === profile.speciesId).slice(0, 6)
+  }, [galleryPhotos, profile.speciesId])
 
   const upcomingPreview = useMemo(() => {
     const items: { id: string; daysLeft: number; label: string; link: string }[] = []
@@ -252,6 +270,48 @@ function Dashboard() {
           ))}
         </div>
       </section>
+
+      {routineSummary.total > 0 && (
+        <section aria-labelledby="routine-heading" className={styles.routineSummary}>
+          <div>
+            <p className={styles.routineLabel}>{t('dashboard.routineSummaryLabel')}</p>
+            <p className={styles.routineValue}>
+              {routineSummary.done} / {routineSummary.total}
+              <span className={styles.routinePercent}>
+                {' · '}
+                {Math.round((routineSummary.done / routineSummary.total) * 100)}%
+              </span>
+            </p>
+          </div>
+          <Link to="/routine" className={styles.routineLink}>
+            {t('dashboard.routineOpen')} →
+          </Link>
+        </section>
+      )}
+
+      {galleryPreview.length > 0 && (
+        <section aria-labelledby="gallery-preview-heading" className={styles.gallerySection}>
+          <header className={styles.sectionHeader}>
+            <h2 id="gallery-preview-heading">{t('dashboard.galleryTitle')}</h2>
+            <Link to={`/species/${species?.slug}`} className={styles.sectionLink}>
+              {t('dashboard.galleryOpen')} →
+            </Link>
+          </header>
+          <ul className={styles.galleryRail}>
+            {galleryPreview.map((p) => (
+              <li key={p.id}>
+                <img
+                  src={p.imageUrl}
+                  alt={p.caption ?? species?.koreanName ?? 'photo'}
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                  className={styles.galleryThumb}
+                />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {upcomingPreview.length > 0 && (
         <section aria-labelledby="upcoming-heading" className={styles.upcomingSection}>
