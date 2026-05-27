@@ -49,6 +49,7 @@
     "partnerDashboard": "Partner desk",
     "registry": "Wildlife filings",
     "compare": "Compare",
+    "petid": "Pet ID card",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -834,6 +835,37 @@
     "toDark": "Switch to dark mode",
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
+  },
+  "petid": {
+    "title": "Pet ID card",
+    "subtitle": "Printable card for the inside of an enclosure or your wallet, in case your pet escapes. Includes owner contact and finder instructions. All data stays in this browser.",
+    "fillFromOnboarding": "Fill from onboarding",
+    "save": "Save card",
+    "clear": "Clear",
+    "print": "Print / save as PDF",
+    "savedToast": "Card saved",
+    "previewHint": "When you print, only the card on the right is output (other UI hidden).",
+    "cardEyebrow": "PET IDENTIFICATION CARD",
+    "cardFooter": "If you found my pet, please contact the owner above. 발견 시 위 연락처로 연락 부탁드립니다.",
+    "requiredHint": "Fill pet name, species, owner name and phone to enable printing.",
+    "fields": {
+      "petName": "Pet name",
+      "speciesLabel": "Species",
+      "ownerName": "Owner name",
+      "ownerPhone": "Owner phone",
+      "region": "Region",
+      "registrationNumber": "Registration ID (optional)",
+      "distinctMarks": "Distinct marks (color, pattern, behavior)",
+      "foundInstructions": "If found (handling, food, environment notes)"
+    },
+    "placeholders": {
+      "petName": "e.g. Leo",
+      "speciesLabel": "e.g. Leopard gecko (Eublepharis macularius)",
+      "region": "e.g. Songpa, Seoul",
+      "registrationNumber": "MoE filing or RFID number",
+      "distinctMarks": "e.g. partial tail loss, white spot on back",
+      "foundInstructions": "e.g. Nocturnal, prefers darkness. Avoid direct sunlight; place in a paper box and contact me."
+    }
   },
   "compare": {
     "title": "Compare species",

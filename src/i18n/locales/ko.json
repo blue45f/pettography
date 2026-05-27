@@ -49,6 +49,7 @@
     "partnerDashboard": "파트너 대시보드",
     "registry": "보관신고 가이드",
     "compare": "종 비교",
+    "petid": "펫 ID 카드",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -834,6 +835,37 @@
     "toDark": "다크 모드로 전환",
     "lightMode": "라이트 모드",
     "darkMode": "다크 모드"
+  },
+  "petid": {
+    "title": "펫 ID 카드",
+    "subtitle": "분실·탈출 시를 대비해 사육장 옆/지갑에 두는 인쇄용 카드. 보호자 연락처와 발견자 안내가 함께 들어갑니다. 모든 정보는 이 브라우저에만 저장됩니다.",
+    "fillFromOnboarding": "온보딩 정보로 채우기",
+    "save": "카드 저장",
+    "clear": "초기화",
+    "print": "인쇄·PDF 저장",
+    "savedToast": "카드를 저장했습니다",
+    "previewHint": "오른쪽 카드는 인쇄 시 페이지 단독으로 출력됩니다 (다른 UI 비표시).",
+    "cardEyebrow": "PET IDENTIFICATION CARD",
+    "cardFooter": "발견 시 위 연락처로 연락 부탁드립니다. Found my pet? Please contact the owner above.",
+    "requiredHint": "이름·종·보호자명·연락처를 채워야 인쇄할 수 있습니다.",
+    "fields": {
+      "petName": "펫 이름",
+      "speciesLabel": "종",
+      "ownerName": "보호자 이름",
+      "ownerPhone": "보호자 연락처",
+      "region": "거주 지역",
+      "registrationNumber": "동물등록번호 (선택)",
+      "distinctMarks": "특이사항 (색·무늬·습성)",
+      "foundInstructions": "발견 시 안내 (취급 시 주의·먹이·환경)"
+    },
+    "placeholders": {
+      "petName": "예: 레오",
+      "speciesLabel": "예: 레오파드 게코 (Eublepharis macularius)",
+      "region": "예: 서울 송파구",
+      "registrationNumber": "환경부 보관신고 또는 RFID 번호",
+      "distinctMarks": "예: 꼬리 일부 절단, 등에 흰 점",
+      "foundInstructions": "예: 야행성이라 어두운 곳을 좋아함. 직사광선 피하고 종이상자에 보관 후 연락주세요."
+    }
   },
   "compare": {
     "title": "종 비교",

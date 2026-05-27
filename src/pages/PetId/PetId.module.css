@@ -1,0 +1,207 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  max-width: 65ch;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+}
+
+@container main (min-width: 880px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 440px);
+    align-items: start;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.formFooter {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-md);
+}
+
+.previewSide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  position: sticky;
+  top: var(--spacing-xl);
+}
+
+.previewHint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.card {
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  box-shadow: var(--shadow-md);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  border-bottom: 1px dashed var(--color-border);
+  padding-bottom: var(--spacing-sm);
+}
+
+.cardEmoji {
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+.cardEyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--font-size-xs);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.cardBrand {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.cardRow,
+.cardRowEmphasis {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.cardRowEmphasis {
+  background: var(--color-primary-soft);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
+}
+
+.cardLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: 700;
+}
+
+.cardValue {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.cardValuePrimary {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.015em;
+}
+
+.cardValueMono {
+  font-family: var(--font-mono, monospace);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.cardPhone {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.cardPhone:hover {
+  text-decoration: underline;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+}
+
+.cardFooter {
+  border-top: 1px dashed var(--color-border);
+  padding-top: var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.requiredHint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  [data-print='petid-card'],
+  [data-print='petid-card'] * {
+    visibility: visible;
+  }
+  [data-print='petid-card'] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 480px;
+    margin: 1cm;
+    page-break-inside: avoid;
+    box-shadow: none;
+    border-color: black;
+  }
+}

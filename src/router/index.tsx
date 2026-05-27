@@ -137,6 +137,7 @@ export const routes = [
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Compare')),
       },
+      { path: 'petid', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/PetId')) },
       { path: '*', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/NotFound')) },
     ],
   },
