@@ -1,22 +1,33 @@
 import Badge from '@components/common/Badge'
 import { useOnboardingStore } from '@features/onboarding'
 import { isRegulated, REGISTRY_FILINGS, REGISTRY_LINKS, useRegistryStore } from '@features/registry'
+import { useSpecies, type FilingStatus } from '@features/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Registry.module.css'
+
+const FILING_STATUS_VARIANT: Record<FilingStatus, 'success' | 'warning' | 'default'> = {
+  'white-list': 'success',
+  regulated: 'warning',
+  unregulated: 'default',
+  unknown: 'default',
+}
 
 function Registry() {
   const { t } = useTranslation()
   useDocumentTitle(t('registry.title'))
 
   const category = useOnboardingStore((s) => s.profile.category)
+  const speciesId = useOnboardingStore((s) => s.profile.speciesId)
+  const { data: species } = useSpecies(speciesId ?? undefined)
   const done = useRegistryStore((s) => s.done)
   const toggle = useRegistryStore((s) => s.toggle)
   const clear = useRegistryStore((s) => s.clear)
 
   const regulated = isRegulated(category)
   const completedCount = Object.keys(done).length
+  const speciesFiling = species?.filingStatus ?? 'unknown'
 
   return (
     <section className={styles.page}>
@@ -42,6 +53,17 @@ function Registry() {
             <p className={styles.statusValue}>{t('registry.noCategory')}</p>
           )}
         </div>
+        {species && (
+          <div>
+            <p className={styles.statusLabel}>{t('registry.speciesFilingLabel')}</p>
+            <p className={styles.statusValue}>
+              {species.koreanName} ·{' '}
+              <Badge variant={FILING_STATUS_VARIANT[speciesFiling]}>
+                {t(`registry.filingStatus.${speciesFiling}`)}
+              </Badge>
+            </p>
+          </div>
+        )}
         <div>
           <p className={styles.statusLabel}>{t('registry.checklistProgress')}</p>
           <p className={styles.statusValue}>

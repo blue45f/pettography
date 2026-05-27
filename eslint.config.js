@@ -21,6 +21,7 @@ export default tseslint.config(
       '.husky',
       '*.tsbuildinfo',
       'backend',
+      '.claude',
     ],
   },
   {

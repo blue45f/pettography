@@ -915,6 +915,13 @@
     "regulatedBadge": "Filing required",
     "unregulatedBadge": "Not regulated",
     "noCategory": "Pick a category in onboarding first",
+    "speciesFilingLabel": "Your species' white-list status",
+    "filingStatus": {
+      "white-list": "White-list (trade allowed)",
+      "regulated": "Regulated (filing required)",
+      "unregulated": "Not under wildlife rules",
+      "unknown": "Verify with MoE"
+    },
     "checklistProgress": "Checklist progress",
     "filingsTitle": "4 required filings",
     "linksTitle": "Official sites",

@@ -24,6 +24,9 @@ export type HandlingTolerance = z.infer<typeof handlingToleranceSchema>
 export const activityPatternSchema = z.enum(['nocturnal', 'diurnal', 'mixed'])
 export type ActivityPattern = z.infer<typeof activityPatternSchema>
 
+export const filingStatusSchema = z.enum(['white-list', 'regulated', 'unregulated', 'unknown'])
+export type FilingStatus = z.infer<typeof filingStatusSchema>
+
 export const speciesSchema = z.object({
   id: z.string(),
   slug: z.string(),
@@ -44,6 +47,7 @@ export const speciesSchema = z.object({
   beginnerTip: z.string(),
   commonProblem: z.string(),
   monthlyBudgetKrw: z.number().int().nonnegative(),
+  filingStatus: filingStatusSchema.optional(),
 })
 
 export type Species = z.infer<typeof speciesSchema>
