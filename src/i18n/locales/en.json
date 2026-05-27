@@ -36,6 +36,7 @@
     "resources": "Resources",
     "diary": "Diary",
     "species": "Species",
+    "match": "Match",
     "onboarding": "First pick"
   },
   "onboarding": {
@@ -183,7 +184,22 @@
     "diet": "Diet",
     "lifespan": "Lifespan",
     "lifespanYears": "{{min}}–{{max}} years",
-    "tagsTitle": "Tags"
+    "tagsTitle": "Tags",
+    "spaceNeed": "Space needed",
+    "spaceSmall": "Small (desktop)",
+    "spaceMedium": "Medium (bookshelf)",
+    "spaceLarge": "Large (room corner)",
+    "handlingTolerance": "Handling",
+    "handlingLow": "Display only",
+    "handlingMedium": "Occasional",
+    "handlingHigh": "Frequent",
+    "activityPattern": "Activity",
+    "activityNocturnal": "Nocturnal",
+    "activityDiurnal": "Diurnal",
+    "activityMixed": "Mixed",
+    "monthlyBudget": "Monthly budget",
+    "beginnerTip": "Beginner tip",
+    "commonProblem": "Common problem"
   },
   "communities": {
     "title": "Community",
@@ -240,6 +256,66 @@
     "certified": "Gov-registered",
     "uncertified": "Unregistered — caution",
     "noResult": "No farewell service registered for this category yet."
+  },
+  "match": {
+    "title": "Find your match",
+    "subtitle": "Answer 5 questions and we'll rank species by difficulty, space, handling and budget fit.",
+    "progress": "{{current}}/{{total}}",
+    "back": "Back",
+    "next": "Next",
+    "submit": "See results",
+    "restart": "Restart",
+    "resultTitle": "Top matches",
+    "matchScore": "Match score {{score}}",
+    "openSpecies": "Open species details",
+    "questions": {
+      "experience": {
+        "title": "Experience",
+        "hint": "How experienced are you with pets so far?",
+        "options": {
+          "beginner": "Brand new or only dogs/cats",
+          "intermediate": "Small animals (hamsters, hedgehogs etc.)",
+          "advanced": "Exotic species (reptiles, parrots etc.)"
+        }
+      },
+      "space": {
+        "title": "Space",
+        "hint": "How much space can the enclosure take?",
+        "options": {
+          "small": "Desk corner (~30cm)",
+          "medium": "Single bookshelf slot",
+          "large": "Half a room"
+        }
+      },
+      "handling": {
+        "title": "Handling",
+        "hint": "How much hands-on time do you want?",
+        "options": {
+          "low": "Watching is enough",
+          "medium": "Occasional handling",
+          "high": "Frequent hands-on bonding"
+        }
+      },
+      "activity": {
+        "title": "Activity",
+        "hint": "Which activity pattern fits your lifestyle?",
+        "options": {
+          "nocturnal": "Nocturnal animals OK",
+          "diurnal": "Prefer diurnal animals",
+          "mixed": "No preference",
+          "no-preference": "No preference"
+        }
+      },
+      "budget": {
+        "title": "Monthly budget",
+        "hint": "Monthly spend for food, gear and check-ups?",
+        "options": {
+          "low": "Under ₩25,000",
+          "medium": "Under ₩50,000",
+          "high": "₩50,000+ is fine"
+        }
+      }
+    }
   },
   "diary": {
     "title": "Husbandry diary",

@@ -36,6 +36,7 @@
     "resources": "외부 자료",
     "diary": "사육 일지",
     "species": "종 카탈로그",
+    "match": "맞춤 추천",
     "onboarding": "처음 선택"
   },
   "onboarding": {
@@ -183,7 +184,22 @@
     "diet": "먹이 가이드",
     "lifespan": "평균 수명",
     "lifespanYears": "{{min}}~{{max}}년",
-    "tagsTitle": "키워드"
+    "tagsTitle": "키워드",
+    "spaceNeed": "필요 공간",
+    "spaceSmall": "소형 (책상 위)",
+    "spaceMedium": "중형 (1단 책장)",
+    "spaceLarge": "대형 (방 일부)",
+    "handlingTolerance": "핸들링",
+    "handlingLow": "관상 위주",
+    "handlingMedium": "가끔 핸들링",
+    "handlingHigh": "자주 교감",
+    "activityPattern": "활동 시간",
+    "activityNocturnal": "야행성",
+    "activityDiurnal": "주행성",
+    "activityMixed": "혼합",
+    "monthlyBudget": "월 평균 비용",
+    "beginnerTip": "초보 팁",
+    "commonProblem": "흔한 문제"
   },
   "communities": {
     "title": "커뮤니티",
@@ -240,6 +256,66 @@
     "certified": "정부 등록",
     "uncertified": "미등록 주의",
     "noResult": "선택한 카테고리에 맞는 장묘업체가 아직 등록되지 않았어요."
+  },
+  "match": {
+    "title": "나에게 맞는 펫 찾기",
+    "subtitle": "5개 질문에 답하면 사육 난이도·공간·시간·예산을 토대로 가장 잘 맞는 종을 추천합니다.",
+    "progress": "{{current}}/{{total}}",
+    "back": "이전",
+    "next": "다음",
+    "submit": "결과 보기",
+    "restart": "다시 풀기",
+    "resultTitle": "추천 결과",
+    "matchScore": "적합도 {{score}}점",
+    "openSpecies": "이 종 자세히 보기",
+    "questions": {
+      "experience": {
+        "title": "사육 경험",
+        "hint": "지금까지 키워본 동물의 난이도가 어느 정도였나요?",
+        "options": {
+          "beginner": "처음이거나 개·고양이만",
+          "intermediate": "햄스터·고슴도치 등 소형 동물 경험 있음",
+          "advanced": "파충류·앵무 등 특수 동물 사육 경험"
+        }
+      },
+      "space": {
+        "title": "사육 공간",
+        "hint": "사육장을 둘 수 있는 공간 크기는?",
+        "options": {
+          "small": "책상 위 30cm 정도",
+          "medium": "1인용 책장 칸 정도",
+          "large": "방 한쪽을 통째로 줄 수 있음"
+        }
+      },
+      "handling": {
+        "title": "핸들링 욕구",
+        "hint": "직접 만지고 교감하는 시간이 얼마나 필요하세요?",
+        "options": {
+          "low": "보기만 해도 만족",
+          "medium": "가끔 만지는 정도",
+          "high": "자주 안고 교감하고 싶음"
+        }
+      },
+      "activity": {
+        "title": "활동 패턴",
+        "hint": "내 생활 패턴과 맞는 활동 시간은?",
+        "options": {
+          "nocturnal": "밤에 활동하는 동물 OK",
+          "diurnal": "낮에 활동하는 동물이 좋음",
+          "mixed": "상관없음",
+          "no-preference": "상관없음"
+        }
+      },
+      "budget": {
+        "title": "월 예산",
+        "hint": "먹이·용품·정기 검진을 포함한 월 지출 한도는?",
+        "options": {
+          "low": "2.5만원 이내",
+          "medium": "5만원 이내",
+          "high": "5만원 이상 OK"
+        }
+      }
+    }
   },
   "diary": {
     "title": "사육 일지",

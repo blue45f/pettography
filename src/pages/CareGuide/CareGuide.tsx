@@ -61,6 +61,22 @@ function CareGuide() {
                 <dd>{species.diet}</dd>
               </div>
               <div>
+                <dt>{t('care.spaceNeed')}</dt>
+                <dd>{t(`care.space${capitalize(species.spaceNeed)}`)}</dd>
+              </div>
+              <div>
+                <dt>{t('care.handlingTolerance')}</dt>
+                <dd>{t(`care.handling${capitalize(species.handlingTolerance)}`)}</dd>
+              </div>
+              <div>
+                <dt>{t('care.activityPattern')}</dt>
+                <dd>{t(`care.activity${capitalize(species.activityPattern)}`)}</dd>
+              </div>
+              <div>
+                <dt>{t('care.monthlyBudget')}</dt>
+                <dd>₩{species.monthlyBudgetKrw.toLocaleString('ko')}</dd>
+              </div>
+              <div>
                 <dt>{t('care.tagsTitle')}</dt>
                 <dd className={styles.tagRow}>
                   {species.tags.map((tag) => (
@@ -71,6 +87,20 @@ function CareGuide() {
                 </dd>
               </div>
             </dl>
+            <div className={styles.highlightRow}>
+              <Card padding="md" className={styles.highlightCard}>
+                <Card.Body>
+                  <h3 className={styles.highlightTitle}>💡 {t('care.beginnerTip')}</h3>
+                  <p>{species.beginnerTip}</p>
+                </Card.Body>
+              </Card>
+              <Card padding="md" className={styles.highlightCard}>
+                <Card.Body>
+                  <h3 className={styles.highlightTitle}>⚠️ {t('care.commonProblem')}</h3>
+                  <p>{species.commonProblem}</p>
+                </Card.Body>
+              </Card>
+            </div>
           </Card.Body>
         </Card>
       )}
@@ -107,6 +137,10 @@ function CareGuide() {
       )}
     </section>
   )
+}
+
+function capitalize<T extends string>(value: T): Capitalize<T> {
+  return (value.charAt(0).toUpperCase() + value.slice(1)) as Capitalize<T>
 }
 
 export default CareGuide

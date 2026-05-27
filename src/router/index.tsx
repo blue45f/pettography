@@ -81,6 +81,11 @@ export const routes = [
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Diary')),
       },
+      {
+        path: 'match',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Match')),
+      },
       { path: '*', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/NotFound')) },
     ],
   },

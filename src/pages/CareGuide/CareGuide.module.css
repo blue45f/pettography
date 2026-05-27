@@ -79,6 +79,23 @@
   font-weight: 700;
 }
 
+.highlightRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.highlightCard {
+  border: 1px solid var(--color-primary-alpha);
+}
+
+.highlightTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+}
+
 .checklist {
   list-style: none;
   counter-reset: cl;
