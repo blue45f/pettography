@@ -56,6 +56,7 @@
     "insurance": "Insurance",
     "setup": "Setup cost",
     "morphs": "Morphs",
+    "food": "Food",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -874,6 +875,15 @@
     "toDark": "Switch to dark mode",
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
+  },
+  "food": {
+    "title": "Feeder food guide",
+    "subtitle": "10 common feeder foods used by KR reptile/amphibian/arthropod owners with unit prices, nutrition notes and warnings. Filter by category.",
+    "filterLabel": "Filter by category",
+    "allCategories": "All",
+    "cautionLabel": "Caution",
+    "openShop": "Open shop",
+    "disclaimer": "Prices are 2025–26 KR averages. Nutrition values summarize supplier and research data."
   },
   "morphs": {
     "title": "Popular morph catalog",

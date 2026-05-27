@@ -56,6 +56,7 @@
     "insurance": "펫보험·비상금",
     "setup": "셋업 견적",
     "morphs": "모프 카탈로그",
+    "food": "먹이 가이드",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -874,6 +875,15 @@
     "toDark": "다크 모드로 전환",
     "lightMode": "라이트 모드",
     "darkMode": "다크 모드"
+  },
+  "food": {
+    "title": "먹이 단가·영양 가이드",
+    "subtitle": "한국 파충류·양서류·곤충 사용자가 자주 쓰는 먹이 10종의 평균 단가·영양·주의 사항을 한 표에 모았습니다. 카테고리 필터로 좁혀보세요.",
+    "filterLabel": "카테고리 필터",
+    "allCategories": "전체",
+    "cautionLabel": "주의",
+    "openShop": "공급처 열기",
+    "disclaimer": "단가는 2025~26년 한국 평균 추정치입니다. 영양 수치는 사료사·연구 자료 요약."
   },
   "morphs": {
     "title": "인기 모프 카탈로그",

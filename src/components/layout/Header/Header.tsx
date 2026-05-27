@@ -61,6 +61,7 @@ function Header() {
         { path: '/insurance', label: t('nav.insurance') },
         { path: '/setup', label: t('nav.setup') },
         { path: '/morphs', label: t('nav.morphs') },
+        { path: '/food', label: t('nav.food') },
         { path: '/backup', label: t('nav.backup') },
         { path: '/sos', label: t('nav.sos') },
       ]
