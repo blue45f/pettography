@@ -150,6 +150,7 @@ export const routes = [
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Insurance')),
       },
+      { path: 'setup', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Setup')) },
       { path: '*', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/NotFound')) },
     ],
   },

@@ -54,6 +54,7 @@
     "routine": "Routine",
     "calendar": "Calendar",
     "insurance": "Insurance",
+    "setup": "Setup cost",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -872,6 +873,19 @@
     "toDark": "Switch to dark mode",
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
+  },
+  "setup": {
+    "title": "Enclosure setup estimator",
+    "subtitle": "Pick a category and we'll show the 6–8 essentials (enclosure, substrate, UVB, heat, hygrometer, food, etc.) with basic and premium price ranges. Standardizes what KR beginners most often forget.",
+    "pickCategory": "Pick a category",
+    "empty": "Pick a category",
+    "emptyDesc": "Choose the category you want to keep from the chips above.",
+    "totalLabel": "Total (basic – premium)",
+    "totalHint": "Averaged from KR e-commerce. Real prices vary by model and season.",
+    "includeOptional": "Include optional parts",
+    "optional": "Optional",
+    "shopsTitle": "Korean exotic pet shops",
+    "disclaimer": "We have no affiliation with these shops. Prices and stock are governed by each shop's own listings."
   },
   "insurance": {
     "title": "Pet insurance & emergency reserve",
