@@ -52,6 +52,28 @@ GET /api/shops?category=mammal&kind=food
 GET /api/communities?category=bird
 ```
 
+### Forum
+
+| Method | Path                                    | 설명                                                                      |
+| ------ | --------------------------------------- | ------------------------------------------------------------------------- |
+| GET    | `/api/forum/posts`                      | 게시글 목록. 쿼리: `category` (reptile/arthropod/bird/amphibian/mammal)   |
+| POST   | `/api/forum/posts`                      | 게시글 작성. body: `{ category, title, author, body }` → 생성된 Post 반환 |
+| GET    | `/api/forum/posts/:id`                  | 단일 게시글 + 댓글 묶음 `{ post, replies }`                               |
+| POST   | `/api/forum/posts/:id/replies`          | 댓글 작성. body: `{ author, body }` → 생성된 Reply 반환                   |
+| DELETE | `/api/forum/posts/:id`                  | 게시글 삭제 (어드민용, 인증 없음 — demo). 응답 204                        |
+| DELETE | `/api/forum/posts/:id/replies/:replyId` | 댓글 삭제 (어드민용). 응답 204                                            |
+
+### Partners
+
+| Method | Path                       | 설명                                                                                          |
+| ------ | -------------------------- | --------------------------------------------------------------------------------------------- |
+| GET    | `/api/partners`            | 입점 신청 목록. 쿼리: `status` (pending/approved/rejected)                                    |
+| POST   | `/api/partners`            | 입점 신청. body: `{ kind, name, contact, region, description, url? }` → status는 자동 pending |
+| PATCH  | `/api/partners/:id/status` | 입점 상태 변경 (어드민용). body: `{ status: 'approved' \| 'rejected' }`                       |
+| DELETE | `/api/partners/:id`        | 신청 삭제 (어드민용). 응답 204                                                                |
+
+Forum/Partners 데이터는 in-memory(Service 내 mutable array/Map)이며 서버 재시작 시 시드로 리셋됩니다. ID는 `crypto.randomUUID()`로 발급됩니다.
+
 ## 시드 데이터 규모
 
 | 도메인      | 개수                 |
