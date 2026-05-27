@@ -42,6 +42,7 @@
     "partners": "Become partner",
     "admin": "Admin",
     "sos": "Emergency",
+    "health": "Health log",
     "onboarding": "First pick"
   },
   "onboarding": {
@@ -261,6 +262,53 @@
     "certified": "Gov-registered",
     "uncertified": "Unregistered, caution",
     "noResult": "No farewell service registered for this category yet."
+  },
+  "health": {
+    "title": "Health log",
+    "subtitle": "Track weight, vaccinations, medications and check-ups as structured data with upcoming reminders.",
+    "weightTitle": "Weight trend",
+    "weightChartLabel": "Weight time-series chart",
+    "weightEmpty": "No weight entries yet. Add the first measurement.",
+    "weightLatest": "Latest",
+    "weightDelta30": "Last 30 days",
+    "weightRange": "Min / Max",
+    "weightCount": "Entries",
+    "addWeightTitle": "Add weight",
+    "weightDate": "Measured on",
+    "weightGrams": "Weight (g)",
+    "weightNote": "Note (optional)",
+    "addWeight": "Save weight",
+    "vaccinationTitle": "Vaccinations, meds and checkups",
+    "vaccinationEmpty": "No records yet. Add the first one.",
+    "addVaccinationTitle": "Add entry",
+    "vKind": "Kind",
+    "vName": "Name",
+    "vNamePlaceholder": "e.g. Influenza, Dewormer, Annual checkup",
+    "vDate": "Administered on",
+    "vNextDue": "Next due (optional)",
+    "vClinic": "Clinic (optional)",
+    "vNote": "Note (optional)",
+    "addVaccination": "Save entry",
+    "remove": "Remove",
+    "upcomingTitle": "Upcoming (within 60 days)",
+    "upcomingEmpty": "No upcoming items.",
+    "daysLeft": "in {{count}} days",
+    "overdue": "{{count}} days overdue",
+    "kinds": {
+      "vaccine": "Vaccine",
+      "medication": "Medication",
+      "checkup": "Check-up",
+      "parasite": "Parasite"
+    },
+    "errors": {
+      "dateRequired": "Pick a date.",
+      "weightNumber": "Weight must be a number.",
+      "weightPositive": "Weight must be positive.",
+      "nameRequired": "Enter a name.",
+      "nameMax": "Name must be 80 characters or fewer.",
+      "clinicMax": "Clinic must be 80 characters or fewer.",
+      "noteMax": "Note must be 200 characters or fewer."
+    }
   },
   "sos": {
     "title": "Emergency SOS",

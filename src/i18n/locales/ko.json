@@ -42,6 +42,7 @@
     "partners": "입점 신청",
     "admin": "어드민",
     "sos": "응급 SOS",
+    "health": "건강 기록",
     "onboarding": "처음 선택"
   },
   "onboarding": {
@@ -261,6 +262,53 @@
     "certified": "정부 등록",
     "uncertified": "미등록 주의",
     "noResult": "선택한 카테고리에 맞는 장묘업체가 아직 등록되지 않았어요."
+  },
+  "health": {
+    "title": "건강 기록",
+    "subtitle": "체중·접종·약·정기 검진을 정형 데이터로 기록하고, 다음 일정과 30일 변화를 한눈에.",
+    "weightTitle": "체중 추이",
+    "weightChartLabel": "체중 시계열 그래프",
+    "weightEmpty": "아직 체중 기록이 없어요. 첫 측정값을 입력해주세요.",
+    "weightLatest": "최근 체중",
+    "weightDelta30": "30일 전 대비",
+    "weightRange": "최저 / 최고",
+    "weightCount": "총 기록",
+    "addWeightTitle": "체중 추가",
+    "weightDate": "측정 일자",
+    "weightGrams": "체중 (g)",
+    "weightNote": "메모 (선택)",
+    "addWeight": "체중 기록",
+    "vaccinationTitle": "접종·약물·검진 기록",
+    "vaccinationEmpty": "접종/약 기록이 없습니다. 처음 항목을 추가해보세요.",
+    "addVaccinationTitle": "기록 추가",
+    "vKind": "유형",
+    "vName": "이름",
+    "vNamePlaceholder": "예) 인플루엔자, 구충제, 정기검진",
+    "vDate": "시행 일자",
+    "vNextDue": "다음 예정 (선택)",
+    "vClinic": "병원 (선택)",
+    "vNote": "메모 (선택)",
+    "addVaccination": "기록 추가",
+    "remove": "삭제",
+    "upcomingTitle": "예정된 일정 (60일 이내)",
+    "upcomingEmpty": "예정된 일정이 없어요.",
+    "daysLeft": "{{count}}일 남음",
+    "overdue": "지난 {{count}}일",
+    "kinds": {
+      "vaccine": "접종",
+      "medication": "약물",
+      "checkup": "정기 검진",
+      "parasite": "구충"
+    },
+    "errors": {
+      "dateRequired": "일자를 입력해주세요.",
+      "weightNumber": "체중은 숫자여야 합니다.",
+      "weightPositive": "체중은 0보다 큰 값이어야 합니다.",
+      "nameRequired": "이름을 입력해주세요.",
+      "nameMax": "이름은 80자 이내입니다.",
+      "clinicMax": "병원명은 80자 이내입니다.",
+      "noteMax": "메모는 200자 이내입니다."
+    }
   },
   "sos": {
     "title": "응급 SOS",
