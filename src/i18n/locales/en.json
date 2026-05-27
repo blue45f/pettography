@@ -37,6 +37,10 @@
     "diary": "Diary",
     "species": "Species",
     "match": "Match",
+    "consult": "Vet chat",
+    "forum": "Forum",
+    "partners": "Become partner",
+    "admin": "Admin",
     "onboarding": "First pick"
   },
   "onboarding": {
@@ -256,6 +260,113 @@
     "certified": "Gov-registered",
     "uncertified": "Unregistered — caution",
     "noResult": "No farewell service registered for this category yet."
+  },
+  "consult": {
+    "title": "Vet live consult",
+    "subtitle": "1-on-1 chat with exotic vets. (Demo — replies are auto-generated.)",
+    "vetListLabel": "Vet list",
+    "pickVet": "Pick a vet from the left to start chatting.",
+    "firstMessageHint": "Include symptoms, environment (temp/humidity), and a photo description for a faster reply.",
+    "placeholder": "Type a message...",
+    "send": "Send",
+    "experience": "{{years}} yrs experience",
+    "replyToast": "Vet replied",
+    "status": {
+      "online": "Online",
+      "busy": "In session",
+      "offline": "Offline"
+    }
+  },
+  "forum": {
+    "title": "Species community forum",
+    "subtitle": "Share notes with people who keep the same animals. Everything stays in this browser.",
+    "filterLabel": "Category filter",
+    "filterAll": "All",
+    "newPostTitle": "New post",
+    "category": "Category",
+    "author": "Author",
+    "authorPlaceholder": "Nickname",
+    "titleLabel": "Title",
+    "titlePlaceholder": "What do you want to discuss?",
+    "bodyLabel": "Body",
+    "bodyPlaceholder": "Environment, symptoms, photos — more detail attracts better answers.",
+    "replyLabel": "Reply",
+    "replyPlaceholder": "Leave something useful.",
+    "publish": "Publish",
+    "reply": "Reply",
+    "empty": "No posts in this category yet. Be the first!",
+    "expand": "Show replies",
+    "collapse": "Hide",
+    "repliesCount": "{{count}} replies",
+    "postedToast": "Post published",
+    "replyToast": "Reply posted",
+    "errors": {
+      "titleRequired": "Enter a title.",
+      "titleMax": "Title must be 120 characters or fewer.",
+      "authorRequired": "Enter a nickname.",
+      "authorMax": "Nickname must be 40 characters or fewer.",
+      "bodyRequired": "Enter the body.",
+      "bodyMax": "Body must be 2000 characters or fewer.",
+      "replyRequired": "Enter the reply.",
+      "replyMax": "Reply must be 800 characters or fewer."
+    }
+  },
+  "partners": {
+    "title": "Become a Pettography partner",
+    "subtitle": "Running a shop, vet clinic, or treat shop? Submit an application and our admin will review it.",
+    "kinds": {
+      "shop": "Gear shop",
+      "hospital": "Specialist vet",
+      "treat-shop": "Food/treat shop"
+    },
+    "formTitle": "Application form",
+    "kindLabel": "Type",
+    "nameLabel": "Business name",
+    "namePlaceholder": "e.g. Songpa Exotic Vet Center",
+    "contactLabel": "Contact",
+    "contactPlaceholder": "Phone or email",
+    "regionLabel": "Region",
+    "regionPlaceholder": "e.g. Songpa-gu, Seoul",
+    "urlLabel": "Website (optional)",
+    "descriptionLabel": "Pitch",
+    "descriptionPlaceholder": "Specialties, hours, supported species categories. (min 10 chars)",
+    "submit": "Submit application",
+    "submittedToast": "Application received",
+    "recentTitle": "Recent applications",
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "errors": {
+      "nameRequired": "Business name is required.",
+      "contactRequired": "Contact is required.",
+      "regionRequired": "Region is required.",
+      "descriptionMin": "Pitch must be at least 10 characters.",
+      "urlInvalid": "URL must start with http:// or https://"
+    }
+  },
+  "admin": {
+    "title": "Admin dashboard",
+    "subtitle": "Stats, partner reviews and forum moderation.",
+    "gateTitle": "Enable admin mode",
+    "gateDesc": "Demo toggle. Switching on exposes stats, partner queue and moderation tools.",
+    "enable": "Turn on admin",
+    "disable": "Turn off admin",
+    "statsTitle": "Operations",
+    "stats": {
+      "onboarding": "Onboarding done",
+      "forumPosts": "Forum posts",
+      "forumReplies": "Forum replies",
+      "diaryEntries": "Diary entries",
+      "consultMessages": "Consult messages",
+      "applicationsPending": "Pending applications"
+    },
+    "applicationsTitle": "Partner applications",
+    "moderationTitle": "Forum moderation",
+    "approve": "Approve",
+    "reject": "Reject",
+    "delete": "Delete"
   },
   "match": {
     "title": "Find your match",

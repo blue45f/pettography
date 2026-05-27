@@ -22,11 +22,15 @@ function Header() {
         { path: '/hospitals', label: t('nav.hospitals') },
         { path: '/shops', label: t('nav.shops') },
         { path: '/care', label: t('nav.care') },
+        { path: '/consult', label: t('nav.consult') },
+        { path: '/forum', label: t('nav.forum') },
+        { path: '/diary', label: t('nav.diary') },
         { path: '/adoption', label: t('nav.adoption') },
         { path: '/communities', label: t('nav.communities') },
-        { path: '/diary', label: t('nav.diary') },
         { path: '/funeral', label: t('nav.funeral') },
         { path: '/resources', label: t('nav.resources') },
+        { path: '/partners', label: t('nav.partners') },
+        { path: '/admin', label: t('nav.admin') },
       ]
     : [
         { path: '/match', label: t('nav.match') },
@@ -34,7 +38,9 @@ function Header() {
         { path: '/species', label: t('nav.species') },
         { path: '/hospitals', label: t('nav.hospitals') },
         { path: '/shops', label: t('nav.shops') },
+        { path: '/forum', label: t('nav.forum') },
         { path: '/resources', label: t('nav.resources') },
+        { path: '/partners', label: t('nav.partners') },
       ]
 
   return (

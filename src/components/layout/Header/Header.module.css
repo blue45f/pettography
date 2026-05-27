@@ -1,12 +1,14 @@
 .header {
-  background-color: var(--color-background);
+  background: var(--gradient-glass);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   z-index: 100;
   transition:
-    background-color var(--transition),
-    border-color var(--transition);
+    background-color var(--motion-base),
+    border-color var(--motion-base);
 }
 
 .container {
@@ -16,16 +18,26 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--spacing-md) var(--spacing-xl);
+  gap: var(--spacing-md);
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-family: var(--font-display);
   font-size: var(--font-size-xl);
-  font-weight: 700;
-  color: var(--color-text);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .logo:hover {
-  color: var(--color-primary);
+  filter: brightness(1.05);
 }
 
 .actions {
@@ -36,30 +48,34 @@
 
 .navList {
   display: flex;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-xs);
   list-style: none;
+  flex-wrap: wrap;
 }
 
 .navLink {
-  font-size: var(--font-size-base);
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
   color: var(--color-text-secondary);
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--border-radius);
-  transition: all var(--transition);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-pill);
+  transition:
+    color var(--motion-fast),
+    background-color var(--motion-fast),
+    box-shadow var(--motion-fast);
 }
 
 .navLink:hover {
-  color: var(--color-text);
-  background-color: var(--color-surface);
+  color: var(--color-primary);
+  background-color: var(--color-primary-soft);
 }
 
 .navLink.active {
-  color: var(--color-primary);
-  background-color: var(--color-primary-alpha);
+  color: white;
+  background: var(--gradient-brand);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Hamburger menu button */
 .menuButton {
   display: none;
   align-items: center;
@@ -67,10 +83,17 @@
   width: 40px;
   height: 40px;
   padding: 0;
-  background: transparent;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-md);
   cursor: pointer;
+  transition:
+    border-color var(--motion-fast),
+    background-color var(--motion-fast);
+}
+
+.menuButton:hover {
+  border-color: var(--color-primary);
 }
 
 .hamburger {
@@ -79,7 +102,7 @@
   height: 2px;
   background-color: var(--color-text);
   position: relative;
-  transition: background-color var(--transition);
+  transition: background-color var(--motion-fast);
 }
 
 .hamburger::before,
@@ -90,7 +113,7 @@
   height: 2px;
   background-color: var(--color-text);
   left: 0;
-  transition: transform var(--transition);
+  transition: transform var(--motion-fast);
 }
 
 .hamburger::before {
@@ -115,7 +138,6 @@
   transform: rotate(-45deg);
 }
 
-/* Mobile responsive */
 @media (max-width: 768px) {
   .menuButton {
     display: flex;
@@ -127,8 +149,9 @@
     left: 0;
     right: 0;
     flex-direction: column;
-    background-color: var(--color-background);
+    background-color: var(--color-surface);
     border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
     padding: var(--spacing-md) var(--spacing-xl);
     gap: var(--spacing-md);
     display: none;
