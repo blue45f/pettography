@@ -168,6 +168,14 @@
     "diaryTitle": "Recent husbandry log",
     "diaryEmpty": "No diary entries yet. Open /diary to add your first.",
     "viewDiary": "All diary entries",
+    "upcomingTitle": "Coming up",
+    "openCalendar": "Open calendar",
+    "urgentToast": "{{count}} item(s) due within 3 days.",
+    "upcoming": {
+      "daysLeft": "in {{days}}d",
+      "now": "today",
+      "filings": "{{count}} wildlife filings pending"
+    },
     "conditionTitle": "Today's condition",
     "conditionSubtitle": "Health, habitat, spend and stock at a glance. Tap a card for detail.",
     "condition": {

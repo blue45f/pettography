@@ -168,6 +168,14 @@
     "diaryTitle": "최근 사육 일지",
     "diaryEmpty": "아직 기록된 일지가 없어요. /diary에서 첫 기록을 남겨보세요.",
     "viewDiary": "일지 전체 보기",
+    "upcomingTitle": "곧 다가오는 일정",
+    "openCalendar": "통합 일정 열기",
+    "urgentToast": "{{count}}건의 D-3 이내 일정이 있습니다.",
+    "upcoming": {
+      "daysLeft": "D-{{days}}",
+      "now": "오늘",
+      "filings": "보관신고 미완료 {{count}}건"
+    },
     "conditionTitle": "오늘의 컨디션",
     "conditionSubtitle": "건강·환경·지출·재고를 한눈에. 카드를 누르면 상세로 이동합니다.",
     "condition": {

@@ -3,6 +3,7 @@ import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Skeleton from '@components/common/Skeleton'
+import { useToast } from '@components/common/Toast'
 import { useAdoptionList } from '@features/adoption'
 import { compareAgainstRecommended, monthBreakdown, useBudgetStore } from '@features/budget'
 import { useCareGuide } from '@features/care-guides'
@@ -18,12 +19,13 @@ import { upcomingDues, useHealthStore, weightTrend } from '@features/health'
 import { useHospitalsList } from '@features/hospitals'
 import { LOCATION_PRESETS, findPreset } from '@features/location'
 import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
+import { useRegistryStore, REGISTRY_FILINGS } from '@features/registry'
 import { useShopsList } from '@features/shops'
 import { useSpecies } from '@features/species'
 import { supplyStatus, useSuppliesStore } from '@features/supplies'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useAppStore } from '@store/index'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, Navigate } from 'react-router'
 
@@ -71,11 +73,13 @@ function Dashboard() {
   const diaryAggregate = useMemo(() => diaryStats(diaryEntries), [diaryEntries])
   const recentDiary = diaryEntries.slice(0, 2)
 
+  const { toast } = useToast()
   const weights = useHealthStore((s) => s.weights)
   const vaccinations = useHealthStore((s) => s.vaccinations)
   const habitatEntries = useHabitatStore((s) => s.entries)
   const budgetEntries = useBudgetStore((s) => s.entries)
   const supplyItems = useSuppliesStore((s) => s.items)
+  const registryDone = useRegistryStore((s) => s.done)
 
   const healthSummary = useMemo(() => {
     const trend = weightTrend(weights)
@@ -107,6 +111,49 @@ function Dashboard() {
       .sort((a, b) => a.status.daysLeft - b.status.daysLeft)
     return { worst: ranked[0].item, status: ranked[0].status }
   }, [supplyItems])
+
+  const upcomingPreview = useMemo(() => {
+    const items: { id: string; daysLeft: number; label: string; link: string }[] = []
+    for (const due of upcomingDues(vaccinations, 14)) {
+      items.push({
+        id: `vax-${due.vaccination.id}`,
+        daysLeft: due.daysLeft,
+        label: due.vaccination.name,
+        link: '/health',
+      })
+    }
+    for (const item of supplyItems) {
+      const status = supplyStatus(item)
+      if (status.daysLeft <= 14) {
+        items.push({
+          id: `sup-${item.id}`,
+          daysLeft: status.daysLeft,
+          label: item.name,
+          link: '/supplies',
+        })
+      }
+    }
+    const filingPending = REGISTRY_FILINGS.filter((f) => !registryDone[f]).length
+    if (filingPending > 0) {
+      items.push({
+        id: 'registry',
+        daysLeft: 30,
+        label: t('dashboard.upcoming.filings', { count: filingPending }),
+        link: '/registry',
+      })
+    }
+    return items.sort((a, b) => a.daysLeft - b.daysLeft).slice(0, 4)
+  }, [vaccinations, supplyItems, registryDone, t])
+
+  const alertedRef = useRef(false)
+  useEffect(() => {
+    if (alertedRef.current) return
+    const urgent = upcomingPreview.filter((i) => i.daysLeft <= 3)
+    if (urgent.length > 0) {
+      toast(t('dashboard.urgentToast', { count: urgent.length }), 'warning')
+      alertedRef.current = true
+    }
+  }, [upcomingPreview, toast, t])
 
   if (!isOnboardingComplete(profile)) {
     return <Navigate to="/onboarding" replace />
@@ -205,6 +252,31 @@ function Dashboard() {
           ))}
         </div>
       </section>
+
+      {upcomingPreview.length > 0 && (
+        <section aria-labelledby="upcoming-heading" className={styles.upcomingSection}>
+          <header className={styles.sectionHeader}>
+            <h2 id="upcoming-heading">{t('dashboard.upcomingTitle')}</h2>
+            <Link to="/calendar" className={styles.sectionLink}>
+              {t('dashboard.openCalendar')} →
+            </Link>
+          </header>
+          <ul className={styles.upcomingList}>
+            {upcomingPreview.map((item) => (
+              <li key={item.id}>
+                <Link to={item.link} className={styles.upcomingItem}>
+                  <span className={styles.upcomingDays}>
+                    {item.daysLeft <= 0
+                      ? t('dashboard.upcoming.now')
+                      : t('dashboard.upcoming.daysLeft', { days: item.daysLeft })}
+                  </span>
+                  <span className={styles.upcomingLabel}>{item.label}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section aria-labelledby="condition-heading">
         <header className={styles.sectionHeader}>

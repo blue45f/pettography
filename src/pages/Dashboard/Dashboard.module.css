@@ -336,3 +336,56 @@
   color: var(--color-error);
   font-weight: 600;
 }
+
+.upcomingSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-primary-soft);
+  border-radius: var(--radius-lg);
+}
+
+.upcomingList {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: var(--spacing-xs);
+}
+
+.upcomingItem {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--color-text);
+  transition:
+    border-color var(--motion-fast),
+    transform var(--motion-fast);
+}
+
+.upcomingItem:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.upcomingDays {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--color-primary-700);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+
+[data-theme='dark'] .upcomingDays {
+  color: var(--color-primary-200);
+}
+
+.upcomingLabel {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
