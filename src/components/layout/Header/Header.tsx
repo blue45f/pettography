@@ -51,6 +51,7 @@ function Header() {
         { path: '/funeral', label: t('nav.funeral') },
         { path: '/resources', label: t('nav.resources') },
         { path: '/partners', label: t('nav.partners') },
+        { path: '/partner-dashboard', label: t('nav.partnerDashboard') },
         { path: '/admin', label: t('nav.admin') },
         { path: '/sos', label: t('nav.sos') },
       ]

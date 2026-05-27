@@ -46,6 +46,7 @@
     "habitat": "환경 모니터",
     "budget": "비용 트래커",
     "supplies": "사료·재고",
+    "partnerDashboard": "파트너 대시보드",
     "onboarding": "처음 선택"
   },
   "onboarding": {
@@ -265,6 +266,24 @@
     "certified": "정부 등록",
     "uncertified": "미등록 주의",
     "noResult": "선택한 카테고리에 맞는 장묘업체가 아직 등록되지 않았어요."
+  },
+  "partnerDashboard": {
+    "title": "파트너 대시보드",
+    "subtitle": "Pettography에 입점한 샵·동물병원·간식 샵 운영자가 자기 가게 정보·상태·노출 카테고리를 관리하는 공간.",
+    "noApproved": "아직 승인된 파트너가 없어요. /partners에서 신청 후 어드민 승인을 기다려주세요.",
+    "myStoresTitle": "내 가게 ({{count}})",
+    "pendingHint": "검토 대기 {{count}}건이 있습니다.",
+    "kindTotalsTitle": "카테고리별 입점 현황",
+    "regionTotalsTitle": "지역별 입점 현황",
+    "certifiedBadge": "정부 인증",
+    "openOnSite": "사이트 열기",
+    "applyMore": "추가 입점 신청",
+    "openAdmin": "어드민 검토",
+    "statusLine": {
+      "pending": "검토 대기 중",
+      "approved": "승인 완료, 노출 중",
+      "rejected": "반려 — 사유 확인 후 재신청"
+    }
   },
   "supplies": {
     "title": "사료·재고 트래커",

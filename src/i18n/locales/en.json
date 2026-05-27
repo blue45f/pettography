@@ -46,6 +46,7 @@
     "habitat": "Habitat",
     "budget": "Budget",
     "supplies": "Supplies",
+    "partnerDashboard": "Partner desk",
     "onboarding": "First pick"
   },
   "onboarding": {
@@ -265,6 +266,24 @@
     "certified": "Gov-registered",
     "uncertified": "Unregistered, caution",
     "noResult": "No farewell service registered for this category yet."
+  },
+  "partnerDashboard": {
+    "title": "Partner desk",
+    "subtitle": "Approved Pettography partners (shops, vets, treat shops) manage their listing, status and exposed categories here.",
+    "noApproved": "No approved partners yet. Apply at /partners and wait for admin review.",
+    "myStoresTitle": "My listings ({{count}})",
+    "pendingHint": "{{count}} pending application(s).",
+    "kindTotalsTitle": "By type",
+    "regionTotalsTitle": "By region",
+    "certifiedBadge": "Gov-verified",
+    "openOnSite": "Open site",
+    "applyMore": "Apply more",
+    "openAdmin": "Admin review",
+    "statusLine": {
+      "pending": "Under review",
+      "approved": "Approved, currently listed",
+      "rejected": "Rejected — review reason and reapply"
+    }
   },
   "supplies": {
     "title": "Supply tracker",
