@@ -86,6 +86,26 @@ export const routes = [
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Match')),
       },
+      {
+        path: 'consult',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Consult')),
+      },
+      {
+        path: 'forum',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Forum')),
+      },
+      {
+        path: 'partners',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Partners')),
+      },
+      {
+        path: 'admin',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Admin')),
+      },
       { path: '*', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/NotFound')) },
     ],
   },
