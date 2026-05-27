@@ -41,6 +41,8 @@ function Header() {
   const overflow: NavItem[] = completed
     ? [
         { path: '/care', label: t('nav.care') },
+        { path: '/health', label: t('nav.health') },
+        { path: '/habitat', label: t('nav.habitat') },
         { path: '/forum', label: t('nav.forum') },
         { path: '/diary', label: t('nav.diary') },
         { path: '/adoption', label: t('nav.adoption') },

@@ -43,6 +43,7 @@
     "admin": "Admin",
     "sos": "Emergency",
     "health": "Health log",
+    "habitat": "Habitat",
     "onboarding": "First pick"
   },
   "onboarding": {
@@ -262,6 +263,48 @@
     "certified": "Gov-registered",
     "uncertified": "Unregistered, caution",
     "noResult": "No farewell service registered for this category yet."
+  },
+  "habitat": {
+    "title": "Habitat monitor",
+    "subtitle": "Log enclosure temperature, humidity and UVB hours over time, and compare against the recommended range for your species category.",
+    "noCategoryTitle": "Pick a species category in onboarding first",
+    "noCategoryDesc": "We need the category to compare measurements against the recommended range.",
+    "quickAddTitle": "Quick add",
+    "measuredAt": "Measured at",
+    "temperatureC": "Temperature (°C)",
+    "humidityPct": "Humidity (%)",
+    "uvbHours": "UVB hours today",
+    "uvbNotRecommended": "UVB is not required for this category.",
+    "note": "Note (optional)",
+    "save": "Save entry",
+    "tempTrendTitle": "Temperature trend",
+    "humidityTrendTitle": "Humidity trend",
+    "tempChartLabel": "Temperature time-series",
+    "humidityChartLabel": "Humidity time-series",
+    "noTempData": "No temperature data yet.",
+    "noHumidityData": "No humidity data yet.",
+    "recommendedRange": "Recommended",
+    "currentValue": "Latest",
+    "avgValue": "Average",
+    "rangeValue": "Min / Max",
+    "breach": {
+      "tempLow": "Temperature is {{diff}}°C below the recommended minimum ({{threshold}}°C)",
+      "tempHigh": "Temperature is {{diff}}°C above the recommended maximum ({{threshold}}°C)",
+      "humidityLow": "Humidity is {{diff}}% below the recommended minimum ({{threshold}}%)",
+      "humidityHigh": "Humidity is {{diff}}% above the recommended maximum ({{threshold}}%)"
+    },
+    "recentTitle": "Recent entries",
+    "remove": "Remove",
+    "empty": "No habitat entries yet. Log the first measurement.",
+    "errors": {
+      "dateRequired": "Pick a date.",
+      "tempNumber": "Temperature must be a number.",
+      "tempRange": "Temperature must be between -10 and 60°C.",
+      "humidityNumber": "Humidity must be a number.",
+      "humidityRange": "Humidity must be 0 to 100%.",
+      "uvbNumber": "UVB hours must be a number.",
+      "uvbRange": "UVB hours must be 0 to 24."
+    }
   },
   "health": {
     "title": "Health log",

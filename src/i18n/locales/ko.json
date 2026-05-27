@@ -43,6 +43,7 @@
     "admin": "어드민",
     "sos": "응급 SOS",
     "health": "건강 기록",
+    "habitat": "환경 모니터",
     "onboarding": "처음 선택"
   },
   "onboarding": {
@@ -262,6 +263,48 @@
     "certified": "정부 등록",
     "uncertified": "미등록 주의",
     "noResult": "선택한 카테고리에 맞는 장묘업체가 아직 등록되지 않았어요."
+  },
+  "habitat": {
+    "title": "환경 모니터",
+    "subtitle": "사육장 온도·습도·UVB 사용 시간을 시계열로 기록하고, 종 카테고리 권장 범위와 비교하세요.",
+    "noCategoryTitle": "온보딩에서 종 카테고리를 먼저 선택해주세요",
+    "noCategoryDesc": "카테고리 정보가 있어야 권장 환경 범위와 비교할 수 있어요.",
+    "quickAddTitle": "지금 측정값 기록",
+    "measuredAt": "측정 시각",
+    "temperatureC": "온도 (℃)",
+    "humidityPct": "습도 (%)",
+    "uvbHours": "UVB 사용 (시간)",
+    "uvbNotRecommended": "이 카테고리는 UVB가 필수가 아닙니다.",
+    "note": "메모 (선택)",
+    "save": "기록 저장",
+    "tempTrendTitle": "온도 추이",
+    "humidityTrendTitle": "습도 추이",
+    "tempChartLabel": "온도 시계열",
+    "humidityChartLabel": "습도 시계열",
+    "noTempData": "온도 기록이 없어요.",
+    "noHumidityData": "습도 기록이 없어요.",
+    "recommendedRange": "권장 범위",
+    "currentValue": "최근 값",
+    "avgValue": "평균",
+    "rangeValue": "최저 / 최고",
+    "breach": {
+      "tempLow": "온도가 권장 최저({{threshold}}℃)보다 {{diff}}℃ 낮습니다",
+      "tempHigh": "온도가 권장 최고({{threshold}}℃)보다 {{diff}}℃ 높습니다",
+      "humidityLow": "습도가 권장 최저({{threshold}}%)보다 {{diff}}% 낮습니다",
+      "humidityHigh": "습도가 권장 최고({{threshold}}%)보다 {{diff}}% 높습니다"
+    },
+    "recentTitle": "최근 기록",
+    "remove": "삭제",
+    "empty": "환경 기록이 아직 없어요. 첫 값을 입력해보세요.",
+    "errors": {
+      "dateRequired": "측정 시각을 입력해주세요.",
+      "tempNumber": "온도는 숫자여야 합니다.",
+      "tempRange": "온도는 -10~60℃ 사이로 입력해주세요.",
+      "humidityNumber": "습도는 숫자여야 합니다.",
+      "humidityRange": "습도는 0~100% 사이로 입력해주세요.",
+      "uvbNumber": "UVB 시간은 숫자여야 합니다.",
+      "uvbRange": "UVB 시간은 0~24 사이로 입력해주세요."
+    }
   },
   "health": {
     "title": "건강 기록",
