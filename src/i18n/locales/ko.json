@@ -52,6 +52,7 @@
     "petid": "펫 ID 카드",
     "backup": "데이터 백업",
     "routine": "일과 체크",
+    "calendar": "통합 일정",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -841,6 +842,32 @@
     "toDark": "다크 모드로 전환",
     "lightMode": "라이트 모드",
     "darkMode": "다크 모드"
+  },
+  "calendar": {
+    "title": "통합 일정",
+    "subtitle": "향후 {{horizon}}일 내의 접종 일정, 보충해야 할 사료·재고, 보관신고 마감을 한 timeline에서 봅니다.",
+    "empty": "예정된 일정이 없습니다.",
+    "emptyDesc": "건강·재고·보관신고에 항목을 추가하면 여기에 자동으로 모입니다.",
+    "noClinic": "병원 미지정",
+    "daysLeft": "D-{{days}}",
+    "daysOverdue": "D+{{days}} 경과",
+    "buckets": {
+      "overdue": "지연 ({{count}})",
+      "within7": "이번 주 ({{count}})",
+      "within30": "이번 달 ({{count}})",
+      "beyond": "다음 달 이후 ({{count}})"
+    },
+    "kind": {
+      "vaccine": "건강",
+      "supply": "재고",
+      "registry": "신고"
+    },
+    "supplyLevel": {
+      "ok": "약 {{days}}일분 남음",
+      "warning": "약 {{days}}일분 남음",
+      "critical": "위급: 약 {{days}}일분",
+      "depleted": "재고 소진"
+    }
   },
   "routine": {
     "title": "일과 체크리스트",

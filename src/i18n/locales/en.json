@@ -52,6 +52,7 @@
     "petid": "Pet ID card",
     "backup": "Backup",
     "routine": "Routine",
+    "calendar": "Calendar",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -841,6 +842,32 @@
     "toDark": "Switch to dark mode",
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "subtitle": "Vaccinations, restock dates and wildlife filings due in the next {{horizon}} days, in one timeline.",
+    "empty": "No upcoming items.",
+    "emptyDesc": "Add health/supply/registry items and they'll appear here automatically.",
+    "noClinic": "No clinic set",
+    "daysLeft": "in {{days}}d",
+    "daysOverdue": "{{days}}d overdue",
+    "buckets": {
+      "overdue": "Overdue ({{count}})",
+      "within7": "This week ({{count}})",
+      "within30": "This month ({{count}})",
+      "beyond": "Later ({{count}})"
+    },
+    "kind": {
+      "vaccine": "Health",
+      "supply": "Supply",
+      "registry": "Filing"
+    },
+    "supplyLevel": {
+      "ok": "~{{days}}d left",
+      "warning": "~{{days}}d left",
+      "critical": "Critical (~{{days}}d)",
+      "depleted": "Out of stock"
+    }
   },
   "routine": {
     "title": "Daily routine",
