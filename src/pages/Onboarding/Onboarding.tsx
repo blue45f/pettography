@@ -10,11 +10,12 @@ import {
   useOnboardingStore,
   type OnboardingStep,
 } from '@features/onboarding'
+import { isRegulated } from '@features/registry'
 import { SPECIES_CATEGORIES, useSpeciesList } from '@features/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 import styles from './Onboarding.module.css'
 
@@ -305,6 +306,20 @@ function Onboarding() {
               </dl>
             </Card.Body>
           </Card>
+          {isRegulated(profile.category) && (
+            <Card padding="lg" className={styles.registryHint}>
+              <Card.Body>
+                <p className={styles.registryHintEyebrow}>
+                  {t('onboarding.registryNoticeEyebrow')}
+                </p>
+                <h3 className={styles.registryHintTitle}>{t('onboarding.registryNoticeTitle')}</h3>
+                <p className={styles.registryHintBody}>{t('onboarding.registryNoticeBody')}</p>
+                <Link to="/registry" className={styles.registryHintLink}>
+                  {t('onboarding.registryNoticeCta')} →
+                </Link>
+              </Card.Body>
+            </Card>
+          )}
           <div className={styles.finishRow}>
             <Button variant="ghost" onClick={handleReset}>
               {t('onboarding.restart')}
