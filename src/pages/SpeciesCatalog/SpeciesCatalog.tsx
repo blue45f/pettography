@@ -1,0 +1,163 @@
+import Badge from '@components/common/Badge'
+import Card from '@components/common/Card'
+import EmptyState from '@components/common/EmptyState'
+import Input from '@components/common/Input'
+import Skeleton from '@components/common/Skeleton'
+import {
+  SPECIES_CATEGORIES,
+  useSpeciesList,
+  type Difficulty,
+  type SpeciesCategory,
+} from '@features/species'
+import useDocumentTitle from '@hooks/useDocumentTitle'
+import { useDeferredValue, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
+
+import styles from './SpeciesCatalog.module.css'
+
+const DIFFICULTIES: readonly Difficulty[] = ['beginner', 'intermediate', 'advanced'] as const
+
+function SpeciesCatalog() {
+  const { t } = useTranslation()
+  useDocumentTitle(t('species.catalogTitle'))
+
+  const [category, setCategory] = useState<SpeciesCategory | 'all'>('all')
+  const [difficulty, setDifficulty] = useState<Difficulty | 'all'>('all')
+  const [query, setQuery] = useState('')
+  const deferredQuery = useDeferredValue(query)
+
+  const { data, isLoading } = useSpeciesList(category === 'all' ? {} : { category })
+
+  const filtered = useMemo(() => {
+    if (!data) return undefined
+    const q = deferredQuery.trim().toLowerCase()
+    return data.filter((s) => {
+      if (difficulty !== 'all' && s.difficulty !== difficulty) return false
+      if (!q) return true
+      return (
+        s.koreanName.toLowerCase().includes(q) ||
+        s.scientificName.toLowerCase().includes(q) ||
+        s.tags.some((tag) => tag.toLowerCase().includes(q))
+      )
+    })
+  }, [data, deferredQuery, difficulty])
+
+  return (
+    <section className={styles.page}>
+      <header className={styles.header}>
+        <h1>{t('species.catalogTitle')}</h1>
+        <p className={styles.subtitle}>{t('species.catalogSubtitle')}</p>
+      </header>
+
+      <div className={styles.controls}>
+        <Input
+          type="search"
+          placeholder={t('species.searchPlaceholder')}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          aria-label={t('species.searchPlaceholder')}
+        />
+      </div>
+
+      <div role="radiogroup" aria-label={t('species.categoryFilter')} className={styles.filters}>
+        <button
+          type="button"
+          role="radio"
+          aria-checked={category === 'all'}
+          className={[styles.filterChip, category === 'all' ? styles.filterActive : ''].join(' ')}
+          onClick={() => setCategory('all')}
+        >
+          {t('species.filterAll')}
+        </button>
+        {SPECIES_CATEGORIES.map((c) => (
+          <button
+            key={c}
+            type="button"
+            role="radio"
+            aria-checked={category === c}
+            className={[styles.filterChip, category === c ? styles.filterActive : ''].join(' ')}
+            onClick={() => setCategory(c)}
+          >
+            {t(`categories.${c}`)}
+          </button>
+        ))}
+      </div>
+
+      <div role="radiogroup" aria-label={t('species.difficultyFilter')} className={styles.filters}>
+        <button
+          type="button"
+          role="radio"
+          aria-checked={difficulty === 'all'}
+          className={[
+            styles.filterChip,
+            styles.filterChipSubtle,
+            difficulty === 'all' ? styles.filterActive : '',
+          ].join(' ')}
+          onClick={() => setDifficulty('all')}
+        >
+          {t('species.filterAll')}
+        </button>
+        {DIFFICULTIES.map((d) => (
+          <button
+            key={d}
+            type="button"
+            role="radio"
+            aria-checked={difficulty === d}
+            className={[
+              styles.filterChip,
+              styles.filterChipSubtle,
+              difficulty === d ? styles.filterActive : '',
+            ].join(' ')}
+            onClick={() => setDifficulty(d)}
+          >
+            {t(`difficulty.${d}`)}
+          </button>
+        ))}
+      </div>
+
+      <p className={styles.countLine}>
+        {filtered ? t('species.resultCount', { count: filtered.length }) : '...'}
+      </p>
+
+      {isLoading && <Skeleton variant="rectangular" height={100} lines={3} />}
+      {filtered && filtered.length === 0 && <EmptyState icon="🔍" title={t('species.noResult')} />}
+
+      <ul className={styles.grid}>
+        {filtered?.map((s) => (
+          <li key={s.id}>
+            <Link to={`/species/${s.slug}`} className={styles.cardLink}>
+              <Card padding="lg" hoverable className={styles.card}>
+                <Card.Body>
+                  <div className={styles.cardHeader}>
+                    <span aria-hidden="true" className={styles.emoji}>
+                      {s.heroEmoji}
+                    </span>
+                    <div>
+                      <h2 className={styles.cardTitle}>{s.koreanName}</h2>
+                      <p className={styles.scientific}>{s.scientificName}</p>
+                    </div>
+                  </div>
+                  <p className={styles.summary}>{s.summary}</p>
+                  <div className={styles.badges}>
+                    <Badge variant="primary">{t(`categories.${s.category}`)}</Badge>
+                    <Badge variant="default">{t(`difficulty.${s.difficulty}`)}</Badge>
+                    <Badge variant="success">
+                      {t('care.lifespanYears', {
+                        min: s.lifespanMinYears,
+                        max: s.lifespanMaxYears,
+                      })}
+                    </Badge>
+                  </div>
+                  <span className={styles.cta}>{t('species.openDetail')} →</span>
+                </Card.Body>
+              </Card>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+export default SpeciesCatalog

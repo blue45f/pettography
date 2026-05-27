@@ -17,6 +17,7 @@ function Header() {
   const navItems = completed
     ? [
         { path: '/dashboard', label: t('nav.dashboard') },
+        { path: '/species', label: t('nav.species') },
         { path: '/hospitals', label: t('nav.hospitals') },
         { path: '/shops', label: t('nav.shops') },
         { path: '/care', label: t('nav.care') },
@@ -28,6 +29,7 @@ function Header() {
       ]
     : [
         { path: '/onboarding', label: t('nav.onboarding') },
+        { path: '/species', label: t('nav.species') },
         { path: '/hospitals', label: t('nav.hospitals') },
         { path: '/shops', label: t('nav.shops') },
         { path: '/resources', label: t('nav.resources') },

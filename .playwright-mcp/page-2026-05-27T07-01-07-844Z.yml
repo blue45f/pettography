@@ -1,0 +1,193 @@
+- generic [ref=e2]:
+    - generic [ref=e3]:
+        - link "본문으로 건너뛰기" [ref=e4] [cursor=pointer]:
+            - /url: '#main-content'
+        - banner [ref=e5]:
+            - generic [ref=e6]:
+                - link "Pettography" [ref=e7] [cursor=pointer]:
+                    - /url: /
+                    - text: 🐾 Pettography
+                - generic [ref=e8]:
+                    - navigation "메인 네비게이션" [ref=e9]:
+                        - list [ref=e10]:
+                            - listitem [ref=e11]:
+                                - link "내 포탈" [ref=e12] [cursor=pointer]:
+                                    - /url: /dashboard
+                            - listitem [ref=e13]:
+                                - link "병원" [ref=e14] [cursor=pointer]:
+                                    - /url: /hospitals
+                            - listitem [ref=e15]:
+                                - link "샵" [ref=e16] [cursor=pointer]:
+                                    - /url: /shops
+                            - listitem [ref=e17]:
+                                - link "관리 가이드" [ref=e18] [cursor=pointer]:
+                                    - /url: /care
+                            - listitem [ref=e19]:
+                                - link "입양·분양" [ref=e20] [cursor=pointer]:
+                                    - /url: /adoption
+                            - listitem [ref=e21]:
+                                - link "커뮤니티" [ref=e22] [cursor=pointer]:
+                                    - /url: /communities
+                            - listitem [ref=e23]:
+                                - link "사육 일지" [ref=e24] [cursor=pointer]:
+                                    - /url: /diary
+                            - listitem [ref=e25]:
+                                - link "장례·추모" [ref=e26] [cursor=pointer]:
+                                    - /url: /funeral
+                            - listitem [ref=e27]:
+                                - link "외부 자료" [ref=e28] [cursor=pointer]:
+                                    - /url: /resources
+                    - generic [ref=e29]:
+                        - generic [ref=e30]: 언어
+                        - combobox "언어" [ref=e31] [cursor=pointer]:
+                            - option "한국어" [selected]
+                            - option "English"
+                    - button "다크 모드로 전환" [ref=e32] [cursor=pointer]:
+                        - generic [ref=e33]: 🌙
+        - main [ref=e34]:
+            - generic [ref=e144]:
+                - generic [ref=e145]:
+                    - heading "특수동물 병원" [level=1] [ref=e146]
+                    - paragraph [ref=e147]: 위치 기준 거리순으로 정렬됩니다.
+                    - paragraph [ref=e148]: '위치 기준: 서울 송파구 (잠실)'
+                - radiogroup "카테고리 필터" [ref=e149]:
+                    - radio "전체" [ref=e150] [cursor=pointer]
+                    - radio "파충류" [checked] [ref=e151] [cursor=pointer]
+                    - radio "절지류" [ref=e152] [cursor=pointer]
+                    - radio "희귀 조류" [ref=e153] [cursor=pointer]
+                    - radio "양서류" [ref=e154] [cursor=pointer]
+                    - radio "소형 포유류" [ref=e155] [cursor=pointer]
+                - generic [ref=e157]:
+                    - generic [ref=e158]: 정렬
+                    - combobox "정렬" [ref=e160] [cursor=pointer]:
+                        - option "거리 가까운 순" [selected]
+                        - option "이름순"
+                        - option "응급 진료 우선"
+                - generic [ref=e161]: 🗺️ 지도 미리보기 (카카오맵 키를 등록하면 실제 지도가 표시됩니다)
+                - list [ref=e162]:
+                    - listitem [ref=e163]:
+                        - generic [ref=e165]:
+                            - generic [ref=e166]:
+                                - heading "송파특수동물의료센터" [level=2] [ref=e167]
+                                - generic [ref=e168]: 24시 응급
+                            - paragraph [ref=e169]: 서울 송파구 오금로 234 · 0.49km
+                            - paragraph [ref=e170]:
+                                - strong [ref=e171]: '진료 시간:'
+                                - text: 평일 10:00-20:00 / 주말 10:00-18:00
+                            - paragraph [ref=e172]:
+                                - strong [ref=e173]: '진료 가능:'
+                                - text: 파충류, 절지류, 희귀 조류, 양서류, 소형 포유류
+                            - generic [ref=e174]:
+                                - 'link "전화: 02-417-0000" [ref=e175] [cursor=pointer]':
+                                    - /url: tel:02-417-0000
+                                - link "지도에서 보기 ↗" [ref=e176] [cursor=pointer]:
+                                    - /url: https://map.kakao.com/?q=%EC%86%A1%ED%8C%8C%ED%8A%B9%EC%88%98%EB%8F%99%EB%AC%BC
+                    - listitem [ref=e177]:
+                        - generic [ref=e179]:
+                            - heading "강동무척추동물병원" [level=2] [ref=e181]
+                            - paragraph [ref=e182]: 서울 강동구 천호대로 1101 · 4.39km
+                            - paragraph [ref=e183]:
+                                - strong [ref=e184]: '진료 시간:'
+                                - text: 화-토 12:00-20:00 / 월·일 휴진
+                            - paragraph [ref=e185]:
+                                - strong [ref=e186]: '진료 가능:'
+                                - text: 절지류, 파충류
+                            - generic [ref=e187]:
+                                - 'link "전화: 02-481-2200" [ref=e188] [cursor=pointer]':
+                                    - /url: tel:02-481-2200
+                                - link "지도에서 보기 ↗" [ref=e189] [cursor=pointer]:
+                                    - /url: https://map.kakao.com/?q=%EA%B0%95%EB%8F%99%EB%AC%B4%EC%B2%99%EC%B6%94
+                    - listitem [ref=e190]:
+                        - generic [ref=e192]:
+                            - generic [ref=e193]:
+                                - heading "청담우리동물병원 (특수동물과)" [level=2] [ref=e194]
+                                - generic [ref=e195]: 24시 응급
+                            - paragraph [ref=e196]: 서울 강남구 도산대로 528 · 5.28km
+                            - paragraph [ref=e197]:
+                                - strong [ref=e198]: '진료 시간:'
+                                - text: 24시간 응급 진료
+                            - paragraph [ref=e199]:
+                                - strong [ref=e200]: '진료 가능:'
+                                - text: 파충류, 희귀 조류, 소형 포유류
+                            - generic [ref=e201]:
+                                - 'link "전화: 02-549-1119" [ref=e202] [cursor=pointer]':
+                                    - /url: tel:02-549-1119
+                                - link "지도에서 보기 ↗" [ref=e203] [cursor=pointer]:
+                                    - /url: https://map.kakao.com/?q=%EC%B2%AD%EB%8B%B4%EC%9A%B0%EB%A6%AC
+                    - listitem [ref=e204]:
+                        - generic [ref=e206]:
+                            - generic [ref=e207]:
+                                - heading "마포24시동물의료원" [level=2] [ref=e208]
+                                - generic [ref=e209]: 24시 응급
+                            - paragraph [ref=e210]: 서울 마포구 양화로 100 · 16.74km
+                            - paragraph [ref=e211]:
+                                - strong [ref=e212]: '진료 시간:'
+                                - text: 24시간 응급 진료
+                            - paragraph [ref=e213]:
+                                - strong [ref=e214]: '진료 가능:'
+                                - text: 소형 포유류, 희귀 조류, 파충류
+                            - generic [ref=e215]:
+                                - 'link "전화: 02-322-7575" [ref=e216] [cursor=pointer]':
+                                    - /url: tel:02-322-7575
+                                - link "지도에서 보기 ↗" [ref=e217] [cursor=pointer]:
+                                    - /url: https://map.kakao.com/?q=%EB%A7%88%ED%8F%AC24%EC%8B%9C
+                    - listitem [ref=e218]:
+                        - generic [ref=e220]:
+                            - heading "분당특수동물병원" [level=2] [ref=e222]
+                            - paragraph [ref=e223]: 경기 성남시 분당구 성남대로 343 · 18.01km
+                            - paragraph [ref=e224]:
+                                - strong [ref=e225]: '진료 시간:'
+                                - text: 평일 10:30-20:00 / 일요일 휴진
+                            - paragraph [ref=e226]:
+                                - strong [ref=e227]: '진료 가능:'
+                                - text: 파충류, 양서류, 소형 포유류
+                            - generic [ref=e228]:
+                                - 'link "전화: 031-789-9988" [ref=e229] [cursor=pointer]':
+                                    - /url: tel:031-789-9988
+                                - link "지도에서 보기 ↗" [ref=e230] [cursor=pointer]:
+                                    - /url: https://map.kakao.com/?q=%EB%B6%84%EB%8B%B9%ED%8A%B9%EC%88%98
+                    - listitem [ref=e231]:
+                        - generic [ref=e233]:
+                            - heading "목동파충류전문병원" [level=2] [ref=e235]
+                            - paragraph [ref=e236]: 서울 양천구 목동동로 257 · 20.57km
+                            - paragraph [ref=e237]:
+                                - strong [ref=e238]: '진료 시간:'
+                                - text: 평일 11:00-21:00
+                            - paragraph [ref=e239]:
+                                - strong [ref=e240]: '진료 가능:'
+                                - text: 파충류, 양서류
+                            - generic [ref=e241]:
+                                - 'link "전화: 02-2061-7700" [ref=e242] [cursor=pointer]':
+                                    - /url: tel:02-2061-7700
+                                - link "지도에서 보기 ↗" [ref=e243] [cursor=pointer]:
+                                    - /url: https://map.kakao.com/?q=%EB%AA%A9%EB%8F%99%ED%8C%8C%EC%B6%A9%EB%A5%98
+                    - listitem [ref=e244]:
+                        - generic [ref=e246]:
+                            - heading "용인이그조틱동물병원" [level=2] [ref=e248]
+                            - paragraph [ref=e249]: 경기 용인시 수지구 풍덕천로 110 · 21.24km
+                            - paragraph [ref=e250]:
+                                - strong [ref=e251]: '진료 시간:'
+                                - text: 평일 10:00-19:30 / 토 10:00-16:00
+                            - paragraph [ref=e252]:
+                                - strong [ref=e253]: '진료 가능:'
+                                - text: 파충류, 양서류, 소형 포유류
+                            - generic [ref=e254]:
+                                - 'link "전화: 031-262-7100" [ref=e255] [cursor=pointer]':
+                                    - /url: tel:031-262-7100
+                                - link "지도에서 보기 ↗" [ref=e256] [cursor=pointer]:
+                                    - /url: https://map.kakao.com/?q=%EC%9A%A9%EC%9D%B8%EC%9D%B4%EA%B7%B8%EC%A1%B0%ED%8B%B1
+        - contentinfo [ref=e38]:
+            - generic [ref=e39]:
+                - paragraph [ref=e40]: © 2026 Pettography. 위치 데이터는 송파구 인근 mock입니다.
+                - generic [ref=e41]:
+                    - link "개인정보처리방침" [ref=e42] [cursor=pointer]:
+                        - /url: /privacy
+                    - link "이용약관" [ref=e43] [cursor=pointer]:
+                        - /url: /terms
+                    - link "문의하기" [ref=e44] [cursor=pointer]:
+                        - /url: /contact
+    - region "알림"
+    - generic [ref=e45]:
+        - img [ref=e47]
+        - button "Open Tanstack query devtools" [ref=e95] [cursor=pointer]:
+            - img [ref=e96]

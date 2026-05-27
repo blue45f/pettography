@@ -35,6 +35,7 @@
     "funeral": "장례·추모",
     "resources": "외부 자료",
     "diary": "사육 일지",
+    "species": "종 카탈로그",
     "onboarding": "처음 선택"
   },
   "onboarding": {
@@ -278,6 +279,15 @@
     "speciesUnknown": "(종 선택 전 기록)"
   },
   "species": {
+    "catalogTitle": "종 카탈로그",
+    "catalogSubtitle": "Pettography가 큐레이션한 희귀 동물 종을 한 곳에서. 카테고리·난이도·키워드로 좁혀보세요.",
+    "searchPlaceholder": "종 이름·학명·태그 검색",
+    "difficultyFilter": "난이도",
+    "categoryFilter": "카테고리",
+    "filterAll": "전체",
+    "resultCount": "{{count}}종",
+    "noResult": "조건에 맞는 종을 찾지 못했어요.",
+    "openDetail": "자세히 보기",
     "scientificName": "학명",
     "lifespan": "수명",
     "difficulty": "난이도",

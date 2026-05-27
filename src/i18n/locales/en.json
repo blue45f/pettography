@@ -35,6 +35,7 @@
     "funeral": "Farewell",
     "resources": "Resources",
     "diary": "Diary",
+    "species": "Species",
     "onboarding": "First pick"
   },
   "onboarding": {
@@ -278,6 +279,15 @@
     "speciesUnknown": "(no species selected)"
   },
   "species": {
+    "catalogTitle": "Species catalog",
+    "catalogSubtitle": "Browse every species Pettography curates — narrow by category, difficulty or keyword.",
+    "searchPlaceholder": "Search name, scientific name or tag",
+    "difficultyFilter": "Difficulty",
+    "categoryFilter": "Category",
+    "filterAll": "All",
+    "resultCount": "{{count}} species",
+    "noResult": "No species matched the current filter.",
+    "openDetail": "View details",
     "scientificName": "Scientific name",
     "lifespan": "Lifespan",
     "difficulty": "Difficulty",

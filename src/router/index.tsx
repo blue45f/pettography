@@ -62,6 +62,11 @@ export const routes = [
         lazy: lazyPage(() => import('@pages/Funeral')),
       },
       {
+        path: 'species',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/SpeciesCatalog')),
+      },
+      {
         path: 'species/:idOrSlug',
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/SpeciesDetail')),
