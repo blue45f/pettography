@@ -133,7 +133,9 @@
     "emptyHospitals": "선택한 카테고리를 진료하는 병원을 찾지 못했어요.",
     "emptyShops": "선택한 카테고리를 다루는 샵이 아직 없어요.",
     "guest": "방문자",
-    "locationNote": "위치 기준: {{label}}"
+    "locationNote": "위치 기준: {{label}}",
+    "changeLocation": "위치 바꾸기",
+    "locationPickerTitle": "빠른 위치 변경"
   },
   "hospitals": {
     "title": "특수동물 병원",
@@ -144,7 +146,11 @@
     "supports": "진료 가능",
     "hours": "진료 시간",
     "noResult": "조건에 맞는 병원을 찾지 못했어요.",
-    "mapPlaceholder": "지도 미리보기 (카카오맵 키를 등록하면 실제 지도가 표시됩니다)"
+    "mapPlaceholder": "지도 미리보기 (카카오맵 키를 등록하면 실제 지도가 표시됩니다)",
+    "sortLabel": "정렬",
+    "sortDistance": "거리 가까운 순",
+    "sortName": "이름순",
+    "sortEmergency": "응급 진료 우선"
   },
   "shops": {
     "title": "먹이·용품 샵",
@@ -155,7 +161,11 @@
     "online": "온라인",
     "offline": "오프라인",
     "noResult": "조건에 맞는 샵을 찾지 못했어요.",
-    "visitSite": "사이트 방문"
+    "visitSite": "사이트 방문",
+    "sortLabel": "정렬",
+    "sortDistance": "거리 가까운 순",
+    "sortName": "이름순",
+    "sortOnline": "온라인 우선"
   },
   "care": {
     "title": "관리 가이드",

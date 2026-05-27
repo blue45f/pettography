@@ -20,6 +20,10 @@
   gap: var(--spacing-md);
 }
 
+.sortRow {
+  max-width: 280px;
+}
+
 .filters {
   display: flex;
   gap: var(--spacing-xs);

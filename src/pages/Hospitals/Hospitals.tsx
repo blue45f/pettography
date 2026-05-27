@@ -1,8 +1,9 @@
 import Badge from '@components/common/Badge'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
+import Select from '@components/common/Select'
 import Skeleton from '@components/common/Skeleton'
-import { useHospitalsList } from '@features/hospitals'
+import { useHospitalsList, type HospitalWithDistance } from '@features/hospitals'
 import { useOnboardingStore } from '@features/onboarding'
 import { SPECIES_CATEGORIES, type SpeciesCategory } from '@features/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
@@ -11,12 +12,31 @@ import { useTranslation } from 'react-i18next'
 
 import styles from './Hospitals.module.css'
 
+type HospitalSort = 'distance' | 'name' | 'emergency'
+
+function sortHospitals(list: HospitalWithDistance[], sort: HospitalSort): HospitalWithDistance[] {
+  const copy = [...list]
+  switch (sort) {
+    case 'name':
+      return copy.sort((a, b) => a.name.localeCompare(b.name, 'ko'))
+    case 'emergency':
+      return copy.sort((a, b) => {
+        if (a.hasEmergency !== b.hasEmergency) return a.hasEmergency ? -1 : 1
+        return a.distanceKm - b.distanceKm
+      })
+    case 'distance':
+    default:
+      return copy.sort((a, b) => a.distanceKm - b.distanceKm)
+  }
+}
+
 function Hospitals() {
   const { t } = useTranslation()
   const profile = useOnboardingStore((s) => s.profile)
   useDocumentTitle(t('hospitals.title'))
 
   const [category, setCategory] = useState<SpeciesCategory | 'all'>(profile.category ?? 'all')
+  const [sort, setSort] = useState<HospitalSort>(profile.location ? 'distance' : 'name')
 
   const origin = useMemo(
     () => (profile.location ? { lat: profile.location.lat, lng: profile.location.lng } : undefined),
@@ -27,6 +47,8 @@ function Hospitals() {
     category: category === 'all' ? undefined : category,
     origin,
   })
+
+  const sorted = useMemo(() => (data ? sortHospitals(data, sort) : data), [data, sort])
 
   return (
     <section className={styles.page}>
@@ -68,15 +90,29 @@ function Hospitals() {
         ))}
       </div>
 
+      <div className={styles.sortRow}>
+        <Select
+          label={t('hospitals.sortLabel')}
+          value={sort}
+          onChange={(e) => setSort(e.target.value as HospitalSort)}
+          options={[
+            { value: 'distance', label: t('hospitals.sortDistance') },
+            { value: 'name', label: t('hospitals.sortName') },
+            { value: 'emergency', label: t('hospitals.sortEmergency') },
+          ]}
+          disabled={!profile.location && sort === 'distance'}
+        />
+      </div>
+
       <div className={styles.mapPlaceholder} aria-hidden="true">
         🗺️ {t('hospitals.mapPlaceholder')}
       </div>
 
       {isLoading && <Skeleton variant="rectangular" height={120} lines={3} />}
-      {data && data.length === 0 && <EmptyState icon="🏥" title={t('hospitals.noResult')} />}
+      {sorted && sorted.length === 0 && <EmptyState icon="🏥" title={t('hospitals.noResult')} />}
 
       <ul className={styles.list}>
-        {data?.map((h) => (
+        {sorted?.map((h) => (
           <li key={h.id}>
             <Card padding="md">
               <Card.Body>

@@ -28,6 +28,41 @@
   margin-top: var(--spacing-xs);
 }
 
+.locationPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  align-items: center;
+  margin-top: var(--spacing-sm);
+}
+
+.locationPickerLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.locationChip {
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.locationChip:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.locationChipActive {
+  background: var(--color-primary-alpha);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
 .speciesCard {
   min-width: 280px;
   flex: 0 1 320px;

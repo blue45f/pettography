@@ -26,6 +26,10 @@
   flex-wrap: wrap;
 }
 
+.sortRow {
+  max-width: 280px;
+}
+
 .filterChip {
   padding: var(--spacing-xs) var(--spacing-md);
   background: var(--color-surface);

@@ -133,7 +133,9 @@
     "emptyHospitals": "No vets matched your category yet.",
     "emptyShops": "No shops matched your category yet.",
     "guest": "Guest",
-    "locationNote": "Based on: {{label}}"
+    "locationNote": "Based on: {{label}}",
+    "changeLocation": "Change location",
+    "locationPickerTitle": "Quick location switch"
   },
   "hospitals": {
     "title": "Specialist vets",
@@ -144,7 +146,11 @@
     "supports": "Treats",
     "hours": "Hours",
     "noResult": "No vets match the current filter.",
-    "mapPlaceholder": "Map preview (real KakaoMap renders when API key is configured)"
+    "mapPlaceholder": "Map preview (real KakaoMap renders when API key is configured)",
+    "sortLabel": "Sort",
+    "sortDistance": "Distance (nearest first)",
+    "sortName": "Name (A→Z)",
+    "sortEmergency": "Emergency first"
   },
   "shops": {
     "title": "Food & gear shops",
@@ -155,7 +161,11 @@
     "online": "Online",
     "offline": "Offline",
     "noResult": "No shops match the current filter.",
-    "visitSite": "Visit site"
+    "visitSite": "Visit site",
+    "sortLabel": "Sort",
+    "sortDistance": "Distance (nearest first)",
+    "sortName": "Name (A→Z)",
+    "sortOnline": "Online first"
   },
   "care": {
     "title": "Care guide",

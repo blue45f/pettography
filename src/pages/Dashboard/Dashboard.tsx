@@ -12,6 +12,7 @@ import {
 } from '@features/external-links'
 import { useFuneralList } from '@features/funeral'
 import { useHospitalsList } from '@features/hospitals'
+import { LOCATION_PRESETS, findPreset } from '@features/location'
 import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
 import { useShopsList } from '@features/shops'
 import { useSpecies } from '@features/species'
@@ -36,6 +37,7 @@ const LIFECYCLE_STAGES = [
 function Dashboard() {
   const { t } = useTranslation()
   const profile = useOnboardingStore((s) => s.profile)
+  const setLocation = useOnboardingStore((s) => s.setLocation)
   const user = useAppStore((s) => s.user)
   useDocumentTitle(t('nav.dashboard'))
 
@@ -78,6 +80,37 @@ function Dashboard() {
               {t('dashboard.locationNote', { label: profile.location.label })}
             </p>
           )}
+          <div
+            className={styles.locationPicker}
+            role="group"
+            aria-label={t('dashboard.locationPickerTitle')}
+          >
+            <span className={styles.locationPickerLabel}>{t('dashboard.changeLocation')}:</span>
+            {LOCATION_PRESETS.map((preset) => (
+              <button
+                key={preset.id}
+                type="button"
+                className={[
+                  styles.locationChip,
+                  profile.location?.presetId === preset.id ? styles.locationChipActive : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                onClick={() => {
+                  const found = findPreset(preset.id)
+                  if (!found) return
+                  setLocation({
+                    label: found.label,
+                    presetId: found.id,
+                    lat: found.coords.lat,
+                    lng: found.coords.lng,
+                  })
+                }}
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
         </div>
         {species && (
           <Card padding="md" className={styles.speciesCard}>
