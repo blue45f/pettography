@@ -31,6 +31,7 @@ function Onboarding() {
   const setCategory = useOnboardingStore((s) => s.setCategory)
   const setSpecies = useOnboardingStore((s) => s.setSpecies)
   const setLocation = useOnboardingStore((s) => s.setLocation)
+  const setPetName = useOnboardingStore((s) => s.setPetName)
   const complete = useOnboardingStore((s) => s.complete)
   const reset = useOnboardingStore((s) => s.reset)
 
@@ -281,6 +282,18 @@ function Onboarding() {
           <h2 className={styles.stepTitle}>{t('onboarding.reviewTitle')}</h2>
           <Card padding="lg">
             <Card.Body>
+              <label className={styles.petNameLabel} htmlFor="onboarding-pet-name">
+                {t('onboarding.petNameLabel')}
+              </label>
+              <input
+                id="onboarding-pet-name"
+                type="text"
+                maxLength={40}
+                placeholder={t('onboarding.petNamePlaceholder')}
+                value={profile.petName ?? ''}
+                onChange={(e) => setPetName(e.target.value)}
+                className={styles.petNameInput}
+              />
               <dl className={styles.summary}>
                 <div className={styles.summaryRow}>
                   <dt>{t('onboarding.reviewCategory')}</dt>

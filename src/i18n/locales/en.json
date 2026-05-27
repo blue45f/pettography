@@ -81,6 +81,8 @@
     "speciesHint": "Your dashboard curates everything around this pick.",
     "locationTitle": "Where are you based?",
     "locationHint": "We default to Songpa-gu, Seoul. Pick another area or use your current location.",
+    "petNameLabel": "Pet name (optional)",
+    "petNamePlaceholder": "e.g. Leo",
     "registryNoticeEyebrow": "Heads up · Wildlife Act",
     "registryNoticeTitle": "This category is filing-required",
     "registryNoticeBody": "Effective 2025-12-14, mammals, birds, reptiles and amphibians require Ministry of Environment filings on keeping, transfer and death. Check the guide before you start.",

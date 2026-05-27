@@ -2,6 +2,7 @@ import { speciesCategorySchema } from '@features/species'
 import { z } from 'zod'
 
 export const onboardingProfileSchema = z.object({
+  petName: z.string().max(40).nullable().optional(),
   category: speciesCategorySchema.nullable(),
   speciesId: z.string().nullable(),
   location: z

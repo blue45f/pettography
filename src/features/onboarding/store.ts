@@ -6,6 +6,7 @@ import type { SpeciesCategory } from '@features/species'
 
 interface OnboardingState {
   profile: OnboardingProfile
+  setPetName: (name: string) => void
   setCategory: (category: SpeciesCategory) => void
   setSpecies: (speciesId: string) => void
   setLocation: (location: OnboardingProfile['location']) => void
@@ -14,6 +15,7 @@ interface OnboardingState {
 }
 
 const EMPTY_PROFILE: OnboardingProfile = {
+  petName: null,
   category: null,
   speciesId: null,
   location: null,
@@ -24,6 +26,8 @@ export const useOnboardingStore = create<OnboardingState>()(
   persist(
     (set) => ({
       profile: EMPTY_PROFILE,
+      setPetName: (name) =>
+        set((state) => ({ profile: { ...state.profile, petName: name.trim() || null } })),
       setCategory: (category) =>
         set((state) => ({
           profile: {

@@ -210,7 +210,7 @@ function Dashboard() {
     return <Navigate to="/onboarding" replace />
   }
 
-  const greetingName = user?.name ?? t('dashboard.guest')
+  const greetingName = profile.petName ?? user?.name ?? t('dashboard.guest')
 
   return (
     <section className={styles.dashboard}>
