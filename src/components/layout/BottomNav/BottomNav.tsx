@@ -18,18 +18,18 @@ function BottomNav() {
 
   const items: BottomNavItem[] = completed
     ? [
-        { path: '/dashboard', label: t('nav.dashboard'), icon: '🏠' },
-        { path: '/match', label: t('nav.match'), icon: '✨' },
-        { path: '/consult', label: t('nav.consult'), icon: '💬' },
-        { path: '/forum', label: t('nav.forum'), icon: '👥' },
-        { path: '/diary', label: t('nav.diary'), icon: '📓' },
+        { path: '/dashboard', label: t('nav.short.dashboard'), icon: '🏠' },
+        { path: '/match', label: t('nav.short.match'), icon: '✨' },
+        { path: '/consult', label: t('nav.short.consult'), icon: '💬' },
+        { path: '/forum', label: t('nav.short.forum'), icon: '👥' },
+        { path: '/diary', label: t('nav.short.diary'), icon: '📓' },
       ]
     : [
-        { path: '/', label: t('nav.dashboard'), icon: '🏠' },
-        { path: '/match', label: t('nav.match'), icon: '✨' },
-        { path: '/onboarding', label: t('nav.onboarding'), icon: '🎯' },
-        { path: '/species', label: t('nav.species'), icon: '🐾' },
-        { path: '/hospitals', label: t('nav.hospitals'), icon: '🏥' },
+        { path: '/', label: t('nav.short.dashboard'), icon: '🏠' },
+        { path: '/match', label: t('nav.short.match'), icon: '✨' },
+        { path: '/onboarding', label: t('nav.short.onboarding'), icon: '🎯' },
+        { path: '/species', label: t('nav.short.species'), icon: '🐾' },
+        { path: '/hospitals', label: t('nav.short.hospitals'), icon: '🏥' },
       ]
 
   return (

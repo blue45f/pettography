@@ -23,6 +23,42 @@
   .layout {
     grid-template-columns: 1fr;
   }
+
+  .vetList {
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: var(--spacing-2xs) 0 var(--spacing-sm);
+    margin: 0 calc(-1 * var(--layout-pad));
+    padding-inline: var(--layout-pad);
+    scrollbar-width: none;
+  }
+
+  .vetList::-webkit-scrollbar {
+    display: none;
+  }
+
+  .vetCard {
+    flex: 0 0 auto;
+    width: 240px;
+    grid-template-columns: 40px 1fr;
+    scroll-snap-align: start;
+  }
+
+  .vetCard > :nth-child(3) {
+    grid-column: 1 / -1;
+    justify-self: end;
+  }
+
+  .vetAvatar {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .chatCard {
+    min-height: 60dvh;
+  }
 }
 
 .vetList {

@@ -47,7 +47,17 @@
     "budget": "Budget",
     "supplies": "Supplies",
     "partnerDashboard": "Partner desk",
-    "onboarding": "First pick"
+    "onboarding": "First pick",
+    "short": {
+      "dashboard": "Home",
+      "match": "Match",
+      "consult": "Vet",
+      "forum": "Forum",
+      "diary": "Diary",
+      "onboarding": "Start",
+      "species": "Species",
+      "hospitals": "Vets"
+    }
   },
   "onboarding": {
     "title": "Pick your first pet",
@@ -593,7 +603,7 @@
   },
   "match": {
     "title": "Find your match",
-    "subtitle": "Answer 5 questions and we'll rank species by difficulty, space, handling and budget fit.",
+    "subtitle": "Answer {{count}} questions and we'll rank species by difficulty, space, handling and budget fit.",
     "progress": "{{current}}/{{total}}",
     "back": "Back",
     "next": "Next",

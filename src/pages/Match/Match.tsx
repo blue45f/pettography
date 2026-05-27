@@ -83,7 +83,7 @@ function Match() {
       <section className={styles.page}>
         <header className={styles.header}>
           <h1>{t('match.resultTitle')}</h1>
-          <p className={styles.subtitle}>{t('match.subtitle')}</p>
+          <p className={styles.subtitle}>{t('match.subtitle', { count: STEPS.length })}</p>
         </header>
         <ol className={styles.results}>
           {ranked.map((m, idx) => (
@@ -132,7 +132,7 @@ function Match() {
     <section className={styles.page}>
       <header className={styles.header}>
         <h1>{t('match.title')}</h1>
-        <p className={styles.subtitle}>{t('match.subtitle')}</p>
+        <p className={styles.subtitle}>{t('match.subtitle', { count: STEPS.length })}</p>
         <Progress value={progress} max={100} className={styles.progress} />
         <p className={styles.progressLabel}>
           {t('match.progress', { current: stepIndex + 1, total: STEPS.length })}

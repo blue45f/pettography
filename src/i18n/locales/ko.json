@@ -47,7 +47,17 @@
     "budget": "비용 트래커",
     "supplies": "사료·재고",
     "partnerDashboard": "파트너 대시보드",
-    "onboarding": "처음 선택"
+    "onboarding": "처음 선택",
+    "short": {
+      "dashboard": "포탈",
+      "match": "추천",
+      "consult": "상담",
+      "forum": "포럼",
+      "diary": "일지",
+      "onboarding": "시작",
+      "species": "종",
+      "hospitals": "병원"
+    }
   },
   "onboarding": {
     "title": "내 애완동물 처음 선택하기",
@@ -593,7 +603,7 @@
   },
   "match": {
     "title": "나에게 맞는 펫 찾기",
-    "subtitle": "5개 질문에 답하면 사육 난이도·공간·시간·예산을 토대로 가장 잘 맞는 종을 추천합니다.",
+    "subtitle": "{{count}}개 질문에 답하면 사육 난이도·공간·시간·예산을 토대로 가장 잘 맞는 종을 추천합니다.",
     "progress": "{{current}}/{{total}}",
     "back": "이전",
     "next": "다음",

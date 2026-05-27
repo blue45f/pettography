@@ -27,8 +27,10 @@
   line-height: 1.08;
   letter-spacing: -0.025em;
   color: var(--color-text);
-  max-width: 18ch;
+  max-width: 24ch;
   text-wrap: balance;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .title em {

@@ -176,44 +176,88 @@
   text-decoration: none;
 }
 
-.lifecycleGrid {
+.lifecycleRail {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
-  gap: var(--spacing-md);
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(120px, 1fr);
+  gap: var(--spacing-xs);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: var(--spacing-2xs) 0 var(--spacing-sm);
+  margin: 0 calc(-1 * var(--layout-pad));
+  padding-inline: var(--layout-pad);
+  scrollbar-width: none;
 }
 
-.stageCardLink {
+.lifecycleRail::-webkit-scrollbar {
+  display: none;
+}
+
+.lifecycleStep {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-items: center;
+  justify-items: center;
+  gap: 4px;
+  scroll-snap-align: start;
+  padding: var(--spacing-sm) var(--spacing-2xs) var(--spacing-md);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   text-decoration: none;
-  color: inherit;
-}
-
-.stageCard {
+  color: var(--color-text);
   text-align: center;
-  height: 100%;
+  transition:
+    transform var(--motion-fast),
+    border-color var(--motion-fast),
+    background-color var(--motion-fast);
+  min-height: 92px;
 }
 
-.stageEmoji {
-  font-size: 2rem;
-  display: block;
-  margin-bottom: var(--spacing-xs);
+.lifecycleStep:hover,
+.lifecycleStep:focus-visible {
+  transform: translateY(-1px);
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  outline: none;
 }
 
-.stageTitle {
-  font-size: var(--font-size-lg);
+.stepNumber {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--font-size-xs);
   font-weight: 700;
-  margin-bottom: var(--spacing-xs);
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
 }
 
-.stageDesc {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  margin-bottom: var(--spacing-sm);
+.stepEmoji {
+  font-size: 1.5rem;
+  line-height: 1;
 }
 
-.stageCta {
-  color: var(--color-primary);
-  font-size: var(--font-size-sm);
+.stepLabel {
+  font-size: var(--font-size-xs);
   font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+@container main (min-width: 720px) {
+  .lifecycleRail {
+    grid-auto-columns: 1fr;
+    margin: 0;
+    padding-inline: 0;
+    overflow-x: visible;
+  }
+  .lifecycleStep {
+    min-height: 110px;
+  }
+  .stepEmoji {
+    font-size: 1.75rem;
+  }
+  .stepLabel {
+    font-size: var(--font-size-sm);
+  }
 }
 
 .footerActions {

@@ -146,19 +146,20 @@ function Dashboard() {
           <h2 id="lifecycle-heading">{t('lifecycle.title')}</h2>
           <p className={styles.sectionSubtitle}>{t('lifecycle.subtitle')}</p>
         </header>
-        <div className={styles.lifecycleGrid}>
-          {LIFECYCLE_STAGES.map((stage) => (
-            <Link key={stage.id} to={stage.target} className={styles.stageCardLink}>
-              <Card hoverable padding="lg" className={styles.stageCard}>
-                <Card.Body>
-                  <span aria-hidden="true" className={styles.stageEmoji}>
-                    {stage.emoji}
-                  </span>
-                  <h3 className={styles.stageTitle}>{t(`lifecycle.stages.${stage.id}`)}</h3>
-                  <p className={styles.stageDesc}>{t(`lifecycle.stageDesc.${stage.id}`)}</p>
-                  <span className={styles.stageCta}>{t('lifecycle.openStage')} →</span>
-                </Card.Body>
-              </Card>
+        <div className={styles.lifecycleRail} role="list" aria-label={t('lifecycle.title')}>
+          {LIFECYCLE_STAGES.map((stage, idx) => (
+            <Link
+              key={stage.id}
+              to={stage.target}
+              className={styles.lifecycleStep}
+              role="listitem"
+              aria-label={t(`lifecycle.stages.${stage.id}`)}
+            >
+              <span className={styles.stepNumber}>{String(idx + 1).padStart(2, '0')}</span>
+              <span aria-hidden="true" className={styles.stepEmoji}>
+                {stage.emoji}
+              </span>
+              <span className={styles.stepLabel}>{t(`lifecycle.stages.${stage.id}`)}</span>
             </Link>
           ))}
         </div>
