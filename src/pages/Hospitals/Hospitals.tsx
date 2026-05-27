@@ -1,9 +1,11 @@
 import Badge from '@components/common/Badge'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
+import KakaoMap, { type KakaoMapMarker } from '@components/common/KakaoMap'
 import Select from '@components/common/Select'
 import Skeleton from '@components/common/Skeleton'
 import { useHospitalsList, type HospitalWithDistance } from '@features/hospitals'
+import { SONGPA_CENTER } from '@features/location'
 import { useOnboardingStore } from '@features/onboarding'
 import { SPECIES_CATEGORIES, type SpeciesCategory } from '@features/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
@@ -49,6 +51,24 @@ function Hospitals() {
   })
 
   const sorted = useMemo(() => (data ? sortHospitals(data, sort) : data), [data, sort])
+
+  const mapCenter = useMemo(
+    () =>
+      profile.location ? { lat: profile.location.lat, lng: profile.location.lng } : SONGPA_CENTER,
+    [profile.location]
+  )
+
+  const mapMarkers: KakaoMapMarker[] = useMemo(
+    () =>
+      sorted?.map((h) => ({
+        id: h.id,
+        lat: h.lat,
+        lng: h.lng,
+        title: h.name,
+        popupHtml: `<div style="padding:8px;font-size:13px"><strong>${h.name}</strong><br/>${h.district}</div>`,
+      })) ?? [],
+    [sorted]
+  )
 
   return (
     <section className={styles.page}>
@@ -104,9 +124,7 @@ function Hospitals() {
         />
       </div>
 
-      <div className={styles.mapPlaceholder} aria-hidden="true">
-        🗺️ {t('hospitals.mapPlaceholder')}
-      </div>
+      <KakaoMap center={mapCenter} markers={mapMarkers} height={320} />
 
       {isLoading && <Skeleton variant="rectangular" height={120} lines={3} />}
       {sorted && sorted.length === 0 && <EmptyState icon="🏥" title={t('hospitals.noResult')} />}

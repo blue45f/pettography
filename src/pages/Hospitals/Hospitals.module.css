@@ -52,18 +52,6 @@
   color: var(--color-primary);
 }
 
-.mapPlaceholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-surface);
-  border: 1px dashed var(--color-border);
-  border-radius: var(--border-radius);
-  padding: var(--spacing-xl);
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-}
-
 .list {
   list-style: none;
   display: flex;

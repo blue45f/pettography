@@ -2,6 +2,8 @@ export type SpeciesCategory = 'reptile' | 'arthropod' | 'bird' | 'amphibian' | '
 export type SpeciesDifficulty = 'beginner' | 'intermediate' | 'advanced';
 export type ShopKind = 'food' | 'equipment' | 'both';
 export type CommunityKind = 'forum' | 'cafe' | 'discord' | 'youtube';
+export type AdoptionKind = 'rescue' | 'breeder' | 'cafe' | 'marketplace';
+export type FuneralServiceKind = 'cremation' | 'memorial' | 'pickup' | 'directory';
 
 export interface SpeciesEnvironment {
   temperature: string;
@@ -75,4 +77,27 @@ export interface Community {
   url: string;
   kind: CommunityKind;
   language: string;
+}
+
+export interface AdoptionListing {
+  id: string;
+  name: string;
+  url: string;
+  kind: AdoptionKind;
+  region: string;
+  supportedCategories: SpeciesCategory[];
+  description: string;
+  badge?: string;
+}
+
+export interface FuneralService {
+  id: string;
+  name: string;
+  url: string;
+  kind: FuneralServiceKind;
+  region: string;
+  supportedCategories: SpeciesCategory[];
+  description: string;
+  certified: boolean;
+  phone?: string;
 }
