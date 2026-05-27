@@ -1,7 +1,7 @@
 {
   "common": {
     "appName": "Pettography",
-    "appTagline": "Rare-pet lifecycle portal — pick, vet, shop, farewell — starting in Songpa.",
+    "appTagline": "Rare-pet lifecycle portal, pick, vet, shop, farewell, starting in Songpa.",
     "skipToContent": "Skip to main content",
     "loading": "Loading...",
     "error": "Something went wrong.",
@@ -61,7 +61,7 @@
     "locationHint": "We default to Songpa-gu, Seoul. Pick another area or use your current location.",
     "useCurrent": "Use current location",
     "currentDetecting": "Detecting location...",
-    "currentFailed": "Couldn't detect — falling back to Songpa-gu.",
+    "currentFailed": "Couldn't detect, falling back to Songpa-gu.",
     "presetLabel": "Suggested areas",
     "manualLabel": "Manual",
     "manualLat": "Latitude",
@@ -85,11 +85,11 @@
     "bird": "Rare birds",
     "amphibian": "Amphibians",
     "mammal": "Small mammals",
-    "reptileDesc": "Lizards, snakes, turtles — cold-blooded friends",
+    "reptileDesc": "Lizards, snakes, turtles, cold-blooded friends",
     "arthropodDesc": "Tarantulas, scorpions, exotic insects",
     "birdDesc": "Parrots, raptors and rare small birds",
     "amphibianDesc": "Frogs, salamanders and more",
-    "mammalDesc": "Beyond hamsters — sugar gliders, ferrets etc."
+    "mammalDesc": "Beyond hamsters, sugar gliders, ferrets etc."
   },
   "difficulty": {
     "beginner": "Beginner",
@@ -225,7 +225,7 @@
   },
   "resources": {
     "title": "External resources",
-    "subtitle": "32 vetted Korean links — government, market and community sources for rare pets",
+    "subtitle": "32 vetted Korean links, government, market and community sources for rare pets",
     "filterByLinkCategory": "Resource category",
     "filterByCategory": "Species filter",
     "filterAll": "All",
@@ -258,12 +258,12 @@
     "kindPickup": "Pickup",
     "kindDirectory": "Directory",
     "certified": "Gov-registered",
-    "uncertified": "Unregistered — caution",
+    "uncertified": "Unregistered, caution",
     "noResult": "No farewell service registered for this category yet."
   },
   "consult": {
     "title": "Vet live consult",
-    "subtitle": "1-on-1 chat with exotic vets. (Demo — replies are auto-generated.)",
+    "subtitle": "1-on-1 chat with exotic vets. (Demo, replies are auto-generated.)",
     "vetListLabel": "Vet list",
     "pickVet": "Pick a vet from the left to start chatting.",
     "firstMessageHint": "Include symptoms, environment (temp/humidity), and a photo description for a faster reply.",
@@ -289,7 +289,7 @@
     "titleLabel": "Title",
     "titlePlaceholder": "What do you want to discuss?",
     "bodyLabel": "Body",
-    "bodyPlaceholder": "Environment, symptoms, photos — more detail attracts better answers.",
+    "bodyPlaceholder": "Environment, symptoms, photos, more detail attracts better answers.",
     "replyLabel": "Reply",
     "replyPlaceholder": "Leave something useful.",
     "publish": "Publish",
@@ -467,7 +467,7 @@
   },
   "species": {
     "catalogTitle": "Species catalog",
-    "catalogSubtitle": "Browse every species Pettography curates — narrow by category, difficulty or keyword.",
+    "catalogSubtitle": "Browse every species Pettography curates, narrow by category, difficulty or keyword.",
     "searchPlaceholder": "Search name, scientific name or tag",
     "difficultyFilter": "Difficulty",
     "categoryFilter": "Category",
@@ -488,18 +488,18 @@
     "noRelatedSpecies": "More species coming soon."
   },
   "landing": {
-    "title": "A whole lifecycle with rare pets — Pettography",
-    "description": "Pick → adopt → raise → vet → farewell, all set up from a single choice.",
+    "title": "From the first pick to the last farewell.",
+    "description": "Seven stages with your rare pet, one choice that sets up vets, food, care, community and farewell.",
     "primaryCta": "Start first pick",
     "secondaryCta": "Browse sample",
     "featureSpeciesTitle": "Species-first curation",
-    "featureSpeciesDesc": "Reptiles, arthropods, rare birds and more — at species granularity",
+    "featureSpeciesDesc": "Reptiles, arthropods, rare birds and more, at species granularity",
     "featureLocationTitle": "Location-aware",
     "featureLocationDesc": "Vets and shops near Songpa-gu coordinates by default",
     "featureCareTitle": "Care guide",
     "featureCareDesc": "Environment, diet and health checkpoints on a single screen",
     "featureLifecycleTitle": "Full lifecycle",
-    "featureLifecycleDesc": "Adoption to farewell — every stage links to vetted external resources"
+    "featureLifecycleDesc": "Adoption to farewell, every stage links to vetted external resources"
   },
   "notFound": {
     "title": "Page not found",

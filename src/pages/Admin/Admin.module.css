@@ -55,11 +55,13 @@
 .tileValue {
   font-size: var(--font-size-3xl);
   font-weight: 800;
-  background: var(--gradient-brand);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  letter-spacing: -0.02em;
+  color: var(--color-primary-700);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-theme='dark'] .tileValue {
+  color: var(--color-primary-200);
 }
 
 .list {

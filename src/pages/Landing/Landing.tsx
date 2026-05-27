@@ -1,11 +1,12 @@
 import Button from '@components/common/Button'
-import Card from '@components/common/Card'
 import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
 import styles from './Landing.module.css'
+
+const LIFECYCLE_STEPS = ['pick', 'adopt', 'raise', 'vet', 'daily', 'senior', 'funeral'] as const
 
 function Landing() {
   const { t } = useTranslation()
@@ -18,45 +19,40 @@ function Landing() {
 
   return (
     <div className={styles.landing}>
-      <section className={styles.hero}>
+      <section className={styles.hero} aria-labelledby="hero-title">
         <p className={styles.eyebrow}>{t('common.appTagline')}</p>
-        <h1 className={styles.title}>{t('landing.title')}</h1>
+        <h1 id="hero-title" className={styles.title}>
+          {t('landing.title')}
+        </h1>
         <p className={styles.description}>{t('landing.description')}</p>
         <div className={styles.ctaRow}>
           <Button variant="primary" size="lg" onClick={() => navigate(primaryTarget)}>
             {completed ? t('nav.dashboard') : t('landing.primaryCta')}
           </Button>
-          <Button variant="outline" size="lg" onClick={() => navigate('/hospitals')}>
-            {t('landing.secondaryCta')}
+          <Button variant="outline" size="lg" onClick={() => navigate('/match')}>
+            {t('nav.match')}
           </Button>
         </div>
       </section>
 
-      <section className={styles.features}>
-        <Card padding="lg" hoverable>
-          <Card.Body>
-            <h3 className={styles.featureTitle}>{t('landing.featureSpeciesTitle')}</h3>
-            <p className={styles.featureDesc}>{t('landing.featureSpeciesDesc')}</p>
-          </Card.Body>
-        </Card>
-        <Card padding="lg" hoverable>
-          <Card.Body>
-            <h3 className={styles.featureTitle}>{t('landing.featureLocationTitle')}</h3>
-            <p className={styles.featureDesc}>{t('landing.featureLocationDesc')}</p>
-          </Card.Body>
-        </Card>
-        <Card padding="lg" hoverable>
-          <Card.Body>
-            <h3 className={styles.featureTitle}>{t('landing.featureCareTitle')}</h3>
-            <p className={styles.featureDesc}>{t('landing.featureCareDesc')}</p>
-          </Card.Body>
-        </Card>
-        <Card padding="lg" hoverable>
-          <Card.Body>
-            <h3 className={styles.featureTitle}>{t('landing.featureLifecycleTitle')}</h3>
-            <p className={styles.featureDesc}>{t('landing.featureLifecycleDesc')}</p>
-          </Card.Body>
-        </Card>
+      <section className={styles.lifecycle} aria-labelledby="lifecycle-title">
+        <h2 id="lifecycle-title" className={styles.sectionTitle}>
+          {t('lifecycle.title')}
+        </h2>
+        <p className={styles.sectionLead}>{t('lifecycle.subtitle')}</p>
+        <ol className={styles.steps}>
+          {LIFECYCLE_STEPS.map((id, idx) => (
+            <li key={id} className={styles.step}>
+              <span aria-hidden="true" className={styles.stepNo}>
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+              <div className={styles.stepBody}>
+                <h3 className={styles.stepTitle}>{t(`lifecycle.stages.${id}`)}</h3>
+                <p className={styles.stepDesc}>{t(`lifecycle.stageDesc.${id}`)}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </section>
     </div>
   )

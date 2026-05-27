@@ -17,11 +17,9 @@
 
 .title {
   font-size: var(--font-size-4xl);
-  background: var(--gradient-brand);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--color-text);
 }
 
 .subtitle {
