@@ -2,14 +2,23 @@ import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
+import Input from '@components/common/Input'
 import Skeleton from '@components/common/Skeleton'
 import { useToast } from '@components/common/Toast'
+import {
+  photoInputSchema,
+  photosForSpecies,
+  useGalleryStore,
+  type PhotoInput,
+} from '@features/gallery'
 import { useHospitalsList } from '@features/hospitals'
 import { useOnboardingStore } from '@features/onboarding'
 import { useShopsList } from '@features/shops'
 import { useSpecies, useSpeciesList } from '@features/species'
+import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router'
 
@@ -38,6 +47,26 @@ function SpeciesDetail() {
   )
   const shopsQuery = useShopsList(species ? { category: species.category, origin } : { origin })
   const siblingsQuery = useSpeciesList(species ? { category: species.category } : {})
+
+  const galleryPhotos = useGalleryStore((s) => s.photos)
+  const addPhoto = useGalleryStore((s) => s.addPhoto)
+  const removePhoto = useGalleryStore((s) => s.removePhoto)
+  const speciesPhotos = useMemo(
+    () => (species ? photosForSpecies(galleryPhotos, species.id) : []),
+    [galleryPhotos, species]
+  )
+
+  const photoForm = useForm<PhotoInput>({
+    resolver: zodResolver(photoInputSchema),
+    defaultValues: { imageUrl: '', sourceUrl: '', caption: '' },
+  })
+
+  const onAddPhoto = photoForm.handleSubmit((values) => {
+    if (!species) return
+    addPhoto(species.id, values)
+    toast(t('species.gallery.addedToast'), 'success')
+    photoForm.reset({ imageUrl: '', sourceUrl: '', caption: '' })
+  })
 
   if (isLoading) return <Skeleton variant="rectangular" height={200} lines={3} />
   if (!species) return <EmptyState icon="🐾" title={t('care.notFound')} />
@@ -160,6 +189,85 @@ function SpeciesDetail() {
             </Card>
           ))}
         </div>
+      </section>
+
+      <section aria-labelledby="gallery-heading" className={styles.relatedSection}>
+        <header className={styles.sectionHeader}>
+          <h2 id="gallery-heading">{t('species.gallery.title', { name: species.koreanName })}</h2>
+          <p className={styles.sectionSubtitle}>{t('species.gallery.subtitle')}</p>
+        </header>
+
+        <form className={styles.galleryForm} onSubmit={onAddPhoto} noValidate>
+          <Input
+            label={t('species.gallery.imageUrlLabel')}
+            placeholder="https://…"
+            error={photoForm.formState.errors.imageUrl?.message}
+            {...photoForm.register('imageUrl')}
+          />
+          <Input
+            label={t('species.gallery.sourceUrlLabel')}
+            placeholder="https://instagram.com/…"
+            error={photoForm.formState.errors.sourceUrl?.message}
+            {...photoForm.register('sourceUrl')}
+          />
+          <Input
+            label={t('species.gallery.captionLabel')}
+            placeholder={t('species.gallery.captionPlaceholder')}
+            maxLength={120}
+            error={photoForm.formState.errors.caption?.message}
+            {...photoForm.register('caption')}
+          />
+          <div className={styles.galleryFormActions}>
+            <Button type="submit" variant="primary">
+              {t('species.gallery.add')}
+            </Button>
+          </div>
+        </form>
+
+        {speciesPhotos.length === 0 ? (
+          <EmptyState icon="📷" title={t('species.gallery.empty')} />
+        ) : (
+          <ul className={styles.galleryGrid}>
+            {speciesPhotos.map((p) => (
+              <li key={p.id} className={styles.galleryItem}>
+                <img
+                  src={p.imageUrl}
+                  alt={p.caption ?? species.koreanName}
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                  className={styles.galleryImage}
+                />
+                <div className={styles.galleryMeta}>
+                  {p.caption && <p className={styles.galleryCaption}>{p.caption}</p>}
+                  <div className={styles.galleryFooter}>
+                    {p.sourceUrl ? (
+                      <a
+                        className={styles.gallerySource}
+                        href={p.sourceUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {t('species.gallery.source')} ↗
+                      </a>
+                    ) : (
+                      <span className={styles.gallerySourceMuted}>
+                        {t('species.gallery.noSource')}
+                      </span>
+                    )}
+                    <button
+                      type="button"
+                      className={styles.galleryRemove}
+                      onClick={() => removePhoto(p.id)}
+                      aria-label={t('species.gallery.remove')}
+                    >
+                      ×
+                    </button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <section aria-labelledby="related-species-heading" className={styles.relatedSection}>

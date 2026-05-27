@@ -780,7 +780,21 @@
     "relatedSpeciesTitle": "Other species in this category",
     "noRelatedHospitals": "No vets registered for this category yet.",
     "noRelatedShops": "No shops registered for this category yet.",
-    "noRelatedSpecies": "More species coming soon."
+    "noRelatedSpecies": "More species coming soon.",
+    "gallery": {
+      "title": "{{name}} photo wall",
+      "subtitle": "Bookmark photo URLs you've spotted on Instagram, Korean cafes or DC galleries. We don't host images, we just keep the link and credit the source.",
+      "imageUrlLabel": "Image URL",
+      "sourceUrlLabel": "Source URL (optional)",
+      "captionLabel": "Caption (optional)",
+      "captionPlaceholder": "e.g. Leo's first successful shed",
+      "add": "Add photo",
+      "empty": "No photos yet. Add the first one above.",
+      "source": "Source",
+      "noSource": "No source",
+      "remove": "Remove photo",
+      "addedToast": "Photo added"
+    }
   },
   "landing": {
     "title": "From the first pick to the last farewell.",

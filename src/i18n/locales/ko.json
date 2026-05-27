@@ -780,7 +780,21 @@
     "relatedSpeciesTitle": "같은 카테고리의 다른 종",
     "noRelatedHospitals": "이 카테고리를 진료하는 등록 병원이 아직 없어요.",
     "noRelatedShops": "이 카테고리를 다루는 등록 샵이 아직 없어요.",
-    "noRelatedSpecies": "다른 종이 곧 추가됩니다."
+    "noRelatedSpecies": "다른 종이 곧 추가됩니다.",
+    "gallery": {
+      "title": "{{name}} 사진 모음",
+      "subtitle": "인스타·카페·DC 갤러리에서 본 사진의 URL을 모아두면 같은 종을 키우는 다른 사용자도 참고합니다. 자체 호스팅 없이 외부 URL만 기록합니다.",
+      "imageUrlLabel": "이미지 URL",
+      "sourceUrlLabel": "출처 URL (선택)",
+      "captionLabel": "캡션 (선택)",
+      "captionPlaceholder": "예: 우리집 레오 첫 탈피 후",
+      "add": "사진 추가",
+      "empty": "아직 등록된 사진이 없어요. 첫 사진을 추가해 보세요.",
+      "source": "출처",
+      "noSource": "출처 미상",
+      "remove": "사진 삭제",
+      "addedToast": "사진을 추가했습니다"
+    }
   },
   "landing": {
     "title": "처음 선택부터 마지막 인사까지.",
