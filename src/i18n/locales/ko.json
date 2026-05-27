@@ -50,6 +50,7 @@
     "registry": "보관신고 가이드",
     "compare": "종 비교",
     "petid": "펫 ID 카드",
+    "backup": "데이터 백업",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -640,6 +641,7 @@
   "match": {
     "title": "나에게 맞는 펫 찾기",
     "subtitle": "{{count}}개 질문에 답하면 사육 난이도·공간·시간·예산을 토대로 가장 잘 맞는 종을 추천합니다.",
+    "compareTop": "이 3종 한눈에 비교",
     "progress": "{{current}}/{{total}}",
     "back": "이전",
     "next": "다음",
@@ -735,6 +737,8 @@
     "body": "메모",
     "weight": "체중 (g, 선택)",
     "weightOptional": "체중은 weight 카테고리에서만 입력합니다.",
+    "imageUrl": "사진 URL (선택)",
+    "imageUrlHelper": "외부 이미지 URL만 저장합니다 (인스타·카페·DC 등). 호스팅하지 않습니다.",
     "emptyTitle": "아직 기록이 없어요",
     "emptyDesc": "첫 기록을 남기면 라이프사이클 후반 노령기 관리에서도 활용됩니다.",
     "stats": {
@@ -757,7 +761,8 @@
       "bodyRequired": "메모를 입력해주세요.",
       "bodyMax": "메모는 500자 이내로 작성해주세요.",
       "weightNumber": "체중은 숫자여야 합니다.",
-      "weightPositive": "체중은 0보다 큰 값이어야 합니다."
+      "weightPositive": "체중은 0보다 큰 값이어야 합니다.",
+      "imageUrl": "올바른 이미지 URL을 입력해주세요."
     },
     "remove": "삭제",
     "speciesUnknown": "(종 선택 전 기록)"
@@ -835,6 +840,25 @@
     "toDark": "다크 모드로 전환",
     "lightMode": "라이트 모드",
     "darkMode": "다크 모드"
+  },
+  "backup": {
+    "title": "데이터 백업·복원",
+    "subtitle": "모든 기록(일지·건강·환경·예산·재고·갤러리·펫ID 등)은 이 브라우저에만 저장됩니다. 정기 백업으로 다른 기기·브라우저에서도 이어쓰세요.",
+    "exportTitle": "내보내기",
+    "exportDesc": "현재 저장된 데이터를 JSON 파일 1개로 내려받습니다.",
+    "exportButton": "JSON 파일로 내보내기",
+    "exportedToast": "백업 파일을 내려받았습니다",
+    "importTitle": "가져오기",
+    "importDesc": "이전에 내보낸 JSON 파일을 선택하면 기존 데이터를 덮어쓰고 새로고침합니다.",
+    "importButton": "JSON 파일 가져오기",
+    "importedToast": "복원이 완료되었습니다. 잠시 후 새로고침됩니다.",
+    "invalidFileToast": "올바른 Pettography 백업 파일이 아닙니다",
+    "wipeTitle": "초기화",
+    "wipeDesc": "모든 기록을 삭제하고 첫 사용 상태로 되돌립니다. 되돌릴 수 없습니다.",
+    "wipeButton": "전체 데이터 삭제",
+    "wipeConfirm": "모든 기록을 삭제할까요? 되돌릴 수 없습니다.",
+    "wipedToast": "데이터를 삭제했습니다",
+    "empty": "아직 저장된 데이터가 없습니다."
   },
   "petid": {
     "title": "펫 ID 카드",

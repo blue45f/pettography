@@ -50,6 +50,7 @@
     "registry": "Wildlife filings",
     "compare": "Compare",
     "petid": "Pet ID card",
+    "backup": "Backup",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -640,6 +641,7 @@
   "match": {
     "title": "Find your match",
     "subtitle": "Answer {{count}} questions and we'll rank species by difficulty, space, handling and budget fit.",
+    "compareTop": "Compare these 3 side-by-side",
     "progress": "{{current}}/{{total}}",
     "back": "Back",
     "next": "Next",
@@ -735,6 +737,8 @@
     "body": "Note",
     "weight": "Weight (g, optional)",
     "weightOptional": "Weight is collected on the 'weight' category only.",
+    "imageUrl": "Photo URL (optional)",
+    "imageUrlHelper": "Stores only the external URL (Instagram, cafe, DC, …). No hosting.",
     "emptyTitle": "No entries yet",
     "emptyDesc": "Your first entry powers senior-stage care later.",
     "stats": {
@@ -757,7 +761,8 @@
       "bodyRequired": "Enter a note.",
       "bodyMax": "Keep notes under 500 characters.",
       "weightNumber": "Weight must be a number.",
-      "weightPositive": "Weight must be positive."
+      "weightPositive": "Weight must be positive.",
+      "imageUrl": "Enter a valid image URL."
     },
     "remove": "Remove",
     "speciesUnknown": "(no species selected)"
@@ -835,6 +840,25 @@
     "toDark": "Switch to dark mode",
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
+  },
+  "backup": {
+    "title": "Backup & restore",
+    "subtitle": "All records (diary, health, habitat, budget, supplies, gallery, pet ID, etc.) live only in this browser. Export regularly so you can continue on another device or browser.",
+    "exportTitle": "Export",
+    "exportDesc": "Download all current data as a single JSON file.",
+    "exportButton": "Export JSON file",
+    "exportedToast": "Backup file downloaded",
+    "importTitle": "Import",
+    "importDesc": "Pick a previously exported JSON file to overwrite existing data and reload.",
+    "importButton": "Import JSON file",
+    "importedToast": "Restored. The page will reload shortly.",
+    "invalidFileToast": "This is not a valid Pettography backup file",
+    "wipeTitle": "Reset",
+    "wipeDesc": "Erase every record and start from a clean slate. Cannot be undone.",
+    "wipeButton": "Delete everything",
+    "wipeConfirm": "Erase everything? This cannot be undone.",
+    "wipedToast": "All data deleted",
+    "empty": "No data stored yet."
   },
   "petid": {
     "title": "Pet ID card",

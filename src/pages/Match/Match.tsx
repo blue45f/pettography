@@ -120,6 +120,12 @@ function Match() {
           ))}
         </ol>
         <div className={styles.footer}>
+          <Link
+            to={`/compare?species=${ranked.map((r) => r.species.id).join(',')}`}
+            className={styles.compareLink}
+          >
+            {t('match.compareTop')} →
+          </Link>
           <Button variant="ghost" onClick={restart}>
             {t('match.restart')}
           </Button>

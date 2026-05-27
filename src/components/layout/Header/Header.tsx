@@ -56,6 +56,7 @@ function Header() {
         { path: '/registry', label: t('nav.registry') },
         { path: '/compare', label: t('nav.compare') },
         { path: '/petid', label: t('nav.petid') },
+        { path: '/backup', label: t('nav.backup') },
         { path: '/sos', label: t('nav.sos') },
       ]
     : [

@@ -52,6 +52,7 @@ function Diary() {
       occurredAt: todayIso(),
       body: '',
       weightGram: null,
+      imageUrl: '',
     },
   })
 
@@ -65,6 +66,7 @@ function Diary() {
       occurredAt: values.occurredAt,
       body: values.body,
       weightGram: values.category === 'weight' ? (values.weightGram ?? null) : null,
+      imageUrl: values.imageUrl?.trim() || null,
     })
     toast(t('common.save'), 'success')
     reset({
@@ -72,6 +74,7 @@ function Diary() {
       occurredAt: todayIso(),
       body: '',
       weightGram: null,
+      imageUrl: '',
     })
   })
 
@@ -151,6 +154,14 @@ function Diary() {
               error={errors.body?.message ? t(errors.body.message) : undefined}
               {...register('body')}
             />
+            <Input
+              type="url"
+              label={t('diary.imageUrl')}
+              placeholder="https://…"
+              helperText={t('diary.imageUrlHelper')}
+              error={errors.imageUrl?.message ? t(errors.imageUrl.message) : undefined}
+              {...register('imageUrl')}
+            />
             <div className={styles.formActions}>
               <Button type="submit" variant="primary" isLoading={isSubmitting}>
                 {t('diary.addEntry')}
@@ -187,6 +198,15 @@ function Diary() {
                     </button>
                   </div>
                   <p className={styles.entryBody}>{entry.body}</p>
+                  {entry.imageUrl && (
+                    <img
+                      src={entry.imageUrl}
+                      alt={entry.body.slice(0, 60)}
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      className={styles.entryImage}
+                    />
+                  )}
                   {!entry.speciesId && (
                     <p className={styles.entryFooter}>{t('diary.speciesUnknown')}</p>
                   )}

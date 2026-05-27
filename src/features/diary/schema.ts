@@ -19,6 +19,7 @@ export const diaryEntrySchema = z.object({
   occurredAt: z.string(),
   body: z.string().max(500),
   weightGram: z.number().nullable(),
+  imageUrl: z.string().url().nullable().optional(),
   createdAt: z.string(),
 })
 
@@ -34,6 +35,7 @@ export const diaryFormSchema = z.object({
     .positive('diary.errors.weightPositive')
     .nullable()
     .optional(),
+  imageUrl: z.string().url('diary.errors.imageUrl').or(z.literal('')).optional(),
 })
 
 export type DiaryFormValues = z.infer<typeof diaryFormSchema>

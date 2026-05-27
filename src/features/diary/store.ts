@@ -11,6 +11,7 @@ interface DiaryState {
     occurredAt: string
     body: string
     weightGram?: number | null
+    imageUrl?: string | null
   }) => DiaryEntry
   removeEntry: (id: string) => void
   clear: () => void
@@ -20,7 +21,7 @@ export const useDiaryStore = create<DiaryState>()(
   persist(
     (set) => ({
       entries: [],
-      addEntry: ({ speciesId, category, occurredAt, body, weightGram = null }) => {
+      addEntry: ({ speciesId, category, occurredAt, body, weightGram = null, imageUrl = null }) => {
         const entry: DiaryEntry = {
           id: crypto.randomUUID(),
           speciesId,
@@ -28,6 +29,7 @@ export const useDiaryStore = create<DiaryState>()(
           occurredAt,
           body,
           weightGram: weightGram ?? null,
+          imageUrl: imageUrl ?? null,
           createdAt: new Date().toISOString(),
         }
         set((state) => ({
