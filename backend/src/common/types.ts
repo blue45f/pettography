@@ -1,15 +1,13 @@
 export type SpeciesCategory = 'reptile' | 'arthropod' | 'bird' | 'amphibian' | 'mammal';
 export type SpeciesDifficulty = 'beginner' | 'intermediate' | 'advanced';
+export type SpaceNeed = 'small' | 'medium' | 'large';
+export type HandlingTolerance = 'low' | 'medium' | 'high';
+export type ActivityPattern = 'nocturnal' | 'diurnal' | 'mixed';
+export type FilingStatus = 'white-list' | 'regulated' | 'unregulated' | 'unknown';
 export type ShopKind = 'food' | 'equipment' | 'both';
 export type CommunityKind = 'forum' | 'cafe' | 'discord' | 'youtube';
 export type AdoptionKind = 'rescue' | 'breeder' | 'cafe' | 'marketplace';
 export type FuneralServiceKind = 'cremation' | 'memorial' | 'pickup' | 'directory';
-
-export interface SpeciesEnvironment {
-  temperature: string;
-  humidity: string;
-  space: string;
-}
 
 export interface Species {
   id: string;
@@ -18,12 +16,20 @@ export interface Species {
   scientificName: string;
   category: SpeciesCategory;
   difficulty: SpeciesDifficulty;
-  lifespanYears: string;
+  lifespanMinYears: number;
+  lifespanMaxYears: number;
   summary: string;
-  environment: SpeciesEnvironment;
+  environment: string;
   diet: string;
   heroEmoji: string;
   tags: string[];
+  spaceNeed: SpaceNeed;
+  handlingTolerance: HandlingTolerance;
+  activityPattern: ActivityPattern;
+  beginnerTip: string;
+  commonProblem: string;
+  monthlyBudgetKrw: number;
+  filingStatus?: FilingStatus;
 }
 
 export interface Hospital {

@@ -17,7 +17,7 @@ describe('SpeciesController', () => {
   describe('GET /species', () => {
     it('returns all species when no filter is provided', () => {
       const result = controller.findAll({});
-      expect(result.length).toBeGreaterThanOrEqual(8);
+      expect(result.length).toBeGreaterThanOrEqual(16);
       expect(result[0]).toHaveProperty('koreanName');
       expect(result[0]).toHaveProperty('scientificName');
     });
@@ -48,8 +48,8 @@ describe('SpeciesController', () => {
     });
 
     it('returns species by id', () => {
-      const result = controller.findOne('sp-001');
-      expect(result.id).toBe('sp-001');
+      const result = controller.findOne('sp-leopard-gecko');
+      expect(result.id).toBe('sp-leopard-gecko');
     });
 
     it('throws NotFoundException for unknown id/slug', () => {
