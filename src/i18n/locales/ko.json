@@ -44,6 +44,7 @@
     "sos": "응급 SOS",
     "health": "건강 기록",
     "habitat": "환경 모니터",
+    "budget": "비용 트래커",
     "onboarding": "처음 선택"
   },
   "onboarding": {
@@ -263,6 +264,47 @@
     "certified": "정부 등록",
     "uncertified": "미등록 주의",
     "noResult": "선택한 카테고리에 맞는 장묘업체가 아직 등록되지 않았어요."
+  },
+  "budget": {
+    "title": "비용 트래커",
+    "subtitle": "이번 달 사육 지출을 카테고리별로 모으고, 종 권장 월 예산과 비교하세요.",
+    "thisMonth": "{{month}} 지출",
+    "recommended": "권장",
+    "remaining": "남음",
+    "over": "초과",
+    "status": {
+      "under": "예산 여유",
+      "on-track": "적정 범위",
+      "over": "초과 주의"
+    },
+    "categoriesTitle": "카테고리별 지출",
+    "addTitle": "지출 추가",
+    "date": "지출 일자",
+    "amount": "금액 (원)",
+    "category": "카테고리",
+    "merchant": "상점 (선택)",
+    "merchantPlaceholder": "예) 잠실파충류전문샵, 쿠팡, 청담우리동물병원",
+    "note": "메모 (선택)",
+    "save": "지출 기록",
+    "recentTitle": "최근 지출",
+    "empty": "이번 달 지출 기록이 없어요. 첫 지출을 입력해보세요.",
+    "noSpeciesBudget": "선택한 종에 권장 예산 데이터가 없습니다.",
+    "remove": "삭제",
+    "categories": {
+      "feeding": "먹이",
+      "gear": "용품",
+      "medical": "의료",
+      "subscription": "정기 구독",
+      "funeral": "장례",
+      "other": "기타"
+    },
+    "errors": {
+      "dateRequired": "지출 일자를 입력해주세요.",
+      "amountNumber": "금액은 숫자여야 합니다.",
+      "amountPositive": "금액은 0보다 큰 값이어야 합니다.",
+      "merchantMax": "상점명은 80자 이내입니다.",
+      "noteMax": "메모는 200자 이내입니다."
+    }
   },
   "habitat": {
     "title": "환경 모니터",

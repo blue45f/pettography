@@ -44,6 +44,7 @@
     "sos": "Emergency",
     "health": "Health log",
     "habitat": "Habitat",
+    "budget": "Budget",
     "onboarding": "First pick"
   },
   "onboarding": {
@@ -263,6 +264,47 @@
     "certified": "Gov-registered",
     "uncertified": "Unregistered, caution",
     "noResult": "No farewell service registered for this category yet."
+  },
+  "budget": {
+    "title": "Budget tracker",
+    "subtitle": "Track this month's husbandry spend by category and compare against your species recommended budget.",
+    "thisMonth": "{{month}} spend",
+    "recommended": "Recommended",
+    "remaining": "Remaining",
+    "over": "Over",
+    "status": {
+      "under": "Under budget",
+      "on-track": "On track",
+      "over": "Over budget"
+    },
+    "categoriesTitle": "By category",
+    "addTitle": "Add expense",
+    "date": "Date",
+    "amount": "Amount (KRW)",
+    "category": "Category",
+    "merchant": "Merchant (optional)",
+    "merchantPlaceholder": "e.g. Coupang, Songpa Reptile Shop, Cheongdam Vet",
+    "note": "Note (optional)",
+    "save": "Save expense",
+    "recentTitle": "Recent expenses",
+    "empty": "No expenses this month yet. Add the first one.",
+    "noSpeciesBudget": "No recommended budget data for your species.",
+    "remove": "Remove",
+    "categories": {
+      "feeding": "Feeding",
+      "gear": "Gear",
+      "medical": "Medical",
+      "subscription": "Subscription",
+      "funeral": "Funeral",
+      "other": "Other"
+    },
+    "errors": {
+      "dateRequired": "Pick a date.",
+      "amountNumber": "Amount must be a number.",
+      "amountPositive": "Amount must be positive.",
+      "merchantMax": "Merchant must be 80 characters or fewer.",
+      "noteMax": "Note must be 200 characters or fewer."
+    }
   },
   "habitat": {
     "title": "Habitat monitor",
