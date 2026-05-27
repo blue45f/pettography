@@ -24,8 +24,9 @@
     "test:i18n": "vitest run src/i18n/locales.test.ts",
     "typecheck": "tsc -b --noEmit",
     "audit:security": "pnpm audit --audit-level high",
-    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test:run && pnpm build",
-    "verify:push": "pnpm verify && pnpm lint:security",
+    "ci": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test:run && pnpm run build",
+    "verify": "pnpm run ci",
+    "verify:push": "pnpm run verify && pnpm run lint:security",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky"
