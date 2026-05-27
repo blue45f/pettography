@@ -136,7 +136,10 @@
     "guest": "Guest",
     "locationNote": "Based on: {{label}}",
     "changeLocation": "Change location",
-    "locationPickerTitle": "Quick location switch"
+    "locationPickerTitle": "Quick location switch",
+    "diaryTitle": "Recent husbandry log",
+    "diaryEmpty": "No diary entries yet. Open /diary to add your first.",
+    "viewDiary": "All diary entries"
   },
   "hospitals": {
     "title": "Specialist vets",

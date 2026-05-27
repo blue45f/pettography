@@ -136,7 +136,10 @@
     "guest": "방문자",
     "locationNote": "위치 기준: {{label}}",
     "changeLocation": "위치 바꾸기",
-    "locationPickerTitle": "빠른 위치 변경"
+    "locationPickerTitle": "빠른 위치 변경",
+    "diaryTitle": "최근 사육 일지",
+    "diaryEmpty": "아직 기록된 일지가 없어요. /diary에서 첫 기록을 남겨보세요.",
+    "viewDiary": "일지 전체 보기"
   },
   "hospitals": {
     "title": "특수동물 병원",

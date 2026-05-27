@@ -6,6 +6,7 @@ import Skeleton from '@components/common/Skeleton'
 import { useAdoptionList } from '@features/adoption'
 import { useCareGuide } from '@features/care-guides'
 import { useCommunitiesList } from '@features/communities'
+import { diaryStats, useDiaryStore, type DiaryCategory } from '@features/diary'
 import {
   useExternalLinks,
   type SpeciesCategory as ExtSpeciesCategory,
@@ -62,6 +63,9 @@ function Dashboard() {
   const externalLinksQuery = useExternalLinks(
     profile.category ? { speciesCategory: profile.category as ExtSpeciesCategory } : {}
   )
+  const diaryEntries = useDiaryStore((s) => s.entries)
+  const diaryAggregate = useMemo(() => diaryStats(diaryEntries), [diaryEntries])
+  const recentDiary = diaryEntries.slice(0, 2)
 
   if (!isOnboardingComplete(profile)) {
     return <Navigate to="/onboarding" replace />
@@ -234,6 +238,49 @@ function Dashboard() {
         )}
         {!careQuery.isLoading && !careQuery.data && (
           <EmptyState icon="📝" title={t('care.notFound')} />
+        )}
+      </section>
+
+      <section className={styles.gridSection} aria-labelledby="diary-heading">
+        <header className={styles.sectionHeader}>
+          <h2 id="diary-heading">{t('dashboard.diaryTitle')}</h2>
+          <Link to="/diary" className={styles.sectionLink}>
+            {t('dashboard.viewDiary')} →
+          </Link>
+        </header>
+        {diaryEntries.length === 0 ? (
+          <EmptyState icon="📓" title={t('dashboard.diaryEmpty')} />
+        ) : (
+          <div className={styles.cardGrid}>
+            <Card padding="md">
+              <Card.Body>
+                <h3 className={styles.itemTitle}>{t('diary.stats.title')}</h3>
+                <p className={styles.itemMeta}>
+                  {t('diary.stats.total')}: {diaryAggregate.total} · {t('diary.stats.recent30')}:{' '}
+                  {diaryAggregate.recent30}
+                </p>
+                <p className={styles.itemDesc}>
+                  {t('diary.stats.latestWeight')}:{' '}
+                  {diaryAggregate.latestWeight
+                    ? `${diaryAggregate.latestWeight} g`
+                    : t('diary.stats.noWeight')}
+                </p>
+              </Card.Body>
+            </Card>
+            {recentDiary.map((entry) => (
+              <Card key={entry.id} padding="md">
+                <Card.Body>
+                  <p className={styles.itemMeta}>
+                    <Badge variant="primary">
+                      {t(`diary.categories.${entry.category as DiaryCategory}`)}
+                    </Badge>{' '}
+                    {entry.occurredAt}
+                  </p>
+                  <p className={styles.itemDesc}>{entry.body}</p>
+                </Card.Body>
+              </Card>
+            ))}
+          </div>
         )}
       </section>
 

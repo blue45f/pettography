@@ -1,0 +1,20 @@
+{
+  "name": "Pettography",
+  "short_name": "Pettography",
+  "description": "희귀 애완동물 종 선택부터 입양·사육·의료·일상·장례까지 단일 앱에서 안내하는 위치 기반 포탈.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#1d4ed8",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
