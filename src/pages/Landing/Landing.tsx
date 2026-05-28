@@ -29,7 +29,11 @@ function Landing() {
           <span className={`${styles.orb} ${styles.orbF}`}>🕷️</span>
         </div>
         <div className={styles.heroContent}>
-          <p className={styles.eyebrow}>{t('common.appTagline')}</p>
+          <p className={styles.eyebrow}>
+            {profile.location?.label
+              ? t('common.appTaglineRegion', { region: profile.location.label })
+              : t('common.appTagline')}
+          </p>
           <h1 id="hero-title" className={styles.title}>
             {t('landing.title')}
           </h1>
