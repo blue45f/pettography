@@ -3,6 +3,7 @@ import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
+import PetBadge, { ShowAllPetsToggle } from '@components/common/PetBadge'
 import Progress from '@components/common/Progress'
 import Select from '@components/common/Select'
 import Textarea from '@components/common/Textarea'
@@ -21,7 +22,7 @@ import { useOnboardingStore } from '@features/onboarding'
 import { useSpecies } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
@@ -44,7 +45,10 @@ function Budget() {
 
   const profile = useOnboardingStore((s) => s.profile)
   const { data: species } = useSpecies(profile.speciesId ?? undefined)
-  const entries = useActivePetBudget()
+  const activeEntries = useActivePetBudget()
+  const allEntries = useBudgetStore((s) => s.entries)
+  const [showAllPets, setShowAllPets] = useState(false)
+  const entries = showAllPets ? allEntries : activeEntries
   const addEntry = useBudgetStore((s) => s.addEntry)
   const removeEntry = useBudgetStore((s) => s.removeEntry)
 
@@ -95,6 +99,7 @@ function Budget() {
       <header className={styles.heroHeader}>
         <h1>{t('budget.title')}</h1>
         <p className={styles.subtitle}>{t('budget.subtitle')}</p>
+        <ShowAllPetsToggle checked={showAllPets} onChange={setShowAllPets} />
       </header>
 
       <Card padding="lg" className={styles.summaryCard}>
@@ -235,6 +240,7 @@ function Budget() {
                 <strong className={styles.recentAmount}>₩{e.amountKrw.toLocaleString('ko')}</strong>
                 <span className={styles.recentMerchant}>{e.merchant ?? ''}</span>
                 <span className={styles.recentNote}>{e.note ?? ''}</span>
+                <PetBadge petId={e.petId} hideWhenActive={!showAllPets} />
                 <button
                   type="button"
                   className={styles.removeBtn}

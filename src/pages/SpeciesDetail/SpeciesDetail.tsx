@@ -3,6 +3,7 @@ import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
+import PetBadge from '@components/common/PetBadge'
 import Skeleton from '@components/common/Skeleton'
 import { useToast } from '@components/common/Toast'
 import {
@@ -248,6 +249,7 @@ function SpeciesDetail() {
                 />
                 <div className={styles.galleryMeta}>
                   {p.caption && <p className={styles.galleryCaption}>{p.caption}</p>}
+                  <PetBadge petId={p.petId} hideWhenActive />
                   <div className={styles.galleryFooter}>
                     {p.sourceUrl ? (
                       <a

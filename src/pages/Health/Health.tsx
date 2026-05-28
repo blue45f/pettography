@@ -3,6 +3,7 @@ import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
+import PetBadge, { ShowAllPetsToggle } from '@components/common/PetBadge'
 import Select from '@components/common/Select'
 import Sparkline, { type SparklinePoint } from '@components/common/Sparkline'
 import Textarea from '@components/common/Textarea'
@@ -22,7 +23,7 @@ import { useOnboardingStore } from '@features/onboarding'
 import { useSpecies } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
@@ -40,7 +41,12 @@ function Health() {
   const profile = useOnboardingStore((s) => s.profile)
   const { data: species } = useSpecies(profile.speciesId ?? undefined)
 
-  const { weights, vaccinations } = useActivePetHealth()
+  const active = useActivePetHealth()
+  const allWeights = useHealthStore((s) => s.weights)
+  const allVaccinations = useHealthStore((s) => s.vaccinations)
+  const [showAllPets, setShowAllPets] = useState(false)
+  const weights = showAllPets ? allWeights : active.weights
+  const vaccinations = showAllPets ? allVaccinations : active.vaccinations
   const addWeight = useHealthStore((s) => s.addWeight)
   const removeWeight = useHealthStore((s) => s.removeWeight)
   const addVaccination = useHealthStore((s) => s.addVaccination)
@@ -109,6 +115,7 @@ function Health() {
             {species.heroEmoji} {species.koreanName}
           </p>
         )}
+        <ShowAllPetsToggle checked={showAllPets} onChange={setShowAllPets} />
       </header>
 
       <section aria-labelledby="upcoming-heading" className={styles.section}>
@@ -239,6 +246,7 @@ function Health() {
                   <span className={styles.weightDate}>{w.measuredAt}</span>
                   <strong>{w.grams}g</strong>
                   <span className={styles.weightNote}>{w.note ?? ''}</span>
+                  <PetBadge petId={w.petId} hideWhenActive={!showAllPets} />
                   <button
                     type="button"
                     className={styles.removeBtn}
@@ -315,6 +323,7 @@ function Health() {
                     {v.nextDueAt && ` · ${t('health.vNextDue')}: ${v.nextDueAt}`}
                   </p>
                   {v.note && <p className={styles.vNote}>{v.note}</p>}
+                  <PetBadge petId={v.petId} hideWhenActive={!showAllPets} />
                 </div>
                 <button
                   type="button"

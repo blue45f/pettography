@@ -3,6 +3,7 @@ import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
+import PetBadge, { ShowAllPetsToggle } from '@components/common/PetBadge'
 import Sparkline, { type SparklinePoint } from '@components/common/Sparkline'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
@@ -18,7 +19,7 @@ import {
 import { useOnboardingStore } from '@features/onboarding'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -37,7 +38,10 @@ function Habitat() {
   useDocumentTitle(t('habitat.title'))
 
   const profile = useOnboardingStore((s) => s.profile)
-  const entries = useActivePetHabitat()
+  const activeEntries = useActivePetHabitat()
+  const allEntries = useHabitatStore((s) => s.entries)
+  const [showAllPets, setShowAllPets] = useState(false)
+  const entries = showAllPets ? allEntries : activeEntries
   const addEntry = useHabitatStore((s) => s.addEntry)
   const removeEntry = useHabitatStore((s) => s.removeEntry)
 
@@ -103,6 +107,7 @@ function Habitat() {
       <header className={styles.heroHeader}>
         <h1>{t('habitat.title')}</h1>
         <p className={styles.subtitle}>{t('habitat.subtitle')}</p>
+        <ShowAllPetsToggle checked={showAllPets} onChange={setShowAllPets} />
       </header>
 
       {!profile.category && (
@@ -322,6 +327,7 @@ function Habitat() {
                     <span className={styles.recentMeta}>UVB {e.uvbHoursToday}h</span>
                   )}
                   <span className={styles.recentNote}>{e.note ?? ''}</span>
+                  <PetBadge petId={e.petId} hideWhenActive={!showAllPets} />
                   <button
                     type="button"
                     className={styles.removeBtn}

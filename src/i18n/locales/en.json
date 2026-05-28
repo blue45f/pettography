@@ -994,6 +994,9 @@
     "addNew": "Add new pet",
     "remove": "Remove pet"
   },
+  "petBadge": {
+    "showAll": "Show every pet's records"
+  },
   "events": {
     "title": "2026 KR pet fairs",
     "subtitle": "PET&MORE, K-PET Fair, MyPetFair, Reptile Fair and Mega Zoo on one timeline. Filter by region.",

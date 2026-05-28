@@ -1,6 +1,7 @@
 import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Input from '@components/common/Input'
+import PetBadge from '@components/common/PetBadge'
 import Select from '@components/common/Select'
 import { useToast } from '@components/common/Toast'
 import { useOnboardingStore } from '@features/onboarding'
@@ -119,14 +120,17 @@ function Routine() {
                       {task.builtIn ? (
                         <Badge variant="default">{t('routine.builtIn')}</Badge>
                       ) : (
-                        <button
-                          type="button"
-                          className={styles.taskRemove}
-                          onClick={() => removeTask(task.id)}
-                          aria-label={t('routine.remove')}
-                        >
-                          ×
-                        </button>
+                        <>
+                          <PetBadge petId={task.petId} hideWhenActive />
+                          <button
+                            type="button"
+                            className={styles.taskRemove}
+                            onClick={() => removeTask(task.id)}
+                            aria-label={t('routine.remove')}
+                          >
+                            ×
+                          </button>
+                        </>
                       )}
                     </div>
                   </li>

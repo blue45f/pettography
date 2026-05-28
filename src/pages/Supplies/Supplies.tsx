@@ -3,6 +3,7 @@ import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
+import PetBadge, { ShowAllPetsToggle } from '@components/common/PetBadge'
 import Select from '@components/common/Select'
 import { useToast } from '@components/common/Toast'
 import {
@@ -37,7 +38,10 @@ function Supplies() {
   const { toast } = useToast()
   useDocumentTitle(t('supplies.title'))
 
-  const items = useActivePetSupplies()
+  const activeItems = useActivePetSupplies()
+  const allItems = useSuppliesStore((s) => s.items)
+  const [showAllPets, setShowAllPets] = useState(false)
+  const items = showAllPets ? allItems : activeItems
   const addItem = useSuppliesStore((s) => s.addItem)
   const restock = useSuppliesStore((s) => s.restock)
   const removeItem = useSuppliesStore((s) => s.removeItem)
@@ -82,6 +86,7 @@ function Supplies() {
       <header className={styles.heroHeader}>
         <h1>{t('supplies.title')}</h1>
         <p className={styles.subtitle}>{t('supplies.subtitle')}</p>
+        <ShowAllPetsToggle checked={showAllPets} onChange={setShowAllPets} />
       </header>
 
       {items.length === 0 ? (
@@ -101,9 +106,12 @@ function Supplies() {
                       {item.preferredVendor && ` · ${item.preferredVendor}`}
                     </p>
                   </div>
-                  <Badge variant={LEVEL_VARIANT[status.level]}>
-                    {t(`supplies.level.${status.level}`)}
-                  </Badge>
+                  <div className={styles.itemHeaderBadges}>
+                    <Badge variant={LEVEL_VARIANT[status.level]}>
+                      {t(`supplies.level.${status.level}`)}
+                    </Badge>
+                    <PetBadge petId={item.petId} hideWhenActive={!showAllPets} />
+                  </div>
                 </header>
 
                 <dl className={styles.statsRow}>
