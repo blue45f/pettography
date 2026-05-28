@@ -29,13 +29,14 @@
     "typecheck": "tsc -b --noEmit",
     "audit:security": "pnpm audit --audit-level high",
     "ci": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test:run && pnpm run build",
-    "verify": "pnpm run ci",
+    "verify": "pnpm run validate:architecture && pnpm run ci",
     "verify:backend": "pnpm --filter pettography-backend run verify",
     "verify:all": "pnpm run verify && pnpm run verify:backend",
     "verify:push": "pnpm run verify && pnpm run lint:security",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepare": "husky"
+    "prepare": "husky",
+    "validate:architecture": "node scripts/validate-architecture.mjs"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
