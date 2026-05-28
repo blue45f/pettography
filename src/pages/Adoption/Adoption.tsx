@@ -8,6 +8,7 @@ import { SPECIES_CATEGORIES, type SpeciesCategory } from '@features/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import styles from './Adoption.module.css'
 
@@ -73,7 +74,10 @@ function Adoption() {
                 {a.badge && <Badge variant="success">{a.badge}</Badge>}{' '}
                 <a href={a.url} target="_blank" rel="noreferrer" className={styles.linkAction}>
                   {t('common.openLink')} ↗
-                </a>
+                </a>{' '}
+                <Link to="/contact?category=general" className={styles.linkAction}>
+                  {t('adoption.inquireCta')}
+                </Link>
               </Card.Body>
             </Card>
           </li>

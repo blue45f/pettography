@@ -24,7 +24,8 @@
     "openLink": "Open link",
     "distanceKm": "{{km}}km",
     "phone": "Phone",
-    "address": "Address"
+    "address": "Address",
+    "inquire": "Inquire"
   },
   "nav": {
     "dashboard": "My portal",
@@ -305,7 +306,10 @@
     "kindForum": "Forum",
     "kindCafe": "Cafe",
     "kindDiscord": "Discord",
-    "kindYoutube": "YouTube"
+    "kindYoutube": "YouTube",
+    "suggestTitle": "Suggest a community",
+    "suggestDesc": "Know a community that should be listed here? Send us a suggestion.",
+    "suggestCta": "Send suggestion"
   },
   "adoption": {
     "title": "Adoption & rescue",
@@ -314,7 +318,8 @@
     "kindBreeder": "Breeder",
     "kindCafe": "Cafe/Community",
     "kindMarketplace": "Marketplace",
-    "noResult": "No adoption channel registered for this category yet."
+    "noResult": "No adoption channel registered for this category yet.",
+    "inquireCta": "Adoption inquiry"
   },
   "resources": {
     "title": "External resources",
@@ -352,7 +357,8 @@
     "kindDirectory": "Directory",
     "certified": "Gov-registered",
     "uncertified": "Unregistered, caution",
-    "noResult": "No farewell service registered for this category yet."
+    "noResult": "No farewell service registered for this category yet.",
+    "inquireCta": "Farewell inquiry"
   },
   "partnerDashboard": {
     "title": "Partner desk",

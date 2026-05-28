@@ -17,6 +17,7 @@ interface ForumState {
   ownReplyIds: Record<string, true>
   reportedPostIds: Record<string, true>
   reportedReplyIds: Record<string, true>
+  lastAuthor: string
   addPost: (input: {
     category: SpeciesCategory
     title: string
@@ -127,6 +128,7 @@ export const useForumStore = create<ForumState>()(
       ownReplyIds: {},
       reportedPostIds: {},
       reportedReplyIds: {},
+      lastAuthor: '',
       addPost: (input) => {
         const post: ForumPost = {
           id: crypto.randomUUID(),
@@ -140,6 +142,7 @@ export const useForumStore = create<ForumState>()(
         set((state) => ({
           posts: [post, ...state.posts],
           ownPostIds: { ...state.ownPostIds, [post.id]: true },
+          lastAuthor: input.author,
         }))
         return post
       },
@@ -159,6 +162,7 @@ export const useForumStore = create<ForumState>()(
           return {
             replies: next,
             ownReplyIds: { ...state.ownReplyIds, [reply.id]: true },
+            lastAuthor: input.author,
           }
         })
         return reply
@@ -256,11 +260,12 @@ export const useForumStore = create<ForumState>()(
           ownReplyIds: {},
           reportedPostIds: {},
           reportedReplyIds: {},
+          lastAuthor: '',
         }),
     }),
     {
       name: 'pettography.forum',
-      version: 4,
+      version: 5,
       storage: createJSONStorage(() => localStorage),
       migrate: (persisted: unknown, version) => {
         const base = (persisted ?? {}) as LegacyForumState & Partial<ForumState>
@@ -288,7 +293,11 @@ export const useForumStore = create<ForumState>()(
             reportCount: typeof p.reportCount === 'number' ? p.reportCount : 0,
             autoHidden: typeof p.autoHidden === 'boolean' ? p.autoHidden : false,
           }))
-        if (version >= 4) return persisted as ForumState
+        if (version >= 5) return persisted as ForumState
+        if (version >= 4) {
+          const state = persisted as Partial<ForumState>
+          return { ...state, lastAuthor: state.lastAuthor ?? '' } as ForumState
+        }
         if (version >= 2 && persisted && typeof persisted === 'object') {
           const state = persisted as Partial<ForumState>
           return {

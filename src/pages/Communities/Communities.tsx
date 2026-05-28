@@ -8,6 +8,7 @@ import { SPECIES_CATEGORIES, type SpeciesCategory } from '@features/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import styles from './Communities.module.css'
 
@@ -81,6 +82,16 @@ function Communities() {
           </li>
         ))}
       </ul>
+
+      <Card padding="md" className={styles.suggestCard}>
+        <Card.Body>
+          <h2 className={styles.suggestTitle}>{t('communities.suggestTitle')}</h2>
+          <p className={styles.suggestDesc}>{t('communities.suggestDesc')}</p>
+          <Link to="/contact?category=feature" className={styles.suggestLink}>
+            {t('communities.suggestCta')} →
+          </Link>
+        </Card.Body>
+      </Card>
     </section>
   )
 }

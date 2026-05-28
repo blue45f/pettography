@@ -52,6 +52,7 @@ function Forum() {
   const removeReply = useForumStore((s) => s.removeReply)
   const reportPost = useForumStore((s) => s.reportPost)
   const reportReply = useForumStore((s) => s.reportReply)
+  const lastAuthor = useForumStore((s) => s.lastAuthor)
 
   const [category, setCategory] = useState<SpeciesCategory | 'all'>(profile.category ?? 'all')
   const [sort, setSort] = useState<ForumSort>('hot')
@@ -69,7 +70,7 @@ function Forum() {
     resolver: zodResolver(forumPostFormSchema),
     defaultValues: {
       category: profile.category ?? 'reptile',
-      author: '',
+      author: lastAuthor,
       title: '',
       body: '',
     },
@@ -271,6 +272,7 @@ function Forum() {
                       replies={replies}
                       ownReplyIds={ownReplyIds}
                       reportedReplyIds={reportedReplyIds}
+                      lastAuthor={lastAuthor}
                       onSend={(values, parentReplyId) => {
                         addReply({ postId: post.id, parentReplyId, ...values })
                         toast(t('forum.replyToast'), 'success')
@@ -347,6 +349,7 @@ interface ReplyThreadProps {
   replies: readonly ForumReply[]
   ownReplyIds: Record<string, true>
   reportedReplyIds: Record<string, true>
+  lastAuthor: string
   onSend: ReplySender
   onRemove: (replyId: string) => void
   onReport: (replyId: string) => void
@@ -356,6 +359,7 @@ function ReplyThread({
   replies,
   ownReplyIds,
   reportedReplyIds,
+  lastAuthor,
   onSend,
   onRemove,
   onReport,
@@ -377,6 +381,7 @@ function ReplyThread({
               depth={0}
               ownReplyIds={ownReplyIds}
               reportedReplyIds={reportedReplyIds}
+              lastAuthor={lastAuthor}
               onSend={onSend}
               onRemove={onRemove}
               onReport={onReport}
@@ -384,7 +389,11 @@ function ReplyThread({
           ))}
         </ul>
       )}
-      <ReplyComposer onSubmit={(values) => onSend(values, null)} variant="root" />
+      <ReplyComposer
+        onSubmit={(values) => onSend(values, null)}
+        variant="root"
+        lastAuthor={lastAuthor}
+      />
     </div>
   )
 }
@@ -394,6 +403,7 @@ interface ReplyNodeProps {
   depth: number
   ownReplyIds: Record<string, true>
   reportedReplyIds: Record<string, true>
+  lastAuthor: string
   onSend: ReplySender
   onRemove: (replyId: string) => void
   onReport: (replyId: string) => void
@@ -404,6 +414,7 @@ function ReplyNode({
   depth,
   ownReplyIds,
   reportedReplyIds,
+  lastAuthor,
   onSend,
   onRemove,
   onReport,
@@ -453,6 +464,7 @@ function ReplyNode({
       {composerOpen && canReply && (
         <ReplyComposer
           variant="nested"
+          lastAuthor={lastAuthor}
           onSubmit={(values) => {
             onSend(values, node.reply.id)
             setComposerOpen(false)
@@ -468,6 +480,7 @@ function ReplyNode({
               depth={depth + 1}
               ownReplyIds={ownReplyIds}
               reportedReplyIds={reportedReplyIds}
+              lastAuthor={lastAuthor}
               onSend={onSend}
               onRemove={onRemove}
               onReport={onReport}
@@ -481,10 +494,11 @@ function ReplyNode({
 
 interface ReplyComposerProps {
   variant: 'root' | 'nested'
+  lastAuthor: string
   onSubmit: (values: ForumReplyFormValues) => void
 }
 
-function ReplyComposer({ variant, onSubmit }: ReplyComposerProps) {
+function ReplyComposer({ variant, lastAuthor, onSubmit }: ReplyComposerProps) {
   const { t } = useTranslation()
   const {
     register,
@@ -493,7 +507,7 @@ function ReplyComposer({ variant, onSubmit }: ReplyComposerProps) {
     formState: { errors, isSubmitting },
   } = useForm<ForumReplyFormValues>({
     resolver: zodResolver(forumReplyFormSchema),
-    defaultValues: { author: '', body: '' },
+    defaultValues: { author: lastAuthor, body: '' },
   })
 
   const submit = handleSubmit((values) => {

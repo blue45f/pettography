@@ -24,7 +24,8 @@
     "openLink": "링크 열기",
     "distanceKm": "{{km}}km",
     "phone": "전화",
-    "address": "주소"
+    "address": "주소",
+    "inquire": "문의하기"
   },
   "nav": {
     "dashboard": "내 포탈",
@@ -305,7 +306,10 @@
     "kindForum": "포럼",
     "kindCafe": "카페",
     "kindDiscord": "디스코드",
-    "kindYoutube": "유튜브"
+    "kindYoutube": "유튜브",
+    "suggestTitle": "커뮤니티 제안하기",
+    "suggestDesc": "추가됐으면 하는 커뮤니티가 있으면 문의를 통해 제안해 주세요.",
+    "suggestCta": "제안 보내기"
   },
   "adoption": {
     "title": "입양·분양",
@@ -314,7 +318,8 @@
     "kindBreeder": "브리더",
     "kindCafe": "카페/커뮤니티",
     "kindMarketplace": "분양 마켓",
-    "noResult": "선택한 카테고리에 맞는 입양 채널이 아직 등록되지 않았어요."
+    "noResult": "선택한 카테고리에 맞는 입양 채널이 아직 등록되지 않았어요.",
+    "inquireCta": "입양 관련 문의"
   },
   "resources": {
     "title": "외부 자료 모음",
@@ -352,7 +357,8 @@
     "kindDirectory": "디렉토리",
     "certified": "정부 등록",
     "uncertified": "미등록 주의",
-    "noResult": "선택한 카테고리에 맞는 장묘업체가 아직 등록되지 않았어요."
+    "noResult": "선택한 카테고리에 맞는 장묘업체가 아직 등록되지 않았어요.",
+    "inquireCta": "장례 관련 문의"
   },
   "partnerDashboard": {
     "title": "파트너 대시보드",

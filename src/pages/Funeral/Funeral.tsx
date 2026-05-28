@@ -8,6 +8,7 @@ import { SPECIES_CATEGORIES, type SpeciesCategory } from '@features/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import styles from './Funeral.module.css'
 
@@ -83,7 +84,10 @@ function Funeral() {
                   )}
                   <a href={f.url} target="_blank" rel="noreferrer" className={styles.linkAction}>
                     {t('common.openLink')} ↗
-                  </a>
+                  </a>{' '}
+                  <Link to="/contact?category=general" className={styles.linkAction}>
+                    {t('funeral.inquireCta')}
+                  </Link>
                 </div>
               </Card.Body>
             </Card>
