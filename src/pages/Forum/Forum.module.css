@@ -13,6 +13,19 @@
   margin-top: var(--spacing-xs);
 }
 
+.controls {
+  display: grid;
+  grid-template-columns: 1fr minmax(140px, 200px);
+  gap: var(--spacing-sm);
+  align-items: end;
+}
+
+@media (max-width: 640px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
+}
+
 .filters {
   display: flex;
   gap: var(--spacing-xs);
@@ -127,6 +140,50 @@
 .postBody {
   white-space: pre-wrap;
   color: var(--color-text);
+}
+
+.postStats {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+  font-variant-numeric: tabular-nums;
+}
+
+.likeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition:
+    color var(--motion-fast),
+    border-color var(--motion-fast),
+    background-color var(--motion-fast);
+}
+
+.likeButton:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.likeButtonLiked {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.statChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
 }
 
 .replyThread {

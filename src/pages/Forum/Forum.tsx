@@ -7,17 +7,22 @@ import Select from '@components/common/Select'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
 import {
+  FORUM_SORT_OPTIONS,
   forumPostFormSchema,
   forumReplyFormSchema,
+  hotScore,
   useForumStore,
+  type ForumPost,
   type ForumPostFormValues,
+  type ForumReply,
   type ForumReplyFormValues,
+  type ForumSort,
 } from '@features/forum'
 import { useOnboardingStore } from '@features/onboarding'
 import { SPECIES_CATEGORIES, type SpeciesCategory } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
@@ -31,19 +36,18 @@ function Forum() {
   const profile = useOnboardingStore((s) => s.profile)
   const posts = useForumStore((s) => s.posts)
   const repliesMap = useForumStore((s) => s.replies)
+  const likedPostIds = useForumStore((s) => s.likedPostIds)
   const addPost = useForumStore((s) => s.addPost)
   const addReply = useForumStore((s) => s.addReply)
+  const toggleLike = useForumStore((s) => s.toggleLike)
+  const recordView = useForumStore((s) => s.recordView)
 
   const [category, setCategory] = useState<SpeciesCategory | 'all'>(profile.category ?? 'all')
+  const [sort, setSort] = useState<ForumSort>('hot')
+  const [search, setSearch] = useState('')
   const [openPostId, setOpenPostId] = useState<string | null>(null)
 
-  const visiblePosts = useMemo(
-    () =>
-      posts
-        .filter((p) => (category === 'all' ? true : p.category === category))
-        .sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
-    [posts, category]
-  )
+  const visiblePosts = selectPosts(posts, repliesMap, category, sort, search)
 
   const {
     register,
@@ -66,12 +70,37 @@ function Forum() {
     reset({ category: values.category, author: values.author, title: '', body: '' })
   })
 
+  function handleToggleOpen(postId: string) {
+    const willOpen = openPostId !== postId
+    setOpenPostId(willOpen ? postId : null)
+    if (willOpen) recordView(postId)
+  }
+
   return (
     <section className={styles.page}>
       <header className={styles.header}>
         <h1>{t('forum.title')}</h1>
         <p className={styles.subtitle}>{t('forum.subtitle')}</p>
       </header>
+
+      <div className={styles.controls}>
+        <Input
+          type="search"
+          aria-label={t('forum.searchLabel')}
+          placeholder={t('forum.searchPlaceholder')}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Select
+          aria-label={t('forum.sortLabel')}
+          value={sort}
+          onChange={(e) => setSort(e.target.value as ForumSort)}
+          options={FORUM_SORT_OPTIONS.map((s) => ({
+            value: s,
+            label: t(`forum.sort.${s}`),
+          }))}
+        />
+      </div>
 
       <div role="radiogroup" aria-label={t('forum.filterLabel')} className={styles.filters}>
         <button
@@ -139,12 +168,19 @@ function Forum() {
         </Card.Body>
       </Card>
 
-      {visiblePosts.length === 0 && <EmptyState icon="💬" title={t('forum.empty')} />}
+      {visiblePosts.length === 0 && (
+        <EmptyState
+          icon="💬"
+          title={search ? t('forum.noResult') : t('forum.empty')}
+          description={search ? t('forum.noResultHint') : undefined}
+        />
+      )}
 
       <ul className={styles.list}>
         {visiblePosts.map((post) => {
           const replies = repliesMap[post.id] ?? []
           const isOpen = openPostId === post.id
+          const liked = Boolean(likedPostIds[post.id])
           return (
             <li key={post.id}>
               <Card padding="lg" className={styles.postCard}>
@@ -160,15 +196,33 @@ function Forum() {
                     <button
                       type="button"
                       className={styles.toggleButton}
-                      onClick={() => setOpenPostId(isOpen ? null : post.id)}
+                      onClick={() => handleToggleOpen(post.id)}
                     >
                       {isOpen ? t('forum.collapse') : t('forum.expand')}
                     </button>
                   </div>
                   <p className={styles.postBody}>{post.body}</p>
+
+                  <div className={styles.postStats}>
+                    <button
+                      type="button"
+                      className={[styles.likeButton, liked ? styles.likeButtonLiked : ''].join(' ')}
+                      aria-pressed={liked}
+                      aria-label={liked ? t('forum.unlike') : t('forum.like')}
+                      onClick={() => toggleLike(post.id)}
+                    >
+                      <span aria-hidden="true">{liked ? '❤️' : '🤍'}</span> {post.likes}
+                    </button>
+                    <span className={styles.statChip}>
+                      <span aria-hidden="true">💬</span> {replies.length}
+                    </span>
+                    <span className={styles.statChip}>
+                      <span aria-hidden="true">👁️</span> {post.views}
+                    </span>
+                  </div>
+
                   {isOpen && (
                     <ReplyThread
-                      postId={post.id}
                       replies={replies}
                       onSend={(values) => {
                         addReply({ postId: post.id, ...values })
@@ -186,8 +240,47 @@ function Forum() {
   )
 }
 
+function selectPosts(
+  posts: ForumPost[],
+  repliesMap: Record<string, ForumReply[]>,
+  category: SpeciesCategory | 'all',
+  sort: ForumSort,
+  search: string
+): ForumPost[] {
+  const now = Date.now()
+  const needle = search.trim().toLowerCase()
+  const filtered = posts.filter((p) => {
+    if (category !== 'all' && p.category !== category) return false
+    if (!needle) return true
+    return p.title.toLowerCase().includes(needle) || p.body.toLowerCase().includes(needle)
+  })
+  return filtered.sort((a, b) => {
+    if (sort === 'recent') return b.createdAt.localeCompare(a.createdAt)
+    if (sort === 'popular') return b.likes - a.likes
+    if (sort === 'views') return b.views - a.views
+    const aScore = hotScore(
+      {
+        likes: a.likes,
+        views: a.views,
+        replies: repliesMap[a.id]?.length ?? 0,
+        createdAt: a.createdAt,
+      },
+      now
+    )
+    const bScore = hotScore(
+      {
+        likes: b.likes,
+        views: b.views,
+        replies: repliesMap[b.id]?.length ?? 0,
+        createdAt: b.createdAt,
+      },
+      now
+    )
+    return bScore - aScore
+  })
+}
+
 interface ReplyThreadProps {
-  postId: string
   replies: ReturnType<typeof useForumStore.getState>['replies'][string]
   onSend: (values: ForumReplyFormValues) => void
 }

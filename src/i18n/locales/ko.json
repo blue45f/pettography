@@ -610,6 +610,19 @@
     "repliesCount": "답글 {{count}}",
     "postedToast": "글이 게시되었습니다",
     "replyToast": "답글이 등록되었습니다",
+    "searchLabel": "검색",
+    "searchPlaceholder": "제목·본문에서 검색",
+    "sortLabel": "정렬",
+    "sort": {
+      "hot": "인기 (핫)",
+      "recent": "최신순",
+      "popular": "좋아요순",
+      "views": "조회순"
+    },
+    "like": "좋아요",
+    "unlike": "좋아요 취소",
+    "noResult": "검색 결과가 없어요",
+    "noResultHint": "다른 키워드로 시도하거나 카테고리를 바꿔보세요.",
     "errors": {
       "titleRequired": "제목을 입력해주세요.",
       "titleMax": "제목은 120자 이내로 작성해주세요.",

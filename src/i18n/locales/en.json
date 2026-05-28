@@ -610,6 +610,19 @@
     "repliesCount": "{{count}} replies",
     "postedToast": "Post published",
     "replyToast": "Reply posted",
+    "searchLabel": "Search",
+    "searchPlaceholder": "Search title or body",
+    "sortLabel": "Sort",
+    "sort": {
+      "hot": "Hot",
+      "recent": "Latest",
+      "popular": "Most liked",
+      "views": "Most viewed"
+    },
+    "like": "Like",
+    "unlike": "Unlike",
+    "noResult": "No results",
+    "noResultHint": "Try a different keyword or category.",
     "errors": {
       "titleRequired": "Enter a title.",
       "titleMax": "Title must be 120 characters or fewer.",
