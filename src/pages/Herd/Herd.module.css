@@ -1,0 +1,144 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  max-width: 65ch;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.petCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition:
+    border-color var(--motion-fast),
+    transform var(--motion-fast),
+    box-shadow var(--motion-fast);
+}
+
+.petCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.petCardActive {
+  border-color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary-soft), var(--color-surface));
+}
+
+.petHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.petEmoji {
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+.petTitleBlock {
+  flex: 1;
+  min-width: 0;
+}
+
+.petName {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.petSpecies {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.metricList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.metric {
+  display: grid;
+  grid-template-columns: minmax(0, 110px) 1fr;
+  gap: var(--spacing-sm);
+  align-items: baseline;
+  border-bottom: 1px dashed var(--color-border);
+  padding-bottom: var(--spacing-2xs);
+}
+
+.metric:last-child {
+  border-bottom: none;
+}
+
+.metric dt {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.metric dd {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-2xs);
+}
+
+.subMetric {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.petActions {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-sm);
+}
+
+.activeLink {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+}
+
+.activeLink:hover {
+  text-decoration: underline;
+}

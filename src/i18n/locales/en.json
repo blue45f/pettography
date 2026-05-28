@@ -27,6 +27,7 @@
   },
   "nav": {
     "dashboard": "My portal",
+    "herd": "Herd compare",
     "hospitals": "Vets",
     "shops": "Shops",
     "care": "Care guide",
@@ -996,6 +997,30 @@
   },
   "petBadge": {
     "showAll": "Show every pet's records"
+  },
+  "herd": {
+    "title": "Herd compare",
+    "subtitle": "If you keep multiple animals, see weight, vaccinations, habitat, spend, supplies, diary, photos and filings for every pet side by side.",
+    "singlePetTitle": "Only one pet to compare",
+    "singlePetDesc": "Use the pet switcher in the header to add a second pet; the compare view lights up once you have at least two.",
+    "activeBadge": "Active",
+    "switchAndOpen": "Switch to this pet",
+    "openDashboard": "Open dashboard",
+    "metrics": {
+      "weight": "Latest weight",
+      "nextDue": "Next shot",
+      "habitat": "Latest habitat",
+      "monthSpend": "This month",
+      "worstSupply": "Critical supply",
+      "diary30": "Diary 30d",
+      "gallery": "Photos",
+      "filings": "Filings",
+      "noneUpcoming": "None due",
+      "noSupplies": "No supplies",
+      "filingsDone": "All done",
+      "filingsPending": "{{count}} pending",
+      "breach": "{{count}} breach"
+    }
   },
   "events": {
     "title": "2026 KR pet fairs",
