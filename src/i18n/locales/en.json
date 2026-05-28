@@ -57,6 +57,7 @@
     "setup": "Setup cost",
     "morphs": "Morphs",
     "food": "Food",
+    "events": "Pet fairs",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -875,6 +876,23 @@
     "toDark": "Switch to dark mode",
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
+  },
+  "events": {
+    "title": "2026 KR pet fairs",
+    "subtitle": "PET&MORE, K-PET Fair, MyPetFair, Reptile Fair and Mega Zoo on one timeline. Filter by region.",
+    "filterLabel": "Filter by region",
+    "allRegions": "All regions",
+    "noEvents": "No events match the filter.",
+    "daysLeft": "in {{days}}d",
+    "daysAgo": "{{days}}d ago",
+    "openSite": "Open official site",
+    "kind": {
+      "expo": "General expo",
+      "reptile": "Reptile/exotic",
+      "community": "Community",
+      "adoption": "Adoption/rescue"
+    },
+    "disclaimer": "Dates and venues per organizers. Tentative dates may change — confirm on the official site."
   },
   "food": {
     "title": "Feeder food guide",

@@ -57,6 +57,7 @@
     "setup": "셋업 견적",
     "morphs": "모프 카탈로그",
     "food": "먹이 가이드",
+    "events": "박람회 일정",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -875,6 +876,23 @@
     "toDark": "다크 모드로 전환",
     "lightMode": "라이트 모드",
     "darkMode": "다크 모드"
+  },
+  "events": {
+    "title": "2026 한국 펫 박람회",
+    "subtitle": "펫앤모어, 케이펫페어, 마이펫페어, 렙타일페어, 메가주 등 한국에서 열리는 펫 박람회를 한 timeline에. 지역 필터로 좁혀보세요.",
+    "filterLabel": "지역 필터",
+    "allRegions": "전체 지역",
+    "noEvents": "필터에 맞는 행사가 없습니다.",
+    "daysLeft": "D-{{days}}",
+    "daysAgo": "{{days}}일 전",
+    "openSite": "공식 사이트 열기",
+    "kind": {
+      "expo": "종합 박람회",
+      "reptile": "파충류·이색",
+      "community": "커뮤니티",
+      "adoption": "입양·구조"
+    },
+    "disclaimer": "일정·장소는 주최사 발표 기준입니다. 예정 일정은 변경될 수 있으니 공식 사이트에서 최종 확인하세요."
   },
   "food": {
     "title": "먹이 단가·영양 가이드",

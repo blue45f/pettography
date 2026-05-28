@@ -153,6 +153,7 @@ export const routes = [
       { path: 'setup', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Setup')) },
       { path: 'morphs', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Morphs')) },
       { path: 'food', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Food')) },
+      { path: 'events', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Events')) },
       { path: '*', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/NotFound')) },
     ],
   },
