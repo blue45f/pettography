@@ -252,7 +252,6 @@
 }
 
 .replyNodeAction {
-  margin-top: var(--spacing-xs);
   background: none;
   border: none;
   padding: 0;
@@ -263,4 +262,60 @@
 
 .replyNodeAction:hover {
   text-decoration: underline;
+}
+
+.replyActions {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  margin-top: var(--spacing-xs);
+}
+
+.postAuthorActions {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-left: auto;
+  align-items: center;
+}
+
+.dangerLink {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-error);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+}
+
+.dangerLink:hover {
+  text-decoration: underline;
+}
+
+.ghostLink {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+}
+
+.ghostLink:hover {
+  color: var(--color-error);
+  text-decoration: underline;
+}
+
+.ghostLink:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+.hiddenNotice {
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--color-error-soft, var(--color-surface-muted));
+  color: var(--color-error);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
 }

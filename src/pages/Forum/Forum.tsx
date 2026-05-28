@@ -40,17 +40,25 @@ function Forum() {
   const posts = useForumStore((s) => s.posts)
   const repliesMap = useForumStore((s) => s.replies)
   const likedPostIds = useForumStore((s) => s.likedPostIds)
+  const ownPostIds = useForumStore((s) => s.ownPostIds)
+  const ownReplyIds = useForumStore((s) => s.ownReplyIds)
+  const reportedPostIds = useForumStore((s) => s.reportedPostIds)
+  const reportedReplyIds = useForumStore((s) => s.reportedReplyIds)
   const addPost = useForumStore((s) => s.addPost)
   const addReply = useForumStore((s) => s.addReply)
   const toggleLike = useForumStore((s) => s.toggleLike)
   const recordView = useForumStore((s) => s.recordView)
+  const removePost = useForumStore((s) => s.removePost)
+  const removeReply = useForumStore((s) => s.removeReply)
+  const reportPost = useForumStore((s) => s.reportPost)
+  const reportReply = useForumStore((s) => s.reportReply)
 
   const [category, setCategory] = useState<SpeciesCategory | 'all'>(profile.category ?? 'all')
   const [sort, setSort] = useState<ForumSort>('hot')
   const [search, setSearch] = useState('')
   const [openPostId, setOpenPostId] = useState<string | null>(null)
 
-  const visiblePosts = selectPosts(posts, repliesMap, category, sort, search)
+  const visiblePosts = selectPosts(posts, repliesMap, ownPostIds, category, sort, search)
 
   const {
     register,
@@ -222,15 +230,61 @@ function Forum() {
                     <span className={styles.statChip}>
                       <span aria-hidden="true">👁️</span> {post.views}
                     </span>
+                    <div className={styles.postAuthorActions}>
+                      {ownPostIds[post.id] ? (
+                        <button
+                          type="button"
+                          className={styles.dangerLink}
+                          onClick={() => {
+                            removePost(post.id)
+                            toast(t('forum.deletedToast'), 'success')
+                          }}
+                        >
+                          {t('forum.delete')}
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className={styles.ghostLink}
+                          disabled={Boolean(reportedPostIds[post.id])}
+                          onClick={() => {
+                            const ok = reportPost(post.id)
+                            toast(
+                              ok ? t('forum.reportedToast') : t('forum.reportedAlready'),
+                              ok ? 'success' : 'error'
+                            )
+                          }}
+                        >
+                          {reportedPostIds[post.id] ? t('forum.reported') : t('forum.report')}
+                        </button>
+                      )}
+                    </div>
                   </div>
+
+                  {post.autoHidden && ownPostIds[post.id] && (
+                    <p className={styles.hiddenNotice}>{t('forum.hiddenNotice')}</p>
+                  )}
 
                   {isOpen && (
                     <ReplyThread
                       postId={post.id}
                       replies={replies}
+                      ownReplyIds={ownReplyIds}
+                      reportedReplyIds={reportedReplyIds}
                       onSend={(values, parentReplyId) => {
                         addReply({ postId: post.id, parentReplyId, ...values })
                         toast(t('forum.replyToast'), 'success')
+                      }}
+                      onRemove={(replyId) => {
+                        removeReply(post.id, replyId)
+                        toast(t('forum.deletedToast'), 'success')
+                      }}
+                      onReport={(replyId) => {
+                        const ok = reportReply(post.id, replyId)
+                        toast(
+                          ok ? t('forum.reportedToast') : t('forum.reportedAlready'),
+                          ok ? 'success' : 'error'
+                        )
                       }}
                     />
                   )}
@@ -247,6 +301,7 @@ function Forum() {
 function selectPosts(
   posts: ForumPost[],
   repliesMap: Record<string, ForumReply[]>,
+  ownPostIds: Record<string, true>,
   category: SpeciesCategory | 'all',
   sort: ForumSort,
   search: string
@@ -254,6 +309,7 @@ function selectPosts(
   const now = Date.now()
   const needle = search.trim().toLowerCase()
   const filtered = posts.filter((p) => {
+    if (p.autoHidden && !ownPostIds[p.id]) return false
     if (category !== 'all' && p.category !== category) return false
     if (!needle) return true
     return p.title.toLowerCase().includes(needle) || p.body.toLowerCase().includes(needle)
@@ -289,10 +345,21 @@ type ReplySender = (values: ForumReplyFormValues, parentReplyId: string | null) 
 interface ReplyThreadProps {
   postId: string
   replies: readonly ForumReply[]
+  ownReplyIds: Record<string, true>
+  reportedReplyIds: Record<string, true>
   onSend: ReplySender
+  onRemove: (replyId: string) => void
+  onReport: (replyId: string) => void
 }
 
-function ReplyThread({ replies, onSend }: ReplyThreadProps) {
+function ReplyThread({
+  replies,
+  ownReplyIds,
+  reportedReplyIds,
+  onSend,
+  onRemove,
+  onReport,
+}: ReplyThreadProps) {
   const { t } = useTranslation()
   const tree = buildReplyTree(replies)
 
@@ -304,7 +371,16 @@ function ReplyThread({ replies, onSend }: ReplyThreadProps) {
       {tree.length > 0 && (
         <ul className={styles.replyList}>
           {tree.map((node) => (
-            <ReplyNode key={node.reply.id} node={node} depth={0} onSend={onSend} />
+            <ReplyNode
+              key={node.reply.id}
+              node={node}
+              depth={0}
+              ownReplyIds={ownReplyIds}
+              reportedReplyIds={reportedReplyIds}
+              onSend={onSend}
+              onRemove={onRemove}
+              onReport={onReport}
+            />
           ))}
         </ul>
       )}
@@ -316,13 +392,27 @@ function ReplyThread({ replies, onSend }: ReplyThreadProps) {
 interface ReplyNodeProps {
   node: ForumReplyNode
   depth: number
+  ownReplyIds: Record<string, true>
+  reportedReplyIds: Record<string, true>
   onSend: ReplySender
+  onRemove: (replyId: string) => void
+  onReport: (replyId: string) => void
 }
 
-function ReplyNode({ node, depth, onSend }: ReplyNodeProps) {
+function ReplyNode({
+  node,
+  depth,
+  ownReplyIds,
+  reportedReplyIds,
+  onSend,
+  onRemove,
+  onReport,
+}: ReplyNodeProps) {
   const { t } = useTranslation()
   const [composerOpen, setComposerOpen] = useState(false)
   const canReply = depth + 1 < FORUM_MAX_REPLY_DEPTH
+  const owned = Boolean(ownReplyIds[node.reply.id])
+  const reported = Boolean(reportedReplyIds[node.reply.id])
 
   return (
     <li className={styles.replyItem}>
@@ -330,16 +420,36 @@ function ReplyNode({ node, depth, onSend }: ReplyNodeProps) {
         <strong>{node.reply.author}</strong> · {new Date(node.reply.createdAt).toLocaleString('ko')}
       </p>
       <p className={styles.replyBody}>{node.reply.body}</p>
-      {canReply && (
-        <button
-          type="button"
-          className={styles.replyNodeAction}
-          onClick={() => setComposerOpen((prev) => !prev)}
-          aria-expanded={composerOpen}
-        >
-          {composerOpen ? t('forum.cancelReply') : t('forum.replyToThis')}
-        </button>
-      )}
+      <div className={styles.replyActions}>
+        {canReply && (
+          <button
+            type="button"
+            className={styles.replyNodeAction}
+            onClick={() => setComposerOpen((prev) => !prev)}
+            aria-expanded={composerOpen}
+          >
+            {composerOpen ? t('forum.cancelReply') : t('forum.replyToThis')}
+          </button>
+        )}
+        {owned ? (
+          <button
+            type="button"
+            className={styles.dangerLink}
+            onClick={() => onRemove(node.reply.id)}
+          >
+            {t('forum.delete')}
+          </button>
+        ) : (
+          <button
+            type="button"
+            className={styles.ghostLink}
+            disabled={reported}
+            onClick={() => onReport(node.reply.id)}
+          >
+            {reported ? t('forum.reported') : t('forum.report')}
+          </button>
+        )}
+      </div>
       {composerOpen && canReply && (
         <ReplyComposer
           variant="nested"
@@ -352,7 +462,16 @@ function ReplyNode({ node, depth, onSend }: ReplyNodeProps) {
       {node.children.length > 0 && (
         <ul className={styles.replyChildren}>
           {node.children.map((child) => (
-            <ReplyNode key={child.reply.id} node={child} depth={depth + 1} onSend={onSend} />
+            <ReplyNode
+              key={child.reply.id}
+              node={child}
+              depth={depth + 1}
+              ownReplyIds={ownReplyIds}
+              reportedReplyIds={reportedReplyIds}
+              onSend={onSend}
+              onRemove={onRemove}
+              onReport={onReport}
+            />
           ))}
         </ul>
       )}

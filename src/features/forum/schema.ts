@@ -10,7 +10,11 @@ export const forumPostSchema = z.object({
   createdAt: z.string(),
   likes: z.number().int().nonnegative().default(0),
   views: z.number().int().nonnegative().default(0),
+  reportCount: z.number().int().nonnegative().default(0),
+  autoHidden: z.boolean().default(false),
 })
+
+export const FORUM_AUTO_HIDE_THRESHOLD = 5
 
 export type ForumPost = z.infer<typeof forumPostSchema>
 
@@ -37,7 +41,17 @@ export const forumReplySchema = z.object({
   author: z.string().min(1).max(40),
   body: z.string().min(1).max(800),
   createdAt: z.string(),
+  reportCount: z.number().int().nonnegative().default(0),
 })
+
+export const FORUM_REPORT_REASONS = [
+  'spam',
+  'inappropriate',
+  'fake',
+  'harassment',
+  'other',
+] as const
+export type ForumReportReason = (typeof FORUM_REPORT_REASONS)[number]
 
 export type ForumReply = z.infer<typeof forumReplySchema>
 
