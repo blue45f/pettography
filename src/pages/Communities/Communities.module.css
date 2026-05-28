@@ -98,6 +98,12 @@
 }
 
 .suggestLink {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 var(--spacing-xs);
   color: var(--color-primary);
   text-decoration: none;
   font-weight: 600;

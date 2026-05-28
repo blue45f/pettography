@@ -25,7 +25,7 @@ import { useOnboardingStore } from '@features/onboarding'
 import { SPECIES_CATEGORIES, type SpeciesCategory } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
@@ -65,7 +65,8 @@ function Forum() {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    setValue,
+    formState: { errors, isSubmitting, dirtyFields },
   } = useForm<ForumPostFormValues>({
     resolver: zodResolver(forumPostFormSchema),
     defaultValues: {
@@ -75,6 +76,10 @@ function Forum() {
       body: '',
     },
   })
+
+  useEffect(() => {
+    if (!dirtyFields.author) setValue('author', lastAuthor)
+  }, [lastAuthor, dirtyFields.author, setValue])
 
   const onSubmit = handleSubmit((values) => {
     addPost(values)
