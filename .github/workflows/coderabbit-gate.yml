@@ -90,10 +90,9 @@ jobs:
             );
 
             if (headReviews.length === 0) {
-              // CodeRabbit sometimes marks the check as success without posting
-              // a formal PR review when it finds no actionable issues (e.g. for
-              // CI-only commits). Walk the last few commits of the PR looking for
-              // a passing CodeRabbit check; accept the first one found.
+              // CodeRabbit posts commit statuses (not check-runs). Walk the PR
+              // commits newest-first; if any has a CodeRabbit status of
+              // 'success', treat it as equivalent to APPROVED.
               const { data: prCommits } = await github.rest.pulls.listCommits({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -103,19 +102,15 @@ jobs:
               const shasNewestFirst = prCommits.map((c) => c.sha).reverse();
               let accepted = false;
               for (const sha of shasNewestFirst) {
-                const { data: crData } = await github.rest.checks.listForRef({
+                const { data: combined } = await github.rest.repos.getCombinedStatusForRef({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   ref: sha,
-                  check_name: "CodeRabbit",
-                  per_page: 10,
                 });
-                const crCheck = crData.check_runs
-                  .filter((c) => c.name === "CodeRabbit")
-                  .sort((a, b) => new Date(b.completed_at ?? 0).getTime() - new Date(a.completed_at ?? 0).getTime())[0];
-                if (crCheck?.conclusion === "success") {
+                const crStatus = combined.statuses.find((s) => s.context === "CodeRabbit");
+                if (crStatus?.state === "success") {
                   core.notice(
-                    `No CodeRabbit PR review for HEAD (${headSha.slice(0,8)}), but CodeRabbit check on ${sha.slice(0,8)} concluded 'success' — treating as approved.`
+                    `No CodeRabbit PR review for HEAD (${headSha.slice(0,8)}), but CodeRabbit status on ${sha.slice(0,8)} is 'success' — treating as approved.`
                   );
                   accepted = true;
                   break;
