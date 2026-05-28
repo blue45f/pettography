@@ -1,3 +1,4 @@
+import { useOnboardingStore } from '@features/onboarding'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
@@ -6,9 +7,15 @@ import type { VaccinationEntry, VaccinationKind, WeightEntry } from './schema'
 interface HealthState {
   weights: WeightEntry[]
   vaccinations: VaccinationEntry[]
-  addWeight: (input: { measuredAt: string; grams: number; note?: string }) => WeightEntry
+  addWeight: (input: {
+    petId?: string | null
+    measuredAt: string
+    grams: number
+    note?: string
+  }) => WeightEntry
   removeWeight: (id: string) => void
   addVaccination: (input: {
+    petId?: string | null
     kind: VaccinationKind
     name: string
     administeredAt: string
@@ -20,14 +27,19 @@ interface HealthState {
   clear: () => void
 }
 
+function resolvePetId(petId: string | null | undefined): string | null {
+  return petId === undefined ? (useOnboardingStore.getState().activePetId ?? null) : petId
+}
+
 export const useHealthStore = create<HealthState>()(
   persist(
     (set) => ({
       weights: [],
       vaccinations: [],
-      addWeight: ({ measuredAt, grams, note }) => {
+      addWeight: ({ petId, measuredAt, grams, note }) => {
         const entry: WeightEntry = {
           id: crypto.randomUUID(),
+          petId: resolvePetId(petId),
           measuredAt,
           grams,
           note,
@@ -40,9 +52,10 @@ export const useHealthStore = create<HealthState>()(
         return entry
       },
       removeWeight: (id) => set((state) => ({ weights: state.weights.filter((w) => w.id !== id) })),
-      addVaccination: ({ kind, name, administeredAt, nextDueAt = null, clinic, note }) => {
+      addVaccination: ({ petId, kind, name, administeredAt, nextDueAt = null, clinic, note }) => {
         const entry: VaccinationEntry = {
           id: crypto.randomUUID(),
+          petId: resolvePetId(petId),
           kind,
           name,
           administeredAt,
@@ -67,6 +80,21 @@ export const useHealthStore = create<HealthState>()(
     }
   )
 )
+
+/**
+ * Returns weights/vaccinations scoped to the currently active pet.
+ * Legacy entries with no petId fall through.
+ */
+export function useActivePetHealth(): { weights: WeightEntry[]; vaccinations: VaccinationEntry[] } {
+  const weights = useHealthStore((s) => s.weights)
+  const vaccinations = useHealthStore((s) => s.vaccinations)
+  const activePetId = useOnboardingStore((s) => s.activePetId)
+  if (!activePetId) return { weights, vaccinations }
+  return {
+    weights: weights.filter((w) => !w.petId || w.petId === activePetId),
+    vaccinations: vaccinations.filter((v) => !v.petId || v.petId === activePetId),
+  }
+}
 
 export interface WeightTrend {
   latest: number | null

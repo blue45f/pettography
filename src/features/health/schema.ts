@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 export const weightEntrySchema = z.object({
   id: z.string(),
+  petId: z.string().nullable().optional(),
   measuredAt: z.string(),
   grams: z.number().int().positive(),
   note: z.string().max(200).optional(),
@@ -20,6 +21,7 @@ export const VACCINATION_KINDS: readonly VaccinationKind[] = [
 
 export const vaccinationEntrySchema = z.object({
   id: z.string(),
+  petId: z.string().nullable().optional(),
   kind: vaccinationKindSchema,
   name: z.string().min(1).max(80),
   administeredAt: z.string(),

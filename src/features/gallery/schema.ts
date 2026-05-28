@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 export const galleryPhotoSchema = z.object({
   id: z.string(),
+  petId: z.string().nullable().optional(),
   speciesId: z.string(),
   imageUrl: z.string().url(),
   sourceUrl: z.string().url().optional(),
