@@ -28,6 +28,13 @@ pnpm run dev
 | `pnpm run verify:push`          | 프론트 verify + 보안 lint                    |
 | `cd backend && pnpm run verify` | backend format, lint, typecheck, test, build |
 
+## PR 규칙
+
+- PR 템플릿의 체크리스트를 PR 전 모두 완료하고, 프론트엔드/백엔드 검증 로그를 PR 본문에 남깁니다.
+- PR 본문에는 변경 요약, 영향 범위, 회귀 대응/롤백 포인트를 기록합니다.
+- 병합 전 `CodeRabbit review gate`가 `APPROVED` 상태여야 하며, 동일 PR에서 `skipped` 항목이 있으면 병합 대기합니다.
+- API 계약 또는 마이그레이션 변경은 영향 경로와 호환성 점검을 별도 체크리스트에 남깁니다.
+
 ## 코드 스타일
 
 프론트는 React/Vite 계층을 `src/app`, `src/components`, `src/features`, `src/services` 중심으로 유지합니다. backend는 NestJS module/controller/service 경계를 유지하고 DTO validation을 우선합니다.
