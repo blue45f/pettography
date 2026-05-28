@@ -9,6 +9,7 @@ import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
 import {
   upcomingDues,
+  useActivePetHealth,
   useHealthStore,
   VACCINATION_KINDS,
   vaccinationFormSchema,
@@ -39,8 +40,7 @@ function Health() {
   const profile = useOnboardingStore((s) => s.profile)
   const { data: species } = useSpecies(profile.speciesId ?? undefined)
 
-  const weights = useHealthStore((s) => s.weights)
-  const vaccinations = useHealthStore((s) => s.vaccinations)
+  const { weights, vaccinations } = useActivePetHealth()
   const addWeight = useHealthStore((s) => s.addWeight)
   const removeWeight = useHealthStore((s) => s.removeWeight)
   const addVaccination = useHealthStore((s) => s.addVaccination)

@@ -12,6 +12,7 @@ import {
   EXPENSE_CATEGORIES,
   expenseFormSchema,
   monthBreakdown,
+  useActivePetBudget,
   useBudgetStore,
   type ExpenseCategory,
   type ExpenseFormValues,
@@ -43,7 +44,7 @@ function Budget() {
 
   const profile = useOnboardingStore((s) => s.profile)
   const { data: species } = useSpecies(profile.speciesId ?? undefined)
-  const entries = useBudgetStore((s) => s.entries)
+  const entries = useActivePetBudget()
   const addEntry = useBudgetStore((s) => s.addEntry)
   const removeEntry = useBudgetStore((s) => s.removeEntry)
 

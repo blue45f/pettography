@@ -10,6 +10,7 @@ import {
   DIARY_CATEGORIES,
   diaryFormSchema,
   diaryStats,
+  useActivePetDiary,
   useDiaryStore,
   type DiaryCategory,
   type DiaryFormValues,
@@ -34,7 +35,7 @@ function Diary() {
   useDocumentTitle(t('diary.title'))
 
   const profile = useOnboardingStore((s) => s.profile)
-  const entries = useDiaryStore((s) => s.entries)
+  const entries = useActivePetDiary()
   const addEntry = useDiaryStore((s) => s.addEntry)
   const removeEntry = useDiaryStore((s) => s.removeEntry)
   const { data: species } = useSpecies(profile.speciesId ?? undefined)

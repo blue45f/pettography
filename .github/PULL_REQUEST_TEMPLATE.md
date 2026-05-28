@@ -25,6 +25,7 @@
 
 - [ ] `pnpm run verify` 통과
 - [ ] `cd backend && pnpm run verify` 통과
+- [ ] `CodeRabbit review gate` 통과
 - [ ] API 계약 변경 시 frontend service/schema 영향 확인
 - [ ] UI 변경 시 주요 화면 수동 확인
 

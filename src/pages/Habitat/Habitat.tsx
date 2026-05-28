@@ -11,6 +11,7 @@ import {
   habitatFormSchema,
   habitatStats,
   recommendationFor,
+  useActivePetHabitat,
   useHabitatStore,
   type HabitatFormValues,
 } from '@features/habitat'
@@ -36,7 +37,7 @@ function Habitat() {
   useDocumentTitle(t('habitat.title'))
 
   const profile = useOnboardingStore((s) => s.profile)
-  const entries = useHabitatStore((s) => s.entries)
+  const entries = useActivePetHabitat()
   const addEntry = useHabitatStore((s) => s.addEntry)
   const removeEntry = useHabitatStore((s) => s.removeEntry)
 

@@ -9,6 +9,7 @@ import {
   SUPPLY_KINDS,
   supplyFormSchema,
   supplyStatus,
+  useActivePetSupplies,
   useSuppliesStore,
   type SupplyFormValues,
 } from '@features/supplies'
@@ -36,7 +37,7 @@ function Supplies() {
   const { toast } = useToast()
   useDocumentTitle(t('supplies.title'))
 
-  const items = useSuppliesStore((s) => s.items)
+  const items = useActivePetSupplies()
   const addItem = useSuppliesStore((s) => s.addItem)
   const restock = useSuppliesStore((s) => s.restock)
   const removeItem = useSuppliesStore((s) => s.removeItem)
