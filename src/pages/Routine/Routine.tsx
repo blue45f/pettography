@@ -9,6 +9,7 @@ import {
   isDoneWithinWindow,
   ROUTINE_CADENCES,
   routineFormSchema,
+  useActivePetCustomTasks,
   useRoutineStore,
   type RoutineCadence,
   type RoutineFormValues,
@@ -28,7 +29,7 @@ function Routine() {
   useDocumentTitle(t('routine.title'))
 
   const category = useOnboardingStore((s) => s.profile.category)
-  const customTasks = useRoutineStore((s) => s.customTasks)
+  const customTasks = useActivePetCustomTasks()
   const completions = useRoutineStore((s) => s.completions)
   const addTask = useRoutineStore((s) => s.addTask)
   const removeTask = useRoutineStore((s) => s.removeTask)

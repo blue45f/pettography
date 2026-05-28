@@ -3,7 +3,13 @@ import Input from '@components/common/Input'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
 import { useOnboardingStore } from '@features/onboarding'
-import { isCardComplete, petIdSchema, usePetIdStore, type PetIdValues } from '@features/petid'
+import {
+  isCardComplete,
+  petIdSchema,
+  useActivePetIdCard,
+  usePetIdStore,
+  type PetIdValues,
+} from '@features/petid'
 import { useSpecies } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
@@ -18,7 +24,7 @@ function PetId() {
   const { toast } = useToast()
   useDocumentTitle(t('petid.title'))
 
-  const card = usePetIdStore((s) => s.card)
+  const card = useActivePetIdCard()
   const save = usePetIdStore((s) => s.save)
   const clear = usePetIdStore((s) => s.clear)
   const profile = useOnboardingStore((s) => s.profile)

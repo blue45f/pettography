@@ -7,7 +7,7 @@ import Skeleton from '@components/common/Skeleton'
 import { useToast } from '@components/common/Toast'
 import {
   photoInputSchema,
-  photosForSpecies,
+  useActivePetPhotos,
   useGalleryStore,
   type PhotoInput,
 } from '@features/gallery'
@@ -48,13 +48,9 @@ function SpeciesDetail() {
   const shopsQuery = useShopsList(species ? { category: species.category, origin } : { origin })
   const siblingsQuery = useSpeciesList(species ? { category: species.category } : {})
 
-  const galleryPhotos = useGalleryStore((s) => s.photos)
+  const speciesPhotos = useActivePetPhotos(species?.id ?? null)
   const addPhoto = useGalleryStore((s) => s.addPhoto)
   const removePhoto = useGalleryStore((s) => s.removePhoto)
-  const speciesPhotos = useMemo(
-    () => (species ? photosForSpecies(galleryPhotos, species.id) : []),
-    [galleryPhotos, species]
-  )
 
   const photoForm = useForm<PhotoInput>({
     resolver: zodResolver(photoInputSchema),

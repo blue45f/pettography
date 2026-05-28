@@ -1,6 +1,12 @@
 import Badge from '@components/common/Badge'
 import { useOnboardingStore } from '@features/onboarding'
-import { isRegulated, REGISTRY_FILINGS, REGISTRY_LINKS, useRegistryStore } from '@features/registry'
+import {
+  isRegulated,
+  REGISTRY_FILINGS,
+  REGISTRY_LINKS,
+  useActivePetFilings,
+  useRegistryStore,
+} from '@features/registry'
 import { useSpecies, type FilingStatus } from '@features/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useTranslation } from 'react-i18next'
@@ -21,7 +27,7 @@ function Registry() {
   const category = useOnboardingStore((s) => s.profile.category)
   const speciesId = useOnboardingStore((s) => s.profile.speciesId)
   const { data: species } = useSpecies(speciesId ?? undefined)
-  const done = useRegistryStore((s) => s.done)
+  const done = useActivePetFilings()
   const toggle = useRegistryStore((s) => s.toggle)
   const clear = useRegistryStore((s) => s.clear)
 

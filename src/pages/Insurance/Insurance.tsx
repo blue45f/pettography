@@ -7,6 +7,7 @@ import {
   INSURANCE_PROVIDERS,
   monthsBetween,
   suggestedReserveKrw,
+  useActivePetReserve,
   useReserveStore,
 } from '@features/insurance'
 import { useOnboardingStore } from '@features/onboarding'
@@ -26,8 +27,7 @@ function Insurance() {
   const category = useOnboardingStore((s) => s.profile.category)
   const speciesId = useOnboardingStore((s) => s.profile.speciesId)
   const { data: species } = useSpecies(speciesId ?? undefined)
-  const monthlyContributionKrw = useReserveStore((s) => s.monthlyContributionKrw)
-  const startedAt = useReserveStore((s) => s.startedAt)
+  const { monthlyContributionKrw, startedAt } = useActivePetReserve()
   const setContribution = useReserveStore((s) => s.setContribution)
 
   const exotic = isRegulated(category) && category !== 'mammal'
