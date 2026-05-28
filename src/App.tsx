@@ -4,6 +4,7 @@ import SkipLink from '@components/common/SkipLink'
 import BottomNav from '@components/layout/BottomNav'
 import Footer from '@components/layout/Footer'
 import Header from '@components/layout/Header'
+import SosFab from '@components/layout/SosFab'
 import { Suspense } from 'react'
 import { Outlet } from 'react-router'
 
@@ -22,6 +23,7 @@ function App() {
         </ErrorBoundary>
       </main>
       <Footer />
+      <SosFab />
       <BottomNav />
     </div>
   )
