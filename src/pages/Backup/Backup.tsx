@@ -20,11 +20,19 @@ function collectKeys(): string[] {
   for (let i = 0; i < localStorage.length; i++) {
     const k = localStorage.key(i)
     if (!k) continue
-    if (BACKUP_KEY_PREFIXES.some((p) => k.startsWith(p) || k === p)) {
+    if (isBackupKey(k)) {
       keys.push(k)
     }
   }
   return keys.sort()
+}
+
+function isBackupKey(key: string): boolean {
+  return BACKUP_KEY_PREFIXES.some((prefix) => key.startsWith(prefix) || key === prefix)
+}
+
+function isBackupData(data: unknown): data is Record<string, unknown> {
+  return typeof data === 'object' && data !== null && !Array.isArray(data)
 }
 
 function buildEnvelope(): BackupEnvelope {
@@ -68,14 +76,14 @@ function Backup() {
     try {
       const text = await file.text()
       const parsed = JSON.parse(text) as Partial<BackupEnvelope>
-      if (parsed.app !== 'pettography' || parsed.version !== 1 || !parsed.data) {
+      if (parsed.app !== 'pettography' || parsed.version !== 1 || !isBackupData(parsed.data)) {
         throw new Error('invalid')
       }
       for (const k of collectKeys()) {
         localStorage.removeItem(k)
       }
       for (const [k, v] of Object.entries(parsed.data)) {
-        if (typeof v === 'string') localStorage.setItem(k, v)
+        if (isBackupKey(k) && typeof v === 'string') localStorage.setItem(k, v)
       }
       toast(t('backup.importedToast'), 'success')
       setTimeout(() => window.location.reload(), 600)
