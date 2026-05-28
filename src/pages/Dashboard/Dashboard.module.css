@@ -499,3 +499,54 @@
   border-color: var(--color-primary);
   color: var(--color-primary);
 }
+
+.weeklySection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.weeklyList {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+  gap: var(--spacing-sm);
+}
+
+.weeklyChip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  transition: border-color var(--motion-fast);
+}
+
+.weeklyChip:hover {
+  border-color: var(--color-primary);
+}
+
+.weeklyNum {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--color-primary-700);
+  line-height: 1;
+}
+
+[data-theme='dark'] .weeklyNum {
+  color: var(--color-primary-200);
+}
+
+.weeklyLabel {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}

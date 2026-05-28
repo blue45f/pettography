@@ -179,6 +179,13 @@
     "diaryTitle": "최근 사육 일지",
     "diaryEmpty": "아직 기록된 일지가 없어요. /diary에서 첫 기록을 남겨보세요.",
     "viewDiary": "일지 전체 보기",
+    "weeklyTitle": "이번 주 활동",
+    "weekly": {
+      "diary": "일지 기록",
+      "photos": "새 사진",
+      "routine": "일과 완료",
+      "weights": "체중 기록"
+    },
     "notifyButton": "브라우저 알림 허용",
     "notifyEnabled": "이제 D-3 이내 일정이 발생하면 브라우저 알림을 받습니다.",
     "notifyAlreadyOn": "이미 알림이 켜져 있어요.",

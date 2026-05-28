@@ -130,6 +130,8 @@ function Dashboard() {
     return galleryPhotos.filter((p) => p.speciesId === profile.speciesId).slice(0, 6)
   }, [galleryPhotos, profile.speciesId])
 
+  const weekActivity = countWeekActivity(diaryEntries, galleryPhotos, routineCompletions, weights)
+
   const upcomingPreview = useMemo(() => {
     const items: { id: string; daysLeft: number; label: string; link: string }[] = []
     for (const due of upcomingDues(vaccinations, 14)) {
@@ -309,6 +311,30 @@ function Dashboard() {
           🔔 {t('dashboard.notifyButton')}
         </button>
       </div>
+
+      <section aria-labelledby="weekly-heading" className={styles.weeklySection}>
+        <header className={styles.sectionHeader}>
+          <h2 id="weekly-heading">{t('dashboard.weeklyTitle')}</h2>
+        </header>
+        <ul className={styles.weeklyList}>
+          <li className={styles.weeklyChip}>
+            <span className={styles.weeklyNum}>{weekActivity.diary}</span>
+            <span className={styles.weeklyLabel}>{t('dashboard.weekly.diary')}</span>
+          </li>
+          <li className={styles.weeklyChip}>
+            <span className={styles.weeklyNum}>{weekActivity.photos}</span>
+            <span className={styles.weeklyLabel}>{t('dashboard.weekly.photos')}</span>
+          </li>
+          <li className={styles.weeklyChip}>
+            <span className={styles.weeklyNum}>{weekActivity.routine}</span>
+            <span className={styles.weeklyLabel}>{t('dashboard.weekly.routine')}</span>
+          </li>
+          <li className={styles.weeklyChip}>
+            <span className={styles.weeklyNum}>{weekActivity.weights}</span>
+            <span className={styles.weeklyLabel}>{t('dashboard.weekly.weights')}</span>
+          </li>
+        </ul>
+      </section>
 
       {routineSummary.total > 0 && (
         <section aria-labelledby="routine-heading" className={styles.routineSummary}>
@@ -745,6 +771,22 @@ function Dashboard() {
 
 function capitalize<T extends string>(value: T): Capitalize<T> {
   return (value.charAt(0).toUpperCase() + value.slice(1)) as Capitalize<T>
+}
+
+function countWeekActivity(
+  diary: { occurredAt: string }[],
+  photos: { addedAt: string }[],
+  completions: Record<string, string>,
+  weights: { measuredAt: string }[]
+) {
+  const weekAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000).toISOString()
+  const since = (iso: string) => iso >= weekAgo
+  return {
+    diary: diary.filter((e) => since(e.occurredAt)).length,
+    photos: photos.filter((p) => since(p.addedAt)).length,
+    routine: Object.values(completions).filter((ts) => since(ts)).length,
+    weights: weights.filter((w) => since(w.measuredAt)).length,
+  }
 }
 
 export default Dashboard

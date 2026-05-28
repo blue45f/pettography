@@ -179,6 +179,13 @@
     "diaryTitle": "Recent husbandry log",
     "diaryEmpty": "No diary entries yet. Open /diary to add your first.",
     "viewDiary": "All diary entries",
+    "weeklyTitle": "This week's activity",
+    "weekly": {
+      "diary": "Diary entries",
+      "photos": "New photos",
+      "routine": "Routine done",
+      "weights": "Weight logs"
+    },
     "notifyButton": "Enable browser notifications",
     "notifyEnabled": "You'll get a browser notification when items are due within 3 days.",
     "notifyAlreadyOn": "Notifications are already enabled.",
