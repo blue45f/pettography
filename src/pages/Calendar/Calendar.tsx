@@ -1,10 +1,10 @@
 import Badge from '@components/common/Badge'
 import EmptyState from '@components/common/EmptyState'
-import { upcomingDues, useHealthStore } from '@features/health'
+import { upcomingDues, useActivePetHealth } from '@features/health'
 import { useOnboardingStore } from '@features/onboarding'
-import { useRegistryStore, REGISTRY_FILINGS } from '@features/registry'
+import { useActivePetFilings, REGISTRY_FILINGS } from '@features/registry'
 import { useSpecies } from '@features/species'
-import { supplyStatus, useSuppliesStore } from '@features/supplies'
+import { supplyStatus, useActivePetSupplies } from '@features/supplies'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -40,9 +40,9 @@ function Calendar() {
   const { t } = useTranslation()
   useDocumentTitle(t('calendar.title'))
 
-  const vaccinations = useHealthStore((s) => s.vaccinations)
-  const supplyItems = useSuppliesStore((s) => s.items)
-  const registryDone = useRegistryStore((s) => s.done)
+  const { vaccinations } = useActivePetHealth()
+  const supplyItems = useActivePetSupplies()
+  const registryDone = useActivePetFilings()
   const speciesId = useOnboardingStore((s) => s.profile.speciesId)
   const { data: species } = useSpecies(speciesId ?? undefined)
 

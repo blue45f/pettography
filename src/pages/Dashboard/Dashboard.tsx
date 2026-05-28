@@ -5,26 +5,31 @@ import EmptyState from '@components/common/EmptyState'
 import Skeleton from '@components/common/Skeleton'
 import { useToast } from '@components/common/Toast'
 import { useAdoptionList } from '@features/adoption'
-import { compareAgainstRecommended, monthBreakdown, useBudgetStore } from '@features/budget'
+import { compareAgainstRecommended, monthBreakdown, useActivePetBudget } from '@features/budget'
 import { useCareGuide } from '@features/care-guides'
 import { useCommunitiesList } from '@features/communities'
-import { diaryStats, useDiaryStore, type DiaryCategory } from '@features/diary'
+import { diaryStats, useActivePetDiary, type DiaryCategory } from '@features/diary'
 import {
   useExternalLinks,
   type SpeciesCategory as ExtSpeciesCategory,
 } from '@features/external-links'
 import { useFuneralList } from '@features/funeral'
-import { useGalleryStore } from '@features/gallery'
-import { detectBreaches, recommendationFor, useHabitatStore } from '@features/habitat'
-import { upcomingDues, useHealthStore, weightTrend } from '@features/health'
+import { useActivePetPhotos } from '@features/gallery'
+import { detectBreaches, recommendationFor, useActivePetHabitat } from '@features/habitat'
+import { upcomingDues, useActivePetHealth, weightTrend } from '@features/health'
 import { useHospitalsList } from '@features/hospitals'
 import { LOCATION_PRESETS, findPreset } from '@features/location'
 import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
-import { useRegistryStore, REGISTRY_FILINGS } from '@features/registry'
-import { BUILTIN_ROUTINES, isDoneWithinWindow, useRoutineStore } from '@features/routine'
+import { useActivePetFilings, REGISTRY_FILINGS } from '@features/registry'
+import {
+  BUILTIN_ROUTINES,
+  isDoneWithinWindow,
+  useActivePetCustomTasks,
+  useRoutineStore,
+} from '@features/routine'
 import { useShopsList } from '@features/shops'
 import { useSpecies } from '@features/species'
-import { supplyStatus, useSuppliesStore } from '@features/supplies'
+import { supplyStatus, useActivePetSupplies } from '@features/supplies'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useAppStore } from '@store/index'
 import { useEffect, useMemo, useRef } from 'react'
@@ -71,19 +76,18 @@ function Dashboard() {
   const externalLinksQuery = useExternalLinks(
     profile.category ? { speciesCategory: profile.category as ExtSpeciesCategory } : {}
   )
-  const diaryEntries = useDiaryStore((s) => s.entries)
+  const diaryEntries = useActivePetDiary()
   const diaryAggregate = useMemo(() => diaryStats(diaryEntries), [diaryEntries])
   const recentDiary = diaryEntries.slice(0, 2)
 
   const { toast } = useToast()
-  const weights = useHealthStore((s) => s.weights)
-  const vaccinations = useHealthStore((s) => s.vaccinations)
-  const habitatEntries = useHabitatStore((s) => s.entries)
-  const budgetEntries = useBudgetStore((s) => s.entries)
-  const supplyItems = useSuppliesStore((s) => s.items)
-  const registryDone = useRegistryStore((s) => s.done)
-  const galleryPhotos = useGalleryStore((s) => s.photos)
-  const routineCustom = useRoutineStore((s) => s.customTasks)
+  const { weights, vaccinations } = useActivePetHealth()
+  const habitatEntries = useActivePetHabitat()
+  const budgetEntries = useActivePetBudget()
+  const supplyItems = useActivePetSupplies()
+  const registryDone = useActivePetFilings()
+  const galleryPhotos = useActivePetPhotos(profile.speciesId ?? null)
+  const routineCustom = useActivePetCustomTasks()
   const routineCompletions = useRoutineStore((s) => s.completions)
 
   const healthSummary = useMemo(() => {
