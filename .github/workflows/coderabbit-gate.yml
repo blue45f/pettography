@@ -91,29 +91,42 @@ jobs:
 
             if (headReviews.length === 0) {
               // CodeRabbit sometimes marks the check as success without posting
-              // a formal PR review when it finds no actionable issues. In that
-              // case, treat a passing CodeRabbit check on the head SHA as
-              // equivalent to APPROVED so the gate doesn't stay permanently red.
-              const { data: checkRuns } = await github.rest.checks.listForRef({
+              // a formal PR review when it finds no actionable issues (e.g. for
+              // CI-only commits). Walk the last few commits of the PR looking for
+              // a passing CodeRabbit check; accept the first one found.
+              const { data: prCommits } = await github.rest.pulls.listCommits({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: headSha,
-                check_name: "CodeRabbit",
+                pull_number: prNumber,
                 per_page: 10,
               });
-              const latestCrCheck = checkRuns.check_runs
-                .filter((c) => codeRabbitLogins.has(c.app?.slug ?? "") || c.name === "CodeRabbit")
-                .sort((a, b) => new Date(b.completed_at ?? 0).getTime() - new Date(a.completed_at ?? 0).getTime())[0];
-              if (latestCrCheck?.conclusion === "success") {
-                core.notice(
-                  `No CodeRabbit PR review for ${headSha}, but CodeRabbit check concluded 'success' — treating as approved.`
-                );
-                return;
+              const shasNewestFirst = prCommits.map((c) => c.sha).reverse();
+              let accepted = false;
+              for (const sha of shasNewestFirst) {
+                const { data: crData } = await github.rest.checks.listForRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: sha,
+                  check_name: "CodeRabbit",
+                  per_page: 10,
+                });
+                const crCheck = crData.check_runs
+                  .filter((c) => c.name === "CodeRabbit")
+                  .sort((a, b) => new Date(b.completed_at ?? 0).getTime() - new Date(a.completed_at ?? 0).getTime())[0];
+                if (crCheck?.conclusion === "success") {
+                  core.notice(
+                    `No CodeRabbit PR review for HEAD (${headSha.slice(0,8)}), but CodeRabbit check on ${sha.slice(0,8)} concluded 'success' — treating as approved.`
+                  );
+                  accepted = true;
+                  break;
+                }
               }
-              core.setFailed(
-                `CodeRabbit has not reviewed the latest PR head (${headSha}) yet. The gate stays red until CodeRabbit posts a review for the current commit. ` +
-                  "If CodeRabbit is disabled for your repo, ask an admin to install the GitHub App."
-              );
+              if (!accepted) {
+                core.setFailed(
+                  `CodeRabbit has not reviewed the latest PR head (${headSha}) yet. The gate stays red until CodeRabbit posts a review for the current commit. ` +
+                    "If CodeRabbit is disabled for your repo, ask an admin to install the GitHub App."
+                );
+              }
               return;
             }
 
