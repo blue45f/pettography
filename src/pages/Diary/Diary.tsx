@@ -16,10 +16,10 @@ import {
   type DiaryFormValues,
 } from '@features/diary'
 import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies } from '@features/species'
+import { useSpecies, useSpeciesList } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
@@ -35,10 +35,29 @@ function Diary() {
   useDocumentTitle(t('diary.title'))
 
   const profile = useOnboardingStore((s) => s.profile)
-  const entries = useActivePetDiary()
+  const pets = useOnboardingStore((s) => s.pets)
+  const activePetId = useOnboardingStore((s) => s.activePetId)
+  const activeEntries = useActivePetDiary()
+  const allEntries = useDiaryStore((s) => s.entries)
   const addEntry = useDiaryStore((s) => s.addEntry)
   const removeEntry = useDiaryStore((s) => s.removeEntry)
   const { data: species } = useSpecies(profile.speciesId ?? undefined)
+  const { data: speciesList = [] } = useSpeciesList({})
+
+  const [showAllPets, setShowAllPets] = useState(false)
+  const entries = showAllPets ? allEntries : activeEntries
+  const showPetBadge = showAllPets && pets.length > 1
+
+  function petLabel(petId: string | null | undefined): { name: string; emoji: string } | null {
+    if (!petId) return null
+    const pet = pets.find((p) => p.id === petId)
+    if (!pet) return null
+    const sp = speciesList.find((s) => s.id === pet.speciesId)
+    return {
+      name: pet.petName?.trim() || sp?.koreanName || t('petSwitcher.title', { count: 1 }),
+      emoji: sp?.heroEmoji ?? '🐾',
+    }
+  }
 
   const {
     register,
@@ -88,6 +107,16 @@ function Diary() {
           <p className={styles.locationNote}>
             {species.heroEmoji} {species.koreanName}
           </p>
+        )}
+        {pets.length > 1 && (
+          <label className={styles.showAllToggle}>
+            <input
+              type="checkbox"
+              checked={showAllPets}
+              onChange={(e) => setShowAllPets(e.target.checked)}
+            />
+            {t('diary.showAllPets')}
+          </label>
         )}
       </header>
 
@@ -189,6 +218,18 @@ function Diary() {
                       {entry.weightGram !== null && (
                         <Badge variant="success">{entry.weightGram} g</Badge>
                       )}
+                      {(() => {
+                        const label = petLabel(entry.petId)
+                        if (!label) return null
+                        // Hide the badge when the active-pet view already
+                        // implies which pet this entry belongs to.
+                        if (!showPetBadge && entry.petId === activePetId) return null
+                        return (
+                          <Badge variant="default">
+                            <span aria-hidden="true">{label.emoji}</span> {label.name}
+                          </Badge>
+                        )
+                      })()}
                     </div>
                     <button
                       type="button"

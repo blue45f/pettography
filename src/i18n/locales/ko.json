@@ -801,6 +801,7 @@
       "weightPositive": "체중은 0보다 큰 값이어야 합니다.",
       "imageUrl": "올바른 이미지 URL을 입력해주세요."
     },
+    "showAllPets": "모든 펫 기록 보기",
     "remove": "삭제",
     "speciesUnknown": "(종 선택 전 기록)"
   },

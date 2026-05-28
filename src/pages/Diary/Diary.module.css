@@ -20,6 +20,23 @@
   margin-top: var(--spacing-xs);
 }
 
+.showAllToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.showAllToggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
 .statsCard {
   border: 1px solid var(--color-border);
 }

@@ -801,6 +801,7 @@
       "weightPositive": "Weight must be positive.",
       "imageUrl": "Enter a valid image URL."
     },
+    "showAllPets": "Show every pet's entries",
     "remove": "Remove",
     "speciesUnknown": "(no species selected)"
   },
