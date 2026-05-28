@@ -24,7 +24,7 @@ function PartnerDashboard() {
 
   const approved = useMemo(
     () => applications.filter((a) => a.status === 'approved'),
-    [applications]
+    [applications],
   )
   const pending = useMemo(() => applications.filter((a) => a.status === 'pending'), [applications])
   const kindTotals = useMemo(() => {

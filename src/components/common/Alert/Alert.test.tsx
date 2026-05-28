@@ -22,7 +22,7 @@ describe('Alert', () => {
     render(
       <Alert dismissible onDismiss={onDismiss}>
         메시지
-      </Alert>
+      </Alert>,
     )
 
     await user.click(screen.getByLabelText('알림 닫기'))

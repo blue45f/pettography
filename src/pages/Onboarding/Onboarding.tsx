@@ -42,7 +42,7 @@ function Onboarding() {
   const progressValue = ((stepIndex + 1) / ONBOARDING_STEPS.length) * 100
 
   const { data: speciesList = [] } = useSpeciesList(
-    profile.category ? { category: profile.category } : {}
+    profile.category ? { category: profile.category } : {},
   )
 
   function goNext() {
@@ -98,7 +98,7 @@ function Onboarding() {
         handleSelectPreset('songpa')
         setLocating(false)
       },
-      { timeout: 5000 }
+      { timeout: 5000 },
     )
   }
 

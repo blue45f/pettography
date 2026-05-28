@@ -59,7 +59,7 @@ function Modal({
         }
       }
     },
-    [onClose]
+    [onClose],
   )
 
   useEffect(() => {
@@ -121,7 +121,7 @@ function Modal({
         <div className={styles.body}>{children}</div>
       </div>
     </div>,
-    document.body
+    document.body,
   )
 }
 

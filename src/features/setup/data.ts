@@ -257,13 +257,13 @@ export const SETUP_SHOPS = [
 
 export function totalRange(
   parts: SetupPart[],
-  includeOptional: boolean
+  includeOptional: boolean,
 ): { basic: number; premium: number } {
   return parts.reduce(
     (acc, p) => {
       if (p.optional && !includeOptional) return acc
       return { basic: acc.basic + p.basicKrw, premium: acc.premium + p.premiumKrw }
     },
-    { basic: 0, premium: 0 }
+    { basic: 0, premium: 0 },
   )
 }

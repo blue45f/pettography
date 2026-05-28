@@ -46,7 +46,7 @@ export const useHealthStore = create<HealthState>()(
         }
         set((state) => ({
           weights: [...state.weights, entry].sort((a, b) =>
-            a.measuredAt.localeCompare(b.measuredAt)
+            a.measuredAt.localeCompare(b.measuredAt),
           ),
         }))
         return entry
@@ -65,7 +65,7 @@ export const useHealthStore = create<HealthState>()(
         }
         set((state) => ({
           vaccinations: [entry, ...state.vaccinations].sort((a, b) =>
-            b.administeredAt.localeCompare(a.administeredAt)
+            b.administeredAt.localeCompare(a.administeredAt),
           ),
         }))
         return entry
@@ -77,8 +77,8 @@ export const useHealthStore = create<HealthState>()(
     {
       name: 'pettography.health',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 )
 
 /**

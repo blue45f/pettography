@@ -59,7 +59,7 @@ export async function listShops(params: ListShopsParams = {}): Promise<ShopWithD
   const inRadius =
     params.origin && params.radiusKm !== undefined
       ? withDist.filter(
-          (s) => s.distanceKm === null || s.distanceKm <= (params.radiusKm ?? Infinity)
+          (s) => s.distanceKm === null || s.distanceKm <= (params.radiusKm ?? Infinity),
         )
       : withDist
 

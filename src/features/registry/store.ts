@@ -52,8 +52,8 @@ export const useRegistryStore = create<RegistryState>()(
     {
       name: 'pettography.registry',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 )
 
 export function useActivePetFilings(): FilingDone {

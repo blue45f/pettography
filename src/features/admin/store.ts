@@ -19,6 +19,6 @@ export const useAdminStore = create<AdminState>()(
     {
       name: 'pettography.admin',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 )

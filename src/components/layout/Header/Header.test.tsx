@@ -24,7 +24,7 @@ function renderHeader(initial = '/') {
   return render(
     <MemoryRouter initialEntries={[initial]}>
       <Header />
-    </MemoryRouter>
+    </MemoryRouter>,
   )
 }
 

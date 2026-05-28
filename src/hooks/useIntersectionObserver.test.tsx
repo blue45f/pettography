@@ -29,7 +29,7 @@ beforeEach(() => {
       observe = observeMock
       unobserve = unobserveMock
       disconnect = disconnectMock
-    }
+    },
   )
 })
 

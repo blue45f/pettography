@@ -13,7 +13,7 @@ describe('Card', () => {
     render(
       <Card>
         <Card.Header>제목</Card.Header>
-      </Card>
+      </Card>,
     )
     expect(screen.getByText('제목')).toBeInTheDocument()
   })
@@ -22,7 +22,7 @@ describe('Card', () => {
     render(
       <Card>
         <Card.Body>본문</Card.Body>
-      </Card>
+      </Card>,
     )
     expect(screen.getByText('본문')).toBeInTheDocument()
   })
@@ -31,7 +31,7 @@ describe('Card', () => {
     render(
       <Card>
         <Card.Footer>푸터</Card.Footer>
-      </Card>
+      </Card>,
     )
     expect(screen.getByText('푸터')).toBeInTheDocument()
   })

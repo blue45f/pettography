@@ -40,11 +40,11 @@ function SpeciesDetail() {
 
   const origin = useMemo(
     () => (profile.location ? { lat: profile.location.lat, lng: profile.location.lng } : undefined),
-    [profile.location]
+    [profile.location],
   )
 
   const hospitalsQuery = useHospitalsList(
-    species ? { category: species.category, origin } : { origin }
+    species ? { category: species.category, origin } : { origin },
   )
   const shopsQuery = useShopsList(species ? { category: species.category, origin } : { origin })
   const siblingsQuery = useSpeciesList(species ? { category: species.category } : {})

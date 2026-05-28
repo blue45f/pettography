@@ -30,7 +30,7 @@ describe('ProtectedRoute', () => {
             }
           />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     )
     expect(screen.getByText('landing')).toBeInTheDocument()
     expect(screen.queryByText('secret content')).not.toBeInTheDocument()
@@ -50,7 +50,7 @@ describe('ProtectedRoute', () => {
             }
           />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     )
     expect(screen.getByText('login page')).toBeInTheDocument()
   })
@@ -69,7 +69,7 @@ describe('ProtectedRoute', () => {
             }
           />
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     )
     expect(screen.getByText('secret content')).toBeInTheDocument()
   })

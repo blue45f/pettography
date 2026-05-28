@@ -40,7 +40,7 @@ function Routine() {
   const builtIn = useMemo(() => (category ? (BUILTIN_ROUTINES[category] ?? []) : []), [category])
   const allTasks = useMemo<RoutineTask[]>(
     () => [...builtIn, ...customTasks],
-    [builtIn, customTasks]
+    [builtIn, customTasks],
   )
 
   const grouped = useMemo(() => {

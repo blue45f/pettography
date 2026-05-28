@@ -21,7 +21,7 @@ describe('Tooltip', () => {
     const { container } = render(
       <Tooltip content="hello" delay={200}>
         trigger
-      </Tooltip>
+      </Tooltip>,
     )
     const wrapper = container.firstChild as HTMLElement
     fireEvent.mouseEnter(wrapper)
@@ -35,7 +35,7 @@ describe('Tooltip', () => {
     const { container } = render(
       <Tooltip content="hi" delay={300}>
         trigger
-      </Tooltip>
+      </Tooltip>,
     )
     const wrapper = container.firstChild as HTMLElement
     fireEvent.mouseEnter(wrapper)
@@ -49,7 +49,7 @@ describe('Tooltip', () => {
     const { container } = render(
       <Tooltip content="focused" delay={0}>
         <button>btn</button>
-      </Tooltip>
+      </Tooltip>,
     )
     const wrapper = container.firstChild as HTMLElement
     fireEvent.focus(wrapper)
@@ -64,7 +64,7 @@ describe('Tooltip', () => {
     const { container } = render(
       <Tooltip content="x" position="bottom" delay={0}>
         trigger
-      </Tooltip>
+      </Tooltip>,
     )
     const wrapper = container.firstChild as HTMLElement
     fireEvent.mouseEnter(wrapper)
@@ -76,7 +76,7 @@ describe('Tooltip', () => {
     const { container, rerender } = render(
       <Tooltip content="x" position="left" delay={0}>
         t
-      </Tooltip>
+      </Tooltip>,
     )
     const wrapper = container.firstChild as HTMLElement
     fireEvent.mouseEnter(wrapper)
@@ -87,7 +87,7 @@ describe('Tooltip', () => {
     rerender(
       <Tooltip content="x" position="right" delay={0}>
         t
-      </Tooltip>
+      </Tooltip>,
     )
     fireEvent.mouseEnter(container.firstChild as HTMLElement)
     act(() => vi.advanceTimersByTime(0))
@@ -98,7 +98,7 @@ describe('Tooltip', () => {
     const { container, unmount } = render(
       <Tooltip content="x" delay={500}>
         t
-      </Tooltip>
+      </Tooltip>,
     )
     fireEvent.mouseEnter(container.firstChild as HTMLElement)
     unmount()

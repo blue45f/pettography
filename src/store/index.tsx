@@ -37,6 +37,6 @@ export const useAppStore = create<AppState>()(
           state.isAuthenticated = true
         }
       },
-    }
-  )
+    },
+  ),
 )

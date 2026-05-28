@@ -85,7 +85,7 @@ function scoreHandling(answer: HandlingTolerance, species: HandlingTolerance): n
 
 function scoreActivity(
   answer: ActivityPattern | 'no-preference',
-  species: ActivityPattern
+  species: ActivityPattern,
 ): number {
   if (answer === 'no-preference') return 12
   if (answer === species) return 15

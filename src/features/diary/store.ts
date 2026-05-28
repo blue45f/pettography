@@ -47,7 +47,7 @@ export const useDiaryStore = create<DiaryState>()(
         }
         set((state) => ({
           entries: [entry, ...state.entries].sort((a, b) =>
-            b.occurredAt.localeCompare(a.occurredAt)
+            b.occurredAt.localeCompare(a.occurredAt),
           ),
         }))
         return entry
@@ -58,8 +58,8 @@ export const useDiaryStore = create<DiaryState>()(
     {
       name: 'pettography.diary',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 )
 
 /**

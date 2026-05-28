@@ -28,11 +28,11 @@ function Sos() {
 
   const origin = useMemo(
     () => (profile.location ? { lat: profile.location.lat, lng: profile.location.lng } : undefined),
-    [profile.location]
+    [profile.location],
   )
 
   const hospitalsQuery = useHospitalsList(
-    profile.category ? { category: profile.category, origin } : { origin }
+    profile.category ? { category: profile.category, origin } : { origin },
   )
 
   const emergencyHospitals = useMemo(() => {

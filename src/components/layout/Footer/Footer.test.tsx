@@ -8,7 +8,7 @@ function renderFooter() {
   return render(
     <MemoryRouter>
       <Footer />
-    </MemoryRouter>
+    </MemoryRouter>,
   )
 }
 

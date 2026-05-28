@@ -36,7 +36,7 @@ function Admin() {
     const replyCount = Object.values(repliesMap).reduce((acc, list) => acc + (list?.length ?? 0), 0)
     const consultCount = Object.values(consultMessages).reduce(
       (acc, list) => acc + (list?.length ?? 0),
-      0
+      0,
     )
     const pending = applications.filter((a) => a.status === 'pending').length
     return {

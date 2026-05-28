@@ -32,8 +32,8 @@ export const useGalleryStore = create<GalleryState>()(
     {
       name: 'pettography.gallery',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 )
 
 export function photosForSpecies(photos: GalleryPhoto[], speciesId: string): GalleryPhoto[] {

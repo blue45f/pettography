@@ -43,6 +43,6 @@ export const useContactStore = create<ContactState>()(
     {
       name: 'pettography.contact',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 )

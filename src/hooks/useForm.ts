@@ -53,7 +53,7 @@ function useForm<T extends Record<string, unknown>>({
       }
       return undefined
     },
-    [rules]
+    [rules],
   )
 
   const validateAll = useCallback(
@@ -67,7 +67,7 @@ function useForm<T extends Record<string, unknown>>({
       }
       return newErrors
     },
-    [validateField]
+    [validateField],
   )
 
   const handleChange = useCallback(
@@ -89,7 +89,7 @@ function useForm<T extends Record<string, unknown>>({
         return next
       })
     },
-    [touched, validateField]
+    [touched, validateField],
   )
 
   const handleBlur = useCallback(
@@ -105,7 +105,7 @@ function useForm<T extends Record<string, unknown>>({
         return rest as FormErrors<T>
       })
     },
-    [values, validateField]
+    [values, validateField],
   )
 
   const handleSubmit = useCallback(
@@ -114,7 +114,7 @@ function useForm<T extends Record<string, unknown>>({
 
       const allTouched = Object.keys(values).reduce(
         (acc, key) => ({ ...acc, [key]: true }),
-        {} as Record<keyof T, boolean>
+        {} as Record<keyof T, boolean>,
       )
       setTouched(allTouched)
 
@@ -130,7 +130,7 @@ function useForm<T extends Record<string, unknown>>({
         setIsSubmitting(false)
       }
     },
-    [values, validateAll, onSubmit]
+    [values, validateAll, onSubmit],
   )
 
   const setFieldValue = useCallback((field: keyof T, value: T[keyof T]) => {

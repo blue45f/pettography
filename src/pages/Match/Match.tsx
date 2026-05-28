@@ -60,7 +60,7 @@ function Match() {
   const { data: speciesList = [] } = useSpeciesList({})
   const ranked = useMemo(
     () => (submitted && isComplete(draft) ? rankSpecies(speciesList, draft).slice(0, 3) : []),
-    [submitted, draft, speciesList]
+    [submitted, draft, speciesList],
   )
 
   const step = STEPS[stepIndex]

@@ -40,8 +40,8 @@ export const usePetIdStore = create<PetIdState>()(
     {
       name: 'pettography.petid',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 )
 
 export function useActivePetIdCard(): PetIdValues {

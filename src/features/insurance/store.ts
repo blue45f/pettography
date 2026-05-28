@@ -60,8 +60,8 @@ export const useReserveStore = create<ReserveState>()(
     {
       name: 'pettography.reserve',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 )
 
 export function useActivePetReserve(): ReserveSnapshot {

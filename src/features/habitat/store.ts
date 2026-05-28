@@ -45,7 +45,7 @@ export const useHabitatStore = create<HabitatState>()(
         }
         set((state) => ({
           entries: [...state.entries, entry].sort((a, b) =>
-            a.measuredAt.localeCompare(b.measuredAt)
+            a.measuredAt.localeCompare(b.measuredAt),
           ),
         }))
         return entry
@@ -56,8 +56,8 @@ export const useHabitatStore = create<HabitatState>()(
     {
       name: 'pettography.habitat',
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 )
 
 export function useActivePetHabitat(): HabitatEntry[] {
@@ -109,7 +109,7 @@ export function habitatStats(entries: HabitatEntry[]): HabitatStats {
 }
 
 export function recommendationFor(
-  category: SpeciesCategory | null | undefined
+  category: SpeciesCategory | null | undefined,
 ): HabitatRange | undefined {
   if (!category) return undefined
   return HABITAT_RECOMMENDATIONS[category]
@@ -124,7 +124,7 @@ export interface RangeBreach {
 
 export function detectBreaches(
   latest: HabitatEntry | null,
-  range: HabitatRange | undefined
+  range: HabitatRange | undefined,
 ): RangeBreach[] {
   if (!latest || !range) return []
   const breaches: RangeBreach[] = []

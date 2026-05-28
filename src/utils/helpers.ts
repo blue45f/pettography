@@ -23,7 +23,7 @@ export function formatDate(date: Date | string, options?: Intl.DateTimeFormatOpt
     ...options,
   }
   return new Intl.DateTimeFormat('ko-KR', defaultOptions).format(
-    typeof date === 'string' ? new Date(date) : date
+    typeof date === 'string' ? new Date(date) : date,
   )
 }
 
@@ -50,7 +50,7 @@ export function truncate(text: string, maxLength: number): string {
  */
 export function removeUndefined<T extends Record<string, unknown>>(obj: T): Partial<T> {
   return Object.fromEntries(
-    Object.entries(obj).filter(([, value]) => value !== undefined)
+    Object.entries(obj).filter(([, value]) => value !== undefined),
   ) as Partial<T>
 }
 
@@ -92,7 +92,7 @@ export function generateId(): string {
  */
 export function throttle<T extends (...args: unknown[]) => unknown>(
   fn: T,
-  delay: number
+  delay: number,
 ): (...args: Parameters<T>) => void {
   let lastCall = 0
   let timeoutId: ReturnType<typeof setTimeout> | null = null

@@ -69,7 +69,7 @@ function Accordion({
                 >
                   &#x203A;
                 </span>
-              </button>
+              </button>,
             )}
             <div
               id={panelId}

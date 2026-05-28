@@ -62,7 +62,7 @@ describe('useForm', () => {
           ],
         },
         onSubmit: vi.fn(),
-      })
+      }),
     )
 
     act(() => {
@@ -83,7 +83,7 @@ describe('useForm', () => {
           name: [{ validate: (v) => typeof v === 'string' && v.length > 0, message: '필수' }],
         },
         onSubmit,
-      })
+      }),
     )
 
     act(() => {

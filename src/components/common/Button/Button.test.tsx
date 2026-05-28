@@ -25,7 +25,7 @@ describe('Button', () => {
     render(
       <Button disabled onClick={onClick}>
         클릭
-      </Button>
+      </Button>,
     )
 
     await user.click(screen.getByRole('button'))

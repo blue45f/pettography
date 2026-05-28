@@ -35,7 +35,7 @@ function Resources() {
 
   const [linkCategory, setLinkCategory] = useState<LinkCategory | 'all'>('all')
   const [speciesCategory, setSpeciesCategory] = useState<ExtSpeciesCategory | 'all'>(
-    (profile.category as SpeciesCategory | null) ?? 'all'
+    (profile.category as SpeciesCategory | null) ?? 'all',
   )
   const [query, setQuery] = useState('')
   const deferredQuery = useDeferredValue(query)
@@ -53,7 +53,7 @@ function Resources() {
       (item) =>
         item.name.toLowerCase().includes(q) ||
         item.description.toLowerCase().includes(q) ||
-        (item.region ?? '').toLowerCase().includes(q)
+        (item.region ?? '').toLowerCase().includes(q),
     )
   }, [data, deferredQuery])
 
@@ -84,7 +84,7 @@ function Resources() {
           role="radio"
           aria-checked={linkCategory === 'all'}
           className={[styles.filterChip, linkCategory === 'all' ? styles.filterActive : ''].join(
-            ' '
+            ' ',
           )}
           onClick={() => setLinkCategory('all')}
         >
