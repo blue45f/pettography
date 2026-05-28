@@ -103,6 +103,25 @@ pnpm verify:push   # verify + lint:security + audit (pre-push hook과 동일)
 
 pre-commit: staged 파일만 lint/format. pre-push: `verify:push` 전체.
 
+### 4. PR 머지 게이트 (CI + CodeRabbit)
+
+main 머지는 모든 GitHub Actions status check가 통과해야만 가능합니다:
+
+- `Frontend verify` (`pnpm verify`)
+- `Backend verify` (`backend/pnpm verify`)
+- `CodeRabbit review` — `.coderabbit.yaml`이 활성화되어 있어 PR이 열리면 [CodeRabbit](https://www.coderabbit.ai/) GitHub App이 자동 리뷰를 시작합니다. 이 job은 CodeRabbit이 head SHA에 대해 PR review를 남길 때까지 최대 20분 대기하며, `CHANGES_REQUESTED`이면 실패합니다.
+
+#### 1회 GitHub UI 설정 (관리자)
+
+위 status check를 실제 머지 차단으로 만들려면 한 번만 Repository 설정을 수정해야 합니다.
+
+1. `Settings` → `Branches` → `Branch protection rules` → `Add rule`.
+2. Branch name pattern: `main`.
+3. `Require a pull request before merging` 체크.
+4. `Require status checks to pass before merging` + `Require branches to be up to date before merging` 체크.
+5. Required status checks: `Frontend verify`, `Backend verify`, `CodeRabbit review` 세 가지 모두 선택.
+6. `Do not allow bypassing the above settings` (admin도 게이트 강제).
+
 ## 환경변수
 
 | 변수                 | 기본값 | 설명                                              |
