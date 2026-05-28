@@ -65,3 +65,29 @@
   border-top-color: var(--color-primary);
   background: var(--color-primary-soft);
 }
+
+.link.active .icon {
+  transform: translateY(-2px) scale(1.06);
+  transition: transform var(--motion-base);
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--gradient-brand);
+  transform: translateX(-50%);
+  transition: width var(--motion-base);
+  pointer-events: none;
+}
+
+.link.active::after {
+  width: 36px;
+}
+
+.link {
+  position: relative;
+}
