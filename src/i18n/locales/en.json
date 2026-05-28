@@ -870,7 +870,63 @@
     "privacy": "Privacy policy",
     "terms": "Terms of service",
     "contact": "Contact",
-    "about": "About"
+    "about": "About",
+    "faq": "FAQ"
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "subtitle": "The ten things first-time users ask. Each answer links to the page that handles it.",
+    "linkMatch": "Start match quiz",
+    "linkRegistry": "Filing guide",
+    "linkInsurance": "Insurance & reserve",
+    "linkMorphs": "Morph catalog",
+    "linkSetup": "Setup estimator",
+    "linkFood": "Food guide",
+    "linkSos": "Emergency SOS",
+    "linkAbout": "Read about",
+    "linkBackup": "Backup data",
+    "questions": {
+      "firstPet": {
+        "q": "Which species should a first-time keeper pick?",
+        "a": "Pick one with forgiving temperature/humidity needs and gentle handling. Leopard gecko, crested gecko, corn snake and bearded dragon are typical. Run the 8-question match quiz for a personalized top-3."
+      },
+      "wildlifeLaw": {
+        "q": "Who has to file under the wildlife law?",
+        "a": "Effective 2025-12-14, owners of mammals, birds, reptiles and amphibians must file with the Ministry of Environment when keeping, transferring or losing the animal. White-list trades also require filings."
+      },
+      "insurance": {
+        "q": "Can reptiles or amphibians get pet insurance?",
+        "a": "Korean pet insurance is dog/cat only. Reptiles, amphibians and arthropods almost never qualify. Pettography recommends building an emergency reserve instead."
+      },
+      "morphCost": {
+        "q": "How are morph prices set?",
+        "a": "Genetic rarity, combos (multiple morphs), and het/homozygous all matter. Korean baselines: common morphs ₩30–80k, mid ₩100–300k, premium ₩500k–1.5M."
+      },
+      "enclosureSetup": {
+        "q": "How much does first-month setup cost?",
+        "a": "Depends on category and tier. Reptile basic setup runs ~₩200–400k; premium ~₩600k–1M. The setup estimator gives a per-part breakdown."
+      },
+      "feeding": {
+        "q": "Where do I buy feeder food, and how do I store it?",
+        "a": "Crickets, dubia roaches, mealworms, superworms, pinky mice, CGD all differ by species. Order from KR shops (The Zoo, Newrun, Mimine Aqua, etc.); keep live insects in ventilated boxes and order only enough for 3–5 days."
+      },
+      "emergency": {
+        "q": "What do I do in an emergency?",
+        "a": "Each species has its own warning signs (refusal to eat, bad shed, trauma, heat shock). The /sos page gives a 1-minute category checklist and a 1-tap call to the nearest 24h exotic vet."
+      },
+      "multiPet": {
+        "q": "Can I track multiple pets?",
+        "a": "The current build assumes one pet at a time. Multi-pet is on the roadmap; in the meantime, use /backup to keep separate JSON snapshots per animal."
+      },
+      "dataLoss": {
+        "q": "Will I lose my data if I clear the browser?",
+        "a": "Yes — everything is stored only in this browser's localStorage. Export regularly from /backup so you can restore on another device or after a browser wipe."
+      },
+      "mapKey": {
+        "q": "I can't see the KakaoMap",
+        "a": "The map renders only when VITE_KAKAO_MAP_KEY is set in your build environment. Self-hosters can grab a JavaScript key from the Kakao Developers Console."
+      }
+    }
   },
   "about": {
     "eyebrow": "About Pettography",
