@@ -1,3 +1,4 @@
+import { useOnboardingStore } from '@features/onboarding'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
@@ -8,6 +9,7 @@ import type { SpeciesCategory } from '@features/species'
 interface HabitatState {
   entries: HabitatEntry[]
   addEntry: (input: {
+    petId?: string | null
     measuredAt: string
     temperatureC?: number | null
     humidityPct?: number | null
@@ -23,14 +25,18 @@ export const useHabitatStore = create<HabitatState>()(
     (set) => ({
       entries: [],
       addEntry: ({
+        petId,
         measuredAt,
         temperatureC = null,
         humidityPct = null,
         uvbHoursToday = null,
         note,
       }) => {
+        const resolvedPetId =
+          petId === undefined ? (useOnboardingStore.getState().activePetId ?? null) : petId
         const entry: HabitatEntry = {
           id: crypto.randomUUID(),
+          petId: resolvedPetId,
           measuredAt,
           temperatureC: temperatureC ?? null,
           humidityPct: humidityPct ?? null,
@@ -53,6 +59,13 @@ export const useHabitatStore = create<HabitatState>()(
     }
   )
 )
+
+export function useActivePetHabitat(): HabitatEntry[] {
+  const entries = useHabitatStore((s) => s.entries)
+  const activePetId = useOnboardingStore((s) => s.activePetId)
+  if (!activePetId) return entries
+  return entries.filter((e) => !e.petId || e.petId === activePetId)
+}
 
 export interface HabitatStats {
   count: number

@@ -21,6 +21,7 @@ export const EXPENSE_CATEGORIES: readonly ExpenseCategory[] = [
 
 export const expenseEntrySchema = z.object({
   id: z.string(),
+  petId: z.string().nullable().optional(),
   spentAt: z.string(),
   amountKrw: z.number().int().nonnegative(),
   category: expenseCategorySchema,

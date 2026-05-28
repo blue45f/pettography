@@ -1,3 +1,4 @@
+import { useOnboardingStore } from '@features/onboarding'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
@@ -6,6 +7,7 @@ import type { ExpenseCategory, ExpenseEntry } from './schema'
 interface BudgetState {
   entries: ExpenseEntry[]
   addEntry: (input: {
+    petId?: string | null
     spentAt: string
     amountKrw: number
     category: ExpenseCategory
@@ -20,9 +22,12 @@ export const useBudgetStore = create<BudgetState>()(
   persist(
     (set) => ({
       entries: [],
-      addEntry: ({ spentAt, amountKrw, category, merchant, note }) => {
+      addEntry: ({ petId, spentAt, amountKrw, category, merchant, note }) => {
+        const resolvedPetId =
+          petId === undefined ? (useOnboardingStore.getState().activePetId ?? null) : petId
         const entry: ExpenseEntry = {
           id: crypto.randomUUID(),
+          petId: resolvedPetId,
           spentAt,
           amountKrw,
           category,
@@ -43,6 +48,13 @@ export const useBudgetStore = create<BudgetState>()(
     }
   )
 )
+
+export function useActivePetBudget(): ExpenseEntry[] {
+  const entries = useBudgetStore((s) => s.entries)
+  const activePetId = useOnboardingStore((s) => s.activePetId)
+  if (!activePetId) return entries
+  return entries.filter((e) => !e.petId || e.petId === activePetId)
+}
 
 function monthKey(date: Date): string {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`

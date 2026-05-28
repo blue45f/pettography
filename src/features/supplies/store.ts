@@ -1,3 +1,4 @@
+import { useOnboardingStore } from '@features/onboarding'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
@@ -6,6 +7,7 @@ import type { SupplyItem, SupplyKind } from './schema'
 interface SuppliesState {
   items: SupplyItem[]
   addItem: (input: {
+    petId?: string | null
     name: string
     kind: SupplyKind
     unit: string
@@ -23,6 +25,7 @@ export const useSuppliesStore = create<SuppliesState>()(
     (set) => ({
       items: [],
       addItem: ({
+        petId,
         name,
         kind,
         unit,
@@ -31,8 +34,11 @@ export const useSuppliesStore = create<SuppliesState>()(
         weeklyConsumption,
         preferredVendor,
       }) => {
+        const resolvedPetId =
+          petId === undefined ? (useOnboardingStore.getState().activePetId ?? null) : petId
         const item: SupplyItem = {
           id: crypto.randomUUID(),
+          petId: resolvedPetId,
           name,
           kind,
           unit,
@@ -77,6 +83,13 @@ export interface SupplyStatus {
   remaining: number
   daysLeft: number
   level: 'ok' | 'warning' | 'critical' | 'depleted'
+}
+
+export function useActivePetSupplies(): SupplyItem[] {
+  const items = useSuppliesStore((s) => s.items)
+  const activePetId = useOnboardingStore((s) => s.activePetId)
+  if (!activePetId) return items
+  return items.filter((i) => !i.petId || i.petId === activePetId)
 }
 
 export function supplyStatus(item: SupplyItem, refDate: Date = new Date()): SupplyStatus {

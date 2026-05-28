@@ -19,6 +19,7 @@ export const SUPPLY_KINDS: readonly SupplyKind[] = [
 
 export const supplyItemSchema = z.object({
   id: z.string(),
+  petId: z.string().nullable().optional(),
   name: z.string().min(1).max(60),
   kind: supplyKindSchema,
   unit: z.string().min(1).max(20),

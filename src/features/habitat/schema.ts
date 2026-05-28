@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 export const habitatEntrySchema = z.object({
   id: z.string(),
+  petId: z.string().nullable().optional(),
   measuredAt: z.string(),
   temperatureC: z.number().nullable(),
   humidityPct: z.number().nullable(),
