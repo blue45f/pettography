@@ -3,15 +3,17 @@
   "description": "희귀 애완동물 종 선택부터 위치 기반 병원·샵·관리 정보까지 연결하는 포탈 앱",
   "private": true,
   "version": "0.1.0",
-  "packageManager": "pnpm@10.4.1",
+  "packageManager": "pnpm@11.4.0",
   "type": "module",
   "engines": {
     "node": ">=22",
-    "pnpm": ">=10"
+    "pnpm": ">=11"
   },
   "scripts": {
     "dev": "vite",
+    "dev:backend": "pnpm --filter pettography-backend run dev",
     "build": "tsc -b && vite build",
+    "build:backend": "pnpm --filter pettography-backend run build",
     "lint": "eslint .",
     "lint:security": "eslint . --max-warnings=0 && pnpm audit:security",
     "lint:fix": "eslint . --fix",
@@ -20,6 +22,7 @@
     "clean": "rm -rf dist coverage storybook-static",
     "preview": "vite preview",
     "test": "vitest",
+    "test:backend": "pnpm --filter pettography-backend run test",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:i18n": "vitest run src/i18n/locales.test.ts",
@@ -27,6 +30,8 @@
     "audit:security": "pnpm audit --audit-level high",
     "ci": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test:run && pnpm run build",
     "verify": "pnpm run ci",
+    "verify:backend": "pnpm --filter pettography-backend run verify",
+    "verify:all": "pnpm run verify && pnpm run verify:backend",
     "verify:push": "pnpm run verify && pnpm run lint:security",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

@@ -41,6 +41,11 @@ coverage
 /.playwright
 /.playwright-mcp
 /[0-9][0-9]-*.png
+# Local demo/QA screenshots saved during dev — not for commit
+/contact-*.png
+/forum-*.png
+/landing-*.png
+/herd-*.png
 
 # Storybook
 storybook-static
