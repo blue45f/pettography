@@ -987,6 +987,12 @@
     "lightMode": "라이트 모드",
     "darkMode": "다크 모드"
   },
+  "petSwitcher": {
+    "menuLabel": "내 펫 선택",
+    "title": "내 펫 ({{count}}마리)",
+    "addNew": "새 펫 추가",
+    "remove": "펫 삭제"
+  },
   "events": {
     "title": "2026 한국 펫 박람회",
     "subtitle": "펫앤모어, 케이펫페어, 마이펫페어, 렙타일페어, 메가주 등 한국에서 열리는 펫 박람회를 한 timeline에. 지역 필터로 좁혀보세요.",

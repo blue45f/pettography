@@ -987,6 +987,12 @@
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
   },
+  "petSwitcher": {
+    "menuLabel": "Pick a pet",
+    "title": "My pets ({{count}})",
+    "addNew": "Add new pet",
+    "remove": "Remove pet"
+  },
   "events": {
     "title": "2026 KR pet fairs",
     "subtitle": "PET&MORE, K-PET Fair, MyPetFair, Reptile Fair and Mega Zoo on one timeline. Filter by region.",

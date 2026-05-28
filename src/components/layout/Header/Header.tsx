@@ -1,5 +1,6 @@
 import LanguageToggle from '@components/common/LanguageToggle'
 import ThemeToggle from '@components/common/ThemeToggle'
+import PetSwitcher from '@components/layout/PetSwitcher'
 import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -154,6 +155,7 @@ function Header() {
               )}
             </ul>
           </nav>
+          {completed && <PetSwitcher />}
           <LanguageToggle />
           <ThemeToggle />
         </div>
