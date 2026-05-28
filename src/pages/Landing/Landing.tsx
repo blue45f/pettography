@@ -20,18 +20,28 @@ function Landing() {
   return (
     <div className={styles.landing}>
       <section className={styles.hero} aria-labelledby="hero-title">
-        <p className={styles.eyebrow}>{t('common.appTagline')}</p>
-        <h1 id="hero-title" className={styles.title}>
-          {t('landing.title')}
-        </h1>
-        <p className={styles.description}>{t('landing.description')}</p>
-        <div className={styles.ctaRow}>
-          <Button variant="primary" size="lg" onClick={() => navigate(primaryTarget)}>
-            {completed ? t('nav.dashboard') : t('landing.primaryCta')}
-          </Button>
-          <Button variant="outline" size="lg" onClick={() => navigate('/match')}>
-            {t('nav.match')}
-          </Button>
+        <div className={styles.orbField} aria-hidden="true">
+          <span className={`${styles.orb} ${styles.orbA}`}>🦎</span>
+          <span className={`${styles.orb} ${styles.orbB}`}>🐢</span>
+          <span className={`${styles.orb} ${styles.orbC}`}>🐍</span>
+          <span className={`${styles.orb} ${styles.orbD}`}>🦜</span>
+          <span className={`${styles.orb} ${styles.orbE}`}>🦔</span>
+          <span className={`${styles.orb} ${styles.orbF}`}>🕷️</span>
+        </div>
+        <div className={styles.heroContent}>
+          <p className={styles.eyebrow}>{t('common.appTagline')}</p>
+          <h1 id="hero-title" className={styles.title}>
+            {t('landing.title')}
+          </h1>
+          <p className={styles.description}>{t('landing.description')}</p>
+          <div className={styles.ctaRow}>
+            <Button variant="primary" size="lg" onClick={() => navigate(primaryTarget)}>
+              {completed ? t('nav.dashboard') : t('landing.primaryCta')}
+            </Button>
+            <Button variant="outline" size="lg" onClick={() => navigate('/match')}>
+              {t('nav.match')}
+            </Button>
+          </div>
         </div>
       </section>
 

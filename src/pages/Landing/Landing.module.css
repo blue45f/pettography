@@ -5,12 +5,132 @@
 }
 
 .hero {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(2.5rem, 5vw + 1rem, 5.5rem) clamp(1rem, 2vw + 0.5rem, 3rem);
+  border-radius: clamp(var(--radius-xl), 2vw, var(--radius-2xl));
+  background:
+    radial-gradient(60% 80% at 80% 0%, rgba(244, 63, 94, 0.18), transparent 65%),
+    radial-gradient(70% 90% at 0% 100%, rgba(99, 102, 241, 0.22), transparent 60%),
+    linear-gradient(180deg, rgba(245, 245, 247, 0.55), rgba(255, 255, 255, 0.85));
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+[data-theme='dark'] .hero {
+  background:
+    radial-gradient(60% 80% at 80% 0%, rgba(244, 63, 94, 0.22), transparent 65%),
+    radial-gradient(70% 90% at 0% 100%, rgba(99, 102, 241, 0.3), transparent 60%),
+    linear-gradient(180deg, rgba(17, 24, 39, 0.65), rgba(11, 17, 32, 0.95));
+  border-color: var(--color-border-strong);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: var(--spacing-md);
-  padding: var(--spacing-2xl) 0 var(--spacing-xl);
+  animation: heroRise 700ms var(--easing-expo) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroContent {
+    animation: none;
+  }
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.orbField {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb {
+  position: absolute;
+  font-size: clamp(2.2rem, 4vw + 1rem, 4.5rem);
+  filter: drop-shadow(0 10px 20px rgba(15, 23, 42, 0.12));
+  opacity: 0.5;
+  user-select: none;
+  animation: orbDrift 14s var(--easing-quint) infinite alternate;
+  will-change: transform, opacity;
+}
+
+[data-theme='dark'] .orb {
+  opacity: 0.6;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb {
+    animation: none;
+  }
+}
+
+.orbA {
+  top: 8%;
+  left: 4%;
+  animation-delay: 0s;
+}
+
+.orbB {
+  top: 14%;
+  right: 6%;
+  animation-delay: -3s;
+  animation-duration: 16s;
+}
+
+.orbC {
+  bottom: 18%;
+  left: 8%;
+  animation-delay: -5s;
+  animation-duration: 18s;
+}
+
+.orbD {
+  bottom: 10%;
+  right: 10%;
+  animation-delay: -7s;
+  animation-duration: 15s;
+}
+
+.orbE {
+  top: 50%;
+  left: 50%;
+  animation-delay: -2s;
+  animation-duration: 20s;
+  transform: translate(-220%, -50%);
+}
+
+.orbF {
+  top: 50%;
+  right: 25%;
+  animation-delay: -9s;
+  animation-duration: 17s;
+}
+
+@keyframes orbDrift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-4deg);
+  }
+  100% {
+    transform: translate3d(8px, -14px, 0) rotate(6deg);
+  }
 }
 
 .eyebrow {

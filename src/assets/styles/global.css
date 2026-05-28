@@ -100,9 +100,12 @@
   --shadow-lg: 0 24px 48px -20px rgba(15, 23, 42, 0.25), 0 10px 22px rgba(15, 23, 42, 0.08);
   --shadow-glow: 0 0 0 6px var(--color-primary-alpha);
 
-  --motion-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
-  --motion-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --motion-slow: 320ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* ease-out-expo: more modern, decelerating curve */
+  --easing-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --easing-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-fast: 140ms var(--easing-quint);
+  --motion-base: 240ms var(--easing-expo);
+  --motion-slow: 420ms var(--easing-expo);
   --transition: var(--motion-base);
 
   /* Layout */
