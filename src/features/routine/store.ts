@@ -1,3 +1,4 @@
+import { useOnboardingStore } from '@features/onboarding'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
@@ -6,7 +7,7 @@ import type { RoutineCadence, RoutineTask } from './schema'
 interface RoutineState {
   customTasks: RoutineTask[]
   completions: Record<string, string>
-  addTask: (input: { label: string; cadence: RoutineCadence }) => RoutineTask
+  addTask: (input: { petId?: string | null; label: string; cadence: RoutineCadence }) => RoutineTask
   removeTask: (id: string) => void
   markDone: (id: string) => void
   unmark: (id: string) => void
@@ -18,9 +19,12 @@ export const useRoutineStore = create<RoutineState>()(
     (set) => ({
       customTasks: [],
       completions: {},
-      addTask: ({ label, cadence }) => {
+      addTask: ({ petId, label, cadence }) => {
+        const resolvedPetId =
+          petId === undefined ? (useOnboardingStore.getState().activePetId ?? null) : petId
         const task: RoutineTask = {
           id: `custom-${crypto.randomUUID()}`,
+          petId: resolvedPetId,
           label,
           cadence,
           builtIn: false,
@@ -53,6 +57,13 @@ export const useRoutineStore = create<RoutineState>()(
     }
   )
 )
+
+export function useActivePetCustomTasks(): RoutineTask[] {
+  const tasks = useRoutineStore((s) => s.customTasks)
+  const activePetId = useOnboardingStore((s) => s.activePetId)
+  if (!activePetId) return tasks
+  return tasks.filter((t) => !t.petId || t.petId === activePetId)
+}
 
 export function isDoneWithinWindow(
   completedAt: string | undefined,

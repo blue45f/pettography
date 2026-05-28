@@ -7,6 +7,7 @@ export const ROUTINE_CADENCES: readonly RoutineCadence[] = ['daily', 'weekly', '
 
 export const routineTaskSchema = z.object({
   id: z.string(),
+  petId: z.string().nullable().optional(),
   label: z.string().min(1).max(60),
   cadence: routineCadenceSchema,
   category: z.string().optional(),
