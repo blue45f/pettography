@@ -7,6 +7,8 @@ import Select from '@components/common/Select'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
 import {
+  buildReplyTree,
+  FORUM_MAX_REPLY_DEPTH,
   FORUM_SORT_OPTIONS,
   forumPostFormSchema,
   forumReplyFormSchema,
@@ -16,6 +18,7 @@ import {
   type ForumPostFormValues,
   type ForumReply,
   type ForumReplyFormValues,
+  type ForumReplyNode,
   type ForumSort,
 } from '@features/forum'
 import { useOnboardingStore } from '@features/onboarding'
@@ -223,9 +226,10 @@ function Forum() {
 
                   {isOpen && (
                     <ReplyThread
+                      postId={post.id}
                       replies={replies}
-                      onSend={(values) => {
-                        addReply({ postId: post.id, ...values })
+                      onSend={(values, parentReplyId) => {
+                        addReply({ postId: post.id, parentReplyId, ...values })
                         toast(t('forum.replyToast'), 'success')
                       }}
                     />
@@ -280,12 +284,88 @@ function selectPosts(
   })
 }
 
+type ReplySender = (values: ForumReplyFormValues, parentReplyId: string | null) => void
+
 interface ReplyThreadProps {
-  replies: ReturnType<typeof useForumStore.getState>['replies'][string]
-  onSend: (values: ForumReplyFormValues) => void
+  postId: string
+  replies: readonly ForumReply[]
+  onSend: ReplySender
 }
 
 function ReplyThread({ replies, onSend }: ReplyThreadProps) {
+  const { t } = useTranslation()
+  const tree = buildReplyTree(replies)
+
+  return (
+    <div className={styles.replyThread}>
+      <h4 className={styles.replyTitle}>
+        {t('forum.repliesCount', { count: replies?.length ?? 0 })}
+      </h4>
+      {tree.length > 0 && (
+        <ul className={styles.replyList}>
+          {tree.map((node) => (
+            <ReplyNode key={node.reply.id} node={node} depth={0} onSend={onSend} />
+          ))}
+        </ul>
+      )}
+      <ReplyComposer onSubmit={(values) => onSend(values, null)} variant="root" />
+    </div>
+  )
+}
+
+interface ReplyNodeProps {
+  node: ForumReplyNode
+  depth: number
+  onSend: ReplySender
+}
+
+function ReplyNode({ node, depth, onSend }: ReplyNodeProps) {
+  const { t } = useTranslation()
+  const [composerOpen, setComposerOpen] = useState(false)
+  const canReply = depth + 1 < FORUM_MAX_REPLY_DEPTH
+
+  return (
+    <li className={styles.replyItem}>
+      <p className={styles.replyMeta}>
+        <strong>{node.reply.author}</strong> · {new Date(node.reply.createdAt).toLocaleString('ko')}
+      </p>
+      <p className={styles.replyBody}>{node.reply.body}</p>
+      {canReply && (
+        <button
+          type="button"
+          className={styles.replyNodeAction}
+          onClick={() => setComposerOpen((prev) => !prev)}
+          aria-expanded={composerOpen}
+        >
+          {composerOpen ? t('forum.cancelReply') : t('forum.replyToThis')}
+        </button>
+      )}
+      {composerOpen && canReply && (
+        <ReplyComposer
+          variant="nested"
+          onSubmit={(values) => {
+            onSend(values, node.reply.id)
+            setComposerOpen(false)
+          }}
+        />
+      )}
+      {node.children.length > 0 && (
+        <ul className={styles.replyChildren}>
+          {node.children.map((child) => (
+            <ReplyNode key={child.reply.id} node={child} depth={depth + 1} onSend={onSend} />
+          ))}
+        </ul>
+      )}
+    </li>
+  )
+}
+
+interface ReplyComposerProps {
+  variant: 'root' | 'nested'
+  onSubmit: (values: ForumReplyFormValues) => void
+}
+
+function ReplyComposer({ variant, onSubmit }: ReplyComposerProps) {
   const { t } = useTranslation()
   const {
     register,
@@ -298,44 +378,33 @@ function ReplyThread({ replies, onSend }: ReplyThreadProps) {
   })
 
   const submit = handleSubmit((values) => {
-    onSend(values)
+    onSubmit(values)
     reset({ author: values.author, body: '' })
   })
 
   return (
-    <div className={styles.replyThread}>
-      <h4 className={styles.replyTitle}>
-        {t('forum.repliesCount', { count: replies?.length ?? 0 })}
-      </h4>
-      <ul className={styles.replyList}>
-        {(replies ?? []).map((reply) => (
-          <li key={reply.id} className={styles.replyItem}>
-            <p className={styles.replyMeta}>
-              <strong>{reply.author}</strong> · {new Date(reply.createdAt).toLocaleString('ko')}
-            </p>
-            <p className={styles.replyBody}>{reply.body}</p>
-          </li>
-        ))}
-      </ul>
-      <form className={styles.replyForm} onSubmit={submit} noValidate>
-        <Input
-          label={t('forum.author')}
-          placeholder={t('forum.authorPlaceholder')}
-          error={errors.author?.message ? t(errors.author.message) : undefined}
-          {...register('author')}
-        />
-        <Textarea
-          rows={2}
-          label={t('forum.replyLabel')}
-          placeholder={t('forum.replyPlaceholder')}
-          error={errors.body?.message ? t(errors.body.message) : undefined}
-          {...register('body')}
-        />
-        <Button type="submit" variant="outline" isLoading={isSubmitting}>
-          {t('forum.reply')}
-        </Button>
-      </form>
-    </div>
+    <form
+      className={variant === 'nested' ? styles.replyFormNested : styles.replyForm}
+      onSubmit={submit}
+      noValidate
+    >
+      <Input
+        label={t('forum.author')}
+        placeholder={t('forum.authorPlaceholder')}
+        error={errors.author?.message ? t(errors.author.message) : undefined}
+        {...register('author')}
+      />
+      <Textarea
+        rows={2}
+        label={t('forum.replyLabel')}
+        placeholder={t('forum.replyPlaceholder')}
+        error={errors.body?.message ? t(errors.body.message) : undefined}
+        {...register('body')}
+      />
+      <Button type="submit" variant="outline" size="sm" isLoading={isSubmitting}>
+        {t('forum.reply')}
+      </Button>
+    </form>
   )
 }
 

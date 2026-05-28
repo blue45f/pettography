@@ -33,12 +33,41 @@ export function hotScore(input: ForumHotInputs, nowMs: number = Date.now()): num
 export const forumReplySchema = z.object({
   id: z.string(),
   postId: z.string(),
+  parentReplyId: z.string().nullable().default(null),
   author: z.string().min(1).max(40),
   body: z.string().min(1).max(800),
   createdAt: z.string(),
 })
 
 export type ForumReply = z.infer<typeof forumReplySchema>
+
+export const FORUM_MAX_REPLY_DEPTH = 4
+
+export interface ForumReplyNode {
+  reply: ForumReply
+  children: ForumReplyNode[]
+}
+
+export function buildReplyTree(replies: readonly ForumReply[]): ForumReplyNode[] {
+  const byId = new Map<string, ForumReplyNode>()
+  for (const reply of replies) {
+    byId.set(reply.id, { reply, children: [] })
+  }
+  const roots: ForumReplyNode[] = []
+  for (const reply of replies) {
+    const node = byId.get(reply.id)
+    if (!node) continue
+    const parent = reply.parentReplyId ? byId.get(reply.parentReplyId) : undefined
+    if (parent) parent.children.push(node)
+    else roots.push(node)
+  }
+  const sortNodes = (nodes: ForumReplyNode[]) => {
+    nodes.sort((a, b) => a.reply.createdAt.localeCompare(b.reply.createdAt))
+    for (const node of nodes) sortNodes(node.children)
+  }
+  sortNodes(roots)
+  return roots
+}
 
 export const forumPostFormSchema = z.object({
   category: speciesCategorySchema,

@@ -623,6 +623,8 @@
     "unlike": "좋아요 취소",
     "noResult": "검색 결과가 없어요",
     "noResultHint": "다른 키워드로 시도하거나 카테고리를 바꿔보세요.",
+    "replyToThis": "이 답글에 답글",
+    "cancelReply": "취소",
     "errors": {
       "titleRequired": "제목을 입력해주세요.",
       "titleMax": "제목은 120자 이내로 작성해주세요.",

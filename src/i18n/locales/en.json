@@ -623,6 +623,8 @@
     "unlike": "Unlike",
     "noResult": "No results",
     "noResultHint": "Try a different keyword or category.",
+    "replyToThis": "Reply to this",
+    "cancelReply": "Cancel",
     "errors": {
       "titleRequired": "Enter a title.",
       "titleMax": "Title must be 120 characters or fewer.",

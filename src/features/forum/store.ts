@@ -17,7 +17,12 @@ interface ForumState {
     author: string
     body: string
   }) => ForumPost
-  addReply: (input: { postId: string; author: string; body: string }) => ForumReply
+  addReply: (input: {
+    postId: string
+    parentReplyId?: string | null
+    author: string
+    body: string
+  }) => ForumReply
   removePost: (id: string) => void
   removeReply: (postId: string, replyId: string) => void
   toggleLike: (postId: string) => boolean
@@ -63,15 +68,25 @@ const SEED_REPLIES: Record<string, ForumReply[]> = {
     {
       id: 'seed-reply-1',
       postId: 'seed-post-1',
+      parentReplyId: null,
       author: '게코마스터',
       body: '습도 70%까지 30분 유지 후 따뜻한 면봉으로 살살. 그래도 안 빠지면 가까운 특수동물병원 가세요. 잘못 잡아당기면 발가락 잘립니다.',
       createdAt: '2026-05-20T15:00:00.000Z',
+    },
+    {
+      id: 'seed-reply-1a',
+      postId: 'seed-post-1',
+      parentReplyId: 'seed-reply-1',
+      author: '잠실집사',
+      body: '감사합니다! 면봉으로 해보고 안 빠지면 병원 갈게요.',
+      createdAt: '2026-05-20T15:30:00.000Z',
     },
   ],
   'seed-post-3': [
     {
       id: 'seed-reply-2',
       postId: 'seed-post-3',
+      parentReplyId: null,
       author: '거미바라기',
       body: '+1 탈피 직후 24시간은 외골격 굳을 때까지 먹이도 금지요.',
       createdAt: '2026-05-25T21:00:00.000Z',
@@ -105,7 +120,10 @@ export const useForumStore = create<ForumState>()(
       addReply: (input) => {
         const reply: ForumReply = {
           id: crypto.randomUUID(),
-          ...input,
+          postId: input.postId,
+          parentReplyId: input.parentReplyId ?? null,
+          author: input.author,
+          body: input.body,
           createdAt: new Date().toISOString(),
         }
         set((state) => {
@@ -163,14 +181,35 @@ export const useForumStore = create<ForumState>()(
     }),
     {
       name: 'pettography.forum',
-      version: 2,
+      version: 3,
       storage: createJSONStorage(() => localStorage),
       migrate: (persisted: unknown, version) => {
-        if (version >= 2 && persisted && typeof persisted === 'object') {
-          return persisted as ForumState
+        const base = (persisted ?? {}) as LegacyForumState & Partial<ForumState>
+        const normaliseReplies = (
+          replies: Record<string, ForumReply[]> | undefined
+        ): Record<string, ForumReply[]> => {
+          if (!replies) return SEED_REPLIES
+          const out: Record<string, ForumReply[]> = {}
+          for (const [postId, list] of Object.entries(replies)) {
+            out[postId] = list.map((r) => ({
+              id: r.id,
+              postId: r.postId ?? postId,
+              parentReplyId: r.parentReplyId ?? null,
+              author: r.author,
+              body: r.body,
+              createdAt: r.createdAt,
+            }))
+          }
+          return out
         }
-        const legacy = (persisted ?? {}) as LegacyForumState
-        const posts: ForumPost[] = (legacy.posts ?? []).map((p) => ({
+        if (version >= 3) return persisted as ForumState
+        if (version === 2 && persisted && typeof persisted === 'object') {
+          return {
+            ...(persisted as Partial<ForumState>),
+            replies: normaliseReplies((persisted as Partial<ForumState>).replies),
+          } as ForumState
+        }
+        const posts: ForumPost[] = (base.posts ?? []).map((p) => ({
           id: p.id,
           category: (p.category ?? 'reptile') as ForumPost['category'],
           title: p.title ?? '',
@@ -182,7 +221,7 @@ export const useForumStore = create<ForumState>()(
         }))
         return {
           posts: posts.length > 0 ? posts : SEED_POSTS,
-          replies: legacy.replies ?? SEED_REPLIES,
+          replies: normaliseReplies(base.replies as Record<string, ForumReply[]> | undefined),
           likedPostIds: {},
           lastViewedAt: {},
         } as unknown as ForumState
