@@ -157,6 +157,7 @@ export const routes = [
       { path: 'about', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/About')) },
       { path: 'faq', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Faq')) },
       { path: 'herd', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Herd')) },
+      { path: 'contact', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Contact')) },
       { path: '*', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/NotFound')) },
     ],
   },

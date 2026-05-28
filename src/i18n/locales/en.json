@@ -60,6 +60,7 @@
     "morphs": "Morphs",
     "food": "Food",
     "events": "Pet fairs",
+    "contact": "Contact",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -982,7 +983,56 @@
       "multiPet": "Multi-pet (one user, many animals) is not yet supported.",
       "insurance": "Insurance comparison is dog/cat only. Exotic owners should rely on the reserve workflow."
     },
-    "backHome": "Back home"
+    "backHome": "Back home",
+    "contactCta": "Contact us"
+  },
+  "contact": {
+    "title": "Contact us",
+    "subtitle": "Stuck somewhere, found bad data, want a feature, or want to partner? Tell us — we reply within 1–3 days.",
+    "formTitle": "Send a message",
+    "categoryLabel": "Category",
+    "nameLabel": "Name or handle",
+    "namePlaceholder": "e.g. ReptileKeeper",
+    "emailLabel": "Email (optional)",
+    "emailPlaceholder": "Where to reach you; leave blank to stay anonymous",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "e.g. Add a hamster category",
+    "bodyLabel": "Message",
+    "bodyPlaceholder": "Context, repro steps, expected behavior, links — anything helpful.",
+    "submit": "Send",
+    "submittedToast": "Message received",
+    "removedToast": "Message removed",
+    "recentTitle": "My messages",
+    "empty": "No messages yet",
+    "emptyHint": "Feature requests, bug reports, general questions — all welcome.",
+    "altTitle": "Try a faster channel first",
+    "altHint": "A topic-shaped channel may be faster — forum for keeper Q&A, consult for medical, partners for shop intake.",
+    "altForum": "Discuss with other keepers",
+    "altConsult": "1:1 vet chat",
+    "altPartners": "Apply as a vet/shop",
+    "altSos": "Open emergency guide now",
+    "categories": {
+      "general": "General",
+      "bug": "Bug report",
+      "feature": "Feature request",
+      "partnership": "Partnership",
+      "safety": "Safety / welfare",
+      "other": "Other"
+    },
+    "status": {
+      "received": "Received",
+      "in-review": "In review",
+      "resolved": "Resolved"
+    },
+    "errors": {
+      "nameRequired": "Name is required",
+      "nameMax": "Name must be 40 chars or less",
+      "emailInvalid": "Invalid email",
+      "subjectMin": "Subject must be at least 2 chars",
+      "subjectMax": "Subject must be 120 chars or less",
+      "bodyMin": "Message must be at least 10 chars",
+      "bodyMax": "Message must be 2000 chars or less"
+    }
   },
   "theme": {
     "toLight": "Switch to light mode",

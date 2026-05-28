@@ -60,6 +60,7 @@
     "morphs": "모프 카탈로그",
     "food": "먹이 가이드",
     "events": "박람회 일정",
+    "contact": "문의하기",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -982,7 +983,56 @@
       "multiPet": "Multi-pet (한 사용자 다중 펫) 미지원 — 현재는 단일 펫 가정.",
       "insurance": "보험 비교는 강아지·고양이 기준 — 희귀펫은 비상금 적립 권장."
     },
-    "backHome": "홈으로"
+    "backHome": "홈으로",
+    "contactCta": "문의하기"
+  },
+  "contact": {
+    "title": "문의하기",
+    "subtitle": "Pettography 사용 중 막힌 부분, 데이터 오류, 기능 제안, 입점·제휴 문의 모두 환영합니다. 1~3일 안에 답변드려요.",
+    "formTitle": "문의 보내기",
+    "categoryLabel": "분류",
+    "nameLabel": "이름 또는 닉네임",
+    "namePlaceholder": "예: 잠실집사",
+    "emailLabel": "이메일 (선택)",
+    "emailPlaceholder": "답변 받을 주소, 비워두면 익명으로 처리합니다",
+    "subjectLabel": "제목",
+    "subjectPlaceholder": "예: 햄스터 카테고리 추가 요청",
+    "bodyLabel": "내용",
+    "bodyPlaceholder": "상황·재현 단계·기대 동작·참고 링크 등 자유롭게 적어주세요.",
+    "submit": "문의 보내기",
+    "submittedToast": "문의가 접수되었습니다",
+    "removedToast": "문의를 삭제했습니다",
+    "recentTitle": "내 문의 내역",
+    "empty": "아직 보낸 문의가 없어요",
+    "emptyHint": "기능 요청·버그 신고·일반 질문 모두 환영합니다.",
+    "altTitle": "다른 채널로 먼저 시도해보세요",
+    "altHint": "성격에 맞는 채널이 더 빠를 수 있어요. 일반 질문이면 포럼, 의료는 상담, 입점은 파트너 신청 페이지로.",
+    "altForum": "다른 키퍼와 토론·질문",
+    "altConsult": "수의사 1:1 챗 상담",
+    "altPartners": "병원·샵 입점 신청",
+    "altSos": "응급 행동 가이드 즉시 열기",
+    "categories": {
+      "general": "일반 문의",
+      "bug": "버그 신고",
+      "feature": "기능 제안",
+      "partnership": "제휴·입점",
+      "safety": "안전·동물복지",
+      "other": "기타"
+    },
+    "status": {
+      "received": "접수됨",
+      "in-review": "확인 중",
+      "resolved": "처리 완료"
+    },
+    "errors": {
+      "nameRequired": "이름을 입력하세요",
+      "nameMax": "이름은 40자 이내로 입력하세요",
+      "emailInvalid": "이메일 형식이 올바르지 않습니다",
+      "subjectMin": "제목은 2자 이상 입력하세요",
+      "subjectMax": "제목은 120자 이내로 입력하세요",
+      "bodyMin": "내용은 10자 이상 입력하세요",
+      "bodyMax": "내용은 2000자 이내로 입력하세요"
+    }
   },
   "theme": {
     "toLight": "라이트 모드로 전환",

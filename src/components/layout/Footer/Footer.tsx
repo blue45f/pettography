@@ -15,6 +15,9 @@ function Footer() {
           <Link to="/about" className={styles.link}>
             {t('footer.about')}
           </Link>
+          <Link to="/contact" className={styles.link}>
+            {t('footer.contact')}
+          </Link>
           <Link to="/faq" className={styles.link}>
             {t('footer.faq')}
           </Link>

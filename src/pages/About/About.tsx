@@ -80,6 +80,9 @@ function About() {
         <Link to="/" className={styles.footerLink}>
           ← {t('about.backHome')}
         </Link>
+        <Link to="/contact" className={styles.footerLink}>
+          {t('about.contactCta')} →
+        </Link>
         <a
           href="https://github.com/blue45f/pettography"
           target="_blank"

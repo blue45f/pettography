@@ -66,6 +66,7 @@ function Header() {
         { path: '/food', label: t('nav.food') },
         { path: '/events', label: t('nav.events') },
         { path: '/backup', label: t('nav.backup') },
+        { path: '/contact', label: t('nav.contact') },
         { path: '/sos', label: t('nav.sos') },
       ]
     : [
@@ -74,6 +75,7 @@ function Header() {
         { path: '/partners', label: t('nav.partners') },
         { path: '/registry', label: t('nav.registry') },
         { path: '/compare', label: t('nav.compare') },
+        { path: '/contact', label: t('nav.contact') },
         { path: '/sos', label: t('nav.sos') },
       ]
 
