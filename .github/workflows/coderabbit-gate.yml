@@ -90,6 +90,26 @@ jobs:
             );
 
             if (headReviews.length === 0) {
+              // CodeRabbit sometimes marks the check as success without posting
+              // a formal PR review when it finds no actionable issues. In that
+              // case, treat a passing CodeRabbit check on the head SHA as
+              // equivalent to APPROVED so the gate doesn't stay permanently red.
+              const { data: checkRuns } = await github.rest.checks.listForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: headSha,
+                check_name: "CodeRabbit",
+                per_page: 10,
+              });
+              const latestCrCheck = checkRuns.check_runs
+                .filter((c) => codeRabbitLogins.has(c.app?.slug ?? "") || c.name === "CodeRabbit")
+                .sort((a, b) => new Date(b.completed_at ?? 0).getTime() - new Date(a.completed_at ?? 0).getTime())[0];
+              if (latestCrCheck?.conclusion === "success") {
+                core.notice(
+                  `No CodeRabbit PR review for ${headSha}, but CodeRabbit check concluded 'success' — treating as approved.`
+                );
+                return;
+              }
               core.setFailed(
                 `CodeRabbit has not reviewed the latest PR head (${headSha}) yet. The gate stays red until CodeRabbit posts a review for the current commit. ` +
                   "If CodeRabbit is disabled for your repo, ask an admin to install the GitHub App."
