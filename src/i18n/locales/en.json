@@ -869,7 +869,54 @@
     "copyright": "© {{year}} Pettography. Location data is mock around Songpa-gu.",
     "privacy": "Privacy policy",
     "terms": "Terms of service",
-    "contact": "Contact"
+    "contact": "Contact",
+    "about": "About"
+  },
+  "about": {
+    "eyebrow": "About Pettography",
+    "title": "One rare pet's whole life in one app",
+    "lead": "Pettography curates every stage of a reptile/arthropod/exotic bird/amphibian/small mammal keeper's journey, from first pick to farewell, in a single Korean-context app.",
+    "whyTitle": "Why we built it",
+    "whyBody": "In a Korean pet market built around dogs and cats, owners of rare pets juggle scattered information. Major apps focus on dog/cat. Wildlife filing duties live buried on environment ministry sites. Pettography aims to be both the first tool you open in an emergency and the lightweight diary you check 2-3x a week.",
+    "principlesTitle": "Five principles",
+    "principles": {
+      "location": {
+        "title": "Location and distance are first-class",
+        "body": "All location data ships with distance, and switching location is one chip away."
+      },
+      "emergency": {
+        "title": "Emergencies get priority",
+        "body": "24h vets, critical supply levels and environment range breaches lead visually and in sort order."
+      },
+      "sources": {
+        "title": "Don't hide sources",
+        "body": "Mock data, external links, government registration status are all surfaced. Trust comes from metadata, not raw data."
+      },
+      "diaryVsMedical": {
+        "title": "Light on diary, deep on medical",
+        "body": "Diary and routine are fast-entry; medical, habitat and budget pages carry rich context per screen."
+      },
+      "beyondCards": {
+        "title": "Beyond identical cards",
+        "body": "We avoid endless grids of the same card. Information weight drives the affordance choice."
+      }
+    },
+    "dataTitle": "How we handle data",
+    "data": {
+      "storage": "All user records (diary, health, habitat, budget, supplies, gallery, pet ID, ...) live only in this browser's localStorage.",
+      "backup": "Use /backup to export everything as JSON and restore it on another device.",
+      "species": "Species data is summarized from external references (Reptiles Magazine, MorphMarket, Korea National Biological Resources, etc.).",
+      "registry": "Wildlife filing guidance summarizes Ministry of Environment material (wildlife.go.kr, animal.go.kr). Official sources remain authoritative.",
+      "external": "32 external links are real Korean sites verified with WebSearch + WebFetch; no affiliation."
+    },
+    "limitsTitle": "Limits and follow-ups",
+    "limits": {
+      "map": "KakaoMap SDK not wired (placeholder). Set VITE_KAKAO_MAP_KEY to enable.",
+      "whiteList": "White-list classification is an estimate; refresh when MoE publishes the official list.",
+      "multiPet": "Multi-pet (one user, many animals) is not yet supported.",
+      "insurance": "Insurance comparison is dog/cat only. Exotic owners should rely on the reserve workflow."
+    },
+    "backHome": "Back home"
   },
   "theme": {
     "toLight": "Switch to light mode",

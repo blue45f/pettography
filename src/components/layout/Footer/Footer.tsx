@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Footer.module.css'
 
@@ -11,14 +12,22 @@ function Footer() {
       <div className={styles.container}>
         <p className={styles.copyright}>{t('footer.copyright', { year: currentYear })}</p>
         <div className={styles.links}>
-          <a href="/privacy" className={styles.link}>
-            {t('footer.privacy')}
-          </a>
-          <a href="/terms" className={styles.link}>
-            {t('footer.terms')}
-          </a>
-          <a href="/contact" className={styles.link}>
-            {t('footer.contact')}
+          <Link to="/about" className={styles.link}>
+            {t('footer.about')}
+          </Link>
+          <Link to="/backup" className={styles.link}>
+            {t('nav.backup')}
+          </Link>
+          <Link to="/registry" className={styles.link}>
+            {t('nav.registry')}
+          </Link>
+          <a
+            href="https://github.com/blue45f/pettography"
+            target="_blank"
+            rel="noreferrer"
+            className={styles.link}
+          >
+            GitHub ↗
           </a>
         </div>
       </div>
