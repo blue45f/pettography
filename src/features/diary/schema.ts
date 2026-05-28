@@ -14,6 +14,7 @@ export const DIARY_CATEGORIES: readonly DiaryCategory[] = [
 
 export const diaryEntrySchema = z.object({
   id: z.string(),
+  petId: z.string().nullable().optional(),
   speciesId: z.string().nullable(),
   category: diaryCategorySchema,
   occurredAt: z.string(),

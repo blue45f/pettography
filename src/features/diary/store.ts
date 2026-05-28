@@ -1,3 +1,4 @@
+import { useOnboardingStore } from '@features/onboarding'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
@@ -6,6 +7,7 @@ import type { DiaryCategory, DiaryEntry } from './schema'
 interface DiaryState {
   entries: DiaryEntry[]
   addEntry: (input: {
+    petId?: string | null
     speciesId: string | null
     category: DiaryCategory
     occurredAt: string
@@ -21,9 +23,20 @@ export const useDiaryStore = create<DiaryState>()(
   persist(
     (set) => ({
       entries: [],
-      addEntry: ({ speciesId, category, occurredAt, body, weightGram = null, imageUrl = null }) => {
+      addEntry: ({
+        petId,
+        speciesId,
+        category,
+        occurredAt,
+        body,
+        weightGram = null,
+        imageUrl = null,
+      }) => {
+        const resolvedPetId =
+          petId === undefined ? useOnboardingStore.getState().activePetId : petId
         const entry: DiaryEntry = {
           id: crypto.randomUUID(),
+          petId: resolvedPetId ?? null,
           speciesId,
           category,
           occurredAt,
@@ -48,6 +61,18 @@ export const useDiaryStore = create<DiaryState>()(
     }
   )
 )
+
+/**
+ * Returns diary entries scoped to the currently active pet.
+ * Legacy entries with no petId fall through to the active pet so
+ * existing v1 data keeps showing up after the multi-pet migration.
+ */
+export function useActivePetDiary(): DiaryEntry[] {
+  const entries = useDiaryStore((s) => s.entries)
+  const activePetId = useOnboardingStore((s) => s.activePetId)
+  if (!activePetId) return entries
+  return entries.filter((e) => !e.petId || e.petId === activePetId)
+}
 
 export function diaryStats(entries: DiaryEntry[]) {
   const byCategory = new Map<DiaryCategory, number>()
