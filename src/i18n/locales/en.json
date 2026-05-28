@@ -638,6 +638,7 @@
     "reportedToast": "Report received",
     "reportedAlready": "You already reported this",
     "hiddenNotice": "Hidden from other readers after reports accumulated. Only you can see it.",
+    "newReplies": "{{count}} new",
     "errors": {
       "titleRequired": "Enter a title.",
       "titleMax": "Title must be 120 characters or fewer.",

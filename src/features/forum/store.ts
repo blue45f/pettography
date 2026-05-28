@@ -18,6 +18,8 @@ interface ForumState {
   reportedPostIds: Record<string, true>
   reportedReplyIds: Record<string, true>
   lastAuthor: string
+  lastReadAt: Record<string, string>
+  markPostRead: (postId: string) => void
   addPost: (input: {
     category: SpeciesCategory
     title: string
@@ -129,6 +131,12 @@ export const useForumStore = create<ForumState>()(
       reportedPostIds: {},
       reportedReplyIds: {},
       lastAuthor: '',
+      lastReadAt: {},
+      markPostRead: (postId) => {
+        set((state) => ({
+          lastReadAt: { ...state.lastReadAt, [postId]: new Date().toISOString() },
+        }))
+      },
       addPost: (input) => {
         const post: ForumPost = {
           id: crypto.randomUUID(),
@@ -219,7 +227,7 @@ export const useForumStore = create<ForumState>()(
         set((state) => {
           const list = state.replies[postId] ?? []
           const updated = list.map((r) =>
-            r.id === replyId ? { ...r, reportCount: r.reportCount + 1 } : r
+            r.id === replyId ? { ...r, reportCount: r.reportCount + 1 } : r,
           )
           return {
             replies: { ...state.replies, [postId]: updated },
@@ -232,7 +240,7 @@ export const useForumStore = create<ForumState>()(
         const liked = Boolean(get().likedPostIds[postId])
         set((state) => {
           const posts = state.posts.map((p) =>
-            p.id === postId ? { ...p, likes: Math.max(0, p.likes + (liked ? -1 : 1)) } : p
+            p.id === postId ? { ...p, likes: Math.max(0, p.likes + (liked ? -1 : 1)) } : p,
           )
           const nextLiked = { ...state.likedPostIds }
           if (liked) delete nextLiked[postId]
@@ -261,16 +269,17 @@ export const useForumStore = create<ForumState>()(
           reportedPostIds: {},
           reportedReplyIds: {},
           lastAuthor: '',
+          lastReadAt: {},
         }),
     }),
     {
       name: 'pettography.forum',
-      version: 5,
+      version: 6,
       storage: createJSONStorage(() => localStorage),
       migrate: (persisted: unknown, version) => {
         const base = (persisted ?? {}) as LegacyForumState & Partial<ForumState>
         const normaliseReplies = (
-          replies: Record<string, ForumReply[]> | undefined
+          replies: Record<string, ForumReply[]> | undefined,
         ): Record<string, ForumReply[]> => {
           if (!replies) return SEED_REPLIES
           const out: Record<string, ForumReply[]> = {}
@@ -293,10 +302,14 @@ export const useForumStore = create<ForumState>()(
             reportCount: typeof p.reportCount === 'number' ? p.reportCount : 0,
             autoHidden: typeof p.autoHidden === 'boolean' ? p.autoHidden : false,
           }))
-        if (version >= 5) return persisted as ForumState
+        if (version >= 6) return persisted as ForumState
+        if (version >= 5) {
+          const state = persisted as Partial<ForumState>
+          return { ...state, lastReadAt: state.lastReadAt ?? {} } as ForumState
+        }
         if (version >= 4) {
           const state = persisted as Partial<ForumState>
-          return { ...state, lastAuthor: state.lastAuthor ?? '' } as ForumState
+          return { ...state, lastAuthor: state.lastAuthor ?? '', lastReadAt: {} } as ForumState
         }
         if (version >= 2 && persisted && typeof persisted === 'object') {
           const state = persisted as Partial<ForumState>
@@ -333,6 +346,6 @@ export const useForumStore = create<ForumState>()(
           reportedReplyIds: {},
         } as unknown as ForumState
       },
-    }
-  )
+    },
+  ),
 )

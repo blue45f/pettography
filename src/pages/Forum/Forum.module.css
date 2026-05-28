@@ -319,3 +319,20 @@
   border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
 }
+
+.newReplyBadge {
+  margin-left: var(--spacing-xs);
+  vertical-align: middle;
+  font-size: var(--font-size-xs);
+  animation: pulse 1.5s ease-in-out 3;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

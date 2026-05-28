@@ -53,6 +53,8 @@ function Forum() {
   const reportPost = useForumStore((s) => s.reportPost)
   const reportReply = useForumStore((s) => s.reportReply)
   const lastAuthor = useForumStore((s) => s.lastAuthor)
+  const lastReadAt = useForumStore((s) => s.lastReadAt)
+  const markPostRead = useForumStore((s) => s.markPostRead)
 
   const [category, setCategory] = useState<SpeciesCategory | 'all'>(profile.category ?? 'all')
   const [sort, setSort] = useState<ForumSort>('hot')
@@ -90,7 +92,10 @@ function Forum() {
   function handleToggleOpen(postId: string) {
     const willOpen = openPostId !== postId
     setOpenPostId(willOpen ? postId : null)
-    if (willOpen) recordView(postId)
+    if (willOpen) {
+      recordView(postId)
+      markPostRead(postId)
+    }
   }
 
   return (
@@ -198,13 +203,25 @@ function Forum() {
           const replies = repliesMap[post.id] ?? []
           const isOpen = openPostId === post.id
           const liked = Boolean(likedPostIds[post.id])
+          const hasOwnReply = replies.some((r) => ownReplyIds[r.id])
+          const readAt = lastReadAt[post.id]
+          const newRepliesCount = hasOwnReply
+            ? replies.filter((r) => !ownReplyIds[r.id] && (!readAt || r.createdAt > readAt)).length
+            : 0
           return (
             <li key={post.id}>
               <Card padding="lg" className={styles.postCard}>
                 <Card.Body>
                   <div className={styles.postHeader}>
                     <div>
-                      <h3 className={styles.postTitle}>{post.title}</h3>
+                      <h3 className={styles.postTitle}>
+                        {post.title}
+                        {newRepliesCount > 0 && (
+                          <Badge variant="primary" className={styles.newReplyBadge}>
+                            {t('forum.newReplies', { count: newRepliesCount })}
+                          </Badge>
+                        )}
+                      </h3>
                       <p className={styles.postMeta}>
                         <Badge variant="primary">{t(`categories.${post.category}`)}</Badge>{' '}
                         {post.author} · {new Date(post.createdAt).toLocaleString('ko')}
@@ -257,7 +274,7 @@ function Forum() {
                             const ok = reportPost(post.id)
                             toast(
                               ok ? t('forum.reportedToast') : t('forum.reportedAlready'),
-                              ok ? 'success' : 'error'
+                              ok ? 'success' : 'error',
                             )
                           }}
                         >
@@ -290,7 +307,7 @@ function Forum() {
                         const ok = reportReply(post.id, replyId)
                         toast(
                           ok ? t('forum.reportedToast') : t('forum.reportedAlready'),
-                          ok ? 'success' : 'error'
+                          ok ? 'success' : 'error',
                         )
                       }}
                     />
@@ -311,7 +328,7 @@ function selectPosts(
   ownPostIds: Record<string, true>,
   category: SpeciesCategory | 'all',
   sort: ForumSort,
-  search: string
+  search: string,
 ): ForumPost[] {
   const now = Date.now()
   const needle = search.trim().toLowerCase()
@@ -332,7 +349,7 @@ function selectPosts(
         replies: repliesMap[a.id]?.length ?? 0,
         createdAt: a.createdAt,
       },
-      now
+      now,
     )
     const bScore = hotScore(
       {
@@ -341,7 +358,7 @@ function selectPosts(
         replies: repliesMap[b.id]?.length ?? 0,
         createdAt: b.createdAt,
       },
-      now
+      now,
     )
     return bScore - aScore
   })
