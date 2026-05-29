@@ -13,7 +13,7 @@
 - **사용자 데이터 100% 클라이언트 저장** — zustand persist + localStorage. `/backup` 페이지에서 JSON export/import.
 - **i18n ko/en/ja** 완전 동기화 — 3개 언어 키 패리티 (`pnpm test:i18n` 게이트), 헤더 언어 선택기.
 
-## 페이지 맵 (총 66개 라우트)
+## 페이지 맵 (총 69개 라우트)
 
 | 카테고리  | 페이지                                                                       | 설명                                                                                                                                                                            |
 | --------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -32,7 +32,7 @@
 | 법규/안전 | `/registry`, `/petid`, `/backup`                                             | 2025-12-14 야생생물법 4종 신고 체크리스트 / 인쇄용 미아 ID 카드 / 데이터 export·import·wipe                                                                                     |
 | 메타      | `/about`, `/faq`                                                             | 앱 소개·원칙·데이터 출처 / 10개 자주 묻는 질문 accordion                                                                                                                        |
 
-### 🆕 v0.2 확장 (28개 신규 라우트, ko/en/ja)
+### 🆕 v0.2 확장 (31개 신규 라우트, ko/en/ja)
 
 | 카테고리          | 페이지                                     | 설명                                                                                                                                    |
 | ----------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -45,6 +45,7 @@
 | 🧭 계획·복지·대비 | `/wishlist`, `/taming`, `/kit`             | **위시리스트**(입양 준비도 체크) / **핸들링 적응**(세션·스트레스 추이·내성 가이드) / **응급 키트**(대비 체크리스트·연락처·/sos 연동)    |
 | 🔔 통합·영양·자급 | `/alerts`, `/supplements`, `/feeders`      | **알림 센터**(전 기능 D-day·지연 교차 집계) / **보충제 더스팅**(칼슘·D3·MBD 예방) / **먹이 컬처**(두비아·톡토기 콜로니·gut-load)        |
 | 🌳 혈통·재무·이동 | `/lineage`, `/costreport`, `/transport`    | **혈통도**(3대 펫디그리 트리·자손) / **비용 리포트**(연/월·카테고리·펫별 집계) / **이동 플래너**(병원·이사 체크리스트·온도·규제종 서류) |
+| 🧽 위생·안전·계절 | `/cleaning`, `/safety`, `/seasonal`        | **청소 기록**(스팟·전체·바닥재·물갈이 주기) / **안전 점검**(탈출·화상·감전·익사 감사·점수) / **계절 케어**(현재 계절·종별 봄~겨울 조정) |
 
 > 모든 신규 기능: pet-scoped zustand persist · 디자인 토큰 준수 · 라이트/다크 동등 · WCAG AA · ko/en/ja i18n 키 패리티 · 단위 테스트.
 
@@ -54,7 +55,7 @@
 pettography/
 ├── src/                 # Frontend (React 19 + Vite + TS strict)
 │   ├── features/        # 30+ features (species, onboarding, genetics, molt, vivarium, breeding, feeding, meds, showcase, qna, meetups, market, passport, assistant ...)
-│   ├── pages/           # 66 routes (lazy)
+│   ├── pages/           # 69 routes (lazy)
 │   ├── components/      # shared UI (Card, Badge, Button, Input, Textarea, Toast, BottomNav, Header ...)
 │   ├── router/ store/ services/ i18n/ hooks/ utils/
 │   └── assets/styles/   # design tokens (OKLCH-tinted, fluid clamp)
