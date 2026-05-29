@@ -199,6 +199,13 @@ export const routes = [
       { path: 'senior', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Senior')) },
       { path: 'vitals', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Vitals')) },
       { path: 'cohab', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Cohab')) },
+      {
+        path: 'wishlist',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Wishlist')),
+      },
+      { path: 'taming', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Taming')) },
+      { path: 'kit', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Kit')) },
       { path: 'food', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Food')) },
       { path: 'events', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Events')) },
       { path: 'about', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/About')) },

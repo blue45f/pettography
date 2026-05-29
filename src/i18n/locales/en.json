@@ -78,6 +78,9 @@
     "senior": "Senior care",
     "vitals": "Vitals",
     "cohab": "Cohabitation",
+    "wishlist": "Wishlist",
+    "taming": "Taming",
+    "kit": "Emergency kit",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -2600,6 +2603,231 @@
         "madagascar-hissing-cockroach": "A social, colony-living arthropod — group housing among the same species is natural."
       }
     }
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "subtitle": "Collect species you hope to keep one day, and check your readiness before bringing one home.",
+    "responsibleNote": "Fill in your readiness before bringing one home. A prepared adoption — not an impulse — protects the animal.",
+    "added": "Added to your wishlist",
+    "remove": "Remove",
+    "unknownSpecies": "Unknown species",
+    "regulatedWarning": "Regulated · check filing",
+    "experienceCaution": "This is an advanced species. Build up comparable experience before taking it on.",
+    "budgetHint": "Est. monthly upkeep ~ {{amount}} KRW",
+    "readinessTitle": "Readiness checklist",
+    "readinessAria": "Readiness {{pct}}% complete",
+    "form": {
+      "title": "Add to wishlist",
+      "species": "Species",
+      "speciesPlaceholder": "Choose a species",
+      "priority": "Priority",
+      "targetDate": "Target date (optional)",
+      "targetDateHelper": "Roughly when you hope to acquire it. Leave blank if unsure.",
+      "notes": "Notes",
+      "notesPlaceholder": "Care plan, source, open questions…",
+      "submit": "Add to wishlist"
+    },
+    "priority": {
+      "someday": "Someday",
+      "soon": "Soon",
+      "next": "Up next"
+    },
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "readiness": {
+      "space": "Housing space secured",
+      "budget": "Startup & monthly budget",
+      "experience": "Experience for the difficulty",
+      "filing": "Regulated-species filing checked",
+      "vet": "Exotic vet lined up",
+      "time": "Committed to lifelong care",
+      "supplies": "Essential gear ready"
+    },
+    "dday": {
+      "future": "D-{{days}}",
+      "today": "D-DAY",
+      "past": "{{days}} days past target"
+    },
+    "empty": {
+      "title": "Your wishlist is empty",
+      "desc": "Add a species you have your eye on and build up your readiness before bringing it home."
+    },
+    "errors": {
+      "speciesRequired": "Please choose a species.",
+      "notesMax": "Notes can be up to 300 characters."
+    }
+  },
+  "taming": {
+    "title": "Taming",
+    "subtitle": "Handling is for the animal's tolerance, not the keeper's wish. Log sessions slowly and briefly, and watch stress signals and acclimation over time.",
+    "saved": "Session logged.",
+    "showAllPets": "Show all pets",
+    "tolerance": {
+      "low": {
+        "title": "This species has low handling tolerance",
+        "body": "Keep it minimal and brief. Handle only when truly needed (health checks, cleaning, moving) — observation is usually enough. Not handling can be the best care."
+      },
+      "medium": {
+        "title": "This species has moderate handling tolerance",
+        "body": "Short, calm, regular sessions can build trust over time. Stop and return the animal as soon as you see stress signals."
+      },
+      "high": {
+        "title": "This species tolerates handling well",
+        "body": "It generally handles well, but still put the animal's signals first. It's fine to skip a session on an off day."
+      }
+    },
+    "form": {
+      "title": "Log a session",
+      "date": "Date",
+      "duration": "Duration (min)",
+      "durationHelp": "Time you actually handled the animal",
+      "calmness": "Calmness (1–5)",
+      "stressSigns": "Stress signs",
+      "stressSignsHelp": "Select every behavior shown this session. Leave empty if none.",
+      "note": "Note",
+      "notePlaceholder": "Note the context, environment, or anything notable.",
+      "submit": "Save session"
+    },
+    "calmnessScale": {
+      "1": "Very anxious",
+      "2": "Anxious",
+      "3": "Neutral",
+      "4": "Calm",
+      "5": "Very calm"
+    },
+    "signs": {
+      "fleeing": "Fleeing",
+      "hiding": "Hiding",
+      "tailRattle": "Tail rattle",
+      "hissing": "Hissing",
+      "biting": "Biting",
+      "gaping": "Gaping threat",
+      "freezing": "Freezing",
+      "regurgitation": "Regurgitation"
+    },
+    "progress": {
+      "title": "Acclimation progress",
+      "avgCalmness": "Average calmness",
+      "outOfFive": "{{value}}/5",
+      "sessions": "Sessions",
+      "lastSession": "Last session",
+      "trendLabel": "Calmness trend (past → now)",
+      "chartLabel": "Calmness trend by session",
+      "delta": {
+        "improving": "Improving",
+        "steady": "Steady",
+        "declining": "Declining"
+      }
+    },
+    "recommendation": {
+      "title": "Recommendation"
+    },
+    "guidance": {
+      "noData": "No sessions yet. Start calmly with a short session.",
+      "lowTolerance": "This species has low handling tolerance. Keep frequency and duration minimal, and rely mostly on observation.",
+      "highStress": "Recent sessions show a lot of stress signals. Cut back on sessions and focus on environmental acclimation.",
+      "goodProgress": "Calmness is improving. Keep this pace and continue slowly.",
+      "declining": "Calmness is dropping. Shorten your sessions and pay closer attention to the animal's signals.",
+      "steady": "Acclimation is steady. Keep up these short, gentle sessions."
+    },
+    "history": {
+      "calmness": "Calmness {{value}}/5",
+      "duration": "{{count}} min",
+      "remove": "Remove",
+      "speciesUnknown": "Logged without species info"
+    },
+    "empty": {
+      "title": "No handling sessions yet",
+      "desc": "Log your first short session. Over time you'll see the acclimation trend."
+    },
+    "errors": {
+      "dateRequired": "Please enter a date.",
+      "durationNumber": "Please enter the duration as a number.",
+      "durationMin": "Duration must be 0 minutes or more.",
+      "durationMax": "That duration is too long.",
+      "calmnessRequired": "Please choose a calmness level.",
+      "calmnessRange": "Calmness must be between 1 and 5.",
+      "noteMax": "Note must be 200 characters or fewer."
+    }
+  },
+  "kit": {
+    "title": "Emergency kit",
+    "subtitle": "Power outages, heatwaves, sudden illness. In a crisis, minutes matter. Prepare in advance so you never have to scramble.",
+    "readiness": {
+      "title": "Readiness",
+      "desc": "Check off items to build up your household's emergency readiness.",
+      "count": "{{done}}/{{total}} ready",
+      "aria": "Readiness {{pct}}%"
+    },
+    "quick": {
+      "sosTitle": "Emergency SOS",
+      "sosDesc": "Symptom-based response and 1-tap call",
+      "hospitalsTitle": "Find a 24h vet",
+      "hospitalsDesc": "Nearby exotic-animal emergency clinics"
+    },
+    "hintLabel": "Tip for your pet",
+    "hints": {
+      "generic": "Register a pet and we'll show a preparedness tip for its species. Start with warmth, transport, and contacts.",
+      "reptile": "For reptiles, warmth matters most during an outage. Keep heat packs and a power bank on hand, and check the enclosure often with a spare thermometer.",
+      "amphibian": "For amphibians, water quality and oxygen are vital. Filtration and aeration stop during an outage, so store clean water ahead of time and minimize temperature swings.",
+      "arthropod": "For arthropods, holding humidity and temperature is key. Keep misting water plus heat and ice packs ready so the enclosure doesn't swing suddenly.",
+      "bird": "Birds are sensitive to sudden temperature changes and stress. Keep an insulatable carrier with a cover, and prepare a heat backup for outages.",
+      "mammal": "Small mammals struggle to regulate body temperature. Prepare for both heat and cold with insulation, an ice pack, and plenty of water."
+    },
+    "checklist": {
+      "title": "Supplies checklist",
+      "intro": "Supplies worth having ready for each kind of emergency. Check the ones you already have."
+    },
+    "groups": {
+      "power": "Power outage",
+      "transport": "Transport / evacuation",
+      "firstAid": "First aid",
+      "info": "Info / contacts"
+    },
+    "items": {
+      "backupHeat": "Heat backup — hand warmers / USB heater",
+      "thermometer": "Spare thermo-hygrometer",
+      "batteries": "Spare batteries / power bank",
+      "carrier": "Small carrier / ventilated container",
+      "insulatedBox": "Styrofoam box",
+      "heatPack": "Hand warmers",
+      "coolPack": "Ice pack (for heatwaves)",
+      "sugarWater": "Sugar-water gauze for escape / exhaustion",
+      "cleanGauze": "Sterile gauze",
+      "digitalScale": "Scale",
+      "feedingSyringe": "Feeding syringe",
+      "vetContact": "Exotic-animal vet contact",
+      "emergencyVet": "24h emergency clinic",
+      "filingDoc": "Copy of possession-filing papers",
+      "careSheet": "Printed species care sheet"
+    },
+    "contacts": {
+      "title": "Emergency contacts",
+      "intro": "Save your vet, pet sitter, and neighbor numbers so you can call instantly in a pinch.",
+      "labelField": "Name / relationship",
+      "labelPlaceholder": "e.g. Regular exotic-animal vet",
+      "phoneField": "Phone number",
+      "phonePlaceholder": "e.g. 02-000-0000",
+      "noteField": "Note",
+      "notePlaceholder": "e.g. Open at night, booking required",
+      "add": "Add contact",
+      "added": "Contact saved",
+      "call": "Call",
+      "remove": "Remove",
+      "emptyTitle": "No saved contacts yet",
+      "emptyDesc": "Add the numbers of your go-to vet or someone who can help, ahead of time."
+    },
+    "errors": {
+      "labelRequired": "Enter a name",
+      "labelMax": "Name must be 40 characters or fewer",
+      "phoneRequired": "Enter a phone number",
+      "phoneMax": "Phone number must be 40 characters or fewer",
+      "noteMax": "Note must be 120 characters or fewer"
+    },
+    "disclaimer": "This checklist is guidance to help you prepare in advance. In a real emergency, contact an exotic-animal clinic immediately."
   },
   "morphs": {
     "title": "Popular morph catalog",

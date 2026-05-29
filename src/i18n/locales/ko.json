@@ -78,6 +78,9 @@
     "senior": "노령기 케어",
     "vitals": "바이탈 측정",
     "cohab": "합사 체크",
+    "wishlist": "위시리스트",
+    "taming": "핸들링 적응",
+    "kit": "응급 키트",
     "food": "먹이 가이드",
     "events": "박람회 일정",
     "contact": "문의하기",
@@ -2597,6 +2600,231 @@
         "madagascar-hissing-cockroach": "군집 생활을 하는 사회적 절지류 — 같은 종끼리 무리 사육이 자연스럽습니다."
       }
     }
+  },
+  "wishlist": {
+    "title": "위시리스트",
+    "subtitle": "언젠가 함께하고 싶은 종을 모으고, 데려오기 전에 준비도를 점검하세요.",
+    "responsibleNote": "데려오기 전에 준비도를 채우세요. 충동이 아니라 준비된 입양이 동물을 지킵니다.",
+    "added": "위시리스트에 담았어요",
+    "remove": "삭제",
+    "unknownSpecies": "알 수 없는 종",
+    "regulatedWarning": "규제종 · 보관신고 확인",
+    "experienceCaution": "고난도 종이에요. 비슷한 경험을 충분히 쌓은 뒤 도전하세요.",
+    "budgetHint": "예상 월 유지비 약 {{amount}}원",
+    "readinessTitle": "준비도 체크리스트",
+    "readinessAria": "준비도 {{pct}}% 완료",
+    "form": {
+      "title": "위시리스트에 추가",
+      "species": "종",
+      "speciesPlaceholder": "종을 선택하세요",
+      "priority": "우선순위",
+      "targetDate": "목표 시기 (선택)",
+      "targetDateHelper": "데려오려는 대략의 날짜예요. 비워둬도 됩니다.",
+      "notes": "메모",
+      "notesPlaceholder": "사육 계획, 분양처, 궁금한 점 등",
+      "submit": "위시리스트에 담기"
+    },
+    "priority": {
+      "someday": "언젠가",
+      "soon": "곧",
+      "next": "다음 차례"
+    },
+    "difficulty": {
+      "beginner": "입문",
+      "intermediate": "중급",
+      "advanced": "고급"
+    },
+    "readiness": {
+      "space": "사육 공간 확보",
+      "budget": "초기·월 예산 확보",
+      "experience": "난이도에 맞는 경험",
+      "filing": "규제종 보관신고 확인",
+      "vet": "특수동물 병원 확보",
+      "time": "수명만큼의 장기 돌봄 각오",
+      "supplies": "필수 장비 준비"
+    },
+    "dday": {
+      "future": "D-{{days}}",
+      "today": "D-DAY",
+      "past": "목표일 {{days}}일 지남"
+    },
+    "empty": {
+      "title": "아직 위시리스트가 비어 있어요",
+      "desc": "마음에 둔 종을 추가하고 데려오기 전 준비를 차근차근 갖춰보세요."
+    },
+    "errors": {
+      "speciesRequired": "종을 선택하세요.",
+      "notesMax": "메모는 300자까지 입력할 수 있어요."
+    }
+  },
+  "taming": {
+    "title": "핸들링 적응",
+    "subtitle": "핸들링은 보호자의 바람이 아니라 동물의 내성에 맞춰요. 천천히, 짧게 기록하며 스트레스 신호와 적응 정도를 살펴보세요.",
+    "saved": "세션을 기록했어요.",
+    "showAllPets": "모든 펫 보기",
+    "tolerance": {
+      "low": {
+        "title": "이 종은 핸들링 내성이 낮아요",
+        "body": "최소한으로, 짧게. 꼭 필요할 때(건강 점검·청소·이동)만 만지고, 평소에는 관찰로 충분해요. 만지지 않는 것이 가장 좋은 돌봄일 수 있어요."
+      },
+      "medium": {
+        "title": "이 종은 핸들링 내성이 보통이에요",
+        "body": "짧고 차분한 세션을 규칙적으로 가지면 천천히 익숙해질 수 있어요. 스트레스 신호가 보이면 바로 멈추고 돌려보내 주세요."
+      },
+      "high": {
+        "title": "이 종은 핸들링 내성이 높은 편이에요",
+        "body": "비교적 핸들링을 잘 견디지만, 그래도 동물의 신호를 우선하세요. 컨디션이 안 좋은 날은 쉬어 가도 괜찮아요."
+      }
+    },
+    "form": {
+      "title": "세션 기록",
+      "date": "날짜",
+      "duration": "시간(분)",
+      "durationHelp": "동물을 직접 만지거나 다룬 시간",
+      "calmness": "차분함 (1~5)",
+      "stressSigns": "스트레스 신호",
+      "stressSignsHelp": "이번 세션에서 보인 행동을 모두 선택하세요. 없으면 비워 두세요.",
+      "note": "메모",
+      "notePlaceholder": "상황, 환경, 특이점 등을 적어 두세요.",
+      "submit": "세션 저장"
+    },
+    "calmnessScale": {
+      "1": "매우 불안",
+      "2": "불안",
+      "3": "보통",
+      "4": "차분",
+      "5": "매우 차분"
+    },
+    "signs": {
+      "fleeing": "도망치기",
+      "hiding": "숨기",
+      "tailRattle": "꼬리 떨기",
+      "hissing": "쉭쉭거림",
+      "biting": "물기",
+      "gaping": "입 벌림 위협",
+      "freezing": "얼어붙음",
+      "regurgitation": "토함"
+    },
+    "progress": {
+      "title": "적응 현황",
+      "avgCalmness": "평균 차분함",
+      "outOfFive": "{{value}}/5",
+      "sessions": "세션 수",
+      "lastSession": "최근 세션",
+      "trendLabel": "차분함 추이 (과거 → 현재)",
+      "chartLabel": "세션별 차분함 추이",
+      "delta": {
+        "improving": "개선",
+        "steady": "정체",
+        "declining": "악화"
+      }
+    },
+    "recommendation": {
+      "title": "추천"
+    },
+    "guidance": {
+      "noData": "아직 기록이 없어요. 짧은 세션부터 차분히 시작해 보세요.",
+      "lowTolerance": "이 종은 핸들링 내성이 낮아요. 횟수와 시간을 최소한으로 유지하고, 평소에는 관찰 위주로 돌봐 주세요.",
+      "highStress": "최근 세션에서 스트레스 신호가 많이 보여요. 세션을 줄이고 환경 적응에 집중하세요.",
+      "goodProgress": "차분함이 좋아지고 있어요. 지금 속도를 유지하며 천천히 이어가세요.",
+      "declining": "차분함이 떨어지고 있어요. 세션을 짧게 줄이고 동물의 신호를 더 살펴보세요.",
+      "steady": "안정적으로 적응 중이에요. 지금처럼 짧고 부드러운 세션을 유지하세요."
+    },
+    "history": {
+      "calmness": "차분함 {{value}}/5",
+      "duration": "{{count}}분",
+      "remove": "삭제",
+      "speciesUnknown": "종 정보 없이 기록됨"
+    },
+    "empty": {
+      "title": "아직 핸들링 기록이 없어요",
+      "desc": "첫 세션을 짧게 기록해 보세요. 시간이 지나면 적응 추이를 볼 수 있어요."
+    },
+    "errors": {
+      "dateRequired": "날짜를 입력해 주세요.",
+      "durationNumber": "시간을 숫자로 입력해 주세요.",
+      "durationMin": "시간은 0분 이상이어야 해요.",
+      "durationMax": "시간이 너무 길어요.",
+      "calmnessRequired": "차분함을 선택해 주세요.",
+      "calmnessRange": "차분함은 1~5 사이여야 해요.",
+      "noteMax": "메모는 200자 이내로 입력해 주세요."
+    }
+  },
+  "kit": {
+    "title": "응급 키트",
+    "subtitle": "정전, 폭염, 갑작스러운 이상 증상. 위기 상황에서는 몇 분이 결정적입니다. 미리 준비해 두면 당황하지 않습니다.",
+    "readiness": {
+      "title": "준비 완료도",
+      "desc": "항목을 체크하며 우리 집 응급 대비 수준을 채워 보세요.",
+      "count": "{{done}}/{{total}}개 준비됨",
+      "aria": "준비 완료도 {{pct}}%"
+    },
+    "quick": {
+      "sosTitle": "응급 SOS",
+      "sosDesc": "증상별 응급 대처와 1탭 연락",
+      "hospitalsTitle": "24시 병원 찾기",
+      "hospitalsDesc": "가까운 특수동물 응급 병원"
+    },
+    "hintLabel": "우리 아이 맞춤 팁",
+    "hints": {
+      "generic": "반려동물을 등록하면 종에 맞는 응급 대비 팁을 알려드려요. 기본적으로 보온, 이동, 연락처부터 챙기세요.",
+      "reptile": "파충류는 정전 시 보온이 가장 중요합니다. 핫팩과 보조배터리로 온도를 유지하고, 예비 온습도계로 사육장 상태를 수시로 확인하세요.",
+      "amphibian": "양서류는 수질과 산소가 생명입니다. 정전 시 여과·산소 공급이 멈추므로 깨끗한 물을 미리 받아 두고, 수온 변화를 최소화하세요.",
+      "arthropod": "절지동물은 습도와 온도 유지가 핵심입니다. 분무용 물과 핫팩·아이스팩을 준비해 사육장 환경이 급변하지 않게 대비하세요.",
+      "bird": "조류는 급격한 온도 변화와 스트레스에 약합니다. 보온 가능한 이동장과 덮개를 두고, 정전 대비 보온 백업을 마련하세요.",
+      "mammal": "소형 포유류는 체온 조절이 어렵습니다. 폭염·한파 모두 대비해 보온재와 아이스팩, 충분한 물을 준비하세요."
+    },
+    "checklist": {
+      "title": "준비물 체크리스트",
+      "intro": "상황별로 미리 갖춰 두면 좋은 준비물입니다. 가지고 있는 항목을 체크하세요."
+    },
+    "groups": {
+      "power": "정전 대비",
+      "transport": "이동 / 대피",
+      "firstAid": "응급 처치",
+      "info": "정보 / 연락"
+    },
+    "items": {
+      "backupHeat": "보온 백업 — 핫팩 / USB 보온기",
+      "thermometer": "예비 온습도계",
+      "batteries": "예비 배터리 / 보조배터리",
+      "carrier": "소형 이동장 / 통기 용기",
+      "insulatedBox": "스티로폼 박스",
+      "heatPack": "핫팩",
+      "coolPack": "아이스팩 (폭염 대비)",
+      "sugarWater": "탈출·탈진 대비 설탕물 거즈",
+      "cleanGauze": "멸균 거즈",
+      "digitalScale": "체중계",
+      "feedingSyringe": "급여 시린지",
+      "vetContact": "특수동물 병원 연락처",
+      "emergencyVet": "24시 응급 병원",
+      "filingDoc": "보관신고 서류 사본",
+      "careSheet": "종 케어시트 출력본"
+    },
+    "contacts": {
+      "title": "응급 연락처",
+      "intro": "위급할 때 바로 누를 수 있도록 병원, 펫시터, 이웃 연락처를 저장해 두세요.",
+      "labelField": "이름 / 관계",
+      "labelPlaceholder": "예: 단골 특수동물병원",
+      "phoneField": "전화번호",
+      "phonePlaceholder": "예: 02-000-0000",
+      "noteField": "메모",
+      "notePlaceholder": "예: 야간 진료 가능, 예약 필요",
+      "add": "연락처 추가",
+      "added": "연락처를 저장했어요",
+      "call": "전화",
+      "remove": "삭제",
+      "emptyTitle": "저장된 연락처가 없어요",
+      "emptyDesc": "자주 찾는 병원이나 도움을 줄 사람의 번호를 미리 등록해 두세요."
+    },
+    "errors": {
+      "labelRequired": "이름을 입력하세요",
+      "labelMax": "이름은 40자 이내로 입력하세요",
+      "phoneRequired": "전화번호를 입력하세요",
+      "phoneMax": "전화번호는 40자 이내로 입력하세요",
+      "noteMax": "메모는 120자 이내로 입력하세요"
+    },
+    "disclaimer": "이 체크리스트는 사전 대비를 돕기 위한 안내입니다. 실제 응급 상황에서는 즉시 특수동물 병원에 연락하세요."
   },
   "morphs": {
     "title": "인기 모프 카탈로그",
