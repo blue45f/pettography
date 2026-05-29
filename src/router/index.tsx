@@ -170,6 +170,13 @@ export const routes = [
       },
       { path: 'qna', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Qna')) },
       { path: 'meetups', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Meetups')) },
+      {
+        path: 'breeding',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Breeding')),
+      },
+      { path: 'meds', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Meds')) },
+      { path: 'feeding', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Feeding')) },
       { path: 'food', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Food')) },
       { path: 'events', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Events')) },
       { path: 'about', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/About')) },

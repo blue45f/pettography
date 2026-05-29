@@ -65,6 +65,9 @@
     "showcase": "Showcase",
     "qna": "Q&A",
     "meetups": "Meetups",
+    "breeding": "Breeding",
+    "meds": "Meds",
+    "feeding": "Feeding",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -1540,6 +1543,296 @@
       "bioMax": "Bio must be 400 characters or fewer.",
       "contactRequired": "Please enter how to reach you.",
       "contactMax": "Contact must be 120 characters or fewer."
+    }
+  },
+  "breeding": {
+    "title": "Breeding & Clutch / Incubation Tracker",
+    "subtitle": "Log pairings and egg clutches, and track temperature-aware hatch estimates and countdowns for each species.",
+    "disclaimer": "Incubation durations and temperatures shown are approximations based on common keeper references; real outcomes vary with exact temperature, humidity, and the individual clutch.",
+    "notes": "Notes",
+    "notesOptional": "Optional (max 300 chars)",
+    "remove": "Remove",
+    "speciesUnknown": "Species not set",
+    "unknownParent": "Unknown",
+    "tdsdNote": "This species uses temperature-dependent sex determination (TDSD). Incubation temperature can influence hatchling sex ratio, so mind your setpoint if you are targeting a sex.",
+    "geneticsCta": {
+      "title": "Curious about the offspring? → Morph genetics calculator",
+      "desc": "Enter the parents' morphs to calculate the probability of each morph in the clutch."
+    },
+    "dday": {
+      "today": "D-DAY",
+      "sub": "until the estimated hatch (midpoint)"
+    },
+    "statusCode": {
+      "incubating": "Incubating",
+      "due": "Due",
+      "overdue": "Overdue",
+      "hatched": "Hatched",
+      "failed": "Failed"
+    },
+    "pairing": {
+      "title": "Pairings",
+      "intro": "Register the sire × dam pairs you have set up so you can link them to clutch records.",
+      "newTitle": "New pairing",
+      "sire": "Sire (male)",
+      "sirePlaceholder": "e.g. Pastel male",
+      "dam": "Dam (female)",
+      "damPlaceholder": "e.g. Normal female",
+      "pairedAt": "Paired on",
+      "pairedOn": "Paired",
+      "add": "Add pairing",
+      "addClutch": "Add clutch",
+      "created": "Pairing added.",
+      "emptyTitle": "No pairings yet",
+      "emptyDesc": "Register a sire × dam pair to make tracking clutches easier."
+    },
+    "clutch": {
+      "title": "Clutches / Incubation",
+      "intro": "Log a batch of laid eggs and we'll show a hatch estimate and progress based on the species reference.",
+      "newTitle": "New clutch",
+      "pairing": "Link to pairing",
+      "noPairing": "Not linked",
+      "laidAt": "Laid on",
+      "eggCount": "Egg count",
+      "eggUnit": "{{count}} eggs",
+      "fertileCount": "Fertile eggs",
+      "fertileHelper": "Confirmed fertile count (optional)",
+      "fertility": "Fertility",
+      "temp": "Incubation temp (°C)",
+      "tempHelper": "Current incubator temperature (optional)",
+      "add": "Add clutch",
+      "created": "Clutch logged.",
+      "markHatched": "Mark hatched",
+      "markFailed": "Mark failed",
+      "markedHatched": "Marked as hatched.",
+      "markedFailed": "Marked as failed.",
+      "fromPairing": "Pairing",
+      "windowLabel": "Estimated hatch window",
+      "progressLabel": "{{pct}}% complete",
+      "emptyTitle": "No clutches logged yet",
+      "emptyDesc": "Enter a laid date and egg count to start the hatch countdown."
+    },
+    "errors": {
+      "dateRequired": "Please enter a date.",
+      "nameMax": "Keep this under 40 characters.",
+      "notesMax": "Notes must be 300 characters or fewer.",
+      "eggCountNumber": "Enter the egg count as a number.",
+      "eggCountMin": "Egg count must be at least 1.",
+      "fertileNumber": "Enter the fertile count as a number.",
+      "fertileMin": "Fertile count must be 0 or more.",
+      "tempNumber": "Enter the temperature as a number."
+    }
+  },
+  "meds": {
+    "title": "Medication & Quarantine",
+    "subtitle": "Keep dosing schedules and quarantine countdowns for new or sick animals in one place. All data stays only in this browser.",
+    "remove": "Remove",
+    "tabs": {
+      "medications": "Medications",
+      "quarantine": "Quarantine"
+    },
+    "status": {
+      "dueToday": "Due today",
+      "overdue": "Overdue",
+      "upcoming": "Upcoming",
+      "done": "Done"
+    },
+    "disclaimer": {
+      "title": "Always follow your vet's dosing instructions",
+      "body": "This tool only helps you log and track dosing schedules — it is not medical advice or a diagnosis. Follow the drug, dose, and interval exactly as instructed by the vet who examined your animal, and contact a clinic right away if you notice an adverse reaction."
+    },
+    "med": {
+      "newTitle": "Add a medication",
+      "name": "Medication name",
+      "namePlaceholder": "e.g. Panacur, Baytril",
+      "dosage": "Dose",
+      "dosagePlaceholder": "e.g. 0.1ml, 1/4 tablet",
+      "reason": "Reason",
+      "reasonPlaceholder": "e.g. routine deworming, respiratory infection",
+      "startedAt": "Start date",
+      "frequency": "Interval (days)",
+      "frequencyHelper": "How many days between doses.",
+      "frequencyLabel": "Interval",
+      "duration": "Total length (days, optional)",
+      "durationHelper": "Set a fixed course length, or leave blank for ongoing treatment.",
+      "notes": "Notes",
+      "notesPlaceholder": "Note reactions, storage, anything useful.",
+      "add": "Add medication",
+      "added": "Medication added.",
+      "everyNDays": "Every {{count}} day(s)",
+      "ofNDays": "{{count}} day(s) total",
+      "nextDose": "Next dose",
+      "courseComplete": "Course complete",
+      "courseProgress": "Course progress",
+      "recentDoses": "Recent doses",
+      "markToday": "Mark today's dose",
+      "markedToday": "Given today (undo)",
+      "doseDone": "Logged today's dose.",
+      "doseUndone": "Undid today's dose.",
+      "emptyTitle": "No medications yet",
+      "emptyDesc": "Add any ongoing medication to track the next dose and your adherence."
+    },
+    "quarantine": {
+      "guideTitle": "Why quarantine?",
+      "guideBody": "New or sick animals should be quarantined 30–90 days in a separate space away from your main collection. Use separate enclosures and tools, care for your established animals first and the quarantined one last, and wash your hands each time to stop the spread of disease and parasites.",
+      "newTitle": "Add a quarantine",
+      "animalName": "Animal name",
+      "animalNamePlaceholder": "e.g. New leopard gecko",
+      "startedAt": "Start date",
+      "reason": "Reason",
+      "duration": "Length (days)",
+      "durationHelper": "Set between 1 and 180 days. New animals usually warrant 30–90 days.",
+      "presetDays": "{{count}} days",
+      "notes": "Notes",
+      "notesPlaceholder": "Note symptoms, the separate space, observations.",
+      "add": "Add quarantine",
+      "added": "Quarantine added.",
+      "endsAt": "Ends on",
+      "remaining": "Remaining",
+      "daysLeft": "{{count}} day(s) left",
+      "dDay": "D-{{count}}",
+      "clear": "Clear quarantine",
+      "cleared": "Quarantine cleared.",
+      "clearedOn": "Cleared {{date}}",
+      "statusReady": "Ready to clear",
+      "statusCleared": "Cleared",
+      "reasons": {
+        "newArrival": "New arrival",
+        "illness": "Suspected illness",
+        "postVet": "Post-vet",
+        "other": "Other"
+      },
+      "emptyTitle": "No animals in quarantine",
+      "emptyDesc": "Add a quarantine schedule for any new or off-color animal to keep track."
+    },
+    "errors": {
+      "nameRequired": "Please enter the medication name.",
+      "nameMax": "Keep the name within 60 characters.",
+      "reasonMax": "Keep the reason within 120 characters.",
+      "dosageMax": "Keep the dose within 60 characters.",
+      "dateRequired": "Please pick a date.",
+      "frequencyNumber": "The interval must be a number.",
+      "frequencyMin": "The interval must be at least 1 day.",
+      "durationNumber": "The length must be a number.",
+      "durationMin": "The length must be at least 1 day.",
+      "notesMax": "Keep notes within 300 characters.",
+      "animalNameRequired": "Please enter the animal name.",
+      "animalNameMax": "Keep the animal name within 60 characters.",
+      "qDurationNumber": "The quarantine length must be a number.",
+      "qDurationMin": "The quarantine length must be at least 1 day.",
+      "qDurationMax": "The quarantine length must be 180 days or fewer."
+    }
+  },
+  "feeding": {
+    "title": "Feeding scheduler & prey-size calculator",
+    "subtitle": "Work out the right prey size and feeding frequency for your pet's species and stage, then log feedings to predict the next one and catch refusal streaks early. All data stays in this browser.",
+    "showAllPets": "Show every pet's logs",
+    "toastSaved": "Feeding logged.",
+    "disclaimer": "These values are general guidance. Adjust to the individual animal's build, appetite, and health, and to your vet or an experienced keeper's advice.",
+    "stages": {
+      "juvenile": "Juvenile / sub-adult",
+      "adult": "Adult"
+    },
+    "preyRules": {
+      "betweenEyes": "Offer prey no larger than the space between the eyes.",
+      "bodyWeightPct": "Prey weight should be about 10–15% of body weight.",
+      "girthMatch": "Offer prey about the same as the widest girth (roughly 1–1.25×).",
+      "bodyLength": "Offer prey about the same length as the body, or smaller.",
+      "greensPlusInsects": "Daily greens with insects sized to the animal's stage."
+    },
+    "calc": {
+      "title": "Prey-size calculator",
+      "stage": "Life stage",
+      "bodyWeight": "Current weight (g)",
+      "bodyWeightHelper": "Enter a recent weight to estimate the right prey weight range.",
+      "preyWeight": "Recommended prey weight",
+      "preyWeightRange": "{{min}}–{{max}} g",
+      "preyWeightHint": "Enter a weight to calculate.",
+      "preySize": "Prey-size rule",
+      "frequency": "Recommended frequency",
+      "everyNDays": "every {{count}} days",
+      "noSpecies": "Pick a species in onboarding to see species-specific guidance."
+    },
+    "next": {
+      "title": "Next feeding",
+      "dday": "D-{{count}}",
+      "today": "Due today",
+      "overdue": "{{count}} days overdue",
+      "basis": "Based on the last feeding on {{date}}, on a {{count}}-day cycle.",
+      "empty": "Log a feeding once and we'll predict the next date."
+    },
+    "refusal": {
+      "warning": "{{count}} refusals in a row — check temperature, humidity, and hides.",
+      "arthropodNote": "Arthropods normally fast before a molt (pre-molt). If the abdomen is plump and dark, don't force feeding — just wait it out."
+    },
+    "log": {
+      "title": "Log a feeding",
+      "fedAt": "Feeding date",
+      "item": "Prey item",
+      "itemPlaceholder": "e.g. adult mouse, dubia, cricket",
+      "quantity": "Quantity (optional)",
+      "quantityHelper": "Number of prey items offered (optional)",
+      "quantityCount": "{{count}} pcs",
+      "accepted": "Ate it (uncheck for a refusal)",
+      "ate": "Ate",
+      "refused": "Refused",
+      "notes": "Notes",
+      "submit": "Add log",
+      "remove": "Remove",
+      "speciesUnknown": "(no species selected)"
+    },
+    "trend": {
+      "title": "Feeding-gap trend",
+      "chartLabel": "Trend of recent gaps between feedings, in days",
+      "meta": "Days between consecutive feedings, oldest to newest."
+    },
+    "empty": {
+      "title": "No feedings logged yet",
+      "desc": "Log your first feeding to start next-feeding predictions and refusal tracking."
+    },
+    "errors": {
+      "dateRequired": "Pick a date.",
+      "itemRequired": "Enter a prey item.",
+      "itemMax": "Keep the prey item under 60 characters.",
+      "quantityNumber": "Quantity must be a whole number.",
+      "quantityNonNegative": "Quantity can't be negative.",
+      "notesMax": "Keep notes under 300 characters."
+    },
+    "rules": {
+      "ball-python": {
+        "note": "For ball pythons, pick a rodent about the size of the snake's widest girth. They're prone to obesity, so don't overfeed, and avoid handling for 24–48 hours after a meal."
+      },
+      "corn-snake": {
+        "note": "For corn snakes, match the mouse to the body's girth. Every 7 days while growing and 10–14 days as an adult is typical."
+      },
+      "leopard-gecko": {
+        "note": "For leopard geckos, offer insects smaller than the gap between the eyes. Juveniles eat 5–7 insects daily; adults 2–3× a week, with calcium/vitamin dusting."
+      },
+      "crested-gecko": {
+        "note": "Crested geckos do best on a complete diet (CGD), with insects smaller than the eye gap as a 1–2× weekly supplement."
+      },
+      "bearded-dragon": {
+        "note": "Bearded dragons eat more insects as juveniles and shift to mostly greens as adults. Keep insects smaller than the gap between the eyes."
+      },
+      "mexican-redknee-tarantula": {
+        "note": "For the Mexican redknee, offer prey at or below its body length. Adults are fine every 1–2 weeks, and they fast during pre-molt, so remove uneaten prey."
+      },
+      "emperor-scorpion": {
+        "note": "Feed emperor scorpions prey sized to their body about once a week. Pause feeding around molts and keep humidity stable."
+      },
+      "pacman-frog": {
+        "note": "For Pacman frogs, offer prey smaller than the gap between the eyes. They obese easily, so space adult meals to every 4–7 days."
+      },
+      "axolotl": {
+        "note": "Axolotls live on earthworms and pellets. Feed juveniles daily and adults 2–3× a week, only what they finish, removing leftovers to protect water quality."
+      },
+      "fallback": {
+        "reptile": "Prey size and frequency vary a lot between reptiles. Use the gap between the eyes as a baseline and check a species-specific source.",
+        "arthropod": "Offer arthropods prey sized to their body, and expect fasting before a molt. Check a care sheet for your species.",
+        "amphibian": "Offer amphibians prey smaller than the gap between the eyes. They obese easily, so manage portion size and frequency.",
+        "bird": "Give birds species-appropriate seed/pellets and fresh greens daily. Avoid toxic foods such as avocado.",
+        "mammal": "Give small mammals a species-appropriate diet and fresh vegetables daily. Nutritional needs vary, so check a dedicated source."
+      }
     }
   },
   "morphs": {
