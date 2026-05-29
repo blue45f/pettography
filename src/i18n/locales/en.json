@@ -68,6 +68,9 @@
     "breeding": "Breeding",
     "meds": "Meds",
     "feeding": "Feeding",
+    "market": "Market",
+    "passport": "Passport",
+    "assistant": "Care Assistant",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -1833,6 +1836,267 @@
         "bird": "Give birds species-appropriate seed/pellets and fresh greens daily. Avoid toxic foods such as avocado.",
         "mammal": "Give small mammals a species-appropriate diet and fresh vegetables daily. Nutritional needs vary, so check a dedicated source."
       }
+    }
+  },
+  "market": {
+    "title": "Adoption Market",
+    "subtitle": "Rehome and share captive-bred (CB) animals and morphs around Seoul, responsibly.",
+    "safety": {
+      "title": "Safe Trading Guidelines",
+      "cb": "Prefer captive-bred (CB) over wild-caught (WC) animals — they are healthier and adapt faster.",
+      "meet": "When possible, meet in person to inspect the animal and receive its keeping history.",
+      "free": "Free rehoming means finding a forever home that will take full responsibility. Please avoid impulse adoptions.",
+      "regulatedNote": "Regulated species are subject to keeping registration.",
+      "regulatedLink": "Check regulated-species registration"
+    },
+    "filterCategoryLabel": "Category filter",
+    "filterRegionLabel": "Region filter",
+    "filterAll": "All",
+    "freeOnly": "Free rehoming only",
+    "sortLabel": "Sort",
+    "sort": {
+      "recent": "Newest",
+      "priceAsc": "Price: low to high"
+    },
+    "newListingTitle": "Post a Listing",
+    "titleLabel": "Title",
+    "titlePlaceholder": "e.g. Ball Python Pastel (2025 hatch, CB)",
+    "species": "Species",
+    "speciesUnselected": "Not selected",
+    "morphLabel": "Morph (optional)",
+    "morphPlaceholder": "e.g. Pastel, Harlequin",
+    "regionLabel": "Region",
+    "regions": {
+      "songpa": "Songpa",
+      "gangnam": "Gangnam",
+      "jamsil": "Jamsil",
+      "online": "Online/Shipping",
+      "other": "Other"
+    },
+    "cbLabel": "Origin",
+    "cb": {
+      "cb": "Captive-bred (CB)",
+      "wc": "Wild-caught (WC)",
+      "unknown": "Unknown origin"
+    },
+    "freeToggle": "Post as free rehoming",
+    "freeHint": "Free rehoming is responsible adoption. Please find a home that will take full responsibility.",
+    "priceLabel": "Price (KRW)",
+    "pricePlaceholder": "e.g. 150000",
+    "priceWon": "{{price}} KRW",
+    "free": "Free rehoming",
+    "contactLabel": "Contact",
+    "contactPlaceholder": "Open-chat link, email, or phone number",
+    "contactHelper": "Enter a URL to turn it into a link that opens in a new tab.",
+    "descriptionLabel": "Details",
+    "descriptionPlaceholder": "Describe the animal's condition, feeding history, setup, and adoption terms.",
+    "author": "Author",
+    "authorPlaceholder": "Nickname",
+    "publish": "Post",
+    "regulatedBadge": "Registration required",
+    "unknownSpecies": "Species not set",
+    "remove": "Delete",
+    "postedToast": "Your listing has been posted.",
+    "removedToast": "Listing deleted.",
+    "empty": "No listings match your filters.",
+    "emptyHint": "Try changing the filters or post the first listing.",
+    "errors": {
+      "titleRequired": "Please enter a title.",
+      "titleMax": "Title must be 80 characters or fewer.",
+      "morphMax": "Morph must be 60 characters or fewer.",
+      "priceRequired": "Enter a price or post it as free rehoming.",
+      "priceInvalid": "Price must be a whole number of 0 or more.",
+      "contactRequired": "Please enter a contact.",
+      "contactMax": "Contact must be 120 characters or fewer.",
+      "descriptionRequired": "Please enter details.",
+      "descriptionMax": "Details must be 600 characters or fewer.",
+      "authorRequired": "Please enter an author nickname.",
+      "authorMax": "Nickname must be 40 characters or fewer."
+    }
+  },
+  "passport": {
+    "title": "Pet Passport",
+    "subtitle": "A personal passport and achievements built from everything you've logged together.",
+    "card": {
+      "docType": "Keeper Passport",
+      "unnamed": "Unnamed friend",
+      "speciesUnknown": "Species not set",
+      "daysTogether": "Days together",
+      "daysValue": "{{count}} days",
+      "badges": "Achievements",
+      "shareNote": "Screenshot this passport to share it as-is. Show off your companion's journey.",
+      "holder": "Keeper · {{name}}",
+      "aria": "{{name}}'s pet passport card"
+    },
+    "stats": {
+      "aria": "Activity summary",
+      "days": "Days together",
+      "diary": "Diary",
+      "molt": "Sheds",
+      "feeding": "Feedings",
+      "clutch": "Clutches"
+    },
+    "achievements": {
+      "title": "Achievements",
+      "progress": "{{unlocked}} / {{total}} unlocked",
+      "progressCount": "{{current}} / {{goal}}",
+      "unlocked": "Unlocked"
+    },
+    "tier": {
+      "bronze": "Bronze",
+      "silver": "Silver",
+      "gold": "Gold"
+    },
+    "empty": {
+      "title": "No achievements yet",
+      "desc": "Write diary entries and log sheds and feedings to unlock achievements one by one. Start with your first entry.",
+      "noPetTitle": "No pet registered",
+      "noPetDesc": "Register your companion first and the passport starts counting from day one."
+    },
+    "ach": {
+      "bond7": { "title": "First Week", "desc": "You've been together for 7 days." },
+      "bond30": { "title": "One Month Together", "desc": "You've passed 30 days together." },
+      "bond100": { "title": "100 Days", "desc": "You've reached 100 days together." },
+      "diary1": { "title": "First Entry", "desc": "You wrote your first diary entry." },
+      "diary10": { "title": "Steady Observer", "desc": "You wrote 10 diary entries." },
+      "diary50": { "title": "Master Journalist", "desc": "You wrote 50 diary entries." },
+      "molt1": { "title": "First Shed", "desc": "You logged your first shed." },
+      "moltMaster": { "title": "Shed Master", "desc": "You logged 5 complete sheds." },
+      "feed10": { "title": "Hearty Meals", "desc": "You logged 10 feedings." },
+      "feed50": { "title": "Consistent Diet", "desc": "You logged 50 feedings." },
+      "feedStreak5": {
+        "title": "5 in a Row",
+        "desc": "5 accepted feedings in a row with no refusals."
+      },
+      "clutch1": { "title": "First Clutch", "desc": "You logged your first clutch." }
+    }
+  },
+  "assistant": {
+    "title": "Care Assistant",
+    "subtitle": "Pick a symptom and get rule-based triage with clear next steps. Advice is tuned to your active pet's category.",
+    "disclaimerTitle": "For guidance only",
+    "disclaimer": "This is rule-based guidance. It does not replace a veterinarian. If anything seems off, contact a clinic.",
+    "context": "Guidance is shown for {{name}} ({{category}}). Advice is tuned to this category's needs.",
+    "contextGeneric": "No active pet is set, so general guidance is shown. Pick a species in onboarding to tune advice to its category.",
+    "step1Title": "1. What symptom are you seeing?",
+    "step1Hint": "Choose the one that fits best.",
+    "step2Title": "2. One more thing to check",
+    "resultTitle": "Guidance",
+    "categoryNoteLabel": "Category note",
+    "speciesTipLabel": "Common issue for {{name}}",
+    "reminder": "If anything seems off, don't hesitate — contact a clinic.",
+    "restart": "Start over",
+    "emptyTitle": "Pick a symptom to begin",
+    "emptyDescription": "Choose a symptom above and we'll show guidance after one or two quick questions.",
+    "emergencyTitle": "This may be an emergency",
+    "emergencyBody": "Begin emergency care without delay and contact a clinic. Time matters.",
+    "emergencySos": "Emergency SOS",
+    "emergencyHospitals": "Find a 24h clinic",
+    "severity": {
+      "info": "Info",
+      "caution": "Caution",
+      "urgent": "Urgent"
+    },
+    "topics": {
+      "anorexia": {
+        "label": "Not eating (anorexia)",
+        "question": "Since when, and how severe?",
+        "options": {
+          "recent": "A few days, activity is about normal",
+          "weeks": "Refusing food for weeks",
+          "weightLoss": "Refusing food with visible weight or body loss"
+        }
+      },
+      "sheddingIssue": {
+        "label": "Shedding trouble",
+        "question": "How is the shed going?",
+        "options": {
+          "inProgress": "Shedding now and progressing naturally",
+          "stuckPatches": "Patches of skin stuck and not coming off",
+          "toesOrEyes": "Stuck shed constricting toes, tail tip, or eyes"
+        }
+      },
+      "respiratory": {
+        "label": "Breathing issue",
+        "question": "How does the breathing look?",
+        "options": {
+          "mildWheeze": "Occasional wheeze but active as usual",
+          "openMouth": "Open-mouth, labored breathing",
+          "mucusBubbles": "Nasal discharge, bubbles, or mucus"
+        }
+      },
+      "lethargy": {
+        "label": "Lethargy",
+        "question": "How active is the animal?",
+        "options": {
+          "slightlyQuiet": "Quieter than usual but responsive",
+          "notMoving": "Barely moving and slow to react",
+          "unresponsive": "Limp and barely responds to touch"
+        }
+      },
+      "injury": {
+        "label": "Injury or bleeding",
+        "question": "What does the wound look like?",
+        "options": {
+          "minorScrape": "Minor scrape, bleeding has stopped",
+          "activeBleeding": "Bleeding that won't stop",
+          "prolapse": "Organ or cloaca protruding (prolapse)"
+        }
+      },
+      "tempHumidity": {
+        "label": "Temp / humidity",
+        "question": "How are the enclosure readings?",
+        "options": {
+          "slightlyOff": "Slightly outside the recommended range",
+          "wayOff": "Well outside the recommended range",
+          "burnOrHeatStress": "Burn marks or panting from overheating"
+        }
+      },
+      "behavior": {
+        "label": "Behavior change",
+        "question": "What kind of change?",
+        "options": {
+          "newRoutine": "Started after a recent change in setup or routine",
+          "hiding": "Hiding constantly and not behaving normally",
+          "aggressionOrTremor": "Sudden aggression, tremors, or abnormal posture"
+        }
+      }
+    },
+    "advice": {
+      "anorexiaRecent": "Short-term food refusal is common with environment change, stress, or seasonal shifts. Keep the enclosure stable and observe for a few more days. Always provide water and log weight regularly.",
+      "anorexiaWeeks": "Refusal lasting weeks calls for checking low temperatures, parasites, and environmental stress. Verify temp, humidity, and heating first; if there's no improvement, consult a vet.",
+      "anorexiaWeightLoss": "Refusal with weight loss may mean dehydration or metabolic disease and needs prompt care. Don't force-feed; keep the animal warm and contact a clinic.",
+      "sheddingInProgress": "This is a normal shed. Don't handle the animal and keep humidity in range. A hide and rough surfaces help the shed come off.",
+      "sheddingStuckPatches": "For stuck shed, raise humidity and assist with lukewarm misting or a humid hide. Never peel it off by force; if it doesn't clear in a few days, consult a vet.",
+      "sheddingToesOrEyes": "Stuck shed on toes, tail tip, or eyes can cut off blood flow and cause necrosis or blindness. If a gentle lukewarm soak doesn't release it, contact a clinic immediately.",
+      "respiratoryMildWheeze": "A mild wheeze can come from low temperature, dry air, or dust. Raise heat into range and check substrate dust. If it worsens, see a vet.",
+      "respiratoryOpenMouth": "Open-mouth breathing is a sign of severe respiratory distress. Keep heating stable and contact a clinic without delay.",
+      "respiratoryMucusBubbles": "Nasal discharge, bubbles, or mucus strongly suggest a respiratory infection. Keep the animal warm and seek care immediately.",
+      "lethargySlightlyQuiet": "Mild lethargy can be normal rest, digestion, or temperature shifts. Check heating and night-time temperature drop, and observe. Also watch appetite and stool.",
+      "lethargyNotMoving": "If it's slow to react and barely moving, check for low temperature, dehydration, and infection. Correct temp and humidity; if there's no improvement, see a vet.",
+      "lethargyUnresponsive": "Limp and barely responsive is an emergency. Keep the animal warm and contact a clinic immediately.",
+      "injuryMinorScrape": "Gently rinse a minor scrape with clean water, keep the enclosure clean, and observe. If it swells or oozes, see a vet.",
+      "injuryActiveBleeding": "Bleeding that won't stop is an emergency. Apply gentle pressure with clean gauze to slow it while you contact a clinic immediately.",
+      "injuryProlapse": "A prolapse (protruding organ or cloaca) is an emergency. Keep the exposed tissue clean and moist (e.g., gauze dampened with sugar water) and head to a clinic immediately.",
+      "tempHumiditySlightlyOff": "If readings are slightly off, adjust with heating, misting, or ventilation. Use two digital gauges to check the hot spot and cool zone together.",
+      "tempHumidityWayOff": "Readings well outside range affect appetite, immunity, and shedding. Check the thermostat and heating or humidity gear to normalize quickly, and watch the animal's condition.",
+      "tempHumidityBurnOrHeatStress": "A burn or heat stress is an emergency. Turn off the heat source at once, move the animal somewhere cool, then contact a clinic. Always guard heat lamps with a cage and thermostat.",
+      "behaviorNewRoutine": "A behavior change right after a setup or routine change may be adjustment. Keep the enclosure stable, reduce disturbance, and observe for a few days.",
+      "behaviorHiding": "Constant hiding can signal temperature discomfort, stress, or pain. Check temp, humidity, and hide placement; if appetite also drops, see a vet.",
+      "behaviorAggressionOrTremor": "Sudden aggression, tremors, or abnormal posture can mean pain or a neurological or metabolic problem. Check the environment and consult a vet as soon as possible."
+    },
+    "categoryNotes": {
+      "anorexiaArthropod": "Arthropods naturally refuse food before a molt (pre-molt). A dark, plump abdomen can signal an upcoming molt — leave it undisturbed and wait.",
+      "anorexiaReptile": "Reptile anorexia often overlaps with low temperatures or brumation. Check the hot spot and cool zone temperatures first.",
+      "anorexiaAmphibian": "Amphibians are sensitive to water quality and temperature, so refusal is common. Check water temperature, cleanliness, and dechlorination first.",
+      "sheddingArthropod": "Molting is the most vulnerable time for arthropods. Never handle during a molt, remove feeders, and just keep humidity stable.",
+      "sheddingReptile": "Reptile shedding trouble is usually caused by low humidity. Assist with a humid hide and misting.",
+      "respiratoryAmphibian": "Amphibians rely heavily on skin respiration, so water quality and humidity directly affect breathing. Check water cleanliness and ventilation together.",
+      "respiratoryBird": "Birds have very sensitive airways and deteriorate fast. If you see tail bobbing or open-mouth breathing, seek care without delay.",
+      "lethargyReptile": "Reptiles are ectotherms, so low temperatures make them look lethargic. Before a vet visit, bring heating back into the normal range.",
+      "lethargyArthropod": "Arthropods can move much less around a molt. Check whether a molt happened recently first.",
+      "tempHumidityAmphibian": "Amphibians are especially vulnerable to dryness and heat. Keep humidity high and avoid direct sun and overheating.",
+      "tempHumidityReptile": "For reptiles, the temperature gradient between hot spot and cool zone is key. Measure both separately to maintain the gradient."
     }
   },
   "morphs": {

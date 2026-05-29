@@ -68,6 +68,9 @@
     "breeding": "번식·부화",
     "meds": "투약·격리",
     "feeding": "급이 스케줄",
+    "market": "분양 마켓",
+    "passport": "펫 여권",
+    "assistant": "케어 어시스턴트",
     "food": "먹이 가이드",
     "events": "박람회 일정",
     "contact": "문의하기",
@@ -1833,6 +1836,264 @@
         "bird": "조류는 종에 맞는 시드·펠릿과 신선한 채소를 매일 제공하세요. 아보카도 등 독성 먹이는 피해야 합니다.",
         "mammal": "소형 포유류는 종에 맞는 사료·채소를 매일 제공하세요. 종별 영양 요구가 다르므로 전용 자료를 확인하세요."
       }
+    }
+  },
+  "market": {
+    "title": "분양 마켓",
+    "subtitle": "서울 인근 사육 번식(CB) 개체와 모프를 책임감 있게 분양·나눔하세요.",
+    "safety": {
+      "title": "거래 안전 수칙",
+      "cb": "야생 포획(WC)보다 사육 번식(CB) 개체를 권장합니다. 건강하고 적응이 빠릅니다.",
+      "meet": "가능하면 직거래로 개체 상태를 직접 확인하고, 사육 이력을 함께 받으세요.",
+      "free": "무료 나눔은 끝까지 책임질 입양처를 찾는 '책임 분양'입니다. 충동 입양은 피해 주세요.",
+      "regulatedNote": "규제종은 보관신고 대상입니다.",
+      "regulatedLink": "규제종 보관신고 확인하기"
+    },
+    "filterCategoryLabel": "분류 필터",
+    "filterRegionLabel": "지역 필터",
+    "filterAll": "전체",
+    "freeOnly": "무료 나눔만",
+    "sortLabel": "정렬",
+    "sort": {
+      "recent": "최신순",
+      "priceAsc": "가격 낮은순"
+    },
+    "newListingTitle": "분양 글 등록",
+    "titleLabel": "제목",
+    "titlePlaceholder": "예: 볼파이톤 파스텔 (2025년 해칭, CB)",
+    "species": "종 선택",
+    "speciesUnselected": "선택 안 함",
+    "morphLabel": "모프 (선택)",
+    "morphPlaceholder": "예: 파스텔, 할리퀸",
+    "regionLabel": "지역",
+    "regions": {
+      "songpa": "송파",
+      "gangnam": "강남",
+      "jamsil": "잠실",
+      "online": "온라인/택배",
+      "other": "기타"
+    },
+    "cbLabel": "개체 출처",
+    "cb": {
+      "cb": "사육 번식 (CB)",
+      "wc": "야생 포획 (WC)",
+      "unknown": "출처 미상"
+    },
+    "freeToggle": "무료 나눔으로 등록",
+    "freeHint": "무료 나눔은 책임 분양입니다. 끝까지 책임질 입양처를 찾아 주세요.",
+    "priceLabel": "가격 (원)",
+    "pricePlaceholder": "예: 150000",
+    "priceWon": "{{price}}원",
+    "free": "무료 나눔",
+    "contactLabel": "연락처",
+    "contactPlaceholder": "오픈채팅 링크, 이메일 또는 전화번호",
+    "contactHelper": "URL을 입력하면 새 탭으로 열리는 링크가 됩니다.",
+    "descriptionLabel": "상세 설명",
+    "descriptionPlaceholder": "개체 상태, 먹이 이력, 사육 환경, 분양 조건 등을 적어 주세요.",
+    "author": "작성자",
+    "authorPlaceholder": "닉네임",
+    "publish": "등록하기",
+    "regulatedBadge": "보관신고 대상",
+    "unknownSpecies": "종 미지정",
+    "remove": "삭제",
+    "postedToast": "분양 글이 등록되었습니다.",
+    "removedToast": "분양 글을 삭제했습니다.",
+    "empty": "조건에 맞는 분양 글이 없습니다.",
+    "emptyHint": "필터를 바꾸거나 첫 분양 글을 등록해 보세요.",
+    "errors": {
+      "titleRequired": "제목을 입력해 주세요.",
+      "titleMax": "제목은 80자 이내로 입력해 주세요.",
+      "morphMax": "모프는 60자 이내로 입력해 주세요.",
+      "priceRequired": "가격을 입력하거나 무료 나눔으로 등록해 주세요.",
+      "priceInvalid": "가격은 0 이상의 정수로 입력해 주세요.",
+      "contactRequired": "연락처를 입력해 주세요.",
+      "contactMax": "연락처는 120자 이내로 입력해 주세요.",
+      "descriptionRequired": "상세 설명을 입력해 주세요.",
+      "descriptionMax": "상세 설명은 600자 이내로 입력해 주세요.",
+      "authorRequired": "작성자 닉네임을 입력해 주세요.",
+      "authorMax": "닉네임은 40자 이내로 입력해 주세요."
+    }
+  },
+  "passport": {
+    "title": "펫 여권",
+    "subtitle": "함께한 기록으로 만든 우리 아이만의 여권과 업적이에요.",
+    "card": {
+      "docType": "Keeper Passport",
+      "unnamed": "이름 없는 친구",
+      "speciesUnknown": "종 미설정",
+      "daysTogether": "함께한 일수",
+      "daysValue": "{{count}}일",
+      "badges": "획득 업적",
+      "shareNote": "이 여권은 화면을 캡처해 그대로 공유할 수 있어요. 우리 아이의 성장 기록을 자랑해 보세요.",
+      "holder": "보호자 · {{name}}",
+      "aria": "{{name}}의 펫 여권 카드"
+    },
+    "stats": {
+      "aria": "활동 통계 요약",
+      "days": "함께한 일수",
+      "diary": "일지",
+      "molt": "탈피",
+      "feeding": "급여",
+      "clutch": "클러치"
+    },
+    "achievements": {
+      "title": "업적",
+      "progress": "{{unlocked}} / {{total}} 달성",
+      "progressCount": "{{current}} / {{goal}}",
+      "unlocked": "달성 완료"
+    },
+    "tier": {
+      "bronze": "브론즈",
+      "silver": "실버",
+      "gold": "골드"
+    },
+    "empty": {
+      "title": "아직 업적이 없어요",
+      "desc": "일지를 쓰고 탈피·급여를 기록하면 업적이 하나씩 열려요. 첫 기록을 남겨보세요.",
+      "noPetTitle": "등록된 펫이 없어요",
+      "noPetDesc": "먼저 우리 아이를 등록하면 함께한 날부터 여권이 만들어져요."
+    },
+    "ach": {
+      "bond7": { "title": "첫 일주일", "desc": "함께한 지 7일이 지났어요." },
+      "bond30": { "title": "한 달의 동행", "desc": "함께한 지 30일을 넘겼어요." },
+      "bond100": { "title": "100일의 약속", "desc": "함께한 지 100일을 달성했어요." },
+      "diary1": { "title": "기록의 시작", "desc": "첫 일지를 작성했어요." },
+      "diary10": { "title": "꾸준한 관찰자", "desc": "일지를 10개 작성했어요." },
+      "diary50": { "title": "기록의 달인", "desc": "일지를 50개 작성했어요." },
+      "molt1": { "title": "첫 탈피", "desc": "첫 탈피를 기록했어요." },
+      "moltMaster": { "title": "탈피 마스터", "desc": "완전 탈피를 5회 기록했어요." },
+      "feed10": { "title": "든든한 식사", "desc": "급여를 10회 기록했어요." },
+      "feed50": { "title": "한결같은 식단", "desc": "급여를 50회 기록했어요." },
+      "feedStreak5": { "title": "완식 연속 5회", "desc": "거부 없이 5회 연속 잘 먹었어요." },
+      "clutch1": { "title": "첫 클러치", "desc": "첫 산란(클러치)을 기록했어요." }
+    }
+  },
+  "assistant": {
+    "title": "케어 어시스턴트",
+    "subtitle": "증상을 고르면 규칙 기반으로 위급도와 다음 행동을 안내해 드려요. 활성 반려동물의 분류에 맞춰 조정됩니다.",
+    "disclaimerTitle": "참고용 안내입니다",
+    "disclaimer": "규칙 기반 안내입니다. 수의사 진료를 대체하지 않습니다. 조금이라도 이상하면 병원에 연락하세요.",
+    "context": "현재 {{name}}({{category}}) 기준으로 안내합니다. 분류 특성에 맞춰 조언이 조정돼요.",
+    "contextGeneric": "활성 반려동물이 설정되지 않아 일반 안내를 제공합니다. 온보딩에서 종을 선택하면 분류에 맞춰 조정됩니다.",
+    "step1Title": "1. 어떤 증상이 보이나요?",
+    "step1Hint": "가장 가까운 항목 하나를 선택하세요.",
+    "step2Title": "2. 한 가지만 더 확인할게요",
+    "resultTitle": "안내 결과",
+    "categoryNoteLabel": "분류 참고",
+    "speciesTipLabel": "{{name}} 흔한 문제",
+    "reminder": "조금이라도 이상하면 주저하지 말고 병원에 연락하세요.",
+    "restart": "다시 시작",
+    "emptyTitle": "증상을 선택해 시작하세요",
+    "emptyDescription": "위 항목에서 증상을 고르면 1~2개의 간단한 질문 뒤에 안내를 보여드립니다.",
+    "emergencyTitle": "응급 상황일 수 있어요",
+    "emergencyBody": "지체 없이 응급 대응을 시작하고 병원에 연락하세요. 시간이 중요합니다.",
+    "emergencySos": "응급 SOS",
+    "emergencyHospitals": "24시 병원 찾기",
+    "severity": {
+      "info": "참고",
+      "caution": "주의",
+      "urgent": "긴급"
+    },
+    "topics": {
+      "anorexia": {
+        "label": "거식 (먹지 않음)",
+        "question": "언제부터, 어느 정도인가요?",
+        "options": {
+          "recent": "며칠 정도, 활동은 평소와 비슷함",
+          "weeks": "몇 주째 계속 거부함",
+          "weightLoss": "거부와 함께 체중·체형이 눈에 띄게 줄었음"
+        }
+      },
+      "sheddingIssue": {
+        "label": "탈피 부전",
+        "question": "탈피 상태가 어떤가요?",
+        "options": {
+          "inProgress": "지금 탈피 중이고 자연스럽게 진행됨",
+          "stuckPatches": "군데군데 허물이 남아 떨어지지 않음",
+          "toesOrEyes": "발가락·꼬리 끝·눈 주위에 허물이 조이고 있음"
+        }
+      },
+      "respiratory": {
+        "label": "호흡 이상",
+        "question": "호흡이 어떻게 보이나요?",
+        "options": {
+          "mildWheeze": "가끔 쌕쌕거리지만 평소처럼 활동함",
+          "openMouth": "입을 벌리고 힘겹게 숨을 쉼",
+          "mucusBubbles": "콧물·거품·점액이 보임"
+        }
+      },
+      "lethargy": {
+        "label": "무기력",
+        "question": "활동성이 어느 정도인가요?",
+        "options": {
+          "slightlyQuiet": "평소보다 조금 조용하지만 반응은 있음",
+          "notMoving": "거의 움직이지 않고 자극에 둔함",
+          "unresponsive": "축 늘어지고 만져도 반응이 거의 없음"
+        }
+      },
+      "injury": {
+        "label": "외상·출혈",
+        "question": "상처 상태가 어떤가요?",
+        "options": {
+          "minorScrape": "작은 찰과상, 출혈은 멈춤",
+          "activeBleeding": "출혈이 멈추지 않고 계속됨",
+          "prolapse": "장기·총배설강이 빠져나와 있음(탈출)"
+        }
+      },
+      "tempHumidity": {
+        "label": "온습도 문제",
+        "question": "사육장 온습도가 어떤가요?",
+        "options": {
+          "slightlyOff": "권장 범위에서 살짝 벗어남",
+          "wayOff": "권장 범위에서 크게 벗어남",
+          "burnOrHeatStress": "화상 흔적이 있거나 과열로 헐떡임"
+        }
+      },
+      "behavior": {
+        "label": "행동 변화",
+        "question": "어떤 변화인가요?",
+        "options": {
+          "newRoutine": "최근 환경·일과가 바뀐 뒤 나타남",
+          "hiding": "계속 숨고 평소 행동을 하지 않음",
+          "aggressionOrTremor": "갑작스러운 공격성·떨림·비정상 자세"
+        }
+      }
+    },
+    "advice": {
+      "anorexiaRecent": "단기 거식은 환경 변화·스트레스·계절 변동으로 흔히 나타납니다. 사육장을 안정적으로 유지하고 며칠 더 관찰하세요. 물은 늘 제공하고, 체중을 주기적으로 기록하세요.",
+      "anorexiaWeeks": "몇 주간 지속되는 거식은 온도 부족·기생충·환경 스트레스를 점검해야 합니다. 온습도와 보온 장비를 먼저 확인하고, 개선이 없으면 수의사 상담을 권합니다.",
+      "anorexiaWeightLoss": "거식과 함께 체중이 줄면 탈수·대사 질환 가능성이 있어 빠른 진료가 필요합니다. 무리하게 강제 급여하지 말고 보온을 유지한 채 병원에 연락하세요.",
+      "sheddingInProgress": "정상적인 탈피 과정입니다. 만지지 말고 습도를 권장 범위로 유지하세요. 은신처와 거친 표면을 두면 탈피에 도움이 됩니다.",
+      "sheddingStuckPatches": "잔존 허물은 습도를 높이고 미온수 미스팅·습식 은신처로 보조하세요. 강제로 떼어내지 말고, 며칠 내 떨어지지 않으면 수의사와 상의하세요.",
+      "sheddingToesOrEyes": "발가락·꼬리 끝·눈 주위 잔존 허물은 혈류를 막아 괴사·실명을 부를 수 있습니다. 미온수에 부드럽게 불린 뒤에도 풀리지 않으면 즉시 병원에 연락하세요.",
+      "respiratoryMildWheeze": "가벼운 호흡음은 낮은 온도나 건조·먼지가 원인일 수 있습니다. 보온을 권장 범위로 높이고 바닥재 먼지를 점검하세요. 악화되면 진료를 받으세요.",
+      "respiratoryOpenMouth": "개구 호흡은 심한 호흡 곤란 신호입니다. 보온을 안정적으로 유지하며 지체 없이 병원에 연락하세요.",
+      "respiratoryMucusBubbles": "콧물·거품·점액은 호흡기 감염의 강한 신호입니다. 따뜻하게 유지한 채 즉시 진료를 받으세요.",
+      "lethargySlightlyQuiet": "약간의 무기력은 정상 휴식·소화·온도 변동일 수 있습니다. 보온과 야간 온도 강하를 점검하고 관찰하세요. 식욕·배변도 함께 확인하세요.",
+      "lethargyNotMoving": "반응이 둔하고 거의 움직이지 않으면 저온·탈수·감염을 점검해야 합니다. 온습도를 바로잡고 호전이 없으면 진료를 받으세요.",
+      "lethargyUnresponsive": "축 늘어져 반응이 거의 없으면 응급 상황입니다. 보온을 유지하며 즉시 병원에 연락하세요.",
+      "injuryMinorScrape": "작은 찰과상은 깨끗한 물로 부드럽게 세척하고 사육장을 청결히 유지하며 관찰하세요. 붓거나 진물이 나면 진료를 받으세요.",
+      "injuryActiveBleeding": "멈추지 않는 출혈은 응급입니다. 깨끗한 거즈로 부드럽게 압박해 지혈하면서 즉시 병원에 연락하세요.",
+      "injuryProlapse": "장기·총배설강 탈출은 응급입니다. 노출 부위를 깨끗하고 촉촉하게(설탕물 적신 거즈 등) 유지한 채 즉시 병원으로 이동하세요.",
+      "tempHumiditySlightlyOff": "권장 범위에서 살짝 벗어난 정도는 보온·미스팅·환기로 조정하세요. 디지털 온습도계 2개로 핫스팟과 쿨존을 함께 확인하세요.",
+      "tempHumidityWayOff": "권장 범위를 크게 벗어나면 식욕·면역·탈피에 영향을 줍니다. 서모스탯과 보온·가습 장비를 점검해 빠르게 정상화하고, 동물의 상태를 함께 살피세요.",
+      "tempHumidityBurnOrHeatStress": "화상이나 과열 스트레스는 응급입니다. 즉시 열원을 끄고 시원한 곳으로 옮긴 뒤 병원에 연락하세요. 보온등은 항상 가드와 서모스탯으로 보호하세요.",
+      "behaviorNewRoutine": "환경·일과 변화 직후의 행동 변화는 적응 과정일 수 있습니다. 사육장을 안정적으로 유지하고 방해를 줄이며 며칠 관찰하세요.",
+      "behaviorHiding": "지속적으로 숨는다면 온도 불편·스트레스·통증 신호일 수 있습니다. 온습도와 은신처 배치를 점검하고, 식욕 저하가 겹치면 진료를 받으세요.",
+      "behaviorAggressionOrTremor": "갑작스러운 공격성·떨림·비정상 자세는 통증이나 신경계·대사 문제일 수 있습니다. 환경을 점검하고 가급적 빨리 수의사와 상담하세요."
+    },
+    "categoryNotes": {
+      "anorexiaArthropod": "절지류는 탈피 전(pre-molt)에 자연스럽게 먹이를 거부합니다. 복부가 검고 탱탱하면 탈피 신호일 수 있으니 방해하지 말고 기다려 보세요.",
+      "anorexiaReptile": "파충류 거식은 온도 부족이나 동면(brumation) 시기와 자주 겹칩니다. 핫스팟·쿨존 온도부터 점검하세요.",
+      "anorexiaAmphibian": "양서류는 수질·온도에 민감해 거식이 흔합니다. 물 온도와 청결, 염소 제거 여부를 먼저 확인하세요.",
+      "sheddingArthropod": "절지류의 탈피는 가장 취약한 시기입니다. 탈피 중에는 절대 만지지 말고 먹이도 치우며 습도만 안정적으로 유지하세요.",
+      "sheddingReptile": "파충류 탈피 부전은 대개 습도 부족이 원인입니다. 습식 은신처와 미스팅으로 보조하세요.",
+      "respiratoryAmphibian": "양서류는 피부 호흡 비중이 커 수질·습도가 호흡에 직접 영향을 줍니다. 물 청결과 환기를 함께 점검하세요.",
+      "respiratoryBird": "조류는 호흡기가 매우 민감해 악화가 빠릅니다. 꼬리 흔들기·개구 호흡이 보이면 지체 없이 진료를 받으세요.",
+      "lethargyReptile": "파충류는 변온 동물이라 온도가 낮으면 무기력해 보입니다. 진료 전에 보온부터 정상 범위로 맞춰 보세요.",
+      "lethargyArthropod": "절지류는 탈피 전후로 움직임이 크게 줄 수 있습니다. 최근 탈피 여부를 먼저 확인하세요.",
+      "tempHumidityAmphibian": "양서류는 건조와 고온에 특히 취약합니다. 습도를 높게 유지하고 직사광선·과열을 피하세요.",
+      "tempHumidityReptile": "파충류는 핫스팟과 쿨존의 온도 구배가 핵심입니다. 양쪽을 따로 측정해 구배를 확보하세요."
     }
   },
   "morphs": {

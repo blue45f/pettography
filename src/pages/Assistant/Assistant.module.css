@@ -1,0 +1,205 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.header h1 {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  max-width: 640px;
+}
+
+.context {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.stepTitle {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-xs);
+}
+
+.stepHint {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Step 1 — symptom chips */
+.topicGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: var(--spacing-sm);
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  min-height: 44px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  transition:
+    border-color var(--motion-fast),
+    background var(--motion-fast);
+}
+
+.chip:hover {
+  border-color: var(--color-primary);
+}
+
+.chipActive {
+  background: var(--gradient-brand);
+  border-color: transparent;
+  color: #fff;
+}
+
+.chipIcon {
+  font-size: var(--font-size-xl);
+  line-height: 1;
+}
+
+/* Step 2 — follow-up question */
+.question {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: var(--spacing-sm);
+}
+
+.option {
+  min-height: 44px;
+  padding: var(--spacing-md);
+  border: 2px solid var(--color-border);
+  background: var(--color-background);
+  color: var(--color-text);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  transition:
+    border-color var(--motion-fast),
+    background var(--motion-fast);
+}
+
+.option:hover {
+  border-color: var(--color-primary);
+}
+
+.optionActive {
+  background: var(--color-primary-alpha);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Result */
+.resultHead {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-sm);
+}
+
+.resultTitle {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.advice {
+  font-size: var(--font-size-base);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--spacing-md);
+}
+
+.note {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--spacing-sm);
+}
+
+.noteLabel {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.reminder {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.emergencyText {
+  margin-bottom: var(--spacing-sm);
+}
+
+.emergencyLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.emergencyLink,
+.emergencyLinkOutline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--spacing-xs) var(--spacing-lg);
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+}
+
+.emergencyLink {
+  background: var(--color-error);
+  color: #fff;
+}
+
+.emergencyLink:hover {
+  filter: brightness(0.95);
+}
+
+.emergencyLinkOutline {
+  border: 2px solid var(--color-error);
+  color: var(--color-error);
+}
+
+.emergencyLinkOutline:hover {
+  background: var(--color-error-alpha);
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-start;
+}

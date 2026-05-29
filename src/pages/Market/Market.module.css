@@ -1,0 +1,267 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+/* ── Safety card ── */
+.safetyCard {
+  background: var(--color-primary-soft);
+  box-shadow: var(--shadow-xs);
+}
+
+.safetyTitle {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+}
+
+.safetyList {
+  list-style: disc;
+  padding-left: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.safetyNote {
+  margin-top: var(--spacing-sm);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.safetyLink {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.safetyLink:hover {
+  text-decoration: underline;
+}
+
+/* ── Controls / filters ── */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.controlsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.filters {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.filterChip {
+  min-height: 44px;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  transition:
+    color var(--motion-fast),
+    background-color var(--motion-fast),
+    border-color var(--motion-fast);
+}
+
+.filterChip:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.filterActive {
+  background: var(--gradient-brand);
+  color: #fff;
+  border-color: transparent;
+}
+
+.filterActive:hover {
+  color: #fff;
+}
+
+/* ── Composer ── */
+.composerCard {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.composerTitle {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.composerForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.composerRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.freeRow {
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) 1fr;
+  gap: var(--spacing-md);
+  align-items: end;
+}
+
+@media (max-width: 640px) {
+  .composerRow,
+  .freeRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.freeHint {
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+}
+
+.composerActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ── Listing grid ── */
+.grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.listingCard {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  height: 100%;
+}
+
+.listingTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.listingTitle {
+  font-size: var(--font-size-lg);
+  line-height: 1.3;
+}
+
+.price {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.listingSpecies {
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.morph {
+  color: var(--color-text-muted);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+}
+
+.regulatedLink {
+  text-decoration: none;
+}
+
+.description {
+  margin-top: var(--spacing-sm);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  white-space: pre-wrap;
+}
+
+.listingFooter {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.contact {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  word-break: break-word;
+}
+
+.contactLabel {
+  color: var(--color-text-muted);
+}
+
+.contactLink {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.contactLink:hover {
+  text-decoration: underline;
+}
+
+.contactText {
+  font-weight: 600;
+}
+
+.author {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.ownActions {
+  margin-top: var(--spacing-sm);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dangerLink {
+  min-height: 44px;
+  background: none;
+  border: none;
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.dangerLink:hover {
+  text-decoration: underline;
+}

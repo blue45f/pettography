@@ -1,0 +1,297 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+/* ---------- Passport identity card (hero) ---------- */
+.passport {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-xl);
+  background: var(--gradient-brand);
+  color: #fff;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  max-width: 540px;
+}
+
+/* Decorative guilloché-style sheen, kept subtle and non-animated. */
+.passport::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 85% -10%,
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0) 55%
+  );
+  pointer-events: none;
+}
+
+.passport > * {
+  position: relative;
+  z-index: 1;
+}
+
+.passportTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.wordmark {
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-size: var(--font-size-base);
+}
+
+.docType {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  opacity: 0.85;
+}
+
+.passportMain {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.hero {
+  font-size: 3.25rem;
+  line-height: 1;
+  width: 72px;
+  height: 72px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.18);
+  flex-shrink: 0;
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  min-width: 0;
+}
+
+.petName {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.species {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.scientific {
+  font-size: var(--font-size-xs);
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.passportStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 110px), 1fr));
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.passportStat dt {
+  font-size: var(--font-size-xs);
+  opacity: 0.85;
+  margin-bottom: var(--spacing-2xs);
+}
+
+.passportStat dd {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.passportFoot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.passportNo {
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, monospace;
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.holder {
+  font-size: var(--font-size-xs);
+  opacity: 0.85;
+  text-align: right;
+}
+
+.shareNote {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  margin-top: calc(-1 * var(--spacing-sm));
+}
+
+/* ---------- Stat strip ---------- */
+.statStrip {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr));
+  gap: var(--spacing-sm);
+}
+
+.statChip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-md);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.statValue {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary);
+}
+
+.statLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+/* ---------- Achievements ---------- */
+.achHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-md);
+}
+
+.achTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.achCount {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.achGrid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.achCard {
+  height: 100%;
+  transition: transform var(--motion-fast);
+}
+
+.achUnlocked {
+  border: 1px solid var(--color-primary);
+}
+
+.achUnlocked:hover {
+  transform: translateY(-2px);
+}
+
+.achLocked {
+  opacity: 0.62;
+}
+
+.achCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.achIcon {
+  font-size: var(--font-size-2xl);
+  line-height: 1;
+}
+
+.achLocked .achIcon {
+  filter: grayscale(1);
+}
+
+.achName {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  margin-bottom: var(--spacing-2xs);
+}
+
+.achDesc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.achDone {
+  display: inline-block;
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+.achProgress {
+  margin-top: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.achProgressLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .achCard {
+    transition: none;
+  }
+  .achUnlocked:hover {
+    transform: none;
+  }
+}

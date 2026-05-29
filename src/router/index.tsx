@@ -177,6 +177,17 @@ export const routes = [
       },
       { path: 'meds', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Meds')) },
       { path: 'feeding', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Feeding')) },
+      { path: 'market', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Market')) },
+      {
+        path: 'passport',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Passport')),
+      },
+      {
+        path: 'assistant',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Assistant')),
+      },
       { path: 'food', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Food')) },
       { path: 'events', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Events')) },
       { path: 'about', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/About')) },
