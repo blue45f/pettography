@@ -32,7 +32,7 @@
 | 법규/안전 | `/registry`, `/petid`, `/backup`                                             | 2025-12-14 야생생물법 4종 신고 체크리스트 / 인쇄용 미아 ID 카드 / 데이터 export·import·wipe                                                                                     |
 | 메타      | `/about`, `/faq`                                                             | 앱 소개·원칙·데이터 출처 / 10개 자주 묻는 질문 accordion                                                                                                                        |
 
-### 🆕 v0.2 확장 (12개 신규 라우트, ko/en/ja)
+### 🆕 v0.2 확장 (16개 신규 라우트, ko/en/ja)
 
 | 카테고리     | 페이지                                     | 설명                                                                                                                              |
 | ------------ | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
@@ -50,7 +50,7 @@
 pettography/
 ├── src/                 # Frontend (React 19 + Vite + TS strict)
 │   ├── features/        # 30+ features (species, onboarding, genetics, molt, vivarium, breeding, feeding, meds, showcase, qna, meetups, market, passport, assistant ...)
-│   ├── pages/           # 50 routes (lazy)
+│   ├── pages/           # 54 routes (lazy)
 │   ├── components/      # shared UI (Card, Badge, Button, Input, Textarea, Toast, BottomNav, Header ...)
 │   ├── router/ store/ services/ i18n/ hooks/ utils/
 │   └── assets/styles/   # design tokens (OKLCH-tinted, fluid clamp)
