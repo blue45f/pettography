@@ -59,6 +59,7 @@
     "insurance": "Insurance",
     "setup": "Setup cost",
     "morphs": "Morphs",
+    "genetics": "Genetics",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -1127,6 +1128,41 @@
     "cautionLabel": "Caution",
     "openShop": "Open shop",
     "disclaimer": "Prices are 2025–26 KR averages. Nutrition values summarize supplier and research data."
+  },
+  "genetics": {
+    "title": "Morph Genetics Calculator",
+    "subtitle": "Pick the morph genotype of both parents and we compute the offspring phenotype odds with a Punnett square. Loci are assumed to be independent.",
+    "speciesLabel": "Select species",
+    "polygenicNote": "Many popular morphs in this species are line-bred / polygenic and aren't captured by simple Mendelian math. Only single-gene morphs are modelled here.",
+    "sire": "Sire",
+    "dam": "Dam",
+    "normal": "Normal",
+    "expressed": "Visual",
+    "homozygous": "Homozygous (2 copies)",
+    "results": {
+      "title": "Offspring odds",
+      "distinct": "{{count}} phenotype(s)",
+      "hint": "Select at least one morph on a parent above to see the odds table.",
+      "showGenotype": "Show genotype detail (incl. het)",
+      "hideGenotype": "Hide genotype detail",
+      "phenotype": "Phenotype",
+      "carriers": "Carriers (het)",
+      "odds": "Odds"
+    },
+    "save": {
+      "title": "Save pairing",
+      "label": "Pairing name",
+      "placeholder": "e.g. 2026 Pastel × Albino plan",
+      "cta": "Save",
+      "empty": "No saved pairings yet. Save a planned cross to keep it grouped per active pet.",
+      "saved": "Pairing saved.",
+      "needTrait": "Select at least one morph on a parent first.",
+      "untitled": "Untitled pairing"
+    },
+    "legend": {
+      "title": "Genetics quick reference",
+      "body": "A het (heterozygous) animal carries one recessive copy: it looks normal but passes the trait on. Co-dominant genes show a base morph with one copy and a distinct 'super' form with two. Dominant traits show with a single copy. A '66% het' tag is the chance a normal-looking sibling is a carrier."
+    }
   },
   "morphs": {
     "title": "Popular morph catalog",
