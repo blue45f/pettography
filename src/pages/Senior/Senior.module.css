@@ -1,0 +1,247 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+  max-inline-size: 60ch;
+  text-wrap: pretty;
+}
+
+.speciesNote {
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.lifespanNote {
+  color: var(--color-text-muted);
+}
+
+.cardTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Life-stage card (primary) */
+.stageCard {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+}
+
+.stageHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.stageHeadText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.stageEyebrow {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.stageBadge {
+  font-size: var(--font-size-md);
+}
+
+.ageReadout {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.stageBlurb {
+  margin-top: var(--spacing-md);
+  color: var(--color-text-secondary);
+  text-wrap: pretty;
+  line-height: 1.6;
+}
+
+.progressBlock {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.progressLabels {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.progressPct {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+}
+
+.progressScale {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.metricGrid {
+  margin-top: var(--spacing-lg);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.metricGrid dt {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-2xs);
+}
+
+.metricGrid dd {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.estimateNote {
+  margin-top: var(--spacing-md);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-wrap: pretty;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Care recommendations */
+.tipsEmphasis {
+  border: 1px solid var(--color-warning);
+}
+
+.tipsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.tipsHead .cardTitle {
+  margin-bottom: 0;
+}
+
+.tipsLead {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-md);
+  text-wrap: pretty;
+}
+
+.tipList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  list-style: none;
+}
+
+.tipItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  line-height: 1.55;
+  color: var(--color-text);
+}
+
+.tipMarker {
+  flex: none;
+  inline-size: 8px;
+  block-size: 8px;
+  margin-top: 0.5em;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+}
+
+.tipsEmphasis .tipMarker {
+  background: var(--color-warning);
+}
+
+/* Checklist */
+.checklistHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.checklistHead .cardTitle {
+  margin-bottom: 0;
+}
+
+.checklistCount {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.checklistProgress {
+  margin-bottom: var(--spacing-md);
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  list-style: none;
+}
+
+.checklistItem {
+  display: flex;
+  align-items: center;
+  min-block-size: 44px;
+  padding-block: var(--spacing-2xs);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.checklistItem:last-child {
+  border-bottom: none;
+}

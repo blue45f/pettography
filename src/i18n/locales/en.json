@@ -75,6 +75,9 @@
     "water": "Water",
     "brumation": "Brumation",
     "gear": "Gear",
+    "senior": "Senior care",
+    "vitals": "Vitals",
+    "cohab": "Cohabitation",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -2358,6 +2361,244 @@
       "intervalMin": "Interval must be at least 0 months.",
       "intervalMax": "Interval must be 120 months or fewer.",
       "notesMax": "Notes must be 200 characters or fewer."
+    }
+  },
+  "senior": {
+    "title": "Senior care",
+    "subtitle": "As your years together add up, care needs to change too. Gauge when your companion is entering its senior years and adjust to a gentler, more comfortable setup.",
+    "lifespanRange": "Lifespan {{min}}–{{max}} yrs",
+    "saved": "Saved",
+    "stage": {
+      "eyebrow": "Current life stage",
+      "ageReadout": "About {{years}} yrs old",
+      "juvenile": "Juvenile",
+      "adult": "Adult",
+      "senior": "Senior",
+      "geriatric": "Geriatric"
+    },
+    "stageBlurb": {
+      "juvenile": "A time of rapid growth. Focus on nutrition and growth tracking to build a healthy foundation.",
+      "adult": "The most stable phase. Keep up your good routines and log baseline behavior so you can spot changes early.",
+      "senior": "Your companion is entering its senior years. Watch for small shifts in activity, appetite, and weight, and ease the habitat into something more comfortable.",
+      "geriatric": "These are precious years beyond the typical lifespan. Prioritize stability and comfort over big changes, and check in with your vet more often."
+    },
+    "progress": {
+      "label": "Progress vs. lifespan",
+      "aria": "{{pct}}% of expected lifespan",
+      "maxYears": "{{max}} yrs"
+    },
+    "metric": {
+      "remaining": "Est. years remaining",
+      "lifespan": "Species lifespan",
+      "range": "{{min}}–{{max}} yrs",
+      "years": "~{{years}} yrs",
+      "estimateNote": "Remaining time is a rough estimate based on the species' average lifespan. It can vary widely with each animal's health and environment."
+    },
+    "form": {
+      "title": "Age details",
+      "age": "Age (years)",
+      "ageHelper": "An approximate value is fine if you're not sure. E.g. 4.5",
+      "acquiredAs": "Acquired as",
+      "acquiredAsHelper": "Life stage when you got the animal. Helps estimate age when the exact birth date is unknown.",
+      "notes": "Notes",
+      "notesPlaceholder": "Jot down recent condition, appetite, or behavior changes.",
+      "submit": "Save"
+    },
+    "acquiredAs": {
+      "baby": "Baby (young animal)",
+      "juvenile": "Juvenile",
+      "adult": "Adult",
+      "unknown": "Unknown"
+    },
+    "tipsTitle": "Senior care guide",
+    "tipsActive": "Worth attention now",
+    "tipsLeadSenior": "Now that the senior years have begun, work the items below into the habitat and daily routine.",
+    "tipsLeadEarly": "Not a senior yet, but here are species-specific care points worth knowing in advance.",
+    "tips": {
+      "reptileLowerBasking": "Lower the basking spot and place it for easy climbing to reduce the risk of falls.",
+      "reptileEasyDecor": "Switch hides and steps to lower, more stable options to ease movement.",
+      "reptileVetChecks": "Schedule vet checkups more often to monitor organ and metabolic health.",
+      "reptileWeightAppetite": "Log weight and appetite changes more frequently to catch warning signs early.",
+      "reptileJointOrgan": "Watch for age-related changes like joint stiffness and kidney or liver decline.",
+      "reptileHydration": "Pay extra attention to hydration and humidity, as older animals tire of dehydration sooner.",
+      "arthropodGentleHandling": "Minimize handling and be especially gentle when you do.",
+      "arthropodEasyPrey": "Offer smaller, easier-to-catch prey.",
+      "arthropodLowerClimb": "Lower the enclosure height to reduce the risk of fatal falls and abdominal rupture.",
+      "arthropodMoltWatch": "Molts can be risky for older animals, so watch closely before and after a molt.",
+      "arthropodStableHumidity": "Keep temperature and humidity steady to minimize stress.",
+      "birdPerchVariety": "Offer perches of varying thickness plus lower perches to ease strain on feet and joints.",
+      "birdSoftDiet": "Increase softer, easier-to-eat foods and keep the diet balanced.",
+      "birdWarmth": "Provide extra warmth as temperature regulation becomes harder.",
+      "birdVetChecks": "See an avian vet more often to screen for hidden illness.",
+      "birdWeightAppetite": "Check weight and appetite often to catch changes quickly.",
+      "birdGentleRoutine": "Reduce changes and stimulation, keeping a calm, stable routine.",
+      "amphibianWaterQuality": "Pay closer attention to water quality and filtration to guard against weakened immunity.",
+      "amphibianCoolerTemps": "Keep water slightly cooler and stable to ease metabolic load.",
+      "amphibianEasyPrey": "Offer smaller, easier-to-digest prey.",
+      "amphibianSkinWatch": "Inspect the skin often for wounds or signs of infection.",
+      "amphibianGentleHandling": "Animals grow more sensitive, so minimize handling and make changes slowly.",
+      "mammalSoftBedding": "Use soft bedding to ease strain on joints and prevent pressure sores.",
+      "mammalRamps": "Add ramps and low steps to make climbing easier.",
+      "mammalSoftDiet": "Adjust to softer, easier-to-digest food to match dental condition.",
+      "mammalVetChecks": "Schedule checkups more often to monitor teeth, joints, and organs.",
+      "mammalWeightAppetite": "Log weight and appetite changes often to notice problems early.",
+      "mammalDentalJoint": "Watch for age-related issues like worn teeth and arthritis."
+    },
+    "checklistTitle": "Senior checklist",
+    "checklistCount": "{{done}}/{{total}} done",
+    "checklistAria": "Checklist {{pct}}% complete",
+    "checklist": {
+      "vetBaseline": "Get a senior baseline vet checkup",
+      "weightLog": "Log weight regularly",
+      "appetiteWatch": "Watch appetite and water intake",
+      "mobilityCheck": "Check activity and mobility",
+      "habitatAdjust": "Make the habitat more comfortable",
+      "hydrationCheck": "Review hydration and humidity",
+      "comfortReview": "Revisit comfort (temperature, hides)",
+      "endOfLifePlan": "Prepare a senior care plan ahead of time"
+    },
+    "empty": {
+      "noPetTitle": "Register a pet first",
+      "noPetDesc": "We need species info to compute the life stage from lifespan. Add your companion during onboarding.",
+      "noAgeTitle": "Enter an age to see the life stage",
+      "noAgeDesc": "Enter an age below and we'll compare it with the species lifespan to estimate the current life stage and remaining time.",
+      "noLifespanTitle": "No lifespan data yet",
+      "noLifespanDesc": "There's no lifespan data for {{name}}, so the life stage can't be computed precisely. You can still record age and notes."
+    },
+    "errors": {
+      "ageNumber": "Please enter a number",
+      "ageNonNegative": "Please enter 0 or more",
+      "ageMax": "That value is too large",
+      "notesMax": "Notes must be 300 characters or fewer"
+    }
+  },
+  "vitals": {
+    "title": "Vitals Counter",
+    "subtitle": "Respiratory and heart rate are key health signals for exotic pets. Tap to count, compute beats-or-breaths per minute, and track the trend.",
+    "saved": "Logged a reading of {{bpm}} {{unit}}.",
+    "type": {
+      "respiration": "Respiration",
+      "heartrate": "Heart rate"
+    },
+    "unit": {
+      "respiration": "/min",
+      "heartrate": "bpm"
+    },
+    "counter": {
+      "title": "Tap counter",
+      "hint": "Pick respiration or heart rate, set a window, press start, then tap once for every breath (or beat).",
+      "typeLabel": "Measurement type",
+      "durationLabel": "Measurement window",
+      "seconds": "{{count}}s",
+      "secUnit": "s",
+      "remaining": "Time left",
+      "taps": "Taps",
+      "liveBpm": "Estimate",
+      "tap": "Tap",
+      "tapEach": "Tap once per {{type}}",
+      "tapIdle": "Press start to enable",
+      "tapAria": "Count {{type}}",
+      "start": "Start",
+      "stop": "Stop",
+      "save": "Save",
+      "reset": "Reset",
+      "resultMeta": "{{taps}} in {{seconds}}s",
+      "note": "Note",
+      "notePlaceholder": "Note the context (e.g. at rest, enclosure 28C)"
+    },
+    "guidance": {
+      "title": "Resting respiratory rate by category",
+      "reptile": "Reptiles breathe roughly 10-40 per minute at rest, varying widely by species. It rises with temperature and stress.",
+      "amphibian": "Amphibians breathe partly through the skin, so visible breathing is irregular. At rest it is roughly 20-50 per minute, varying a lot by species and water temperature.",
+      "bird": "Birds have a fast metabolism, so even at rest it is roughly 25-50+ per minute, faster in smaller species.",
+      "mammal": "Small mammals have a fast metabolism, roughly 30-100+ per minute at rest, varying widely by species and size.",
+      "arthropod": "Arthropods have no lungs, so a typical breathing count does not apply. Watch activity and posture changes instead.",
+      "unknown": "Register a species to see approximate resting respiratory-rate guidance for its category.",
+      "caveat": "These are all very approximate and vary a lot with temperature, species, and individual. Treat them as a tracking reference, not a diagnosis.",
+      "vet": "If breathing looks different from usual or is open-mouthed and labored, contact your vet right away."
+    },
+    "history": {
+      "title": "Reading history",
+      "typeLabel": "History type",
+      "showAllPets": "Show all pets",
+      "trendAria": "Trend chart of {{count}} {{type}} readings",
+      "remove": "Remove",
+      "emptyTitle": "No readings yet",
+      "emptyDesc": "Save your first reading with the tap counter and the trend will build up here."
+    }
+  },
+  "cohab": {
+    "title": "Cohabitation Checker",
+    "subtitle": "Get a clear, rule-based verdict on whether two species can share an enclosure. Most exotic pets are meant to be kept alone, and this tool explains why.",
+    "empty": "Pick two species to see a cohabitation verdict.",
+    "disclaimer": "This verdict is general guidance based on common husbandry principles and does not account for every individual situation. If you are considering cohabitation, always pair it with ample space, quarantine, and advice from an expert or vet. When in doubt, keeping animals solo is safest.",
+    "principle": {
+      "title": "Most exotic pets are meant to be kept alone",
+      "body": "Nearly all reptiles, arthropods, and amphibians are naturally solitary; housing them together causes chronic stress, territorial fighting, cannibalism, and disease spread. \"Looking lonely\" is a human feeling — cohabitation rarely benefits the animal."
+    },
+    "picker": {
+      "title": "Choose two species to check",
+      "intro": "Pick the two species to compare. Species A defaults to your active pet. Choose the same species twice to check same-species cohabitation.",
+      "speciesA": "Species A",
+      "speciesB": "Species B"
+    },
+    "verdict": {
+      "pair": "{{a}} + {{b}}",
+      "samePair": "Two {{name}} together (same species)",
+      "reasonsTitle": "Why this verdict",
+      "label": {
+        "no": "Not recommended",
+        "caution": "Strongly discouraged",
+        "sameSpeciesOnly": "Same species only",
+        "ok": "Recommended together"
+      },
+      "headline": {
+        "no": "Do not house these together",
+        "caution": "Keep this species alone",
+        "sameSpeciesOnly": "Never mix species — same species only",
+        "ok": "Best kept together"
+      },
+      "summary": {
+        "no": "This pairing is not recommended. Sharing one enclosure brings a high risk of stress, aggression, predation, and disease spread. Keep each animal solo in its own enclosure.",
+        "caution": "This species should be kept alone. Even with the same species, sharing a space easily leads to territorial disputes and stress, so keep them separate unless you have a specific purpose such as breeding.",
+        "sameSpeciesOnly": "This species is social enough to be kept in same-species groups. However, never mix it with other species, and provide ample space and an appropriate sex ratio.",
+        "ok": "This is a social animal that risks depression and self-harm when kept alone, so keeping several of the same species together is recommended. Provide ample space and a proper introduction process."
+      }
+    },
+    "reasons": {
+      "mixSpeciesNever": "Never house different species together — there is virtually no safe cross-species combination.",
+      "territorial": "A territorial animal, so sharing a space leads to disputes and aggression.",
+      "cannibalism": "Risk of cannibalism — one animal may eat the other.",
+      "sizeMismatch": "A size difference means the smaller one can be injured or become prey.",
+      "diseaseRisk": "Parasites, bacteria, and viruses spread quickly between animals.",
+      "differentNeeds": "Different temperature, humidity, and diet needs mean one animal is always stressed.",
+      "stress": "Simply being housed together builds chronic stress, leading to food refusal and weakened immunity.",
+      "predation": "A predator–prey relationship in which one may eat the other.",
+      "socialNeedsGroup": "A social animal that risks loneliness, depression, and self-harm when kept alone.",
+      "sameSpeciesGroupOk": "Group housing is fine among the same species (but not with other species).",
+      "spaceRequired": "Needs an enclosure large enough, with enough hides, for multiple animals.",
+      "sexRatio": "Manage the sex ratio carefully (e.g. same-sex groups) to prevent fighting and overbreeding.",
+      "soloMandatory": "A species that must be kept alone — one animal per enclosure."
+    },
+    "guide": {
+      "title": "Solitary-keeping basics",
+      "solitaryDefault": "Unless a species is clearly known to be social, the default is always to keep it alone.",
+      "noIntroduce": "Don't add a \"friend\" because an animal looks lonely — for most species, cohabitation is a threat.",
+      "stressHidden": "Exotics hide stress well. By the time you see food refusal, hiding, or weight loss, things may already be serious.",
+      "quarantine": "Quarantine any newly acquired animal separately for at least 30–90 days to prevent disease spread.",
+      "oneEnclosure": "One animal per enclosure is safest — it removes competition for space, hides, and food entirely."
+    },
+    "social": {
+      "title": "Social species (the exceptions)",
+      "intro": "The species below are exceptions that can or should be kept in same-species groups. Even so, never mix them with other species.",
+      "empty": "No social species registered.",
+      "tag": "Social species",
+      "notes": {
+        "budgerigar": "Best kept in groups — they get very lonely alone. Needs a roomy cage and flight space.",
+        "cockatiel": "Highly social; can be kept in pairs or groups — provide ample space and interaction time.",
+        "sugar-glider": "Never keep alone — at least two same-sex animals required. Isolation causes depression and self-harm.",
+        "madagascar-hissing-cockroach": "A social, colony-living arthropod — group housing among the same species is natural."
+      }
     }
   },
   "morphs": {
