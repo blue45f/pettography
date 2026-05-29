@@ -1,0 +1,123 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.speciesNote {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.formTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.gearCard {
+  height: 100%;
+  border: 1px solid var(--color-border);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-sm);
+}
+
+.gearName {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+  word-break: break-word;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.meta dt {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  margin-bottom: var(--spacing-2xs);
+}
+
+.meta dd {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.gearNotes {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-sm);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.removeButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--spacing-sm);
+  background: none;
+  border: none;
+  color: var(--color-error);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+}
+
+.removeButton:hover {
+  text-decoration: underline;
+}

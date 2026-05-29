@@ -1,0 +1,262 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.speciesNote {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.showAllToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  user-select: none;
+  min-height: 44px;
+}
+
+.showAllToggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+}
+
+/* Cycle status card */
+.statusCard {
+  border: 1px solid var(--color-border-strong);
+}
+
+.statusHead {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-sm);
+}
+
+.statusTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.statusBadge {
+  font-size: var(--font-size-sm);
+}
+
+.statusExplain {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+.measuredLine {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Parameter chips */
+.chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.chip {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  min-width: 92px;
+}
+
+.chipLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.chipValue {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.chipUnit {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.chipFlag {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.chipOk {
+  border-color: var(--color-success);
+}
+
+.chipOk .chipFlag {
+  color: var(--color-success);
+}
+
+.chipWarn {
+  border-color: var(--color-warning);
+}
+
+.chipWarn .chipFlag {
+  color: var(--color-warning);
+}
+
+.chipDanger {
+  border-color: var(--color-error);
+}
+
+.chipDanger .chipFlag {
+  color: var(--color-error);
+}
+
+/* Form */
+.formTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.paramGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.kitNote {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+/* History */
+.sectionTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.trendCard {
+  border: 1px solid var(--color-border);
+}
+
+.trendTitle {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.entryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.entryHeaderLeft {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.entryDate {
+  font-weight: 600;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  min-height: 44px;
+  padding: 0 var(--spacing-xs);
+}
+
+.removeButton:hover {
+  text-decoration: underline;
+}
+
+.summary {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs) var(--spacing-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.summary li {
+  display: inline-flex;
+  gap: var(--spacing-2xs);
+}
+
+.summaryKey {
+  color: var(--color-text-muted);
+}
+
+.summaryWarn {
+  color: var(--color-warning);
+  font-weight: 600;
+}
+
+.summaryDanger {
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+.entryNote {
+  margin-top: var(--spacing-sm);
+  white-space: pre-wrap;
+}
+
+.entryFooter {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}

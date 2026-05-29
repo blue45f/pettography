@@ -1,0 +1,316 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.speciesChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  background: var(--gradient-brand);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+/* ── Safety alert list ───────────────────────────────────────── */
+.safetyList {
+  margin: var(--spacing-2xs) 0 0;
+  padding-left: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.safetyList li {
+  font-size: var(--font-size-sm);
+}
+
+/* ── Sections ────────────────────────────────────────────────── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.sectionIntro {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: calc(-1 * var(--spacing-2xs));
+}
+
+.formTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.fieldsetLegend {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.phaseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+}
+
+.disclaimer {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+/* ── Active plan summary ─────────────────────────────────────── */
+.summaryTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.summarySpecies {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  font-weight: 700;
+}
+
+.dday {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.ddaySub {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.statRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  align-items: center;
+  font-size: var(--font-size-sm);
+}
+
+.statRow + .statRow {
+  margin-top: var(--spacing-xs);
+}
+
+.statLabel {
+  color: var(--color-text-secondary);
+}
+
+.statValue {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.statBlock {
+  margin-top: var(--spacing-md);
+}
+
+.progressWrap {
+  margin-top: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+/* ── Phase timeline ──────────────────────────────────────────── */
+.timeline {
+  list-style: none;
+  margin: var(--spacing-md) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.timelineItem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spacing-md);
+  align-items: start;
+}
+
+.timelineRail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  padding-top: var(--spacing-2xs);
+}
+
+.timelineDot {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--color-border);
+  flex-shrink: 0;
+}
+
+.timelineDotPast {
+  background: var(--color-primary);
+}
+
+.timelineDotCurrent {
+  background: var(--gradient-brand);
+  box-shadow: var(--shadow-glow);
+}
+
+.timelineLine {
+  flex: 1;
+  width: 2px;
+  min-height: var(--spacing-lg);
+  background: var(--color-border);
+}
+
+.timelineLinePast {
+  background: var(--color-primary);
+}
+
+.timelineBody {
+  padding-bottom: var(--spacing-2xs);
+}
+
+.timelineHead {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.timelineNum {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.timelineTitle {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+}
+
+.timelineDates {
+  margin-top: var(--spacing-2xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.timelineDuration {
+  color: var(--color-text-muted);
+}
+
+.timelineDesc {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ── Saved plan list ─────────────────────────────────────────── */
+.planList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.planHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.planMeta {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.planActions {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.planNotes {
+  margin-top: var(--spacing-sm);
+  white-space: pre-wrap;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.activeTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--spacing-sm);
+  background: var(--gradient-brand);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  min-height: 44px;
+  padding: 0 var(--spacing-2xs);
+}
+
+.removeButton:hover {
+  text-decoration: underline;
+}

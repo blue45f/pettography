@@ -189,6 +189,13 @@ export const routes = [
         lazy: lazyPage(() => import('@pages/Assistant')),
       },
       { path: 'growth', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Growth')) },
+      { path: 'water', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Water')) },
+      {
+        path: 'brumation',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Brumation')),
+      },
+      { path: 'gear', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Gear')) },
       { path: 'food', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Food')) },
       { path: 'events', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Events')) },
       { path: 'about', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/About')) },

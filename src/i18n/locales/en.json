@@ -72,6 +72,9 @@
     "passport": "Passport",
     "assistant": "Care Assistant",
     "growth": "Growth",
+    "water": "Water",
+    "brumation": "Brumation",
+    "gear": "Gear",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -2143,6 +2146,218 @@
       "lengthNumber": "Enter the length as a number.",
       "lengthPositive": "Length must be greater than 0.",
       "noteMax": "Notes must be 200 characters or fewer."
+    }
+  },
+  "water": {
+    "title": "Water Quality Tracker",
+    "subtitle": "Keep the nitrogen cycle stable to protect your aquatic pet's habitat.",
+    "showAllPets": "Show all pets",
+    "notAquatic": "This tool is tuned for aquarium setups. Your current species isn't aquatic, but you can still log readings.",
+    "pet": "My pet",
+    "measuredOn": "Latest reading · {{date}}",
+    "notMeasured": "Not measured",
+    "noReadings": "No readings yet. Log your first water test.",
+    "toxicAlertTitle": "Water change needed now",
+    "toxicAlert": "Ammonia or nitrite is at a dangerous level. Do a partial water change (25–50%) right away and stop feeding.",
+    "newReading": "Log a reading",
+    "addReading": "Add reading",
+    "kitNote": "Test kits and strips give approximate values. Measure consistently under the same conditions to read the trend.",
+    "historyTitle": "Reading history",
+    "nitrateTrend": "Nitrate trend",
+    "emptyTitle": "No readings",
+    "emptyDesc": "Measure at least one of temperature, pH, ammonia, nitrite, or nitrate.",
+    "remove": "Remove",
+    "speciesUnknown": "Saved without species info.",
+    "status": {
+      "title": "Nitrogen cycle status",
+      "cycling": "Cycling",
+      "cycled": "Cycled",
+      "toxic": "Toxic warning",
+      "unknown": "Inconclusive"
+    },
+    "statusExplain": {
+      "cycling": "Filter bacteria are establishing. Feed lightly and check daily until ammonia and nitrite reach zero and nitrate appears.",
+      "cycled": "Ammonia and nitrite read zero and nitrate is present — the cycle is complete. Manage nitrate with regular water changes.",
+      "toxic": "Ammonia or nitrite is at a dangerous level. Change water immediately and investigate the cause.",
+      "unknown": "Not enough data to judge. Measure at least ammonia, nitrite, and nitrate together."
+    },
+    "params": {
+      "measuredAt": "Date measured",
+      "tempC": "Temp (°C)",
+      "ph": "pH",
+      "ammoniaPpm": "Ammonia (ppm)",
+      "nitritePpm": "Nitrite (ppm)",
+      "nitratePpm": "Nitrate (ppm)",
+      "note": "Note"
+    },
+    "paramsShort": {
+      "tempC": "Temp",
+      "ph": "pH",
+      "ammoniaPpm": "Ammonia",
+      "nitritePpm": "Nitrite",
+      "nitratePpm": "Nitrate"
+    },
+    "flags": {
+      "ok": "OK",
+      "warn": "Watch",
+      "danger": "Danger"
+    },
+    "errors": {
+      "atLeastOne": "Enter at least one water parameter.",
+      "dateRequired": "Enter the date measured.",
+      "number": "Enter a number.",
+      "nonNegative": "Enter 0 or more.",
+      "tooHigh": "That value is too high.",
+      "phRange": "pH must be between 0 and 14.",
+      "noteMax": "Keep the note within 200 characters."
+    }
+  },
+  "brumation": {
+    "title": "Brumation Planner",
+    "subtitle": "Plan a reptile's brumation safely, phase by phase — for bearded dragons, some geckos, tortoises and more. From the vet check through fasting, a gradual temperature step-down, dormancy, gradual warm-up and recovery.",
+    "disclaimer": "The phase durations shown are defaults based on common keeper references, not precise prescriptions. Real timing varies with species, individual and health, and should always be decided with your veterinarian.",
+    "remove": "Remove",
+    "speciesUnknown": "Species not set",
+    "created": "Brumation plan saved.",
+    "safety": {
+      "title": "Read this before you start",
+      "intro": "Brumation is a risky process that can be life-threatening if done carelessly. Confirm every condition below first.",
+      "healthyOnly": "Only attempt this with healthy adults. Never brumate a sick, underweight or recovering animal.",
+      "vetFirst": "A pre-brumation vet check is essential. Parasites, infections or mouth rot can worsen dangerously during dormancy.",
+      "noJuvenile": "Do not brumate juveniles. Only fully grown animals at a stable weight are candidates.",
+      "fastBeforeCool": "Clear the gut with a full fast before cooling. Undigested food can rot at low temperatures and cause sepsis.",
+      "monitorWeight": "Weigh the animal regularly throughout, and stop brumation immediately if you see a sharp drop or any warning signs.",
+      "tempControl": "Stable cool temperatures are critical. Use a thermometer to keep the species' recommended range at all times."
+    },
+    "notReptile": {
+      "title": "Brumation mainly applies to reptiles",
+      "desc": "Your active pet is not a reptile. Brumation applies to most reptiles (and a few other species), but you can still build a plan here for reference."
+    },
+    "phases": {
+      "vetCheck": {
+        "title": "Vet Check",
+        "desc": "A pre-brumation health check to confirm the animal is fit to brumate. Review weight, parasites and infections, and only proceed if all is clear."
+      },
+      "fasting": {
+        "title": "Fasting (gut clearing)",
+        "desc": "Stop feeding and let the gut empty completely. Keep temperatures normal for now so any remaining food is fully digested and passed."
+      },
+      "coolDown": {
+        "title": "Gradual Cool-down",
+        "desc": "Step the enclosure temperature down to the target over several days, and gradually shorten the photoperiod (light hours) too."
+      },
+      "dormancy": {
+        "title": "Dormancy (the cool period)",
+        "desc": "The core dormant stretch, holding the target cool temperature steadily. Minimise disturbance, but provide fresh water and check weight and condition periodically."
+      },
+      "warmUp": {
+        "title": "Gradual Warm-up",
+        "desc": "Bring temperature and photoperiod back to normal husbandry over several days. Avoid warming up abruptly."
+      },
+      "recovery": {
+        "title": "Recovery & refeeding",
+        "desc": "Once back at normal temperatures, offer water first, then resume feeding with small portions. Watch for normal droppings and appetite returning."
+      }
+    },
+    "form": {
+      "title": "Create a plan",
+      "intro": "Set a start date and the length of each phase, and the full schedule and per-phase dates are calculated for you.",
+      "newTitle": "New brumation plan",
+      "startDate": "Start date",
+      "targetTemp": "Target temperature (°C)",
+      "targetTempHelper": "Temperature to hold during dormancy (optional)",
+      "phasesLegend": "Phase durations (adjust as needed)",
+      "daysUnit": "in days",
+      "notes": "Notes",
+      "notesOptional": "Optional (max 300 chars)",
+      "add": "Save plan"
+    },
+    "active": {
+      "title": "Active plan",
+      "period": "Full period",
+      "length": "Total length",
+      "targetTemp": "Target temp",
+      "progressLabel": "{{pct}}% complete"
+    },
+    "dday": {
+      "today": "D-DAY",
+      "sub": "until brumation ends"
+    },
+    "status": {
+      "done": "Complete",
+      "upcoming": "Upcoming"
+    },
+    "timeline": {
+      "current": "Current phase"
+    },
+    "list": {
+      "title": "Saved plans",
+      "emptyTitle": "No saved brumation plans yet",
+      "emptyDesc": "Set a start date and phase durations above to create your first plan.",
+      "viewing": "Viewing",
+      "starts": "Starts",
+      "totalDays": "{{count}} days",
+      "load": "Load"
+    },
+    "errors": {
+      "dateRequired": "Please enter a start date.",
+      "daysNumber": "Please enter a number.",
+      "daysInt": "Days must be a whole number.",
+      "daysMin": "Must be at least 1 day.",
+      "daysMax": "That duration is too long (max 365 days).",
+      "tempNumber": "Temperature must be a number.",
+      "tempRange": "Temperature must be between 0 and 40°C.",
+      "notesMax": "Notes must be 300 characters or fewer."
+    }
+  },
+  "gear": {
+    "title": "Gear Replacement Tracker",
+    "subtitle": "Log install dates and replacement intervals for your enclosure gear and see the countdown at a glance. All data stays in this browser only.",
+    "uvbAlertTitle": "Replace UVB bulbs even while they still light up",
+    "uvbAlertBody": "A UVB bulb's UV output fades long before its visible light does. It can still glow while emitting almost no UV, so replace it on schedule even if it looks fine. Skipping this is a leading cause of metabolic bone disease (MBD).",
+    "newItem": "Add gear",
+    "type": "Gear type",
+    "name": "Name",
+    "namePlaceholder": "e.g. Arcadia T5 12% (60cm)",
+    "installedAt": "Installed on",
+    "intervalMonths": "Replacement interval (months)",
+    "intervalHelper": "Leave at 0 to track only, with no scheduled replacement.",
+    "notes": "Notes",
+    "notesPlaceholder": "e.g. 25cm distance, reptile-only — optional",
+    "addItem": "Add",
+    "added": "Gear added.",
+    "dueDate": "Due date",
+    "noSchedule": "No schedule",
+    "lifeUsed": "{{pct}}% of life used",
+    "markReplaced": "Mark replaced",
+    "replacedToast": "Logged the replacement and restarted the cycle.",
+    "remove": "Remove",
+    "emptyTitle": "No gear added yet",
+    "emptyDesc": "Add gear like UVB and heat bulbs or filters, and we'll help you never miss a replacement.",
+    "types": {
+      "uvbBulb": "UVB bulb",
+      "heatBulb": "Heat bulb",
+      "thermostat": "Thermostat",
+      "filter": "Filter",
+      "filterMedia": "Filter media",
+      "substrate": "Substrate",
+      "other": "Other"
+    },
+    "dday": {
+      "monitor": "Monitor",
+      "today": "Due today",
+      "overdue": "{{count}} days overdue",
+      "remaining": "{{count}} days left"
+    },
+    "errors": {
+      "nameRequired": "Please enter a name.",
+      "nameMax": "Name must be 60 characters or fewer.",
+      "dateRequired": "Please select an install date.",
+      "intervalNumber": "Interval must be a number.",
+      "intervalInt": "Interval must be a whole number.",
+      "intervalMin": "Interval must be at least 0 months.",
+      "intervalMax": "Interval must be 120 months or fewer.",
+      "notesMax": "Notes must be 200 characters or fewer."
     }
   },
   "morphs": {
