@@ -157,6 +157,12 @@ export const routes = [
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Genetics')),
       },
+      { path: 'molt', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Molt')) },
+      {
+        path: 'vivarium',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Vivarium')),
+      },
       { path: 'food', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Food')) },
       { path: 'events', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Events')) },
       { path: 'about', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/About')) },

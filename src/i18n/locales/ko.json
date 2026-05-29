@@ -60,6 +60,8 @@
     "setup": "셋업 견적",
     "morphs": "모프 카탈로그",
     "genetics": "모프 유전",
+    "molt": "탈피·털갈이",
+    "vivarium": "비바리움 설계",
     "food": "먹이 가이드",
     "events": "박람회 일정",
     "contact": "문의하기",
@@ -1162,6 +1164,180 @@
     "legend": {
       "title": "유전 용어 빠른 안내",
       "body": "het(헤테로)는 열성 유전자를 1개만 가진 보인자로 겉모습은 노말이지만 자손에 물려줍니다. 공우성(코도미넌트)은 1카피가 기본 모프, 2카피가 다른 '슈퍼' 폼으로 발현합니다. 우성은 1카피만 있어도 발현합니다. '66% het' 표시는 노말로 보이는 자손이 보인자일 확률입니다."
+    }
+  },
+  "molt": {
+    "title": "탈피 / 털갈이 추적기",
+    "subtitle": "탈피 주기를 기록하면 다음 탈피 시점을 예측해 드려요.",
+    "saved": "기록을 저장했어요.",
+    "showAllPets": "모든 펫 기록 보기",
+    "term": {
+      "reptile": "탈피",
+      "arthropod": "탈피(허물벗기)",
+      "amphibian": "탈피",
+      "bird": "털갈이",
+      "mammal": "털갈이",
+      "default": "탈피"
+    },
+    "kinds": {
+      "complete": "완전 탈피",
+      "incomplete": "불완전 탈피",
+      "stuck": "탈피 부전",
+      "in_progress": "탈피 진행 중"
+    },
+    "confidence": {
+      "low": "신뢰도 낮음",
+      "medium": "신뢰도 보통",
+      "high": "신뢰도 높음"
+    },
+    "prediction": {
+      "title": "다음 {{term}} 예측",
+      "expected": "예상일 {{date}}",
+      "dayOfCycle": "주기 {{elapsed}}일 / {{total}}일",
+      "needMore": "{{term}} 기록이 2회 이상 쌓이면 다음 시점을 예측해 드려요. 아래에서 첫 기록을 남겨보세요."
+    },
+    "metrics": {
+      "average": "평균 주기",
+      "median": "중앙값 주기",
+      "samples": "측정 구간",
+      "days": "{{count}}일"
+    },
+    "overdue": {
+      "title": "{{term}} 예정일이 지났어요",
+      "generic": "예상 주기를 넘겼어요. 습도와 은신처를 점검하고, 탈피 부전 징후가 보이면 무리하게 떼지 말고 살펴봐 주세요.",
+      "arthropod": "예상 주기를 넘겼어요. 절식과 탈피 전 은신은 정상 행동이에요. 탈피 중인 개체는 절대 건드리지 말고 습도만 맞춰 주세요."
+    },
+    "tip": {
+      "arthropodTitle": "절지동물 탈피 안내",
+      "arthropodBody": "탈피 전에는 절식하고 은신처에 숨거나 뒤집힌 자세를 취하는 것이 정상이에요. 탈피 중·직후의 개체는 외골격이 매우 약하니 먹이 급여를 멈추고 절대 만지지 마세요."
+    },
+    "form": {
+      "title": "{{term}} 기록 추가",
+      "date": "날짜",
+      "kind": "유형",
+      "notes": "메모",
+      "notesPlaceholder": "색 변화, 거식, 습도 등 관찰 내용을 적어두세요.",
+      "submit": "기록 추가"
+    },
+    "trend": {
+      "title": "주기 변화 추이",
+      "meta": "최근 {{count}}개 구간",
+      "chartLabel": "탈피 간격(일) 추이 그래프"
+    },
+    "history": {
+      "sincePrev": "이전 기록 +{{count}}일",
+      "remove": "삭제",
+      "speciesUnknown": "(종 선택 전 기록)"
+    },
+    "empty": {
+      "title": "아직 {{term}} 기록이 없어요",
+      "desc": "첫 기록을 남기면 주기를 분석하고 다음 시점을 예측해 드려요."
+    },
+    "errors": {
+      "dateRequired": "날짜를 입력해 주세요.",
+      "notesMax": "메모는 300자 이내로 입력해 주세요."
+    }
+  },
+  "vivarium": {
+    "title": "바이오액티브 비바리움 설계",
+    "subtitle": "기질 레이어, 클린업 크루, 식물을 조합해 스스로 정화되는 사육장을 설계하세요.",
+    "intro": "바이오액티브 사육장은 배수층·토양·낙엽 위에 등각류와 톡토기 같은 클린업 크루, 살아있는 식물을 더해 배설물과 곰팡이를 스스로 분해하는 작은 생태계입니다. 종에 맞는 온습도 그래디언트까지 맞추면 청소 부담이 크게 줄어듭니다.",
+    "loadTemplate": "추천 템플릿 불러오기",
+    "templateApplied": "추천 템플릿을 불러왔어요.",
+    "loaded": "저장한 빌드를 불러왔어요.",
+    "saveToast": "빌드를 저장했어요.",
+    "savedBuild": "저장한 빌드",
+    "roles": {
+      "drainage": "배수층",
+      "barrier": "분리망",
+      "substrate": "토양층",
+      "topper": "표면 토퍼"
+    },
+    "humidity": {
+      "arid": "건조",
+      "mid": "중간 습도",
+      "humid": "고습"
+    },
+    "light": {
+      "low": "약한 빛",
+      "med": "중간 빛",
+      "high": "강한 빛"
+    },
+    "levels": {
+      "low": "저관리",
+      "medium": "보통",
+      "high": "고관리"
+    },
+    "composer": {
+      "title": "사육장 구성",
+      "substrate": "기질 레이어",
+      "substrateHint": "바닥부터 표면까지 (복수 선택)",
+      "crew": "클린업 크루",
+      "crewHint": "등각류·톡토기 등 (복수 선택)",
+      "plants": "식물",
+      "plantsHint": "빛·습도에 맞춰 선택"
+    },
+    "gradient": {
+      "hot": "핫존 °C",
+      "cool": "쿨존 °C",
+      "humidity": "습도 %"
+    },
+    "diagram": {
+      "title": "단면 다이어그램",
+      "empty": "기질 레이어를 선택하면 단면이 그려집니다.",
+      "caption": "아래에서 위로 쌓이는 레이어 순서입니다.",
+      "aria": "사육장 기질 레이어 단면도"
+    },
+    "maintenance": {
+      "title": "관리 난이도 예측",
+      "scoreLabel": "자가정화 점수 {{score}} / 100 — 높을수록 손이 덜 갑니다."
+    },
+    "factors": {
+      "hasCrew": "클린업 크루 투입",
+      "hasPlants": "식물로 영양 순환",
+      "goodLitter": "낙엽 리터 확보",
+      "balancedCrew": "등각류+톡토기 균형",
+      "noDrainage": "고습인데 배수층 없음",
+      "noCrew": "클린업 크루 없음",
+      "noPlants": "식물 없음"
+    },
+    "checklist": {
+      "title": "바이오액티브 준비 체크리스트",
+      "progress": "{{done}} / {{total}} 충족",
+      "hasDrainage": "배수층이 있다",
+      "hasSubstrate": "토양층이 있다",
+      "hasCrew": "클린업 크루가 있다",
+      "hasPlants": "살아있는 식물이 있다",
+      "hasTopper": "표면 토퍼(낙엽·물이끼)가 있다"
+    },
+    "save": {
+      "title": "빌드 저장",
+      "name": "빌드 이름",
+      "namePlaceholder": "예: 크레스티드 수직 다습 빌드",
+      "notes": "메모",
+      "action": "저장하기"
+    },
+    "saved": {
+      "title": "저장한 빌드",
+      "emptyTitle": "아직 저장한 빌드가 없어요",
+      "emptyDesc": "위에서 사육장을 구성하고 저장하면 여기에 모입니다.",
+      "load": "불러오기",
+      "remove": "삭제",
+      "layers": "레이어 {{count}}종",
+      "crew": "크루 {{count}}종",
+      "plants": "식물 {{count}}종",
+      "humidity": "습도 {{value}}%",
+      "temp": "{{hot}}/{{cool}}°C"
+    },
+    "aquatic": {
+      "title": "이 종은 완전 수생이에요",
+      "body": "토양형 바이오액티브 비바리움 대신 수조 기반 설계가 필요합니다. 저온 유지, 여과, 질소 사이클 관리가 핵심이며 육상 기질 레이어는 적용되지 않습니다."
+    },
+    "errors": {
+      "nameRequired": "빌드 이름을 입력해 주세요.",
+      "nameMax": "이름은 80자 이하로 입력해 주세요.",
+      "notesMax": "메모는 500자 이하로 입력해 주세요.",
+      "emptyBuild": "기질·크루·식물 중 하나 이상을 선택해 주세요."
     }
   },
   "morphs": {

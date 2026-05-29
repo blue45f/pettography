@@ -64,6 +64,8 @@ function Header() {
         { path: '/setup', label: t('nav.setup') },
         { path: '/morphs', label: t('nav.morphs') },
         { path: '/genetics', label: t('nav.genetics') },
+        { path: '/molt', label: t('nav.molt') },
+        { path: '/vivarium', label: t('nav.vivarium') },
         { path: '/food', label: t('nav.food') },
         { path: '/events', label: t('nav.events') },
         { path: '/backup', label: t('nav.backup') },

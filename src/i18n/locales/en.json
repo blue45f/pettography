@@ -60,6 +60,8 @@
     "setup": "Setup cost",
     "morphs": "Morphs",
     "genetics": "Genetics",
+    "molt": "Shed/Molt",
+    "vivarium": "Vivarium",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -1162,6 +1164,180 @@
     "legend": {
       "title": "Genetics quick reference",
       "body": "A het (heterozygous) animal carries one recessive copy: it looks normal but passes the trait on. Co-dominant genes show a base morph with one copy and a distinct 'super' form with two. Dominant traits show with a single copy. A '66% het' tag is the chance a normal-looking sibling is a carrier."
+    }
+  },
+  "molt": {
+    "title": "Shed / Molt Tracker",
+    "subtitle": "Log each shed and we'll predict the next one.",
+    "saved": "Entry saved.",
+    "showAllPets": "Show all pets",
+    "term": {
+      "reptile": "shed",
+      "arthropod": "molt",
+      "amphibian": "shed",
+      "bird": "molt",
+      "mammal": "molt",
+      "default": "shed"
+    },
+    "kinds": {
+      "complete": "Complete shed",
+      "incomplete": "Incomplete shed",
+      "stuck": "Stuck shed",
+      "in_progress": "In progress"
+    },
+    "confidence": {
+      "low": "Low confidence",
+      "medium": "Medium confidence",
+      "high": "High confidence"
+    },
+    "prediction": {
+      "title": "Next {{term}} prediction",
+      "expected": "Expected {{date}}",
+      "dayOfCycle": "Day {{elapsed}} of {{total}}",
+      "needMore": "Log at least 2 {{term}} events and we'll predict the next one. Add your first entry below."
+    },
+    "metrics": {
+      "average": "Average cycle",
+      "median": "Median cycle",
+      "samples": "Intervals",
+      "days": "{{count}} days"
+    },
+    "overdue": {
+      "title": "{{term}} is overdue",
+      "generic": "Past the expected cycle. Check humidity and hides, and if you see signs of a stuck shed, watch closely rather than forcing it off.",
+      "arthropod": "Past the expected cycle. Pre-molt fasting and hiding are normal. Never disturb a molting specimen — just keep the humidity up."
+    },
+    "tip": {
+      "arthropodTitle": "Arthropod molt notes",
+      "arthropodBody": "Refusing food and hiding (or lying on its back) before a molt is normal. A molting or freshly molted specimen has a very soft exoskeleton — stop feeding and never handle it."
+    },
+    "form": {
+      "title": "Log a {{term}}",
+      "date": "Date",
+      "kind": "Type",
+      "notes": "Notes",
+      "notesPlaceholder": "Note color changes, fasting, humidity, and other observations.",
+      "submit": "Add entry"
+    },
+    "trend": {
+      "title": "Cycle trend",
+      "meta": "Last {{count}} intervals",
+      "chartLabel": "Shed interval (days) trend chart"
+    },
+    "history": {
+      "sincePrev": "+{{count}} days since previous",
+      "remove": "Remove",
+      "speciesUnknown": "(logged before species was set)"
+    },
+    "empty": {
+      "title": "No {{term}} records yet",
+      "desc": "Add your first entry and we'll analyze the cycle and predict the next one."
+    },
+    "errors": {
+      "dateRequired": "Please enter a date.",
+      "notesMax": "Notes must be 300 characters or fewer."
+    }
+  },
+  "vivarium": {
+    "title": "Bioactive Vivarium Designer",
+    "subtitle": "Compose substrate layers, a cleanup crew, and plants into a self-cleaning enclosure.",
+    "intro": "A bioactive enclosure is a small ecosystem: a cleanup crew of isopods and springtails plus live plants break down waste and mould on top of a drainage, soil, and leaf-litter base. Dial in the right temperature and humidity gradient and routine maintenance drops dramatically.",
+    "loadTemplate": "Load recommended template",
+    "templateApplied": "Recommended template loaded.",
+    "loaded": "Saved build loaded.",
+    "saveToast": "Build saved.",
+    "savedBuild": "Saved build",
+    "roles": {
+      "drainage": "Drainage",
+      "barrier": "Barrier",
+      "substrate": "Substrate",
+      "topper": "Topper"
+    },
+    "humidity": {
+      "arid": "Arid",
+      "mid": "Mid humidity",
+      "humid": "Humid"
+    },
+    "light": {
+      "low": "Low light",
+      "med": "Medium light",
+      "high": "High light"
+    },
+    "levels": {
+      "low": "Low upkeep",
+      "medium": "Moderate",
+      "high": "High upkeep"
+    },
+    "composer": {
+      "title": "Build your enclosure",
+      "substrate": "Substrate layers",
+      "substrateHint": "Bottom to top (multi-select)",
+      "crew": "Cleanup crew",
+      "crewHint": "Isopods, springtails, etc. (multi-select)",
+      "plants": "Plants",
+      "plantsHint": "Match light and humidity"
+    },
+    "gradient": {
+      "hot": "Hot side °C",
+      "cool": "Cool side °C",
+      "humidity": "Humidity %"
+    },
+    "diagram": {
+      "title": "Cross-section",
+      "empty": "Pick substrate layers to draw the cross-section.",
+      "caption": "Layers stack bottom to top.",
+      "aria": "Vivarium substrate layer cross-section"
+    },
+    "maintenance": {
+      "title": "Maintenance estimate",
+      "scoreLabel": "Self-sustaining score {{score}} / 100 — higher means less work."
+    },
+    "factors": {
+      "hasCrew": "Cleanup crew added",
+      "hasPlants": "Plants cycle nutrients",
+      "goodLitter": "Leaf litter in place",
+      "balancedCrew": "Isopods + springtails balanced",
+      "noDrainage": "Humid build, no drainage",
+      "noCrew": "No cleanup crew",
+      "noPlants": "No plants"
+    },
+    "checklist": {
+      "title": "Bioactive-readiness checklist",
+      "progress": "{{done}} / {{total}} met",
+      "hasDrainage": "Has a drainage layer",
+      "hasSubstrate": "Has a substrate layer",
+      "hasCrew": "Has a cleanup crew",
+      "hasPlants": "Has live plants",
+      "hasTopper": "Has a topper (leaf litter / sphagnum)"
+    },
+    "save": {
+      "title": "Save build",
+      "name": "Build name",
+      "namePlaceholder": "e.g. Crested vertical humid build",
+      "notes": "Notes",
+      "action": "Save"
+    },
+    "saved": {
+      "title": "Saved builds",
+      "emptyTitle": "No saved builds yet",
+      "emptyDesc": "Compose an enclosure above and save it to collect it here.",
+      "load": "Load",
+      "remove": "Remove",
+      "layers": "{{count}} layers",
+      "crew": "{{count}} crew",
+      "plants": "{{count}} plants",
+      "humidity": "{{value}}% humidity",
+      "temp": "{{hot}}/{{cool}}°C"
+    },
+    "aquatic": {
+      "title": "This species is fully aquatic",
+      "body": "It needs an aquarium-based setup rather than a terrestrial bioactive vivarium. Cool temperatures, filtration, and the nitrogen cycle are what matter here — land substrate layers don't apply."
+    },
+    "errors": {
+      "nameRequired": "Please enter a build name.",
+      "nameMax": "Keep the name under 80 characters.",
+      "notesMax": "Keep notes under 500 characters.",
+      "emptyBuild": "Select at least one substrate, crew, or plant."
     }
   },
   "morphs": {
