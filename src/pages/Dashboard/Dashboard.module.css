@@ -550,3 +550,96 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
+
+.attentionSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.attentionList {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: var(--spacing-xs);
+}
+
+.attentionItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  text-decoration: none;
+  transition:
+    border-color var(--motion-fast),
+    transform var(--motion-fast);
+}
+
+.attentionItem:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.attentionDot {
+  flex: none;
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-text-muted);
+}
+
+.sevOverdue {
+  background: var(--color-error);
+}
+
+.sevDue {
+  background: var(--color-warning);
+}
+
+.sevSoon {
+  background: var(--color-primary);
+}
+
+.sevInfo {
+  background: var(--color-text-muted);
+}
+
+.attentionEmoji {
+  flex: none;
+  font-size: var(--font-size-lg);
+  line-height: 1;
+}
+
+.attentionLabel {
+  flex: 1;
+  min-inline-size: 0;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.attentionDate {
+  flex: none;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .attentionItem {
+    transition: none;
+  }
+
+  .attentionItem:hover {
+    transform: none;
+  }
+}

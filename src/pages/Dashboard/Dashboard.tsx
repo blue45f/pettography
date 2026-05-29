@@ -5,6 +5,7 @@ import EmptyState from '@components/common/EmptyState'
 import Skeleton from '@components/common/Skeleton'
 import { useToast } from '@components/common/Toast'
 import { useAdoptionList } from '@features/adoption'
+import { actionableCount } from '@features/alerts'
 import { compareAgainstRecommended, monthBreakdown, useActivePetBudget } from '@features/budget'
 import { useCareGuide } from '@features/care-guides'
 import { useCommunitiesList } from '@features/communities'
@@ -30,6 +31,7 @@ import {
 import { useShopsList } from '@features/shops'
 import { useSpecies } from '@features/species'
 import { supplyStatus, useActivePetSupplies } from '@features/supplies'
+import { useAggregatedAlerts } from '@hooks/useAggregatedAlerts'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useAppStore } from '@store/index'
 import { useEffect, useMemo, useRef } from 'react'
@@ -47,6 +49,22 @@ const LIFECYCLE_STAGES = [
   { id: 'senior', emoji: '🪴', target: '/care' },
   { id: 'funeral', emoji: '🌈', target: '/funeral' },
 ] as const
+
+const ALERT_SOURCE_EMOJI: Record<string, string> = {
+  meds: '💊',
+  gear: '🔧',
+  breeding: '🥚',
+  molt: '🦎',
+  water: '💧',
+  brumation: '❄️',
+}
+
+const ATTENTION_DOT_CLASS: Record<string, string> = {
+  overdue: styles.sevOverdue,
+  due: styles.sevDue,
+  soon: styles.sevSoon,
+  info: styles.sevInfo,
+}
 
 function Dashboard() {
   const { t } = useTranslation()
@@ -89,6 +107,10 @@ function Dashboard() {
   const galleryPhotos = useActivePetPhotos(profile.speciesId ?? null)
   const routineCustom = useActivePetCustomTasks()
   const routineCompletions = useRoutineStore((s) => s.completions)
+
+  const aggregatedAlerts = useAggregatedAlerts()
+  const attentionCount = actionableCount(aggregatedAlerts)
+  const attentionAlerts = aggregatedAlerts.filter((a) => a.severity !== 'info').slice(0, 4)
 
   const healthSummary = useMemo(() => {
     const trend = weightTrend(weights)
@@ -285,6 +307,36 @@ function Dashboard() {
           </Card>
         )}
       </header>
+
+      {attentionAlerts.length > 0 && (
+        <section aria-labelledby="attention-heading" className={styles.attentionSection}>
+          <header className={styles.sectionHeader}>
+            <h2 id="attention-heading">
+              {t('dashboard.alerts.title')} <Badge variant="warning">{attentionCount}</Badge>
+            </h2>
+            <Link to="/alerts" className={styles.sectionLink}>
+              {t('dashboard.alerts.viewAll')} →
+            </Link>
+          </header>
+          <ul className={styles.attentionList}>
+            {attentionAlerts.map((item) => (
+              <li key={item.id}>
+                <Link to={item.route} className={styles.attentionItem}>
+                  <span
+                    className={`${styles.attentionDot} ${ATTENTION_DOT_CLASS[item.severity]}`}
+                    aria-hidden="true"
+                  />
+                  <span className={styles.attentionEmoji} aria-hidden="true">
+                    {ALERT_SOURCE_EMOJI[item.source] ?? '🔔'}
+                  </span>
+                  <span className={styles.attentionLabel}>{t(item.titleKey, item.params)}</span>
+                  {item.dateISO && <span className={styles.attentionDate}>{item.dateISO}</span>}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section aria-labelledby="lifecycle-heading">
         <header className={styles.sectionHeader}>

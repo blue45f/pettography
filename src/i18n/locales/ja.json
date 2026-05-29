@@ -242,6 +242,10 @@
       "now": "今日",
       "filings": "保管申告 未完了 {{count}}件"
     },
+    "alerts": {
+      "title": "注意が必要な項目",
+      "viewAll": "すべて表示"
+    },
     "conditionTitle": "今日のコンディション",
     "conditionSubtitle": "健康・環境・支出・在庫をひと目で。カードを押すと詳細に移動します。",
     "condition": {

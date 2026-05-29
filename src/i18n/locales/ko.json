@@ -242,6 +242,10 @@
       "now": "오늘",
       "filings": "보관신고 미완료 {{count}}건"
     },
+    "alerts": {
+      "title": "주의가 필요한 항목",
+      "viewAll": "전체 보기"
+    },
     "conditionTitle": "오늘의 컨디션",
     "conditionSubtitle": "건강·환경·지출·재고를 한눈에. 카드를 누르면 상세로 이동합니다.",
     "condition": {

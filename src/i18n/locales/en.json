@@ -242,6 +242,10 @@
       "now": "today",
       "filings": "{{count}} wildlife filings pending"
     },
+    "alerts": {
+      "title": "Needs attention",
+      "viewAll": "View all"
+    },
     "conditionTitle": "Today's condition",
     "conditionSubtitle": "Health, habitat, spend and stock at a glance. Tap a card for detail.",
     "condition": {
