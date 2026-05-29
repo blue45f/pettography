@@ -1,0 +1,300 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+/* ---- Monthly theme banner ---- */
+.themeBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  background: var(--gradient-brand);
+  color: #fff;
+  box-shadow: var(--shadow-md);
+}
+
+.themeEmoji {
+  font-size: var(--font-size-3xl);
+  line-height: 1;
+}
+
+.themeText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.themeLabel {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.9;
+}
+
+.themeName {
+  font-size: var(--font-size-xl);
+}
+
+.themeTagline {
+  font-size: var(--font-size-sm);
+  opacity: 0.92;
+}
+
+/* ---- Winner card ---- */
+.winnerCard {
+  background: var(--color-surface-elevated);
+  box-shadow: var(--shadow-md);
+}
+
+.winnerHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.winnerVotes {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.winnerBody {
+  display: grid;
+  grid-template-columns: minmax(0, 220px) 1fr;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .winnerBody {
+    grid-template-columns: 1fr;
+  }
+}
+
+.winnerImage {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.winnerMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.winnerCaption {
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+}
+
+.winnerAuthor {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ---- Filters & controls ---- */
+.filters {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.filterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  min-height: 44px;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  transition:
+    color var(--motion-fast),
+    background-color var(--motion-fast),
+    border-color var(--motion-fast);
+}
+
+.filterChip:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.filterActive {
+  background: var(--gradient-brand);
+  color: #fff;
+  border-color: transparent;
+}
+
+.filterActive:hover {
+  color: #fff;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.controls > * {
+  min-width: 160px;
+}
+
+/* ---- Composer ---- */
+.composerCard {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.composerTitle {
+  font-size: var(--font-size-lg);
+}
+
+.composerHint {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-2xs);
+  margin-bottom: var(--spacing-md);
+}
+
+.composerForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.composerRow {
+  display: grid;
+  grid-template-columns: 1fr minmax(180px, 240px);
+  gap: var(--spacing-md);
+}
+
+@media (max-width: 640px) {
+  .composerRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.composerActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ---- Photo grid ---- */
+.grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.photoCard {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  height: 100%;
+}
+
+.photo {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.cardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+}
+
+.themeChip {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+}
+
+.caption {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  white-space: pre-wrap;
+}
+
+.author {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.voteButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  min-height: 44px;
+  padding: var(--spacing-2xs) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-sm);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition:
+    color var(--motion-fast),
+    background-color var(--motion-fast),
+    border-color var(--motion-fast);
+}
+
+.voteButton:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.voteButtonOn {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.removeLink {
+  margin-left: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-error);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+}
+
+.removeLink:hover {
+  text-decoration: underline;
+}
