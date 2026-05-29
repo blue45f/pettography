@@ -1,0 +1,409 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.speciesNote {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+/* ── Intro ─────────────────────────────────────────── */
+.introCard {
+  border: 1px solid var(--color-border);
+}
+
+.introText {
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.tip {
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-primary-soft);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  line-height: var(--leading-snug);
+}
+
+.introActions {
+  margin-top: var(--spacing-md);
+}
+
+/* ── Work area layout ──────────────────────────────── */
+.workArea {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+.composerColumn,
+.previewColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  min-width: 0;
+}
+
+/* ── Chip groups ───────────────────────────────────── */
+.chipGroup {
+  margin-bottom: var(--spacing-lg);
+}
+
+.chipGroup:last-of-type {
+  margin-bottom: var(--spacing-md);
+}
+
+.chipGroupHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.chipGroupTitle {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+}
+
+.chipGroupHint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  min-height: 44px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color var(--motion-fast),
+    background-color var(--motion-fast),
+    box-shadow var(--motion-fast);
+}
+
+.chip:hover {
+  border-color: var(--color-border-strong);
+}
+
+.chip:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-glow);
+}
+
+.chipActive {
+  background: var(--gradient-brand);
+  border-color: transparent;
+  color: #fff;
+}
+
+.chipActive .chipSub {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.chipLabel {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.chipSub {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  line-height: 1.1;
+}
+
+/* ── Temp/humidity gradient row ────────────────────── */
+.gradientRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ── Save form ─────────────────────────────────────── */
+.saveForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.saveActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ── Cross-section diagram ─────────────────────────── */
+.diagram {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.band {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-height: 56px;
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.band:first-child {
+  padding-top: var(--spacing-md);
+}
+
+.band:last-child {
+  padding-bottom: var(--spacing-md);
+}
+
+.bandRole {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+.bandNames {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.diagramEmpty {
+  padding: var(--spacing-xl) var(--spacing-md);
+  text-align: center;
+  color: var(--color-text-muted);
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--color-border-strong);
+}
+
+.diagramCaption {
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* ── Maintenance ───────────────────────────────────── */
+.maintenanceHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.maintenanceHead .sectionTitle {
+  margin-bottom: 0;
+}
+
+.maintenanceHint {
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.factorChips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-md);
+}
+
+.factorChip {
+  display: inline-block;
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.factorGood {
+  background: color-mix(in srgb, var(--color-success) 14%, transparent);
+  color: var(--color-success);
+}
+
+.factorWarn {
+  background: color-mix(in srgb, var(--color-warning) 18%, transparent);
+  color: var(--color-warning);
+}
+
+/* ── Checklist ─────────────────────────────────────── */
+.checklistCount {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.checklist {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.checkItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+}
+
+.checkMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.checkOk .checkMark {
+  background: color-mix(in srgb, var(--color-success) 16%, transparent);
+  color: var(--color-success);
+}
+
+.checkOff {
+  color: var(--color-text-muted);
+}
+
+.checkOff .checkMark {
+  background: var(--color-surface-muted);
+  color: var(--color-text-muted);
+}
+
+/* ── Aquatic note ──────────────────────────────────── */
+.aquaticCard {
+  border: 1px solid var(--color-info);
+}
+
+.aquaticBody {
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* ── Saved builds ──────────────────────────────────── */
+.savedSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.buildList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.buildHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-sm);
+}
+
+.buildHeadLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.buildName {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+}
+
+.buildActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  min-height: 44px;
+  padding: 0 var(--spacing-xs);
+}
+
+.removeButton:hover {
+  text-decoration: underline;
+}
+
+.buildSummary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.summaryChip {
+  display: inline-block;
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.buildNotes {
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+}
