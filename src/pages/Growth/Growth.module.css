@@ -1,0 +1,204 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+  max-inline-size: 60ch;
+  text-wrap: pretty;
+}
+
+.speciesNote {
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.normNote {
+  color: var(--color-text-muted);
+}
+
+.showAllToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.showAllToggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
+.cardTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+.statsCard {
+  border: 1px solid var(--color-border);
+}
+
+.statsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.statsHead .cardTitle {
+  margin-bottom: 0;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.statsGrid dt {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-2xs);
+}
+
+.statsGrid dd {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Growth chart */
+.chart {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 320 / 150;
+  display: block;
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-md);
+  overflow: visible;
+}
+
+.band {
+  fill: var(--color-success);
+  opacity: 0.14;
+}
+
+.line {
+  stroke: var(--color-primary);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.dot {
+  fill: var(--color-primary);
+  stroke: var(--color-surface);
+  stroke-width: 1.5;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.legendSwatch {
+  inline-size: 14px;
+  block-size: 10px;
+  border-radius: var(--radius-xs);
+  background: var(--color-success);
+  opacity: 0.3;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* History */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  list-style: none;
+}
+
+.entryHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.entryLeft {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.entryWeight {
+  font-weight: 800;
+  font-size: var(--font-size-lg);
+  font-variant-numeric: tabular-nums;
+}
+
+.entryDate {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.entryNote {
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  text-wrap: pretty;
+}
+
+.removeButton {
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border-radius: var(--radius-sm);
+}
+
+.removeButton:hover {
+  color: var(--color-error);
+}

@@ -75,6 +75,7 @@ function Header() {
         { path: '/market', label: t('nav.market') },
         { path: '/passport', label: t('nav.passport') },
         { path: '/assistant', label: t('nav.assistant') },
+        { path: '/growth', label: t('nav.growth') },
         { path: '/food', label: t('nav.food') },
         { path: '/events', label: t('nav.events') },
         { path: '/backup', label: t('nav.backup') },

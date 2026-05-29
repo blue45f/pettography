@@ -71,6 +71,7 @@
     "market": "分譲マーケット",
     "passport": "ペットパスポート",
     "assistant": "ケアアシスタント",
+    "growth": "成長記録",
     "food": "餌ガイド",
     "events": "展示会スケジュール",
     "contact": "問い合わせ",
@@ -2094,6 +2095,51 @@
       "lethargyArthropod": "節足動物は脱皮の前後で動きが大きく減ることがあります。最近の脱皮の有無をまず確認してください。",
       "tempHumidityAmphibian": "両生類は乾燥と高温に特に弱いです。湿度を高く保ち、直射日光・過熱を避けてください。",
       "tempHumidityReptile": "爬虫類はホットスポットとクールゾーンの温度勾配が要です。両方を別々に測って勾配を確保してください。"
+    }
+  },
+  "growth": {
+    "title": "成長記録",
+    "subtitle": "体重・体長を記録すると、種の標準範囲と比較して成長曲線を描きます。",
+    "saved": "測定値を保存しました。",
+    "showAllPets": "すべてのペットの記録を表示",
+    "remove": "削除",
+    "adultBand": "成体の標準 {{min}}〜{{max}}g",
+    "perWeek": "週あたり {{g}}g",
+    "status": {
+      "below": "標準未満",
+      "normal": "標準範囲",
+      "above": "標準超過"
+    },
+    "stats": {
+      "title": "成長サマリー",
+      "latest": "最新の体重",
+      "change": "変化量",
+      "rate": "成長ペース",
+      "length": "最新の体長"
+    },
+    "chart": {
+      "title": "成長曲線",
+      "aria": "{{count}}回の測定、{{min}}gから{{max}}gまでの体重推移グラフ",
+      "bandLegend": "緑の帯は種の成体標準体重の範囲です"
+    },
+    "form": {
+      "title": "測定値を記録",
+      "date": "測定日",
+      "weight": "体重 (g)",
+      "length": "体長 (cm)",
+      "lengthOptional": "任意",
+      "note": "メモ",
+      "submit": "記録を追加"
+    },
+    "emptyTitle": "まだ測定記録がありません",
+    "emptyDesc": "最初の体重を記録すると、成長曲線と標準比較が始まります。",
+    "errors": {
+      "dateRequired": "測定日を入力してください。",
+      "weightNumber": "体重を数値で入力してください。",
+      "weightPositive": "体重は0より大きい必要があります。",
+      "lengthNumber": "体長を数値で入力してください。",
+      "lengthPositive": "体長は0より大きい必要があります。",
+      "noteMax": "メモは200文字以内で入力してください。"
     }
   },
   "morphs": {

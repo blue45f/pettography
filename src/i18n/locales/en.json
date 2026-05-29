@@ -71,6 +71,7 @@
     "market": "Market",
     "passport": "Passport",
     "assistant": "Care Assistant",
+    "growth": "Growth",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -2097,6 +2098,51 @@
       "lethargyArthropod": "Arthropods can move much less around a molt. Check whether a molt happened recently first.",
       "tempHumidityAmphibian": "Amphibians are especially vulnerable to dryness and heat. Keep humidity high and avoid direct sun and overheating.",
       "tempHumidityReptile": "For reptiles, the temperature gradient between hot spot and cool zone is key. Measure both separately to maintain the gradient."
+    }
+  },
+  "growth": {
+    "title": "Growth Tracking",
+    "subtitle": "Log weight and length and we'll chart the growth curve against the species' typical band.",
+    "saved": "Measurement saved.",
+    "showAllPets": "Show all pets",
+    "remove": "Remove",
+    "adultBand": "Adult norm {{min}}–{{max}}g",
+    "perWeek": "{{g}}g / week",
+    "status": {
+      "below": "Below norm",
+      "normal": "In range",
+      "above": "Above norm"
+    },
+    "stats": {
+      "title": "Growth summary",
+      "latest": "Latest weight",
+      "change": "Change",
+      "rate": "Growth rate",
+      "length": "Latest length"
+    },
+    "chart": {
+      "title": "Growth curve",
+      "aria": "Weight chart of {{count}} measurements from {{min}}g to {{max}}g",
+      "bandLegend": "The green band is the species' typical adult weight range"
+    },
+    "form": {
+      "title": "Log a measurement",
+      "date": "Date",
+      "weight": "Weight (g)",
+      "length": "Length (cm)",
+      "lengthOptional": "Optional",
+      "note": "Note",
+      "submit": "Add entry"
+    },
+    "emptyTitle": "No measurements yet",
+    "emptyDesc": "Log the first weight to start the growth curve and norm comparison.",
+    "errors": {
+      "dateRequired": "Please enter a date.",
+      "weightNumber": "Enter the weight as a number.",
+      "weightPositive": "Weight must be greater than 0.",
+      "lengthNumber": "Enter the length as a number.",
+      "lengthPositive": "Length must be greater than 0.",
+      "noteMax": "Notes must be 200 characters or fewer."
     }
   },
   "morphs": {

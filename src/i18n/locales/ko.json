@@ -71,6 +71,7 @@
     "market": "분양 마켓",
     "passport": "펫 여권",
     "assistant": "케어 어시스턴트",
+    "growth": "성장 추적",
     "food": "먹이 가이드",
     "events": "박람회 일정",
     "contact": "문의하기",
@@ -2094,6 +2095,51 @@
       "lethargyArthropod": "절지류는 탈피 전후로 움직임이 크게 줄 수 있습니다. 최근 탈피 여부를 먼저 확인하세요.",
       "tempHumidityAmphibian": "양서류는 건조와 고온에 특히 취약합니다. 습도를 높게 유지하고 직사광선·과열을 피하세요.",
       "tempHumidityReptile": "파충류는 핫스팟과 쿨존의 온도 구배가 핵심입니다. 양쪽을 따로 측정해 구배를 확보하세요."
+    }
+  },
+  "growth": {
+    "title": "성장 추적",
+    "subtitle": "체중·길이를 기록하면 종 표준 범위와 비교해 성장 곡선을 그려드려요.",
+    "saved": "측정값을 저장했어요.",
+    "showAllPets": "모든 펫 기록 보기",
+    "remove": "삭제",
+    "adultBand": "성체 표준 {{min}}~{{max}}g",
+    "perWeek": "주당 {{g}}g",
+    "status": {
+      "below": "표준 미만",
+      "normal": "표준 범위",
+      "above": "표준 초과"
+    },
+    "stats": {
+      "title": "성장 요약",
+      "latest": "최근 체중",
+      "change": "변화량",
+      "rate": "성장 속도",
+      "length": "최근 길이"
+    },
+    "chart": {
+      "title": "성장 곡선",
+      "aria": "측정 {{count}}회, {{min}}g부터 {{max}}g까지의 체중 변화 그래프",
+      "bandLegend": "초록 띠는 종 성체 표준 체중 범위입니다"
+    },
+    "form": {
+      "title": "측정값 기록",
+      "date": "측정일",
+      "weight": "체중 (g)",
+      "length": "길이 (cm)",
+      "lengthOptional": "선택 입력",
+      "note": "메모",
+      "submit": "기록 추가"
+    },
+    "emptyTitle": "아직 측정 기록이 없어요",
+    "emptyDesc": "첫 체중을 기록하면 성장 곡선과 종 표준 비교가 시작됩니다.",
+    "errors": {
+      "dateRequired": "측정일을 입력해 주세요.",
+      "weightNumber": "체중을 숫자로 입력해 주세요.",
+      "weightPositive": "체중은 0보다 커야 합니다.",
+      "lengthNumber": "길이를 숫자로 입력해 주세요.",
+      "lengthPositive": "길이는 0보다 커야 합니다.",
+      "noteMax": "메모는 200자 이내로 입력해 주세요."
     }
   },
   "morphs": {
