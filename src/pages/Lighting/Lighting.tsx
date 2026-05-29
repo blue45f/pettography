@@ -25,6 +25,7 @@ import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Lighting.module.css'
 
@@ -275,6 +276,9 @@ function Lighting() {
       <Alert variant="info" title={t('lighting.uvb.title')}>
         <p>{t(uvbNoteKey(category))}</p>
         <p className={styles.uvbDecay}>{t('lighting.uvb.decay')}</p>
+        <Link to="/gear" className={styles.uvbGearLink}>
+          {t('lighting.uvb.gearLink')} →
+        </Link>
       </Alert>
 
       <p className={styles.disclaimer}>{t('lighting.disclaimer')}</p>

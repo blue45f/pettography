@@ -5,6 +5,7 @@ import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
+import { latestBcs, useActivePetBcs } from '@features/bcs'
 import {
   chartPoints,
   growthNorm,
@@ -22,6 +23,7 @@ import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Growth.module.css'
 
@@ -55,6 +57,8 @@ function Growth() {
   const norm = useMemo(() => growthNorm(activeSpecies?.slug), [activeSpecies?.slug])
 
   const activeEntries = useActivePetGrowth()
+  const bcsEntries = useActivePetBcs()
+  const latestBcsEntry = latestBcs(bcsEntries)
   const allEntries = useGrowthStore((s) => s.entries)
   const addEntry = useGrowthStore((s) => s.addEntry)
   const removeEntry = useGrowthStore((s) => s.removeEntry)
@@ -136,11 +140,18 @@ function Growth() {
         <Card.Body>
           <div className={styles.statsHead}>
             <h2 className={styles.cardTitle}>{t('growth.stats.title')}</h2>
-            {stats.status && (
-              <Badge variant={STATUS_VARIANT[stats.status]}>
-                {t(`growth.status.${stats.status}`)}
-              </Badge>
-            )}
+            <div className={styles.statsHeadMeta}>
+              {stats.status && (
+                <Badge variant={STATUS_VARIANT[stats.status]}>
+                  {t(`growth.status.${stats.status}`)}
+                </Badge>
+              )}
+              {latestBcsEntry && (
+                <Link to="/bcs" className={styles.bcsLink}>
+                  {t('growth.bcsLink', { score: latestBcsEntry.score })}
+                </Link>
+              )}
+            </div>
           </div>
           <dl className={styles.statsGrid}>
             <div>

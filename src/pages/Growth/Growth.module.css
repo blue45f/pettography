@@ -66,6 +66,24 @@
   margin-bottom: 0;
 }
 
+.statsHeadMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.bcsLink {
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.bcsLink:hover {
+  text-decoration: underline;
+}
+
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));

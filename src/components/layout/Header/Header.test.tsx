@@ -1,4 +1,5 @@
 import { useAppStore } from '@store/index'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -21,10 +22,13 @@ beforeEach(() => {
 })
 
 function renderHeader(initial = '/') {
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   return render(
-    <MemoryRouter initialEntries={[initial]}>
-      <Header />
-    </MemoryRouter>,
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={[initial]}>
+        <Header />
+      </MemoryRouter>
+    </QueryClientProvider>,
   )
 }
 

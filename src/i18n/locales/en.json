@@ -939,6 +939,7 @@
   },
   "header": {
     "primaryNav": "Primary navigation",
+    "alertsCount": "Alerts, {{count}} need attention",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "more": "More",
@@ -2134,6 +2135,7 @@
     "remove": "Remove",
     "adultBand": "Adult norm {{min}}–{{max}}g",
     "perWeek": "{{g}}g / week",
+    "bcsLink": "Body {{score}}/5 ›",
     "status": {
       "below": "Below norm",
       "normal": "In range",
@@ -3460,6 +3462,7 @@
     },
     "uvb": {
       "title": "UVB guidance",
+      "gearLink": "Track UVB replacement in Gear",
       "decay": "A UVB lamp's UV output fades long before its visible light does. Replace it on schedule. (Track replacement cycles alongside your other gear.)",
       "reptile": "Diurnal reptiles need UVB for D3 synthesis and calcium metabolism. Even nocturnal geckos benefit from low-level UVB. Position it so the UV index reaches the basking spot.",
       "bird": "Birds benefit from full-spectrum (UVA/UVB) lighting for natural behaviour and vitamin D3. Use an avian UV lamp where indoor housing lacks natural sunlight.",
@@ -3473,6 +3476,7 @@
     "title": "Body score",
     "subtitle": "Weight alone misses obesity and wasting. Log a 1–5 body condition score (BCS) over time and watch the trend.",
     "petFallback": "Pet",
+    "weightLink": "Latest weight {{weight}} g ›",
     "showAllPets": "Show all pets",
     "intro": "Body condition score complements weight tracking. Two animals at the same weight can be in very different shape, so noting what you see and feel helps catch obesity or wasting earlier.",
     "latest": {

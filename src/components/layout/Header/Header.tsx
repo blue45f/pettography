@@ -1,7 +1,9 @@
 import LanguageToggle from '@components/common/LanguageToggle'
 import ThemeToggle from '@components/common/ThemeToggle'
 import PetSwitcher from '@components/layout/PetSwitcher'
+import { actionableCount } from '@features/alerts'
 import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
+import { useAggregatedAlerts } from '@hooks/useAggregatedAlerts'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router'
@@ -18,6 +20,7 @@ function Header() {
   const location = useLocation()
   const profile = useOnboardingStore((s) => s.profile)
   const completed = isOnboardingComplete(profile)
+  const alertCount = actionableCount(useAggregatedAlerts())
   const [menuOpen, setMenuOpen] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
   const moreRef = useRef<HTMLLIElement | null>(null)
@@ -46,63 +49,14 @@ function Header() {
         { path: '/care', label: t('nav.care') },
         { path: '/health', label: t('nav.health') },
         { path: '/habitat', label: t('nav.habitat') },
-        { path: '/budget', label: t('nav.budget') },
-        { path: '/forum', label: t('nav.forum') },
         { path: '/diary', label: t('nav.diary') },
-        { path: '/adoption', label: t('nav.adoption') },
-        { path: '/communities', label: t('nav.communities') },
-        { path: '/funeral', label: t('nav.funeral') },
-        { path: '/resources', label: t('nav.resources') },
+        { path: '/calendar', label: t('nav.calendar') },
+        { path: '/forum', label: t('nav.forum') },
+        { path: '/registry', label: t('nav.registry') },
         { path: '/partners', label: t('nav.partners') },
         { path: '/partner-dashboard', label: t('nav.partnerDashboard') },
         { path: '/admin', label: t('nav.admin') },
-        { path: '/registry', label: t('nav.registry') },
-        { path: '/compare', label: t('nav.compare') },
-        { path: '/petid', label: t('nav.petid') },
-        { path: '/routine', label: t('nav.routine') },
-        { path: '/calendar', label: t('nav.calendar') },
-        { path: '/insurance', label: t('nav.insurance') },
-        { path: '/setup', label: t('nav.setup') },
-        { path: '/morphs', label: t('nav.morphs') },
-        { path: '/genetics', label: t('nav.genetics') },
-        { path: '/molt', label: t('nav.molt') },
-        { path: '/vivarium', label: t('nav.vivarium') },
-        { path: '/showcase', label: t('nav.showcase') },
-        { path: '/qna', label: t('nav.qna') },
-        { path: '/meetups', label: t('nav.meetups') },
-        { path: '/breeding', label: t('nav.breeding') },
-        { path: '/meds', label: t('nav.meds') },
-        { path: '/feeding', label: t('nav.feeding') },
-        { path: '/market', label: t('nav.market') },
-        { path: '/passport', label: t('nav.passport') },
-        { path: '/assistant', label: t('nav.assistant') },
-        { path: '/growth', label: t('nav.growth') },
-        { path: '/water', label: t('nav.water') },
-        { path: '/brumation', label: t('nav.brumation') },
-        { path: '/gear', label: t('nav.gear') },
-        { path: '/senior', label: t('nav.senior') },
-        { path: '/vitals', label: t('nav.vitals') },
-        { path: '/cohab', label: t('nav.cohab') },
-        { path: '/wishlist', label: t('nav.wishlist') },
-        { path: '/taming', label: t('nav.taming') },
-        { path: '/kit', label: t('nav.kit') },
-        { path: '/alerts', label: t('nav.alerts') },
-        { path: '/supplements', label: t('nav.supplements') },
-        { path: '/feeders', label: t('nav.feeders') },
-        { path: '/lineage', label: t('nav.lineage') },
-        { path: '/costreport', label: t('nav.costreport') },
-        { path: '/transport', label: t('nav.transport') },
-        { path: '/cleaning', label: t('nav.cleaning') },
-        { path: '/safety', label: t('nav.safety') },
-        { path: '/seasonal', label: t('nav.seasonal') },
-        { path: '/lighting', label: t('nav.lighting') },
-        { path: '/bcs', label: t('nav.bcs') },
-        { path: '/enclosure', label: t('nav.enclosure') },
-        { path: '/food', label: t('nav.food') },
-        { path: '/events', label: t('nav.events') },
-        { path: '/backup', label: t('nav.backup') },
         { path: '/contact', label: t('nav.contact') },
-        { path: '/sos', label: t('nav.sos') },
       ]
     : [
         { path: '/forum', label: t('nav.forum') },
@@ -194,6 +148,24 @@ function Header() {
             </ul>
           </nav>
           {completed && <PetSwitcher />}
+          {completed && (
+            <Link
+              to="/alerts"
+              className={styles.alertBell}
+              aria-label={
+                alertCount > 0 ? t('header.alertsCount', { count: alertCount }) : t('nav.alerts')
+              }
+              aria-current={location.pathname === '/alerts' ? 'page' : undefined}
+              onClick={closeAll}
+            >
+              <span aria-hidden="true">🔔</span>
+              {alertCount > 0 && (
+                <span className={styles.alertBadge} aria-hidden="true">
+                  {alertCount > 9 ? '9+' : alertCount}
+                </span>
+              )}
+            </Link>
+          )}
           <LanguageToggle />
           <ThemeToggle />
         </div>

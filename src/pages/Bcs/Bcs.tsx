@@ -20,6 +20,7 @@ import {
   type BcsFormValues,
   type BcsStatus,
 } from '@features/bcs'
+import { useActivePetHealth, weightTrend } from '@features/health'
 import { useOnboardingStore } from '@features/onboarding'
 import { useSpecies, useSpeciesList } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -27,6 +28,7 @@ import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Bcs.module.css'
 
@@ -61,6 +63,8 @@ function Bcs() {
 
   const scale = useMemo(() => scaleFor(profile.category), [profile.category])
   const stats = useMemo(() => bcsStats(entries), [entries])
+  const { weights } = useActivePetHealth()
+  const latestWeight = useMemo(() => weightTrend(weights).latest, [weights])
   const trendValues = useMemo(() => bcsTrend(entries), [entries])
   const sparkPoints = useMemo(() => trendValues.map((v, i) => ({ x: i, y: v })), [trendValues])
 
@@ -150,6 +154,11 @@ function Bcs() {
                 <span className={styles.latestCount}>
                   {t('bcs.latest.count', { count: stats.total })}
                 </span>
+                {latestWeight !== null && (
+                  <Link to="/growth" className={styles.weightLink}>
+                    {t('bcs.weightLink', { weight: latestWeight })}
+                  </Link>
+                )}
               </div>
             </div>
             {sparkPoints.length >= 3 && (

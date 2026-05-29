@@ -125,6 +125,46 @@
   box-shadow: var(--shadow-sm);
 }
 
+.alertBell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition:
+    color var(--motion-fast),
+    background-color var(--motion-fast);
+}
+
+.alertBell:hover {
+  color: var(--color-primary);
+  background-color: var(--color-primary-soft);
+}
+
+.alertBadge {
+  position: absolute;
+  top: 3px;
+  inset-inline-end: 3px;
+  min-inline-size: 18px;
+  block-size: 18px;
+  padding: 0 var(--spacing-2xs);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-error);
+  color: white;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  line-height: 1;
+  border-radius: var(--radius-pill);
+  font-variant-numeric: tabular-nums;
+}
+
 .moreItem {
   position: relative;
 }

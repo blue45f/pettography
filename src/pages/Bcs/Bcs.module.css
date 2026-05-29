@@ -94,6 +94,17 @@
   font-size: var(--font-size-sm);
 }
 
+.weightLink {
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.weightLink:hover {
+  text-decoration: underline;
+}
+
 .trend {
   margin-top: var(--spacing-lg);
   padding-top: var(--spacing-md);

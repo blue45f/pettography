@@ -155,6 +155,19 @@
   font-size: var(--font-size-sm);
 }
 
+.uvbGearLink {
+  display: inline-block;
+  margin-top: var(--spacing-sm);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.uvbGearLink:hover {
+  text-decoration: underline;
+}
+
 .disclaimer {
   color: var(--color-text-muted);
   font-size: var(--font-size-xs);
