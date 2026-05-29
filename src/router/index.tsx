@@ -163,6 +163,13 @@ export const routes = [
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Vivarium')),
       },
+      {
+        path: 'showcase',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Showcase')),
+      },
+      { path: 'qna', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Qna')) },
+      { path: 'meetups', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Meetups')) },
       { path: 'food', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Food')) },
       { path: 'events', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Events')) },
       { path: 'about', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/About')) },
