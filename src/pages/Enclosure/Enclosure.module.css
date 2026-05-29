@@ -1,0 +1,168 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  max-width: 65ch;
+}
+
+.context {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.contextEmoji {
+  font-size: var(--font-size-2xl);
+  line-height: 1;
+}
+
+.contextText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  min-width: 0;
+}
+
+.contextName {
+  font-weight: 700;
+  font-size: var(--font-size-md);
+}
+
+.contextMeta {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.cardTitle {
+  font-size: var(--font-size-lg);
+  letter-spacing: -0.015em;
+}
+
+.minHead,
+.verdictHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-sm);
+}
+
+.minDims {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--spacing-2xs);
+}
+
+.minLiters {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: var(--spacing-sm);
+}
+
+.ruleNote {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-md);
+}
+
+.helpText {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.dimForm {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.formActions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.verdictCard {
+  background: var(--color-surface);
+}
+
+.verdictMsg {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-md);
+  max-width: 65ch;
+}
+
+.compareTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.compareTable th,
+.compareTable td {
+  text-align: left;
+  padding: var(--spacing-sm) var(--spacing-xs);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.compareTable thead th {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.compareTable tbody th {
+  font-weight: 600;
+}
+
+.numCell {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.statusMuted {
+  color: var(--color-text-muted);
+}
+
+.volumeRow {
+  margin-top: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+}
+
+.floorNote {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  max-width: 65ch;
+}

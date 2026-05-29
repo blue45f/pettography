@@ -1,0 +1,161 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.context {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+}
+
+.speciesChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  background: var(--gradient-brand);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.seasonChip {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+/* ── Day-length readout ──────────────────────────────────────── */
+.readoutTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.readoutLabel {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.readoutValue {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  margin-top: var(--spacing-2xs);
+}
+
+.readoutTarget {
+  margin-top: var(--spacing-sm);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 24-hour lit/dark bar ────────────────────────────────────── */
+.dayBar {
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  gap: 2px;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-2xs);
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-md);
+}
+
+.barCell {
+  height: 28px;
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-xs);
+  transition: background var(--motion-fast);
+}
+
+.barCellLit {
+  background: var(--gradient-brand);
+}
+
+.barScale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-2xs);
+  padding: 0 var(--spacing-2xs);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.verdictHint {
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ── Editor form ─────────────────────────────────────────────── */
+.formTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.formIntro {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-2xs);
+  margin-bottom: var(--spacing-md);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.uvbBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+}
+
+/* ── UVB guidance ────────────────────────────────────────────── */
+.uvbDecay {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+}
+
+.disclaimer {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}

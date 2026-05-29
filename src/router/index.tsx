@@ -239,6 +239,17 @@ export const routes = [
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Seasonal')),
       },
+      {
+        path: 'lighting',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Lighting')),
+      },
+      { path: 'bcs', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Bcs')) },
+      {
+        path: 'enclosure',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Enclosure')),
+      },
       { path: 'food', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Food')) },
       { path: 'events', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Events')) },
       { path: 'about', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/About')) },

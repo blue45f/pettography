@@ -1,0 +1,350 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.speciesNote {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.showAllToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.showAllToggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
+/* Latest score card */
+.latestCard {
+  border: 1px solid var(--color-border);
+}
+
+.latestRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.latestScoreBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.latestLabel {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.latestScore {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-primary);
+}
+
+.latestScoreMax {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  margin-left: var(--spacing-2xs);
+}
+
+.latestScoreName {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}
+
+.latestMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-2xs);
+  text-align: right;
+}
+
+.latestAvg,
+.latestCount {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.trend {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.trendLabel {
+  display: block;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Section headings */
+.sectionTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.sectionDesc {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-2xs);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Scale reference */
+.scaleList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.scaleItem {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  background: var(--color-surface-muted);
+  transition: border-color var(--motion-fast);
+}
+
+.scaleItemActive {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-xs);
+}
+
+.scaleItemHead {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-xs);
+}
+
+.scaleScore {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border-strong);
+  font-weight: 800;
+  font-size: var(--font-size-md);
+}
+
+.scaleItemActive .scaleScore {
+  background: var(--gradient-brand);
+  border-color: transparent;
+  color: #fff;
+}
+
+.scaleName {
+  font-weight: 600;
+}
+
+.scaleText {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.statusLegend {
+  margin-top: var(--spacing-md);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.scoreField {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.scoreLegend {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xs);
+  padding: 0;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--spacing-2xs);
+}
+
+.segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2xs);
+  min-height: 64px;
+  padding: var(--spacing-xs);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  text-align: center;
+  transition:
+    border-color var(--motion-fast),
+    color var(--motion-fast),
+    background var(--motion-fast);
+}
+
+.segment:hover {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.segmentActive {
+  background: var(--gradient-brand);
+  border-color: transparent;
+  color: #fff;
+}
+
+.segmentActive:hover {
+  color: #fff;
+}
+
+.segmentScore {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.segmentName {
+  font-size: var(--font-size-xs);
+  line-height: 1.2;
+}
+
+.scoreHint {
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.fieldError {
+  display: block;
+  margin-top: var(--spacing-xs);
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* History */
+.historySection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.entryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.entryHeaderLeft {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.entryScore {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.entryScoreMax {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.entryName {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.entryDate {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  min-height: 44px;
+  padding: 0 var(--spacing-2xs);
+}
+
+.removeButton:hover {
+  text-decoration: underline;
+}
+
+.entryNote {
+  white-space: pre-wrap;
+  color: var(--color-text-secondary);
+}
