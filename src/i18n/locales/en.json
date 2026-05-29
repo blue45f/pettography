@@ -3656,6 +3656,17 @@
       "records": "Records & compliance"
     }
   },
+  "command": {
+    "title": "Command palette",
+    "placeholder": "Search tools & species, or jump to... (e.g. feeding, leopard gecko)",
+    "empty": "No results.",
+    "toolsGroup": "Tools & pages",
+    "speciesGroup": "Species",
+    "navigate": "navigate",
+    "select": "select",
+    "close": "close",
+    "openLabel": "Open command palette (⌘K)"
+  },
   "morphs": {
     "title": "Popular morph catalog",
     "subtitle": "Common morphs (color and pattern variants) sold in Korea with 2025–26 average price bands. Pick a base species to see morph cards and breeder sites.",

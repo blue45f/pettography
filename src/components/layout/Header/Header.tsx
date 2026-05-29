@@ -15,7 +15,11 @@ interface NavItem {
   label: string
 }
 
-function Header() {
+interface HeaderProps {
+  onOpenCommand?: () => void
+}
+
+function Header({ onOpenCommand }: HeaderProps) {
   const { t } = useTranslation()
   const location = useLocation()
   const profile = useOnboardingStore((s) => s.profile)
@@ -147,6 +151,17 @@ function Header() {
               )}
             </ul>
           </nav>
+          {onOpenCommand && (
+            <button
+              type="button"
+              className={styles.commandButton}
+              onClick={onOpenCommand}
+              aria-label={t('command.openLabel')}
+            >
+              <span aria-hidden="true">🔍</span>
+              <kbd className={styles.commandKbd}>⌘K</kbd>
+            </button>
+          )}
           {completed && <PetSwitcher />}
           {completed && (
             <Link

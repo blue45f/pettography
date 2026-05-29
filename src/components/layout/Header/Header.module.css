@@ -165,6 +165,35 @@
   font-variant-numeric: tabular-nums;
 }
 
+.commandButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  min-block-size: 44px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition:
+    border-color var(--motion-fast),
+    color var(--motion-fast);
+}
+
+.commandButton:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.commandKbd {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  font-family: inherit;
+  color: var(--color-text-muted);
+}
+
 .moreItem {
   position: relative;
 }
