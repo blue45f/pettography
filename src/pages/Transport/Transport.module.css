@@ -1,0 +1,275 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  letter-spacing: -0.025em;
+  color: var(--color-text);
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  max-width: 62ch;
+}
+
+/* ── Category tip ──────────────────────────────────────────────── */
+.tipCard {
+  background: var(--color-primary-soft);
+  border: 1px solid var(--color-border);
+}
+
+.tipBody {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
+}
+
+.tipIcon {
+  font-size: var(--font-size-xl);
+  line-height: 1.2;
+}
+
+.tipLabel {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-2xs);
+}
+
+.tipText {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  max-width: 64ch;
+}
+
+/* ── Paperwork warning ─────────────────────────────────────────── */
+.paperworkText {
+  margin-bottom: var(--spacing-xs);
+}
+
+.paperworkLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+  min-height: 32px;
+}
+
+.paperworkLink:hover {
+  text-decoration: underline;
+}
+
+.paperworkLink::after {
+  content: '→';
+}
+
+/* ── Sections ──────────────────────────────────────────────────── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-2xl);
+  letter-spacing: -0.02em;
+}
+
+.sectionIntro {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  max-width: 64ch;
+}
+
+/* ── Create form ───────────────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ── Trip list ─────────────────────────────────────────────────── */
+.tripList {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.tripCard {
+  height: 100%;
+}
+
+.tripTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.tripBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.removeButton {
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  min-height: 44px;
+  border-radius: var(--radius-sm);
+}
+
+.removeButton:hover {
+  color: var(--color-error);
+}
+
+.tripMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-md);
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metaItem dt {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.metaItem dd {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.tripNotes {
+  margin-top: var(--spacing-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  white-space: pre-wrap;
+}
+
+/* ── Checklist progress ────────────────────────────────────────── */
+.progressBlock {
+  margin-top: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.progressTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.progressLabel {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.itemList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  margin-top: var(--spacing-sm);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  min-height: 44px;
+  transition: background var(--motion-fast);
+}
+
+.item:hover {
+  background: var(--color-surface-muted);
+}
+
+.itemChecked {
+  background: var(--color-surface-muted);
+}
+
+/* ── Per-trip tip / paperwork ──────────────────────────────────── */
+.tripTip {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.tripPaperwork {
+  margin-top: var(--spacing-sm);
+  color: var(--color-warning);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.inlineLink {
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.inlineLink:hover {
+  text-decoration: underline;
+}
+
+.disclaimer {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  padding: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+}

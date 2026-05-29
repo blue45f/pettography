@@ -84,6 +84,9 @@
     "alerts": "アラート",
     "supplements": "サプリ管理",
     "feeders": "餌昆虫の繁殖",
+    "lineage": "血統図",
+    "costreport": "費用レポート",
+    "transport": "移動プラン",
     "food": "餌ガイド",
     "events": "展示会スケジュール",
     "contact": "問い合わせ",
@@ -3010,6 +3013,182 @@
       "estimateNumber": "個体数は数字で入力してください。",
       "estimateInt": "個体数は整数で入力してください。",
       "estimateNonnegative": "個体数は0以上にしてください。",
+      "notesMax": "メモは300文字以内で入力してください。"
+    }
+  },
+  "lineage": {
+    "title": "血統図",
+    "subtitle": "飼育個体と父・母のつながりを登録し、選んだ個体の3世代血統と子孫をひと目で確認できます。個体ごとに管理される全体記録です。",
+    "remove": "削除",
+    "speciesUnspecified": "種未設定",
+    "errors": {
+      "nameRequired": "個体の名前を入力してください。",
+      "nameMax": "名前は最大60文字までです。",
+      "morphMax": "モルフは最大60文字までです。",
+      "notesMax": "メモは最大300文字までです。"
+    },
+    "sex": {
+      "male": "オス",
+      "female": "メス",
+      "unknown": "不明"
+    },
+    "relation": {
+      "sire": "父（オス）",
+      "dam": "母（メス）"
+    },
+    "form": {
+      "title": "個体を登録",
+      "name": "個体名",
+      "namePlaceholder": "例：パステル オス 1号",
+      "species": "種",
+      "speciesNone": "選択しない",
+      "sex": "性別",
+      "morph": "モルフ",
+      "morphPlaceholder": "例：パステル、アルビノ",
+      "optional": "任意入力",
+      "sire": "父（オス）",
+      "sireHelper": "登録済みの個体から選択（任意）",
+      "dam": "母（メス）",
+      "damHelper": "登録済みの個体から選択（任意）",
+      "parentUnknown": "不明／未登録",
+      "notes": "メモ",
+      "notesHelper": "血統の出所、ブリーダー、特記事項など（最大300文字）",
+      "submit": "個体を登録"
+    },
+    "roster": {
+      "title": "個体一覧",
+      "intro": "個体を選択すると、下に血統図と子孫が表示されます。",
+      "emptyTitle": "まだ登録された個体がありません",
+      "emptyDesc": "上のフォームから最初の個体を登録すると、親子・子孫の関係を追跡できます。",
+      "ancestorCount": "祖先 {{count}}個体"
+    },
+    "pedigree": {
+      "title": "{{name}}の血統図",
+      "intro": "親と祖父母までの3世代を表示します。未登録の祖先は破線で表示されます。",
+      "ariaLabel": "{{name}}の3世代血統図",
+      "genSelf": "本個体",
+      "genParents": "両親",
+      "genGrandparents": "祖父母",
+      "unknown": "不明",
+      "noMorph": "モルフ未入力"
+    },
+    "offspring": {
+      "title": "子孫（{{count}}）",
+      "empty": "この個体の子孫として登録された個体はありません。"
+    },
+    "toast": {
+      "added": "{{name}}を登録しました。",
+      "removed": "{{name}}を削除しました。"
+    }
+  },
+  "costreport": {
+    "title": "費用レポート",
+    "subtitle": "記録した飼育費用を年間合計・月平均・カテゴリ別・ペット別にまとめて確認できます。",
+    "yearLabel": "期間を選択",
+    "allTime": "全期間",
+    "yearChip": "{{year}}年",
+    "scope": {
+      "allTime": "全期間の合計",
+      "year": "{{year}}年の合計"
+    },
+    "perMonth": "記録のある月の平均",
+    "projectedHint": "今年の累計 {{amount}} を基に推定",
+    "monthsValue": "{{n}}か月",
+    "entriesHint": "支出は合計 {{n}}件",
+    "tiles": {
+      "total": "総支出",
+      "monthlyAverage": "月平均",
+      "projected": "{{year}}年の推定",
+      "months": "記録した月数"
+    },
+    "categoryTitle": "カテゴリ別の支出",
+    "noCategory": "この期間の支出記録はありません。",
+    "trendTitle": "月別の推移",
+    "trendAria": "月別支出合計の推移グラフ",
+    "trendEmpty": "推移を表示するには2か月以上の記録が必要です。",
+    "petTitle": "ペット別の支出",
+    "petDesc": "登録したペットごとに支出を比較します。",
+    "unscopedPet": "未指定",
+    "allPetsNote": "すべてのペットの費用を合算して分析します。",
+    "empty": {
+      "title": "まだ分析できる費用がありません",
+      "description": "まず費用を記録すると、合計や推移を自動でまとめます。",
+      "cta": "費用を記録する"
+    }
+  },
+  "transport": {
+    "title": "移動プラン",
+    "subtitle": "通院・引っ越し・展示会などの移動を安全に準備しましょう。安全なキャリー、温度の維持、ストレスの最小化が要です。",
+    "tipLabel": "移動のヒント",
+    "created": "移動の予定を追加しました。",
+    "disclaimer": "このチェックリストは安全な移動を助けるための案内です。種や個体の状態に合わせて調整し、不安なときは獣医に相談してください。",
+    "purposes": {
+      "vet": "通院",
+      "move": "引っ越し",
+      "expo": "展示会",
+      "other": "その他"
+    },
+    "items": {
+      "secureContainer": "通気性のよい安全なキャリー",
+      "tempControl": "保温・保冷 — カイロ・保冷剤",
+      "thermometer": "移動中の温度確認",
+      "coverDark": "暗く覆ってストレス軽減",
+      "noFeedBefore": "移動前の給餌を控える — 吐き戻し防止",
+      "water": "到着後の水分補給",
+      "secureLid": "脱走防止のロック",
+      "paperwork": "規制種の書類"
+    },
+    "tips": {
+      "reptile": "変温動物は移動中の保温が最も重要です。カイロは布で包んで直接触れないようにし、直射日光は必ず避けてください。",
+      "amphibian": "両生類は乾燥に弱いです。湿らせたキッチンペーパーや水苔で湿度を保ち、水分が乾かないようにしましょう。",
+      "arthropod": "節足動物は衝撃や温度変化に敏感です。揺れを抑えつつ、通気と適切な温度も確保してください。",
+      "bird": "鳥はストレスに弱いです。キャリーを暗く覆って落ち着かせ、急な温度変化を避けましょう。",
+      "mammal": "小型哺乳類は保温と換気の両方に気を配り、慣れた敷材や布を入れてストレスを和らげてください。",
+      "generic": "安全なキャリー・温度の維持・ストレスの最小化の3点を基本に準備しましょう。"
+    },
+    "dday": {
+      "today": "今日",
+      "in": "あと{{count}}日",
+      "ago": "{{count}}日前"
+    },
+    "form": {
+      "title": "移動の予定を追加",
+      "intro": "目的と日付を入力すると、準備チェックリストが作成されます。",
+      "purpose": "移動の目的",
+      "date": "移動日",
+      "duration": "予想移動時間（時間）",
+      "durationHelper": "任意 — 空欄のままでも構いません。",
+      "notes": "メモ",
+      "notesPlaceholder": "例：予約時間、同行者、持ち物など",
+      "submit": "予定を追加"
+    },
+    "list": {
+      "title": "移動の予定",
+      "intro": "近い予定から表示されます。項目をチェックして準備を仕上げましょう。",
+      "dateLabel": "日付",
+      "durationLabel": "予想時間",
+      "durationValue": "{{hours}}時間",
+      "remove": "削除",
+      "paperworkHint": "規制種は移動前に届出や書類を確認してください。"
+    },
+    "checklist": {
+      "title": "準備チェックリスト",
+      "count": "{{done}}/{{total}}件 準備済み",
+      "aria": "準備完了度 {{pct}}%"
+    },
+    "paperwork": {
+      "title": "規制種の書類確認",
+      "desc": "{{name}}は規制種です。移動・譲渡の際は届出など関連書類を事前に確認してください。",
+      "link": "登録管理で確認する"
+    },
+    "empty": {
+      "title": "予定された移動はありません",
+      "desc": "通院や引っ越しなどの予定を追加して、安全に準備しましょう。"
+    },
+    "errors": {
+      "dateRequired": "移動日を選択してください。",
+      "durationNumber": "移動時間は数字で入力してください。",
+      "durationRange": "移動時間は0〜240時間の範囲で入力してください。",
       "notesMax": "メモは300文字以内で入力してください。"
     }
   },

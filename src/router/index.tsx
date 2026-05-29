@@ -213,6 +213,21 @@ export const routes = [
         lazy: lazyPage(() => import('@pages/Supplements')),
       },
       { path: 'feeders', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Feeders')) },
+      {
+        path: 'lineage',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Lineage')),
+      },
+      {
+        path: 'costreport',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/CostReport')),
+      },
+      {
+        path: 'transport',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Transport')),
+      },
       { path: 'food', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Food')) },
       { path: 'events', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Events')) },
       { path: 'about', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/About')) },

@@ -84,6 +84,9 @@
     "alerts": "알림 센터",
     "supplements": "보충제 더스팅",
     "feeders": "먹이 컬처",
+    "lineage": "혈통도",
+    "costreport": "비용 리포트",
+    "transport": "이동 플래너",
     "food": "먹이 가이드",
     "events": "박람회 일정",
     "contact": "문의하기",
@@ -3010,6 +3013,182 @@
       "estimateNumber": "개체 수는 숫자로 입력하세요.",
       "estimateInt": "개체 수는 정수로 입력하세요.",
       "estimateNonnegative": "개체 수는 0 이상이어야 해요.",
+      "notesMax": "메모는 300자 이내로 입력하세요."
+    }
+  },
+  "lineage": {
+    "title": "혈통도",
+    "subtitle": "보유한 개체와 부모(부·모) 관계를 등록하고, 선택한 개체의 3대 혈통과 자손을 한눈에 확인하세요. 개체별로 관리되는 전역 기록입니다.",
+    "remove": "삭제",
+    "speciesUnspecified": "종 미지정",
+    "errors": {
+      "nameRequired": "개체 이름을 입력하세요.",
+      "nameMax": "이름은 최대 60자까지 입력할 수 있습니다.",
+      "morphMax": "모프는 최대 60자까지 입력할 수 있습니다.",
+      "notesMax": "메모는 최대 300자까지 입력할 수 있습니다."
+    },
+    "sex": {
+      "male": "수컷",
+      "female": "암컷",
+      "unknown": "미상"
+    },
+    "relation": {
+      "sire": "부(수컷)",
+      "dam": "모(암컷)"
+    },
+    "form": {
+      "title": "개체 등록",
+      "name": "개체 이름",
+      "namePlaceholder": "예: 파스텔 수컷 1번",
+      "species": "종",
+      "speciesNone": "선택 안 함",
+      "sex": "성별",
+      "morph": "모프",
+      "morphPlaceholder": "예: 파스텔, 알비노",
+      "optional": "선택 입력",
+      "sire": "부(수컷)",
+      "sireHelper": "등록된 개체 중에서 선택 (선택 입력)",
+      "dam": "모(암컷)",
+      "damHelper": "등록된 개체 중에서 선택 (선택 입력)",
+      "parentUnknown": "미상 / 미등록",
+      "notes": "메모",
+      "notesHelper": "혈통 출처, 브리더, 특이사항 등 (최대 300자)",
+      "submit": "개체 등록"
+    },
+    "roster": {
+      "title": "개체 목록",
+      "intro": "개체를 선택하면 아래에 혈통도와 자손이 표시됩니다.",
+      "emptyTitle": "아직 등록한 개체가 없습니다",
+      "emptyDesc": "위 양식에서 첫 개체를 등록하면 부모·자손 관계를 추적할 수 있습니다.",
+      "ancestorCount": "조상 {{count}}개체"
+    },
+    "pedigree": {
+      "title": "{{name}}의 혈통도",
+      "intro": "부모와 조부모까지 3대를 보여줍니다. 미등록 조상은 점선으로 표시됩니다.",
+      "ariaLabel": "{{name}}의 3대 혈통도",
+      "genSelf": "본개체",
+      "genParents": "부모",
+      "genGrandparents": "조부모",
+      "unknown": "미상",
+      "noMorph": "모프 미입력"
+    },
+    "offspring": {
+      "title": "자손 ({{count}})",
+      "empty": "이 개체의 자손으로 등록된 개체가 없습니다."
+    },
+    "toast": {
+      "added": "{{name}} 개체를 등록했습니다.",
+      "removed": "{{name}} 개체를 삭제했습니다."
+    }
+  },
+  "costreport": {
+    "title": "비용 리포트",
+    "subtitle": "기록한 사육 비용을 연간 합계, 월 평균, 카테고리·반려동물별로 모아 한눈에 봅니다.",
+    "yearLabel": "기간 선택",
+    "allTime": "전체 기간",
+    "yearChip": "{{year}}년",
+    "scope": {
+      "allTime": "전체 기간 합계",
+      "year": "{{year}}년 합계"
+    },
+    "perMonth": "기록된 달 기준 평균",
+    "projectedHint": "올해 누적 {{amount}} 기준 추정",
+    "monthsValue": "{{n}}개월",
+    "entriesHint": "총 {{n}}건의 지출",
+    "tiles": {
+      "total": "총 지출",
+      "monthlyAverage": "월 평균",
+      "projected": "{{year}}년 추정",
+      "months": "기록 개월수"
+    },
+    "categoryTitle": "카테고리별 지출",
+    "noCategory": "해당 기간에 지출 기록이 없어요.",
+    "trendTitle": "월별 추이",
+    "trendAria": "월별 지출 합계 추이 그래프",
+    "trendEmpty": "추이를 보려면 두 달 이상의 기록이 필요해요.",
+    "petTitle": "반려동물별 지출",
+    "petDesc": "등록한 반려동물별로 지출을 비교합니다.",
+    "unscopedPet": "지정 안 됨",
+    "allPetsNote": "모든 반려동물의 비용을 합산해 분석합니다.",
+    "empty": {
+      "title": "아직 분석할 비용이 없어요",
+      "description": "먼저 비용을 기록하면 합계와 추이를 자동으로 정리해 드려요.",
+      "cta": "비용 기록하러 가기"
+    }
+  },
+  "transport": {
+    "title": "이동 플래너",
+    "subtitle": "병원·이사·전시회 등 이동을 안전하게 준비하세요. 안전한 이동장, 온도 유지, 스트레스 최소화가 핵심입니다.",
+    "tipLabel": "이동 팁",
+    "created": "이동 일정을 추가했어요.",
+    "disclaimer": "이 체크리스트는 안전한 이동을 돕기 위한 안내입니다. 종·개체 상태에 따라 수의사와 상의해 준비하세요.",
+    "purposes": {
+      "vet": "병원 진료",
+      "move": "이사",
+      "expo": "전시회",
+      "other": "기타"
+    },
+    "items": {
+      "secureContainer": "통기 잘 되는 안전한 이동장",
+      "tempControl": "보온·보냉 — 핫팩·아이스팩",
+      "thermometer": "이동 중 온도 확인",
+      "coverDark": "어둡게 덮어 스트레스 줄이기",
+      "noFeedBefore": "이동 전 급여 자제 — 역류 방지",
+      "water": "도착 후 수분 공급",
+      "secureLid": "탈출 방지 잠금",
+      "paperwork": "규제종 서류 챙기기"
+    },
+    "tips": {
+      "reptile": "변온동물은 이동 중 보온이 가장 중요합니다. 핫팩은 천에 싸 직접 닿지 않게 하고, 직사광선은 절대 피하세요.",
+      "amphibian": "양서류는 건조에 약합니다. 습한 키친타월이나 물이끼로 습도를 유지하고 수분이 마르지 않게 하세요.",
+      "arthropod": "절지동물은 충격과 온도 변화에 민감합니다. 흔들림을 줄이고 통풍과 적정 온도를 함께 챙기세요.",
+      "bird": "새는 스트레스에 약합니다. 이동장을 어둡게 덮어 안정시키고 급격한 온도 변화를 피하세요.",
+      "mammal": "소형 포유류는 보온과 환기를 함께 챙기고, 익숙한 깔짚이나 천을 넣어 스트레스를 줄여 주세요.",
+      "generic": "안전한 이동장, 온도 유지, 스트레스 최소화 세 가지를 기본으로 준비하세요."
+    },
+    "dday": {
+      "today": "오늘",
+      "in": "D-{{count}}",
+      "ago": "{{count}}일 지남"
+    },
+    "form": {
+      "title": "이동 일정 추가",
+      "intro": "이동 목적과 날짜를 입력하면 준비 체크리스트가 만들어집니다.",
+      "purpose": "이동 목적",
+      "date": "이동 날짜",
+      "duration": "예상 이동 시간 (시간)",
+      "durationHelper": "선택 입력 — 비워 두어도 됩니다.",
+      "notes": "메모",
+      "notesPlaceholder": "예: 동물병원 예약 시간, 동행자, 준비물 등",
+      "submit": "일정 추가"
+    },
+    "list": {
+      "title": "이동 일정",
+      "intro": "다가오는 일정이 먼저 표시됩니다. 항목을 체크하며 준비를 마무리하세요.",
+      "dateLabel": "날짜",
+      "durationLabel": "예상 시간",
+      "durationValue": "{{hours}}시간",
+      "remove": "삭제",
+      "paperworkHint": "규제종은 이동 전 보관신고·서류를 확인하세요."
+    },
+    "checklist": {
+      "title": "준비 체크리스트",
+      "count": "{{done}}/{{total}}개 준비됨",
+      "aria": "준비 완료도 {{pct}}%"
+    },
+    "paperwork": {
+      "title": "규제종 서류 확인",
+      "desc": "{{name}}은(는) 규제종입니다. 이동·양도 시 보관신고 등 관련 서류를 미리 확인하세요.",
+      "link": "등록 관리에서 확인하기"
+    },
+    "empty": {
+      "title": "예정된 이동이 없어요",
+      "desc": "병원 진료나 이사 등 이동 일정을 추가해 안전하게 준비해 보세요."
+    },
+    "errors": {
+      "dateRequired": "이동 날짜를 선택하세요.",
+      "durationNumber": "이동 시간은 숫자로 입력하세요.",
+      "durationRange": "이동 시간은 0~240시간 사이로 입력하세요.",
       "notesMax": "메모는 300자 이내로 입력하세요."
     }
   },

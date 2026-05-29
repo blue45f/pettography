@@ -84,6 +84,9 @@
     "alerts": "Alerts",
     "supplements": "Supplements",
     "feeders": "Feeders",
+    "lineage": "Lineage",
+    "costreport": "Cost report",
+    "transport": "Transport",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -3014,6 +3017,182 @@
       "estimateInt": "Head-count must be a whole number.",
       "estimateNonnegative": "Head-count can't be negative.",
       "notesMax": "Keep notes under 300 characters."
+    }
+  },
+  "lineage": {
+    "title": "Lineage",
+    "subtitle": "Register your animals and their sire/dam links, then view any individual's 3-generation pedigree and offspring. This is a global, per-animal registry.",
+    "remove": "Remove",
+    "speciesUnspecified": "Species unspecified",
+    "errors": {
+      "nameRequired": "Enter the animal's name.",
+      "nameMax": "Name can be at most 60 characters.",
+      "morphMax": "Morph can be at most 60 characters.",
+      "notesMax": "Notes can be at most 300 characters."
+    },
+    "sex": {
+      "male": "Male",
+      "female": "Female",
+      "unknown": "Unknown"
+    },
+    "relation": {
+      "sire": "Sire (male)",
+      "dam": "Dam (female)"
+    },
+    "form": {
+      "title": "Add animal",
+      "name": "Animal name",
+      "namePlaceholder": "e.g. Pastel male #1",
+      "species": "Species",
+      "speciesNone": "None",
+      "sex": "Sex",
+      "morph": "Morph",
+      "morphPlaceholder": "e.g. Pastel, Albino",
+      "optional": "Optional",
+      "sire": "Sire (male)",
+      "sireHelper": "Pick from registered animals (optional)",
+      "dam": "Dam (female)",
+      "damHelper": "Pick from registered animals (optional)",
+      "parentUnknown": "Unknown / not registered",
+      "notes": "Notes",
+      "notesHelper": "Lineage source, breeder, remarks, etc. (max 300 chars)",
+      "submit": "Add animal"
+    },
+    "roster": {
+      "title": "Animals",
+      "intro": "Select an animal to see its pedigree and offspring below.",
+      "emptyTitle": "No animals registered yet",
+      "emptyDesc": "Add your first animal in the form above to start tracking parentage and offspring.",
+      "ancestorCount": "{{count}} ancestors"
+    },
+    "pedigree": {
+      "title": "{{name}}'s pedigree",
+      "intro": "Shows three generations up to grandparents. Unregistered ancestors appear dashed.",
+      "ariaLabel": "Three-generation pedigree of {{name}}",
+      "genSelf": "Self",
+      "genParents": "Parents",
+      "genGrandparents": "Grandparents",
+      "unknown": "Unknown",
+      "noMorph": "No morph"
+    },
+    "offspring": {
+      "title": "Offspring ({{count}})",
+      "empty": "No animals are registered as offspring of this individual."
+    },
+    "toast": {
+      "added": "Added {{name}}.",
+      "removed": "Removed {{name}}."
+    }
+  },
+  "costreport": {
+    "title": "Cost report",
+    "subtitle": "Roll up your logged pet costs into an annual total, monthly average, and per-category and per-pet breakdowns.",
+    "yearLabel": "Select period",
+    "allTime": "All time",
+    "yearChip": "{{year}}",
+    "scope": {
+      "allTime": "All-time total",
+      "year": "{{year}} total"
+    },
+    "perMonth": "Average across recorded months",
+    "projectedHint": "Estimated from {{amount}} spent so far this year",
+    "monthsValue": "{{n}} mo",
+    "entriesHint": "{{n}} expenses total",
+    "tiles": {
+      "total": "Total spend",
+      "monthlyAverage": "Monthly average",
+      "projected": "{{year}} projected",
+      "months": "Months recorded"
+    },
+    "categoryTitle": "Spend by category",
+    "noCategory": "No expenses recorded for this period.",
+    "trendTitle": "Monthly trend",
+    "trendAria": "Monthly total spend trend chart",
+    "trendEmpty": "Two or more months are needed to show a trend.",
+    "petTitle": "Spend by pet",
+    "petDesc": "Compare spending across your registered pets.",
+    "unscopedPet": "Unassigned",
+    "allPetsNote": "Analysis sums costs across all of your pets.",
+    "empty": {
+      "title": "Nothing to report yet",
+      "description": "Log a few costs first and we'll roll up totals and trends for you.",
+      "cta": "Go log a cost"
+    }
+  },
+  "transport": {
+    "title": "Transport planner",
+    "subtitle": "Prepare for vet visits, moves, and expos safely. A secure container, steady temperature, and low stress are what matter most.",
+    "tipLabel": "Transport tip",
+    "created": "Trip added.",
+    "disclaimer": "This checklist is guidance to help you travel safely. Adapt it to your species and individual animal, and consult your vet when in doubt.",
+    "purposes": {
+      "vet": "Vet visit",
+      "move": "Moving home",
+      "expo": "Expo",
+      "other": "Other"
+    },
+    "items": {
+      "secureContainer": "Secure, well-ventilated carrier",
+      "tempControl": "Temperature control — heat or cool pack",
+      "thermometer": "Check temperature in transit",
+      "coverDark": "Cover dark to lower stress",
+      "noFeedBefore": "Skip feeding beforehand — prevents regurgitation",
+      "water": "Offer water on arrival",
+      "secureLid": "Escape-proof latch",
+      "paperwork": "Paperwork for regulated species"
+    },
+    "tips": {
+      "reptile": "For ectotherms, keeping warmth steady in transit matters most. Wrap heat packs in cloth so they never touch the animal, and avoid direct sunlight entirely.",
+      "amphibian": "Amphibians dry out easily. Hold humidity with damp paper towel or sphagnum moss and keep moisture from drying out.",
+      "arthropod": "Arthropods are sensitive to shock and temperature swings. Minimize jostling while keeping ventilation and a stable temperature.",
+      "bird": "Birds stress easily. Cover the carrier dark to settle them and avoid sudden temperature changes.",
+      "mammal": "Keep small mammals warm and ventilated, and add familiar bedding or cloth to reduce stress.",
+      "generic": "Build every trip around three basics: a secure carrier, steady temperature, and minimal stress."
+    },
+    "dday": {
+      "today": "Today",
+      "in": "In {{count}}d",
+      "ago": "{{count}}d ago"
+    },
+    "form": {
+      "title": "Add a trip",
+      "intro": "Enter the purpose and date and a preparation checklist is created for you.",
+      "purpose": "Purpose",
+      "date": "Travel date",
+      "duration": "Estimated time in transit (hours)",
+      "durationHelper": "Optional — you can leave this blank.",
+      "notes": "Notes",
+      "notesPlaceholder": "e.g. appointment time, who is coming, items to bring",
+      "submit": "Add trip"
+    },
+    "list": {
+      "title": "Trips",
+      "intro": "Upcoming trips show first. Tick items off as you finish preparing.",
+      "dateLabel": "Date",
+      "durationLabel": "Est. time",
+      "durationValue": "{{hours}}h",
+      "remove": "Remove",
+      "paperworkHint": "For regulated species, confirm filings and paperwork before travel."
+    },
+    "checklist": {
+      "title": "Preparation checklist",
+      "count": "{{done}}/{{total}} ready",
+      "aria": "Preparation {{pct}}%"
+    },
+    "paperwork": {
+      "title": "Regulated-species paperwork",
+      "desc": "{{name}} is a regulated species. Confirm filings and related paperwork before transport or transfer.",
+      "link": "Open the registry"
+    },
+    "empty": {
+      "title": "No trips planned",
+      "desc": "Add a trip such as a vet visit or a move to prepare safely."
+    },
+    "errors": {
+      "dateRequired": "Pick a travel date.",
+      "durationNumber": "Enter the time as a number.",
+      "durationRange": "Enter a time between 0 and 240 hours.",
+      "notesMax": "Notes must be 300 characters or fewer."
     }
   },
   "morphs": {

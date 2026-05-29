@@ -1,0 +1,349 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+/* ── Sections ────────────────────────────────────────────────── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.subTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.sectionIntro {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: calc(-1 * var(--spacing-2xs));
+}
+
+/* ── Form ────────────────────────────────────────────────────── */
+.formTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+}
+
+/* ── Roster ──────────────────────────────────────────────────── */
+.roster {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.rosterRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.rosterMain {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  min-height: 44px;
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--color-text);
+  transition:
+    background var(--motion-fast),
+    border-color var(--motion-fast);
+}
+
+.rosterMain:hover {
+  background: var(--color-surface-muted);
+}
+
+.rosterMainActive {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.rosterEmoji {
+  font-size: var(--font-size-2xl);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.rosterText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  min-width: 0;
+}
+
+.rosterName {
+  font-weight: 700;
+}
+
+.rosterMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.rosterSpecies {
+  color: var(--color-text-secondary);
+}
+
+.rosterMorph {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.rosterAncestors {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.removeButton {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--color-error);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  min-height: 44px;
+  padding: 0 var(--spacing-2xs);
+}
+
+.removeButton:hover {
+  text-decoration: underline;
+}
+
+/* ── Pedigree tree ───────────────────────────────────────────── */
+.tree {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-md);
+  align-items: stretch;
+}
+
+.treeColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  min-width: 0;
+}
+
+.genLabel {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+/* Each slot grows so the columns vertically balance against each other. */
+.selfSlot,
+.parentSlot,
+.grandSlot {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* Connector lines: parents reach back toward the self column, grandparents
+   reach back toward the parent column. Drawn as a short horizontal stub on
+   the left edge of each downstream node via a pseudo-element. */
+.parentSlot,
+.grandSlot {
+  position: relative;
+  padding-left: var(--spacing-md);
+}
+
+.parentSlot::before,
+.grandSlot::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: var(--spacing-md);
+  height: 2px;
+  background: var(--color-border-strong);
+}
+
+.box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+}
+
+.boxSelf {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.boxRelation {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.boxName {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  font-weight: 700;
+}
+
+.boxSex {
+  color: var(--color-text-secondary);
+}
+
+.boxSpecies {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.boxMorph {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.boxMorphMuted {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* Unknown ancestor slot. */
+.placeholder {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-sm);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: transparent;
+}
+
+.placeholderRelation {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.placeholderText {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* On narrow screens the 3 columns can't sit side by side; stack them and drop
+   the connector stubs so the tree reads top-down instead. */
+@media (max-width: 720px) {
+  .tree {
+    grid-template-columns: 1fr;
+  }
+
+  .parentSlot,
+  .grandSlot {
+    padding-left: 0;
+  }
+
+  .parentSlot::before,
+  .grandSlot::before {
+    display: none;
+  }
+
+  .selfSlot,
+  .parentSlot,
+  .grandSlot {
+    align-items: stretch;
+  }
+}
+
+/* ── Offspring ───────────────────────────────────────────────── */
+.offspringEmpty {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.offspringList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.offspringChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  min-height: 44px;
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  transition:
+    border-color var(--motion-fast),
+    background var(--motion-fast);
+}
+
+.offspringChip:hover {
+  border-color: var(--color-primary);
+  background: var(--color-surface-muted);
+}
+
+.offspringMorph {
+  color: var(--color-text-secondary);
+}
