@@ -13,24 +13,24 @@
 - **사용자 데이터 100% 클라이언트 저장** — zustand persist + localStorage. `/backup` 페이지에서 JSON export/import.
 - **i18n ko/en/ja** 완전 동기화 — 3개 언어 키 패리티 (`pnpm test:i18n` 게이트), 헤더 언어 선택기.
 
-## 페이지 맵 (총 72개 라우트)
+## 페이지 맵 (총 73개 라우트)
 
-| 카테고리  | 페이지                                                                       | 설명                                                                                                                                                                            |
-| --------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 진입      | `/`, `/onboarding`                                                           | 랜딩(emoji orb hero) + 4단계 첫 선택 (regulated 카테고리 안내, 펫 nickname)                                                                                                     |
-| 메인      | `/dashboard`                                                                 | 위치 chip, 종 카드, lifecycle rail, **이번 주 활동 strip**, **오늘의 컨디션 위젯**(health/habitat/budget/supplies), **다가오는 일정 preview**(D-3 toast + browser notification) |
-| 종        | `/species`, `/species/:slug`, `/compare`, `/morphs`                          | 카탈로그(필터+검색+비교 cart) / 상세(병원·샵·갤러리·관련종+filingStatus 배지) / 최대 3종 비교(URL deep-link) / 모프 카탈로그 + KR 가격대                                        |
-| 매칭      | `/match`                                                                     | 8문항 quiz → 추천 3종 + 비교 deep-link + regulated 배지                                                                                                                         |
-| 위치      | `/hospitals`, `/shops`                                                       | 카카오맵 + 거리순 + 24h 응급 배지 (13개 병원, 14개 샵)                                                                                                                          |
-| 가이드    | `/care`, `/care/:speciesId`, `/communities`, `/resources`, `/setup`, `/food` | 사육 가이드 / 커뮤니티 / 32개 외부 자료 / 카테고리별 셋업 견적 / 먹이 단가·영양                                                                                                 |
-| 일상      | `/diary`, `/routine`, `/calendar`                                            | 일지(사진 URL 첨부) / 카테고리별 routine 체크 / health+supplies+registry 통합 timeline                                                                                          |
-| 의료/환경 | `/health`, `/habitat`, `/budget`, `/supplies`, `/sos`, `/insurance`          | 체중·접종 / 온습도 시계열 / 월 지출 / 사료 재고 / 응급 SOS 1-tap (+모바일 floating SOS) / 펫보험·비상금                                                                         |
-| 입양/장례 | `/adoption`, `/funeral`                                                      | 검증된 외부 채널 + 정부 등록 장묘업체                                                                                                                                           |
-| 커뮤니티  | `/consult`, `/forum`                                                         | 수의사 실시간 상담(socket.io) / 종별 게시판                                                                                                                                     |
-| 입점/운영 | `/partners`, `/partner-dashboard`, `/admin`                                  | 입점 신청 / 승인된 가게 관리 / 어드민                                                                                                                                           |
-| 행사      | `/events`                                                                    | 2026 한국 펫 박람회 8건 timeline (지역 필터)                                                                                                                                    |
-| 법규/안전 | `/registry`, `/petid`, `/backup`                                             | 2025-12-14 야생생물법 4종 신고 체크리스트 / 인쇄용 미아 ID 카드 / 데이터 export·import·wipe                                                                                     |
-| 메타      | `/about`, `/faq`                                                             | 앱 소개·원칙·데이터 출처 / 10개 자주 묻는 질문 accordion                                                                                                                        |
+| 카테고리  | 페이지                                                                       | 설명                                                                                                                                                                                                                                    |
+| --------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 진입      | `/`, `/onboarding`                                                           | 랜딩(emoji orb hero) + 4단계 첫 선택 (regulated 카테고리 안내, 펫 nickname)                                                                                                                                                             |
+| 메인      | `/dashboard`, `/tools`                                                       | 위치 chip, 종 카드, lifecycle rail, **이번 주 활동 strip**, **오늘의 컨디션 위젯**(health/habitat/budget/supplies), **다가오는 일정 preview**(D-3 toast + browser notification) / **도구 모음 허브**(63개 도구 10개 카테고리 그룹·검색) |
+| 종        | `/species`, `/species/:slug`, `/compare`, `/morphs`                          | 카탈로그(필터+검색+비교 cart) / 상세(병원·샵·갤러리·관련종+filingStatus 배지) / 최대 3종 비교(URL deep-link) / 모프 카탈로그 + KR 가격대                                                                                                |
+| 매칭      | `/match`                                                                     | 8문항 quiz → 추천 3종 + 비교 deep-link + regulated 배지                                                                                                                                                                                 |
+| 위치      | `/hospitals`, `/shops`                                                       | 카카오맵 + 거리순 + 24h 응급 배지 (13개 병원, 14개 샵)                                                                                                                                                                                  |
+| 가이드    | `/care`, `/care/:speciesId`, `/communities`, `/resources`, `/setup`, `/food` | 사육 가이드 / 커뮤니티 / 32개 외부 자료 / 카테고리별 셋업 견적 / 먹이 단가·영양                                                                                                                                                         |
+| 일상      | `/diary`, `/routine`, `/calendar`                                            | 일지(사진 URL 첨부) / 카테고리별 routine 체크 / health+supplies+registry 통합 timeline                                                                                                                                                  |
+| 의료/환경 | `/health`, `/habitat`, `/budget`, `/supplies`, `/sos`, `/insurance`          | 체중·접종 / 온습도 시계열 / 월 지출 / 사료 재고 / 응급 SOS 1-tap (+모바일 floating SOS) / 펫보험·비상금                                                                                                                                 |
+| 입양/장례 | `/adoption`, `/funeral`                                                      | 검증된 외부 채널 + 정부 등록 장묘업체                                                                                                                                                                                                   |
+| 커뮤니티  | `/consult`, `/forum`                                                         | 수의사 실시간 상담(socket.io) / 종별 게시판                                                                                                                                                                                             |
+| 입점/운영 | `/partners`, `/partner-dashboard`, `/admin`                                  | 입점 신청 / 승인된 가게 관리 / 어드민                                                                                                                                                                                                   |
+| 행사      | `/events`                                                                    | 2026 한국 펫 박람회 8건 timeline (지역 필터)                                                                                                                                                                                            |
+| 법규/안전 | `/registry`, `/petid`, `/backup`                                             | 2025-12-14 야생생물법 4종 신고 체크리스트 / 인쇄용 미아 ID 카드 / 데이터 export·import·wipe                                                                                                                                             |
+| 메타      | `/about`, `/faq`                                                             | 앱 소개·원칙·데이터 출처 / 10개 자주 묻는 질문 accordion                                                                                                                                                                                |
 
 ### 🆕 v0.2 확장 (34개 신규 라우트, ko/en/ja)
 
@@ -56,7 +56,7 @@
 pettography/
 ├── src/                 # Frontend (React 19 + Vite + TS strict)
 │   ├── features/        # 30+ features (species, onboarding, genetics, molt, vivarium, breeding, feeding, meds, showcase, qna, meetups, market, passport, assistant ...)
-│   ├── pages/           # 72 routes (lazy)
+│   ├── pages/           # 73 routes (lazy)
 │   ├── components/      # shared UI (Card, Badge, Button, Input, Textarea, Toast, BottomNav, Header ...)
 │   ├── router/ store/ services/ i18n/ hooks/ utils/
 │   └── assets/styles/   # design tokens (OKLCH-tinted, fluid clamp)
