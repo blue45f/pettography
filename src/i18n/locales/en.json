@@ -87,6 +87,9 @@
     "lineage": "Lineage",
     "costreport": "Cost report",
     "transport": "Transport",
+    "cleaning": "Cleaning",
+    "safety": "Safety",
+    "seasonal": "Seasonal",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -3193,6 +3196,200 @@
       "durationNumber": "Enter the time as a number.",
       "durationRange": "Enter a time between 0 and 240 hours.",
       "notesMax": "Notes must be 300 characters or fewer."
+    }
+  },
+  "cleaning": {
+    "title": "Cleaning log",
+    "subtitle": "Track spot cleans, full cleans, substrate swaps, and water changes by type, and see when each is next due. All data stays in this browser only.",
+    "showAllPets": "Show all pets",
+    "bioactive": {
+      "title": "Over-cleaning can backfire",
+      "body": "In a bioactive setup the cleanup crew and plants break down waste. Keeping up with spot cleaning while minimizing full cleans and substrate swaps keeps the colony stable. The intervals below assume a standard setup, so adjust them to your environment."
+    },
+    "types": {
+      "spot": "Spot clean",
+      "full": "Full clean",
+      "substrate": "Substrate swap",
+      "water": "Water change"
+    },
+    "typeDesc": {
+      "spot": "Remove visible waste and uneaten food",
+      "full": "Wipe down and disinfect surfaces",
+      "substrate": "Replace or deep-refresh the substrate",
+      "water": "Partial water change (mainly aquatic/semi-aquatic)"
+    },
+    "lastCleaned": "Last cleaned",
+    "recommended": "Recommended",
+    "everyDays": "Every {{count}} days",
+    "cleanToday": "Cleaned today",
+    "waterNote": "Just a light reminder if you only have a water dish. A core cadence for aquatic and amphibian keepers.",
+    "status": {
+      "never": "No record"
+    },
+    "dday": {
+      "today": "Due today",
+      "left": "{{count}} days left",
+      "over": "{{count}} days overdue"
+    },
+    "newLog": "Add a cleaning log",
+    "type": "Type",
+    "cleanedAt": "Date cleaned",
+    "note": "Note",
+    "notePlaceholder": "Cleaner used, substrate swapped, etc. (optional)",
+    "addLog": "Add log",
+    "logged": "Logged a {{type}}.",
+    "history": "Cleaning history",
+    "totalCount": "{{count}} total",
+    "emptyTitle": "No cleaning logs yet",
+    "emptyDesc": "Use the \"Cleaned today\" button above or add a log to record your first clean.",
+    "remove": "Delete"
+  },
+  "safety": {
+    "title": "Safety audit",
+    "subtitle": "A guided enclosure audit to prevent escapes, burns, shocks, drowning, and injury before they happen. Prevention is everything.",
+    "creed": "Accidents are all about prevention — work through each item and remove the risk in advance.",
+    "risksTitle": "Species-specific risks",
+    "risksIntro": "Accident types that are especially common for your active pet's category.",
+    "risksAlertTitle": "Watch these closely for this category",
+    "disclaimer": "This checklist is a general husbandry-safety guide and does not cover every hazard. Add your own checks for your species and individual animal.",
+    "levels": {
+      "low": "At risk",
+      "medium": "Fair",
+      "high": "Safe"
+    },
+    "score": {
+      "title": "Safety score",
+      "desc": "Shows your enclosure's overall safety level from the share of items you've confirmed.",
+      "count": "{{done}} / {{total}} confirmed",
+      "aria": "Safety audit {{pct}}% complete",
+      "reset": "Reset this audit",
+      "resetDone": "Audit reset."
+    },
+    "checklist": {
+      "title": "Safety checklist",
+      "intro": "Confirm and fix each item yourself, then switch it on."
+    },
+    "groups": {
+      "escape": "Escape prevention",
+      "thermal": "Heat & burns",
+      "electrical": "Electrical",
+      "physical": "Physical & drowning"
+    },
+    "items": {
+      "secureLid": "Locking lid / door",
+      "noGaps": "No escapable gaps",
+      "screenSecure": "Screen mesh secured",
+      "heightEscape": "Climber height / cover checked",
+      "heatGuard": "Heat lamp guard fitted",
+      "thermostat": "Connected to a thermostat",
+      "noDirectContact": "No direct heater contact",
+      "tempGradient": "Hot / cool gradient checked",
+      "cordsManaged": "Cords managed, away from water",
+      "gfci": "Ground-fault protection (GFCI)",
+      "noFrayed": "No frayed cables",
+      "noSharpDecor": "No sharp decor",
+      "stableDecor": "Stable, non-collapsing structures",
+      "waterDepth": "Drowning-risk water depth managed",
+      "escapeRamp": "Escape ramp in water bowls"
+    },
+    "risks": {
+      "generic": "Escapes and burns are the most common accidents. Start with the lid and heat sources.",
+      "heightEscape": "Arboreal species escape using height — secure the top cover firmly.",
+      "heatBurn": "Direct contact with lamps or heaters causes burns; you need a guard and a thermostat.",
+      "gapEscape": "Even tiny gaps let them out — check every seam and the ventilation mesh.",
+      "waterDepth": "Amphibians can drown even in shallow water; manage depth and an escape ramp.",
+      "toxins": "Sensitive skin can absorb detergent or paint residue — use safe materials only.",
+      "escapeRamp": "Give animals that fall into bowls or water a ramp or foothold to climb out.",
+      "fallHeight": "A fall from height can be fatal for arthropods — keep the enclosure low.",
+      "abdomenRupture": "A fall can rupture a tarantula's abdomen; limit the climbing height.",
+      "toxicFumes": "Birds have very fragile airways — smoke and sprays can be fatal. Check ventilation.",
+      "teflon": "Overheated Teflon (PTFE) cookware is fatal to birds; keep them away from the kitchen.",
+      "barSpacing": "Wide bar spacing can trap heads or limbs, or allow escape — check the gap.",
+      "chewedCords": "Gnawing small mammals can bite cords and get shocked; shield all wiring."
+    }
+  },
+  "seasonal": {
+    "title": "Seasonal care guide",
+    "subtitle": "Husbandry shifts with the seasons. Check this season's priorities for your pet's category, then preview all four seasons ahead. (Korea / northern-hemisphere timing.)",
+    "generalLabel": "Shared priority",
+    "disclaimer": "General guidance for the northern hemisphere (Korea / Japan). Exact timing and temperatures vary by species, individual, and region, so cross-check your species' references and a vet's advice. Covers {{count}} seasons.",
+    "categories": {
+      "reptile": "Reptile",
+      "arthropod": "Arthropod",
+      "bird": "Bird",
+      "amphibian": "Amphibian",
+      "mammal": "Small mammal"
+    },
+    "picker": {
+      "label": "Pick a category to see its seasonal tips"
+    },
+    "hero": {
+      "eyebrow": "This season",
+      "now": "Now"
+    },
+    "seasons": {
+      "spring": {
+        "name": "Spring",
+        "months": "Mar–May",
+        "blurb": "Activity and appetite return and the breeding season begins. Day-night swings are wide, so keep night heating on while gradually raising daytime temperatures."
+      },
+      "summer": {
+        "name": "Summer",
+        "months": "Jun–Aug",
+        "blurb": "Overheating and excess humidity are the biggest risks. Check the enclosure's temperature ceiling, avoid direct AC drafts, and ensure ample water and airflow."
+      },
+      "autumn": {
+        "name": "Autumn",
+        "months": "Sep–Nov",
+        "blurb": "Shortening daylight shifts appetite and activity. Brumating species begin their prep; for others it's time to switch over to winter heating."
+      },
+      "winter": {
+        "name": "Winter",
+        "months": "Dec–Feb",
+        "blurb": "Heating and dryness are the focus. Double-check heaters and thermometers, plan for power outages, and manage indoor humidity; some species brumate now."
+      }
+    },
+    "tips": {
+      "spring": {
+        "reptile": "Raise basking temps in steps and lengthen the photoperiod. Restore feeding as appetite returns, and check condition and weight before pairing breeders.",
+        "arthropod": "Activity and appetite rise, so feed more often. Adjust humidity to spring conditions and watch growing specimens closely for molt signs.",
+        "bird": "Breeding/molt season and longer days raise activity. Boost protein and calcium, and offer more fresh water and bathing to keep plumage in shape.",
+        "amphibian": "Activity resumes as water and air warm. Increase feeding gradually, check water quality often, and provide breeding cues for species that need them.",
+        "mammal": "Activity and appetite recover. Shedding begins, so brush more often and ease off bedding insulation as spring temperatures rise.",
+        "general": "Day-night swings are wide: keep night heating on while raising daytime temps in steps. Lengthen the photoperiod and normalise feeding as appetite returns."
+      },
+      "summer": {
+        "reptile": "Overheating is the top risk. Check peak enclosure temps often, avoid direct AC drafts and sharp temperature swings, and provide ample water, shade, and hides.",
+        "arthropod": "Airflow and moisture matter in heat. Mist to hold humidity but avoid stagnant hot air, and prevent overheating from direct sun or a sealed enclosure.",
+        "bird": "Watch for heat stress. Keep birds in well-ventilated shade, refresh water often, and position them so AC drafts don't hit them directly.",
+        "amphibian": "Heat is deadly to amphibians. Use cooling fans, ice packs, or relocate the tank to stop water temps rising, and manage water quality and oxygen too.",
+        "mammal": "They tolerate heat and dehydration poorly. Provide ventilation and shade, offer cool substrate or tile, and keep fresh water always available.",
+        "general": "Overheating is the top risk. Check peak enclosure temps often, avoid direct AC drafts and sharp temperature swings, and ensure airflow and ample water."
+      },
+      "autumn": {
+        "reptile": "Shortening daylight shifts appetite and activity. Species that brumate should plan a vet check and fasting schedule; others should pre-check heating gear.",
+        "arthropod": "Cooling temps reduce appetite and activity. Adjust feeding and begin heating, while preparing humidity control for winter dryness.",
+        "bird": "Falling daylight wraps up the molt. Reinforce nutrition, check nighttime heating, and consider supplemental light if days are short.",
+        "amphibian": "Activity drops as water and air cool. Reduce feeding, check the heater, and prepare for dryness from indoor heating.",
+        "mammal": "Appetite may rise ahead of winter. Add bedding insulation, block drafts, and watch respiratory and immune health through the change of season.",
+        "general": "Shortening daylight shifts appetite and activity. Pre-check winter heating gear, and plan a brumation prep schedule for species that need one."
+      },
+      "winter": {
+        "reptile": "Heating, outage readiness, and dryness are key. Double-check heaters and thermometers and mist to add humidity. Some species brumate now.",
+        "arthropod": "Heating and dryness prevention matter. Indoor heating drops humidity, so mist more, and judge whether cold-driven dips in activity and appetite are normal.",
+        "bird": "Block drafts and sharp temperature swings, and reinforce nighttime heating. Counter heater dryness with humidity and add light if days are short.",
+        "amphibian": "Check the heater to stop water temps falling, and watch for evaporation and water-quality shifts from indoor dryness. Prepare for outages too.",
+        "mammal": "Warmth and draft-blocking come first. Hold a steady temperature and add bedding, and watch for dryness and poor ventilation from heating.",
+        "general": "Heating, outage readiness, and dryness are key. Double-check heaters and thermometers, plan for power outages, and replace humidity lost to heating."
+      }
+    },
+    "brumationNote": {
+      "text": "If your reptile brumates in winter, plan its schedule and phases ahead.",
+      "link": "Open the brumation planner"
+    },
+    "overview": {
+      "title": "All four seasons at a glance",
+      "lead": "Key per-season points for {{category}}. The current season is highlighted."
     }
   },
   "morphs": {

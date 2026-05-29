@@ -1,0 +1,195 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.speciesNote {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.showAllToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  user-select: none;
+  min-height: 44px;
+}
+
+.showAllToggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.statusCard {
+  border: 1px solid var(--color-border);
+}
+
+.statusBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.statusTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.statusTitleWrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.statusTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.statusDesc {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.statusMeta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+}
+
+.statusMeta dt {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  margin-bottom: var(--spacing-2xs);
+}
+
+.statusMeta dd {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.waterNote {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  background: var(--color-surface-muted);
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border-radius: var(--radius-sm);
+}
+
+.formTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: var(--spacing-md);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.historySection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.historyHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.historyTitle {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.historyCount {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.logHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.logHeaderLeft {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logDate {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  min-height: 44px;
+}
+
+.removeButton:hover {
+  text-decoration: underline;
+}
+
+.logNote {
+  white-space: pre-wrap;
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+}
