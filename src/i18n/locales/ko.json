@@ -81,6 +81,9 @@
     "wishlist": "위시리스트",
     "taming": "핸들링 적응",
     "kit": "응급 키트",
+    "alerts": "알림 센터",
+    "supplements": "보충제 더스팅",
+    "feeders": "먹이 컬처",
     "food": "먹이 가이드",
     "events": "박람회 일정",
     "contact": "문의하기",
@@ -2825,6 +2828,190 @@
       "noteMax": "메모는 120자 이내로 입력하세요"
     },
     "disclaimer": "이 체크리스트는 사전 대비를 돕기 위한 안내입니다. 실제 응급 상황에서는 즉시 특수동물 병원에 연락하세요."
+  },
+  "alerts": {
+    "title": "알림 센터",
+    "subtitle": "활성 펫의 투약·장비·번식·탈피·수질·동면 등 챙겨야 할 일을 한곳에 모았어요.",
+    "noPet": "온보딩에서 펫을 등록하면 더 정확한 알림을 받을 수 있어요.",
+    "summary": "지금 챙길 일이 {{count}}건 있어요.",
+    "summaryInfoOnly": "급한 일은 없어요. 참고 정보만 있습니다.",
+    "view": "보기",
+    "allClear": {
+      "title": "모두 정상이에요",
+      "desc": "지금 당장 챙길 알림이 없어요. 기록을 남기면 예정일과 지연을 자동으로 모아드려요."
+    },
+    "severity": {
+      "overdue": "지연",
+      "due": "오늘/임박",
+      "soon": "곧",
+      "info": "참고"
+    },
+    "items": {
+      "medOverdue": "{{name}} 투약이 지연됐어요",
+      "medDue": "오늘 {{name}} 투약일이에요",
+      "quarantineReady": "{{name}} 격리 해제 가능",
+      "gearOverdue": "{{name}} 교체 시기가 지났어요",
+      "gearSoon": "{{name}} 교체가 곧 필요해요",
+      "clutchOverdue": "클러치 부화 예정일이 지났어요",
+      "clutchDue": "클러치 부화 예정 기간이에요",
+      "moltOverdue": "탈피 예정일이 지났어요",
+      "waterToxic": "수질 위험 — 즉시 환수가 필요해요",
+      "brumationPhase": "동면 진행 중: {{phase}}"
+    }
+  },
+  "supplements": {
+    "title": "보충제 더스팅",
+    "subtitle": "칼슘·D3·종합비타민 더스팅 일정을 관리하고 MBD(대사성 골질환)를 예방하세요.",
+    "showAllPets": "모든 펫 보기",
+    "aPet": "반려동물",
+    "guidanceTitle": "종 맞춤 가이드",
+    "uvbHint": "더스팅 빈도는 UVB 조사량과 주식 구성에 따라 달라집니다. UVB가 충분하면 D3 보충은 줄이세요.",
+    "scheduleTitle": "더스팅 일정",
+    "lastDusted": "마지막 더스팅",
+    "nextDue": "다음 예정",
+    "interval": "권장 주기",
+    "never": "기록 없음",
+    "logToStart": "기록하면 시작돼요",
+    "everyNDays": "{{count}}일마다",
+    "logged": "더스팅을 기록했어요.",
+    "quickLog": "오늘 {{type}} 더스팅",
+    "quickLogged": "오늘 {{type}} 더스팅을 기록했어요.",
+    "remove": "삭제",
+    "disclaimer": "본 일정은 일반적인 가이드입니다. 정확한 보충 계획은 개체의 나이·UVB·주식에 따라 다르며, 이상 징후가 보이면 엑조틱 전문 수의사와 상담하세요.",
+    "mbd": {
+      "title": "MBD 예방",
+      "body": "칼슘 부족과 UVB 부족은 대사성 골질환(MBD)의 주원인입니다. 곤충식·초식 파충류는 칼슘 더스팅을 거르지 마세요."
+    },
+    "gutLoad": {
+      "title": "더스팅보다 거트로딩",
+      "body": "이 분류군은 보통 더스팅하지 않습니다. 먹이 곤충에게 영양가 있는 사료를 24~48시간 먹이는 거트로딩으로 영양을 공급하세요."
+    },
+    "guidance": {
+      "reptile": "곤충식 파충류(레오파드게코, 비어디드래곤 유체 등)는 대부분의 먹이에 무(無)D3 칼슘을 묻히고, 칼슘+D3는 주 1~2회, 종합비타민은 주 1회가 일반적입니다. UVB가 충분하면 D3는 줄이세요.",
+      "amphibian": "양서류(팩맨개구리 등)는 대부분의 먹이에 칼슘을 묻히고 종합비타민은 주 1회 정도가 적당합니다. 과다 보충은 피하세요.",
+      "arthropod": "거미·전갈 등 절지동물은 보통 더스팅하지 않습니다. 먹이 곤충을 거트로딩해 영양을 전달하세요.",
+      "bird": "조류는 균형 잡힌 펠릿·채소 위주 식단이 우선입니다. 칼슘(갑오징어뼈 등)은 보조로 두고 과한 보충은 피하세요.",
+      "mammal": "소형 포유류는 종에 맞는 균형 식단이 핵심입니다. 보충은 수의사 권고가 있을 때만 하세요.",
+      "unknown": "반려동물을 먼저 등록하면 종 분류에 맞는 더스팅 가이드를 보여드려요."
+    },
+    "types": {
+      "calcium": "칼슘",
+      "calciumD3": "칼슘+D3",
+      "multivitamin": "종합비타민"
+    },
+    "status": {
+      "due": "더스팅 필요",
+      "soon": "곧 예정",
+      "ok": "여유 있음",
+      "never": "기록 없음",
+      "notDusted": "더스팅 안 함"
+    },
+    "stats": {
+      "title": "요약",
+      "total": "총 기록",
+      "lastDusted": "마지막 더스팅",
+      "never": "없음"
+    },
+    "form": {
+      "title": "더스팅 기록",
+      "type": "보충제 종류",
+      "dustedAt": "더스팅 날짜",
+      "note": "메모",
+      "notePlaceholder": "예: 칼슘 가볍게, 먹이 거부 없음",
+      "noteHelper": "선택 사항 · 최대 200자",
+      "submit": "기록 추가"
+    },
+    "history": {
+      "title": "기록",
+      "emptyTitle": "아직 더스팅 기록이 없어요",
+      "emptyDesc": "위 빠른 기록 버튼이나 폼으로 첫 더스팅을 남겨보세요."
+    },
+    "errors": {
+      "dateRequired": "날짜를 입력하세요.",
+      "noteMax": "메모는 200자 이하로 입력하세요."
+    }
+  },
+  "feeders": {
+    "title": "먹이 컬처",
+    "subtitle": "직접 사육하는 먹이 곤충과 바이오액티브 청소부대를 관리해 늘 건강하고 영양 가득한 먹이를 유지하세요.",
+    "gutLoadNote": "자가 사육 먹이는 gut-load(먹이에게 먹이 주기)로 영양을 채워야 펫 건강에 직결됩니다. 콜로니에 채소·곡물·전용 사료를 주기적으로 급여하세요.",
+    "toastAdded": "콜로니를 추가했어요.",
+    "toastFed": "{{name}} 콜로니에 먹이를 줬어요.",
+    "toastRemoved": "콜로니를 삭제했어요.",
+    "form": {
+      "title": "콜로니 추가",
+      "type": "먹이 종류",
+      "name": "콜로니 이름",
+      "namePlaceholder": "예: 두비아 메인 통",
+      "startedAt": "시작일",
+      "estimateCount": "대략 개체 수 (선택)",
+      "estimateHelper": "비워 두면 미확인으로 기록돼요.",
+      "notes": "메모",
+      "notesPlaceholder": "사육 통 크기, 먹이 종류, 분양 계획 등",
+      "submit": "콜로니 추가"
+    },
+    "types": {
+      "dubia": "두비아바퀴",
+      "cricket": "귀뚜라미",
+      "mealworm": "밀웜",
+      "superworm": "슈퍼웜",
+      "isopod": "쥐며느리(아이소포드)",
+      "springtail": "톡토기(스프링테일)",
+      "other": "기타"
+    },
+    "status": {
+      "fedRecently": "최근 급여함",
+      "feedSoon": "곧 급여",
+      "overdue": "급여 지연",
+      "never": "급여 기록 없음"
+    },
+    "meta": {
+      "age": "사육 경과",
+      "ageValue": "{{count}}일차",
+      "estimate": "개체 수",
+      "estimateValue": "약 {{count}}마리",
+      "estimateUnknown": "미확인",
+      "lastFed": "마지막 급여",
+      "lastFedNever": "기록 없음"
+    },
+    "care": {
+      "show": "사육 팁 보기",
+      "hide": "사육 팁 접기",
+      "tempRange": "적정 온도 {{min}}~{{max}}℃",
+      "dubia": "조용하고 냄새가 적으며 고단백입니다. 채소·곡물 가루로 gut-load 하고, 통은 환기를 충분히 하세요.",
+      "cricket": "울음소리와 냄새가 있고 번식이 빠릅니다. 신선한 채소와 칼슘 사료로 gut-load 하고 사체는 바로 치우세요.",
+      "mealworm": "관리가 쉽지만 키틴질이 많아 주식보다 간식으로 적당합니다. 밀기울에 채소 조각으로 수분과 영양을 보충하세요.",
+      "superworm": "큰 먹이로 단백질이 높습니다. 번데기로 만들려면 핀헤드처럼 한 마리씩 단독 사육하세요.",
+      "isopod": "바이오액티브 청소부대입니다. 낙엽·목재·칼슘원을 주고 습한 구역과 마른 구역을 함께 마련하세요.",
+      "springtail": "바이오액티브 청소부대로 곰팡이를 억제합니다. 항상 촉촉하게 유지하고 쌀·효모를 소량 급여하세요.",
+      "other": "사육 종에 맞는 먹이·온도·습도를 확인하고 정기적으로 gut-load 하세요."
+    },
+    "productivity": {
+      "dubia": "번식이 느려 안정적인 생산까지 4~6개월 정도 걸립니다.",
+      "cricket": "번식이 빨라 6~8주면 다음 세대를 얻을 수 있습니다.",
+      "mealworm": "딱정벌레 우화 후 약 8~10주면 새 유충이 나옵니다.",
+      "superworm": "단독 사육 후 번데기·성충을 거쳐 산란까지 약 10~12주 걸립니다.",
+      "isopod": "군집이 자리잡아 수확 가능해지기까지 3~6개월 걸립니다.",
+      "springtail": "조건이 맞으면 4~6주면 빠르게 개체 수가 폭발합니다.",
+      "other": "종에 따라 생산 시점이 다르니 개체 수 변화를 기록하세요."
+    },
+    "actions": {
+      "markFed": "먹이 줌 (gut-load)",
+      "remove": "삭제"
+    },
+    "empty": {
+      "title": "아직 등록된 콜로니가 없어요",
+      "desc": "두비아, 귀뚜라미, 톡토기 등 사육 중인 먹이 컬처를 추가해 gut-load 주기를 관리하세요."
+    },
+    "errors": {
+      "nameRequired": "콜로니 이름을 입력하세요.",
+      "nameMax": "이름은 60자 이내로 입력하세요.",
+      "startedAtRequired": "시작일을 선택하세요.",
+      "estimateNumber": "개체 수는 숫자로 입력하세요.",
+      "estimateInt": "개체 수는 정수로 입력하세요.",
+      "estimateNonnegative": "개체 수는 0 이상이어야 해요.",
+      "notesMax": "메모는 300자 이내로 입력하세요."
+    }
   },
   "morphs": {
     "title": "인기 모프 카탈로그",

@@ -206,6 +206,13 @@ export const routes = [
       },
       { path: 'taming', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Taming')) },
       { path: 'kit', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Kit')) },
+      { path: 'alerts', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Alerts')) },
+      {
+        path: 'supplements',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Supplements')),
+      },
+      { path: 'feeders', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Feeders')) },
       { path: 'food', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Food')) },
       { path: 'events', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Events')) },
       { path: 'about', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/About')) },

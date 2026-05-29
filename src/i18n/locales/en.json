@@ -81,6 +81,9 @@
     "wishlist": "Wishlist",
     "taming": "Taming",
     "kit": "Emergency kit",
+    "alerts": "Alerts",
+    "supplements": "Supplements",
+    "feeders": "Feeders",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -2828,6 +2831,190 @@
       "noteMax": "Note must be 120 characters or fewer"
     },
     "disclaimer": "This checklist is guidance to help you prepare in advance. In a real emergency, contact an exotic-animal clinic immediately."
+  },
+  "alerts": {
+    "title": "Alert Center",
+    "subtitle": "Everything that needs attention for your active pet — meds, gear, breeding, shedding, water, brumation — in one place.",
+    "noPet": "Register a pet in onboarding for more accurate alerts.",
+    "summary": "{{count}} item(s) need your attention.",
+    "summaryInfoOnly": "Nothing urgent. Just some info to note.",
+    "view": "View",
+    "allClear": {
+      "title": "All clear",
+      "desc": "Nothing needs attention right now. As you log entries, due dates and overdue items gather here automatically."
+    },
+    "severity": {
+      "overdue": "Overdue",
+      "due": "Due",
+      "soon": "Soon",
+      "info": "Info"
+    },
+    "items": {
+      "medOverdue": "{{name}} dose is overdue",
+      "medDue": "{{name}} dose is due today",
+      "quarantineReady": "{{name}} quarantine ready to clear",
+      "gearOverdue": "{{name}} is overdue for replacement",
+      "gearSoon": "{{name}} needs replacing soon",
+      "clutchOverdue": "A clutch is past its hatch window",
+      "clutchDue": "A clutch is in its hatch window",
+      "moltOverdue": "Shed is overdue",
+      "waterToxic": "Water is toxic — change it now",
+      "brumationPhase": "Brumation in progress: {{phase}}"
+    }
+  },
+  "supplements": {
+    "title": "Supplement Dusting",
+    "subtitle": "Track calcium, D3, and multivitamin dusting to prevent metabolic bone disease (MBD).",
+    "showAllPets": "Show all pets",
+    "aPet": "Pet",
+    "guidanceTitle": "Species-specific guidance",
+    "uvbHint": "Dusting frequency depends on UVB exposure and staple diet. With ample UVB, reduce D3 supplementation.",
+    "scheduleTitle": "Dusting schedule",
+    "lastDusted": "Last dusted",
+    "nextDue": "Next due",
+    "interval": "Recommended interval",
+    "never": "No record",
+    "logToStart": "Log one to start",
+    "everyNDays": "every {{count}} days",
+    "logged": "Dusting logged.",
+    "quickLog": "Dust {{type}} today",
+    "quickLogged": "Logged {{type}} dusting for today.",
+    "remove": "Remove",
+    "disclaimer": "This schedule is general guidance. The right plan depends on the individual's age, UVB, and staple diet; consult an exotics vet if you see warning signs.",
+    "mbd": {
+      "title": "MBD prevention",
+      "body": "Calcium and UVB deficiency are the leading causes of metabolic bone disease (MBD). Don't skip calcium dusting for insectivorous and herbivorous reptiles."
+    },
+    "gutLoad": {
+      "title": "Gut-load over dusting",
+      "body": "This group is generally not dusted. Deliver nutrition by gut-loading feeder insects with nutritious feed for 24-48 hours instead."
+    },
+    "guidance": {
+      "reptile": "Insectivorous reptiles (leopard geckos, juvenile bearded dragons) typically get plain calcium (no D3) on most feedings, calcium+D3 once or twice a week, and a multivitamin about weekly. With ample UVB, cut back on D3.",
+      "amphibian": "Amphibians (such as pacman frogs) get calcium on most feedings and a multivitamin roughly weekly. Avoid over-supplementing.",
+      "arthropod": "Arthropods like tarantulas and scorpions are generally not dusted. Deliver nutrition by gut-loading their feeders.",
+      "bird": "Birds do best on a balanced pellet and vegetable diet. Keep calcium (e.g. cuttlebone) as a supplement and avoid over-supplementation.",
+      "mammal": "Small mammals rely on a species-appropriate balanced diet. Supplement only on a vet's advice.",
+      "unknown": "Register a pet first and we'll show dusting guidance matched to its species group."
+    },
+    "types": {
+      "calcium": "Calcium",
+      "calciumD3": "Calcium + D3",
+      "multivitamin": "Multivitamin"
+    },
+    "status": {
+      "due": "Due",
+      "soon": "Due soon",
+      "ok": "On track",
+      "never": "No record",
+      "notDusted": "Not dusted"
+    },
+    "stats": {
+      "title": "Summary",
+      "total": "Total logs",
+      "lastDusted": "Last dusted",
+      "never": "None"
+    },
+    "form": {
+      "title": "Log a dusting",
+      "type": "Supplement type",
+      "dustedAt": "Dusting date",
+      "note": "Note",
+      "notePlaceholder": "e.g. light calcium, no refusal",
+      "noteHelper": "Optional - up to 200 characters",
+      "submit": "Add log"
+    },
+    "history": {
+      "title": "History",
+      "emptyTitle": "No dustings logged yet",
+      "emptyDesc": "Use a quick-log button above or the form to record your first dusting."
+    },
+    "errors": {
+      "dateRequired": "Please enter a date.",
+      "noteMax": "Notes must be 200 characters or fewer."
+    }
+  },
+  "feeders": {
+    "title": "Feeders",
+    "subtitle": "Track your own feeder-insect cultures and bioactive cleanup crews so they stay healthy and well gut-loaded.",
+    "gutLoadNote": "Home-cultured feeders are only as nutritious as what you gut-load them with — feed the feeders veggies, grains, or a dedicated chow on a regular cycle to keep your pets healthy.",
+    "toastAdded": "Colony added.",
+    "toastFed": "Gut-loaded the {{name}} colony.",
+    "toastRemoved": "Colony removed.",
+    "form": {
+      "title": "Add a colony",
+      "type": "Feeder type",
+      "name": "Colony name",
+      "namePlaceholder": "e.g. Main dubia bin",
+      "startedAt": "Start date",
+      "estimateCount": "Rough head-count (optional)",
+      "estimateHelper": "Leave blank to record as unknown.",
+      "notes": "Notes",
+      "notesPlaceholder": "Bin size, food type, grow-out plans…",
+      "submit": "Add colony"
+    },
+    "types": {
+      "dubia": "Dubia roaches",
+      "cricket": "Crickets",
+      "mealworm": "Mealworms",
+      "superworm": "Superworms",
+      "isopod": "Isopods",
+      "springtail": "Springtails",
+      "other": "Other"
+    },
+    "status": {
+      "fedRecently": "Fed recently",
+      "feedSoon": "Feed soon",
+      "overdue": "Overdue",
+      "never": "Never fed"
+    },
+    "meta": {
+      "age": "Age",
+      "ageValue": "Day {{count}}",
+      "estimate": "Head-count",
+      "estimateValue": "~{{count}}",
+      "estimateUnknown": "Unknown",
+      "lastFed": "Last fed",
+      "lastFedNever": "Never"
+    },
+    "care": {
+      "show": "Show care tips",
+      "hide": "Hide care tips",
+      "tempRange": "Keep at {{min}}–{{max}}°C",
+      "dubia": "Quiet, near odorless and high in protein. Gut-load with veggies and grain meal, and keep the bin well ventilated.",
+      "cricket": "Noisy and smelly with fast breeding. Gut-load with fresh greens and a calcium chow, and remove dead ones promptly.",
+      "mealworm": "Easy to keep but high in chitin, so better as a treat than a staple. Add veggie chunks to wheat bran for moisture and nutrition.",
+      "superworm": "A large, protein-rich feeder. To pupate them, isolate each one individually like a pinhead.",
+      "isopod": "A bioactive cleanup crew. Offer leaf litter, wood and a calcium source, with both a damp and a dry zone.",
+      "springtail": "A bioactive cleanup crew that holds back mold. Keep it consistently moist and feed a pinch of rice or yeast.",
+      "other": "Confirm the right food, temperature and humidity for your species and gut-load on a regular cycle."
+    },
+    "productivity": {
+      "dubia": "Slow breeders — expect about 4–6 months to a steady, productive colony.",
+      "cricket": "Fast breeders — a new generation in roughly 6–8 weeks.",
+      "mealworm": "New larvae appear about 8–10 weeks after the beetles emerge.",
+      "superworm": "Around 10–12 weeks through isolation, pupation and adults before they lay.",
+      "isopod": "About 3–6 months for the culture to establish and become harvestable.",
+      "springtail": "Booms quickly — about 4–6 weeks under the right conditions.",
+      "other": "Productivity timing varies by species, so log how the head-count changes."
+    },
+    "actions": {
+      "markFed": "Feed (gut-load)",
+      "remove": "Remove"
+    },
+    "empty": {
+      "title": "No colonies yet",
+      "desc": "Add the feeder cultures you keep — dubia, crickets, springtails and more — to track their gut-load cycle."
+    },
+    "errors": {
+      "nameRequired": "Enter a colony name.",
+      "nameMax": "Keep the name under 60 characters.",
+      "startedAtRequired": "Pick a start date.",
+      "estimateNumber": "Head-count must be a number.",
+      "estimateInt": "Head-count must be a whole number.",
+      "estimateNonnegative": "Head-count can't be negative.",
+      "notesMax": "Keep notes under 300 characters."
+    }
   },
   "morphs": {
     "title": "Popular morph catalog",
