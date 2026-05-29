@@ -34,6 +34,7 @@ export const routes = [
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Dashboard')),
       },
+      { path: 'tools', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Tools')) },
       {
         path: 'hospitals',
         HydrateFallback: Loading,

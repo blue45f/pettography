@@ -93,6 +93,7 @@
     "lighting": "照明・光周期",
     "bcs": "体型スコア",
     "enclosure": "ケージサイズ",
+    "tools": "ツール一覧",
     "food": "餌ガイド",
     "events": "展示会スケジュール",
     "contact": "問い合わせ",
@@ -3621,6 +3622,27 @@
       "heightNumber": "高さを数値で入力してください。",
       "heightPositive": "高さは0より大きくしてください。",
       "heightRange": "高さが大きすぎます。もう一度確認してください。"
+    }
+  },
+  "tools": {
+    "title": "ツール一覧",
+    "subtitle": "ペットグラフィーのすべてのケアツールを一か所に。カテゴリー別に整理し、検索できます。",
+    "searchPlaceholder": "ツールを検索（例: 給餌、体型、光周期）",
+    "count": "{{count}}個のツール",
+    "groupCount": "{{count}}個",
+    "emptyTitle": "該当する結果がありません",
+    "emptyDesc": "別のキーワードで検索してください。",
+    "groups": {
+      "genetics": "遺伝・繁殖",
+      "habitat": "飼育環境",
+      "feeding": "栄養・給餌",
+      "health": "健康・精密ケア",
+      "daily": "日常・管理",
+      "safety": "安全・備え",
+      "finance": "家計・計画",
+      "community": "コミュニティ",
+      "discover": "情報・探索",
+      "records": "法規・記録"
     }
   },
   "morphs": {

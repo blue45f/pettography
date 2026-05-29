@@ -25,6 +25,7 @@ function Header() {
   const primary: NavItem[] = completed
     ? [
         { path: '/dashboard', label: t('nav.dashboard') },
+        { path: '/tools', label: t('nav.tools') },
         { path: '/species', label: t('nav.species') },
         { path: '/match', label: t('nav.match') },
         { path: '/hospitals', label: t('nav.hospitals') },

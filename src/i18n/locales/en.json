@@ -93,6 +93,7 @@
     "lighting": "Lighting",
     "bcs": "Body score",
     "enclosure": "Enclosure",
+    "tools": "Tools",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -3624,6 +3625,27 @@
       "heightNumber": "Enter the height as a number.",
       "heightPositive": "Height must be greater than 0.",
       "heightRange": "That height looks too large. Please double-check."
+    }
+  },
+  "tools": {
+    "title": "Tools",
+    "subtitle": "Every Pettography care tool in one place, grouped by category and searchable.",
+    "searchPlaceholder": "Search tools (e.g. feeding, body score, lighting)",
+    "count": "{{count}} tools",
+    "groupCount": "{{count}}",
+    "emptyTitle": "No matches",
+    "emptyDesc": "Try a different search term.",
+    "groups": {
+      "genetics": "Genetics & breeding",
+      "habitat": "Habitat",
+      "feeding": "Nutrition & feeding",
+      "health": "Health & precision care",
+      "daily": "Daily & upkeep",
+      "safety": "Safety & readiness",
+      "finance": "Finance & planning",
+      "community": "Community",
+      "discover": "Discover",
+      "records": "Records & compliance"
     }
   },
   "morphs": {

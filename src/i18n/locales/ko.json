@@ -93,6 +93,7 @@
     "lighting": "조명·광주기",
     "bcs": "체형 점수",
     "enclosure": "사육장 크기",
+    "tools": "도구 모음",
     "food": "먹이 가이드",
     "events": "박람회 일정",
     "contact": "문의하기",
@@ -3621,6 +3622,27 @@
       "heightNumber": "높이를 숫자로 입력하세요.",
       "heightPositive": "높이는 0보다 커야 해요.",
       "heightRange": "높이가 너무 큽니다. 다시 확인하세요."
+    }
+  },
+  "tools": {
+    "title": "도구 모음",
+    "subtitle": "펫토그래피의 모든 케어 도구를 한곳에서. 카테고리별로 정리하고 검색할 수 있어요.",
+    "searchPlaceholder": "도구 검색 (예: 급이, 체형, 광주기)",
+    "count": "{{count}}개 도구",
+    "groupCount": "{{count}}개",
+    "emptyTitle": "검색 결과가 없습니다",
+    "emptyDesc": "다른 검색어로 다시 시도해 보세요.",
+    "groups": {
+      "genetics": "유전 · 번식",
+      "habitat": "사육 환경",
+      "feeding": "영양 · 급이",
+      "health": "건강 · 정밀 케어",
+      "daily": "일상 · 관리",
+      "safety": "안전 · 대비",
+      "finance": "재무 · 계획",
+      "community": "커뮤니티",
+      "discover": "정보 · 탐색",
+      "records": "법규 · 기록"
     }
   },
   "morphs": {
