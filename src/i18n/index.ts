@@ -3,9 +3,10 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
 
 import en from './locales/en.json'
+import ja from './locales/ja.json'
 import ko from './locales/ko.json'
 
-export const SUPPORTED_LANGUAGES = ['ko', 'en'] as const
+export const SUPPORTED_LANGUAGES = ['ko', 'en', 'ja'] as const
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number]
 
 void i18n
@@ -15,6 +16,7 @@ void i18n
     resources: {
       ko: { translation: ko },
       en: { translation: en },
+      ja: { translation: ja },
     },
     fallbackLng: 'ko',
     supportedLngs: SUPPORTED_LANGUAGES,

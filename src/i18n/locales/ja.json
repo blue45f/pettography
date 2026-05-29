@@ -1,0 +1,2348 @@
+{
+  "common": {
+    "appName": "Pettography",
+    "appTagline": "希少エキゾチックペットの種選びから病院・ショップ・葬儀まで、一か所で始めるライフサイクルポータル",
+    "appTaglineRegion": "希少エキゾチックペットの種選びから病院・ショップ・葬儀まで、{{region}}で始めるライフサイクルポータル",
+    "skipToContent": "本文へスキップ",
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました。",
+    "retry": "再試行",
+    "cancel": "キャンセル",
+    "confirm": "確認",
+    "delete": "削除",
+    "edit": "編集",
+    "save": "保存",
+    "add": "追加",
+    "search": "検索",
+    "language": "言語",
+    "back": "戻る",
+    "next": "次へ",
+    "done": "完了",
+    "skip": "スキップ",
+    "viewMore": "もっと見る",
+    "openMap": "地図で見る",
+    "openLink": "リンクを開く",
+    "distanceKm": "{{km}}km",
+    "phone": "電話",
+    "address": "住所",
+    "inquire": "問い合わせる"
+  },
+  "nav": {
+    "dashboard": "マイポータル",
+    "herd": "ペット比較 (Herd)",
+    "hospitals": "病院",
+    "shops": "ショップ",
+    "care": "飼育ガイド",
+    "communities": "コミュニティ",
+    "adoption": "里親・分譲",
+    "funeral": "葬儀・追悼",
+    "resources": "外部リソース",
+    "diary": "飼育日誌",
+    "species": "種カタログ",
+    "match": "おすすめ診断",
+    "consult": "獣医相談",
+    "forum": "コミュニティフォーラム",
+    "partners": "出店申請",
+    "admin": "管理者",
+    "sos": "緊急SOS",
+    "health": "健康記録",
+    "habitat": "環境モニター",
+    "budget": "費用トラッカー",
+    "supplies": "餌・在庫",
+    "partnerDashboard": "パートナーダッシュボード",
+    "registry": "保管申告ガイド",
+    "compare": "種比較",
+    "petid": "ペットIDカード",
+    "backup": "データバックアップ",
+    "routine": "日課チェック",
+    "calendar": "統合スケジュール",
+    "insurance": "ペット保険・予備費",
+    "setup": "セットアップ見積",
+    "morphs": "モルフカタログ",
+    "genetics": "モルフ遺伝",
+    "molt": "脱皮・換羽",
+    "vivarium": "ビバリウム設計",
+    "showcase": "フォトコンテスト",
+    "qna": "飼育Q&A",
+    "meetups": "キーパー交流会",
+    "breeding": "繁殖・孵化",
+    "meds": "投薬・隔離",
+    "feeding": "給餌スケジュール",
+    "market": "分譲マーケット",
+    "passport": "ペットパスポート",
+    "assistant": "ケアアシスタント",
+    "food": "餌ガイド",
+    "events": "展示会スケジュール",
+    "contact": "問い合わせ",
+    "onboarding": "はじめての選択",
+    "short": {
+      "dashboard": "ポータル",
+      "match": "診断",
+      "consult": "相談",
+      "forum": "フォーラム",
+      "diary": "日誌",
+      "onboarding": "スタート",
+      "species": "種",
+      "hospitals": "病院"
+    }
+  },
+  "onboarding": {
+    "title": "はじめてのペットを選ぶ",
+    "description": "飼いたい希少動物を選べば、病院・餌・飼育・コミュニティ・葬儀まで一度にセットアップされます。",
+    "steps": {
+      "category": "カテゴリ選択",
+      "species": "種の選択",
+      "location": "位置設定",
+      "review": "確認"
+    },
+    "stepIndicator": "{{current}}/{{total}} ステップ",
+    "categoryTitle": "どんな動物に惹かれますか?",
+    "categoryHint": "カテゴリごとに、診療できる病院・専門ショップ・コミュニティが別々にまとまります。",
+    "speciesTitle": "どの種が気になりますか?",
+    "speciesHint": "選んだ種を基準に、最初の画面が自動でキュレーションされます。",
+    "locationTitle": "位置を教えてください",
+    "locationHint": "おすすめエリアから選ぶか、現在地を使ってもかまいません。",
+    "petNameLabel": "ペットの名前 (任意)",
+    "petNamePlaceholder": "例: レオ",
+    "registryNoticeEyebrow": "注意 · 野生生物法",
+    "registryNoticeTitle": "選んだカテゴリは保管申告の対象です",
+    "registryNoticeBody": "2025年12月14日施行の野生生物保護法により、哺乳類・鳥類・爬虫類・両生類は保管・譲渡・譲受・死亡の際に環境部への申告が必要です。まずはガイドを確認してみましょう。",
+    "registryNoticeCta": "保管申告ガイドを開く",
+    "useCurrent": "現在地を使う",
+    "currentDetecting": "位置を確認中...",
+    "currentFailed": "位置の確認に失敗しました。おすすめエリアから選んでください。",
+    "presetLabel": "おすすめエリア",
+    "manualLabel": "直接入力",
+    "manualLat": "緯度",
+    "manualLng": "経度",
+    "reviewTitle": "選択内容を確認してください",
+    "reviewCategory": "カテゴリ",
+    "reviewSpecies": "選んだ種",
+    "reviewLocation": "位置",
+    "finish": "ポータルを開く",
+    "restart": "最初からやり直す",
+    "savedAt": "保存時刻",
+    "errors": {
+      "selectCategory": "カテゴリを選択してください。",
+      "selectSpecies": "種を選択してください。",
+      "invalidCoord": "座標の形式が正しくありません。"
+    }
+  },
+  "categories": {
+    "reptile": "爬虫類",
+    "arthropod": "節足動物",
+    "bird": "希少鳥類",
+    "amphibian": "両生類",
+    "mammal": "小型哺乳類",
+    "reptileDesc": "トカゲ・ヘビ・カメなどの変温動物",
+    "arthropodDesc": "タランチュラ・サソリ・昆虫など",
+    "birdDesc": "オウム・猛禽・小型の希少鳥類",
+    "amphibianDesc": "カエル・サンショウウオなど",
+    "mammalDesc": "ハムスターの先へ、フクロモモンガ・フェレットなど"
+  },
+  "difficulty": {
+    "beginner": "入門",
+    "intermediate": "中級",
+    "advanced": "上級"
+  },
+  "lifecycle": {
+    "title": "ペットのライフサイクル",
+    "subtitle": "お迎えから最後のお別れまで、段階ごとにご案内します",
+    "stages": {
+      "pick": "選択",
+      "adopt": "里親・分譲",
+      "raise": "飼育",
+      "vet": "医療",
+      "daily": "日常",
+      "senior": "シニア期",
+      "funeral": "葬儀・追悼"
+    },
+    "stageDesc": {
+      "pick": "オンボーディングで種と位置を確定します",
+      "adopt": "保護団体・ブリーダー・分譲カフェの外部リンク",
+      "raise": "飼育環境・餌・チェックポイント",
+      "vet": "位置ベースのエキゾチックアニマル病院",
+      "daily": "餌・用品の定期購入先",
+      "senior": "シニア期の栄養・運動・健康診断",
+      "funeral": "政府登録の葬祭業者と追悼サービス"
+    },
+    "openStage": "ステージを開く"
+  },
+  "dashboard": {
+    "title": "{{name}}さんのポータル",
+    "subtitle": "選んだ種を基準に、近い情報から表示します。",
+    "selectedSpecies": "選んだ種",
+    "speciesChange": "別の種に変える",
+    "nearHospitalsTitle": "近くのエキゾチックアニマル病院",
+    "nearShopsTitle": "近くの餌・用品ショップ",
+    "careGuideTitle": "今日の飼育のコツ",
+    "communitiesTitle": "情報を分かち合う",
+    "adoptionTitle": "里親・分譲ガイド",
+    "funeralTitle": "葬儀・追悼のご案内",
+    "externalTitle": "その他の外部リンク",
+    "viewAllHospitals": "病院をすべて見る",
+    "viewAllShops": "ショップをすべて見る",
+    "viewCareGuide": "飼育ガイドをすべて見る",
+    "viewCommunities": "コミュニティをすべて見る",
+    "viewAdoption": "里親情報をすべて見る",
+    "viewFuneral": "葬儀情報をすべて見る",
+    "emptyHospitals": "選んだカテゴリを診療する病院が見つかりませんでした。",
+    "emptyShops": "選んだカテゴリを扱うショップがまだありません。",
+    "guest": "ゲスト",
+    "locationNote": "位置基準: {{label}}",
+    "changeLocation": "位置を変える",
+    "locationPickerTitle": "クイック位置変更",
+    "diaryTitle": "最近の飼育日誌",
+    "diaryEmpty": "まだ記録された日誌がありません。/diary で最初の記録を残してみましょう。",
+    "viewDiary": "日誌をすべて見る",
+    "weeklyTitle": "今週のアクティビティ",
+    "weekly": {
+      "diary": "日誌の記録",
+      "photos": "新しい写真",
+      "routine": "日課の完了",
+      "weights": "体重の記録"
+    },
+    "notifyButton": "ブラウザ通知を許可",
+    "notifyEnabled": "これからD-3以内の予定が発生すると、ブラウザ通知を受け取ります。",
+    "notifyAlreadyOn": "すでに通知がオンになっています。",
+    "notifyDenied": "通知の権限が拒否されています。ブラウザの設定で許可してください。",
+    "notifyUnsupported": "このブラウザは Notification API に対応していません。",
+    "routineSummaryLabel": "今日の日課",
+    "routineOpen": "日課チェックを開く",
+    "galleryTitle": "最近の写真",
+    "galleryOpen": "ギャラリーを開く",
+    "upcomingTitle": "まもなくの予定",
+    "openCalendar": "統合スケジュールを開く",
+    "urgentToast": "D-3以内の予定が{{count}}件あります。",
+    "upcoming": {
+      "daysLeft": "D-{{days}}",
+      "now": "今日",
+      "filings": "保管申告 未完了 {{count}}件"
+    },
+    "conditionTitle": "今日のコンディション",
+    "conditionSubtitle": "健康・環境・支出・在庫をひと目で。カードを押すと詳細に移動します。",
+    "condition": {
+      "health": {
+        "label": "体重・接種",
+        "empty": "体重を記録すると変化を追跡します",
+        "nextDue": "{{label}} D-{{days}}",
+        "noUpcoming": "30日以内に予定された接種なし"
+      },
+      "habitat": {
+        "label": "飼育環境",
+        "empty": "温度・湿度を記録してみましょう",
+        "breach": "推奨範囲からの逸脱 {{count}}件",
+        "inRange": "推奨範囲内",
+        "noRange": "種カテゴリの推奨範囲なし"
+      },
+      "budget": {
+        "label": "今月の支出",
+        "empty": "支出を記録すると推奨予算と比較します",
+        "under": "推奨比 {{percent}}%",
+        "on-track": "推奨比 {{percent}}%",
+        "over": "推奨比 {{percent}}% 超過",
+        "noRecommended": "種の推奨予算が未設定"
+      },
+      "supplies": {
+        "label": "餌・在庫",
+        "empty": "在庫を追加してみましょう",
+        "ok": "残り日数 約{{days}}日",
+        "warning": "残り日数 約{{days}}日",
+        "critical": "在庫が危険 (約{{days}}日)",
+        "depleted": "在庫切れ"
+      }
+    }
+  },
+  "hospitals": {
+    "title": "エキゾチックアニマル病院",
+    "subtitle": "位置基準の距離順に並びます。",
+    "filterByCategory": "カテゴリで絞り込み",
+    "filterAll": "すべて",
+    "emergencyBadge": "24時間救急",
+    "supports": "診療可能",
+    "hours": "診療時間",
+    "noResult": "条件に合う病院が見つかりませんでした。",
+    "mapPlaceholder": "地図プレビュー (カカオマップのキーを登録すると実際の地図が表示されます)",
+    "sortLabel": "並び替え",
+    "sortDistance": "距離が近い順",
+    "sortName": "名前順",
+    "sortEmergency": "救急診療を優先"
+  },
+  "shops": {
+    "title": "餌・用品ショップ",
+    "subtitle": "実店舗とオンラインショップをまとめてご案内します。",
+    "kindFood": "餌",
+    "kindEquipment": "用品",
+    "kindBoth": "餌・用品",
+    "online": "オンライン",
+    "offline": "実店舗",
+    "noResult": "条件に合うショップが見つかりませんでした。",
+    "visitSite": "サイトを見る",
+    "sortLabel": "並び替え",
+    "sortDistance": "距離が近い順",
+    "sortName": "名前順",
+    "sortOnline": "オンラインを優先"
+  },
+  "care": {
+    "title": "飼育ガイド",
+    "subtitle": "選んだ種の環境・餌・健康チェックポイント",
+    "sectionsTitle": "飼育チェックリスト",
+    "referencesTitle": "参考資料",
+    "notFound": "選んだ種のガイドが見つかりませんでした。",
+    "speciesSummary": "種の概要",
+    "environment": "飼育環境",
+    "diet": "餌ガイド",
+    "lifespan": "平均寿命",
+    "lifespanYears": "{{min}}〜{{max}}年",
+    "tagsTitle": "キーワード",
+    "spaceNeed": "必要なスペース",
+    "spaceSmall": "小型 (机の上)",
+    "spaceMedium": "中型 (1段の本棚)",
+    "spaceLarge": "大型 (部屋の一部)",
+    "handlingTolerance": "ハンドリング",
+    "handlingLow": "鑑賞中心",
+    "handlingMedium": "ときどきハンドリング",
+    "handlingHigh": "頻繁にふれあい",
+    "activityPattern": "活動時間",
+    "activityNocturnal": "夜行性",
+    "activityDiurnal": "昼行性",
+    "activityMixed": "混合",
+    "monthlyBudget": "月平均費用",
+    "beginnerTip": "初心者のコツ",
+    "commonProblem": "よくある問題"
+  },
+  "communities": {
+    "title": "コミュニティ",
+    "subtitle": "選んだカテゴリに合った外部コミュニティ・カフェ・YouTubeのまとめ",
+    "noResult": "選んだカテゴリに合うコミュニティがまだ登録されていません。",
+    "kindForum": "フォーラム",
+    "kindCafe": "カフェ",
+    "kindDiscord": "Discord",
+    "kindYoutube": "YouTube",
+    "suggestTitle": "コミュニティを提案する",
+    "suggestDesc": "追加してほしいコミュニティがあれば、問い合わせから提案してください。",
+    "suggestCta": "提案を送る"
+  },
+  "adoption": {
+    "title": "里親・分譲",
+    "subtitle": "保護団体・ブリーダー・分譲カフェなど信頼できる外部チャネル",
+    "kindRescue": "保護・里親",
+    "kindBreeder": "ブリーダー",
+    "kindCafe": "カフェ・コミュニティ",
+    "kindMarketplace": "分譲マーケット",
+    "noResult": "選んだカテゴリに合う里親チャネルがまだ登録されていません。",
+    "inquireCta": "里親に関する問い合わせ"
+  },
+  "resources": {
+    "title": "外部リソースまとめ",
+    "subtitle": "政府・民間・コミュニティで検証された韓国の外部リンク32件 (希少種を含む)",
+    "filterByLinkCategory": "カテゴリで絞り込み",
+    "filterByCategory": "動物カテゴリで絞り込み",
+    "filterAll": "すべて",
+    "searchPlaceholder": "名前・説明・地域で検索",
+    "noResult": "条件に合う外部リソースがありません。",
+    "categories": {
+      "adoption": "里親・分譲",
+      "shopping": "ショッピング",
+      "medical": "医療",
+      "funeral": "葬儀",
+      "community": "コミュニティ",
+      "reference": "参考資料"
+    },
+    "speciesCategories": {
+      "general": "全体共通",
+      "reptile": "爬虫類",
+      "arthropod": "節足動物",
+      "bird": "鳥類",
+      "amphibian": "両生類",
+      "mammal": "哺乳類"
+    },
+    "regionLabel": "地域",
+    "openLink": "アクセスする"
+  },
+  "funeral": {
+    "title": "葬儀・追悼",
+    "subtitle": "政府登録の動物葬祭業者と追悼サービス",
+    "kindCremation": "火葬場",
+    "kindMemorial": "追悼・メモリアル",
+    "kindPickup": "お迎えサービス",
+    "kindDirectory": "ディレクトリ",
+    "certified": "政府登録",
+    "uncertified": "未登録 注意",
+    "noResult": "選んだカテゴリに合う葬祭業者がまだ登録されていません。",
+    "inquireCta": "葬儀に関する問い合わせ"
+  },
+  "partnerDashboard": {
+    "title": "パートナーダッシュボード",
+    "subtitle": "Pettographyに出店したショップ・動物病院・おやつショップの運営者が、自店の情報・状態・掲載カテゴリを管理する場所です。",
+    "noApproved": "まだ承認されたパートナーがありません。/partners で申請後、管理者の承認をお待ちください。",
+    "myStoresTitle": "マイ店舗 ({{count}})",
+    "pendingHint": "審査待ちが{{count}}件あります。",
+    "kindTotalsTitle": "カテゴリ別の出店状況",
+    "regionTotalsTitle": "地域別の出店状況",
+    "certifiedBadge": "政府認証",
+    "openOnSite": "サイトを開く",
+    "applyMore": "追加で出店申請",
+    "openAdmin": "管理者審査",
+    "statusLine": {
+      "pending": "審査待ち",
+      "approved": "承認完了、掲載中",
+      "rejected": "却下 — 理由を確認して再申請"
+    }
+  },
+  "supplies": {
+    "title": "餌・在庫トラッカー",
+    "subtitle": "生き餌は1〜2週間が保管の限界。週あたりの消費量から残り日数を自動計算し、なくなる前にお知らせします。",
+    "addTitle": "在庫項目を追加",
+    "name": "名前",
+    "namePlaceholder": "例) コオロギM、デュビアローチ、CGD",
+    "kind": "種類",
+    "unit": "単位",
+    "unitPlaceholder": "例) 匹、g、缶",
+    "lastRestockedAt": "最終入荷日",
+    "lastQuantity": "入荷数量",
+    "weeklyConsumption": "週あたり消費量",
+    "preferredVendor": "行きつけの仕入れ先 (任意)",
+    "preferredVendorPlaceholder": "例) 行きつけの爬虫類ショップ、昆虫ハーモニー",
+    "save": "在庫を追加",
+    "empty": "在庫項目がありません。生き餌から登録してみましょう。",
+    "remaining": "残り数量",
+    "daysLeft": "{{count}}日分",
+    "depleted": "在庫切れ",
+    "restockShort": "補充",
+    "remove": "削除",
+    "lastRestocked": "最近の入荷",
+    "weekly": "週{{count}}消費",
+    "addRestock": "補充量",
+    "kinds": {
+      "live-food": "生き餌",
+      "dry-food": "ドライフード",
+      "supplement": "サプリ",
+      "substrate": "床材",
+      "equipment": "用品"
+    },
+    "level": {
+      "ok": "十分",
+      "warning": "注意",
+      "critical": "緊急",
+      "depleted": "切れ"
+    },
+    "errors": {
+      "nameRequired": "名前を入力してください。",
+      "nameMax": "名前は60文字以内です。",
+      "unitRequired": "単位を入力してください。",
+      "unitMax": "単位は20文字以内です。",
+      "dateRequired": "入荷日を入力してください。",
+      "qtyNumber": "数量は数値である必要があります。",
+      "qtyPositive": "数量は0より大きい値である必要があります。",
+      "consumptionNumber": "週あたり消費量は数値である必要があります。",
+      "consumptionPositive": "週あたり消費量は0より大きい値である必要があります。",
+      "vendorMax": "仕入れ先は60文字以内です。"
+    }
+  },
+  "budget": {
+    "title": "費用トラッカー",
+    "subtitle": "今月の飼育支出をカテゴリ別にまとめ、種の推奨月予算と比較しましょう。",
+    "thisMonth": "{{month}} の支出",
+    "recommended": "推奨",
+    "remaining": "残り",
+    "over": "超過",
+    "status": {
+      "under": "予算に余裕",
+      "on-track": "適正範囲",
+      "over": "超過注意"
+    },
+    "categoriesTitle": "カテゴリ別の支出",
+    "addTitle": "支出を追加",
+    "date": "支出日",
+    "amount": "金額 (ウォン)",
+    "category": "カテゴリ",
+    "merchant": "店舗 (任意)",
+    "merchantPlaceholder": "例) 近所の爬虫類ショップ、Coupang、行きつけの動物病院",
+    "note": "メモ (任意)",
+    "save": "支出を記録",
+    "recentTitle": "最近の支出",
+    "empty": "今月の支出記録がありません。最初の支出を入力してみましょう。",
+    "noSpeciesBudget": "選んだ種に推奨予算データがありません。",
+    "remove": "削除",
+    "categories": {
+      "feeding": "餌",
+      "gear": "用品",
+      "medical": "医療",
+      "subscription": "定期購読",
+      "funeral": "葬儀",
+      "other": "その他"
+    },
+    "errors": {
+      "dateRequired": "支出日を入力してください。",
+      "amountNumber": "金額は数値である必要があります。",
+      "amountPositive": "金額は0より大きい値である必要があります。",
+      "merchantMax": "店舗名は80文字以内です。",
+      "noteMax": "メモは200文字以内です。"
+    }
+  },
+  "habitat": {
+    "title": "環境モニター",
+    "subtitle": "飼育ケージの温度・湿度・UVB使用時間を時系列で記録し、種カテゴリの推奨範囲と比較しましょう。",
+    "noCategoryTitle": "オンボーディングでまず種カテゴリを選択してください",
+    "noCategoryDesc": "カテゴリ情報があってはじめて、推奨環境範囲と比較できます。",
+    "quickAddTitle": "今の測定値を記録",
+    "measuredAt": "測定時刻",
+    "temperatureC": "温度 (℃)",
+    "humidityPct": "湿度 (%)",
+    "uvbHours": "UVB使用 (時間)",
+    "uvbNotRecommended": "このカテゴリはUVBが必須ではありません。",
+    "note": "メモ (任意)",
+    "save": "記録を保存",
+    "tempTrendTitle": "温度の推移",
+    "humidityTrendTitle": "湿度の推移",
+    "tempChartLabel": "温度の時系列",
+    "humidityChartLabel": "湿度の時系列",
+    "noTempData": "温度の記録がありません。",
+    "noHumidityData": "湿度の記録がありません。",
+    "recommendedRange": "推奨範囲",
+    "currentValue": "最新の値",
+    "avgValue": "平均",
+    "rangeValue": "最低 / 最高",
+    "breach": {
+      "tempLow": "温度が推奨最低({{threshold}}℃)より{{diff}}℃低いです",
+      "tempHigh": "温度が推奨最高({{threshold}}℃)より{{diff}}℃高いです",
+      "humidityLow": "湿度が推奨最低({{threshold}}%)より{{diff}}%低いです",
+      "humidityHigh": "湿度が推奨最高({{threshold}}%)より{{diff}}%高いです"
+    },
+    "recentTitle": "最近の記録",
+    "remove": "削除",
+    "empty": "環境の記録がまだありません。最初の値を入力してみましょう。",
+    "errors": {
+      "dateRequired": "測定時刻を入力してください。",
+      "tempNumber": "温度は数値である必要があります。",
+      "tempRange": "温度は-10〜60℃の範囲で入力してください。",
+      "humidityNumber": "湿度は数値である必要があります。",
+      "humidityRange": "湿度は0〜100%の範囲で入力してください。",
+      "uvbNumber": "UVB時間は数値である必要があります。",
+      "uvbRange": "UVB時間は0〜24の範囲で入力してください。"
+    }
+  },
+  "health": {
+    "title": "健康記録",
+    "subtitle": "体重・接種・薬・定期健診を定型データで記録し、次の予定と30日間の変化をひと目で。",
+    "weightTitle": "体重の推移",
+    "weightChartLabel": "体重の時系列グラフ",
+    "weightEmpty": "まだ体重の記録がありません。最初の測定値を入力してください。",
+    "weightLatest": "最新の体重",
+    "weightDelta30": "30日前との比較",
+    "weightRange": "最低 / 最高",
+    "weightCount": "記録合計",
+    "addWeightTitle": "体重を追加",
+    "weightDate": "測定日",
+    "weightGrams": "体重 (g)",
+    "weightNote": "メモ (任意)",
+    "addWeight": "体重を記録",
+    "vaccinationTitle": "接種・投薬・健診の記録",
+    "vaccinationEmpty": "接種・薬の記録がありません。最初の項目を追加してみましょう。",
+    "addVaccinationTitle": "記録を追加",
+    "vKind": "種類",
+    "vName": "名前",
+    "vNamePlaceholder": "例) インフルエンザ、駆虫薬、定期健診",
+    "vDate": "実施日",
+    "vNextDue": "次回予定 (任意)",
+    "vClinic": "病院 (任意)",
+    "vNote": "メモ (任意)",
+    "addVaccination": "記録を追加",
+    "remove": "削除",
+    "upcomingTitle": "予定された日程 (60日以内)",
+    "upcomingEmpty": "予定された日程がありません。",
+    "daysLeft": "残り{{count}}日",
+    "overdue": "{{count}}日経過",
+    "kinds": {
+      "vaccine": "接種",
+      "medication": "投薬",
+      "checkup": "定期健診",
+      "parasite": "駆虫"
+    },
+    "errors": {
+      "dateRequired": "日付を入力してください。",
+      "weightNumber": "体重は数値である必要があります。",
+      "weightPositive": "体重は0より大きい値である必要があります。",
+      "nameRequired": "名前を入力してください。",
+      "nameMax": "名前は80文字以内です。",
+      "clinicMax": "病院名は80文字以内です。",
+      "noteMax": "メモは200文字以内です。"
+    }
+  },
+  "sos": {
+    "title": "緊急SOS",
+    "subtitle": "チェックリストで1分以内に危険度を判断し、最寄りの24時間救急病院へすぐ電話しましょう。",
+    "noCategoryTitle": "オンボーディングでまず種カテゴリを選択してください",
+    "noCategoryDesc": "カテゴリ情報があってはじめて、種別の緊急チェックリストを表示できます。",
+    "startOnboarding": "はじめての選択を開く",
+    "callNow": "今すぐ電話",
+    "openMap": "地図を開く",
+    "nearbyTitle": "近くの24時間救急病院",
+    "noEmergency": "あなたのカテゴリを診療できる24時間救急病院が登録されていません。一般病院をご案内します。",
+    "checklistTitle": "緊急チェックリスト",
+    "hotlineTitle": "政府・救助団体ホットライン",
+    "severity": {
+      "critical": "危急",
+      "high": "至急",
+      "watch": "観察"
+    },
+    "disclaimer": "このページは一次トリアージ用です。迷ったら受診が正解。"
+  },
+  "consult": {
+    "title": "獣医リアルタイム相談",
+    "subtitle": "エキゾチックアニマル専門の獣医とチャットで一次相談。現在はデモで、返信は自動生成メッセージです。",
+    "vetListLabel": "獣医一覧",
+    "pickVet": "左から獣医を選択してください",
+    "firstMessageHint": "症状・環境(温度・湿度)・写真の説明を一緒に送ると、返信が早くなります。",
+    "placeholder": "メッセージを入力...",
+    "send": "送信",
+    "experience": "経験{{years}}年",
+    "replyToast": "獣医からの返信が届きました",
+    "status": {
+      "online": "オンライン",
+      "busy": "相談中",
+      "offline": "オフライン"
+    }
+  },
+  "forum": {
+    "title": "種別コミュニティフォーラム",
+    "subtitle": "同じ動物を飼う人どうしで情報を分かち合いましょう。すべての投稿はこのブラウザに保存されます。",
+    "filterLabel": "カテゴリで絞り込み",
+    "filterAll": "すべて",
+    "newPostTitle": "新規投稿",
+    "category": "カテゴリ",
+    "author": "投稿者",
+    "authorPlaceholder": "ニックネーム",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "どんな話を分かち合いたいですか?",
+    "bodyLabel": "内容",
+    "bodyPlaceholder": "飼育環境・症状・写真の説明など、詳しく書くほど良い答えがつきます。",
+    "replyLabel": "返信内容",
+    "replyPlaceholder": "役に立つ情報を残してください。",
+    "publish": "投稿",
+    "reply": "返信する",
+    "empty": "このカテゴリにはまだ投稿がありません。最初の投稿を書いてみましょう!",
+    "expand": "返信を見る",
+    "collapse": "閉じる",
+    "repliesCount": "返信 {{count}}",
+    "postedToast": "投稿が公開されました",
+    "replyToast": "返信が登録されました",
+    "searchLabel": "検索",
+    "searchPlaceholder": "タイトル・本文から検索",
+    "sortLabel": "並び替え",
+    "sort": {
+      "hot": "人気 (ホット)",
+      "recent": "新着順",
+      "popular": "いいね順",
+      "views": "閲覧順"
+    },
+    "like": "いいね",
+    "unlike": "いいねを取り消す",
+    "noResult": "検索結果がありません",
+    "noResultHint": "別のキーワードで試すか、カテゴリを変えてみましょう。",
+    "replyToThis": "この返信に返信",
+    "cancelReply": "キャンセル",
+    "delete": "削除",
+    "report": "通報",
+    "reported": "通報済み",
+    "deletedToast": "削除しました",
+    "reportedToast": "通報を受け付けました",
+    "reportedAlready": "すでに通報した投稿です",
+    "hiddenNotice": "通報が累積し、他のユーザーには非表示になっています。本人だけに見える状態です。",
+    "newReplies": "新しい返信 {{count}}",
+    "errors": {
+      "titleRequired": "タイトルを入力してください。",
+      "titleMax": "タイトルは120文字以内で入力してください。",
+      "authorRequired": "ニックネームを入力してください。",
+      "authorMax": "ニックネームは40文字以内です。",
+      "bodyRequired": "内容を入力してください。",
+      "bodyMax": "内容は2000文字以内で入力してください。",
+      "replyRequired": "返信内容を入力してください。",
+      "replyMax": "返信は800文字以内です。"
+    }
+  },
+  "partners": {
+    "title": "Pettography パートナー出店",
+    "subtitle": "ショップ・動物病院・おやつショップを運営中ですか? 申請書を提出すると、管理者が審査のうえ出店の可否をご案内します。",
+    "kinds": {
+      "shop": "用品ショップ",
+      "hospital": "エキゾチックアニマル病院",
+      "treat-shop": "おやつ・餌ショップ"
+    },
+    "formTitle": "出店申請書",
+    "kindLabel": "種類",
+    "nameLabel": "店舗名",
+    "namePlaceholder": "例) ○○エキゾチックアニマル医療センター",
+    "contactLabel": "連絡先",
+    "contactPlaceholder": "電話番号またはメールアドレス",
+    "regionLabel": "地域",
+    "regionPlaceholder": "例) ソウル○○区",
+    "urlLabel": "ウェブサイト (任意)",
+    "descriptionLabel": "紹介",
+    "descriptionPlaceholder": "専門分野・営業時間・取り扱う動物カテゴリなどを書いてください。(最低10文字)",
+    "submit": "申請書を提出",
+    "submittedToast": "出店申請を受け付けました",
+    "recentTitle": "最近の申請状況",
+    "status": {
+      "pending": "審査中",
+      "approved": "承認",
+      "rejected": "却下"
+    },
+    "errors": {
+      "nameRequired": "店舗名を入力してください。",
+      "contactRequired": "連絡先を入力してください。",
+      "regionRequired": "地域を入力してください。",
+      "descriptionMin": "紹介は最低10文字以上入力してください。",
+      "urlInvalid": "URLは http:// または https:// で始まる必要があります。"
+    }
+  },
+  "admin": {
+    "title": "管理者ダッシュボード",
+    "subtitle": "運営統計・出店申請の審査・掲示板のモデレーション",
+    "gateTitle": "管理者モードを有効にしてください",
+    "gateDesc": "デモ用のトグルです。有効にすると、統計・出店申請・モデレーションツールが表示されます。",
+    "enable": "管理者モードをオン",
+    "disable": "管理者モードをオフ",
+    "statsTitle": "運営統計",
+    "stats": {
+      "onboarding": "オンボーディング完了",
+      "forumPosts": "フォーラム投稿",
+      "forumReplies": "フォーラム返信",
+      "diaryEntries": "飼育日誌",
+      "consultMessages": "相談メッセージ",
+      "applicationsPending": "審査待ちの申請"
+    },
+    "applicationsTitle": "出店申請の管理",
+    "moderationTitle": "フォーラムのモデレーション",
+    "approve": "承認",
+    "reject": "却下",
+    "delete": "削除"
+  },
+  "match": {
+    "title": "自分に合うペットを探す",
+    "subtitle": "{{count}}個の質問に答えると、飼育難易度・スペース・時間・予算をもとに最も合う種をおすすめします。",
+    "compareTop": "この3種をひと目で比較",
+    "progress": "{{current}}/{{total}}",
+    "back": "前へ",
+    "next": "次へ",
+    "submit": "結果を見る",
+    "restart": "もう一度やる",
+    "resultTitle": "おすすめ結果",
+    "matchScore": "適合度 {{score}}点",
+    "openSpecies": "この種を詳しく見る",
+    "questions": {
+      "experience": {
+        "title": "飼育経験",
+        "hint": "これまで飼った動物の難易度はどのくらいでしたか?",
+        "options": {
+          "novice": "まったくの初めて、飼ったことがない",
+          "beginner": "犬・猫の飼育経験のみ",
+          "intermediate": "ハムスター・ハリネズミなど小型動物の経験あり",
+          "advanced": "爬虫類・オウムなどエキゾチックアニマルの飼育経験あり"
+        }
+      },
+      "difficultyAppetite": {
+        "title": "飼育難易度の好み",
+        "hint": "経験とは別に、挑戦したい難易度は?",
+        "options": {
+          "easy-only": "入門レベルだけ見せて",
+          "moderate": "入門〜中級までOK",
+          "any-challenge": "難しい種にも挑戦したい"
+        }
+      },
+      "noiseSensitivity": {
+        "title": "騒音の許容度",
+        "hint": "飼育環境で騒音にどのくらい敏感ですか?",
+        "options": {
+          "quiet-required": "静かでないと困る (家で仕事・勉強)",
+          "tolerant": "ある程度の音はOK",
+          "no-preference": "気にしない"
+        }
+      },
+      "lifespanCommitment": {
+        "title": "長寿への責任",
+        "hint": "一緒に過ごせる期間をどのくらい見込みますか?",
+        "options": {
+          "short": "5〜10年くらい",
+          "medium": "10〜20年くらい",
+          "long": "20年以上でもよい"
+        }
+      },
+      "space": {
+        "title": "飼育スペース",
+        "hint": "飼育ケージを置けるスペースの広さは?",
+        "options": {
+          "small": "机の上、30cmくらい",
+          "medium": "1人用の本棚1段くらい",
+          "large": "部屋の一角を丸ごと使える"
+        }
+      },
+      "handling": {
+        "title": "ハンドリング欲求",
+        "hint": "直接ふれあう時間がどのくらい必要ですか?",
+        "options": {
+          "low": "見るだけで満足",
+          "medium": "ときどき触る程度",
+          "high": "よく抱いてふれあいたい"
+        }
+      },
+      "activity": {
+        "title": "活動パターン",
+        "hint": "自分の生活パターンに合う活動時間は?",
+        "options": {
+          "nocturnal": "夜に活動する動物でOK",
+          "diurnal": "昼に活動する動物がよい",
+          "mixed": "気にしない",
+          "no-preference": "気にしない"
+        }
+      },
+      "budget": {
+        "title": "月の予算",
+        "hint": "餌・用品・定期健診を含む月あたりの支出の上限は?",
+        "options": {
+          "low": "2.5万ウォン以内",
+          "medium": "5万ウォン以内",
+          "high": "5万ウォン以上OK"
+        }
+      }
+    }
+  },
+  "diary": {
+    "title": "飼育日誌",
+    "subtitle": "うちの子の食事・体重・脱皮・診療の記録を日誌に残しましょう。すべてのデータはこのブラウザにだけ保存されます。",
+    "newEntry": "新規記録",
+    "addEntry": "記録を追加",
+    "category": "カテゴリ",
+    "occurredAt": "発生日",
+    "body": "メモ",
+    "weight": "体重 (g、任意)",
+    "weightOptional": "体重は weight カテゴリでのみ入力します。",
+    "imageUrl": "写真URL (任意)",
+    "imageUrlHelper": "外部画像のURLのみ保存します (Instagram・カフェ・DCなど)。ホスティングはしません。",
+    "emptyTitle": "まだ記録がありません",
+    "emptyDesc": "最初の記録を残すと、ライフサイクル後半のシニア期管理でも活用されます。",
+    "stats": {
+      "title": "直近30日のサマリー",
+      "total": "全記録",
+      "recent30": "直近30日",
+      "latestWeight": "最新の体重",
+      "noWeight": "体重の記録なし"
+    },
+    "categories": {
+      "feeding": "食事",
+      "weight": "体重",
+      "shed": "脱皮・換羽",
+      "vet": "診療",
+      "behavior": "行動",
+      "note": "メモ"
+    },
+    "errors": {
+      "dateRequired": "日付を選択してください。",
+      "bodyRequired": "メモを入力してください。",
+      "bodyMax": "メモは500文字以内で入力してください。",
+      "weightNumber": "体重は数値である必要があります。",
+      "weightPositive": "体重は0より大きい値である必要があります。",
+      "imageUrl": "正しい画像URLを入力してください。"
+    },
+    "showAllPets": "すべてのペットの記録を見る",
+    "remove": "削除",
+    "speciesUnknown": "(種選択前の記録)"
+  },
+  "species": {
+    "catalogTitle": "種カタログ",
+    "catalogSubtitle": "Pettographyがキュレーションした希少動物の種を一か所で。カテゴリ・難易度・キーワードで絞り込んでみましょう。",
+    "searchPlaceholder": "種名・学名・タグで検索",
+    "difficultyFilter": "難易度",
+    "categoryFilter": "カテゴリ",
+    "filterAll": "すべて",
+    "resultCount": "{{count}}種",
+    "noResult": "条件に合う種が見つかりませんでした。",
+    "openDetail": "詳しく見る",
+    "scientificName": "学名",
+    "lifespan": "寿命",
+    "difficulty": "難易度",
+    "category": "分類",
+    "selectThis": "この種で始める",
+    "relatedHospitalsTitle": "この種を診療できる近くの病院",
+    "relatedShopsTitle": "関連する餌・用品ショップ",
+    "relatedSpeciesTitle": "同じカテゴリの他の種",
+    "noRelatedHospitals": "このカテゴリを診療する登録病院がまだありません。",
+    "noRelatedShops": "このカテゴリを扱う登録ショップがまだありません。",
+    "noRelatedSpecies": "他の種が近日中に追加されます。",
+    "compareTickAdd": "{{name}}を比較に追加",
+    "compareTickRemove": "比較から外す",
+    "compareBarLabel": "比較カート",
+    "compareBarPicked": "{{count}}/{{max}}種を選択中",
+    "compareBarClear": "クリア",
+    "compareBarGo": "比較する",
+    "gallery": {
+      "title": "{{name}} の写真まとめ",
+      "subtitle": "Instagram・カフェ・DCギャラリーで見た写真のURLをまとめておくと、同じ種を飼う他のユーザーも参考にできます。自前のホスティングはせず、外部URLのみ記録します。",
+      "imageUrlLabel": "画像URL",
+      "sourceUrlLabel": "出典URL (任意)",
+      "captionLabel": "キャプション (任意)",
+      "captionPlaceholder": "例: うちのレオ、初脱皮の後",
+      "add": "写真を追加",
+      "empty": "まだ登録された写真がありません。最初の写真を追加してみましょう。",
+      "source": "出典",
+      "noSource": "出典不明",
+      "remove": "写真を削除",
+      "addedToast": "写真を追加しました"
+    }
+  },
+  "landing": {
+    "title": "はじめての選択から、最後のお別れまで。",
+    "description": "希少動物と過ごす7つの段階。一度の選択で、病院・餌・飼育・コミュニティ・葬儀までまとめてセットアップします。",
+    "primaryCta": "はじめての選択をスタート",
+    "secondaryCta": "サンプルを見てみる",
+    "featureSpeciesTitle": "種に合わせた選択",
+    "featureSpeciesDesc": "爬虫類・節足動物・希少鳥類など種単位のキュレーション",
+    "featureLocationTitle": "位置ベースのおすすめ",
+    "featureLocationDesc": "現在地を基準に近くのエキゾチックアニマル病院とショップをご案内",
+    "featureCareTitle": "飼育ガイド",
+    "featureCareDesc": "環境・餌・健康チェックポイントを一画面で確認",
+    "featureLifecycleTitle": "ライフサイクル全体",
+    "featureLifecycleDesc": "里親から葬儀まで、段階ごとに外部リンクと資料へ接続"
+  },
+  "notFound": {
+    "title": "ページが見つかりません",
+    "description": "リクエストされたページは存在しないか、移動されました。",
+    "goHome": "ホームへ移動"
+  },
+  "header": {
+    "primaryNav": "メインナビゲーション",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "more": "もっと見る",
+    "moreLabel": "追加メニュー"
+  },
+  "footer": {
+    "copyright": "© {{year}} Pettography. 位置データはデモ用のモックです。",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "contact": "問い合わせ",
+    "about": "紹介",
+    "faq": "よくある質問"
+  },
+  "faq": {
+    "title": "よくある質問",
+    "subtitle": "はじめての方からよく寄せられる10の質問。各回答の下に関連ページへのショートカットがあります。",
+    "linkMatch": "おすすめ診断をスタート",
+    "linkRegistry": "保管申告ガイド",
+    "linkInsurance": "ペット保険・予備費",
+    "linkMorphs": "モルフカタログ",
+    "linkSetup": "セットアップ見積",
+    "linkFood": "餌ガイド",
+    "linkSos": "緊急SOS",
+    "linkAbout": "紹介を見る",
+    "linkBackup": "データバックアップ",
+    "questions": {
+      "firstPet": {
+        "q": "どんな種を最初に飼えばよいですか?",
+        "a": "温度・湿度の自動化がシンプルで、ハンドリングしやすい種が入門におすすめです。レオパードゲッコー、クレステッドゲッコー、コーンスネーク、フトアゴヒゲトカゲが代表的です。おすすめ診断の8問で、自分の環境に合う3種を確認できます。"
+      },
+      "wildlifeLaw": {
+        "q": "野生生物法の保管申告は誰がするべきですか?",
+        "a": "2025年12月14日施行の野生生物保護法により、哺乳類・鳥類・爬虫類・両生類は保管・譲渡・譲受・死亡の際に環境部への申告が必要です。ホワイトリスト種の取引も別途、申告の対象です。"
+      },
+      "insurance": {
+        "q": "爬虫類・両生類でもペット保険に加入できますか?",
+        "a": "韓国国内のペット保険は犬・猫が中心で、爬虫類・両生類・節足動物はほぼ加入できません。Pettographyは、救急の診療費をあらかじめ積み立てる予備費の運用をおすすめします。"
+      },
+      "morphCost": {
+        "q": "モルフ(色彩変異)の価格はどのように決まりますか?",
+        "a": "遺伝的な希少性、コンボ(複数モルフの組み合わせ)、ヘテロ/ホモの別によって大きく変わります。韓国市場ではノーマル3〜8万ウォン、中間モルフ10〜30万ウォン、上級モルフ50万〜150万ウォンが一般的です。"
+      },
+      "enclosureSetup": {
+        "q": "初期セットアップ費用はどのくらいかかりますか?",
+        "a": "種カテゴリ・グレードによりますが、爬虫類の入門セットアップは約20〜40万ウォン、上級セットアップは60〜100万ウォン程度です。セットアップ見積ページで、カテゴリ別に部品単位の見積を確認できます。"
+      },
+      "feeding": {
+        "q": "餌はどこで買い、どう保管しますか?",
+        "a": "フタホシ・ヨーロッパイエコオロギ、デュビアローチ、ミルワーム、ジャイアントミルワーム、ピンクマウス、CGDなど種によって異なります。韓国の通販(The Zoo、ニューロンジュラ紀、ミミネアクアなど)で直接購入し、生き餌は通気ケースに3〜5日で消費できるよう少量で注文しましょう。"
+      },
+      "emergency": {
+        "q": "緊急時にはどう対処しますか?",
+        "a": "拒食・脱皮不全・外傷・高温/低温暴露など、種別に緊急のサインが異なります。/sos ページでカテゴリ別の1分チェックリストで危険度を判断し、最寄りの24時間エキゾチックアニマル病院へワンタップで電話しましょう。"
+      },
+      "multiPet": {
+        "q": "1人のユーザーが複数匹を管理できますか?",
+        "a": "現在は単一ペットの前提で設計されています。マルチペット対応は今後の作業として計画中で、それまでは /backup でペットごとのデータを分けてバックアップしておく方法をおすすめします。"
+      },
+      "dataLoss": {
+        "q": "ブラウザを消すとデータは消えますか?",
+        "a": "はい、すべての記録はこのブラウザの localStorage にだけ保存されます。/backup ページでJSONとして定期的にバックアップし、別の端末・ブラウザでインポートして復元してください。"
+      },
+      "mapKey": {
+        "q": "カカオマップが表示されません",
+        "a": "VITE_KAKAO_MAP_KEY 環境変数が登録されていないと、プレースホルダーのみ表示されます。セルフホスティング時は、カカオ開発者コンソールでJavaScriptキーを発行し、ビルド環境に追加してください。"
+      }
+    }
+  },
+  "about": {
+    "eyebrow": "Pettography 紹介",
+    "title": "希少ペット1匹の一生を、1つのアプリで",
+    "lead": "Pettographyは、爬虫類・節足動物・希少鳥類・両生類・小型哺乳類の飼育者が、はじめての選択から葬儀まで通るすべての段階を1つのアプリで扱えるようキュレーションします。",
+    "whyTitle": "なぜ作ったか",
+    "whyBody": "犬・猫が中心の韓国のペット市場では、希少ペットのユーザーは情報が分散しています。ペットフレンズ・フィットペット・ペットダックのようなサービスは犬・猫が中心で、環境部の保管申告のような法規は環境部のサイトに埋もれています。緊急時に真っ先に開くツールであり、日常で週2〜3回立ち寄る日誌・コミュニティのツールを一緒に作りたいと考えています。",
+    "principlesTitle": "5つの原則",
+    "principles": {
+      "location": {
+        "title": "位置と距離は一級の情報",
+        "body": "すべての位置データは距離表示とともに登場し、位置の変更はチップを一度クリックするだけで終わります。"
+      },
+      "emergency": {
+        "title": "緊急は優遇される",
+        "body": "24時間救急病院、餌・在庫の危急、環境の臨界超過の情報は、視覚的にも並び順にも優先権を持ちます。"
+      },
+      "sources": {
+        "title": "出典を隠さない",
+        "body": "モックデータ・外部リンク・政府登録の有無をすべて明示します。信頼はデータそのものではなく、データのメタ情報から生まれます。"
+      },
+      "diaryVsMedical": {
+        "title": "日誌は軽く、医療は深く",
+        "body": "日誌・ルーティンは素早い入力を重視し、医療・環境・予算は一画面に豊かなコンテキストで見せます。"
+      },
+      "beyondCards": {
+        "title": "カードの先へ",
+        "body": "同じ形のカードグリッドを繰り返すだけにはしません。情報の種類と意思決定の重みに応じて、異なるアフォーダンスを使います。"
+      }
+    },
+    "dataTitle": "データの取り扱い",
+    "data": {
+      "storage": "すべてのユーザー記録(日誌・健康・環境・予算・在庫・ギャラリー・ペットIDなど)は、このブラウザの localStorage にだけ保存されます。",
+      "backup": "/backup ページで全データをJSONとして書き出し、別の端末で復元できます。",
+      "species": "種情報は、国立生物資源館・Reptiles Magazine・MorphMarketなどの外部資料を要約・再構成したガイドです。",
+      "registry": "野生生物法の申告案内は、環境部 wildlife.go.kr・animal.go.kr の公式資料の要約であり、法的効力は公式資料が最終基準です。",
+      "external": "32件の外部リンクは、WebSearch + WebFetchで検証した韓国の実在サイトであり、提携関係はありません。"
+    },
+    "limitsTitle": "限界と今後の作業",
+    "limits": {
+      "map": "カカオマップSDK未連携 — VITE_KAKAO_MAP_KEY 登録時に有効化されます。",
+      "whiteList": "ホワイトリスト種の分類は推定値 — 環境部の公式発表に応じて更新が必要です。",
+      "multiPet": "マルチペット(1ユーザー複数ペット)未対応 — 現在は単一ペットの前提です。",
+      "insurance": "保険比較は犬・猫基準 — 希少ペットは予備費の積み立てを推奨します。"
+    },
+    "backHome": "ホームへ",
+    "contactCta": "問い合わせ"
+  },
+  "contact": {
+    "title": "問い合わせ",
+    "subtitle": "Pettography利用中につまずいた点、データの誤り、機能の提案、出店・提携の問い合わせ、すべて歓迎します。1〜3日以内に返信します。",
+    "formTitle": "問い合わせを送る",
+    "categoryLabel": "分類",
+    "nameLabel": "名前またはニックネーム",
+    "namePlaceholder": "例: チャムシルの飼い主",
+    "emailLabel": "メール (任意)",
+    "emailPlaceholder": "返信を受け取るアドレス。空欄の場合は匿名として扱います",
+    "subjectLabel": "タイトル",
+    "subjectPlaceholder": "例: ハムスターカテゴリ追加のお願い",
+    "bodyLabel": "内容",
+    "bodyPlaceholder": "状況・再現手順・期待する動作・参考リンクなど、自由に書いてください。",
+    "submit": "問い合わせを送る",
+    "submittedToast": "問い合わせを受け付けました",
+    "removedToast": "問い合わせを削除しました",
+    "recentTitle": "自分の問い合わせ履歴",
+    "empty": "まだ送った問い合わせがありません",
+    "emptyHint": "機能のリクエスト・バグ報告・一般的な質問、すべて歓迎します。",
+    "altTitle": "ほかのチャネルをまず試してみてください",
+    "altHint": "内容に合ったチャネルのほうが早いことがあります。一般的な質問ならフォーラム、医療は相談、出店はパートナー申請ページへ。",
+    "altForum": "他のキーパーと議論・質問",
+    "altConsult": "獣医と1対1のチャット相談",
+    "altPartners": "病院・ショップの出店申請",
+    "altSos": "緊急時の行動ガイドをすぐ開く",
+    "categories": {
+      "general": "一般的な問い合わせ",
+      "bug": "バグ報告",
+      "feature": "機能の提案",
+      "partnership": "提携・出店",
+      "safety": "安全・動物福祉",
+      "other": "その他"
+    },
+    "status": {
+      "received": "受付済み",
+      "in-review": "確認中",
+      "resolved": "対応完了"
+    },
+    "errors": {
+      "nameRequired": "名前を入力してください",
+      "nameMax": "名前は40文字以内で入力してください",
+      "emailInvalid": "メールアドレスの形式が正しくありません",
+      "subjectMin": "タイトルは2文字以上入力してください",
+      "subjectMax": "タイトルは120文字以内で入力してください",
+      "bodyMin": "内容は10文字以上入力してください",
+      "bodyMax": "内容は2000文字以内で入力してください"
+    }
+  },
+  "theme": {
+    "toLight": "ライトモードに切り替え",
+    "toDark": "ダークモードに切り替え",
+    "lightMode": "ライトモード",
+    "darkMode": "ダークモード"
+  },
+  "petSwitcher": {
+    "menuLabel": "ペットを選択",
+    "title": "マイペット ({{count}}匹)",
+    "addNew": "新しいペットを追加",
+    "remove": "ペットを削除"
+  },
+  "petBadge": {
+    "showAll": "すべてのペットの記録を見る"
+  },
+  "herd": {
+    "title": "マイペット比較",
+    "subtitle": "複数匹を飼っているなら、各ペットの体重・接種・環境・支出・在庫・日誌・ギャラリー・申告状況を一画面に広げて比較しましょう。",
+    "singlePetTitle": "比較できるペットが1匹だけです",
+    "singlePetDesc": "ヘッダーのペットスイッチャーで「新しいペットを追加」から2匹目を作ると、比較ビューが有効になります。",
+    "activeBadge": "現在アクティブ",
+    "switchAndOpen": "このペットに切り替え",
+    "openDashboard": "アクティブなペットのポータルを開く",
+    "metrics": {
+      "weight": "最新の体重",
+      "nextDue": "次回の接種",
+      "habitat": "最新の環境",
+      "monthSpend": "今月の支出",
+      "worstSupply": "在庫の危急",
+      "diary30": "30日の日誌",
+      "gallery": "写真",
+      "filings": "保管申告",
+      "noneUpcoming": "予定なし",
+      "noSupplies": "在庫なし",
+      "filingsDone": "すべて完了",
+      "filingsPending": "未完了 {{count}}件",
+      "breach": "臨界逸脱 {{count}}"
+    }
+  },
+  "events": {
+    "title": "2026 韓国ペット博覧会",
+    "subtitle": "ペットアンドモア、ケイペットフェア、マイペットフェア、レプタイルフェア、メガズーなど、韓国で開かれるペット博覧会を1つのタイムラインに。地域フィルターで絞り込んでみましょう。",
+    "filterLabel": "地域で絞り込み",
+    "allRegions": "すべての地域",
+    "noEvents": "フィルターに合うイベントがありません。",
+    "daysLeft": "D-{{days}}",
+    "daysAgo": "{{days}}日前",
+    "openSite": "公式サイトを開く",
+    "kind": {
+      "expo": "総合博覧会",
+      "reptile": "爬虫類・エキゾチック",
+      "community": "コミュニティ",
+      "adoption": "里親・保護"
+    },
+    "disclaimer": "日程・会場は主催者の発表に基づきます。予定の日程は変更されることがあるため、公式サイトで最終確認してください。"
+  },
+  "food": {
+    "title": "餌の単価・栄養ガイド",
+    "subtitle": "韓国の爬虫類・両生類・昆虫飼育者がよく使う餌10種の平均単価・栄養・注意事項を1つの表にまとめました。カテゴリフィルターで絞り込んでみましょう。",
+    "filterLabel": "カテゴリで絞り込み",
+    "allCategories": "すべて",
+    "cautionLabel": "注意",
+    "openShop": "仕入れ先を開く",
+    "disclaimer": "単価は2025〜26年の韓国平均の推定値です。栄養数値は飼料メーカー・研究資料の要約です。"
+  },
+  "genetics": {
+    "title": "モルフ遺伝計算機",
+    "subtitle": "親2個体のモルフ遺伝子型を選ぶと、パネットスクエアで子の表現型確率を計算します。各遺伝子座は互いに独立と仮定します。",
+    "speciesLabel": "種を選択",
+    "polygenicNote": "この種の人気モルフの多くはラインブリーディング・多因子遺伝で、単純なメンデル計算では表せません。ここでは単一遺伝子モルフのみをモデル化します。",
+    "sire": "父",
+    "dam": "母",
+    "normal": "ノーマル",
+    "expressed": "発現",
+    "homozygous": "ホモ(2コピー)",
+    "results": {
+      "title": "子の確率",
+      "distinct": "表現型 {{count}}種",
+      "hint": "上で親のモルフを1つ以上選ぶと、確率表が表示されます。",
+      "showGenotype": "遺伝子型の詳細を見る (het を含む)",
+      "hideGenotype": "遺伝子型の詳細を隠す",
+      "phenotype": "表現型",
+      "carriers": "保因者(het)",
+      "odds": "確率"
+    },
+    "save": {
+      "title": "ペアリングを保存",
+      "label": "ペアリング名",
+      "placeholder": "例: 2026 パステル × アルビノ計画",
+      "cta": "保存",
+      "empty": "保存したペアリングがまだありません。計画中の交配を保存すると、アクティブなペットごとにまとめて見られます。",
+      "saved": "ペアリングを保存しました。",
+      "needTrait": "まず親のモルフを1つ以上選んでください。",
+      "untitled": "名前のないペアリング"
+    },
+    "legend": {
+      "title": "遺伝用語クイックガイド",
+      "body": "het(ヘテロ)は劣性遺伝子を1つだけ持つ保因者で、見た目はノーマルですが子に受け継がせます。共優性(コドミナント)は1コピーが基本モルフ、2コピーが別の「スーパー」フォームとして発現します。優性は1コピーでも発現します。「66% het」表示は、ノーマルに見える子が保因者である確率です。"
+    }
+  },
+  "molt": {
+    "title": "脱皮 / 換羽トラッカー",
+    "subtitle": "脱皮の周期を記録すると、次の脱皮時期を予測します。",
+    "saved": "記録を保存しました。",
+    "showAllPets": "すべてのペットの記録を見る",
+    "term": {
+      "reptile": "脱皮",
+      "arthropod": "脱皮(脱皮殻ぬぎ)",
+      "amphibian": "脱皮",
+      "bird": "換羽",
+      "mammal": "換毛",
+      "default": "脱皮"
+    },
+    "kinds": {
+      "complete": "完全脱皮",
+      "incomplete": "不完全脱皮",
+      "stuck": "脱皮不全",
+      "in_progress": "脱皮進行中"
+    },
+    "confidence": {
+      "low": "信頼度 低",
+      "medium": "信頼度 中",
+      "high": "信頼度 高"
+    },
+    "prediction": {
+      "title": "次の{{term}}を予測",
+      "expected": "予想日 {{date}}",
+      "dayOfCycle": "周期 {{elapsed}}日 / {{total}}日",
+      "needMore": "{{term}}の記録が2回以上たまると、次の時期を予測します。下から最初の記録を残してみましょう。"
+    },
+    "metrics": {
+      "average": "平均周期",
+      "median": "中央値の周期",
+      "samples": "測定区間",
+      "days": "{{count}}日"
+    },
+    "overdue": {
+      "title": "{{term}}の予定日が過ぎました",
+      "generic": "予想周期を過ぎました。湿度とシェルターを点検し、脱皮不全の兆候が見えたら無理に剥がさず見守ってください。",
+      "arthropod": "予想周期を過ぎました。絶食と脱皮前の潜伏は正常な行動です。脱皮中の個体は絶対に触らず、湿度だけを保ってください。"
+    },
+    "tip": {
+      "arthropodTitle": "節足動物の脱皮ガイド",
+      "arthropodBody": "脱皮前は絶食し、シェルターに隠れたり仰向けの姿勢をとったりするのが正常です。脱皮中・直後の個体は外骨格が非常に弱いので、給餌を止めて絶対に触らないでください。"
+    },
+    "form": {
+      "title": "{{term}}の記録を追加",
+      "date": "日付",
+      "kind": "種類",
+      "notes": "メモ",
+      "notesPlaceholder": "色の変化、拒食、湿度など観察した内容を書いておきましょう。",
+      "submit": "記録を追加"
+    },
+    "trend": {
+      "title": "周期の変化推移",
+      "meta": "直近{{count}}区間",
+      "chartLabel": "脱皮間隔(日)の推移グラフ"
+    },
+    "history": {
+      "sincePrev": "前回の記録 +{{count}}日",
+      "remove": "削除",
+      "speciesUnknown": "(種選択前の記録)"
+    },
+    "empty": {
+      "title": "まだ{{term}}の記録がありません",
+      "desc": "最初の記録を残すと、周期を分析して次の時期を予測します。"
+    },
+    "errors": {
+      "dateRequired": "日付を入力してください。",
+      "notesMax": "メモは300文字以内で入力してください。"
+    }
+  },
+  "vivarium": {
+    "title": "バイオアクティブ・ビバリウム設計",
+    "subtitle": "基質レイヤー、クリーンアップクルー、植物を組み合わせて、自ら浄化する飼育ケージを設計しましょう。",
+    "intro": "バイオアクティブな飼育ケージは、排水層・土壌・落ち葉の上にワラジムシやトビムシのようなクリーンアップクルー、生きた植物を加えて、排泄物やカビを自ら分解する小さな生態系です。種に合った温湿度のグラデーションまで整えれば、掃除の負担が大きく減ります。",
+    "loadTemplate": "おすすめテンプレートを読み込む",
+    "templateApplied": "おすすめテンプレートを読み込みました。",
+    "loaded": "保存したビルドを読み込みました。",
+    "saveToast": "ビルドを保存しました。",
+    "savedBuild": "保存したビルド",
+    "roles": {
+      "drainage": "排水層",
+      "barrier": "分離ネット",
+      "substrate": "土壌層",
+      "topper": "表面トッパー"
+    },
+    "humidity": {
+      "arid": "乾燥",
+      "mid": "中湿度",
+      "humid": "高湿"
+    },
+    "light": {
+      "low": "弱い光",
+      "med": "中程度の光",
+      "high": "強い光"
+    },
+    "levels": {
+      "low": "低管理",
+      "medium": "普通",
+      "high": "高管理"
+    },
+    "composer": {
+      "title": "飼育ケージの構成",
+      "substrate": "基質レイヤー",
+      "substrateHint": "底面から表面まで (複数選択可)",
+      "crew": "クリーンアップクルー",
+      "crewHint": "ワラジムシ・トビムシなど (複数選択可)",
+      "plants": "植物",
+      "plantsHint": "光・湿度に合わせて選択"
+    },
+    "gradient": {
+      "hot": "ホットゾーン °C",
+      "cool": "クールゾーン °C",
+      "humidity": "湿度 %"
+    },
+    "diagram": {
+      "title": "断面ダイアグラム",
+      "empty": "基質レイヤーを選ぶと断面が描かれます。",
+      "caption": "下から上へ積み上がるレイヤーの順番です。",
+      "aria": "飼育ケージの基質レイヤー断面図"
+    },
+    "maintenance": {
+      "title": "管理難易度の予測",
+      "scoreLabel": "自己浄化スコア {{score}} / 100 — 高いほど手がかかりません。"
+    },
+    "factors": {
+      "hasCrew": "クリーンアップクルーを投入",
+      "hasPlants": "植物で栄養を循環",
+      "goodLitter": "落ち葉リターを確保",
+      "balancedCrew": "ワラジムシ+トビムシのバランス",
+      "noDrainage": "高湿なのに排水層がない",
+      "noCrew": "クリーンアップクルーがない",
+      "noPlants": "植物がない"
+    },
+    "checklist": {
+      "title": "バイオアクティブ準備チェックリスト",
+      "progress": "{{done}} / {{total}} 充足",
+      "hasDrainage": "排水層がある",
+      "hasSubstrate": "土壌層がある",
+      "hasCrew": "クリーンアップクルーがいる",
+      "hasPlants": "生きた植物がある",
+      "hasTopper": "表面トッパー(落ち葉・水苔)がある"
+    },
+    "save": {
+      "title": "ビルドを保存",
+      "name": "ビルド名",
+      "namePlaceholder": "例: クレステッド垂直多湿ビルド",
+      "notes": "メモ",
+      "action": "保存する"
+    },
+    "saved": {
+      "title": "保存したビルド",
+      "emptyTitle": "まだ保存したビルドがありません",
+      "emptyDesc": "上で飼育ケージを構成して保存すると、ここにまとまります。",
+      "load": "読み込む",
+      "remove": "削除",
+      "layers": "レイヤー {{count}}種",
+      "crew": "クルー {{count}}種",
+      "plants": "植物 {{count}}種",
+      "humidity": "湿度 {{value}}%",
+      "temp": "{{hot}}/{{cool}}°C"
+    },
+    "aquatic": {
+      "title": "この種は完全水生です",
+      "body": "土壌型のバイオアクティブ・ビバリウムではなく、水槽ベースの設計が必要です。低温の維持、ろ過、窒素サイクルの管理が要で、陸上の基質レイヤーは適用されません。"
+    },
+    "errors": {
+      "nameRequired": "ビルド名を入力してください。",
+      "nameMax": "名前は80文字以下で入力してください。",
+      "notesMax": "メモは500文字以下で入力してください。",
+      "emptyBuild": "基質・クルー・植物のいずれか1つ以上を選択してください。"
+    }
+  },
+  "showcase": {
+    "title": "フォトショーケース",
+    "subtitle": "今月のテーマに写真を投稿し、他の飼い主の作品に投票しましょう。",
+    "banner": {
+      "eyebrow": "今月のテーマ"
+    },
+    "themes": {
+      "freestyle": {
+        "name": "自由テーマ",
+        "tagline": "テーマを問わず、自慢したい一枚を。"
+      },
+      "postShed": {
+        "name": "脱皮直後",
+        "tagline": "脱皮を終えたばかりの鮮やかな色を見せてください。"
+      },
+      "enclosureFull": {
+        "name": "飼育ケージ全景",
+        "tagline": "丹精込めて作った飼育ケージの全体を収めてみましょう。"
+      },
+      "feedingReaction": {
+        "name": "餌への反応",
+        "tagline": "餌を見た瞬間の生き生きとした表情と動き。"
+      },
+      "baby": {
+        "name": "ベビー時代",
+        "tagline": "生まれたばかりの小さく愛おしい姿を共有しましょう。"
+      }
+    },
+    "winnerBadge": "今月の優勝",
+    "voteCount": "{{count}}票",
+    "photoAlt": "{{author}}さんが投稿した写真",
+    "filterLabel": "テーマで絞り込み",
+    "filterAll": "すべて",
+    "sortLabel": "並び替え",
+    "sort": {
+      "popular": "人気順",
+      "recent": "新着順"
+    },
+    "newPostTitle": "写真を投稿",
+    "newPostHint": "画像アドレスを貼り付けて、今月のテーマに参加しましょう。",
+    "author": "ニックネーム",
+    "authorPlaceholder": "例: チャムシルの飼い主",
+    "theme": "テーマ",
+    "imageUrl": "画像アドレス",
+    "imageUrlPlaceholder": "https://...",
+    "caption": "ひとこと",
+    "captionPlaceholder": "写真に込めた物語を聞かせてください (任意)",
+    "publish": "投稿する",
+    "postedToast": "写真を投稿しました!",
+    "deletedToast": "写真を削除しました。",
+    "delete": "削除",
+    "vote": "投票する",
+    "unvote": "投票を取り消す",
+    "empty": "まだ投稿された写真がありません",
+    "emptyHint": "最初の写真の主役になってみましょう!",
+    "errors": {
+      "authorRequired": "ニックネームを入力してください。",
+      "authorMax": "ニックネームは40文字以内で入力してください。",
+      "imageRequired": "画像アドレスを入力してください。",
+      "imageUrl": "正しい画像アドレスを入力してください。",
+      "captionMax": "ひとことは200文字以内で入力してください。"
+    }
+  },
+  "qna": {
+    "title": "種別 飼育Q&A",
+    "subtitle": "希少・エキゾチックなペットの飼育ノウハウを質問し、専門家のベストアンサーで素早く解決しましょう。",
+    "askCta": "質問する",
+    "askCancel": "閉じる",
+    "askTitle": "新しい質問を作成",
+    "fieldTitle": "タイトル",
+    "fieldTitlePlaceholder": "例: レオパードゲッコーが2週間ずっと拒食しています",
+    "fieldBody": "内容",
+    "fieldBodyPlaceholder": "飼育環境(温度・湿度・ケージ)、症状、試してみた対処を詳しく書いてください。",
+    "fieldSpecies": "関連する種 (任意)",
+    "fieldSpeciesPlaceholder": "種を選択してください",
+    "fieldTags": "タグ",
+    "fieldTagsPlaceholder": "拒食, 温度, 脱皮",
+    "fieldTagsHelp": "カンマで区切って、最大5個まで入力できます。",
+    "fieldAuthor": "ニックネーム",
+    "fieldAuthorPlaceholder": "表示するニックネーム",
+    "submitQuestion": "質問を登録",
+    "askedToast": "質問が登録されました。",
+    "filterAll": "すべて",
+    "filterSpeciesLabel": "種で絞り込み",
+    "filterTagLabel": "タグで絞り込み",
+    "sortLabel": "並び替え",
+    "sort": {
+      "popular": "人気順",
+      "unanswered": "未回答",
+      "recent": "新着順"
+    },
+    "answerCount": "回答 {{count}}件",
+    "acceptedBadge": "✓ ベストアンサー",
+    "voteQuestion": "質問に投票",
+    "voteAnswer": "回答に投票",
+    "deleteQuestion": "質問を削除",
+    "deleteAnswer": "回答を削除",
+    "deletedToast": "削除されました。",
+    "noAnswers": "まだ回答がありません。最初の回答を残してみましょう。",
+    "answerTitle": "回答を作成",
+    "fieldAnswer": "回答内容",
+    "fieldAnswerPlaceholder": "経験と根拠をもとに、役に立つ回答を残してください。",
+    "submitAnswer": "回答を登録",
+    "answeredToast": "回答が登録されました。",
+    "accept": "ベストに選ぶ",
+    "unaccept": "ベスト選択を取り消す",
+    "empty": "まだ登録された質問がありません",
+    "emptyHint": "最初の質問を残して、飼育ノウハウを分かち合いましょう。",
+    "errors": {
+      "titleRequired": "タイトルを入力してください。",
+      "titleMax": "タイトルは120文字以内で入力してください。",
+      "bodyRequired": "内容を入力してください。",
+      "bodyMax": "内容は1000文字以内で入力してください。",
+      "authorRequired": "ニックネームを入力してください。",
+      "authorMax": "ニックネームは40文字以内で入力してください。",
+      "answerRequired": "回答内容を入力してください。",
+      "tagsMax": "タグが長すぎます。"
+    }
+  },
+  "meetups": {
+    "title": "キーパー交流会 & メンター",
+    "subtitle": "ソウルのソンパ(松坡)・カンナム(江南)近辺の希少動物の飼い主と出会い、経験豊富なメンターから学びましょう。",
+    "tabMeetups": "ミートアップ",
+    "tabMentors": "メンター",
+    "filterAll": "すべて",
+    "regionFilterLabel": "地域で絞り込み",
+    "focusFilterLabel": "分野で絞り込み",
+    "regions": {
+      "songpa": "ソンパ(松坡)",
+      "gangnam": "カンナム(江南)",
+      "jamsil": "チャムシル(蚕室)",
+      "online": "オンライン",
+      "other": "その他"
+    },
+    "dDay": "D-{{count}}",
+    "dDayToday": "今日",
+    "hostedBy": "{{host}} 主催",
+    "attendeeCount": "参加 {{count}} / {{capacity}}名",
+    "full": "満員",
+    "rsvpJoin": "参加",
+    "rsvpCancel": "参加を取り消す",
+    "rsvpOnToast": "参加申し込み完了! 現地でお会いしましょう。",
+    "rsvpOffToast": "参加を取り消しました。",
+    "delete": "削除",
+    "meetupRemovedToast": "ミートアップを削除しました。",
+    "mentorRemovedToast": "メンター登録を削除しました。",
+    "emptyMeetups": "予定されたミートアップがありません",
+    "emptyMeetupsHint": "最初のミートアップを自分で開いてみましょう。",
+    "emptyMentors": "登録されたメンターがいません",
+    "emptyMentorsHint": "経験があれば、メンターとして登録して手助けを分かち合ってください。",
+    "createMeetupTitle": "ミートアップを開く",
+    "createMeetupSubmit": "ミートアップを登録",
+    "fieldTitle": "タイトル",
+    "fieldTitlePlaceholder": "例: ソンパ爬虫類飼い主の突発オフ会",
+    "fieldHost": "主催者",
+    "fieldHostPlaceholder": "ニックネーム (最大40文字)",
+    "fieldRegion": "地域",
+    "fieldDatetime": "日時",
+    "fieldVenue": "会場",
+    "fieldVenuePlaceholder": "例: ソンパ区パンイ洞のカフェ テラリウム",
+    "fieldCapacity": "定員",
+    "fieldDescription": "紹介",
+    "fieldDescriptionPlaceholder": "集まりのテーマ、対象、持ち物を書いてください。",
+    "createMentorTitle": "メンターとして登録",
+    "createMentorSubmit": "メンター登録",
+    "fieldName": "ニックネーム",
+    "fieldNamePlaceholder": "ニックネーム (最大40文字)",
+    "fieldFocus": "専門分野",
+    "fieldYears": "飼育歴 (年)",
+    "fieldBio": "紹介",
+    "fieldBioPlaceholder": "どんな手助けができるか、自由に書いてください。",
+    "fieldContact": "連絡方法",
+    "fieldContactPlaceholder": "オープンチャットのリンクまたはメール",
+    "fieldContactHelper": "リンク(http)を入れると、すぐに連絡できるボタンが表示されます。",
+    "yearsBadge": "{{count}}年目",
+    "contactCta": "連絡する",
+    "contactLabel": "連絡先",
+    "meetupCreatedToast": "ミートアップを開きました!",
+    "mentorCreatedToast": "メンターとして登録されました。入門者がまもなく連絡してきますよ。",
+    "errors": {
+      "titleRequired": "タイトルを入力してください。",
+      "titleMax": "タイトルは80文字以内で入力してください。",
+      "hostRequired": "主催者のニックネームを入力してください。",
+      "hostMax": "ニックネームは40文字以内で入力してください。",
+      "datetimeRequired": "日時を選択してください。",
+      "venueRequired": "会場を入力してください。",
+      "venueMax": "会場は80文字以内で入力してください。",
+      "capacityRange": "定員は2名から200名の範囲で入力してください。",
+      "descriptionMax": "紹介は500文字以内で入力してください。",
+      "nameRequired": "ニックネームを入力してください。",
+      "nameMax": "ニックネームは40文字以内で入力してください。",
+      "focusRequired": "専門分野を1つ以上選択してください。",
+      "yearsRange": "飼育歴は0年から50年の範囲で入力してください。",
+      "bioRequired": "紹介を入力してください。",
+      "bioMax": "紹介は400文字以内で入力してください。",
+      "contactRequired": "連絡方法を入力してください。",
+      "contactMax": "連絡先は120文字以内で入力してください。"
+    }
+  },
+  "breeding": {
+    "title": "繁殖・クラッチ / 孵化トラッカー",
+    "subtitle": "ペアリングと産卵したクラッチを記録し、種別の基準温度を反映した孵化予想日とカウントダウンを確認しましょう。",
+    "disclaimer": "表示される孵化期間・温度は一般的な飼育資料に基づく近似値であり、実際の結果は正確な温度・湿度・個体によって大きく変わることがあります。",
+    "notes": "メモ",
+    "notesOptional": "任意入力 (最大300文字)",
+    "remove": "削除",
+    "speciesUnknown": "種未指定",
+    "unknownParent": "未指定",
+    "tdsdNote": "この種は温度依存性決定(TDSD)の種です。孵化温度が子の性比に影響することがあるため、目標とする性別があれば温度管理に注意してください。",
+    "geneticsCta": {
+      "title": "交配の結果が気になるなら → モルフ遺伝計算機",
+      "desc": "親のモルフを入力すると、子に出る可能性のあるモルフの確率を計算します。"
+    },
+    "dday": {
+      "today": "D-DAY",
+      "sub": "孵化予想日(中央値)まで"
+    },
+    "statusCode": {
+      "incubating": "孵化中",
+      "due": "孵化予定",
+      "overdue": "予定日経過",
+      "hatched": "孵化完了",
+      "failed": "失敗"
+    },
+    "pairing": {
+      "title": "ペアリング",
+      "intro": "一緒に同居させたオス・メスの組み合わせを登録しておくと、クラッチ記録と紐づけられます。",
+      "newTitle": "新しいペアリングを登録",
+      "sire": "オス(父)",
+      "sirePlaceholder": "例: パステルのオス",
+      "dam": "メス(母)",
+      "damPlaceholder": "例: ノーマルのメス",
+      "pairedAt": "同居日",
+      "pairedOn": "同居",
+      "add": "ペアリングを登録",
+      "addClutch": "クラッチを追加",
+      "created": "ペアリングを登録しました。",
+      "emptyTitle": "まだ登録したペアリングがありません",
+      "emptyDesc": "オス・メスの組み合わせを登録すると、産卵記録をより簡単に追跡できます。"
+    },
+    "clutch": {
+      "title": "クラッチ / 孵化",
+      "intro": "産卵した卵のまとまりを記録すると、種別の基準に合わせて孵化予想日と進捗率を表示します。",
+      "newTitle": "新しいクラッチを記録",
+      "pairing": "紐づけるペアリング",
+      "noPairing": "紐づけない",
+      "laidAt": "産卵日",
+      "eggCount": "卵の数",
+      "eggUnit": "{{count}}個",
+      "fertileCount": "有精卵の数",
+      "fertileHelper": "確認できた有精卵の数 (任意)",
+      "fertility": "受精率",
+      "temp": "孵化温度(°C)",
+      "tempHelper": "現在のインキュベーター温度 (任意)",
+      "add": "クラッチを記録",
+      "created": "クラッチを記録しました。",
+      "markHatched": "孵化完了",
+      "markFailed": "失敗として処理",
+      "markedHatched": "孵化完了として表示しました。",
+      "markedFailed": "失敗として表示しました。",
+      "fromPairing": "ペアリング",
+      "windowLabel": "予想孵化期間",
+      "progressLabel": "進捗率 {{pct}}%",
+      "emptyTitle": "まだ記録されたクラッチがありません",
+      "emptyDesc": "産卵日と卵の数を入力すると、孵化カウントダウンが始まります。"
+    },
+    "errors": {
+      "dateRequired": "日付を入力してください。",
+      "nameMax": "40文字以内で入力してください。",
+      "notesMax": "メモは300文字以内で入力してください。",
+      "eggCountNumber": "卵の数を数値で入力してください。",
+      "eggCountMin": "卵の数は1個以上である必要があります。",
+      "fertileNumber": "有精卵の数を数値で入力してください。",
+      "fertileMin": "有精卵の数は0以上である必要があります。",
+      "tempNumber": "温度を数値で入力してください。"
+    }
+  },
+  "meds": {
+    "title": "投薬・隔離管理",
+    "subtitle": "投薬スケジュールと、新入り・体調不良の個体の隔離期間を一か所で管理しましょう。すべてのデータはこのブラウザにだけ保存されます。",
+    "remove": "削除",
+    "tabs": {
+      "medications": "投薬",
+      "quarantine": "隔離"
+    },
+    "status": {
+      "dueToday": "今日投薬",
+      "overdue": "遅延",
+      "upcoming": "予定",
+      "done": "完了"
+    },
+    "disclaimer": {
+      "title": "服薬は必ず獣医の指示に従ってください",
+      "body": "このツールは投薬スケジュールを記録・管理するための補助手段にすぎず、医学的な処方や診断の代わりにはなりません。薬の種類・用量・間隔は診療を受けた獣医の案内にそのまま従い、異常な反応が見られたら直ちに病院に連絡してください。"
+    },
+    "med": {
+      "newTitle": "新しい投薬を登録",
+      "name": "薬の名前",
+      "namePlaceholder": "例: パナクール、バイトリル",
+      "dosage": "用量",
+      "dosagePlaceholder": "例: 0.1ml、1/4錠",
+      "reason": "投薬の理由",
+      "reasonPlaceholder": "例: 定期駆虫、呼吸器感染の治療",
+      "startedAt": "開始日",
+      "frequency": "投薬間隔(日)",
+      "frequencyHelper": "何日ごとに投薬するか入力してください。",
+      "frequencyLabel": "間隔",
+      "duration": "総期間(日、任意)",
+      "durationHelper": "決まった治療期間があれば入力してください。空欄の場合は常時投薬とみなします。",
+      "notes": "メモ",
+      "notesPlaceholder": "投薬への反応、保管方法などを書いておきましょう。",
+      "add": "投薬を登録",
+      "added": "投薬を登録しました。",
+      "everyNDays": "{{count}}日ごと",
+      "ofNDays": "全{{count}}日",
+      "nextDose": "次回の投薬",
+      "courseComplete": "治療終了",
+      "courseProgress": "治療の進捗率",
+      "recentDoses": "最近の投薬記録",
+      "markToday": "今日の投薬を完了",
+      "markedToday": "今日投薬済み (取り消し)",
+      "doseDone": "今日の投薬を記録しました。",
+      "doseUndone": "今日の投薬記録を取り消しました。",
+      "emptyTitle": "登録された投薬がありません",
+      "emptyDesc": "進行中の薬があれば登録して、次の投薬日と服薬記録を管理しましょう。"
+    },
+    "quarantine": {
+      "guideTitle": "なぜ隔離が必要なのでしょうか?",
+      "guideBody": "新しく迎えた個体や体調不良の個体は、既存のコレクションから離れた別の空間で30〜90日間隔離するのが安全です。ケージ・器具は別々に使い、既存の個体を先に世話してから隔離個体を最後に管理し、毎回手を洗って病気・寄生虫の伝播を防ぎましょう。",
+      "newTitle": "新しい隔離を登録",
+      "animalName": "個体名",
+      "animalNamePlaceholder": "例: 新入りレオパードゲッコー",
+      "startedAt": "隔離開始日",
+      "reason": "隔離の理由",
+      "duration": "隔離期間(日)",
+      "durationHelper": "1〜180日の範囲で設定してください。新しい個体は通常30〜90日を推奨します。",
+      "presetDays": "{{count}}日",
+      "notes": "メモ",
+      "notesPlaceholder": "症状、隔離する空間、観察した内容を書いておきましょう。",
+      "add": "隔離を登録",
+      "added": "隔離を登録しました。",
+      "endsAt": "終了予定日",
+      "remaining": "残りの期間",
+      "daysLeft": "残り{{count}}日",
+      "dDay": "D-{{count}}",
+      "clear": "隔離を解除",
+      "cleared": "隔離を解除しました。",
+      "clearedOn": "{{date}} 解除",
+      "statusReady": "解除可能",
+      "statusCleared": "解除完了",
+      "reasons": {
+        "newArrival": "新規お迎え",
+        "illness": "病気の疑い",
+        "postVet": "受診後",
+        "other": "その他"
+      },
+      "emptyTitle": "隔離中の個体がいません",
+      "emptyDesc": "新しく迎えたり、コンディションが良くなかったりする個体がいれば、隔離スケジュールを登録して管理しましょう。"
+    },
+    "errors": {
+      "nameRequired": "薬の名前を入力してください。",
+      "nameMax": "薬の名前は60文字以内で入力してください。",
+      "reasonMax": "投薬の理由は120文字以内で入力してください。",
+      "dosageMax": "用量は60文字以内で入力してください。",
+      "dateRequired": "日付を選択してください。",
+      "frequencyNumber": "投薬間隔は数値である必要があります。",
+      "frequencyMin": "投薬間隔は1日以上である必要があります。",
+      "durationNumber": "期間は数値である必要があります。",
+      "durationMin": "期間は1日以上である必要があります。",
+      "notesMax": "メモは300文字以内で入力してください。",
+      "animalNameRequired": "個体名を入力してください。",
+      "animalNameMax": "個体名は60文字以内で入力してください。",
+      "qDurationNumber": "隔離期間は数値である必要があります。",
+      "qDurationMin": "隔離期間は1日以上である必要があります。",
+      "qDurationMax": "隔離期間は180日以内である必要があります。"
+    }
+  },
+  "feeding": {
+    "title": "給餌スケジューラ · 餌サイズ計算機",
+    "subtitle": "うちのペットの種と成長段階に合った餌サイズ・給餌周期を計算し、給餌を記録して次の給餌日と拒食のサインを一緒に見守りましょう。すべてのデータはこのブラウザにだけ保存されます。",
+    "showAllPets": "すべてのペットの記録を見る",
+    "toastSaved": "給餌を記録しました。",
+    "disclaimer": "ここに表示される値は一般的なガイドです。個体の体型・食欲・健康状態と、獣医・専門飼育者のアドバイスに合わせて調整してください。",
+    "stages": {
+      "juvenile": "幼体 · 準成体",
+      "adult": "成体"
+    },
+    "preyRules": {
+      "betweenEyes": "餌は両目の間隔より大きくならないように与えてください。",
+      "bodyWeightPct": "餌の重さは体重の約10〜15%が適切です。",
+      "girthMatch": "最も太い胴回りと同じくらい、またはやや大きいくらい(約1〜1.25倍)の餌を与えてください。",
+      "bodyLength": "餌は体長と同じくらい、またはより小さいサイズで与えてください。",
+      "greensPlusInsects": "野菜・葉物を毎日たっぷり、昆虫は齢に合わせて添えて与えてください。"
+    },
+    "calc": {
+      "title": "餌サイズ計算機",
+      "stage": "成長段階",
+      "bodyWeight": "現在の体重 (g)",
+      "bodyWeightHelper": "最新の体重を入力すると、適切な餌の重さの範囲を計算します。",
+      "preyWeight": "推奨される餌の重さ",
+      "preyWeightRange": "{{min}}〜{{max}} g",
+      "preyWeightHint": "体重を入力すると計算されます。",
+      "preySize": "餌サイズの基準",
+      "frequency": "推奨される給餌周期",
+      "everyNDays": "{{count}}日ごと",
+      "noSpecies": "まずオンボーディングで種を選ぶと、種別に合わせたガイドを表示します。"
+    },
+    "next": {
+      "title": "次の給餌日",
+      "dday": "D-{{count}}",
+      "today": "今日が給餌日",
+      "overdue": "{{count}}日経過",
+      "basis": "最後の給餌{{date}}を基準に、{{count}}日周期で計算しました。",
+      "empty": "給餌を一度記録すると、次の給餌日を予測します。"
+    },
+    "refusal": {
+      "warning": "直近{{count}}回連続で拒食 — 温度・湿度・シェルターなど飼育環境を点検してください。",
+      "arthropodNote": "節足動物は脱皮前(プリモルト)に断食するのが正常です。腹部が膨らんで色が暗くなっていたら、無理に給餌せず待ってください。"
+    },
+    "log": {
+      "title": "給餌記録",
+      "fedAt": "給餌日",
+      "item": "餌",
+      "itemPlaceholder": "例: 成体マウス、デュビア、コオロギ",
+      "quantity": "数量 (任意)",
+      "quantityHelper": "与えた餌の匹数 (任意)",
+      "quantityCount": "{{count}}匹",
+      "accepted": "食べました (拒食時はチェックを外す)",
+      "ate": "摂取",
+      "refused": "拒食",
+      "notes": "メモ",
+      "submit": "記録を追加",
+      "remove": "削除",
+      "speciesUnknown": "(種選択前の記録)"
+    },
+    "trend": {
+      "title": "給餌間隔の推移",
+      "chartLabel": "直近の給餌間隔(日)の推移グラフ",
+      "meta": "給餌と給餌の間隔(日)を時間順に表示します。"
+    },
+    "empty": {
+      "title": "まだ給餌の記録がありません",
+      "desc": "最初の給餌を記録すると、次の給餌日の予測と拒食の追跡が始まります。"
+    },
+    "errors": {
+      "dateRequired": "日付を選択してください。",
+      "itemRequired": "餌を入力してください。",
+      "itemMax": "餌の名前は60文字以内で入力してください。",
+      "quantityNumber": "数量は整数である必要があります。",
+      "quantityNonNegative": "数量は0以上である必要があります。",
+      "notesMax": "メモは300文字以内で入力してください。"
+    },
+    "rules": {
+      "ball-python": {
+        "note": "ボールパイソンは、最も太い胴回りと同じくらいのサイズの齧歯類が適切です。自律給餌を好む種なので肥満に注意し、給餌後24〜48時間はハンドリングを控えてください。"
+      },
+      "corn-snake": {
+        "note": "コーンスネークは胴回りに合ったマウスを与えてください。成長期は7日、成体は10〜14日間隔が一般的です。"
+      },
+      "leopard-gecko": {
+        "note": "レオパードゲッコーは両目の間より小さい昆虫を与えてください。幼体は毎日5〜7匹、成体は週2〜3回が適切で、カルシウム・ビタミンのダスティングを併用してください。"
+      },
+      "crested-gecko": {
+        "note": "クレステッドゲッコーはCGD(専用フード)を基本にし、昆虫は両目の間より小さいサイズで週1〜2回、補助的に与えてください。"
+      },
+      "bearded-dragon": {
+        "note": "フトアゴヒゲトカゲは幼体ほど昆虫の比率が高く、成体になると葉野菜中心に変わります。昆虫は両目の間より小さく与えてください。"
+      },
+      "mexican-redknee-tarantula": {
+        "note": "メキシカンレッドニーは体長と同じくらいか小さい餌を与えてください。成体は1〜2週間間隔で十分で、プリモルトには断食するので餌を片付けてください。"
+      },
+      "emperor-scorpion": {
+        "note": "エンペラースコーピオンは体の大きさに合った餌を週1回ほど与えてください。脱皮の前後には給餌を止めて、湿度を安定して保ってください。"
+      },
+      "pacman-frog": {
+        "note": "パックマンガエル(ツノガエル)は両目の間より小さい餌を与えてください。肥満に非常に弱いので、成体は4〜7日間隔で給餌量を調整してください。"
+      },
+      "axolotl": {
+        "note": "アホロートルはミミズ・専用ペレットが主食です。幼体は毎日、成体は週2〜3回ほど、食べる分だけ与え、残った餌はすぐ片付けて水質を管理してください。"
+      },
+      "fallback": {
+        "reptile": "爬虫類は種ごとに餌のサイズ・周期の差が大きいです。両目の間のサイズを基準にしつつ、飼育中の種の専用資料を必ず確認してください。",
+        "arthropod": "節足動物は体の大きさに合った餌を与え、脱皮前は断食するのが正常です。種別のケアシートを確認してください。",
+        "amphibian": "両生類は両目の間より小さい餌を与えてください。肥満に弱いので、給餌量と頻度を調整してください。",
+        "bird": "鳥類は種に合ったシード・ペレットと新鮮な野菜を毎日与えてください。アボカドなど毒性のある餌は避ける必要があります。",
+        "mammal": "小型哺乳類は種に合ったフード・野菜を毎日与えてください。種別に栄養要求が異なるため、専用資料を確認してください。"
+      }
+    }
+  },
+  "market": {
+    "title": "分譲マーケット",
+    "subtitle": "ソウル近郊の飼育繁殖(CB)個体とモルフを、責任を持って分譲・お譲りしましょう。",
+    "safety": {
+      "title": "取引の安全ルール",
+      "cb": "野生採集(WC)より飼育繁殖(CB)個体を推奨します。健康で適応が早いです。",
+      "meet": "可能なら直接取引で個体の状態を自分の目で確認し、飼育履歴も一緒に受け取りましょう。",
+      "free": "無料のお譲りは、最後まで責任を持てる引き取り手を探す「責任分譲」です。衝動的なお迎えは避けてください。",
+      "regulatedNote": "規制種は保管申告の対象です。",
+      "regulatedLink": "規制種の保管申告を確認する"
+    },
+    "filterCategoryLabel": "分類で絞り込み",
+    "filterRegionLabel": "地域で絞り込み",
+    "filterAll": "すべて",
+    "freeOnly": "無料のお譲りのみ",
+    "sortLabel": "並び替え",
+    "sort": {
+      "recent": "新着順",
+      "priceAsc": "価格が低い順"
+    },
+    "newListingTitle": "分譲の投稿を登録",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "例: ボールパイソン パステル (2025年ハッチ、CB)",
+    "species": "種を選択",
+    "speciesUnselected": "選択しない",
+    "morphLabel": "モルフ (任意)",
+    "morphPlaceholder": "例: パステル、ハーレクイン",
+    "regionLabel": "地域",
+    "regions": {
+      "songpa": "ソンパ(松坡)",
+      "gangnam": "カンナム(江南)",
+      "jamsil": "チャムシル(蚕室)",
+      "online": "オンライン/宅配",
+      "other": "その他"
+    },
+    "cbLabel": "個体の出所",
+    "cb": {
+      "cb": "飼育繁殖 (CB)",
+      "wc": "野生採集 (WC)",
+      "unknown": "出所不明"
+    },
+    "freeToggle": "無料のお譲りとして登録",
+    "freeHint": "無料のお譲りは責任分譲です。最後まで責任を持てる引き取り手を探してください。",
+    "priceLabel": "価格 (ウォン)",
+    "pricePlaceholder": "例: 150000",
+    "priceWon": "{{price}}ウォン",
+    "free": "無料のお譲り",
+    "contactLabel": "連絡先",
+    "contactPlaceholder": "オープンチャットのリンク、メールまたは電話番号",
+    "contactHelper": "URLを入力すると、新しいタブで開くリンクになります。",
+    "descriptionLabel": "詳細説明",
+    "descriptionPlaceholder": "個体の状態、餌の履歴、飼育環境、分譲の条件などを書いてください。",
+    "author": "投稿者",
+    "authorPlaceholder": "ニックネーム",
+    "publish": "登録する",
+    "regulatedBadge": "保管申告の対象",
+    "unknownSpecies": "種未指定",
+    "remove": "削除",
+    "postedToast": "分譲の投稿が登録されました。",
+    "removedToast": "分譲の投稿を削除しました。",
+    "empty": "条件に合う分譲の投稿がありません。",
+    "emptyHint": "フィルターを変えるか、最初の分譲の投稿を登録してみましょう。",
+    "errors": {
+      "titleRequired": "タイトルを入力してください。",
+      "titleMax": "タイトルは80文字以内で入力してください。",
+      "morphMax": "モルフは60文字以内で入力してください。",
+      "priceRequired": "価格を入力するか、無料のお譲りとして登録してください。",
+      "priceInvalid": "価格は0以上の整数で入力してください。",
+      "contactRequired": "連絡先を入力してください。",
+      "contactMax": "連絡先は120文字以内で入力してください。",
+      "descriptionRequired": "詳細説明を入力してください。",
+      "descriptionMax": "詳細説明は600文字以内で入力してください。",
+      "authorRequired": "投稿者のニックネームを入力してください。",
+      "authorMax": "ニックネームは40文字以内で入力してください。"
+    }
+  },
+  "passport": {
+    "title": "ペットパスポート",
+    "subtitle": "一緒に過ごした記録で作る、うちの子だけのパスポートと実績です。",
+    "card": {
+      "docType": "Keeper Passport",
+      "unnamed": "名前のない友だち",
+      "speciesUnknown": "種未設定",
+      "daysTogether": "一緒に過ごした日数",
+      "daysValue": "{{count}}日",
+      "badges": "獲得した実績",
+      "shareNote": "このパスポートは画面をキャプチャして、そのまま共有できます。うちの子の成長記録を自慢してみましょう。",
+      "holder": "保護者 · {{name}}",
+      "aria": "{{name}}のペットパスポートカード"
+    },
+    "stats": {
+      "aria": "活動統計のサマリー",
+      "days": "一緒に過ごした日数",
+      "diary": "日誌",
+      "molt": "脱皮",
+      "feeding": "給餌",
+      "clutch": "クラッチ"
+    },
+    "achievements": {
+      "title": "実績",
+      "progress": "{{unlocked}} / {{total}} 達成",
+      "progressCount": "{{current}} / {{goal}}",
+      "unlocked": "達成完了"
+    },
+    "tier": {
+      "bronze": "ブロンズ",
+      "silver": "シルバー",
+      "gold": "ゴールド"
+    },
+    "empty": {
+      "title": "まだ実績がありません",
+      "desc": "日誌を書き、脱皮・給餌を記録すると、実績が1つずつ解放されます。最初の記録を残してみましょう。",
+      "noPetTitle": "登録されたペットがいません",
+      "noPetDesc": "まずうちの子を登録すると、一緒に過ごした日からパスポートが作られます。"
+    },
+    "ach": {
+      "bond7": { "title": "最初の一週間", "desc": "一緒に過ごして7日が経ちました。" },
+      "bond30": { "title": "一か月の同行", "desc": "一緒に過ごして30日を超えました。" },
+      "bond100": { "title": "100日の約束", "desc": "一緒に過ごして100日を達成しました。" },
+      "diary1": { "title": "記録のはじまり", "desc": "最初の日誌を書きました。" },
+      "diary10": { "title": "こつこつ観察者", "desc": "日誌を10個書きました。" },
+      "diary50": { "title": "記録の達人", "desc": "日誌を50個書きました。" },
+      "molt1": { "title": "初めての脱皮", "desc": "最初の脱皮を記録しました。" },
+      "moltMaster": { "title": "脱皮マスター", "desc": "完全脱皮を5回記録しました。" },
+      "feed10": { "title": "しっかりごはん", "desc": "給餌を10回記録しました。" },
+      "feed50": { "title": "ぶれない食事", "desc": "給餌を50回記録しました。" },
+      "feedStreak5": { "title": "完食5回連続", "desc": "拒否なく5回連続でよく食べました。" },
+      "clutch1": { "title": "初めてのクラッチ", "desc": "最初の産卵(クラッチ)を記録しました。" }
+    }
+  },
+  "assistant": {
+    "title": "ケアアシスタント",
+    "subtitle": "症状を選ぶと、ルールベースで危険度と次の行動をご案内します。アクティブなペットの分類に合わせて調整されます。",
+    "disclaimerTitle": "参考用の案内です",
+    "disclaimer": "ルールベースの案内です。獣医の診療を代替するものではありません。少しでもおかしいと感じたら病院に連絡してください。",
+    "context": "現在 {{name}}({{category}}) を基準にご案内します。分類の特性に合わせてアドバイスが調整されます。",
+    "contextGeneric": "アクティブなペットが設定されていないため、一般的な案内を提供します。オンボーディングで種を選ぶと、分類に合わせて調整されます。",
+    "step1Title": "1. どんな症状が見られますか?",
+    "step1Hint": "最も近い項目を1つ選んでください。",
+    "step2Title": "2. もう一つだけ確認します",
+    "resultTitle": "案内結果",
+    "categoryNoteLabel": "分類の参考",
+    "speciesTipLabel": "{{name}} のよくある問題",
+    "reminder": "少しでもおかしいと感じたら、ためらわず病院に連絡してください。",
+    "restart": "もう一度始める",
+    "emptyTitle": "症状を選んで始めましょう",
+    "emptyDescription": "上の項目から症状を選ぶと、1〜2個の簡単な質問のあとに案内を表示します。",
+    "emergencyTitle": "緊急の状況かもしれません",
+    "emergencyBody": "ためらわず緊急対応を始め、病院に連絡してください。時間が重要です。",
+    "emergencySos": "緊急SOS",
+    "emergencyHospitals": "24時間病院を探す",
+    "severity": {
+      "info": "参考",
+      "caution": "注意",
+      "urgent": "緊急"
+    },
+    "topics": {
+      "anorexia": {
+        "label": "拒食 (食べない)",
+        "question": "いつから、どのくらいですか?",
+        "options": {
+          "recent": "数日くらいで、活動はいつもと同じくらい",
+          "weeks": "数週間ずっと拒否している",
+          "weightLoss": "拒否とともに体重・体型が目に見えて減った"
+        }
+      },
+      "sheddingIssue": {
+        "label": "脱皮不全",
+        "question": "脱皮の状態はどうですか?",
+        "options": {
+          "inProgress": "今脱皮中で、自然に進んでいる",
+          "stuckPatches": "ところどころ脱皮殻が残って剥がれない",
+          "toesOrEyes": "足の指・尾の先・目の周りに脱皮殻が締め付けている"
+        }
+      },
+      "respiratory": {
+        "label": "呼吸の異常",
+        "question": "呼吸はどう見えますか?",
+        "options": {
+          "mildWheeze": "ときどきゼーゼーするが、いつものように活動している",
+          "openMouth": "口を開けて苦しそうに息をしている",
+          "mucusBubbles": "鼻水・泡・粘液が見える"
+        }
+      },
+      "lethargy": {
+        "label": "無気力",
+        "question": "活動性はどのくらいですか?",
+        "options": {
+          "slightlyQuiet": "いつもより少し静かだが反応はある",
+          "notMoving": "ほとんど動かず、刺激に鈍い",
+          "unresponsive": "ぐったりして、触っても反応がほとんどない"
+        }
+      },
+      "injury": {
+        "label": "外傷・出血",
+        "question": "傷の状態はどうですか?",
+        "options": {
+          "minorScrape": "小さな擦り傷で、出血は止まっている",
+          "activeBleeding": "出血が止まらず続いている",
+          "prolapse": "臓器・総排泄腔が出てしまっている(脱出)"
+        }
+      },
+      "tempHumidity": {
+        "label": "温湿度の問題",
+        "question": "ケージの温湿度はどうですか?",
+        "options": {
+          "slightlyOff": "推奨範囲から少し外れている",
+          "wayOff": "推奨範囲から大きく外れている",
+          "burnOrHeatStress": "やけどの跡があるか、過熱であえいでいる"
+        }
+      },
+      "behavior": {
+        "label": "行動の変化",
+        "question": "どんな変化ですか?",
+        "options": {
+          "newRoutine": "最近、環境・日課が変わった後に現れた",
+          "hiding": "ずっと隠れていて、いつもの行動をしない",
+          "aggressionOrTremor": "急な攻撃性・震え・異常な姿勢"
+        }
+      }
+    },
+    "advice": {
+      "anorexiaRecent": "短期の拒食は、環境の変化・ストレス・季節の変動でよく見られます。ケージを安定して保ち、数日さらに観察してください。水は常に用意し、体重を定期的に記録してください。",
+      "anorexiaWeeks": "数週間続く拒食は、温度不足・寄生虫・環境ストレスを点検する必要があります。温湿度と保温器具をまず確認し、改善がなければ獣医への相談をおすすめします。",
+      "anorexiaWeightLoss": "拒食とともに体重が減ると、脱水・代謝疾患の可能性があり、早めの受診が必要です。無理に強制給餌せず、保温を保ったまま病院に連絡してください。",
+      "sheddingInProgress": "正常な脱皮の過程です。触らずに湿度を推奨範囲で保ってください。シェルターと粗い表面を置くと、脱皮の助けになります。",
+      "sheddingStuckPatches": "残った脱皮殻は湿度を高め、ぬるま湯のミスティング・ウェットシェルターで補助してください。無理に剥がさず、数日内に剥がれなければ獣医に相談してください。",
+      "sheddingToesOrEyes": "足の指・尾の先・目の周りに残った脱皮殻は血流を妨げ、壊死・失明を招くことがあります。ぬるま湯でやさしくふやかしても解けなければ、直ちに病院に連絡してください。",
+      "respiratoryMildWheeze": "軽い呼吸音は、低い温度や乾燥・ほこりが原因のことがあります。保温を推奨範囲まで上げ、床材のほこりを点検してください。悪化したら受診してください。",
+      "respiratoryOpenMouth": "開口呼吸は強い呼吸困難のサインです。保温を安定して保ちながら、ためらわず病院に連絡してください。",
+      "respiratoryMucusBubbles": "鼻水・泡・粘液は呼吸器感染の強いサインです。温かく保ったまま、直ちに受診してください。",
+      "lethargySlightlyQuiet": "わずかな無気力は、正常な休息・消化・温度の変動のことがあります。保温と夜間の温度低下を点検して観察してください。食欲・排便も一緒に確認してください。",
+      "lethargyNotMoving": "反応が鈍くほとんど動かないなら、低温・脱水・感染を点検する必要があります。温湿度を整え、好転がなければ受診してください。",
+      "lethargyUnresponsive": "ぐったりして反応がほとんどないなら緊急の状況です。保温を保ちながら、直ちに病院に連絡してください。",
+      "injuryMinorScrape": "小さな擦り傷は清潔な水でやさしく洗い、ケージを清潔に保って観察してください。腫れたり浸出液が出たりしたら受診してください。",
+      "injuryActiveBleeding": "止まらない出血は緊急です。清潔なガーゼでやさしく圧迫して止血しながら、直ちに病院に連絡してください。",
+      "injuryProlapse": "臓器・総排泄腔の脱出は緊急です。露出した部位を清潔で湿った状態(砂糖水で湿らせたガーゼなど)に保ったまま、直ちに病院へ移動してください。",
+      "tempHumiditySlightlyOff": "推奨範囲から少し外れた程度は、保温・ミスティング・換気で調整してください。デジタル温湿度計を2つ使って、ホットスポットとクールゾーンを一緒に確認してください。",
+      "tempHumidityWayOff": "推奨範囲から大きく外れると、食欲・免疫・脱皮に影響します。サーモスタットと保温・加湿の器具を点検して素早く正常化し、動物の状態も一緒に見守ってください。",
+      "tempHumidityBurnOrHeatStress": "やけどや過熱ストレスは緊急です。直ちに熱源を切り、涼しい場所へ移してから病院に連絡してください。保温ランプは常にガードとサーモスタットで保護してください。",
+      "behaviorNewRoutine": "環境・日課の変化直後の行動の変化は、適応の過程のことがあります。ケージを安定して保ち、邪魔を減らして数日観察してください。",
+      "behaviorHiding": "継続して隠れるなら、温度の不快・ストレス・痛みのサインのことがあります。温湿度とシェルターの配置を点検し、食欲の低下が重なれば受診してください。",
+      "behaviorAggressionOrTremor": "急な攻撃性・震え・異常な姿勢は、痛みや神経系・代謝の問題のことがあります。環境を点検し、なるべく早く獣医に相談してください。"
+    },
+    "categoryNotes": {
+      "anorexiaArthropod": "節足動物は脱皮前(プリモルト)に自然に餌を拒否します。腹部が黒くぱんぱんなら脱皮のサインのことがあるので、邪魔せず待ってみてください。",
+      "anorexiaReptile": "爬虫類の拒食は、温度不足やクーリング(brumation)の時期とよく重なります。ホットスポット・クールゾーンの温度からまず点検してください。",
+      "anorexiaAmphibian": "両生類は水質・温度に敏感で、拒食はよくあります。水温と清潔さ、カルキ抜きの有無をまず確認してください。",
+      "sheddingArthropod": "節足動物の脱皮は最も無防備な時期です。脱皮中は絶対に触らず、餌も片付けて湿度だけを安定して保ってください。",
+      "sheddingReptile": "爬虫類の脱皮不全は、たいてい湿度不足が原因です。ウェットシェルターとミスティングで補助してください。",
+      "respiratoryAmphibian": "両生類は皮膚呼吸の比重が大きく、水質・湿度が呼吸に直接影響します。水の清潔さと換気を一緒に点検してください。",
+      "respiratoryBird": "鳥類は呼吸器が非常に敏感で、悪化が早いです。尾を振る・開口呼吸が見えたら、ためらわず受診してください。",
+      "lethargyReptile": "爬虫類は変温動物なので、温度が低いと無気力に見えます。受診の前に、まず保温を正常範囲に整えてみてください。",
+      "lethargyArthropod": "節足動物は脱皮の前後で動きが大きく減ることがあります。最近の脱皮の有無をまず確認してください。",
+      "tempHumidityAmphibian": "両生類は乾燥と高温に特に弱いです。湿度を高く保ち、直射日光・過熱を避けてください。",
+      "tempHumidityReptile": "爬虫類はホットスポットとクールゾーンの温度勾配が要です。両方を別々に測って勾配を確保してください。"
+    }
+  },
+  "morphs": {
+    "title": "人気モルフカタログ",
+    "subtitle": "韓国でよく分譲されるモルフ(色・パターンの変異)と、2025〜26年の平均価格帯。ベース種を選ぶと、モルフカードと分譲サイトが表示されます。",
+    "pickSpecies": "種を選択",
+    "empty": "表示する種がありません。",
+    "openDetail": "種の詳細を見る",
+    "rarity": {
+      "common": "ありふれている",
+      "mid": "中間",
+      "rare": "希少"
+    },
+    "breedersTitle": "韓国のブリーダー・分譲サイト",
+    "disclaimer": "価格帯は2025〜26年の市場平均の推定値です。実際の分譲価格は、ベビー/成体、ヘテロ/ホモ、モルフコンボの有無によって大きく異なります。"
+  },
+  "setup": {
+    "title": "飼育ケージ初期セットアップ見積",
+    "subtitle": "種カテゴリを選ぶと、最初の月に必要な飼育用具6〜8種類と、入門〜上級の価格範囲の合計を表示します。韓国の爬虫類・節足動物・両生類・鳥類・小型哺乳類の入門者が最もよく見落とす項目を標準化しました。",
+    "pickCategory": "カテゴリを選択",
+    "empty": "カテゴリを選択してください",
+    "emptyDesc": "上のチップで飼いたいカテゴリを押すと、チェックリストが表示されます。",
+    "totalLabel": "合計 (入門 〜 上級)",
+    "totalHint": "ECサイトの平均価格基準。実際の価格はモデル・シーズンによって異なります。",
+    "includeOptional": "オプション項目を含む",
+    "optional": "オプション",
+    "shopsTitle": "韓国の爬虫類・エキゾチックペット専門ショッピングモール",
+    "disclaimer": "外部のショッピングモールとは提携関係がありません。価格・在庫は各サイトの基準が最終です。"
+  },
+  "insurance": {
+    "title": "ペット保険 & 予備費ガイド",
+    "subtitle": "韓国国内のペット保険は犬・猫が中心です。爬虫類・両生類・節足動物の飼育者には保険の適用が事実上難しいため、救急の診療費をあらかじめ積み立てる予備費の運用をおすすめします。",
+    "exoticWarningTitle": "注意 — 希少ペットの保険加入はほぼ不可",
+    "exoticWarningBody": "現在選んでいるカテゴリは、ほとんどの韓国国内ペット保険の加入対象ではありません。緊急時の自己負担が100%になるため、以下の予備費の積み立てを強くおすすめします。",
+    "reserveTitle": "予備費の積み立て",
+    "reserveDesc": "毎月一定の金額を救急の診療費に備えて積み立てましょう。累計金額と開始日をこのブラウザに保存します。",
+    "reserveSuggestion": "{{name}} の推奨月予算の3倍 (約₩{{amount}}) を予備費の目標として積み立てておくと、救急1〜2回分の診療費をカバーできます。",
+    "monthlyContribution": "月の積立金額 (ウォン)",
+    "save": "保存",
+    "savedToast": "積立金額を保存しました",
+    "startedAt": "開始日",
+    "monthsRunning": "経過月数",
+    "accumulated": "累計金額",
+    "errors": {
+      "contribution": "積立金額は0ウォン以上の数値である必要があります。"
+    },
+    "providersTitle": "韓国国内ペット保険5社の比較 (犬・猫が中心)",
+    "providersDesc": "各カードを押すと、保険会社の公式サイトに移動します。保険料は種・年齢・補償オプションによって変動します。",
+    "coversDogCat": "犬・猫の加入可",
+    "noDogCat": "未加入",
+    "coversExotic": "希少ペット加入可",
+    "noExotic": "希少ペット不可",
+    "perMonth": "/月",
+    "openSite": "公式サイトを開く",
+    "compareLinksTitle": "保険比較の外部資料",
+    "disclaimer": "保険料・補償範囲は公式約款が最終基準です。本ページはキュレーションガイドです。"
+  },
+  "calendar": {
+    "title": "統合スケジュール",
+    "subtitle": "今後{{horizon}}日以内の接種予定、補充すべき餌・在庫、保管申告の締め切りを1つのタイムラインで見ます。",
+    "empty": "予定された日程がありません。",
+    "emptyDesc": "健康・在庫・保管申告に項目を追加すると、ここに自動でまとまります。",
+    "noClinic": "病院未指定",
+    "daysLeft": "D-{{days}}",
+    "daysOverdue": "D+{{days}} 経過",
+    "buckets": {
+      "overdue": "遅延 ({{count}})",
+      "within7": "今週 ({{count}})",
+      "within30": "今月 ({{count}})",
+      "beyond": "来月以降 ({{count}})"
+    },
+    "kind": {
+      "vaccine": "健康",
+      "supply": "在庫",
+      "registry": "申告"
+    },
+    "supplyLevel": {
+      "ok": "約{{days}}日分 残り",
+      "warning": "約{{days}}日分 残り",
+      "critical": "危急: 約{{days}}日分",
+      "depleted": "在庫切れ"
+    }
+  },
+  "routine": {
+    "title": "日課チェックリスト",
+    "subtitle": "種カテゴリ別の基本の日課(餌・ミスティング・UVBなど)＋ユーザー定義のタスクを、daily/weekly/monthly単位でチェックしましょう。チェックは cadence の周期内でのみ「done」状態が維持されます。",
+    "progressLabel": "今日の進捗度",
+    "noCategory": "オンボーディングでカテゴリを選ぶと、基本の日課が自動で埋まります。",
+    "addTitle": "自分のタスクを追加",
+    "add": "追加",
+    "addedToast": "タスクを追加しました",
+    "builtIn": "基本",
+    "remove": "削除",
+    "empty": "この周期には登録されたタスクがありません。",
+    "cadence": {
+      "daily": "毎日",
+      "weekly": "週間",
+      "monthly": "月間"
+    },
+    "fields": {
+      "label": "タスクの内容",
+      "cadence": "周期"
+    },
+    "placeholders": {
+      "label": "例: ケージの霧吹きを確認"
+    },
+    "errors": {
+      "labelRequired": "タスク名を入力してください。",
+      "labelMax": "タスク名は60文字以内で入力してください。"
+    }
+  },
+  "backup": {
+    "title": "データのバックアップ・復元",
+    "subtitle": "すべての記録(日誌・健康・環境・予算・在庫・ギャラリー・ペットIDなど)は、このブラウザにだけ保存されます。定期的なバックアップで、別の端末・ブラウザでも続けて使いましょう。",
+    "exportTitle": "書き出し",
+    "exportDesc": "現在保存されているデータを、JSONファイル1個としてダウンロードします。",
+    "exportButton": "JSONファイルとして書き出す",
+    "exportedToast": "バックアップファイルをダウンロードしました",
+    "importTitle": "読み込み",
+    "importDesc": "以前に書き出したJSONファイルを選ぶと、既存のデータを上書きして再読み込みします。",
+    "importButton": "JSONファイルを読み込む",
+    "importedToast": "復元が完了しました。まもなく再読み込みされます。",
+    "invalidFileToast": "正しいPettographyのバックアップファイルではありません",
+    "wipeTitle": "初期化",
+    "wipeDesc": "すべての記録を削除し、初回利用の状態に戻します。元に戻せません。",
+    "wipeButton": "全データを削除",
+    "wipeConfirm": "すべての記録を削除しますか? 元に戻せません。",
+    "wipedToast": "データを削除しました",
+    "empty": "まだ保存されたデータがありません。"
+  },
+  "petid": {
+    "title": "ペットIDカード",
+    "subtitle": "紛失・脱走に備えて、ケージの横や財布に入れておく印刷用のカードです。保護者の連絡先と発見者への案内が一緒に入ります。すべての情報はこのブラウザにだけ保存されます。",
+    "fillFromOnboarding": "オンボーディング情報で埋める",
+    "save": "カードを保存",
+    "clear": "初期化",
+    "print": "印刷・PDF保存",
+    "savedToast": "カードを保存しました",
+    "previewHint": "右のカードは、印刷時にページ単独で出力されます (他のUIは非表示)。",
+    "cardEyebrow": "PET IDENTIFICATION CARD",
+    "cardFooter": "発見の際は、上記の連絡先までご連絡をお願いします。Found my pet? Please contact the owner above.",
+    "requiredHint": "名前・種・保護者名・連絡先を埋めると印刷できます。",
+    "fields": {
+      "petName": "ペットの名前",
+      "speciesLabel": "種",
+      "ownerName": "保護者の名前",
+      "ownerPhone": "保護者の連絡先",
+      "region": "居住地域",
+      "registrationNumber": "動物登録番号 (任意)",
+      "distinctMarks": "特徴 (色・模様・習性)",
+      "foundInstructions": "発見時の案内 (取り扱いの注意・餌・環境)"
+    },
+    "placeholders": {
+      "petName": "例: レオ",
+      "speciesLabel": "例: レオパードゲッコー (Eublepharis macularius)",
+      "region": "例: ソウル○○区",
+      "registrationNumber": "環境部の保管申告またはRFID番号",
+      "distinctMarks": "例: 尾の一部が欠損、背中に白い点",
+      "foundInstructions": "例: 夜行性なので暗い場所を好みます。直射日光を避け、紙箱に入れて保管のうえご連絡ください。"
+    }
+  },
+  "compare": {
+    "title": "種比較",
+    "subtitle": "最大{{max}}種を選んで、難易度・寿命・スペース・ふれあい・予算を1つの表で比較します。URLをそのまま共有できます。",
+    "pickerTitle": "比較する種を選択 ({{current}}/{{max}})",
+    "clear": "選択を初期化",
+    "gridTitle": "比較結果",
+    "empty": "比較する種を1つ以上選んでみましょう。",
+    "rows": {
+      "category": "分類",
+      "difficulty": "難易度",
+      "lifespan": "寿命",
+      "space": "スペース",
+      "handling": "ふれあい",
+      "activity": "活動",
+      "budget": "月の予算",
+      "beginnerTip": "入門のコツ",
+      "commonProblem": "よくあるトラブル"
+    },
+    "units": {
+      "years": "年",
+      "perMonth": "/月"
+    },
+    "values": {
+      "space": {
+        "small": "小型 (机の上)",
+        "medium": "中型 (別途ケージ)",
+        "large": "大型 (専用スペース)"
+      },
+      "handling": {
+        "low": "鑑賞中心",
+        "medium": "ときどきハンドリング",
+        "high": "頻繁にハンドリング"
+      },
+      "activity": {
+        "nocturnal": "夜行性",
+        "diurnal": "昼行性",
+        "mixed": "混合"
+      }
+    }
+  },
+  "registry": {
+    "title": "野生動物 保管申告ガイド",
+    "subtitle": "指定管理野生動物(哺乳類・鳥類・爬虫類・両生類)を飼ったり、取引・死亡したりする際は、環境部への申告が必要です。自分のペットの申告状態をチェックリストで管理しましょう。",
+    "effectiveNote": "施行: 2025年12月14日 (野生生物の保護および管理に関する法律)",
+    "categoryStatusLabel": "うちのペットのカテゴリ",
+    "regulatedBadge": "申告の対象",
+    "unregulatedBadge": "申告の対象外",
+    "noCategory": "オンボーディングでまずカテゴリを選んでください",
+    "speciesFilingLabel": "うちの種のホワイトリスト状態",
+    "filingStatus": {
+      "white-list": "ホワイトリスト (取引許可)",
+      "regulated": "指定管理 (保管申告 必須)",
+      "unregulated": "規制の対象外",
+      "unknown": "確認が必要"
+    },
+    "checklistProgress": "チェックリストの進捗度",
+    "filingsTitle": "必須の申告4種",
+    "linksTitle": "政府・公式サイト",
+    "markDone": "完了をチェック",
+    "markedDone": "完了済み",
+    "reset": "チェックリストを初期化",
+    "filings": {
+      "keeping": {
+        "title": "保管申告",
+        "desc": "指定管理野生動物を初めて飼い始めたときに、環境部の野生動物 取引・保管申告システムに登録します。",
+        "when": "飼育開始後30日以内"
+      },
+      "transfer": {
+        "title": "譲渡・譲受申告",
+        "desc": "他の人に分譲・譲渡したり、譲り受けたりするとき、双方とも申告します。譲受者は飼育環境の写真を添付します。",
+        "when": "取引発生後30日以内"
+      },
+      "death": {
+        "title": "死亡申告",
+        "desc": "飼っていた野生動物が死んだとき、死亡の事実と処理方法(埋葬・動物葬儀など)を申告します。",
+        "when": "死亡確認後30日以内"
+      },
+      "microchip": {
+        "title": "マイクロチップ(任意)",
+        "desc": "法的な義務ではありませんが、RFIDチップの施術時に種・登録番号を記録しておくと、紛失・盗難の際の回収率が高まります。",
+        "when": "施術後に飼育日誌へ記録"
+      }
+    },
+    "links": {
+      "wildlifeRegistry": "環境部 野生生物統合ポータル (wildlife.go.kr)",
+      "animalRegistry": "国家動物保護情報システム (animal.go.kr)",
+      "envMinistry": "環境部 (me.go.kr) 野生動物 保管申告の案内"
+    },
+    "disclaimer": "法令の解釈は環境部の公式案内が最終基準です。本ガイドはユーザーの利便のための要約です。"
+  }
+}

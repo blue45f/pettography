@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import en from './locales/en.json'
+import ja from './locales/ja.json'
 import ko from './locales/ko.json'
 
 interface LocaleTree {
@@ -16,7 +17,13 @@ function flattenKeys(value: LocaleTree, prefix = ''): string[] {
 }
 
 describe('i18n locale resources', () => {
+  const koKeys = flattenKeys(ko).sort()
+
   it('keeps Korean and English translation keys in sync', () => {
-    expect(flattenKeys(en).sort()).toEqual(flattenKeys(ko).sort())
+    expect(flattenKeys(en).sort()).toEqual(koKeys)
+  })
+
+  it('keeps Korean and Japanese translation keys in sync', () => {
+    expect(flattenKeys(ja).sort()).toEqual(koKeys)
   })
 })

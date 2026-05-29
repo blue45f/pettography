@@ -11,7 +11,7 @@
 - **위치 기반 추천** — 송파/강남 좌표 mock으로 거리순 정렬, 카카오맵 API 키 등록 시 실지도 연동.
 - **외부 링크 큐레이션** — 입점 업체가 부족한 도메인은 환경부·농림축산검역본부·동물자유연대·카라·디시인사이드 등 32개 외부 링크.
 - **사용자 데이터 100% 클라이언트 저장** — zustand persist + localStorage. `/backup` 페이지에서 JSON export/import.
-- **i18n ko/en** 완전 동기화 (`pnpm test:i18n` 게이트).
+- **i18n ko/en/ja** 완전 동기화 — 3개 언어 키 패리티 (`pnpm test:i18n` 게이트), 헤더 언어 선택기.
 
 ## 페이지 맵 (총 50개 라우트)
 
@@ -48,8 +48,8 @@
 ```
 pettography/
 ├── src/                 # Frontend (React 19 + Vite + TS strict)
-│   ├── features/        # 18 features (species, onboarding, gallery, registry, routine, petid, backup ...)
-│   ├── pages/           # 33 routes (lazy)
+│   ├── features/        # 30+ features (species, onboarding, genetics, molt, vivarium, breeding, feeding, meds, showcase, qna, meetups, market, passport, assistant ...)
+│   ├── pages/           # 50 routes (lazy)
 │   ├── components/      # shared UI (Card, Badge, Button, Input, Textarea, Toast, BottomNav, Header ...)
 │   ├── router/ store/ services/ i18n/ hooks/ utils/
 │   └── assets/styles/   # design tokens (OKLCH-tinted, fluid clamp)
@@ -66,7 +66,7 @@ pettography/
 - React 19 + Vite + TypeScript strict + pnpm + React Compiler preset
 - TanStack Query 5 + Zustand 5(persist) + React Router 7 Data Router
 - Zod + react-hook-form + ky
-- i18next ko/en + Pretendard fluid typography (clamp)
+- i18next ko/en/ja + Pretendard fluid typography (clamp)
 - CSS Modules + container queries + safe-area-inset + dvh
 - 모바일: BottomNav(≤860px) + 가로 스크롤 lifecycle/vet rail
 

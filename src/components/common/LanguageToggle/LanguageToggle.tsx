@@ -2,17 +2,18 @@ import { useTranslation } from 'react-i18next'
 
 import styles from './LanguageToggle.module.css'
 
-import { SUPPORTED_LANGUAGES } from '@/i18n'
+import { SUPPORTED_LANGUAGES, type SupportedLanguage } from '@/i18n'
 
-const LABELS: Record<string, string> = {
+const LABELS: Record<SupportedLanguage, string> = {
   ko: '한국어',
   en: 'English',
+  ja: '日本語',
 }
 
 function LanguageToggle() {
   const { i18n, t } = useTranslation()
-  const current = SUPPORTED_LANGUAGES.includes(i18n.resolvedLanguage as 'ko' | 'en')
-    ? (i18n.resolvedLanguage as 'ko' | 'en')
+  const current = SUPPORTED_LANGUAGES.includes(i18n.resolvedLanguage as SupportedLanguage)
+    ? (i18n.resolvedLanguage as SupportedLanguage)
     : 'ko'
 
   return (
