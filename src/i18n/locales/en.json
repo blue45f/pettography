@@ -2894,6 +2894,8 @@
       "supplementSoon": "{{type}} dusting due soon",
       "vaccinationOverdue": "{{name}} booster overdue",
       "vaccinationSoon": "{{name}} booster coming up",
+      "cleaningDue": "{{type}} cleaning is due",
+      "cleaningSoon": "{{type}} cleaning due soon",
       "bcsOff": "Body score is {{status}}",
       "brumationPhase": "Brumation in progress: {{phase}}"
     }

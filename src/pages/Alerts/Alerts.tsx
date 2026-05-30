@@ -20,6 +20,7 @@ const SOURCE_EMOJI: Record<string, string> = {
   bcs: '⚖️',
   supplements: '🧂',
   health: '💉',
+  cleaning: '🧽',
 }
 
 const SEVERITY_VARIANT: Record<AlertSeverity, 'error' | 'warning' | 'primary' | 'default'> = {

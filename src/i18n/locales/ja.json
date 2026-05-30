@@ -2891,6 +2891,8 @@
       "supplementSoon": "{{type}}のダスティングがもうすぐです",
       "vaccinationOverdue": "{{name}}の接種が過ぎています",
       "vaccinationSoon": "{{name}}の接種予定です",
+      "cleaningDue": "{{type}}の掃除時期です",
+      "cleaningSoon": "{{type}}の掃除がもうすぐです",
       "bcsOff": "体型スコアが{{status}}です",
       "brumationPhase": "冬眠進行中: {{phase}}"
     }

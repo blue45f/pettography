@@ -2,6 +2,13 @@ import { sortAlerts, type AlertItem } from '@features/alerts'
 import { latestBcs, statusForScore, useActivePetBcs } from '@features/bcs'
 import { clutchStatusLabelCode, useActivePetClutches } from '@features/breeding'
 import { currentPhase, useActivePetPlans } from '@features/brumation'
+import {
+  CLEAN_TYPES,
+  cleanStatus,
+  defaultIntervalDays as defaultCleanInterval,
+  latestByType as latestCleanByType,
+  useActivePetCleanings,
+} from '@features/cleaning'
 import { dueDate, gearStatus, useActivePetGear } from '@features/gear'
 import { upcomingDues, useActivePetHealth } from '@features/health'
 import {
@@ -54,6 +61,7 @@ export function useAggregatedAlerts(): AlertItem[] {
   const dustings = useActivePetDustings()
   const supSchedule = useSupplementsStore((s) => s.schedule)
   const { vaccinations } = useActivePetHealth()
+  const cleanings = useActivePetCleanings()
 
   const today = todayIso()
 
@@ -225,6 +233,22 @@ export function useAggregatedAlerts(): AlertItem[] {
       })
     }
 
+    // Cleaning — a routine clean (spot/full/substrate/water) is due or coming up
+    for (const type of CLEAN_TYPES) {
+      const last = latestCleanByType(cleanings, type)?.cleanedAt ?? null
+      const status = cleanStatus(last, defaultCleanInterval(type, category), today)
+      if (status === 'due' || status === 'soon') {
+        out.push({
+          id: `cleaning-${type}`,
+          source: 'cleaning',
+          severity: status,
+          titleKey: status === 'due' ? 'alerts.items.cleaningDue' : 'alerts.items.cleaningSoon',
+          params: { type: t(`cleaning.types.${type}`) },
+          route: '/cleaning',
+        })
+      }
+    }
+
     // Supplements — a routine dusting is due or coming up soon (MBD prevention)
     for (const type of SUPPLEMENT_TYPES) {
       const interval = supSchedule[type] ?? defaultIntervalDays(category, type)
@@ -253,6 +277,7 @@ export function useAggregatedAlerts(): AlertItem[] {
     plans,
     bcs,
     category,
+    cleanings,
     dustings,
     supSchedule,
     vaccinations,

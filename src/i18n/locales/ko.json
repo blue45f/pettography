@@ -2891,6 +2891,8 @@
       "supplementSoon": "{{type}} 더스팅이 곧 필요해요",
       "vaccinationOverdue": "{{name}} 접종이 지났어요",
       "vaccinationSoon": "{{name}} 접종 예정이에요",
+      "cleaningDue": "{{type}} 청소 시기예요",
+      "cleaningSoon": "{{type}} 청소가 곧 필요해요",
       "bcsOff": "체형 점수가 '{{status}}' 상태예요",
       "brumationPhase": "동면 진행 중: {{phase}}"
     }
