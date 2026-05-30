@@ -1,14 +1,14 @@
 import LanguageToggle from '@components/common/LanguageToggle'
 import ThemeToggle from '@components/common/ThemeToggle'
 import PetSwitcher from '@components/layout/PetSwitcher'
-import { actionableCount } from '@features/alerts'
 import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
-import { useAggregatedAlerts } from '@hooks/useAggregatedAlerts'
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router'
 
 import styles from './Header.module.css'
+
+const AlertBell = lazy(() => import('./AlertBell'))
 
 interface NavItem {
   path: string
@@ -24,7 +24,6 @@ function Header({ onOpenCommand }: HeaderProps) {
   const location = useLocation()
   const profile = useOnboardingStore((s) => s.profile)
   const completed = isOnboardingComplete(profile)
-  const alertCount = actionableCount(useAggregatedAlerts())
   const [menuOpen, setMenuOpen] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
   const moreRef = useRef<HTMLLIElement | null>(null)
@@ -164,22 +163,9 @@ function Header({ onOpenCommand }: HeaderProps) {
           )}
           {completed && <PetSwitcher />}
           {completed && (
-            <Link
-              to="/alerts"
-              className={styles.alertBell}
-              aria-label={
-                alertCount > 0 ? t('header.alertsCount', { count: alertCount }) : t('nav.alerts')
-              }
-              aria-current={location.pathname === '/alerts' ? 'page' : undefined}
-              onClick={closeAll}
-            >
-              <span aria-hidden="true">🔔</span>
-              {alertCount > 0 && (
-                <span className={styles.alertBadge} aria-hidden="true">
-                  {alertCount > 9 ? '9+' : alertCount}
-                </span>
-              )}
-            </Link>
+            <Suspense fallback={null}>
+              <AlertBell onNavigate={closeAll} />
+            </Suspense>
           )}
           <LanguageToggle />
           <ThemeToggle />

@@ -2,14 +2,15 @@ import ErrorBoundary from '@components/common/ErrorBoundary'
 import Loading from '@components/common/Loading'
 import SkipLink from '@components/common/SkipLink'
 import BottomNav from '@components/layout/BottomNav'
-import CommandPalette from '@components/layout/CommandPalette'
 import Footer from '@components/layout/Footer'
 import Header from '@components/layout/Header'
 import SosFab from '@components/layout/SosFab'
-import { Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { Outlet } from 'react-router'
 
 import styles from './App.module.css'
+
+const CommandPalette = lazy(() => import('@components/layout/CommandPalette'))
 
 function App() {
   const [commandOpen, setCommandOpen] = useState(false)
@@ -39,7 +40,11 @@ function App() {
       <Footer />
       <SosFab />
       <BottomNav />
-      {commandOpen && <CommandPalette onClose={() => setCommandOpen(false)} />}
+      {commandOpen && (
+        <Suspense fallback={null}>
+          <CommandPalette onClose={() => setCommandOpen(false)} />
+        </Suspense>
+      )}
     </div>
   )
 }
