@@ -163,7 +163,16 @@ export const useOnboardingStore = create<OnboardingState>()(
       storage: createJSONStorage(() => localStorage),
       migrate: (persisted: unknown, version) => {
         if (version >= 2 && persisted && typeof persisted === 'object') {
-          return persisted as OnboardingState
+          // Validate the shape before trusting it: a corrupted backup that drops
+          // pets/activePetId/profile would otherwise crash callers. Fall back to
+          // initial state (undefined) when the required fields are malformed.
+          const s = persisted as Partial<OnboardingState>
+          const valid =
+            Array.isArray(s.pets) &&
+            (s.activePetId === null || typeof s.activePetId === 'string') &&
+            s.profile != null &&
+            typeof s.profile === 'object'
+          return valid ? (persisted as OnboardingState) : undefined
         }
         // legacy v0/v1: { profile: OnboardingProfile }
         const legacy = persisted as { profile?: OnboardingProfile } | null

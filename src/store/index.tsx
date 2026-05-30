@@ -33,8 +33,20 @@ export const useAppStore = create<AppState>()(
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ theme: state.theme, user: state.user }),
       onRehydrateStorage: () => (state) => {
-        if (state && state.user) {
+        if (!state) return
+        // Guard against a corrupted/hand-edited backup: only trust a well-formed user.
+        const u: unknown = state.user
+        const valid =
+          u !== null &&
+          typeof u === 'object' &&
+          typeof (u as User).id === 'string' &&
+          typeof (u as User).name === 'string' &&
+          typeof (u as User).email === 'string'
+        if (valid) {
           state.isAuthenticated = true
+        } else {
+          state.user = null
+          state.isAuthenticated = false
         }
       },
     },

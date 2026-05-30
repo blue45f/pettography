@@ -148,7 +148,7 @@ function Vitals() {
   const guidanceKey = respGuidanceCategory(profile.category)
 
   const trendValues = useMemo(() => trend(readings, historyType), [readings, historyType])
-  const sparkPoints = trendValues.map((v, i) => ({ x: i, y: v }))
+  const sparkPoints = useMemo(() => trendValues.map((v, i) => ({ x: i, y: v })), [trendValues])
 
   const historyList = useMemo(
     () => sortByDate(readings.filter((r) => r.type === historyType)).reverse(),
