@@ -4,6 +4,7 @@ import { buildAlerts, type BuildAlertsInput } from './useAggregatedAlerts'
 
 import type { BcsEntry } from '@features/bcs'
 import type { CleaningLog, CleanType } from '@features/cleaning'
+import type { GearItem, GearType } from '@features/gear'
 import type { VaccinationEntry } from '@features/health'
 import type { DustingLog, SupplementType } from '@features/supplements'
 import type { TFunction } from 'i18next'
@@ -66,6 +67,24 @@ function cleaningLog(type: CleanType, cleanedAt: string): CleaningLog {
     cleanedAt,
     note: '',
     createdAt: `${cleanedAt}T00:00:00.000Z`,
+  }
+}
+
+function gearItem(
+  typeId: GearType,
+  name: string,
+  installedAt: string,
+  intervalMonths: number,
+): GearItem {
+  return {
+    id: `g-${typeId}`,
+    petId: 'pet-1',
+    typeId,
+    name,
+    installedAt,
+    intervalMonths,
+    notes: '',
+    createdAt: `${installedAt}T00:00:00.000Z`,
   }
 }
 
@@ -135,6 +154,19 @@ describe('buildAlerts', () => {
       titleKey: 'alerts.items.cleaningDue',
       route: '/cleaning',
       params: { type: 'cleaning.types.spot' },
+    })
+  })
+
+  it('flags an overdue gear replacement, carrying the item id into the alert id', () => {
+    const alerts = buildAlerts(emptyInput({ gear: [gearItem('uvbBulb', 'UVB', '2024-01-01', 1)] }))
+    expect(alerts).toHaveLength(1)
+    expect(alerts[0]).toMatchObject({
+      id: 'gear-g-uvbBulb',
+      source: 'gear',
+      severity: 'overdue',
+      titleKey: 'alerts.items.gearOverdue',
+      route: '/gear',
+      params: { name: 'UVB' },
     })
   })
 
