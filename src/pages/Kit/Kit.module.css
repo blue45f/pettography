@@ -83,13 +83,23 @@
   padding: var(--spacing-lg);
   border-radius: var(--radius-lg);
   text-decoration: none;
-  color: #fff;
+  color: var(--color-on-brand);
   min-height: 44px;
   transition: transform var(--motion-fast);
 }
 
 .quickLink:hover {
   transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quickLink {
+    transition: none;
+  }
+
+  .quickLink:hover {
+    transform: none;
+  }
 }
 
 .quickSos {

@@ -1,6 +1,7 @@
 import useScrollLock from '@hooks/useScrollLock'
 import { useEffect, useCallback, useId, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { useTranslation } from 'react-i18next'
 
 import styles from './Modal.module.css'
 
@@ -24,6 +25,7 @@ function Modal({
   size = 'md',
   closeOnOverlay = true,
 }: ModalProps) {
+  const { t } = useTranslation()
   useScrollLock(isOpen)
   const titleId = useId()
   const modalRef = useRef<HTMLDivElement | null>(null)
@@ -95,7 +97,7 @@ function Modal({
           type="button"
           className={styles.overlay}
           onClick={onClose}
-          aria-label="모달 닫기"
+          aria-label={t('common.closeModal')}
           tabIndex={-1}
         />
       )}
@@ -113,7 +115,12 @@ function Modal({
             <h2 id={titleId} className={styles.title}>
               {title}
             </h2>
-            <button className={styles.close} onClick={onClose} aria-label="닫기" type="button">
+            <button
+              className={styles.close}
+              onClick={onClose}
+              aria-label={t('common.close')}
+              type="button"
+            >
               &times;
             </button>
           </div>

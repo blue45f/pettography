@@ -21,7 +21,7 @@
   padding: var(--spacing-lg);
   border-radius: var(--radius-lg);
   background: var(--gradient-brand);
-  color: #fff;
+  color: var(--color-on-brand);
   box-shadow: var(--shadow-md);
 }
 
@@ -140,12 +140,12 @@
 
 .filterActive {
   background: var(--gradient-brand);
-  color: #fff;
+  color: var(--color-on-brand);
   border-color: transparent;
 }
 
 .filterActive:hover {
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 .controls {

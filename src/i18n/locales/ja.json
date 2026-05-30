@@ -1,5 +1,8 @@
 {
   "common": {
+    "close": "閉じる",
+    "closeModal": "モーダルを閉じる",
+    "imageLoadError": "画像の読み込みに失敗",
     "appName": "Pettography",
     "appTagline": "希少エキゾチックペットの種選びから病院・ショップ・葬儀まで、一か所で始めるライフサイクルポータル",
     "appTaglineRegion": "希少エキゾチックペットの種選びから病院・ショップ・葬儀まで、{{region}}で始めるライフサイクルポータル",

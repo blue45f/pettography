@@ -28,6 +28,7 @@ import { useOnboardingStore } from '@features/onboarding'
 import { useSpecies, useSpeciesList } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { useToday } from '@hooks/useToday'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -71,7 +72,7 @@ function Molt() {
   const term = t(`molt.term.${category ?? 'default'}`)
   const isArthropod = category === 'arthropod'
 
-  const today = todayIso()
+  const today = useToday()
   const prediction = useMemo(() => predictNext(events, today), [events, today])
   const average = useMemo(() => averageCycleDays(events), [events])
   const median = useMemo(() => medianCycleDays(events), [events])

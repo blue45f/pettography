@@ -21,7 +21,7 @@
   margin-top: var(--spacing-sm);
   padding: var(--spacing-2xs) var(--spacing-sm);
   background: var(--gradient-brand);
-  color: #fff;
+  color: var(--color-on-brand);
   border-radius: var(--radius-pill);
   font-size: var(--font-size-sm);
   font-weight: 600;
@@ -52,7 +52,7 @@
   gap: var(--spacing-md);
   padding: var(--spacing-lg);
   background: var(--gradient-brand);
-  color: #fff;
+  color: var(--color-on-brand);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   text-decoration: none;
@@ -64,6 +64,16 @@
 .geneticsLink:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-glow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .geneticsLink {
+    transition: none;
+  }
+
+  .geneticsLink:hover {
+    transform: none;
+  }
 }
 
 .geneticsLink:focus-visible {
@@ -84,7 +94,7 @@
 
 .geneticsLinkDesc {
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.88);
+  color: color-mix(in srgb, var(--color-on-brand) 88%, transparent);
 }
 
 .geneticsLinkArrow {

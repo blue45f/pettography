@@ -27,6 +27,7 @@ import { useOnboardingStore } from '@features/onboarding'
 import { useSpeciesList } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { useToday } from '@hooks/useToday'
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -68,7 +69,7 @@ function Gear() {
   const markReplaced = useGearStore((s) => s.markReplaced)
   const removeItem = useGearStore((s) => s.removeItem)
 
-  const today = todayIso()
+  const today = useToday()
   const sorted = useMemo(() => sortByUrgency(items, today), [items, today])
 
   const {

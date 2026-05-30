@@ -26,6 +26,7 @@ import { useOnboardingStore } from '@features/onboarding'
 import { useSpecies, useSpeciesList } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { useToday } from '@hooks/useToday'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -61,7 +62,7 @@ function Cleaning() {
   const [showAllPets, setShowAllPets] = useState(false)
   const logs = showAllPets ? allLogs : activeLogs
   const showPetBadge = showAllPets && pets.length > 1
-  const today = todayIso()
+  const today = useToday()
   const category = profile.category
 
   const {

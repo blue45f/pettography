@@ -87,7 +87,7 @@ function Feeding() {
     const asc = [...logs].sort((a, b) => a.fedAt.localeCompare(b.fedAt))
     const points: SparklinePoint[] = []
     for (let i = 1; i < asc.length; i += 1) {
-      points.push({ x: i, y: daysBetween(asc[i - 1].fedAt, asc[i].fedAt), label: asc[i].fedAt })
+      points.push({ x: i - 1, y: daysBetween(asc[i - 1].fedAt, asc[i].fedAt), label: asc[i].fedAt })
     }
     return points
   }, [logs])
@@ -353,51 +353,53 @@ function Feeding() {
         />
       ) : (
         <ul className={styles.list}>
-          {logs.map((log) => {
-            const label = petLabel(log.petId)
-            const showBadge = label && (showPetBadge || log.petId !== activePetId)
-            return (
-              <li key={log.id}>
-                <Card padding="md">
-                  <Card.Body>
-                    <div className={styles.entryHeader}>
-                      <div className={styles.entryHeaderLeft}>
-                        <Badge variant={log.accepted ? 'success' : 'warning'}>
-                          {log.accepted ? t('feeding.log.ate') : t('feeding.log.refused')}
-                        </Badge>
-                        <span className={styles.entryDate}>{log.fedAt}</span>
-                        {showBadge && label && (
-                          <Badge variant="default">
-                            <span aria-hidden="true">{label.emoji}</span> {label.name}
+          {[...logs]
+            .sort((a, b) => b.fedAt.localeCompare(a.fedAt))
+            .map((log) => {
+              const label = petLabel(log.petId)
+              const showBadge = label && (showPetBadge || log.petId !== activePetId)
+              return (
+                <li key={log.id}>
+                  <Card padding="md">
+                    <Card.Body>
+                      <div className={styles.entryHeader}>
+                        <div className={styles.entryHeaderLeft}>
+                          <Badge variant={log.accepted ? 'success' : 'warning'}>
+                            {log.accepted ? t('feeding.log.ate') : t('feeding.log.refused')}
                           </Badge>
-                        )}
+                          <span className={styles.entryDate}>{log.fedAt}</span>
+                          {showBadge && label && (
+                            <Badge variant="default">
+                              <span aria-hidden="true">{label.emoji}</span> {label.name}
+                            </Badge>
+                          )}
+                        </div>
+                        <button
+                          type="button"
+                          className={styles.removeButton}
+                          onClick={() => removeLog(log.id)}
+                        >
+                          {t('feeding.log.remove')}
+                        </button>
                       </div>
-                      <button
-                        type="button"
-                        className={styles.removeButton}
-                        onClick={() => removeLog(log.id)}
-                      >
-                        {t('feeding.log.remove')}
-                      </button>
-                    </div>
-                    <p className={styles.entryItem}>
-                      {log.item}
-                      {log.quantity !== null && (
-                        <span className={styles.entryQuantity}>
-                          {' '}
-                          {t('feeding.log.quantityCount', { count: log.quantity })}
-                        </span>
+                      <p className={styles.entryItem}>
+                        {log.item}
+                        {log.quantity !== null && (
+                          <span className={styles.entryQuantity}>
+                            {' '}
+                            {t('feeding.log.quantityCount', { count: log.quantity })}
+                          </span>
+                        )}
+                      </p>
+                      {log.notes && <p className={styles.entryNotes}>{log.notes}</p>}
+                      {!log.speciesId && (
+                        <p className={styles.entryFooter}>{t('feeding.log.speciesUnknown')}</p>
                       )}
-                    </p>
-                    {log.notes && <p className={styles.entryNotes}>{log.notes}</p>}
-                    {!log.speciesId && (
-                      <p className={styles.entryFooter}>{t('feeding.log.speciesUnknown')}</p>
-                    )}
-                  </Card.Body>
-                </Card>
-              </li>
-            )
-          })}
+                    </Card.Body>
+                  </Card>
+                </li>
+              )
+            })}
         </ul>
       )}
     </section>

@@ -90,7 +90,7 @@
 
 .segmentActive {
   background: var(--gradient-brand);
-  color: #fff;
+  color: var(--color-on-brand);
   box-shadow: var(--shadow-xs);
 }
 
@@ -109,8 +109,8 @@
 }
 
 .segmentActive .segmentCount {
-  background: rgb(255 255 255 / 0.25);
-  color: #fff;
+  background: color-mix(in srgb, var(--color-on-brand) 25%, transparent);
+  color: var(--color-on-brand);
 }
 
 /* Live display */

@@ -73,7 +73,7 @@ export const useMeetupsStore = create<MeetupsState>()(
       },
       removeMeetup: (id) =>
         set((state) => {
-          if (!state.ownMeetupIds[id]) return state
+          if (!state.ownMeetupIds[id]) return {}
           const nextOwn = { ...state.ownMeetupIds }
           delete nextOwn[id]
           const nextRsvp = { ...state.rsvpIds }
@@ -114,7 +114,7 @@ export const useMeetupsStore = create<MeetupsState>()(
       },
       removeMentor: (id) =>
         set((state) => {
-          if (!state.ownMentorIds[id]) return state
+          if (!state.ownMentorIds[id]) return {}
           const nextOwn = { ...state.ownMentorIds }
           delete nextOwn[id]
           return {

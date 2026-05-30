@@ -1,5 +1,8 @@
 {
   "common": {
+    "close": "Close",
+    "closeModal": "Close modal",
+    "imageLoadError": "Image failed to load",
     "appName": "Pettography",
     "appTagline": "Rare-pet lifecycle portal — pick, vet, shop, farewell, all in one place.",
     "appTaglineRegion": "Rare-pet lifecycle portal — pick, vet, shop, farewell, starting in {{region}}.",

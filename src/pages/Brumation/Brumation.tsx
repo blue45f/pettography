@@ -29,15 +29,12 @@ import { useOnboardingStore } from '@features/onboarding'
 import { useSpecies, useSpeciesList } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { useToday } from '@hooks/useToday'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Brumation.module.css'
-
-function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
-}
 
 /** Signed whole-day count from today to a `YYYY-MM-DD` date. */
 function daysUntil(dateISO: string, todayISO: string): number {
@@ -51,7 +48,7 @@ function Brumation() {
   const { toast } = useToast()
   useDocumentTitle(t('brumation.title'))
 
-  const today = todayIso()
+  const today = useToday()
   const profile = useOnboardingStore((s) => s.profile)
   const { data: activeSpecies } = useSpecies(profile.speciesId ?? undefined)
   const { data: speciesList = [] } = useSpeciesList({})

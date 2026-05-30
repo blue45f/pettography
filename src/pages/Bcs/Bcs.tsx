@@ -265,45 +265,47 @@ function Bcs() {
           />
         ) : (
           <ul className={styles.list}>
-            {entries.map((entry) => {
-              const status = statusForScore(entry.score)
-              const label = petLabel(entry.petId)
-              const showBadge = label && (showPetBadge || entry.petId !== activePetId)
-              return (
-                <li key={entry.id}>
-                  <Card padding="md">
-                    <Card.Body>
-                      <div className={styles.entryHeader}>
-                        <div className={styles.entryHeaderLeft}>
-                          <span className={styles.entryScore}>
-                            {entry.score}
-                            <span className={styles.entryScoreMax}>/5</span>
-                          </span>
-                          <Badge variant={status === 'ideal' ? 'success' : 'warning'}>
-                            {t(`bcs.status.${status}`)}
-                          </Badge>
-                          <span className={styles.entryName}>{t(scoreLabel(entry.score))}</span>
-                          <span className={styles.entryDate}>{entry.assessedAt}</span>
-                          {showBadge && label && (
-                            <Badge variant="default">
-                              <span aria-hidden="true">{label.emoji}</span> {label.name}
+            {[...entries]
+              .sort((a, b) => b.assessedAt.localeCompare(a.assessedAt))
+              .map((entry) => {
+                const status = statusForScore(entry.score)
+                const label = petLabel(entry.petId)
+                const showBadge = label && (showPetBadge || entry.petId !== activePetId)
+                return (
+                  <li key={entry.id}>
+                    <Card padding="md">
+                      <Card.Body>
+                        <div className={styles.entryHeader}>
+                          <div className={styles.entryHeaderLeft}>
+                            <span className={styles.entryScore}>
+                              {entry.score}
+                              <span className={styles.entryScoreMax}>/5</span>
+                            </span>
+                            <Badge variant={status === 'ideal' ? 'success' : 'warning'}>
+                              {t(`bcs.status.${status}`)}
                             </Badge>
-                          )}
+                            <span className={styles.entryName}>{t(scoreLabel(entry.score))}</span>
+                            <span className={styles.entryDate}>{entry.assessedAt}</span>
+                            {showBadge && label && (
+                              <Badge variant="default">
+                                <span aria-hidden="true">{label.emoji}</span> {label.name}
+                              </Badge>
+                            )}
+                          </div>
+                          <button
+                            type="button"
+                            className={styles.removeButton}
+                            onClick={() => removeEntry(entry.id)}
+                          >
+                            {t('bcs.remove')}
+                          </button>
                         </div>
-                        <button
-                          type="button"
-                          className={styles.removeButton}
-                          onClick={() => removeEntry(entry.id)}
-                        >
-                          {t('bcs.remove')}
-                        </button>
-                      </div>
-                      {entry.note && <p className={styles.entryNote}>{entry.note}</p>}
-                    </Card.Body>
-                  </Card>
-                </li>
-              )
-            })}
+                        {entry.note && <p className={styles.entryNote}>{entry.note}</p>}
+                      </Card.Body>
+                    </Card>
+                  </li>
+                )
+              })}
           </ul>
         )}
       </section>

@@ -1,5 +1,6 @@
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import styles from './LazyImage.module.css'
 
@@ -13,6 +14,7 @@ interface LazyImageProps {
 }
 
 function LazyImage({ src, alt, width, height, placeholder, className = '' }: LazyImageProps) {
+  const { t } = useTranslation()
   const [loaded, setLoaded] = useState(false)
   const [error, setError] = useState(false)
   const { ref, isIntersecting } = useIntersectionObserver({
@@ -37,7 +39,7 @@ function LazyImage({ src, alt, width, height, placeholder, className = '' }: Laz
         </div>
       )}
       {error && (
-        <div className={styles.error} aria-label="이미지 로드 실패">
+        <div className={styles.error} role="img" aria-label={t('common.imageLoadError')}>
           <span aria-hidden="true">&#x26A0;</span>
         </div>
       )}
