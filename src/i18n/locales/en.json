@@ -2890,6 +2890,8 @@
       "clutchDue": "A clutch is in its hatch window",
       "moltOverdue": "Shed is overdue",
       "waterToxic": "Water is toxic — change it now",
+      "supplementDue": "{{type}} dusting is due",
+      "supplementSoon": "{{type}} dusting due soon",
       "bcsOff": "Body score is {{status}}",
       "brumationPhase": "Brumation in progress: {{phase}}"
     }

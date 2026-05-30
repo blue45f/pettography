@@ -11,7 +11,16 @@ import {
   useActivePetQuarantines,
 } from '@features/meds'
 import { predictNext, useActivePetMolts } from '@features/molt'
+import { useOnboardingStore } from '@features/onboarding'
 import { useSpeciesList } from '@features/species'
+import {
+  defaultIntervalDays,
+  dustingStatus,
+  latestByType,
+  SUPPLEMENT_TYPES,
+  useActivePetDustings,
+  useSupplementsStore,
+} from '@features/supplements'
 import { cycleStatus, useActivePetReadings } from '@features/water'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -40,6 +49,9 @@ export function useAggregatedAlerts(): AlertItem[] {
   const readings = useActivePetReadings()
   const plans = useActivePetPlans()
   const bcs = useActivePetBcs()
+  const category = useOnboardingStore((s) => s.profile.category)
+  const dustings = useActivePetDustings()
+  const supSchedule = useSupplementsStore((s) => s.schedule)
 
   const today = todayIso()
 
@@ -197,6 +209,38 @@ export function useAggregatedAlerts(): AlertItem[] {
       }
     }
 
+    // Supplements — a routine dusting is due or coming up soon (MBD prevention)
+    for (const type of SUPPLEMENT_TYPES) {
+      const interval = supSchedule[type] ?? defaultIntervalDays(category, type)
+      if (interval == null) continue
+      const status = dustingStatus(latestByType(dustings, type)?.dustedAt, interval, today)
+      if (status === 'due' || status === 'soon') {
+        out.push({
+          id: `supplement-${type}`,
+          source: 'supplements',
+          severity: status,
+          titleKey: status === 'due' ? 'alerts.items.supplementDue' : 'alerts.items.supplementSoon',
+          params: { type: t(`supplements.types.${type}`) },
+          route: '/supplements',
+        })
+      }
+    }
+
     return sortAlerts(out)
-  }, [meds, quarantines, gear, clutches, molts, readings, plans, bcs, speciesList, today, t])
+  }, [
+    meds,
+    quarantines,
+    gear,
+    clutches,
+    molts,
+    readings,
+    plans,
+    bcs,
+    category,
+    dustings,
+    supSchedule,
+    speciesList,
+    today,
+    t,
+  ])
 }

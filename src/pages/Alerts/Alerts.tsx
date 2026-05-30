@@ -18,6 +18,7 @@ const SOURCE_EMOJI: Record<string, string> = {
   water: '💧',
   brumation: '❄️',
   bcs: '⚖️',
+  supplements: '🧂',
 }
 
 const SEVERITY_VARIANT: Record<AlertSeverity, 'error' | 'warning' | 'primary' | 'default'> = {

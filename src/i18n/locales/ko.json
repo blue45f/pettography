@@ -2887,6 +2887,8 @@
       "clutchDue": "클러치 부화 예정 기간이에요",
       "moltOverdue": "탈피 예정일이 지났어요",
       "waterToxic": "수질 위험 — 즉시 환수가 필요해요",
+      "supplementDue": "{{type}} 더스팅 시기예요",
+      "supplementSoon": "{{type}} 더스팅이 곧 필요해요",
       "bcsOff": "체형 점수가 '{{status}}' 상태예요",
       "brumationPhase": "동면 진행 중: {{phase}}"
     }
