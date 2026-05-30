@@ -176,7 +176,7 @@
 .scaleItemActive .scaleScore {
   background: var(--gradient-brand);
   border-color: transparent;
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 .scaleName {
@@ -252,11 +252,11 @@
 .segmentActive {
   background: var(--gradient-brand);
   border-color: transparent;
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 .segmentActive:hover {
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 .segmentScore {

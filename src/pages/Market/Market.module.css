@@ -92,12 +92,12 @@
 
 .filterActive {
   background: var(--gradient-brand);
-  color: #fff;
+  color: var(--color-on-brand);
   border-color: transparent;
 }
 
 .filterActive:hover {
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 /* ── Composer ── */

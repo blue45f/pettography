@@ -52,7 +52,7 @@
 
 .filterActive {
   background: var(--gradient-brand);
-  color: white;
+  color: var(--color-on-brand);
   border-color: transparent;
 }
 

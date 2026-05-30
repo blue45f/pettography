@@ -23,7 +23,7 @@
   padding: var(--spacing-lg);
   border-radius: var(--radius-xl);
   background: var(--gradient-brand);
-  color: #fff;
+  color: var(--color-on-brand);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
   max-width: 540px;

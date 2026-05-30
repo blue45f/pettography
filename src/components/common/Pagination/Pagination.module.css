@@ -29,7 +29,7 @@
 }
 
 .button.active {
-  color: white;
+  color: var(--color-on-brand);
   background-color: var(--color-primary);
   border-color: var(--color-primary);
 }

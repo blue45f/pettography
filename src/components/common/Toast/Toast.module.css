@@ -16,7 +16,7 @@
   gap: var(--spacing-sm);
   padding: var(--spacing-md) var(--spacing-lg);
   border-radius: var(--border-radius);
-  color: white;
+  color: var(--color-on-brand);
   font-size: var(--font-size-sm);
   box-shadow: var(--shadow-md);
   animation: slideIn 0.3s ease-out;

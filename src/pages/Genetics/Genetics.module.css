@@ -50,7 +50,7 @@
 .chipActive {
   background: var(--gradient-brand);
   border-color: transparent;
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 .caveat {
@@ -136,7 +136,7 @@
 
 .segStrong.segActive {
   background: var(--color-primary);
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 /* Results */

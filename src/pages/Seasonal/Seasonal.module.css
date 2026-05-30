@@ -71,11 +71,11 @@
 .chipActive {
   background: var(--gradient-brand);
   border-color: transparent;
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 .chipActive:hover {
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 /* Current-season hero card */

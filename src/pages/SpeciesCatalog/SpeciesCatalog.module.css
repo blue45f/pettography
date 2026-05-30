@@ -187,7 +187,7 @@
 .compareTickOn {
   background: var(--color-primary);
   border-color: var(--color-primary);
-  color: white;
+  color: var(--color-on-brand);
 }
 
 .compareTick:disabled {
@@ -249,7 +249,7 @@
 
 .compareBarGo {
   background: var(--color-primary);
-  color: white;
+  color: var(--color-on-brand);
 }
 
 .compareBarGo:hover {

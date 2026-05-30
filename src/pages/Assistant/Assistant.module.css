@@ -71,7 +71,7 @@
 .chipActive {
   background: var(--gradient-brand);
   border-color: transparent;
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 .chipIcon {
@@ -183,7 +183,7 @@
 
 .emergencyLink {
   background: var(--color-error);
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 .emergencyLink:hover {

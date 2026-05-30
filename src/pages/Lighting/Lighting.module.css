@@ -27,7 +27,7 @@
   gap: var(--spacing-2xs);
   padding: var(--spacing-2xs) var(--spacing-sm);
   background: var(--gradient-brand);
-  color: #fff;
+  color: var(--color-on-brand);
   border-radius: var(--radius-pill);
   font-size: var(--font-size-sm);
   font-weight: 600;

@@ -73,7 +73,7 @@
 
 .stageActive {
   background: var(--gradient-brand);
-  color: #fff;
+  color: var(--color-on-brand);
   box-shadow: var(--shadow-sm);
 }
 

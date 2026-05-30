@@ -53,7 +53,7 @@
   gap: var(--spacing-2xs);
   padding: var(--spacing-2xs) var(--spacing-md);
   background: var(--color-accent);
-  color: white;
+  color: var(--color-on-brand);
   border-radius: var(--radius-pill);
   font-size: var(--font-size-sm);
   font-weight: 800;
@@ -82,7 +82,7 @@
 
 .sosChip:hover {
   background: var(--color-accent-600);
-  color: white;
+  color: var(--color-on-brand);
   transform: translateY(-1px);
 }
 
@@ -120,7 +120,7 @@
 }
 
 .navLink.active {
-  color: white;
+  color: var(--color-on-brand);
   background: var(--gradient-brand);
   box-shadow: var(--shadow-sm);
 }
@@ -157,7 +157,7 @@
   align-items: center;
   justify-content: center;
   background: var(--color-error);
-  color: white;
+  color: var(--color-on-brand);
   font-size: var(--font-size-xs);
   font-weight: 700;
   line-height: 1;

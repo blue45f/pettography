@@ -93,7 +93,7 @@
 
 .filterActive {
   background: var(--gradient-brand);
-  color: #fff;
+  color: var(--color-on-brand);
   border-color: transparent;
 }
 
@@ -306,12 +306,12 @@
 
 .acceptButton:hover {
   background: var(--color-success);
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 .acceptButton[aria-pressed='true'] {
   background: var(--color-success);
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 .noAnswers {
