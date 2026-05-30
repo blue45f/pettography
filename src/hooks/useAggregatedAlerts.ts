@@ -3,6 +3,7 @@ import { latestBcs, statusForScore, useActivePetBcs } from '@features/bcs'
 import { clutchStatusLabelCode, useActivePetClutches } from '@features/breeding'
 import { currentPhase, useActivePetPlans } from '@features/brumation'
 import { dueDate, gearStatus, useActivePetGear } from '@features/gear'
+import { upcomingDues, useActivePetHealth } from '@features/health'
 import {
   doseStatusCode,
   nextDoseDate,
@@ -52,6 +53,7 @@ export function useAggregatedAlerts(): AlertItem[] {
   const category = useOnboardingStore((s) => s.profile.category)
   const dustings = useActivePetDustings()
   const supSchedule = useSupplementsStore((s) => s.schedule)
+  const { vaccinations } = useActivePetHealth()
 
   const today = todayIso()
 
@@ -209,6 +211,20 @@ export function useAggregatedAlerts(): AlertItem[] {
       }
     }
 
+    // Vaccinations — a booster is overdue or coming up within the horizon
+    for (const due of upcomingDues(vaccinations, 30)) {
+      const overdue = due.daysLeft < 0
+      out.push({
+        id: `vaccination-${due.vaccination.id}`,
+        source: 'health',
+        severity: overdue ? 'overdue' : 'soon',
+        titleKey: overdue ? 'alerts.items.vaccinationOverdue' : 'alerts.items.vaccinationSoon',
+        params: { name: due.vaccination.name },
+        dateISO: due.vaccination.nextDueAt ?? undefined,
+        route: '/health',
+      })
+    }
+
     // Supplements — a routine dusting is due or coming up soon (MBD prevention)
     for (const type of SUPPLEMENT_TYPES) {
       const interval = supSchedule[type] ?? defaultIntervalDays(category, type)
@@ -239,6 +255,7 @@ export function useAggregatedAlerts(): AlertItem[] {
     category,
     dustings,
     supSchedule,
+    vaccinations,
     speciesList,
     today,
     t,

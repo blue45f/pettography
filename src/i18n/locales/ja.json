@@ -2889,6 +2889,8 @@
       "waterToxic": "水質が危険 — すぐに換水が必要です",
       "supplementDue": "{{type}}のダスティング時期です",
       "supplementSoon": "{{type}}のダスティングがもうすぐです",
+      "vaccinationOverdue": "{{name}}の接種が過ぎています",
+      "vaccinationSoon": "{{name}}の接種予定です",
       "bcsOff": "体型スコアが{{status}}です",
       "brumationPhase": "冬眠進行中: {{phase}}"
     }

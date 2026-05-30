@@ -19,6 +19,7 @@ const SOURCE_EMOJI: Record<string, string> = {
   brumation: '❄️',
   bcs: '⚖️',
   supplements: '🧂',
+  health: '💉',
 }
 
 const SEVERITY_VARIANT: Record<AlertSeverity, 'error' | 'warning' | 'primary' | 'default'> = {

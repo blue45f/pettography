@@ -2892,6 +2892,8 @@
       "waterToxic": "Water is toxic — change it now",
       "supplementDue": "{{type}} dusting is due",
       "supplementSoon": "{{type}} dusting due soon",
+      "vaccinationOverdue": "{{name}} booster overdue",
+      "vaccinationSoon": "{{name}} booster coming up",
       "bcsOff": "Body score is {{status}}",
       "brumationPhase": "Brumation in progress: {{phase}}"
     }
