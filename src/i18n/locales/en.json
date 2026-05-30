@@ -257,6 +257,7 @@
     "conditionTitle": "Today's condition",
     "conditionSubtitle": "Health, habitat, spend and stock at a glance. Tap a card for detail.",
     "condition": {
+      "bcs": { "label": "Body score", "empty": "No record" },
       "health": {
         "label": "Weight & shots",
         "empty": "Log a weight to start tracking",

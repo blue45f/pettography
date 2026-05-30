@@ -257,6 +257,7 @@
     "conditionTitle": "今日のコンディション",
     "conditionSubtitle": "健康・環境・支出・在庫をひと目で。カードを押すと詳細に移動します。",
     "condition": {
+      "bcs": { "label": "体型スコア", "empty": "記録なし" },
       "health": {
         "label": "体重・接種",
         "empty": "体重を記録すると変化を追跡します",

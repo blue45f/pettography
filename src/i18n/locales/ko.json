@@ -257,6 +257,7 @@
     "conditionTitle": "오늘의 컨디션",
     "conditionSubtitle": "건강·환경·지출·재고를 한눈에. 카드를 누르면 상세로 이동합니다.",
     "condition": {
+      "bcs": { "label": "체형 점수", "empty": "기록 없음" },
       "health": {
         "label": "체중·접종",
         "empty": "체중을 기록하면 변화를 추적합니다",

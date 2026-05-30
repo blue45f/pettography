@@ -6,6 +6,7 @@ import Skeleton from '@components/common/Skeleton'
 import { useToast } from '@components/common/Toast'
 import { useAdoptionList } from '@features/adoption'
 import { actionableCount } from '@features/alerts'
+import { bcsStats, useActivePetBcs } from '@features/bcs'
 import { compareAgainstRecommended, monthBreakdown, useActivePetBudget } from '@features/budget'
 import { useCareGuide } from '@features/care-guides'
 import { useCommunitiesList } from '@features/communities'
@@ -111,6 +112,8 @@ function Dashboard() {
   const aggregatedAlerts = useAggregatedAlerts()
   const attentionCount = actionableCount(aggregatedAlerts)
   const attentionAlerts = aggregatedAlerts.filter((a) => a.severity !== 'info').slice(0, 4)
+  const bcsEntries = useActivePetBcs()
+  const bcsSummary = useMemo(() => bcsStats(bcsEntries), [bcsEntries])
 
   const healthSummary = useMemo(() => {
     const trend = weightTrend(weights)
@@ -579,6 +582,29 @@ function Dashboard() {
                   {t(`dashboard.condition.supplies.${suppliesSummary.status.level}`, {
                     days: suppliesSummary.status.daysLeft,
                   })}
+                </p>
+              </>
+            )}
+          </Link>
+
+          <Link to="/bcs" className={styles.conditionTile}>
+            <div className={styles.conditionHeader}>
+              <span aria-hidden="true" className={styles.conditionEmoji}>
+                ⚖️
+              </span>
+              <span className={styles.conditionLabel}>{t('dashboard.condition.bcs.label')}</span>
+            </div>
+            {bcsSummary.latestScore === null || bcsSummary.latestStatus === null ? (
+              <p className={styles.conditionEmpty}>{t('dashboard.condition.bcs.empty')}</p>
+            ) : (
+              <>
+                <p className={styles.conditionValue}>{bcsSummary.latestScore}/5</p>
+                <p
+                  className={`${styles.conditionMeta} ${
+                    bcsSummary.latestStatus !== 'ideal' ? styles.conditionAlert : ''
+                  }`}
+                >
+                  {t(`bcs.status.${bcsSummary.latestStatus}`)}
                 </p>
               </>
             )}
