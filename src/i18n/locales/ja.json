@@ -1,5 +1,10 @@
 {
   "common": {
+    "loadingText": "読み込み中...",
+    "loadingShort": "読み込み中",
+    "dismiss": "閉じる",
+    "notifications": "通知",
+    "currentLocation": "現在地",
     "close": "閉じる",
     "closeModal": "モーダルを閉じる",
     "imageLoadError": "画像の読み込みに失敗",
@@ -3666,6 +3671,13 @@
     "select": "選択",
     "close": "閉じる",
     "openLabel": "コマンドパレットを開く (⌘K)"
+  },
+  "pagination": {
+    "nav": "ページネーション",
+    "status": "全{{total}}ページ中{{current}}ページ",
+    "previous": "前のページ",
+    "next": "次のページ",
+    "pageLabel": "{{page}}ページ"
   },
   "morphs": {
     "title": "人気モルフカタログ",

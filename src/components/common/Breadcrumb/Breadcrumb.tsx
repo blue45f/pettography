@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
 import styles from './Breadcrumb.module.css'
@@ -14,8 +15,9 @@ interface BreadcrumbProps {
 }
 
 function Breadcrumb({ items, separator = '/', className = '' }: BreadcrumbProps) {
+  const { t } = useTranslation()
   return (
-    <nav aria-label="현재 위치" className={`${styles.breadcrumb} ${className}`}>
+    <nav aria-label={t('common.currentLocation')} className={`${styles.breadcrumb} ${className}`}>
       <ol className={styles.list}>
         {items.map((item, index) => {
           const isLast = index === items.length - 1

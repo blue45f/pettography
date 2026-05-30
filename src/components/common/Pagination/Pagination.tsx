@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import styles from './Pagination.module.css'
 
 interface PaginationProps {
@@ -42,20 +44,21 @@ function Pagination({
   siblingCount = 1,
   className = '',
 }: PaginationProps) {
+  const { t } = useTranslation()
   if (totalPages <= 1) return null
 
   const pages = getPageRange(currentPage, totalPages, siblingCount)
 
   return (
-    <nav className={`${styles.pagination} ${className}`} aria-label="페이지 네비게이션">
+    <nav className={`${styles.pagination} ${className}`} aria-label={t('pagination.nav')}>
       <span className="sr-only" aria-live="polite">
-        {`전체 ${totalPages}페이지 중 ${currentPage}페이지`}
+        {t('pagination.status', { total: totalPages, current: currentPage })}
       </span>
       <button
         className={styles.button}
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        aria-label="이전 페이지"
+        aria-label={t('pagination.previous')}
         type="button"
       >
         &lsaquo;
@@ -72,7 +75,7 @@ function Pagination({
             className={`${styles.button} ${currentPage === page ? styles.active : ''}`}
             onClick={() => onPageChange(page)}
             aria-current={currentPage === page ? 'page' : undefined}
-            aria-label={`${page}페이지`}
+            aria-label={t('pagination.pageLabel', { page })}
             type="button"
           >
             {page}
@@ -84,7 +87,7 @@ function Pagination({
         className={styles.button}
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        aria-label="다음 페이지"
+        aria-label={t('pagination.next')}
         type="button"
       >
         &rsaquo;

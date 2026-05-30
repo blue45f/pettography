@@ -76,16 +76,16 @@
   position: absolute;
   top: 0;
   left: 50%;
-  width: 0;
+  width: 36px;
   height: 2px;
   background: var(--gradient-brand);
-  transform: translateX(-50%);
-  transition: width var(--motion-base);
+  transform: translateX(-50%) scaleX(0);
+  transition: transform var(--motion-base);
   pointer-events: none;
 }
 
 .link.active::after {
-  width: 36px;
+  transform: translateX(-50%) scaleX(1);
 }
 
 .link {

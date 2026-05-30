@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import styles from './Skeleton.module.css'
 
 type SkeletonVariant = 'text' | 'circular' | 'rectangular'
@@ -11,6 +13,7 @@ interface SkeletonProps {
 }
 
 function Skeleton({ variant = 'text', width, height, lines = 1, className = '' }: SkeletonProps) {
+  const { t } = useTranslation()
   const style: React.CSSProperties = {
     width: typeof width === 'number' ? `${width}px` : width,
     height: typeof height === 'number' ? `${height}px` : height,
@@ -20,7 +23,7 @@ function Skeleton({ variant = 'text', width, height, lines = 1, className = '' }
 
   if (variant === 'text' && lines > 1) {
     return (
-      <div className={styles.textGroup} role="status" aria-label="로딩 중">
+      <div className={styles.textGroup} role="status" aria-label={t('common.loadingShort')}>
         {Array.from({ length: lines }, (_, i) => (
           <div
             key={i}
@@ -31,14 +34,19 @@ function Skeleton({ variant = 'text', width, height, lines = 1, className = '' }
             }}
           />
         ))}
-        <span className="sr-only">로딩 중...</span>
+        <span className="sr-only">{t('common.loadingText')}</span>
       </div>
     )
   }
 
   return (
-    <div className={skeletonClasses} style={style} role="status" aria-label="로딩 중">
-      <span className="sr-only">로딩 중...</span>
+    <div
+      className={skeletonClasses}
+      style={style}
+      role="status"
+      aria-label={t('common.loadingShort')}
+    >
+      <span className="sr-only">{t('common.loadingText')}</span>
     </div>
   )
 }

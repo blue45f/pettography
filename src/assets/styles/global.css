@@ -52,6 +52,7 @@
     linear-gradient(180deg, #fafafa, #ffffff 60%);
   --gradient-brand: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #f43f5e 100%);
   --color-on-brand: #ffffff;
+  --color-on-warning: #1e293b;
   --gradient-card: linear-gradient(140deg, rgba(99, 102, 241, 0.06), rgba(244, 63, 94, 0.04));
   --gradient-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.5));
 

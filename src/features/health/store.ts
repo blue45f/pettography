@@ -111,8 +111,9 @@ export function weightTrend(weights: WeightEntry[]): WeightTrend {
   const sorted = [...weights].sort((a, b) => a.measuredAt.localeCompare(b.measuredAt))
   const latest = sorted[sorted.length - 1].grams
   const cutoff = new Date()
-  cutoff.setDate(cutoff.getDate() - 30)
-  const before30 = [...sorted].reverse().find((w) => new Date(w.measuredAt) < cutoff)
+  cutoff.setUTCDate(cutoff.getUTCDate() - 30)
+  const cutoffIso = cutoff.toISOString().slice(0, 10)
+  const before30 = [...sorted].reverse().find((w) => w.measuredAt < cutoffIso)
   const delta30dGrams = before30 ? latest - before30.grams : null
   const min = Math.min(...sorted.map((w) => w.grams))
   const max = Math.max(...sorted.map((w) => w.grams))

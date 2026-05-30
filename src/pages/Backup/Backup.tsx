@@ -28,7 +28,7 @@ function collectKeys(): string[] {
 }
 
 function isBackupKey(key: string): boolean {
-  return BACKUP_KEY_PREFIXES.some((prefix) => key.startsWith(prefix) || key === prefix)
+  return BACKUP_KEY_PREFIXES.some((prefix) => key.startsWith(prefix))
 }
 
 function isBackupData(data: unknown): data is Record<string, unknown> {

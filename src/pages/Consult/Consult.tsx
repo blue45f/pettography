@@ -6,7 +6,7 @@ import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
 import { useConsultStore, vetsMock, type Vet } from '@features/vet-consult'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Consult.module.css'
@@ -30,10 +30,18 @@ function Consult() {
   const [draft, setDraft] = useState('')
   const activeVet = useMemo(() => vetsMock.find((v) => v.id === activeVetId) ?? null, [activeVetId])
   const conversation = activeVetId ? (messages[activeVetId] ?? []) : []
+  const replyTimerRef = useRef<number | null>(null)
 
   useEffect(() => {
     if (!activeVetId && vetsMock[0]) setActiveVet(vetsMock[0].id)
   }, [activeVetId, setActiveVet])
+
+  useEffect(
+    () => () => {
+      if (replyTimerRef.current !== null) window.clearTimeout(replyTimerRef.current)
+    },
+    [],
+  )
 
   function send() {
     const trimmed = draft.trim()
@@ -41,7 +49,7 @@ function Consult() {
     addMessage(activeVet.id, 'user', trimmed)
     setDraft('')
     const replyDelay = 700
-    window.setTimeout(() => {
+    replyTimerRef.current = window.setTimeout(() => {
       addMessage(
         activeVet.id,
         'vet',

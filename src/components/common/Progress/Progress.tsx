@@ -39,7 +39,10 @@ function Progress({
         aria-valuemax={max}
         aria-label={displayLabel}
       >
-        <div className={`${styles.bar} ${styles[variant]}`} style={{ width: `${percentage}%` }} />
+        <div
+          className={`${styles.bar} ${styles[variant]}`}
+          style={{ transform: `scaleX(${percentage / 100})` }}
+        />
       </div>
     </div>
   )

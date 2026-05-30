@@ -42,6 +42,7 @@ export const forumReplySchema = z.object({
   body: z.string().min(1).max(800),
   createdAt: z.string(),
   reportCount: z.number().int().nonnegative().default(0),
+  autoHidden: z.boolean().default(false),
 })
 
 export const FORUM_REPORT_REASONS = [

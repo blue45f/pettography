@@ -1,5 +1,10 @@
 {
   "common": {
+    "loadingText": "Loading...",
+    "loadingShort": "Loading",
+    "dismiss": "Dismiss",
+    "notifications": "Notifications",
+    "currentLocation": "Current location",
     "close": "Close",
     "closeModal": "Close modal",
     "imageLoadError": "Image failed to load",
@@ -3669,6 +3674,13 @@
     "select": "select",
     "close": "close",
     "openLabel": "Open command palette (⌘K)"
+  },
+  "pagination": {
+    "nav": "Pagination",
+    "status": "Page {{current}} of {{total}}",
+    "previous": "Previous page",
+    "next": "Next page",
+    "pageLabel": "Page {{page}}"
   },
   "morphs": {
     "title": "Popular morph catalog",

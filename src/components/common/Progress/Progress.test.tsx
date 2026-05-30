@@ -28,6 +28,7 @@ describe('Progress', () => {
     const { container } = render(<Progress value={150} />)
     const bar = container.querySelector('[class*="bar"]')
     expect(bar).toBeTruthy()
-    expect(bar?.getAttribute('style')).toContain('100%')
+    // clamped to 100% -> scaleX(1) (transform avoids animating the layout `width`)
+    expect(bar?.getAttribute('style')).toContain('scaleX(1)')
   })
 })

@@ -32,7 +32,7 @@
 
 .warning {
   background-color: var(--color-warning);
-  color: #1e293b;
+  color: var(--color-on-warning);
 }
 
 .info {

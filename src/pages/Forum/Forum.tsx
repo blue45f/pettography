@@ -452,7 +452,11 @@ function ReplyNode({
       <p className={styles.replyMeta}>
         <strong>{node.reply.author}</strong> · {new Date(node.reply.createdAt).toLocaleString('ko')}
       </p>
-      <p className={styles.replyBody}>{node.reply.body}</p>
+      {node.reply.autoHidden && !owned ? (
+        <p className={styles.hiddenNotice}>{t('forum.hiddenNotice')}</p>
+      ) : (
+        <p className={styles.replyBody}>{node.reply.body}</p>
+      )}
       <div className={styles.replyActions}>
         {canReply && (
           <button

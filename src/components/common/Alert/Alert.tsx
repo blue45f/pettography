@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import styles from './Alert.module.css'
 
@@ -21,6 +22,7 @@ function Alert({
   onDismiss,
   className = '',
 }: AlertProps) {
+  const { t } = useTranslation()
   const [dismissed, setDismissed] = useState(false)
 
   if (dismissed) return null
@@ -42,7 +44,7 @@ function Alert({
         <button
           className={styles.close}
           onClick={handleDismiss}
-          aria-label="알림 닫기"
+          aria-label={t('common.dismiss')}
           type="button"
         >
           &times;

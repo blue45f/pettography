@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useMemo, type ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import styles from './Toast.module.css'
 import { ToastContext, type ToastType } from './ToastContext'
@@ -11,6 +12,7 @@ interface Toast {
 }
 
 function ToastProvider({ children }: { children: ReactNode }) {
+  const { t } = useTranslation()
   const [toasts, setToasts] = useState<Toast[]>([])
 
   const removeToast = useCallback((id: string) => {
@@ -27,7 +29,12 @@ function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={contextValue}>
       {children}
-      <div className={styles.container} role="region" aria-live="polite" aria-label="알림">
+      <div
+        className={styles.container}
+        role="region"
+        aria-live="polite"
+        aria-label={t('common.notifications')}
+      >
         {toasts.map((t) => (
           <ToastItem key={t.id} toast={t} onClose={removeToast} />
         ))}
@@ -37,6 +44,7 @@ function ToastProvider({ children }: { children: ReactNode }) {
 }
 
 function ToastItem({ toast, onClose }: { toast: Toast; onClose: (id: string) => void }) {
+  const { t } = useTranslation()
   useEffect(() => {
     const timer = setTimeout(() => onClose(toast.id), toast.duration)
     return () => clearTimeout(timer)
@@ -53,7 +61,7 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: (id: string) => 
       <button
         className={styles.close}
         onClick={() => onClose(toast.id)}
-        aria-label="알림 닫기"
+        aria-label={t('common.dismiss')}
         type="button"
       >
         &times;

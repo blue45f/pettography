@@ -116,11 +116,12 @@ function Hospitals() {
           value={sort}
           onChange={(e) => setSort(e.target.value as HospitalSort)}
           options={[
-            { value: 'distance', label: t('hospitals.sortDistance') },
+            ...(profile.location
+              ? [{ value: 'distance', label: t('hospitals.sortDistance') }]
+              : []),
             { value: 'name', label: t('hospitals.sortName') },
             { value: 'emergency', label: t('hospitals.sortEmergency') },
           ]}
-          disabled={!profile.location && sort === 'distance'}
         />
       </div>
 

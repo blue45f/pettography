@@ -80,8 +80,9 @@ export function diaryStats(entries: DiaryEntry[]) {
     byCategory.set(entry.category, (byCategory.get(entry.category) ?? 0) + 1)
   }
   const recent30Cutoff = new Date()
-  recent30Cutoff.setDate(recent30Cutoff.getDate() - 30)
-  const recent30 = entries.filter((e) => new Date(e.occurredAt) >= recent30Cutoff).length
+  recent30Cutoff.setUTCDate(recent30Cutoff.getUTCDate() - 30)
+  const recent30CutoffIso = recent30Cutoff.toISOString().slice(0, 10)
+  const recent30 = entries.filter((e) => e.occurredAt >= recent30CutoffIso).length
   const latestWeight = entries.find((e) => e.weightGram !== null)
   return {
     total: entries.length,

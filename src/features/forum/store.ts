@@ -90,6 +90,7 @@ const SEED_REPLIES: Record<string, ForumReply[]> = {
       body: '습도 70%까지 30분 유지 후 따뜻한 면봉으로 살살. 그래도 안 빠지면 가까운 특수동물병원 가세요. 잘못 잡아당기면 발가락 잘립니다.',
       createdAt: '2026-05-20T15:00:00.000Z',
       reportCount: 0,
+      autoHidden: false,
     },
     {
       id: 'seed-reply-1a',
@@ -99,6 +100,7 @@ const SEED_REPLIES: Record<string, ForumReply[]> = {
       body: '감사합니다! 면봉으로 해보고 안 빠지면 병원 갈게요.',
       createdAt: '2026-05-20T15:30:00.000Z',
       reportCount: 0,
+      autoHidden: false,
     },
   ],
   'seed-post-3': [
@@ -110,6 +112,7 @@ const SEED_REPLIES: Record<string, ForumReply[]> = {
       body: '+1 탈피 직후 24시간은 외골격 굳을 때까지 먹이도 금지요.',
       createdAt: '2026-05-25T21:00:00.000Z',
       reportCount: 0,
+      autoHidden: false,
     },
   ],
 }
@@ -163,6 +166,7 @@ export const useForumStore = create<ForumState>()(
           body: input.body,
           createdAt: new Date().toISOString(),
           reportCount: 0,
+          autoHidden: false,
         }
         set((state) => {
           const next = { ...state.replies }
@@ -226,9 +230,12 @@ export const useForumStore = create<ForumState>()(
         if (get().reportedReplyIds[replyId]) return false
         set((state) => {
           const list = state.replies[postId] ?? []
-          const updated = list.map((r) =>
-            r.id === replyId ? { ...r, reportCount: r.reportCount + 1 } : r,
-          )
+          const updated = list.map((r) => {
+            if (r.id !== replyId) return r
+            const next = { ...r, reportCount: r.reportCount + 1 }
+            if (next.reportCount >= FORUM_AUTO_HIDE_THRESHOLD) next.autoHidden = true
+            return next
+          })
           return {
             replies: { ...state.replies, [postId]: updated },
             reportedReplyIds: { ...state.reportedReplyIds, [replyId]: true as const },
@@ -292,6 +299,7 @@ export const useForumStore = create<ForumState>()(
               body: r.body,
               createdAt: r.createdAt,
               reportCount: typeof r.reportCount === 'number' ? r.reportCount : 0,
+              autoHidden: typeof r.autoHidden === 'boolean' ? r.autoHidden : false,
             }))
           }
           return out

@@ -1,5 +1,10 @@
 {
   "common": {
+    "loadingText": "로딩 중...",
+    "loadingShort": "로딩 중",
+    "dismiss": "알림 닫기",
+    "notifications": "알림",
+    "currentLocation": "현재 위치",
     "close": "닫기",
     "closeModal": "모달 닫기",
     "imageLoadError": "이미지 로드 실패",
@@ -3666,6 +3671,13 @@
     "select": "선택",
     "close": "닫기",
     "openLabel": "명령 팔레트 열기 (⌘K)"
+  },
+  "pagination": {
+    "nav": "페이지 네비게이션",
+    "status": "전체 {{total}}페이지 중 {{current}}페이지",
+    "previous": "이전 페이지",
+    "next": "다음 페이지",
+    "pageLabel": "{{page}}페이지"
   },
   "morphs": {
     "title": "인기 모프 카탈로그",
