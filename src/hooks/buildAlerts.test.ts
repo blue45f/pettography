@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest'
 import { buildAlerts, type BuildAlertsInput } from './useAggregatedAlerts'
 
 import type { BcsEntry } from '@features/bcs'
+import type { CleaningLog, CleanType } from '@features/cleaning'
+import type { DustingLog, SupplementType } from '@features/supplements'
 import type { TFunction } from 'i18next'
 
 /** Identity stub: returns the key so we can assert which i18n key was chosen. */
@@ -42,6 +44,30 @@ function bcsEntry(score: number, assessedAt = '2024-06-01'): BcsEntry {
   }
 }
 
+function dustingLog(type: SupplementType, dustedAt: string): DustingLog {
+  return {
+    id: `d-${type}-${dustedAt}`,
+    petId: 'pet-1',
+    speciesId: 'sp-1',
+    type,
+    dustedAt,
+    note: '',
+    createdAt: `${dustedAt}T00:00:00.000Z`,
+  }
+}
+
+function cleaningLog(type: CleanType, cleanedAt: string): CleaningLog {
+  return {
+    id: `c-${type}-${cleanedAt}`,
+    petId: 'pet-1',
+    speciesId: 'sp-1',
+    type,
+    cleanedAt,
+    note: '',
+    createdAt: `${cleanedAt}T00:00:00.000Z`,
+  }
+}
+
 describe('buildAlerts', () => {
   it('returns no alerts for all-empty input', () => {
     expect(buildAlerts(emptyInput())).toEqual([])
@@ -70,5 +96,32 @@ describe('buildAlerts', () => {
     )
     expect(alerts).toHaveLength(1)
     expect(alerts[0].params).toEqual({ status: 'bcs.status.under' })
+  })
+
+  it('flags an overdue supplement dusting (schedule override) as due', () => {
+    const alerts = buildAlerts(
+      emptyInput({ dustings: [dustingLog('calcium', '2024-05-01')], supSchedule: { calcium: 2 } }),
+    )
+    expect(alerts).toHaveLength(1)
+    expect(alerts[0]).toMatchObject({
+      id: 'supplement-calcium',
+      source: 'supplements',
+      severity: 'due',
+      titleKey: 'alerts.items.supplementDue',
+      route: '/supplements',
+      params: { type: 'supplements.types.calcium' },
+    })
+  })
+
+  it('flags an overdue routine clean as due (and ignores never-cleaned types)', () => {
+    const alerts = buildAlerts(emptyInput({ cleanings: [cleaningLog('spot', '2024-01-01')] }))
+    expect(alerts.map((a) => a.id)).toEqual(['cleaning-spot'])
+    expect(alerts[0]).toMatchObject({
+      source: 'cleaning',
+      severity: 'due',
+      titleKey: 'alerts.items.cleaningDue',
+      route: '/cleaning',
+      params: { type: 'cleaning.types.spot' },
+    })
   })
 })
