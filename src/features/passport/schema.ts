@@ -28,6 +28,11 @@ export const metricKeySchema = z.enum([
   'feedingCount',
   'feedingAcceptedStreak',
   'clutchCount',
+  'weightCount',
+  'bcsCount',
+  'vitalsCount',
+  'waterCount',
+  'growthCount',
 ])
 export type MetricKey = z.infer<typeof metricKeySchema>
 
@@ -39,6 +44,11 @@ export const METRIC_KEYS: readonly MetricKey[] = [
   'feedingCount',
   'feedingAcceptedStreak',
   'clutchCount',
+  'weightCount',
+  'bcsCount',
+  'vitalsCount',
+  'waterCount',
+  'growthCount',
 ] as const
 
 /** Visual rarity tier of an achievement. */
@@ -85,4 +95,10 @@ export interface PassportMetricInput {
   molts: ReadonlyArray<{ kind: string; occurredAt: string }>
   feedings: ReadonlyArray<{ fedAt: string; accepted: boolean }>
   clutches: ReadonlyArray<{ laidAt: string }>
+  /** Count-only signals from the precision-care trackers (already pet-scoped). */
+  weights: readonly unknown[]
+  bcs: readonly unknown[]
+  vitals: readonly unknown[]
+  water: readonly unknown[]
+  growth: readonly unknown[]
 }

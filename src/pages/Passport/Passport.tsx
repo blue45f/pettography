@@ -2,9 +2,12 @@ import Badge from '@components/common/Badge'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Progress from '@components/common/Progress'
+import { useActivePetBcs } from '@features/bcs'
 import { useBreedingStore } from '@features/breeding'
 import { useDiaryStore } from '@features/diary'
 import { useFeedingStore } from '@features/feeding'
+import { useActivePetGrowth } from '@features/growth'
+import { useActivePetHealth } from '@features/health'
 import { useMoltStore } from '@features/molt'
 import { useOnboardingStore } from '@features/onboarding'
 import {
@@ -15,6 +18,8 @@ import {
   type AchievementTier,
 } from '@features/passport'
 import { useSpeciesList } from '@features/species'
+import { useActivePetVitals } from '@features/vitals'
+import { useActivePetReadings } from '@features/water'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -54,6 +59,13 @@ function Passport() {
   const clutches = useBreedingStore((s) => s.clutches)
   const { data: speciesList = [] } = useSpeciesList({})
 
+  // Precision-care trackers (each hook already scopes to the active pet).
+  const { weights } = useActivePetHealth()
+  const bcs = useActivePetBcs()
+  const vitals = useActivePetVitals()
+  const water = useActivePetReadings()
+  const growth = useActivePetGrowth()
+
   const activePet = useMemo(
     () => pets.find((p) => p.id === activePetId) ?? null,
     [pets, activePetId],
@@ -90,17 +102,42 @@ function Passport() {
           molts,
           feedings,
           clutches: petClutches,
+          weights,
+          bcs,
+          vitals,
+          water,
+          growth,
         },
         today,
       ),
-    [activePet?.createdAt, diary, molts, feedings, petClutches, today],
+    [
+      activePet?.createdAt,
+      diary,
+      molts,
+      feedings,
+      petClutches,
+      weights,
+      bcs,
+      vitals,
+      water,
+      growth,
+      today,
+    ],
   )
 
   const achievements = useMemo(() => evaluateAchievements(metrics), [metrics])
   const unlocked = useMemo(() => unlockedCount(achievements), [achievements])
 
   const totalActivity =
-    metrics.diaryCount + metrics.moltCount + metrics.feedingCount + metrics.clutchCount
+    metrics.diaryCount +
+    metrics.moltCount +
+    metrics.feedingCount +
+    metrics.clutchCount +
+    metrics.weightCount +
+    metrics.bcsCount +
+    metrics.vitalsCount +
+    metrics.waterCount +
+    metrics.growthCount
 
   const petName = profile.petName?.trim() || species?.koreanName || t('passport.card.unnamed')
   const heroEmoji = species?.heroEmoji ?? '🐾'

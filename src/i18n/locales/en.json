@@ -1990,6 +1990,12 @@
       "noPetDesc": "Register your companion first and the passport starts counting from day one."
     },
     "ach": {
+      "weight1": { "title": "First weigh-in", "desc": "Logged your first weight." },
+      "weight20": { "title": "Weight watcher", "desc": "Logged 20 weigh-ins." },
+      "bcs1": { "title": "First body score", "desc": "Logged your first body condition score." },
+      "vitals1": { "title": "First vitals", "desc": "Logged your first vital signs." },
+      "water5": { "title": "Water guardian", "desc": "Logged 5 water tests." },
+      "growth5": { "title": "Growth tracker", "desc": "Logged 5 growth records." },
       "bond7": { "title": "First Week", "desc": "You've been together for 7 days." },
       "bond30": { "title": "One Month Together", "desc": "You've passed 30 days together." },
       "bond100": { "title": "100 Days", "desc": "You've reached 100 days together." },

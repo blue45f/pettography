@@ -18,6 +18,11 @@ function input(overrides: Partial<PassportMetricInput> = {}): PassportMetricInpu
     molts: [],
     feedings: [],
     clutches: [],
+    weights: [],
+    bcs: [],
+    vitals: [],
+    water: [],
+    growth: [],
     ...overrides,
   }
 }
@@ -30,6 +35,11 @@ const ZERO_METRICS: Record<MetricKey, number> = {
   feedingCount: 0,
   feedingAcceptedStreak: 0,
   clutchCount: 0,
+  weightCount: 0,
+  bcsCount: 0,
+  vitalsCount: 0,
+  waterCount: 0,
+  growthCount: 0,
 }
 
 describe('computeMetrics', () => {
@@ -82,6 +92,24 @@ describe('computeMetrics', () => {
     expect(metrics.moltCount).toBe(2)
     expect(metrics.feedingCount).toBe(3)
     expect(metrics.clutchCount).toBe(1)
+  })
+
+  it('counts the precision-care tracker totals (weight, bcs, vitals, water, growth)', () => {
+    const metrics = computeMetrics(
+      input({
+        weights: [{}, {}, {}],
+        bcs: [{}],
+        vitals: [{}, {}],
+        water: [{}, {}, {}, {}],
+        growth: [{}, {}, {}, {}, {}],
+      }),
+      '2024-06-01',
+    )
+    expect(metrics.weightCount).toBe(3)
+    expect(metrics.bcsCount).toBe(1)
+    expect(metrics.vitalsCount).toBe(2)
+    expect(metrics.waterCount).toBe(4)
+    expect(metrics.growthCount).toBe(5)
   })
 
   it('counts only complete sheds for completeShedCount', () => {

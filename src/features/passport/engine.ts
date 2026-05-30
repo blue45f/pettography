@@ -47,7 +47,8 @@ export function computeMetrics(
   input: PassportMetricInput,
   todayISO: string = new Date().toISOString().slice(0, 10),
 ): Record<MetricKey, number> {
-  const { petCreatedAt, diary, molts, feedings, clutches } = input
+  const { petCreatedAt, diary, molts, feedings, clutches, weights, bcs, vitals, water, growth } =
+    input
 
   const daysTogether = petCreatedAt ? wholeDaysBetween(petCreatedAt, todayISO) : 0
   const completeShedCount = molts.filter((m) => m.kind === 'complete').length
@@ -60,6 +61,11 @@ export function computeMetrics(
     feedingCount: feedings.length,
     feedingAcceptedStreak: feedingAcceptedStreak(feedings),
     clutchCount: clutches.length,
+    weightCount: weights.length,
+    bcsCount: bcs.length,
+    vitalsCount: vitals.length,
+    waterCount: water.length,
+    growthCount: growth.length,
   }
 }
 
@@ -87,6 +93,13 @@ export const ACHIEVEMENTS: readonly AchievementDef[] = [
   { id: 'feedStreak5', icon: '🔥', tier: 'silver', goal: 5, metric: 'feedingAcceptedStreak' },
   // Breeding.
   { id: 'clutch1', icon: '🥚', tier: 'gold', goal: 1, metric: 'clutchCount' },
+  // Precision care — weight, body condition, vitals, water, growth.
+  { id: 'weight1', icon: '🪶', tier: 'bronze', goal: 1, metric: 'weightCount' },
+  { id: 'weight20', icon: '📊', tier: 'silver', goal: 20, metric: 'weightCount' },
+  { id: 'bcs1', icon: '⚖️', tier: 'bronze', goal: 1, metric: 'bcsCount' },
+  { id: 'vitals1', icon: '🫀', tier: 'bronze', goal: 1, metric: 'vitalsCount' },
+  { id: 'water5', icon: '💧', tier: 'silver', goal: 5, metric: 'waterCount' },
+  { id: 'growth5', icon: '📈', tier: 'silver', goal: 5, metric: 'growthCount' },
 ] as const
 
 /** Percentage (0..100, rounded) of `current` toward `goal`, clamped. */
