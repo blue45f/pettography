@@ -162,7 +162,7 @@
 
 .skip-link {
   position: absolute;
-  top: -100%;
+  top: var(--spacing-md);
   left: var(--spacing-md);
   padding: var(--spacing-sm) var(--spacing-md);
   background-color: var(--color-primary);
@@ -171,11 +171,12 @@
   z-index: 1000;
   font-size: var(--font-size-sm);
   text-decoration: none;
-  transition: top var(--transition);
+  transform: translateY(-200%);
+  transition: transform var(--transition);
 }
 
 .skip-link:focus {
-  top: var(--spacing-md);
+  transform: translateY(0);
   color: var(--color-on-brand);
 }
 
