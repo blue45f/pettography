@@ -2887,6 +2887,7 @@
       "clutchDue": "クラッチの孵化予定期間です",
       "moltOverdue": "脱皮の予定日を過ぎています",
       "waterToxic": "水質が危険 — すぐに換水が必要です",
+      "bcsOff": "体型スコアが{{status}}です",
       "brumationPhase": "冬眠進行中: {{phase}}"
     }
   },

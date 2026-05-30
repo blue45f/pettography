@@ -1,4 +1,5 @@
 import { sortAlerts, type AlertItem } from '@features/alerts'
+import { latestBcs, statusForScore, useActivePetBcs } from '@features/bcs'
 import { clutchStatusLabelCode, useActivePetClutches } from '@features/breeding'
 import { currentPhase, useActivePetPlans } from '@features/brumation'
 import { dueDate, gearStatus, useActivePetGear } from '@features/gear'
@@ -38,6 +39,7 @@ export function useAggregatedAlerts(): AlertItem[] {
   const molts = useActivePetMolts()
   const readings = useActivePetReadings()
   const plans = useActivePetPlans()
+  const bcs = useActivePetBcs()
 
   const today = todayIso()
 
@@ -178,6 +180,23 @@ export function useAggregatedAlerts(): AlertItem[] {
       }
     }
 
+    // Body condition — the latest score sits outside the ideal band (welfare flag)
+    const latestBcsEntry = latestBcs(bcs)
+    if (latestBcsEntry) {
+      const status = statusForScore(latestBcsEntry.score)
+      if (status !== 'ideal') {
+        out.push({
+          id: 'bcs-off',
+          source: 'bcs',
+          severity: 'soon',
+          titleKey: 'alerts.items.bcsOff',
+          params: { status: t(`bcs.status.${status}`) },
+          dateISO: latestBcsEntry.assessedAt,
+          route: '/bcs',
+        })
+      }
+    }
+
     return sortAlerts(out)
-  }, [meds, quarantines, gear, clutches, molts, readings, plans, speciesList, today, t])
+  }, [meds, quarantines, gear, clutches, molts, readings, plans, bcs, speciesList, today, t])
 }
