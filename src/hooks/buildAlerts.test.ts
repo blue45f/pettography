@@ -6,6 +6,7 @@ import type { BcsEntry } from '@features/bcs'
 import type { CleaningLog, CleanType } from '@features/cleaning'
 import type { GearItem, GearType } from '@features/gear'
 import type { VaccinationEntry } from '@features/health'
+import type { Medication } from '@features/meds'
 import type { DustingLog, SupplementType } from '@features/supplements'
 import type { WaterReading } from '@features/water'
 import type { TFunction } from 'i18next'
@@ -86,6 +87,23 @@ function gearItem(
     intervalMonths,
     notes: '',
     createdAt: `${installedAt}T00:00:00.000Z`,
+  }
+}
+
+/** Open-ended course with no doses logged → the first scheduled dose is overdue. */
+function medication(startedAt: string, frequencyDays: number): Medication {
+  return {
+    id: 'm1',
+    petId: 'pet-1',
+    name: 'Baytril',
+    reason: 'infection',
+    dosage: '0.1ml',
+    startedAt,
+    frequencyDays,
+    durationDays: null,
+    notes: '',
+    doses: [],
+    createdAt: `${startedAt}T00:00:00.000Z`,
   }
 }
 
@@ -171,6 +189,19 @@ describe('buildAlerts', () => {
       titleKey: 'alerts.items.cleaningDue',
       route: '/cleaning',
       params: { type: 'cleaning.types.spot' },
+    })
+  })
+
+  it('flags an overdue, un-given medication dose', () => {
+    const alerts = buildAlerts(emptyInput({ meds: [medication('2024-01-01', 7)] }))
+    expect(alerts).toHaveLength(1)
+    expect(alerts[0]).toMatchObject({
+      id: 'med-m1',
+      source: 'meds',
+      severity: 'overdue',
+      titleKey: 'alerts.items.medOverdue',
+      route: '/meds',
+      params: { name: 'Baytril' },
     })
   })
 
