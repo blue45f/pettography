@@ -7,6 +7,7 @@ import type { CleaningLog, CleanType } from '@features/cleaning'
 import type { GearItem, GearType } from '@features/gear'
 import type { VaccinationEntry } from '@features/health'
 import type { DustingLog, SupplementType } from '@features/supplements'
+import type { WaterReading } from '@features/water'
 import type { TFunction } from 'i18next'
 
 /** Identity stub: returns the key so we can assert which i18n key was chosen. */
@@ -88,6 +89,22 @@ function gearItem(
   }
 }
 
+function waterReading(measuredAt: string, ammoniaPpm: number): WaterReading {
+  return {
+    id: `w-${measuredAt}`,
+    petId: 'pet-1',
+    speciesId: 'sp-1',
+    measuredAt,
+    tempC: null,
+    ph: null,
+    ammoniaPpm,
+    nitritePpm: null,
+    nitratePpm: null,
+    note: '',
+    createdAt: `${measuredAt}T00:00:00.000Z`,
+  }
+}
+
 /** `nextDueAt` far in the past keeps the verdict deterministic vs the real clock. */
 function vaccinationEntry(nextDueAt: string): VaccinationEntry {
   return {
@@ -154,6 +171,18 @@ describe('buildAlerts', () => {
       titleKey: 'alerts.items.cleaningDue',
       route: '/cleaning',
       params: { type: 'cleaning.types.spot' },
+    })
+  })
+
+  it('flags a toxic water reading as an overdue alert', () => {
+    const alerts = buildAlerts(emptyInput({ readings: [waterReading('2024-06-01', 8)] }))
+    expect(alerts).toHaveLength(1)
+    expect(alerts[0]).toMatchObject({
+      id: 'water-toxic',
+      source: 'water',
+      severity: 'overdue',
+      titleKey: 'alerts.items.waterToxic',
+      route: '/water',
     })
   })
 
