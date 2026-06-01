@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { buildAlerts, type BuildAlertsInput } from './useAggregatedAlerts'
 
 import type { BcsEntry } from '@features/bcs'
+import type { Clutch } from '@features/breeding'
 import type { BrumationPlan } from '@features/brumation'
 import type { CleaningLog, CleanType } from '@features/cleaning'
 import type { GearItem, GearType } from '@features/gear'
@@ -119,6 +120,23 @@ function completeMolt(occurredAt: string): MoltEvent {
   }
 }
 
+/** `incubationRef` falls back for an unknown species, so no slug data is needed. */
+function clutch(laidAt: string): Clutch {
+  return {
+    id: 'c1',
+    petId: 'pet-1',
+    pairingId: null,
+    speciesId: null,
+    laidAt,
+    eggCount: 3,
+    fertileCount: null,
+    incubationTempC: null,
+    status: 'incubating',
+    notes: '',
+    createdAt: `${laidAt}T00:00:00.000Z`,
+  }
+}
+
 /** Phase overrides empty → the engine uses template defaults for the schedule. */
 function brumationPlan(startDate: string): BrumationPlan {
   return {
@@ -232,6 +250,18 @@ describe('buildAlerts', () => {
       titleKey: 'alerts.items.cleaningDue',
       route: '/cleaning',
       params: { type: 'cleaning.types.spot' },
+    })
+  })
+
+  it('flags a clutch overdue to hatch (incubation window past)', () => {
+    const alerts = buildAlerts(emptyInput({ clutches: [clutch('2024-01-01')] }))
+    expect(alerts).toHaveLength(1)
+    expect(alerts[0]).toMatchObject({
+      id: 'clutch-c1',
+      source: 'breeding',
+      severity: 'overdue',
+      titleKey: 'alerts.items.clutchOverdue',
+      route: '/breeding',
     })
   })
 
