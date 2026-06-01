@@ -3,10 +3,12 @@ import { describe, expect, it } from 'vitest'
 import { buildAlerts, type BuildAlertsInput } from './useAggregatedAlerts'
 
 import type { BcsEntry } from '@features/bcs'
+import type { BrumationPlan } from '@features/brumation'
 import type { CleaningLog, CleanType } from '@features/cleaning'
 import type { GearItem, GearType } from '@features/gear'
 import type { VaccinationEntry } from '@features/health'
-import type { Medication } from '@features/meds'
+import type { Medication, Quarantine } from '@features/meds'
+import type { MoltEvent } from '@features/molt'
 import type { DustingLog, SupplementType } from '@features/supplements'
 import type { WaterReading } from '@features/water'
 import type { TFunction } from 'i18next'
@@ -87,6 +89,47 @@ function gearItem(
     intervalMonths,
     notes: '',
     createdAt: `${installedAt}T00:00:00.000Z`,
+  }
+}
+
+/** Started long ago with no clearedAt → past its duration, so ready to clear. */
+function quarantine(startedAt: string, durationDays: number): Quarantine {
+  return {
+    id: 'q1',
+    petId: 'pet-1',
+    animalName: 'New gecko',
+    startedAt,
+    durationDays,
+    reasonCode: 'newArrival',
+    clearedAt: null,
+    notes: '',
+    createdAt: `${startedAt}T00:00:00.000Z`,
+  }
+}
+
+function completeMolt(occurredAt: string): MoltEvent {
+  return {
+    id: `molt-${occurredAt}`,
+    petId: 'pet-1',
+    speciesId: 'sp-1',
+    occurredAt,
+    kind: 'complete',
+    notes: '',
+    createdAt: `${occurredAt}T00:00:00.000Z`,
+  }
+}
+
+/** Phase overrides empty → the engine uses template defaults for the schedule. */
+function brumationPlan(startDate: string): BrumationPlan {
+  return {
+    id: 'b1',
+    petId: 'pet-1',
+    speciesId: 'sp-1',
+    startDate,
+    phaseDays: {},
+    targetTempC: null,
+    notes: '',
+    createdAt: `${startDate}T00:00:00.000Z`,
   }
 }
 
@@ -189,6 +232,47 @@ describe('buildAlerts', () => {
       titleKey: 'alerts.items.cleaningDue',
       route: '/cleaning',
       params: { type: 'cleaning.types.spot' },
+    })
+  })
+
+  it('flags a quarantine that is ready to clear', () => {
+    const alerts = buildAlerts(emptyInput({ quarantines: [quarantine('2024-01-01', 30)] }))
+    expect(alerts).toHaveLength(1)
+    expect(alerts[0]).toMatchObject({
+      id: 'quarantine-q1',
+      source: 'meds',
+      severity: 'due',
+      titleKey: 'alerts.items.quarantineReady',
+      route: '/meds',
+      params: { name: 'New gecko' },
+    })
+  })
+
+  it('flags an overdue molt prediction from the logged cadence', () => {
+    const alerts = buildAlerts(
+      emptyInput({
+        molts: [completeMolt('2024-01-01'), completeMolt('2024-02-01'), completeMolt('2024-03-01')],
+      }),
+    )
+    expect(alerts).toHaveLength(1)
+    expect(alerts[0]).toMatchObject({
+      id: 'molt-overdue',
+      source: 'molt',
+      severity: 'overdue',
+      titleKey: 'alerts.items.moltOverdue',
+      route: '/molt',
+    })
+  })
+
+  it('flags an in-progress brumation phase as an info alert', () => {
+    const alerts = buildAlerts(emptyInput({ plans: [brumationPlan('2024-05-25')] }))
+    expect(alerts).toHaveLength(1)
+    expect(alerts[0]).toMatchObject({
+      id: 'brumation-b1',
+      source: 'brumation',
+      severity: 'info',
+      titleKey: 'alerts.items.brumationPhase',
+      route: '/brumation',
     })
   })
 
