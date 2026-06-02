@@ -38,8 +38,8 @@ function Avatar({ src, alt, name, size = 'md', className = '' }: AvatarProps) {
   }
 
   return (
-    <div className={`${avatarClasses} ${styles.fallback}`} aria-label={name || alt}>
-      {name ? getInitials(name) : '?'}
+    <div className={`${avatarClasses} ${styles.fallback}`} role="img" aria-label={name || alt}>
+      <span aria-hidden="true">{name ? getInitials(name) : '?'}</span>
     </div>
   )
 }
