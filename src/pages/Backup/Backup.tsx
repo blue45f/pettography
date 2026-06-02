@@ -1,7 +1,7 @@
 import Button from '@components/common/Button'
 import { useToast } from '@components/common/Toast'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Backup.module.css'
@@ -62,6 +62,12 @@ function Backup() {
   const fileInput = useRef<HTMLInputElement | null>(null)
   const [keys, setKeys] = useState<string[]>(() => collectKeys())
   const [pending, setPending] = useState<PendingImport | null>(null)
+  const confirmRef = useRef<HTMLDivElement | null>(null)
+
+  // Move focus into the restore-confirmation dialog when it opens (WAI-ARIA alertdialog).
+  useEffect(() => {
+    if (pending) confirmRef.current?.focus()
+  }, [pending])
 
   function handleExport() {
     const envelope = buildEnvelope()
@@ -175,6 +181,8 @@ function Backup() {
 
         {pending && (
           <div
+            ref={confirmRef}
+            tabIndex={-1}
             className={styles.confirmPanel}
             role="alertdialog"
             aria-labelledby="restore-confirm-heading"
