@@ -22,6 +22,8 @@ import {
 } from '@features/vitals'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import useInterval from '@hooks/useInterval'
+import { buildCsv } from '@utils/csv'
+import { downloadTextFile } from '@utils/download'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -164,6 +166,17 @@ function Vitals() {
   }
   const showPetBadge = showAllPets && pets.length > 1
 
+  function exportCsv() {
+    const rows = [...readings]
+      .sort((a, b) => a.measuredAt.localeCompare(b.measuredAt))
+      .map((r) => [r.measuredAt, r.type, r.bpm, r.durationSec, r.taps, r.note])
+    downloadTextFile(
+      'pettography-vitals.csv',
+      buildCsv(['date', 'type', 'bpm', 'duration_sec', 'taps', 'note'], rows),
+      'text/csv;charset=utf-8',
+    )
+  }
+
   return (
     <section className={styles.page}>
       <header className={styles.header}>
@@ -173,6 +186,11 @@ function Vitals() {
           <p className={styles.speciesNote}>
             <span aria-hidden="true">{activeSpecies.heroEmoji}</span> {activeSpecies.koreanName}
           </p>
+        )}
+        {readings.length > 0 && (
+          <Button variant="secondary" onClick={exportCsv} className={styles.exportButton}>
+            {t('common.exportCsv')}
+          </Button>
         )}
       </header>
 
