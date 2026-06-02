@@ -126,12 +126,12 @@ export interface UpcomingDue {
 }
 
 export function upcomingDues(vaccinations: VaccinationEntry[], horizonDays = 60): UpcomingDue[] {
-  const now = new Date()
+  const todayMs = new Date(`${new Date().toISOString().slice(0, 10)}T00:00:00Z`).getTime()
   return vaccinations
     .filter((v) => v.nextDueAt)
     .map((v) => {
-      const due = new Date(v.nextDueAt as string)
-      const daysLeft = Math.round((due.getTime() - now.getTime()) / 86_400_000)
+      const dueMs = new Date(`${(v.nextDueAt as string).slice(0, 10)}T00:00:00Z`).getTime()
+      const daysLeft = Math.round((dueMs - todayMs) / 86_400_000)
       return { vaccination: v, daysLeft }
     })
     .filter((d) => d.daysLeft <= horizonDays)
