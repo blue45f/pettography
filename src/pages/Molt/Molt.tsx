@@ -75,11 +75,13 @@ function Molt() {
   const isArthropod = category === 'arthropod'
 
   const today = useToday()
-  const prediction = useMemo(() => predictNext(events, today), [events, today])
-  const average = useMemo(() => averageCycleDays(events), [events])
-  const median = useMemo(() => medianCycleDays(events), [events])
-  const intervals = useMemo(() => completedIntervalsDays(events), [events])
-  const stats = useMemo(() => moltStats(events), [events])
+  // Analytics are per-animal: a cycle/prediction from mixed pets is meaningless,
+  // so derive them from the active pet even when the list below shows all pets.
+  const prediction = useMemo(() => predictNext(activeEvents, today), [activeEvents, today])
+  const average = useMemo(() => averageCycleDays(activeEvents), [activeEvents])
+  const median = useMemo(() => medianCycleDays(activeEvents), [activeEvents])
+  const intervals = useMemo(() => completedIntervalsDays(activeEvents), [activeEvents])
+  const stats = useMemo(() => moltStats(activeEvents), [activeEvents])
 
   // Progress through the current cycle: days elapsed since the last anchor
   // out of the predicted interval. Clamped so an overdue cycle reads 100%.
@@ -325,7 +327,10 @@ function Molt() {
             // events are sorted desc; the next-older event is the previous cycle.
             const older = events[index + 1] as MoltEvent | undefined
             const gap =
-              older && entry.kind !== 'in_progress' && older.kind !== 'in_progress'
+              older &&
+              older.petId === entry.petId &&
+              entry.kind !== 'in_progress' &&
+              older.kind !== 'in_progress'
                 ? daysBetween(older.occurredAt, entry.occurredAt)
                 : null
             const label = petLabel(entry.petId)
