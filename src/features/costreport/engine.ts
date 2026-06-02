@@ -110,7 +110,13 @@ export function projectedAnnual(expenses: ReportExpense[], todayISO: string): nu
   const today = new Date(`${todayISO.slice(0, 10)}T00:00:00Z`)
   const year = today.getUTCFullYear()
   const elapsedMonths = today.getUTCMonth() + 1 // 1..12
-  const spentThisYear = annualTotal(expenses, year)
+  const currentMonth = todayISO.slice(0, 7) // YYYY-MM
+  // Only count spend in months that have actually begun, matching elapsedMonths,
+  // so future-dated current-year expenses do not inflate the projection.
+  const spentThisYear = expenses.reduce(
+    (sum, e) => (yearOf(e.month) === year && e.month <= currentMonth ? sum + e.amountKrw : sum),
+    0,
+  )
   if (spentThisYear === 0) return 0
   return Math.round((spentThisYear / elapsedMonths) * 12)
 }
