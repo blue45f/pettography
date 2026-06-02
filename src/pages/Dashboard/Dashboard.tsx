@@ -861,8 +861,8 @@ function countWeekActivity(
   completions: Record<string, string>,
   weights: { measuredAt: string }[],
 ) {
-  const weekAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000).toISOString()
-  const since = (iso: string) => iso >= weekAgo
+  const weekAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000).toISOString().slice(0, 10)
+  const since = (iso: string) => iso.slice(0, 10) >= weekAgo
   return {
     diary: diary.filter((e) => since(e.occurredAt)).length,
     photos: photos.filter((p) => since(p.addedAt)).length,
