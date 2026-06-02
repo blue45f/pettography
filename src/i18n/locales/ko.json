@@ -102,6 +102,7 @@
     "bcs": "체형 점수",
     "enclosure": "사육장 크기",
     "tools": "도구 모음",
+    "caresheet": "케어 시트",
     "food": "먹이 가이드",
     "events": "박람회 일정",
     "contact": "문의하기",
@@ -3692,6 +3693,44 @@
     "previous": "이전 페이지",
     "next": "다음 페이지",
     "pageLabel": "{{page}}페이지"
+  },
+  "caresheet": {
+    "docTitle": "케어 시트",
+    "title": "{{name}} 케어 시트",
+    "petFallback": "반려동물",
+    "print": "인쇄 / PDF 저장",
+    "hint": "펫시터·수의사에게 건넬 한 장 요약입니다. 인쇄하거나 PDF로 저장하세요.",
+    "generatedOn": "생성일: {{date}}",
+    "noPetTitle": "활성 펫이 없습니다",
+    "noPetDesc": "온보딩을 완료하면 케어 시트를 만들 수 있어요.",
+    "noData": "정보 없음",
+    "sections": {
+      "habitat": "사육 환경",
+      "feeding": "급이",
+      "meds": "복용 약",
+      "attention": "이번 주 주의 항목",
+      "emergency": "응급"
+    },
+    "habitat": {
+      "temp": "온도: {{min}}~{{max}}°C",
+      "humidity": "습도: {{min}}~{{max}}%",
+      "uvbYes": "UVB 조명 필요",
+      "uvbNo": "UVB 필수 아님"
+    },
+    "feeding": {
+      "freq": "급이 주기: {{days}}일마다 (성체 기준)"
+    },
+    "meds": {
+      "none": "복용 중인 약 없음",
+      "detail": "{{dosage}}, {{days}}일마다"
+    },
+    "attention": {
+      "none": "현재 주의 항목 없음"
+    },
+    "emergency": {
+      "note": "응급 상황 시 가까운 특수동물 병원에 즉시 연락하세요.",
+      "findVet": "가까운 병원 찾기"
+    }
   },
   "morphs": {
     "title": "인기 모프 카탈로그",

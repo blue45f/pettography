@@ -14,7 +14,7 @@
 - **i18n ko/en/ja** 완전 동기화 — 3개 언어 키 패리티 (`pnpm test:i18n` 게이트), 헤더 언어 선택기.
 - **⌘K 명령 팔레트 + 도구 허브** — 70+ 라우트와 종을 즉시 검색·이동하는 글로벌 커맨드 팔레트(⌘K / Ctrl+K, 헤더 버튼)와 카테고리별 `/tools` 도구 모음. 단일 카탈로그(`src/config/toolCatalog`)를 공유.
 
-## 페이지 맵 (총 73개 라우트)
+## 페이지 맵 (총 74개 라우트)
 
 | 카테고리  | 페이지                                                                       | 설명                                                                                                                                                                                                                                                                                                 |
 | --------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -30,7 +30,7 @@
 | 커뮤니티  | `/consult`, `/forum`                                                         | 수의사 실시간 상담(socket.io) / 종별 게시판                                                                                                                                                                                                                                                          |
 | 입점/운영 | `/partners`, `/partner-dashboard`, `/admin`                                  | 입점 신청 / 승인된 가게 관리 / 어드민                                                                                                                                                                                                                                                                |
 | 행사      | `/events`                                                                    | 2026 한국 펫 박람회 8건 timeline (지역 필터)                                                                                                                                                                                                                                                         |
-| 법규/안전 | `/registry`, `/petid`, `/backup`                                             | 2025-12-14 야생생물법 4종 신고 체크리스트 / 인쇄용 미아 ID 카드 / 데이터 export·import·wipe                                                                                                                                                                                                          |
+| 법규/안전 | `/registry`, `/petid`, `/backup`, `/caresheet`                               | 2025-12-14 야생생물법 4종 신고 체크리스트 / 인쇄용 미아 ID 카드 / 데이터 export·import·wipe / **펫시터·수의사용 케어 시트**(인쇄·PDF, 사육 환경·급이·약·주의 항목 집계)                                                                                                                              |
 | 메타      | `/about`, `/faq`                                                             | 앱 소개·원칙·데이터 출처 / 10개 자주 묻는 질문 accordion                                                                                                                                                                                                                                             |
 
 ### 🆕 v0.2 확장 (34개 신규 라우트, ko/en/ja)
@@ -57,7 +57,7 @@
 pettography/
 ├── src/                 # Frontend (React 19 + Vite + TS strict)
 │   ├── features/        # 30+ features (species, onboarding, genetics, molt, vivarium, breeding, feeding, meds, showcase, qna, meetups, market, passport, assistant ...)
-│   ├── pages/           # 73 routes (lazy)
+│   ├── pages/           # 74 routes (lazy)
 │   ├── components/      # shared UI (Card, Badge, Button, Input, Textarea, Toast, BottomNav, Header ...)
 │   ├── router/ store/ services/ i18n/ hooks/ utils/
 │   └── assets/styles/   # design tokens (OKLCH-tinted, fluid clamp)

@@ -140,6 +140,11 @@ export const routes = [
       },
       { path: 'petid', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/PetId')) },
       { path: 'backup', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Backup')) },
+      {
+        path: 'caresheet',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Caresheet')),
+      },
       { path: 'routine', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Routine')) },
       {
         path: 'calendar',

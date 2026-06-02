@@ -102,6 +102,7 @@
     "bcs": "Body score",
     "enclosure": "Enclosure",
     "tools": "Tools",
+    "caresheet": "Care sheet",
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
@@ -3695,6 +3696,44 @@
     "previous": "Previous page",
     "next": "Next page",
     "pageLabel": "Page {{page}}"
+  },
+  "caresheet": {
+    "docTitle": "Care sheet",
+    "title": "{{name}}'s care sheet",
+    "petFallback": "Pet",
+    "print": "Print / Save PDF",
+    "hint": "A one-page summary to hand to a pet-sitter or vet. Print it or save as PDF.",
+    "generatedOn": "Generated: {{date}}",
+    "noPetTitle": "No active pet",
+    "noPetDesc": "Complete onboarding to build a care sheet.",
+    "noData": "No data",
+    "sections": {
+      "habitat": "Habitat",
+      "feeding": "Feeding",
+      "meds": "Medications",
+      "attention": "This week's attention items",
+      "emergency": "Emergency"
+    },
+    "habitat": {
+      "temp": "Temperature: {{min}}–{{max}}°C",
+      "humidity": "Humidity: {{min}}–{{max}}%",
+      "uvbYes": "UVB lighting required",
+      "uvbNo": "UVB not essential"
+    },
+    "feeding": {
+      "freq": "Feed every {{days}} days (adult basis)"
+    },
+    "meds": {
+      "none": "No current medications",
+      "detail": "{{dosage}}, every {{days}} days"
+    },
+    "attention": {
+      "none": "No attention items right now"
+    },
+    "emergency": {
+      "note": "In an emergency, contact your nearest exotic-animal vet immediately.",
+      "findVet": "Find a nearby vet"
+    }
   },
   "morphs": {
     "title": "Popular morph catalog",

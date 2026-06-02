@@ -135,6 +135,7 @@ export const TOOL_GROUPS: readonly ToolGroup[] = [
     tools: [
       { path: '/registry', navKey: 'registry' },
       { path: '/petid', navKey: 'petid' },
+      { path: '/caresheet', navKey: 'caresheet' },
       { path: '/backup', navKey: 'backup' },
       { path: '/funeral', navKey: 'funeral' },
       { path: '/partners', navKey: 'partners' },

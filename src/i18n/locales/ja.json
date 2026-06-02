@@ -102,6 +102,7 @@
     "bcs": "体型スコア",
     "enclosure": "ケージサイズ",
     "tools": "ツール一覧",
+    "caresheet": "ケアシート",
     "food": "餌ガイド",
     "events": "展示会スケジュール",
     "contact": "問い合わせ",
@@ -3692,6 +3693,44 @@
     "previous": "前のページ",
     "next": "次のページ",
     "pageLabel": "{{page}}ページ"
+  },
+  "caresheet": {
+    "docTitle": "ケアシート",
+    "title": "{{name}}のケアシート",
+    "petFallback": "ペット",
+    "print": "印刷 / PDF保存",
+    "hint": "ペットシッターや獣医に渡す1枚の要約です。印刷またはPDFで保存してください。",
+    "generatedOn": "作成日: {{date}}",
+    "noPetTitle": "アクティブなペットがいません",
+    "noPetDesc": "オンボーディングを完了するとケアシートを作成できます。",
+    "noData": "情報なし",
+    "sections": {
+      "habitat": "飼育環境",
+      "feeding": "給餌",
+      "meds": "服用薬",
+      "attention": "今週の注意項目",
+      "emergency": "緊急"
+    },
+    "habitat": {
+      "temp": "温度: {{min}}〜{{max}}°C",
+      "humidity": "湿度: {{min}}〜{{max}}%",
+      "uvbYes": "UVB照明が必要",
+      "uvbNo": "UVBは必須ではない"
+    },
+    "feeding": {
+      "freq": "給餌周期: {{days}}日ごと（成体基準）"
+    },
+    "meds": {
+      "none": "服用中の薬なし",
+      "detail": "{{dosage}}、{{days}}日ごと"
+    },
+    "attention": {
+      "none": "現在、注意項目はありません"
+    },
+    "emergency": {
+      "note": "緊急時は最寄りのエキゾチック動物病院にすぐ連絡してください。",
+      "findVet": "近くの病院を探す"
+    }
   },
   "morphs": {
     "title": "人気モルフカタログ",

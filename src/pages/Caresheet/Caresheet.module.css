@@ -1,0 +1,116 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  align-items: flex-start;
+}
+
+.hint {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.sheet {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  max-inline-size: 720px;
+}
+
+.sheetHeader {
+  border-bottom: 2px solid var(--color-border-strong);
+  padding-bottom: var(--spacing-md);
+}
+
+.sheetTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.species {
+  margin-top: var(--spacing-2xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+}
+
+.generated {
+  margin-top: var(--spacing-2xs);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.blockTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.facts {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.facts li {
+  padding-inline-start: var(--spacing-md);
+  position: relative;
+  line-height: 1.5;
+}
+
+.facts li::before {
+  content: '•';
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--color-primary);
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.emergencyLink a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Print only the care sheet, isolated from the app chrome. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  [data-print='care-sheet'],
+  [data-print='care-sheet'] * {
+    visibility: visible;
+  }
+
+  [data-print='care-sheet'] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 1cm;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    page-break-inside: avoid;
+  }
+}
