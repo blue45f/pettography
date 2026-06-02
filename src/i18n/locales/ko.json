@@ -3764,6 +3764,9 @@
       "beyond": "다음 달 이후 ({{count}})"
     },
     "kind": {
+      "gear": "장비 교체",
+      "supplement": "보충제",
+      "cleaning": "청소",
       "vaccine": "건강",
       "supply": "재고",
       "registry": "신고"

@@ -1,10 +1,26 @@
 import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import EmptyState from '@components/common/EmptyState'
+import {
+  CLEAN_TYPES,
+  defaultIntervalDays as defaultCleanInterval,
+  latestByType as latestCleanByType,
+  nextDue as nextCleanDue,
+  useActivePetCleanings,
+} from '@features/cleaning'
+import { dueDate, useActivePetGear } from '@features/gear'
 import { upcomingDues, useActivePetHealth } from '@features/health'
 import { useOnboardingStore } from '@features/onboarding'
 import { useActivePetFilings, REGISTRY_FILINGS } from '@features/registry'
 import { useSpecies } from '@features/species'
+import {
+  defaultIntervalDays,
+  latestByType,
+  nextDusting,
+  SUPPLEMENT_TYPES,
+  useActivePetDustings,
+  useSupplementsStore,
+} from '@features/supplements'
 import { supplyStatus, useActivePetSupplies } from '@features/supplies'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { buildIcs, type IcsEvent } from '@utils/ics'
@@ -14,7 +30,7 @@ import { Link } from 'react-router'
 
 import styles from './Calendar.module.css'
 
-type EventKind = 'vaccine' | 'supply' | 'registry'
+type EventKind = 'vaccine' | 'supply' | 'registry' | 'gear' | 'supplement' | 'cleaning'
 
 interface CalendarEvent {
   id: string
@@ -45,6 +61,11 @@ function Calendar() {
   const { vaccinations } = useActivePetHealth()
   const supplyItems = useActivePetSupplies()
   const registryDone = useActivePetFilings()
+  const gear = useActivePetGear()
+  const dustings = useActivePetDustings()
+  const supSchedule = useSupplementsStore((s) => s.schedule)
+  const cleanings = useActivePetCleanings()
+  const category = useOnboardingStore((s) => s.profile.category)
   const speciesId = useOnboardingStore((s) => s.profile.speciesId)
   const { data: species } = useSpecies(speciesId ?? undefined)
 
@@ -93,8 +114,65 @@ function Calendar() {
       })
     }
 
+    const dayDiff = (iso: string) =>
+      Math.round((new Date(iso).getTime() - now.getTime()) / 86_400_000)
+    const withinWindow = (daysLeft: number) => daysLeft <= HORIZON_DAYS && daysLeft >= -30
+
+    // Gear replacement dates
+    for (const g of gear) {
+      const due = dueDate(g)
+      if (!due) continue
+      const daysLeft = dayDiff(due)
+      if (!withinWindow(daysLeft)) continue
+      out.push({
+        id: `gear-${g.id}`,
+        kind: 'gear',
+        daysLeft,
+        date: new Date(due),
+        title: g.name,
+        note: '',
+        link: '/gear',
+      })
+    }
+
+    // Supplement dustings (only types with a logged cadence to project from)
+    for (const type of SUPPLEMENT_TYPES) {
+      const interval = supSchedule[type] ?? defaultIntervalDays(category, type)
+      const last = latestByType(dustings, type)?.dustedAt
+      if (interval == null || !last) continue
+      const daysLeft = dayDiff(nextDusting(last, interval))
+      if (!withinWindow(daysLeft)) continue
+      out.push({
+        id: `supplement-${type}`,
+        kind: 'supplement',
+        daysLeft,
+        date: new Date(nextDusting(last, interval)),
+        title: t(`supplements.types.${type}`),
+        note: '',
+        link: '/supplements',
+      })
+    }
+
+    // Cleaning cadences
+    for (const type of CLEAN_TYPES) {
+      const last = latestCleanByType(cleanings, type)?.cleanedAt
+      if (!last) continue
+      const due = nextCleanDue(last, defaultCleanInterval(type, category))
+      const daysLeft = dayDiff(due)
+      if (!withinWindow(daysLeft)) continue
+      out.push({
+        id: `cleaning-${type}`,
+        kind: 'cleaning',
+        daysLeft,
+        date: new Date(due),
+        title: t(`cleaning.types.${type}`),
+        note: '',
+        link: '/cleaning',
+      })
+    }
+
     return out.sort((a, b) => a.daysLeft - b.daysLeft)
-  }, [vaccinations, supplyItems, registryDone, t])
+  }, [vaccinations, supplyItems, registryDone, gear, dustings, supSchedule, cleanings, category, t])
 
   const overdue = events.filter((e) => e.daysLeft < 0)
   const within7 = events.filter((e) => e.daysLeft >= 0 && e.daysLeft <= 7)

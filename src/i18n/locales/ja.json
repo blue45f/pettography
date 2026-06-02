@@ -3764,6 +3764,9 @@
       "beyond": "来月以降 ({{count}})"
     },
     "kind": {
+      "gear": "機材交換",
+      "supplement": "サプリ",
+      "cleaning": "掃除",
       "vaccine": "健康",
       "supply": "在庫",
       "registry": "申告"

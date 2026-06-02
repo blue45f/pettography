@@ -3767,6 +3767,9 @@
       "beyond": "Later ({{count}})"
     },
     "kind": {
+      "gear": "Gear",
+      "supplement": "Supplement",
+      "cleaning": "Cleaning",
       "vaccine": "Health",
       "supply": "Supply",
       "registry": "Filing"
