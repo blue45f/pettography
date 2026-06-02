@@ -5,9 +5,21 @@
 
 type Cell = string | number | boolean | null | undefined
 
-/** Quote a cell when it contains a comma, quote or newline; double inner quotes. */
+/** Leading characters a spreadsheet may execute as a formula (CSV injection, CWE-1236). */
+const FORMULA_TRIGGER = /^[=+\-@\t\r]/
+
+/**
+ * Escape a single cell:
+ * 1. User-provided strings that begin with a formula trigger (= + - @, tab, CR) are
+ *    prefixed with a single quote so spreadsheets render them as text, not formulas.
+ *    Typed numbers/booleans are never altered, so negative numbers stay numeric.
+ * 2. Quote the cell when it contains a comma, quote or newline; double inner quotes.
+ */
 function escapeCell(value: Cell): string {
-  const s = value === null || value === undefined ? '' : String(value)
+  let s = value === null || value === undefined ? '' : String(value)
+  if (typeof value === 'string' && FORMULA_TRIGGER.test(value)) {
+    s = `'${s}`
+  }
   return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
 }
 

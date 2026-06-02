@@ -25,4 +25,19 @@ describe('buildCsv', () => {
   it('renders null/undefined as empty and booleans as text', () => {
     expect(buildCsv(['x', 'y', 'z'], [[null, undefined, true]])).toBe('x,y,z\r\n,,true')
   })
+
+  it('neutralizes formula-injection strings with a leading quote', () => {
+    expect(buildCsv(['note'], [['=1+1']])).toBe("note\r\n'=1+1")
+    expect(buildCsv(['note'], [['@cmd']])).toBe("note\r\n'@cmd")
+    expect(buildCsv(['note'], [['+ping']])).toBe("note\r\n'+ping")
+    expect(buildCsv(['note'], [['-5 today']])).toBe("note\r\n'-5 today")
+  })
+
+  it('still quotes a guarded cell that also contains a comma', () => {
+    expect(buildCsv(['note'], [['=a,b']])).toBe('note\r\n"\'=a,b"')
+  })
+
+  it('does not mangle typed negative numbers', () => {
+    expect(buildCsv(['delta'], [[-5]])).toBe('delta\r\n-5')
+  })
 })
