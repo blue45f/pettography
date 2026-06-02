@@ -65,14 +65,12 @@ export const useReserveStore = create<ReserveState>()(
 )
 
 export function useActivePetReserve(): ReserveSnapshot {
-  const top = useReserveStore((s) => ({
-    monthlyContributionKrw: s.monthlyContributionKrw,
-    startedAt: s.startedAt,
-  }))
+  const monthlyContributionKrw = useReserveStore((s) => s.monthlyContributionKrw)
+  const startedAt = useReserveStore((s) => s.startedAt)
   const byPet = useReserveStore((s) => s.byPet)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return top
-  return byPet[activePetId] ?? top
+  if (!activePetId) return { monthlyContributionKrw, startedAt }
+  return byPet[activePetId] ?? { monthlyContributionKrw, startedAt }
 }
 
 export function monthsBetween(startedAt: string | null, now: Date = new Date()): number {
