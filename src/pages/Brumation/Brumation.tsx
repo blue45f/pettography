@@ -257,9 +257,11 @@ function Brumation() {
         <h2 className={styles.sectionTitle}>{t('brumation.list.title')}</h2>
         {plans.length === 0 ? (
           <EmptyState
+            variant="log"
             icon="❄️"
             title={t('brumation.list.emptyTitle')}
             description={t('brumation.list.emptyDesc')}
+            hint={t('brumation.list.hint')}
             headingLevel={3}
           />
         ) : (

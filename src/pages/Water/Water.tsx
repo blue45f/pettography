@@ -333,7 +333,13 @@ function Water() {
       )}
 
       {readings.length === 0 ? (
-        <EmptyState icon="💧" title={t('water.emptyTitle')} description={t('water.emptyDesc')} />
+        <EmptyState
+          variant="log"
+          icon="💧"
+          title={t('water.emptyTitle')}
+          description={t('water.emptyDesc')}
+          hint={t('water.hint')}
+        />
       ) : (
         <ul className={styles.list}>
           {readings.map((reading) => {

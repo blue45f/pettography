@@ -301,9 +301,11 @@ function MedicationsTab() {
       <MedicationForm />
       {medications.length === 0 ? (
         <EmptyState
+          variant="log"
           icon="💊"
           title={t('meds.med.emptyTitle')}
           description={t('meds.med.emptyDesc')}
+          hint={t('meds.med.hint')}
         />
       ) : (
         <ul className={styles.list}>

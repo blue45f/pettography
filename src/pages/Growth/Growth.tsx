@@ -292,7 +292,13 @@ function Growth() {
       </Card>
 
       {entries.length === 0 ? (
-        <EmptyState icon="📈" title={t('growth.emptyTitle')} description={t('growth.emptyDesc')} />
+        <EmptyState
+          variant="log"
+          icon="📈"
+          title={t('growth.emptyTitle')}
+          description={t('growth.emptyDesc')}
+          hint={t('growth.hint')}
+        />
       ) : (
         <ul className={styles.list}>
           {[...entries]

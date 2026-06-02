@@ -123,7 +123,7 @@ function Cohab() {
       {result && speciesA && speciesB ? (
         <VerdictCard result={result} speciesA={speciesA} speciesB={speciesB} />
       ) : (
-        <EmptyState icon="🔎" title={t('cohab.empty')} headingLevel={2} />
+        <EmptyState variant="gated" icon="🔎" title={t('cohab.empty')} headingLevel={2} />
       )}
 
       {/* ── General solitary-keeping guidance ─────────────────── */}

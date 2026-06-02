@@ -239,9 +239,11 @@ function Cleaning() {
         </div>
         {logs.length === 0 ? (
           <EmptyState
+            variant="log"
             icon="🧽"
             title={t('cleaning.emptyTitle')}
             description={t('cleaning.emptyDesc')}
+            hint={t('cleaning.hint')}
           />
         ) : (
           <ul className={styles.list}>

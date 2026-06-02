@@ -128,7 +128,9 @@ function Hospitals() {
       <KakaoMap center={mapCenter} markers={mapMarkers} height={320} />
 
       {isLoading && <Skeleton variant="rectangular" height={120} lines={3} />}
-      {sorted && sorted.length === 0 && <EmptyState icon="🏥" title={t('hospitals.noResult')} />}
+      {sorted && sorted.length === 0 && (
+        <EmptyState variant="discover" icon="🏥" title={t('hospitals.noResult')} />
+      )}
 
       <ul className={styles.list}>
         {sorted?.map((h) => (

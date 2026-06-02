@@ -9,6 +9,12 @@ const meta: Meta<typeof EmptyState> = {
   component: EmptyState,
   tags: ['autodocs'],
   parameters: { layout: 'centered' },
+  argTypes: {
+    variant: {
+      control: 'inline-radio',
+      options: ['default', 'log', 'discover', 'gated'],
+    },
+  },
 }
 
 export default meta
@@ -42,5 +48,46 @@ export const WithAction: Story = {
     description: '새로운 항목을 추가해보세요.',
     icon: '✨',
     action: <Button variant="primary">항목 추가하기</Button>,
+  },
+}
+
+/**
+ * `log` — first-run primer for husbandry logging pages. Contained tinted panel
+ * with a soft icon medallion and a teaching `hint`. Use when the entry form is
+ * already on the page.
+ */
+export const Log: Story = {
+  args: {
+    variant: 'log',
+    icon: '🍽️',
+    title: '아직 급이 기록이 없어요',
+    description: '첫 급이를 기록하면 다음 급이일 예측과 거식 추적이 시작됩니다.',
+    hint: '팁: 거식이 의심되면 거부한 먹이도 함께 남겨두면 패턴이 보여요.',
+  },
+}
+
+/**
+ * `discover` — empty browse/search results. Stays quiet and airy so it never
+ * competes with the filters above it.
+ */
+export const Discover: Story = {
+  args: {
+    variant: 'discover',
+    icon: '🔍',
+    title: '검색 결과가 없어요',
+    description: '필터를 바꾸거나 검색어를 줄여보세요.',
+  },
+}
+
+/**
+ * `gated` — a precondition is unmet (pick a pet, choose a vet…). Contained
+ * panel with a muted medallion so the next step reads as intentional.
+ */
+export const Gated: Story = {
+  args: {
+    variant: 'gated',
+    icon: '💬',
+    title: '상담할 수의사를 먼저 선택하세요',
+    hint: '오른쪽 목록에서 수의사를 고르면 상담 내역이 여기 표시돼요.',
   },
 }

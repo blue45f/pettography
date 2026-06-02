@@ -306,9 +306,11 @@ function Supplements() {
         <h2 className={styles.sectionTitle}>{t('supplements.history.title')}</h2>
         {logs.length === 0 ? (
           <EmptyState
+            variant="log"
             icon="🦴"
             title={t('supplements.history.emptyTitle')}
             description={t('supplements.history.emptyDesc')}
+            hint={t('supplements.history.hint')}
           />
         ) : (
           <ul className={styles.list}>

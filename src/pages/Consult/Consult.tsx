@@ -105,7 +105,7 @@ function Consult() {
         <Card padding="lg" className={styles.chatCard}>
           <Card.Body>
             {!activeVet ? (
-              <EmptyState icon="💬" title={t('consult.pickVet')} />
+              <EmptyState variant="gated" icon="💬" title={t('consult.pickVet')} />
             ) : (
               <>
                 <header className={styles.chatHeader}>

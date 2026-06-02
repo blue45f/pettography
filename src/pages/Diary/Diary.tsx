@@ -202,7 +202,13 @@ function Diary() {
       </Card>
 
       {entries.length === 0 ? (
-        <EmptyState icon="📓" title={t('diary.emptyTitle')} description={t('diary.emptyDesc')} />
+        <EmptyState
+          variant="log"
+          icon="📓"
+          title={t('diary.emptyTitle')}
+          description={t('diary.emptyDesc')}
+          hint={t('diary.hint')}
+        />
       ) : (
         <ul className={styles.list}>
           {entries.map((entry) => (

@@ -164,7 +164,12 @@ function Market() {
       <ListingComposer lastAuthor={lastAuthor} species={species} />
 
       {visibleListings.length === 0 ? (
-        <EmptyState icon="🪧" title={t('market.empty')} description={t('market.emptyHint')} />
+        <EmptyState
+          variant="discover"
+          icon="🪧"
+          title={t('market.empty')}
+          description={t('market.emptyHint')}
+        />
       ) : (
         <ul className={styles.grid}>
           {visibleListings.map((listing) => (

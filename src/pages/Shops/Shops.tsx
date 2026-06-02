@@ -127,7 +127,9 @@ function Shops() {
       </div>
 
       {isLoading && <Skeleton variant="rectangular" height={120} lines={3} />}
-      {sorted && sorted.length === 0 && <EmptyState icon="🛒" title={t('shops.noResult')} />}
+      {sorted && sorted.length === 0 && (
+        <EmptyState variant="discover" icon="🛒" title={t('shops.noResult')} />
+      )}
 
       <ul className={styles.list}>
         {sorted?.map((s) => (

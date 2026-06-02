@@ -137,7 +137,9 @@ function SpeciesCatalog() {
       </p>
 
       {isLoading && <Skeleton variant="rectangular" height={100} lines={3} />}
-      {filtered && filtered.length === 0 && <EmptyState icon="🔍" title={t('species.noResult')} />}
+      {filtered && filtered.length === 0 && (
+        <EmptyState variant="discover" icon="🔍" title={t('species.noResult')} />
+      )}
 
       <ul className={styles.grid}>
         {filtered?.map((s) => {

@@ -259,7 +259,10 @@
     "conditionTitle": "Today's condition",
     "conditionSubtitle": "Health, habitat, spend and stock at a glance. Tap a card for detail.",
     "condition": {
-      "bcs": { "label": "Body score", "empty": "No record" },
+      "bcs": {
+        "label": "Body score",
+        "empty": "No record"
+      },
       "health": {
         "label": "Weight & shots",
         "empty": "Log a weight to start tracking",
@@ -886,7 +889,8 @@
     },
     "showAllPets": "Show every pet's entries",
     "remove": "Remove",
-    "speciesUnknown": "(no species selected)"
+    "speciesUnknown": "(no species selected)",
+    "hint": "Tip: note small shifts in appetite or activity to catch warning signs early."
   },
   "species": {
     "catalogTitle": "Species catalog",
@@ -1280,7 +1284,8 @@
     },
     "empty": {
       "title": "No {{term}} records yet",
-      "desc": "Add your first entry and we'll analyze the cycle and predict the next one."
+      "desc": "Add your first entry and we'll analyze the cycle and predict the next one.",
+      "hint": "Tip: log both start and finish to sharpen the next-cycle prediction."
     },
     "errors": {
       "dateRequired": "Please enter a date.",
@@ -1713,7 +1718,8 @@
       "doseDone": "Logged today's dose.",
       "doseUndone": "Undid today's dose.",
       "emptyTitle": "No medications yet",
-      "emptyDesc": "Add any ongoing medication to track the next dose and your adherence."
+      "emptyDesc": "Add any ongoing medication to track the next dose and your adherence.",
+      "hint": "Tip: record the drug name and dose so you can show it at the next visit."
     },
     "quarantine": {
       "guideTitle": "Why quarantine?",
@@ -1831,7 +1837,8 @@
     },
     "empty": {
       "title": "No feedings logged yet",
-      "desc": "Log your first feeding to start next-feeding predictions and refusal tracking."
+      "desc": "Log your first feeding to start next-feeding predictions and refusal tracking.",
+      "hint": "Tip: note refused feedings too — patterns surface faster that way."
     },
     "errors": {
       "dateRequired": "Pick a date.",
@@ -1994,27 +2001,78 @@
       "noPetDesc": "Register your companion first and the passport starts counting from day one."
     },
     "ach": {
-      "weight1": { "title": "First weigh-in", "desc": "Logged your first weight." },
-      "weight20": { "title": "Weight watcher", "desc": "Logged 20 weigh-ins." },
-      "bcs1": { "title": "First body score", "desc": "Logged your first body condition score." },
-      "vitals1": { "title": "First vitals", "desc": "Logged your first vital signs." },
-      "water5": { "title": "Water guardian", "desc": "Logged 5 water tests." },
-      "growth5": { "title": "Growth tracker", "desc": "Logged 5 growth records." },
-      "bond7": { "title": "First Week", "desc": "You've been together for 7 days." },
-      "bond30": { "title": "One Month Together", "desc": "You've passed 30 days together." },
-      "bond100": { "title": "100 Days", "desc": "You've reached 100 days together." },
-      "diary1": { "title": "First Entry", "desc": "You wrote your first diary entry." },
-      "diary10": { "title": "Steady Observer", "desc": "You wrote 10 diary entries." },
-      "diary50": { "title": "Master Journalist", "desc": "You wrote 50 diary entries." },
-      "molt1": { "title": "First Shed", "desc": "You logged your first shed." },
-      "moltMaster": { "title": "Shed Master", "desc": "You logged 5 complete sheds." },
-      "feed10": { "title": "Hearty Meals", "desc": "You logged 10 feedings." },
-      "feed50": { "title": "Consistent Diet", "desc": "You logged 50 feedings." },
+      "weight1": {
+        "title": "First weigh-in",
+        "desc": "Logged your first weight."
+      },
+      "weight20": {
+        "title": "Weight watcher",
+        "desc": "Logged 20 weigh-ins."
+      },
+      "bcs1": {
+        "title": "First body score",
+        "desc": "Logged your first body condition score."
+      },
+      "vitals1": {
+        "title": "First vitals",
+        "desc": "Logged your first vital signs."
+      },
+      "water5": {
+        "title": "Water guardian",
+        "desc": "Logged 5 water tests."
+      },
+      "growth5": {
+        "title": "Growth tracker",
+        "desc": "Logged 5 growth records."
+      },
+      "bond7": {
+        "title": "First Week",
+        "desc": "You've been together for 7 days."
+      },
+      "bond30": {
+        "title": "One Month Together",
+        "desc": "You've passed 30 days together."
+      },
+      "bond100": {
+        "title": "100 Days",
+        "desc": "You've reached 100 days together."
+      },
+      "diary1": {
+        "title": "First Entry",
+        "desc": "You wrote your first diary entry."
+      },
+      "diary10": {
+        "title": "Steady Observer",
+        "desc": "You wrote 10 diary entries."
+      },
+      "diary50": {
+        "title": "Master Journalist",
+        "desc": "You wrote 50 diary entries."
+      },
+      "molt1": {
+        "title": "First Shed",
+        "desc": "You logged your first shed."
+      },
+      "moltMaster": {
+        "title": "Shed Master",
+        "desc": "You logged 5 complete sheds."
+      },
+      "feed10": {
+        "title": "Hearty Meals",
+        "desc": "You logged 10 feedings."
+      },
+      "feed50": {
+        "title": "Consistent Diet",
+        "desc": "You logged 50 feedings."
+      },
       "feedStreak5": {
         "title": "5 in a Row",
         "desc": "5 accepted feedings in a row with no refusals."
       },
-      "clutch1": { "title": "First Clutch", "desc": "You logged your first clutch." }
+      "clutch1": {
+        "title": "First Clutch",
+        "desc": "You logged your first clutch."
+      }
     }
   },
   "assistant": {
@@ -2189,7 +2247,8 @@
       "lengthNumber": "Enter the length as a number.",
       "lengthPositive": "Length must be greater than 0.",
       "noteMax": "Notes must be 200 characters or fewer."
-    }
+    },
+    "hint": "Tip: weigh on the same scale at the same time of day for a clean curve."
   },
   "water": {
     "title": "Water Quality Tracker",
@@ -2207,8 +2266,8 @@
     "kitNote": "Test kits and strips give approximate values. Measure consistently under the same conditions to read the trend.",
     "historyTitle": "Reading history",
     "nitrateTrend": "Nitrate trend",
-    "emptyTitle": "No readings",
-    "emptyDesc": "Measure at least one of temperature, pH, ammonia, nitrite, or nitrate.",
+    "emptyTitle": "No water readings yet",
+    "emptyDesc": "Measure even one of temperature, pH, ammonia, nitrite, or nitrate and the trend starts building.",
     "remove": "Remove",
     "speciesUnknown": "Saved without species info.",
     "status": {
@@ -2253,7 +2312,8 @@
       "tooHigh": "That value is too high.",
       "phRange": "pH must be between 0 and 14.",
       "noteMax": "Keep the note within 200 characters."
-    }
+    },
+    "hint": "Tip: test at the same time of day (not right after a water change) for a cleaner trend."
   },
   "brumation": {
     "title": "Brumation Planner",
@@ -2340,7 +2400,8 @@
       "viewing": "Viewing",
       "starts": "Starts",
       "totalDays": "{{count}} days",
-      "load": "Load"
+      "load": "Load",
+      "hint": "Tip: log pre-brumation fasting and weight alongside the plan to stay safe."
     },
     "errors": {
       "dateRequired": "Please enter a start date.",
@@ -2564,7 +2625,8 @@
       "trendAria": "Trend chart of {{count}} {{type}} readings",
       "remove": "Remove",
       "emptyTitle": "No readings yet",
-      "emptyDesc": "Save your first reading with the tap counter and the trend will build up here."
+      "emptyDesc": "Save your first reading with the tap counter and the trend will build up here.",
+      "hint": "Tip: measure at rest in the same posture to compare respiration and heart-rate trends."
     }
   },
   "cohab": {
@@ -2968,7 +3030,8 @@
     "history": {
       "title": "History",
       "emptyTitle": "No dustings logged yet",
-      "emptyDesc": "Use a quick-log button above or the form to record your first dusting."
+      "emptyDesc": "Use a quick-log button above or the form to record your first dusting.",
+      "hint": "Tip: log calcium and multivitamins separately to avoid over- or under-dosing."
     },
     "errors": {
       "dateRequired": "Please enter a date.",
@@ -3277,7 +3340,8 @@
     "totalCount": "{{count}} total",
     "emptyTitle": "No cleaning logs yet",
     "emptyDesc": "Use the \"Cleaned today\" button above or add a log to record your first clean.",
-    "remove": "Delete"
+    "remove": "Delete",
+    "hint": "Tip: separate spot cleans from full disinfections to see when the next deep clean is due."
   },
   "safety": {
     "title": "Safety audit",

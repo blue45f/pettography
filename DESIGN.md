@@ -73,6 +73,12 @@ Glass(backdrop-filter blur)는 **Header sticky bar + BottomNav 두 곳에만**. 
 - **Header**: glass sticky + brand logo solid + pill nav. ≤860px에서 햄버거 + actions 슬라이드.
 - **BottomNav**: ≤860px에서만, glass + 5탭 + 활성 탭은 상단 2px primary 보더 + soft 배경.
 - **KakaoMap**: env 키 없으면 placeholder. 있으면 마커 + popup.
+- **EmptyState**: 페이지의 register에 맞춰 빈 화면을 조율하는 `variant` prop. 56개 화면이 같은 빈 박스를 보여주던 것을 도메인 표현형 프라이머로 전환.
+  - `default` — 조용·airy·무테두리. 안전한 fallback(미이전 호출부 그대로 동작).
+  - `log` — 급이/투약/탈피/수질 등 husbandry 기록 페이지의 first-run 프라이머. tinted 패널(surface-muted + soft border + radius-lg) + 소프트 아이콘 medallion(primary-soft) + 선택적 `hint`(이 기록이 무엇에 쓰이는지/시작 한 걸음을 가르치는 한 줄). 입력 폼이 이미 페이지에 있을 때 사용.
+  - `discover` — 종/병원/샵/마켓 등 검색·탐색 결과 빈 상태. 필터와 경쟁하지 않게 조용히 유지.
+  - `gated` — 선행 조건 미충족(반려동물·수의사 먼저 선택). `log`와 같은 패널이되 medallion은 muted 톤으로 "이것부터" 신호.
+  - on-brand by construction: hero-metric·side-stripe 금지. `hint`는 contained 변형(`log`/`gated`)에서만 렌더.
 
 ## Layout
 

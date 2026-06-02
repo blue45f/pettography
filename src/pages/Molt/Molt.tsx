@@ -317,9 +317,11 @@ function Molt() {
       {/* History timeline */}
       {events.length === 0 ? (
         <EmptyState
+          variant="log"
           icon="🪺"
           title={t('molt.empty.title', { term })}
           description={t('molt.empty.desc')}
+          hint={t('molt.empty.hint')}
         />
       ) : (
         <ul className={styles.timeline}>

@@ -385,9 +385,11 @@ function Vitals() {
 
           {historyList.length === 0 ? (
             <EmptyState
+              variant="log"
               icon="🫁"
               title={t('vitals.history.emptyTitle')}
               description={t('vitals.history.emptyDesc')}
+              hint={t('vitals.history.hint')}
               headingLevel={3}
             />
           ) : (

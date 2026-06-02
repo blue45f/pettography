@@ -365,9 +365,11 @@ function Feeding() {
       {/* History */}
       {logs.length === 0 ? (
         <EmptyState
+          variant="log"
           icon="🍽️"
           title={t('feeding.empty.title')}
           description={t('feeding.empty.desc')}
+          hint={t('feeding.empty.hint')}
         />
       ) : (
         <ul className={styles.list}>
