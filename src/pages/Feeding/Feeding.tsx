@@ -26,6 +26,8 @@ import { useOnboardingStore } from '@features/onboarding'
 import { useSpeciesList } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { buildCsv } from '@utils/csv'
+import { downloadTextFile } from '@utils/download'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -138,6 +140,17 @@ function Feeding() {
     })
   })
 
+  function exportCsv() {
+    const rows = [...logs]
+      .sort((a, b) => a.fedAt.localeCompare(b.fedAt))
+      .map((l) => [l.fedAt, l.item, l.quantity ?? '', l.accepted, l.notes])
+    downloadTextFile(
+      'pettography-feeding.csv',
+      buildCsv(['date', 'item', 'quantity', 'accepted', 'notes'], rows),
+      'text/csv;charset=utf-8',
+    )
+  }
+
   return (
     <section className={styles.page}>
       <header className={styles.header}>
@@ -157,6 +170,11 @@ function Feeding() {
             />
             {t('feeding.showAllPets')}
           </label>
+        )}
+        {logs.length > 0 && (
+          <Button variant="secondary" onClick={exportCsv} className={styles.exportButton}>
+            {t('common.exportCsv')}
+          </Button>
         )}
       </header>
 

@@ -23,6 +23,7 @@ import {
 } from '@features/supplements'
 import { supplyStatus, useActivePetSupplies } from '@features/supplies'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { downloadTextFile } from '@utils/download'
 import { buildIcs, type IcsEvent } from '@utils/ics'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -186,13 +187,7 @@ function Calendar() {
       summary: e.title,
       description: e.note,
     }))
-    const blob = new Blob([buildIcs(icsEvents)], { type: 'text/calendar;charset=utf-8' })
-    const url = URL.createObjectURL(blob)
-    const anchor = document.createElement('a')
-    anchor.href = url
-    anchor.download = 'pettography-care.ics'
-    anchor.click()
-    URL.revokeObjectURL(url)
+    downloadTextFile('pettography-care.ics', buildIcs(icsEvents), 'text/calendar;charset=utf-8')
   }
 
   return (

@@ -4,6 +4,10 @@
   gap: var(--spacing-lg);
 }
 
+.exportButton {
+  margin-top: var(--spacing-sm);
+}
+
 .header h1 {
   font-size: var(--font-size-3xl);
   font-weight: 800;

@@ -20,6 +20,8 @@ import { useOnboardingStore } from '@features/onboarding'
 import { useSpeciesList } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { buildCsv } from '@utils/csv'
+import { downloadTextFile } from '@utils/download'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -108,6 +110,17 @@ function Growth() {
   const bandBottomY = chart && norm ? py((norm.adultWeightMinG - chart.minW) / range) : 0
   const polyline = chart ? chart.points.map((p) => `${px(p.x)},${py(p.y)}`).join(' ') : ''
 
+  function exportCsv() {
+    const rows = [...entries]
+      .sort((a, b) => a.measuredAt.localeCompare(b.measuredAt))
+      .map((e) => [e.measuredAt, e.weightGram, e.lengthCm ?? '', e.note])
+    downloadTextFile(
+      'pettography-growth.csv',
+      buildCsv(['date', 'weight_g', 'length_cm', 'note'], rows),
+      'text/csv;charset=utf-8',
+    )
+  }
+
   return (
     <section className={styles.page}>
       <header className={styles.header}>
@@ -133,6 +146,11 @@ function Growth() {
             />
             {t('growth.showAllPets')}
           </label>
+        )}
+        {entries.length > 0 && (
+          <Button variant="secondary" onClick={exportCsv} className={styles.exportButton}>
+            {t('common.exportCsv')}
+          </Button>
         )}
       </header>
 

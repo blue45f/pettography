@@ -1,5 +1,6 @@
 {
   "common": {
+    "exportCsv": "CSV 내보내기",
     "loadingText": "로딩 중...",
     "loadingShort": "로딩 중",
     "dismiss": "알림 닫기",

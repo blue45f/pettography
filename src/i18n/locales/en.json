@@ -1,5 +1,6 @@
 {
   "common": {
+    "exportCsv": "Export CSV",
     "loadingText": "Loading...",
     "loadingShort": "Loading",
     "dismiss": "Dismiss",
