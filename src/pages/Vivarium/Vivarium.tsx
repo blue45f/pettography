@@ -3,6 +3,7 @@ import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
+import PetBadge, { ShowAllPetsToggle } from '@components/common/PetBadge'
 import Progress from '@components/common/Progress'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
@@ -59,7 +60,6 @@ function Vivarium() {
   useDocumentTitle(t('vivarium.title'))
 
   const profile = useOnboardingStore((s) => s.profile)
-  const pets = useOnboardingStore((s) => s.pets)
   const { data: speciesList = [] } = useSpeciesList({})
 
   const activeSpecies = useMemo(
@@ -73,6 +73,9 @@ function Vivarium() {
   const isAquatic = template?.aquatic === true
 
   const builds = useActivePetBuilds()
+  const allBuilds = useVivariumStore((s) => s.builds)
+  const [showAllPets, setShowAllPets] = useState(false)
+  const buildList = showAllPets ? allBuilds : builds
   const saveBuild = useVivariumStore((s) => s.saveBuild)
   const removeBuild = useVivariumStore((s) => s.removeBuild)
 
@@ -117,17 +120,6 @@ function Vivarium() {
   const readyCount = checklist.filter((c) => c.ok).length
 
   const hasSelection = substrateIds.length > 0 || crewIds.length > 0 || plantIds.length > 0
-
-  function petLabel(petId: string | null | undefined): { name: string; emoji: string } | null {
-    if (!petId) return null
-    const pet = pets.find((p) => p.id === petId)
-    if (!pet) return null
-    const sp = speciesList.find((s) => s.id === pet.speciesId)
-    return {
-      name: pet.petName?.trim() || sp?.koreanName || t('vivarium.savedBuild'),
-      emoji: sp?.heroEmoji ?? '🐾',
-    }
-  }
 
   function handleSave() {
     const trimmed = name.trim()
@@ -406,7 +398,8 @@ function Vivarium() {
 
           <section className={styles.savedSection}>
             <h2 className={styles.sectionTitle}>{t('vivarium.saved.title')}</h2>
-            {builds.length === 0 ? (
+            <ShowAllPetsToggle checked={showAllPets} onChange={setShowAllPets} />
+            {buildList.length === 0 ? (
               <EmptyState
                 icon="🌿"
                 title={t('vivarium.saved.emptyTitle')}
@@ -414,8 +407,7 @@ function Vivarium() {
               />
             ) : (
               <ul className={styles.buildList}>
-                {builds.map((build) => {
-                  const label = petLabel(build.petId)
+                {buildList.map((build) => {
                   return (
                     <li key={build.id}>
                       <Card padding="md">
@@ -423,11 +415,7 @@ function Vivarium() {
                           <div className={styles.buildHead}>
                             <div className={styles.buildHeadLeft}>
                               <strong className={styles.buildName}>{build.name}</strong>
-                              {label && (
-                                <Badge variant="default">
-                                  <span aria-hidden="true">{label.emoji}</span> {label.name}
-                                </Badge>
-                              )}
+                              <PetBadge petId={build.petId} hideWhenActive={!showAllPets} />
                             </div>
                             <div className={styles.buildActions}>
                               <Button
