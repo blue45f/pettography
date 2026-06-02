@@ -3752,6 +3752,7 @@
     "disclaimer": "Premiums and coverage are governed by the insurer's official terms. This page is a curated guide."
   },
   "calendar": {
+    "exportIcs": "Export to calendar (.ics)",
     "title": "Calendar",
     "subtitle": "Vaccinations, restock dates and wildlife filings due in the next {{horizon}} days, in one timeline.",
     "empty": "No upcoming items.",

@@ -1,4 +1,5 @@
 import Badge from '@components/common/Badge'
+import Button from '@components/common/Button'
 import EmptyState from '@components/common/EmptyState'
 import { upcomingDues, useActivePetHealth } from '@features/health'
 import { useOnboardingStore } from '@features/onboarding'
@@ -6,6 +7,7 @@ import { useActivePetFilings, REGISTRY_FILINGS } from '@features/registry'
 import { useSpecies } from '@features/species'
 import { supplyStatus, useActivePetSupplies } from '@features/supplies'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { buildIcs, type IcsEvent } from '@utils/ics'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -99,6 +101,22 @@ function Calendar() {
   const within30 = events.filter((e) => e.daysLeft > 7 && e.daysLeft <= 30)
   const beyond = events.filter((e) => e.daysLeft > 30)
 
+  function exportIcs() {
+    const icsEvents: IcsEvent[] = events.map((e) => ({
+      uid: `${e.id}@pettography`,
+      date: formatDate(e.date),
+      summary: e.title,
+      description: e.note,
+    }))
+    const blob = new Blob([buildIcs(icsEvents)], { type: 'text/calendar;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const anchor = document.createElement('a')
+    anchor.href = url
+    anchor.download = 'pettography-care.ics'
+    anchor.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <section className={styles.page}>
       <header className={styles.header}>
@@ -108,6 +126,11 @@ function Calendar() {
           <p className={styles.contextNote}>
             {species.heroEmoji} {species.koreanName}
           </p>
+        )}
+        {events.length > 0 && (
+          <Button variant="secondary" onClick={exportIcs} className={styles.exportButton}>
+            {t('calendar.exportIcs')}
+          </Button>
         )}
       </header>
 
