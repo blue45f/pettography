@@ -57,7 +57,7 @@ export function useActivePetBudget(): ExpenseEntry[] {
 }
 
 function monthKey(date: Date): string {
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}`
 }
 
 export interface MonthBreakdown {
