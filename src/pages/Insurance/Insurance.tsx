@@ -41,6 +41,14 @@ function Insurance() {
   )
 
   const [draft, setDraft] = useState(String(monthlyContributionKrw || ''))
+  // Re-seed the input when the active pet (and thus its contribution) changes,
+  // since the page is not remounted on a pet switch. Adjusting state during
+  // render (not in an effect) is React's recommended pattern for this.
+  const [seededContribution, setSeededContribution] = useState(monthlyContributionKrw)
+  if (seededContribution !== monthlyContributionKrw) {
+    setSeededContribution(monthlyContributionKrw)
+    setDraft(String(monthlyContributionKrw || ''))
+  }
 
   function saveContribution() {
     const v = Number(draft)
