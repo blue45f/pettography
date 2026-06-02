@@ -26,6 +26,8 @@ import {
 } from '@features/water'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { buildCsv } from '@utils/csv'
+import { downloadTextFile } from '@utils/download'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -152,6 +154,25 @@ function Water() {
     })
   })
 
+  function exportCsv() {
+    const rows = [...readings]
+      .sort((a, b) => a.measuredAt.localeCompare(b.measuredAt))
+      .map((r) => [
+        r.measuredAt,
+        r.tempC ?? '',
+        r.ph ?? '',
+        r.ammoniaPpm ?? '',
+        r.nitritePpm ?? '',
+        r.nitratePpm ?? '',
+        r.note ?? '',
+      ])
+    downloadTextFile(
+      'pettography-water.csv',
+      buildCsv(['date', 'temp_c', 'ph', 'ammonia_ppm', 'nitrite_ppm', 'nitrate_ppm', 'note'], rows),
+      'text/csv;charset=utf-8',
+    )
+  }
+
   return (
     <section className={styles.page}>
       <header className={styles.header}>
@@ -171,6 +192,11 @@ function Water() {
             />
             {t('water.showAllPets')}
           </label>
+        )}
+        {readings.length > 0 && (
+          <Button variant="secondary" onClick={exportCsv} className={styles.exportButton}>
+            {t('common.exportCsv')}
+          </Button>
         )}
       </header>
 
