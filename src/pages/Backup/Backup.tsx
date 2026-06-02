@@ -15,6 +15,11 @@ interface BackupEnvelope {
   data: Record<string, string>
 }
 
+interface PendingImport {
+  exportedAt: string
+  data: Record<string, string>
+}
+
 function collectKeys(): string[] {
   const keys: string[] = []
   for (let i = 0; i < localStorage.length; i++) {
@@ -56,6 +61,7 @@ function Backup() {
 
   const fileInput = useRef<HTMLInputElement | null>(null)
   const [keys, setKeys] = useState<string[]>(() => collectKeys())
+  const [pending, setPending] = useState<PendingImport | null>(null)
 
   function handleExport() {
     const envelope = buildEnvelope()
@@ -72,24 +78,41 @@ function Backup() {
     toast(t('backup.exportedToast'), 'success')
   }
 
-  async function handleImport(file: File) {
+  async function handleFile(file: File) {
     try {
       const text = await file.text()
       const parsed = JSON.parse(text) as Partial<BackupEnvelope>
       if (parsed.app !== 'pettography' || parsed.version !== 1 || !isBackupData(parsed.data)) {
         throw new Error('invalid')
       }
-      for (const k of collectKeys()) {
-        localStorage.removeItem(k)
-      }
+      const importable: Record<string, string> = {}
       for (const [k, v] of Object.entries(parsed.data)) {
-        if (isBackupKey(k) && typeof v === 'string') localStorage.setItem(k, v)
+        if (isBackupKey(k) && typeof v === 'string') importable[k] = v
       }
-      toast(t('backup.importedToast'), 'success')
-      setTimeout(() => window.location.reload(), 600)
+      setPending({
+        exportedAt: typeof parsed.exportedAt === 'string' ? parsed.exportedAt : '',
+        data: importable,
+      })
     } catch {
       toast(t('backup.invalidFileToast'), 'error')
     }
+  }
+
+  function confirmImport() {
+    if (!pending) return
+    for (const k of collectKeys()) {
+      localStorage.removeItem(k)
+    }
+    for (const [k, v] of Object.entries(pending.data)) {
+      localStorage.setItem(k, v)
+    }
+    toast(t('backup.importedToast'), 'success')
+    setPending(null)
+    setTimeout(() => window.location.reload(), 600)
+  }
+
+  function cancelImport() {
+    setPending(null)
   }
 
   function handleWipe() {
@@ -101,6 +124,8 @@ function Backup() {
     toast(t('backup.wipedToast'), 'success')
     setTimeout(() => window.location.reload(), 600)
   }
+
+  const pendingKeys = pending ? Object.keys(pending.data).sort() : []
 
   return (
     <section className={styles.page}>
@@ -139,7 +164,7 @@ function Backup() {
           onChange={(e) => {
             const f = e.target.files?.[0]
             if (f) {
-              void handleImport(f)
+              void handleFile(f)
               e.target.value = ''
             }
           }}
@@ -147,6 +172,45 @@ function Backup() {
         <Button variant="outline" onClick={() => fileInput.current?.click()}>
           {t('backup.importButton')}
         </Button>
+
+        {pending && (
+          <div
+            className={styles.confirmPanel}
+            role="alertdialog"
+            aria-labelledby="restore-confirm-heading"
+          >
+            <h3 id="restore-confirm-heading" className={styles.confirmTitle}>
+              {t('backup.confirmTitle')}
+            </h3>
+            {pending.exportedAt && (
+              <p className={styles.confirmMeta}>
+                {t('backup.confirmBackupDate', {
+                  date: new Date(pending.exportedAt).toLocaleString(),
+                })}
+              </p>
+            )}
+            <p className={styles.confirmMeta}>
+              {t('backup.confirmIncludes', { count: pendingKeys.length })}
+            </p>
+            <ul className={styles.confirmKeys}>
+              {pendingKeys.map((k) => (
+                <li key={k}>{k.replace('pettography.', '')}</li>
+              ))}
+            </ul>
+            <p className={styles.confirmWarning}>
+              <span aria-hidden="true">⚠️ </span>
+              {t('backup.confirmWarning')}
+            </p>
+            <div className={styles.confirmActions}>
+              <Button variant="primary" onClick={confirmImport}>
+                {t('backup.confirmRestore')}
+              </Button>
+              <Button variant="ghost" onClick={cancelImport}>
+                {t('common.cancel')}
+              </Button>
+            </div>
+          </div>
+        )}
       </section>
 
       <section className={styles.section} aria-labelledby="wipe-heading">
