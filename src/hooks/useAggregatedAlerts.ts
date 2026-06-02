@@ -30,7 +30,7 @@ import {
   useSupplementsStore,
   type ScheduleConfig,
 } from '@features/supplements'
-import { cycleStatus, useActivePetReadings } from '@features/water'
+import { cycleStatus, latestReading, useActivePetReadings } from '@features/water'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -196,19 +196,17 @@ export function buildAlerts(input: BuildAlertsInput): AlertItem[] {
     })
   }
 
-  // Water — toxic cycle on the latest reading
-  if (readings.length > 0) {
-    const latest = [...readings].sort((a, b) => b.measuredAt.localeCompare(a.measuredAt))[0]
-    if (cycleStatus(latest) === 'toxic') {
-      out.push({
-        id: 'water-toxic',
-        source: 'water',
-        severity: 'overdue',
-        titleKey: 'alerts.items.waterToxic',
-        dateISO: latest.measuredAt,
-        route: '/water',
-      })
-    }
+  // Water — toxic cycle on the latest reading (createdAt tiebreaker, matching the Water page)
+  const latestWater = latestReading(readings)
+  if (latestWater && cycleStatus(latestWater) === 'toxic') {
+    out.push({
+      id: 'water-toxic',
+      source: 'water',
+      severity: 'overdue',
+      titleKey: 'alerts.items.waterToxic',
+      dateISO: latestWater.measuredAt,
+      route: '/water',
+    })
   }
 
   // Brumation — a plan is currently in an active phase
