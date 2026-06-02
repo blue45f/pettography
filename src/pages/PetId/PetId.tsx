@@ -88,37 +88,61 @@ function PetId() {
           <Input
             label={t('petid.fields.petName')}
             placeholder={t('petid.placeholders.petName')}
-            error={form.formState.errors.petName?.message}
+            error={
+              form.formState.errors.petName?.message
+                ? t(form.formState.errors.petName.message)
+                : undefined
+            }
             {...form.register('petName')}
           />
           <Input
             label={t('petid.fields.speciesLabel')}
             placeholder={t('petid.placeholders.speciesLabel')}
-            error={form.formState.errors.speciesLabel?.message}
+            error={
+              form.formState.errors.speciesLabel?.message
+                ? t(form.formState.errors.speciesLabel.message)
+                : undefined
+            }
             {...form.register('speciesLabel')}
           />
           <Input
             label={t('petid.fields.ownerName')}
-            error={form.formState.errors.ownerName?.message}
+            error={
+              form.formState.errors.ownerName?.message
+                ? t(form.formState.errors.ownerName.message)
+                : undefined
+            }
             {...form.register('ownerName')}
           />
           <Input
             label={t('petid.fields.ownerPhone')}
             type="tel"
             placeholder="010-0000-0000"
-            error={form.formState.errors.ownerPhone?.message}
+            error={
+              form.formState.errors.ownerPhone?.message
+                ? t(form.formState.errors.ownerPhone.message)
+                : undefined
+            }
             {...form.register('ownerPhone')}
           />
           <Input
             label={t('petid.fields.region')}
             placeholder={t('petid.placeholders.region')}
-            error={form.formState.errors.region?.message}
+            error={
+              form.formState.errors.region?.message
+                ? t(form.formState.errors.region.message)
+                : undefined
+            }
             {...form.register('region')}
           />
           <Input
             label={t('petid.fields.registrationNumber')}
             placeholder={t('petid.placeholders.registrationNumber')}
-            error={form.formState.errors.registrationNumber?.message}
+            error={
+              form.formState.errors.registrationNumber?.message
+                ? t(form.formState.errors.registrationNumber.message)
+                : undefined
+            }
             {...form.register('registrationNumber')}
           />
           <Textarea
@@ -126,7 +150,11 @@ function PetId() {
             placeholder={t('petid.placeholders.distinctMarks')}
             rows={2}
             maxLength={240}
-            error={form.formState.errors.distinctMarks?.message}
+            error={
+              form.formState.errors.distinctMarks?.message
+                ? t(form.formState.errors.distinctMarks.message)
+                : undefined
+            }
             {...form.register('distinctMarks')}
           />
           <Textarea
@@ -134,7 +162,11 @@ function PetId() {
             placeholder={t('petid.placeholders.foundInstructions')}
             rows={2}
             maxLength={240}
-            error={form.formState.errors.foundInstructions?.message}
+            error={
+              form.formState.errors.foundInstructions?.message
+                ? t(form.formState.errors.foundInstructions.message)
+                : undefined
+            }
             {...form.register('foundInstructions')}
           />
 

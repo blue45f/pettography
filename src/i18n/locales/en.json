@@ -308,6 +308,7 @@
   },
   "shops": {
     "title": "Food & gear shops",
+    "filterByKind": "Filter by kind",
     "subtitle": "Offline stores and online retailers in one place.",
     "kindFood": "Food",
     "kindEquipment": "Gear",
@@ -3875,6 +3876,20 @@
   },
   "petid": {
     "title": "Pet ID card",
+    "errors": {
+      "petNameRequired": "Enter a name",
+      "petNameMax": "Name must be 40 characters or fewer",
+      "speciesLabelRequired": "Enter a species",
+      "speciesLabelMax": "Species must be 40 characters or fewer",
+      "ownerNameRequired": "Enter the owner's name",
+      "ownerNameMax": "Owner name must be 40 characters or fewer",
+      "ownerPhoneRequired": "Enter a contact number",
+      "ownerPhoneMax": "Contact must be 30 characters or fewer",
+      "regionMax": "Region must be 60 characters or fewer",
+      "registrationNumberMax": "Registration number must be 60 characters or fewer",
+      "distinctMarksMax": "Distinct marks must be 240 characters or fewer",
+      "foundInstructionsMax": "Instructions must be 240 characters or fewer"
+    },
     "subtitle": "Printable card for the inside of an enclosure or your wallet, in case your pet escapes. Includes owner contact and finder instructions. All data stays in this browser.",
     "fillFromOnboarding": "Fill from onboarding",
     "save": "Save card",

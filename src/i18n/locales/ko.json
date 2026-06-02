@@ -308,6 +308,7 @@
   },
   "shops": {
     "title": "먹이·용품 샵",
+    "filterByKind": "종류 필터",
     "subtitle": "오프라인 매장과 온라인 샵을 함께 안내합니다.",
     "kindFood": "먹이",
     "kindEquipment": "용품",
@@ -3872,6 +3873,20 @@
   },
   "petid": {
     "title": "펫 ID 카드",
+    "errors": {
+      "petNameRequired": "이름을 입력하세요",
+      "petNameMax": "이름은 40자 이내로 입력하세요",
+      "speciesLabelRequired": "종을 입력하세요",
+      "speciesLabelMax": "종 이름은 40자 이내로 입력하세요",
+      "ownerNameRequired": "보호자 이름을 입력하세요",
+      "ownerNameMax": "보호자 이름은 40자 이내로 입력하세요",
+      "ownerPhoneRequired": "연락처를 입력하세요",
+      "ownerPhoneMax": "연락처는 30자 이내로 입력하세요",
+      "regionMax": "지역은 60자 이내로 입력하세요",
+      "registrationNumberMax": "등록번호는 60자 이내로 입력하세요",
+      "distinctMarksMax": "특징은 240자 이내로 입력하세요",
+      "foundInstructionsMax": "안내문은 240자 이내로 입력하세요"
+    },
     "subtitle": "분실·탈출 시를 대비해 사육장 옆/지갑에 두는 인쇄용 카드. 보호자 연락처와 발견자 안내가 함께 들어갑니다. 모든 정보는 이 브라우저에만 저장됩니다.",
     "fillFromOnboarding": "온보딩 정보로 채우기",
     "save": "카드 저장",

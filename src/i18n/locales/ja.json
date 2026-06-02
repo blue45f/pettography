@@ -308,6 +308,7 @@
   },
   "shops": {
     "title": "餌・用品ショップ",
+    "filterByKind": "種類フィルター",
     "subtitle": "実店舗とオンラインショップをまとめてご案内します。",
     "kindFood": "餌",
     "kindEquipment": "用品",
@@ -3872,6 +3873,20 @@
   },
   "petid": {
     "title": "ペットIDカード",
+    "errors": {
+      "petNameRequired": "名前を入力してください",
+      "petNameMax": "名前は40文字以内で入力してください",
+      "speciesLabelRequired": "種を入力してください",
+      "speciesLabelMax": "種名は40文字以内で入力してください",
+      "ownerNameRequired": "飼い主の名前を入力してください",
+      "ownerNameMax": "飼い主の名前は40文字以内で入力してください",
+      "ownerPhoneRequired": "連絡先を入力してください",
+      "ownerPhoneMax": "連絡先は30文字以内で入力してください",
+      "regionMax": "地域は60文字以内で入力してください",
+      "registrationNumberMax": "登録番号は60文字以内で入力してください",
+      "distinctMarksMax": "特徴は240文字以内で入力してください",
+      "foundInstructionsMax": "案内文は240文字以内で入力してください"
+    },
     "subtitle": "紛失・脱走に備えて、ケージの横や財布に入れておく印刷用のカードです。保護者の連絡先と発見者への案内が一緒に入ります。すべての情報はこのブラウザにだけ保存されます。",
     "fillFromOnboarding": "オンボーディング情報で埋める",
     "save": "カードを保存",

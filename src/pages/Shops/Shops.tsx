@@ -96,7 +96,7 @@ function Shops() {
           ))}
         </div>
 
-        <div role="radiogroup" aria-label="Kind filter" className={styles.filters}>
+        <div role="radiogroup" aria-label={t('shops.filterByKind')} className={styles.filters}>
           {KINDS.map((k) => (
             <button
               key={k}
