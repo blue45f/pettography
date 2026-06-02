@@ -29,6 +29,8 @@ import { useSpecies, useSpeciesList } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useToday } from '@hooks/useToday'
+import { buildCsv } from '@utils/csv'
+import { downloadTextFile } from '@utils/download'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -135,6 +137,17 @@ function Molt() {
         ? 'primary'
         : 'warning'
 
+  function exportCsv() {
+    const rows = [...events]
+      .sort((a, b) => a.occurredAt.localeCompare(b.occurredAt))
+      .map((e) => [e.occurredAt, e.kind, e.notes])
+    downloadTextFile(
+      'pettography-molt.csv',
+      buildCsv(['date', 'kind', 'note'], rows),
+      'text/csv;charset=utf-8',
+    )
+  }
+
   return (
     <section className={styles.page}>
       <header className={styles.header}>
@@ -154,6 +167,11 @@ function Molt() {
             />
             {t('molt.showAllPets')}
           </label>
+        )}
+        {events.length > 0 && (
+          <Button variant="secondary" onClick={exportCsv} className={styles.exportButton}>
+            {t('common.exportCsv')}
+          </Button>
         )}
       </header>
 
