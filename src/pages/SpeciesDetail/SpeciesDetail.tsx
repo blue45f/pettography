@@ -25,6 +25,11 @@ import { Link, useNavigate, useParams } from 'react-router'
 
 import styles from './SpeciesDetail.module.css'
 
+/** Only http(s) links are safe to render as an href; blocks javascript:/data: schemes. */
+function isHttpUrl(url: string): boolean {
+  return /^https?:\/\//i.test(url.trim())
+}
+
 function SpeciesDetail() {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -251,7 +256,7 @@ function SpeciesDetail() {
                   {p.caption && <p className={styles.galleryCaption}>{p.caption}</p>}
                   <PetBadge petId={p.petId} hideWhenActive />
                   <div className={styles.galleryFooter}>
-                    {p.sourceUrl ? (
+                    {p.sourceUrl && isHttpUrl(p.sourceUrl) ? (
                       <a
                         className={styles.gallerySource}
                         href={p.sourceUrl}
