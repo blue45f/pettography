@@ -39,7 +39,8 @@ export const showcaseFormSchema = z.object({
     .string()
     .trim()
     .min(1, 'showcase.errors.imageRequired')
-    .url('showcase.errors.imageUrl'),
+    .url('showcase.errors.imageUrl')
+    .regex(/^https?:\/\//i, 'showcase.errors.imageUrl'),
   caption: z.string().trim().max(200, 'showcase.errors.captionMax'),
   themeId: showcaseThemeSchema,
 })
