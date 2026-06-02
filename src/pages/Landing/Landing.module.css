@@ -7,7 +7,11 @@
 .hero {
   position: relative;
   isolation: isolate;
-  padding: clamp(2.5rem, 5vw + 1rem, 5.5rem) clamp(1rem, 2vw + 0.5rem, 3rem);
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: var(--spacing-xl);
+  padding: clamp(2.25rem, 4vw + 1rem, 4.5rem) clamp(1.25rem, 2vw + 0.5rem, 3.25rem);
   border-radius: clamp(var(--radius-xl), 2vw, var(--radius-2xl));
   background:
     radial-gradient(60% 80% at 80% 0%, rgba(244, 63, 94, 0.18), transparent 65%),
@@ -26,6 +30,16 @@
   border-color: var(--color-border-strong);
 }
 
+/* Asymmetric 56/44 split once the main container is wide enough: copy leads on
+   the left, the photo collage carries the right. Stacked and centered below. */
+@container main (min-width: 760px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.28fr) minmax(0, 1fr);
+    gap: var(--spacing-2xl);
+    padding-block: clamp(3rem, 4vw + 1.5rem, 5rem);
+  }
+}
+
 .heroContent {
   position: relative;
   z-index: 1;
@@ -35,6 +49,13 @@
   text-align: center;
   gap: var(--spacing-md);
   animation: heroRise 700ms var(--easing-expo) both;
+}
+
+@container main (min-width: 760px) {
+  .heroContent {
+    align-items: flex-start;
+    text-align: left;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -54,83 +75,95 @@
   }
 }
 
-.orbField {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.orb {
-  position: absolute;
-  font-size: clamp(2.2rem, 4vw + 1rem, 4.5rem);
-  filter: drop-shadow(0 10px 20px rgba(15, 23, 42, 0.12));
-  opacity: 0.5;
-  user-select: none;
-  animation: orbDrift 14s var(--easing-quint) infinite alternate;
-  will-change: transform, opacity;
-}
-
-[data-theme='dark'] .orb {
-  opacity: 0.6;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+/* Photographic collage: three overlapping keeper shots layered for depth. Real
+   imagery is the hero medium; the brand gradient stays as the surface wash.
+   No emoji orb field, no glass. Entrance is opacity/transform only. */
+.heroCollage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  align-self: stretch;
+  min-height: clamp(15rem, 32vw, 22rem);
+  animation: collageRise 820ms var(--easing-expo) both;
+  animation-delay: 90ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orb {
+  .heroCollage {
     animation: none;
   }
 }
 
-.orbA {
-  top: 8%;
-  left: 4%;
-  animation-delay: 0s;
-}
-
-.orbB {
-  top: 14%;
-  right: 6%;
-  animation-delay: -3s;
-  animation-duration: 16s;
-}
-
-.orbC {
-  bottom: 18%;
-  left: 8%;
-  animation-delay: -5s;
-  animation-duration: 18s;
-}
-
-.orbD {
-  bottom: 10%;
-  right: 10%;
-  animation-delay: -7s;
-  animation-duration: 15s;
-}
-
-.orbE {
-  top: 50%;
-  left: 50%;
-  animation-delay: -2s;
-  animation-duration: 20s;
-  transform: translate(-220%, -50%);
-}
-
-.orbF {
-  top: 50%;
-  right: 25%;
-  animation-delay: -9s;
-  animation-duration: 17s;
-}
-
-@keyframes orbDrift {
-  0% {
-    transform: translate3d(0, 0, 0) rotate(-4deg);
+@keyframes collageRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
   }
-  100% {
-    transform: translate3d(8px, -14px, 0) rotate(6deg);
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
+}
+
+.shot {
+  position: relative;
+  margin: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  outline: 4px solid var(--color-surface);
+  outline-offset: -1px;
+}
+
+[data-theme='dark'] .shot {
+  outline-color: var(--color-surface-elevated);
+}
+
+.shotImage {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+}
+
+/* Soft species cue in the corner so the collage still reads as our domain. */
+.shotTag {
+  position: absolute;
+  left: var(--spacing-sm);
+  bottom: var(--spacing-sm);
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  border-radius: var(--radius-pill);
+  background: oklch(1 0 0 / 0.82);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme='dark'] .shotTag {
+  background: oklch(0.22 0.03 268 / 0.82);
+}
+
+/* Overlapping placement: large lead shot, a wide secondary, a small accent. */
+.shot1 {
+  grid-column: 1 / 4;
+  grid-row: 1 / 6;
+  z-index: 2;
+}
+
+.shot2 {
+  grid-column: 3 / 6;
+  grid-row: 4 / 7;
+  z-index: 3;
+}
+
+.shot3 {
+  grid-column: 4 / 6;
+  grid-row: 1 / 3;
+  z-index: 1;
 }
 
 .eyebrow {

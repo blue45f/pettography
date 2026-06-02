@@ -11,9 +11,24 @@ interface LazyImageProps {
   height?: number | string
   placeholder?: string
   className?: string
+  /**
+   * When true, the loaded image scales up slightly while its container is
+   * hovered or focused, for editorial photo grids. Honors reduced-motion via
+   * the global transition reset. Defaults to false so existing call sites are
+   * unaffected.
+   */
+  hoverZoom?: boolean
 }
 
-function LazyImage({ src, alt, width, height, placeholder, className = '' }: LazyImageProps) {
+function LazyImage({
+  src,
+  alt,
+  width,
+  height,
+  placeholder,
+  className = '',
+  hoverZoom = false,
+}: LazyImageProps) {
   const { t } = useTranslation()
   const [loaded, setLoaded] = useState(false)
   const [error, setError] = useState(false)
@@ -30,7 +45,7 @@ function LazyImage({ src, alt, width, height, placeholder, className = '' }: Laz
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
-      className={`${styles.container} ${className}`}
+      className={`${styles.container} ${hoverZoom ? styles.zoom : ''} ${className}`}
       style={style}
     >
       {!loaded && !error && (

@@ -38,6 +38,21 @@
   opacity: 1;
 }
 
+/* Opt-in editorial hover-zoom: scales the inner image only (never layout). */
+.zoom .image {
+  transition:
+    opacity 0.3s ease-in,
+    transform var(--motion-slow);
+  transform: scale(1);
+  transform-origin: center 38%;
+  backface-visibility: hidden;
+}
+
+.zoom:hover .image,
+.zoom:focus-within .image {
+  transform: scale(1.06);
+}
+
 .error {
   position: absolute;
   inset: 0;

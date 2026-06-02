@@ -52,10 +52,11 @@
   opacity: 0.92;
 }
 
-/* ---- Winner card ---- */
+/* ---- Winner spread (the one elevated, cinematic moment) ---- */
 .winnerCard {
   background: var(--color-surface-elevated);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
 }
 
 .winnerHead {
@@ -70,13 +71,15 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   font-variant-numeric: tabular-nums;
+  font-weight: 600;
 }
 
+/* 62/38 asymmetric split: the photograph clearly leads, meta supports. */
 .winnerBody {
   display: grid;
-  grid-template-columns: minmax(0, 220px) 1fr;
-  gap: var(--spacing-md);
-  align-items: center;
+  grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
+  gap: var(--spacing-lg);
+  align-items: stretch;
 }
 
 @media (max-width: 640px) {
@@ -87,25 +90,31 @@
 
 .winnerImage {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--radius-md);
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-lg);
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .winnerMeta {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  justify-content: center;
+  gap: var(--spacing-sm);
 }
 
 .winnerCaption {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
+  line-height: var(--leading-snug);
+  letter-spacing: -0.01em;
   color: var(--color-text);
+  text-wrap: pretty;
 }
 
 .winnerAuthor {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
+  font-weight: 600;
 }
 
 /* ---- Filters & controls ---- */
@@ -197,62 +206,132 @@
   justify-content: flex-end;
 }
 
-/* ---- Photo grid ---- */
+/* ---- Editorial photo masonry ----
+   The photograph IS the surface here: no card chrome wraps each shot, so the
+   grid reads as a gallery wall rather than a row of identical cards. Tile sizes
+   vary by editorial weight (lead spread + occasional tall portraits) and meta
+   rides a legible bottom scrim over the image, not a separate panel below it. */
 .grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  /* Fixed base row track so row-spans produce genuinely larger tiles; tile
+     height is driven by the grid, not by per-image aspect ratios. */
+  grid-auto-rows: clamp(8.5rem, 13vw, 11rem);
+  grid-auto-flow: dense;
   gap: var(--spacing-md);
 }
 
-.photoCard {
-  background: var(--color-surface);
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  grid-row: span 2;
+}
+
+/* Lead shot: a wide hero spread that anchors the grid's top-left. Tall tiles
+   add a third row for portrait emphasis; both gated to roomy containers. */
+@container main (min-width: 560px) {
+  .tileLead {
+    grid-column: span 2;
+    grid-row: span 3;
+  }
+  .tileTall {
+    grid-row: span 3;
+  }
+}
+
+.figure {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface-muted);
   box-shadow: var(--shadow-sm);
-  height: 100%;
+  transition:
+    box-shadow var(--motion-base),
+    transform var(--motion-base);
+}
+
+.figure:hover,
+.figure:focus-within {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .photo {
   width: 100%;
-  aspect-ratio: 3 / 4;
-  border-radius: var(--radius-md);
-  overflow: hidden;
+  height: 100%;
+  border-radius: var(--radius-lg);
 }
 
-.cardMeta {
+/* Bottom scrim: a soft gradient toward a tinted-dark base for legible overlaid
+   text on any photo. Not glassmorphism (no backdrop blur), per DESIGN.md. */
+.scrim {
+  position: absolute;
+  inset: auto 0 0 0;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
-  margin-top: var(--spacing-sm);
+  align-items: flex-start;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-lg) var(--spacing-md) var(--spacing-md);
+  background: linear-gradient(
+    to top,
+    oklch(0.16 0.03 268 / 0.88) 0%,
+    oklch(0.16 0.03 268 / 0.55) 42%,
+    oklch(0.16 0.03 268 / 0) 100%
+  );
+  color: oklch(0.97 0.01 268);
+  pointer-events: none;
 }
 
 .themeChip {
-  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2xs);
   padding: var(--spacing-2xs) var(--spacing-sm);
-  background: var(--color-surface-muted);
-  color: var(--color-text-secondary);
+  background: oklch(1 0 0 / 0.16);
+  color: oklch(0.98 0.01 268);
   border-radius: var(--radius-pill);
   font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .caption {
+  margin-top: var(--spacing-2xs);
   font-size: var(--font-size-sm);
-  color: var(--color-text);
-  white-space: pre-wrap;
+  line-height: var(--leading-snug);
+  color: oklch(0.97 0.01 268);
+  text-wrap: pretty;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tileLead .caption {
+  font-size: var(--font-size-base);
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
 }
 
 .author {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: oklch(0.88 0.02 268);
 }
 
-.cardActions {
+/* Vote / delete row sits below the photo, on the page surface, so the 44px
+   touch targets never overlap the scrim text and stay easy to hit on mobile. */
+.tileActions {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  margin-top: var(--spacing-md);
+  margin-top: var(--spacing-sm);
 }
 
 .voteButton {
@@ -266,17 +345,23 @@
   color: var(--color-text-secondary);
   border-radius: var(--radius-pill);
   font-size: var(--font-size-sm);
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
   cursor: pointer;
   transition:
     color var(--motion-fast),
     background-color var(--motion-fast),
-    border-color var(--motion-fast);
+    border-color var(--motion-fast),
+    transform var(--motion-fast);
 }
 
 .voteButton:hover {
   color: var(--color-primary);
   border-color: var(--color-primary);
+}
+
+.voteButton:active {
+  transform: scale(0.96);
 }
 
 .voteButtonOn {

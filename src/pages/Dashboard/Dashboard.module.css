@@ -84,19 +84,47 @@
 
 .speciesCard {
   min-width: 280px;
-  flex: 0 1 320px;
+  flex: 0 1 340px;
   border: 1px solid var(--color-primary);
 }
 
-.speciesHeader {
-  display: flex;
-  gap: var(--spacing-md);
-  align-items: center;
-  margin-bottom: var(--spacing-md);
+.speciesBody {
+  padding: 0;
+}
+
+/* Photo-led header band: the selected species opens with a real cover shot,
+   the heroEmoji rides a medallion at the seam between photo and info. */
+.speciesCover {
+  position: relative;
+  isolation: isolate;
+}
+
+.speciesCoverImage {
+  width: 100%;
+  aspect-ratio: 5 / 2;
+  border-radius: 0;
 }
 
 .heroEmoji {
-  font-size: 3rem;
+  position: absolute;
+  left: var(--spacing-md);
+  bottom: calc(-1 * var(--spacing-md));
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  font-size: 1.85rem;
+  line-height: 1;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.speciesInfo {
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--spacing-md) + var(--spacing-md)) var(--spacing-md) var(--spacing-md);
 }
 
 .eyebrow {
@@ -104,7 +132,7 @@
   letter-spacing: 0.06em;
   font-size: 0.75rem;
   color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: var(--spacing-2xs);
 }
 
 .speciesName {
@@ -122,14 +150,20 @@
   display: flex;
   gap: var(--spacing-xs);
   flex-wrap: wrap;
+  margin-top: var(--spacing-sm);
   margin-bottom: var(--spacing-sm);
 }
 
 .speciesAction {
+  align-self: flex-start;
   color: var(--color-primary);
   font-size: var(--font-size-sm);
   font-weight: 600;
   text-decoration: none;
+}
+
+.speciesAction:hover {
+  text-decoration: underline;
 }
 
 .sectionHeader {

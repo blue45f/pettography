@@ -111,6 +111,7 @@ function Showcase() {
                 src={winner.imageUrl}
                 alt={winner.caption || t('showcase.photoAlt', { author: winner.author })}
                 className={styles.winnerImage}
+                hoverZoom
               />
               <div className={styles.winnerMeta}>
                 <p className={styles.winnerCaption}>{winner.caption}</p>
@@ -172,54 +173,65 @@ function Showcase() {
         <EmptyState icon="📷" title={t('showcase.empty')} description={t('showcase.emptyHint')} />
       ) : (
         <ul className={styles.grid}>
-          {visiblePosts.map((post) => {
+          {visiblePosts.map((post, index) => {
             const voted = Boolean(votedIds[post.id])
             const owned = Boolean(ownIds[post.id])
+            // Editorial rhythm: the leading photo runs as a wide hero tile, then
+            // every fifth tile takes a taller portrait span so the masonry never
+            // settles into a uniform grid (DESIGN.md: vary affordance by weight).
+            const isLead = index === 0
+            const isTall = !isLead && index % 5 === 2
+            const tileClass = [
+              styles.tile,
+              isLead ? styles.tileLead : '',
+              isTall ? styles.tileTall : '',
+            ]
+              .filter(Boolean)
+              .join(' ')
             return (
-              <li key={post.id}>
-                <Card padding="md" className={styles.photoCard} hoverable>
-                  <Card.Body>
-                    <LazyImage
-                      src={post.imageUrl}
-                      alt={post.caption || t('showcase.photoAlt', { author: post.author })}
-                      className={styles.photo}
-                    />
-                    <div className={styles.cardMeta}>
-                      <span className={styles.themeChip}>
-                        <span aria-hidden="true">{themeEmoji(post.themeId)}</span>{' '}
-                        {t(`showcase.themes.${post.themeId}.name`)}
-                      </span>
-                      {post.caption && <p className={styles.caption}>{post.caption}</p>}
-                      <p className={styles.author}>
-                        {speciesEmoji(post, speciesById)} {post.author}
-                      </p>
-                    </div>
-                    <div className={styles.cardActions}>
-                      <button
-                        type="button"
-                        className={[styles.voteButton, voted ? styles.voteButtonOn : ''].join(' ')}
-                        aria-pressed={voted}
-                        aria-label={voted ? t('showcase.unvote') : t('showcase.vote')}
-                        onClick={() => toggleVote(post.id)}
-                      >
-                        <span aria-hidden="true">{voted ? '♥' : '♡'}</span>{' '}
-                        {voteCount(post, votedIds)}
-                      </button>
-                      {owned && (
-                        <button
-                          type="button"
-                          className={styles.removeLink}
-                          onClick={() => {
-                            removePost(post.id)
-                            toast(t('showcase.deletedToast'), 'success')
-                          }}
-                        >
-                          {t('showcase.delete')}
-                        </button>
-                      )}
-                    </div>
-                  </Card.Body>
-                </Card>
+              <li key={post.id} className={tileClass}>
+                <figure className={styles.figure}>
+                  <LazyImage
+                    src={post.imageUrl}
+                    alt={post.caption || t('showcase.photoAlt', { author: post.author })}
+                    className={styles.photo}
+                    hoverZoom
+                  />
+                  <figcaption className={styles.scrim}>
+                    <span className={styles.themeChip}>
+                      <span aria-hidden="true">{themeEmoji(post.themeId)}</span>{' '}
+                      {t(`showcase.themes.${post.themeId}.name`)}
+                    </span>
+                    {post.caption && <p className={styles.caption}>{post.caption}</p>}
+                    <p className={styles.author}>
+                      <span aria-hidden="true">{speciesEmoji(post, speciesById)}</span>{' '}
+                      {post.author}
+                    </p>
+                  </figcaption>
+                </figure>
+                <div className={styles.tileActions}>
+                  <button
+                    type="button"
+                    className={[styles.voteButton, voted ? styles.voteButtonOn : ''].join(' ')}
+                    aria-pressed={voted}
+                    aria-label={voted ? t('showcase.unvote') : t('showcase.vote')}
+                    onClick={() => toggleVote(post.id)}
+                  >
+                    <span aria-hidden="true">{voted ? '♥' : '♡'}</span> {voteCount(post, votedIds)}
+                  </button>
+                  {owned && (
+                    <button
+                      type="button"
+                      className={styles.removeLink}
+                      onClick={() => {
+                        removePost(post.id)
+                        toast(t('showcase.deletedToast'), 'success')
+                      }}
+                    >
+                      {t('showcase.delete')}
+                    </button>
+                  )}
+                </div>
               </li>
             )
           })}

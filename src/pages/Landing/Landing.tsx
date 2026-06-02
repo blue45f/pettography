@@ -1,4 +1,5 @@
 import Button from '@components/common/Button'
+import LazyImage from '@components/common/LazyImage'
 import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useTranslation } from 'react-i18next'
@@ -7,6 +8,17 @@ import { useNavigate } from 'react-router'
 import styles from './Landing.module.css'
 
 const LIFECYCLE_STEPS = ['pick', 'adopt', 'raise', 'vet', 'daily', 'senior', 'funeral'] as const
+
+/**
+ * Hero collage shots. Real keeper photography drops in here later; picsum
+ * seeds keep the layout honest and working today. `emoji` is the species cue
+ * shown as a soft caption tag so the collage still reads as our domain.
+ */
+const HERO_SHOTS = [
+  { seed: 'petto-hero-gecko', emoji: '🦎' },
+  { seed: 'petto-hero-vivarium', emoji: '🌿' },
+  { seed: 'petto-hero-tarantula', emoji: '🕷️' },
+] as const
 
 function Landing() {
   const { t } = useTranslation()
@@ -20,14 +32,6 @@ function Landing() {
   return (
     <div className={styles.landing}>
       <section className={styles.hero} aria-labelledby="hero-title">
-        <div className={styles.orbField} aria-hidden="true">
-          <span className={`${styles.orb} ${styles.orbA}`}>🦎</span>
-          <span className={`${styles.orb} ${styles.orbB}`}>🐢</span>
-          <span className={`${styles.orb} ${styles.orbC}`}>🐍</span>
-          <span className={`${styles.orb} ${styles.orbD}`}>🦜</span>
-          <span className={`${styles.orb} ${styles.orbE}`}>🦔</span>
-          <span className={`${styles.orb} ${styles.orbF}`}>🕷️</span>
-        </div>
         <div className={styles.heroContent}>
           <p className={styles.eyebrow}>
             {profile.location?.label
@@ -46,6 +50,19 @@ function Landing() {
               {t('nav.match')}
             </Button>
           </div>
+        </div>
+        <div className={styles.heroCollage} aria-hidden="true">
+          {HERO_SHOTS.map((shot, idx) => (
+            <figure key={shot.seed} className={`${styles.shot} ${styles[`shot${idx + 1}`]}`}>
+              <LazyImage
+                src={`https://picsum.photos/seed/${shot.seed}/640/800`}
+                alt=""
+                className={styles.shotImage}
+                hoverZoom
+              />
+              <figcaption className={styles.shotTag}>{shot.emoji}</figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 

@@ -2,6 +2,7 @@ import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
+import LazyImage from '@components/common/LazyImage'
 import Skeleton from '@components/common/Skeleton'
 import { useToast } from '@components/common/Toast'
 import { useAdoptionList } from '@features/adoption'
@@ -287,25 +288,31 @@ function Dashboard() {
           </div>
         </div>
         {species && (
-          <Card padding="md" className={styles.speciesCard}>
-            <Card.Body>
-              <div className={styles.speciesHeader}>
+          <Card padding="none" className={styles.speciesCard}>
+            <Card.Body className={styles.speciesBody}>
+              <div className={styles.speciesCover}>
+                <LazyImage
+                  src={`https://picsum.photos/seed/petto-species-${species.slug}/480/240`}
+                  alt=""
+                  className={styles.speciesCoverImage}
+                  hoverZoom
+                />
                 <span aria-hidden="true" className={styles.heroEmoji}>
                   {species.heroEmoji}
                 </span>
-                <div>
-                  <p className={styles.eyebrow}>{t('dashboard.selectedSpecies')}</p>
-                  <h2 className={styles.speciesName}>{species.koreanName}</h2>
-                  <p className={styles.scientific}>{species.scientificName}</p>
+              </div>
+              <div className={styles.speciesInfo}>
+                <p className={styles.eyebrow}>{t('dashboard.selectedSpecies')}</p>
+                <h2 className={styles.speciesName}>{species.koreanName}</h2>
+                <p className={styles.scientific}>{species.scientificName}</p>
+                <div className={styles.speciesBadges}>
+                  <Badge variant="primary">{t(`categories.${species.category}`)}</Badge>
+                  <Badge variant="default">{t(`difficulty.${species.difficulty}`)}</Badge>
                 </div>
+                <Link to="/onboarding" className={styles.speciesAction}>
+                  {t('dashboard.speciesChange')} →
+                </Link>
               </div>
-              <div className={styles.speciesBadges}>
-                <Badge variant="primary">{t(`categories.${species.category}`)}</Badge>
-                <Badge variant="default">{t(`difficulty.${species.difficulty}`)}</Badge>
-              </div>
-              <Link to="/onboarding" className={styles.speciesAction}>
-                {t('dashboard.speciesChange')} →
-              </Link>
             </Card.Body>
           </Card>
         )}
