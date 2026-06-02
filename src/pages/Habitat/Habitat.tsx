@@ -19,6 +19,8 @@ import {
 import { useOnboardingStore } from '@features/onboarding'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { buildCsv } from '@utils/csv'
+import { downloadTextFile } from '@utils/download'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -102,12 +104,34 @@ function Habitat() {
     return Number.isFinite(n) ? n : null
   }
 
+  function exportCsv() {
+    const rows = [...entries]
+      .sort((a, b) => a.measuredAt.localeCompare(b.measuredAt))
+      .map((e) => [
+        e.measuredAt,
+        e.temperatureC ?? '',
+        e.humidityPct ?? '',
+        e.uvbHoursToday ?? '',
+        e.note ?? '',
+      ])
+    downloadTextFile(
+      'pettography-habitat.csv',
+      buildCsv(['date', 'temp_c', 'humidity_pct', 'uvb_hours', 'note'], rows),
+      'text/csv;charset=utf-8',
+    )
+  }
+
   return (
     <section className={styles.page}>
       <header className={styles.heroHeader}>
         <h1>{t('habitat.title')}</h1>
         <p className={styles.subtitle}>{t('habitat.subtitle')}</p>
         <ShowAllPetsToggle checked={showAllPets} onChange={setShowAllPets} />
+        {entries.length > 0 && (
+          <Button variant="secondary" onClick={exportCsv} className={styles.exportButton}>
+            {t('common.exportCsv')}
+          </Button>
+        )}
       </header>
 
       {!profile.category && (
