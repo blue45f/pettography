@@ -85,6 +85,27 @@ pettography/
 - ValidationPipe 전역, CORS `http://localhost:5173`, prefix `/api`
 - in-memory seed (송파/강남, 16종, 응급 24h 배지 등)
 
+## 라이브러리 (용도별)
+
+`package.json` 기준 주요 의존성을 용도별로 정리했습니다.
+
+| 용도                    | 라이브러리                                                                                                                          |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| UI 런타임               | `react` 19, `react-dom` 19 (+ `babel-plugin-react-compiler`)                                                                        |
+| 빌드 / 번들             | `vite` 8, `@vitejs/plugin-react`, `typescript`                                                                                      |
+| 라우팅                  | `react-router` 7, `react-router-dom` 7 (Data Router)                                                                                |
+| 서버 상태 / 데이터 패칭 | `@tanstack/react-query` 5 (+ `@tanstack/react-query-devtools`)                                                                      |
+| 클라이언트 상태         | `zustand` 5 (persist)                                                                                                               |
+| HTTP 클라이언트         | `ky`                                                                                                                                |
+| 폼                      | `react-hook-form` (+ `@hookform/resolvers`)                                                                                         |
+| 스키마 검증             | `zod` 4                                                                                                                             |
+| 다국어 (i18n)           | `i18next`, `react-i18next`, `i18next-browser-languagedetector` (ko/en/ja)                                                           |
+| 테스트                  | `vitest`, `@testing-library/react`·`dom`·`user-event`, `jsdom`, `@vitest/coverage-v8`                                               |
+| 린트 / 포맷             | `eslint` (+ `typescript-eslint`, `eslint-plugin-import-x`, `-react-hooks`, `-react-compiler`, `-jsx-a11y`, `-security`), `prettier` |
+| 커밋 / 훅               | `husky`, `lint-staged`, `@commitlint/cli` (conventional)                                                                            |
+| 문서 / 컴포넌트         | `storybook` 10 (+ a11y·themes 애드온)                                                                                               |
+| 백엔드                  | `@nestjs/*` 11, `class-validator` (backend 워크스페이스)                                                                            |
+
 ## 실행 방법
 
 ### 0. 사전 요구

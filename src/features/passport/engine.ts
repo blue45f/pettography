@@ -1,3 +1,5 @@
+import { MS_PER_DAY, toUtcDate } from '@utils/date'
+
 import type { AchievementDef, AchievementProgress, MetricKey, PassportMetricInput } from './schema'
 
 /**
@@ -6,16 +8,10 @@ import type { AchievementDef, AchievementProgress, MetricKey, PassportMetricInpu
  * can derive it all inside `useMemo` and the rules stay exhaustively testable.
  *
  * Date math is done in UTC from a `YYYY-MM-DD` string to avoid local timezone /
- * DST drift: a "day" is exactly 86_400_000 ms apart. Callers pass `todayISO`
- * in so "days together" is deterministic in tests.
+ * DST drift: a "day" is exactly 86_400_000 ms apart (UTC day primitives live in
+ * `@utils/date`). Callers pass `todayISO` in so "days together" is
+ * deterministic in tests.
  */
-
-const MS_PER_DAY = 86_400_000
-
-/** Parse a `YYYY-MM-DD` (or ISO) day-date into a UTC Date at midnight. */
-function toUtcDate(iso: string): Date {
-  return new Date(`${iso.slice(0, 10)}T00:00:00Z`)
-}
 
 /** Whole-day difference `b - a` (never negative; clamped at 0). */
 function wholeDaysBetween(a: string, b: string): number {

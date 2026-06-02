@@ -1,3 +1,5 @@
+import { MS_PER_DAY, toUtcDate } from '@utils/date'
+
 import type { FeederColony } from './schema'
 
 /**
@@ -5,20 +7,13 @@ import type { FeederColony } from './schema'
  *
  * Date arithmetic is always done in UTC from a `YYYY-MM-DD` string so a "day"
  * is exactly 86_400_000 ms apart and the cadence never drifts across the user's
- * local timezone / DST.
+ * local timezone / DST (UTC day primitives live in `@utils/date`).
  */
-
-const MS_PER_DAY = 86_400_000
 
 /** Feeders gut-loaded within this many days are still "fed recently". */
 export const FEED_RECENTLY_DAYS = 3
 /** Past this many days since the last gut-load the culture is "overdue". */
 export const FEED_OVERDUE_DAYS = 7
-
-/** Parse a `YYYY-MM-DD` day-date into a UTC Date at midnight. */
-function toUtcDate(iso: string): Date {
-  return new Date(`${iso.slice(0, 10)}T00:00:00Z`)
-}
 
 /**
  * Whole days from `dateISO` to `todayISO` (today − date). 0 on the same day,

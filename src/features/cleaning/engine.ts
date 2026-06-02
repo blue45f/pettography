@@ -1,28 +1,17 @@
+import { MS_PER_DAY, addDays, toUtcDate } from '@utils/date'
+
 import type { CleaningLog, CleanType } from './schema'
 
 /**
  * Pure, side-effect-free cleaning analytics. Date math is always done in UTC
  * from a `YYYY-MM-DD` day-date so local timezone / DST never shifts a "day":
- * one day is exactly 86_400_000 ms.
+ * one day is exactly 86_400_000 ms (UTC day primitives live in `@utils/date`).
  */
-
-const MS_PER_DAY = 86_400_000
 
 /** "Soon" window: a clean within this many days of due is flagged early. */
 export const SOON_WINDOW_DAYS = 2
 
 export type CleanStatus = 'due' | 'soon' | 'ok' | 'never'
-
-/** Parse a `YYYY-MM-DD` day-date into a UTC Date at midnight. */
-function toUtcDate(iso: string): Date {
-  return new Date(`${iso.slice(0, 10)}T00:00:00Z`)
-}
-
-/** Add `days` to a `YYYY-MM-DD` date, returning a `YYYY-MM-DD` string. */
-function addDays(iso: string, days: number): string {
-  const next = new Date(toUtcDate(iso).getTime() + days * MS_PER_DAY)
-  return next.toISOString().slice(0, 10)
-}
 
 /**
  * The most recent log of a given clean type, or null when none exist.

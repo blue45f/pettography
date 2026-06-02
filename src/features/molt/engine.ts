@@ -1,3 +1,5 @@
+import { addDays, daysBetween } from '@utils/date'
+
 import type { MoltEvent } from './schema'
 
 /**
@@ -5,27 +7,12 @@ import type { MoltEvent } from './schema'
  * predictor stays easy to reason about and exhaustively testable.
  *
  * Date math is always done in UTC from a `YYYY-MM-DD` string to avoid local
- * timezone / DST drift: a "day" is exactly 86_400_000 ms apart.
+ * timezone / DST drift: a "day" is exactly 86_400_000 ms apart. The UTC day
+ * primitives (`addDays`, `daysBetween`) live in `@utils/date`.
  */
 
-const MS_PER_DAY = 86_400_000
-
-/** Parse a `YYYY-MM-DD` day-date into a UTC Date at midnight. */
-function toUtcDate(iso: string): Date {
-  return new Date(`${iso.slice(0, 10)}T00:00:00Z`)
-}
-
-/** Whole-day difference `b - a` (can be negative). */
-export function daysBetween(a: string, b: string): number {
-  const diff = toUtcDate(b).getTime() - toUtcDate(a).getTime()
-  return Math.round(diff / MS_PER_DAY)
-}
-
-/** Add `days` to a `YYYY-MM-DD` date, returning a `YYYY-MM-DD` string. */
-export function addDays(iso: string, days: number): string {
-  const next = new Date(toUtcDate(iso).getTime() + days * MS_PER_DAY)
-  return next.toISOString().slice(0, 10)
-}
+// Re-exported so existing `@features/molt` consumers keep their date helpers.
+export { addDays, daysBetween }
 
 /** Events sorted ascending by `occurredAt`. Stable, non-mutating. */
 export function sortByDate(events: MoltEvent[]): MoltEvent[] {

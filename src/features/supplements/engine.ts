@@ -1,33 +1,20 @@
+import { addDays, daysBetween } from '@utils/date'
+
 import type { DustingLog, SupplementType } from './schema'
 
 /**
  * Pure, side-effect-free analytics for the supplement dusting scheduler.
  *
  * Date math is always done in UTC from a `YYYY-MM-DD` string so a "day" is
- * exactly 86_400_000 ms — no local timezone / DST drift.
+ * exactly 86_400_000 ms — no local timezone / DST drift. The UTC day
+ * primitives (`addDays`, `daysBetween`) live in `@utils/date`.
  */
 
-const MS_PER_DAY = 86_400_000
+// Re-exported so existing `@features/supplements` consumers keep their helpers.
+export { addDays, daysBetween }
 
 /** Number of days before the due date at which a dusting counts as "soon". */
 const SOON_WINDOW_DAYS = 1
-
-/** Parse a `YYYY-MM-DD` day-date into a UTC Date at midnight. */
-function toUtcDate(iso: string): Date {
-  return new Date(`${iso.slice(0, 10)}T00:00:00Z`)
-}
-
-/** Whole-day difference `b - a` (can be negative). */
-export function daysBetween(a: string, b: string): number {
-  const diff = toUtcDate(b).getTime() - toUtcDate(a).getTime()
-  return Math.round(diff / MS_PER_DAY)
-}
-
-/** Add `days` to a `YYYY-MM-DD` date, returning a `YYYY-MM-DD` string. */
-export function addDays(iso: string, days: number): string {
-  const next = new Date(toUtcDate(iso).getTime() + days * MS_PER_DAY)
-  return next.toISOString().slice(0, 10)
-}
 
 /** Project the next dusting day-date from the last dusting plus the cadence. */
 export function nextDusting(lastDustedISO: string, intervalDays: number): string {

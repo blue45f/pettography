@@ -1,3 +1,5 @@
+import { MS_PER_DAY, addDays, toUtcDate } from '@utils/date'
+
 import { incubationRef } from './data'
 
 import type { Clutch } from './schema'
@@ -5,25 +7,13 @@ import type { Clutch } from './schema'
 /**
  * Pure, side-effect-free incubation math. Date arithmetic is always done in
  * UTC from a `YYYY-MM-DD` string so a "day" is exactly 86_400_000 ms apart and
- * we never drift across the user's local timezone / DST.
+ * we never drift across the user's local timezone / DST (UTC day primitives
+ * live in `@utils/date`).
  *
  * Note: the incubation reference table is keyed by species *slug*
  * (e.g. `ball-python`), so engine functions take the slug — the page resolves
  * a clutch's internal `speciesId` to its slug before calling in.
  */
-
-const MS_PER_DAY = 86_400_000
-
-/** Parse a `YYYY-MM-DD` day-date into a UTC Date at midnight. */
-function toUtcDate(iso: string): Date {
-  return new Date(`${iso.slice(0, 10)}T00:00:00Z`)
-}
-
-/** Add `days` to a `YYYY-MM-DD` date, returning a `YYYY-MM-DD` string. */
-function addDays(iso: string, days: number): string {
-  const next = new Date(toUtcDate(iso).getTime() + days * MS_PER_DAY)
-  return next.toISOString().slice(0, 10)
-}
 
 export interface HatchWindow {
   /** Earliest plausible hatch date, `YYYY-MM-DD` (laidAt + minDays). */

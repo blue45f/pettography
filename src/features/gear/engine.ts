@@ -1,3 +1,5 @@
+import { daysBetween, toUtcDate } from '@utils/date'
+
 import type { GearItem } from './schema'
 
 /**
@@ -5,29 +7,18 @@ import type { GearItem } from './schema'
  * countdown logic stays easy to reason about and exhaustively testable.
  *
  * All date math is done in UTC from `YYYY-MM-DD` day-dates to avoid local
- * timezone / DST drift: a "day" is exactly 86_400_000 ms.
+ * timezone / DST drift: a "day" is exactly 86_400_000 ms (UTC day primitives
+ * live in `@utils/date`).
  *
  * An `intervalMonths` of 0 means "no scheduled replacement" — the item is
  * monitor-only, so `dueDate` / `daysUntilDue` / `lifePct` all return null and
  * `gearStatus` reports `'monitor'`.
  */
 
-const MS_PER_DAY = 86_400_000
-
 /** Days within `soon` warning range, inclusive. */
 export const SOON_THRESHOLD_DAYS = 14
 
 export type GearStatus = 'ok' | 'soon' | 'overdue' | 'monitor'
-
-/** Parse a `YYYY-MM-DD` day-date into a UTC Date at midnight. */
-function toUtcDate(iso: string): Date {
-  return new Date(`${iso.slice(0, 10)}T00:00:00Z`)
-}
-
-/** Whole-day difference `b - a` (can be negative). */
-function daysBetween(a: string, b: string): number {
-  return Math.round((toUtcDate(b).getTime() - toUtcDate(a).getTime()) / MS_PER_DAY)
-}
 
 /**
  * Add `months` to a `YYYY-MM-DD` date, clamping the day-of-month when the

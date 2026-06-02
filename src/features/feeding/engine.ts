@@ -1,3 +1,5 @@
+import { addDays, daysBetween } from '@utils/date'
+
 import type { FeedingRule } from './data'
 import type { AgeStage, FeedLog } from './schema'
 
@@ -6,31 +8,16 @@ import type { AgeStage, FeedLog } from './schema'
  * scheduler stays easy to reason about and exhaustively testable.
  *
  * Date math is always done in UTC from a `YYYY-MM-DD` string to avoid local
- * timezone / DST drift: a "day" is exactly 86_400_000 ms apart.
+ * timezone / DST drift: a "day" is exactly 86_400_000 ms apart. The UTC day
+ * primitives (`addDays`, `daysBetween`) live in `@utils/date`.
  */
 
-const MS_PER_DAY = 86_400_000
+// Re-exported so existing `@features/feeding` consumers keep their date helpers.
+export { addDays, daysBetween }
 
 /** Prey weight as a fraction of snake body weight (rule of thumb: 10–15%). */
 const SNAKE_PREY_MIN_PCT = 0.1
 const SNAKE_PREY_MAX_PCT = 0.15
-
-/** Parse a `YYYY-MM-DD` day-date into a UTC Date at midnight. */
-function toUtcDate(iso: string): Date {
-  return new Date(`${iso.slice(0, 10)}T00:00:00Z`)
-}
-
-/** Whole-day difference `b - a` (can be negative). */
-export function daysBetween(a: string, b: string): number {
-  const diff = toUtcDate(b).getTime() - toUtcDate(a).getTime()
-  return Math.round(diff / MS_PER_DAY)
-}
-
-/** Add `days` to a `YYYY-MM-DD` date, returning a `YYYY-MM-DD` string. */
-export function addDays(iso: string, days: number): string {
-  const next = new Date(toUtcDate(iso).getTime() + days * MS_PER_DAY)
-  return next.toISOString().slice(0, 10)
-}
 
 /** Recommended cadence in days for the given life stage. */
 export function recommendFrequencyDays(rule: FeedingRule, ageStage: AgeStage): number {

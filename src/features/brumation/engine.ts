@@ -1,3 +1,5 @@
+import { addDays, daysBetween } from '@utils/date'
+
 import { BRUMATION_PHASES, defaultDaysFor, type BrumationPhaseId } from './data'
 
 import type { BrumationPlan } from './schema'
@@ -7,28 +9,11 @@ import type { BrumationPlan } from './schema'
  *
  * Date arithmetic is always done in UTC from a `YYYY-MM-DD` string so a "day"
  * is exactly 86_400_000 ms apart and the schedule never drifts across the
- * user's local timezone / DST. Phase durations come from the plan's
- * `phaseDays` overrides, falling back to the template default per phase, so the
- * engine tolerates a partial or empty override map.
+ * user's local timezone / DST (UTC day primitives live in `@utils/date`).
+ * Phase durations come from the plan's `phaseDays` overrides, falling back to
+ * the template default per phase, so the engine tolerates a partial or empty
+ * override map.
  */
-
-const MS_PER_DAY = 86_400_000
-
-/** Parse a `YYYY-MM-DD` day-date into a UTC Date at midnight. */
-function toUtcDate(iso: string): Date {
-  return new Date(`${iso.slice(0, 10)}T00:00:00Z`)
-}
-
-/** Add `days` to a `YYYY-MM-DD` date, returning a `YYYY-MM-DD` string. */
-function addDays(iso: string, days: number): string {
-  const next = new Date(toUtcDate(iso).getTime() + days * MS_PER_DAY)
-  return next.toISOString().slice(0, 10)
-}
-
-/** Signed whole-day count `b - a` (negative when `b` precedes `a`). */
-function daysBetween(a: string, b: string): number {
-  return Math.round((toUtcDate(b).getTime() - toUtcDate(a).getTime()) / MS_PER_DAY)
-}
 
 /** Resolved duration for a phase: the plan override, else the template default. */
 export function phaseDuration(plan: BrumationPlan, id: BrumationPhaseId): number {

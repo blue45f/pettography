@@ -1,3 +1,5 @@
+import { MS_PER_DAY, toUtcDate } from '@utils/date'
+
 import { READINESS_ITEMS } from './data'
 
 import type { Priority, WishlistItem } from './schema'
@@ -8,15 +10,8 @@ import type { Difficulty } from '@features/species'
  *
  * Date arithmetic is done in UTC from a `YYYY-MM-DD` string so a "day" is
  * exactly 86_400_000 ms and the D-day countdown never drifts across the user's
- * local timezone / DST.
+ * local timezone / DST (UTC day primitives live in `@utils/date`).
  */
-
-const MS_PER_DAY = 86_400_000
-
-/** Parse a `YYYY-MM-DD` day-date into a UTC Date at midnight. */
-function toUtcDate(iso: string): Date {
-  return new Date(`${iso.slice(0, 10)}T00:00:00Z`)
-}
 
 /**
  * Percentage (0..100, rounded) of readiness items checked `true`, out of

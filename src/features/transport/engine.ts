@@ -1,9 +1,11 @@
+import { MS_PER_DAY, toUtcDate } from '@utils/date'
+
 import type { Trip } from './schema'
 
 /**
  * Pure, side-effect-free helpers for the transport planner. Date math is done
- * in UTC (`new Date(`${iso}T00:00:00Z`)`) so a trip's D-day never drifts with
- * the runner's local timezone.
+ * in UTC (UTC day primitives live in `@utils/date`) so a trip's D-day never
+ * drifts with the runner's local timezone.
  */
 
 export interface ChecklistProgress {
@@ -16,10 +18,9 @@ export interface ChecklistProgress {
 /** Trip lifecycle relative to "today". */
 export type TripStatusCode = 'upcoming' | 'today' | 'past'
 
-const MS_PER_DAY = 86_400_000
-
+/** UTC-midnight epoch ms for a `YYYY-MM-DD` (or ISO) day-date. */
 function toUtcDay(dateISO: string): number {
-  return new Date(`${dateISO.slice(0, 10)}T00:00:00Z`).getTime()
+  return toUtcDate(dateISO).getTime()
 }
 
 /**

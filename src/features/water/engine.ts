@@ -1,3 +1,5 @@
+import { toUtcDate } from '@utils/date'
+
 import {
   NITRATE_DANGER_PPM,
   NITRATE_WARN_PPM,
@@ -10,11 +12,6 @@ import {
 } from './data'
 
 import type { CycleStatus, ParamFlag, WaterParam, WaterReading } from './schema'
-
-/** UTC midnight for a YYYY-MM-DD (or ISO) string, so day math never drifts by timezone. */
-function toUtcDate(iso: string): Date {
-  return new Date(`${iso.slice(0, 10)}T00:00:00Z`)
-}
 
 /** A kit reading at/below the trace floor counts as "zero" in cycle logic. */
 function isTrace(value: number): boolean {
