@@ -2,7 +2,7 @@
 
 희귀 애완동물(파충류·절지류·희귀 조류·양서류·소형 포유류) 종 선택과 송파구 인근 특수동물 병원·먹이/용품 샵을 안내하는 포탈의 NestJS 11 REST 백엔드입니다.
 
-- 런타임: Node 22 + pnpm 10
+- 런타임: Node 22 + pnpm 11
 - 프레임워크: NestJS 11.x (Express adapter)
 - 데이터: in-memory TypeScript seed (`src/data/`)
 - DB/ORM 없음 (요구사항)

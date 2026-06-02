@@ -2,15 +2,12 @@
 
 ## 개발 환경
 
-프론트엔드와 backend는 각각 독립 pnpm lockfile을 사용합니다.
+프론트엔드와 backend는 단일 pnpm workspace(`pnpm-workspace.yaml`의 `.`, `backend`)이며 루트 lockfile 하나를 공유합니다. 루트에서 `pnpm install` 한 번이면 양쪽 의존성이 모두 설치됩니다.
 
 ```bash
-pnpm install
-pnpm run dev
-
-cd backend
-pnpm install
-pnpm run dev
+pnpm install            # 프론트 + backend 의존성 일괄 설치
+pnpm run dev            # 프론트 dev 서버
+pnpm run dev:backend    # backend dev 서버 (--filter pettography-backend)
 ```
 
 ## 작업 흐름
