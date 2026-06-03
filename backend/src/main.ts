@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { resolveCorsOrigins } from './common/cors';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
@@ -18,14 +19,15 @@ async function bootstrap(): Promise<void> {
   );
 
   app.enableCors({
-    origin: ['http://localhost:5173'],
+    origin: resolveCorsOrigins(),
     credentials: true,
   });
 
   const port = Number(process.env.PORT ?? 3001);
-  await app.listen(port);
+  // Bind to 0.0.0.0 so the server is reachable inside containers / PaaS hosts.
+  await app.listen(port, '0.0.0.0');
 
-  console.log(`[pettography-backend] listening on http://localhost:${port}/api`);
+  console.log(`[pettography-backend] listening on port ${port} (prefix /api)`);
 }
 
 void bootstrap();
