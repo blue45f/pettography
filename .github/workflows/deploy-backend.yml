@@ -1,0 +1,45 @@
+name: Deploy Backend to Render
+
+# Mirrors deploy-vercel.yml: triggers a production backend deploy on push to
+# main, but no-ops cleanly when the deploy hook secret is not configured (so
+# forks / unsecreted environments stay green). Render builds the image from
+# backend/Dockerfile per render.yaml.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - 'render.yaml'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+    steps:
+      - name: Skip deployment when Render deploy hook is not configured
+        if: env.RENDER_DEPLOY_HOOK_URL == ''
+        run: echo "RENDER_DEPLOY_HOOK_URL is not configured; skipping backend deployment."
+
+      - name: Trigger Render production deploy
+        if: env.RENDER_DEPLOY_HOOK_URL != ''
+        run: |
+          status=$(curl -sS -o /dev/null -w "%{http_code}" -X POST "$RENDER_DEPLOY_HOOK_URL")
+          echo "Render deploy hook responded with HTTP $status"
+          if [ "$status" -lt 200 ] || [ "$status" -ge 300 ]; then
+            echo "::error::Render deploy hook failed (HTTP $status)"
+            exit 1
+          fi

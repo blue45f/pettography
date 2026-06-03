@@ -1,0 +1,30 @@
+# Render Blueprint for the Pettography NestJS backend.
+#
+# The frontend deploys to Vercel via .github/workflows/deploy-vercel.yml.
+# This Blueprint covers the BACKEND tier (NestJS 11 REST API + /consult
+# socket.io gateway) as a containerized web service built from
+# backend/Dockerfile.
+#
+# First-time setup (maintainer, one-time, in the Render dashboard):
+#   1. New > Blueprint, point it at this repo. Render reads this file.
+#   2. Set CORS_ORIGINS to the deployed Vercel origin(s).
+#   3. After the service exists, copy its "Deploy Hook" URL into the
+#      RENDER_DEPLOY_HOOK_URL GitHub Actions secret so CI can trigger
+#      backend deploys on push to main (see deploy-backend.yml).
+services:
+  - type: web
+    name: pettography-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    plan: free
+    region: singapore
+    branch: main
+    healthCheckPath: /api/health
+    autoDeploy: false # CI triggers deploys via the deploy hook; avoids double-deploys.
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # PORT is injected by Render automatically; main.ts binds to it + 0.0.0.0.
+      - key: CORS_ORIGINS
+        sync: false # Set in the dashboard to the Vercel origin(s), comma-separated.

@@ -28,7 +28,19 @@ pnpm lint        # eslint --fix
 pnpm format      # prettier --write
 ```
 
-전역 prefix는 `/api`이며 CORS는 `http://localhost:5173` (Vite dev server)에서 허용됩니다.
+전역 prefix는 `/api`입니다. CORS 허용 origin은 `CORS_ORIGINS` 환경변수(쉼표 구분)로 설정하며, 미설정 시 `http://localhost:5173` (Vite dev server)으로 fallback합니다. REST API와 `/consult` socket.io 게이트웨이가 같은 allowlist를 공유합니다.
+
+## 배포
+
+프로덕션 배포는 `backend/Dockerfile`(멀티스테이지, node:22-alpine, 프로덕션 의존성만, non-root, `node dist/main.js`)로 컨테이너를 빌드하며 `render.yaml` Blueprint로 Render에 올립니다. 전체 절차(환경변수, GitHub secret, 대시보드 단계)는 [`docs/DEPLOYMENT.md`](../docs/DEPLOYMENT.md)를 참고하세요.
+
+로컬 컨테이너 검증:
+
+```bash
+# 저장소 루트에서 (lockfile이 루트에 있으므로 build context = .)
+docker build -f backend/Dockerfile -t pettography-backend .
+docker run --rm -p 3001:3001 -e CORS_ORIGINS=http://localhost:5173 pettography-backend
+```
 
 ## 엔드포인트
 

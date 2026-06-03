@@ -13,13 +13,14 @@ import { ConsultService } from './consult.service';
 import { JoinRoomDto } from './dto/join-room.dto';
 import { SendMessageDto } from './dto/send-message.dto';
 import type { Vet, VetMessage } from '../common/types';
+import { resolveCorsOrigins } from '../common/cors';
 
 const AUTO_REPLY_DELAY_MS = 700;
 
 @WebSocketGateway({
   namespace: '/consult',
   cors: {
-    origin: ['http://localhost:5173'],
+    origin: resolveCorsOrigins(),
     credentials: true,
   },
 })
