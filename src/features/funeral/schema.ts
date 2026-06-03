@@ -1,8 +1,9 @@
 import { speciesCategorySchema } from '@features/species'
+import { funeralServiceKindSchema } from '@pettography/shared'
 import { z } from 'zod'
 
-export const funeralServiceKindSchema = z.enum(['cremation', 'memorial', 'pickup', 'directory'])
-export type FuneralServiceKind = z.infer<typeof funeralServiceKindSchema>
+export { funeralServiceKindSchema } from '@pettography/shared'
+export type { FuneralServiceKind } from '@pettography/shared'
 
 export const funeralServiceSchema = z.object({
   id: z.string(),

@@ -1,13 +1,41 @@
-export type SpeciesCategory = 'reptile' | 'arthropod' | 'bird' | 'amphibian' | 'mammal';
-export type SpeciesDifficulty = 'beginner' | 'intermediate' | 'advanced';
-export type SpaceNeed = 'small' | 'medium' | 'large';
-export type HandlingTolerance = 'low' | 'medium' | 'high';
-export type ActivityPattern = 'nocturnal' | 'diurnal' | 'mixed';
-export type FilingStatus = 'white-list' | 'regulated' | 'unregulated' | 'unknown';
-export type ShopKind = 'food' | 'equipment' | 'both';
-export type CommunityKind = 'forum' | 'cafe' | 'discord' | 'youtube';
-export type AdoptionKind = 'rescue' | 'breeder' | 'cafe' | 'marketplace';
-export type FuneralServiceKind = 'cremation' | 'memorial' | 'pickup' | 'directory';
+// Domain enums consolidated into the framework-free @pettography/shared
+// workspace package and consumed verbatim by both frontend and backend.
+// Imported as types only, so zod never enters the backend runtime.
+export type {
+  SpeciesCategory,
+  SpeciesDifficulty,
+  SpaceNeed,
+  HandlingTolerance,
+  ActivityPattern,
+  FilingStatus,
+  ShopKind,
+  CommunityKind,
+  AdoptionKind,
+  FuneralServiceKind,
+  PartnerKind,
+  PartnerStatus,
+  VetStatus,
+  VetMessageRole,
+  WildlifeFilingKey,
+} from '@pettography/shared';
+
+import type {
+  SpeciesCategory,
+  SpeciesDifficulty,
+  SpaceNeed,
+  HandlingTolerance,
+  ActivityPattern,
+  FilingStatus,
+  ShopKind,
+  CommunityKind,
+  AdoptionKind,
+  FuneralServiceKind,
+  PartnerKind,
+  PartnerStatus,
+  VetStatus,
+  VetMessageRole,
+  WildlifeFilingKey,
+} from '@pettography/shared';
 
 export interface Species {
   id: string;
@@ -125,9 +153,6 @@ export interface ForumReply {
   createdAt: string;
 }
 
-export type PartnerKind = 'shop' | 'hospital' | 'treat-shop';
-export type PartnerStatus = 'pending' | 'approved' | 'rejected';
-
 export interface PartnerApplication {
   id: string;
   kind: PartnerKind;
@@ -139,9 +164,6 @@ export interface PartnerApplication {
   status: PartnerStatus;
   createdAt: string;
 }
-
-export type VetStatus = 'online' | 'busy' | 'offline';
-export type VetMessageRole = 'user' | 'vet';
 
 export interface Vet {
   id: string;
@@ -161,8 +183,6 @@ export interface VetMessage {
   body: string;
   createdAt: string;
 }
-
-export type WildlifeFilingKey = 'keeping' | 'transfer' | 'death' | 'microchip';
 
 export interface WildlifeFiling {
   key: WildlifeFilingKey;

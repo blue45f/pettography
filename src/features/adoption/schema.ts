@@ -1,8 +1,9 @@
 import { speciesCategorySchema } from '@features/species'
+import { adoptionKindSchema } from '@pettography/shared'
 import { z } from 'zod'
 
-export const adoptionKindSchema = z.enum(['rescue', 'breeder', 'cafe', 'marketplace'])
-export type AdoptionKind = z.infer<typeof adoptionKindSchema>
+export { adoptionKindSchema } from '@pettography/shared'
+export type { AdoptionKind } from '@pettography/shared'
 
 export const adoptionListingSchema = z.object({
   id: z.string(),

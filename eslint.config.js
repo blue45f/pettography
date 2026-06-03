@@ -34,6 +34,11 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2022,
       globals: globals.browser,
+      parserOptions: {
+        // Pin the root so per-file lint (lint-staged) isn't ambiguous now that
+        // packages/shared adds another tsconfig candidate alongside the root.
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     plugins: {
       'react-hooks': reactHooks,

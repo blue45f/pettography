@@ -1,7 +1,9 @@
+import { vetRoleSchema, vetStatusSchema } from '@pettography/shared'
 import { z } from 'zod'
 
-export const vetConsultRoleSchema = z.enum(['user', 'vet'])
-export type VetConsultRole = z.infer<typeof vetConsultRoleSchema>
+// vetRoleSchema is shared; the codebase refers to it as vetConsultRoleSchema.
+export const vetConsultRoleSchema = vetRoleSchema
+export type { VetConsultRole } from '@pettography/shared'
 
 export const vetMessageSchema = z.object({
   id: z.string(),
@@ -19,7 +21,7 @@ export const vetSchema = z.object({
   clinic: z.string(),
   specialties: z.array(z.string()).min(1),
   yearsOfExperience: z.number().int().nonnegative(),
-  status: z.enum(['online', 'busy', 'offline']),
+  status: vetStatusSchema,
   avatarEmoji: z.string(),
   hourlyKrw: z.number().int().nonnegative(),
 })

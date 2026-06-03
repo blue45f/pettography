@@ -1,6 +1,7 @@
 packages:
   - '.'
   - 'backend'
+  - 'packages/shared'
 
 allowBuilds:
   '@nestjs/core': true

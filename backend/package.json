@@ -22,11 +22,12 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "ci": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build",
+    "ci": "pnpm --filter @pettography/shared run build && pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build",
     "verify": "pnpm run ci"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.24",
+    "@pettography/shared": "workspace:*",
     "@nestjs/core": "^11.1.24",
     "@nestjs/platform-express": "^11.1.24",
     "@nestjs/platform-socket.io": "^11.1.24",
