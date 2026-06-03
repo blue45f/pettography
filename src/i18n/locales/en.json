@@ -1125,6 +1125,10 @@
     "lightMode": "Light mode",
     "darkMode": "Dark mode"
   },
+  "a11y": {
+    "navigatedTo": "Navigated to {{title}}",
+    "pageChanged": "Page changed"
+  },
   "petSwitcher": {
     "menuLabel": "Pick a pet",
     "title": "My pets ({{count}})",
