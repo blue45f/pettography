@@ -1,8 +1,9 @@
 import { speciesCategorySchema } from '@features/species'
+import { communityKindSchema } from '@pettography/shared'
 import { z } from 'zod'
 
-export const communityKindSchema = z.enum(['forum', 'cafe', 'discord', 'youtube'])
-export type CommunityKind = z.infer<typeof communityKindSchema>
+export { communityKindSchema } from '@pettography/shared'
+export type { CommunityKind } from '@pettography/shared'
 
 export const communitySchema = z.object({
   id: z.string(),

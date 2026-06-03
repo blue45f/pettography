@@ -1,10 +1,8 @@
+import { partnerKindSchema, partnerStatusSchema } from '@pettography/shared'
 import { z } from 'zod'
 
-export const partnerKindSchema = z.enum(['shop', 'hospital', 'treat-shop'])
-export type PartnerKind = z.infer<typeof partnerKindSchema>
-
-export const partnerStatusSchema = z.enum(['pending', 'approved', 'rejected'])
-export type PartnerStatus = z.infer<typeof partnerStatusSchema>
+export { partnerKindSchema, partnerStatusSchema } from '@pettography/shared'
+export type { PartnerKind, PartnerStatus } from '@pettography/shared'
 
 export const partnerApplicationSchema = z.object({
   id: z.string(),

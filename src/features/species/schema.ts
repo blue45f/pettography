@@ -1,31 +1,33 @@
+import {
+  speciesCategorySchema,
+  difficultySchema,
+  spaceNeedSchema,
+  handlingToleranceSchema,
+  activityPatternSchema,
+  filingStatusSchema,
+} from '@pettography/shared'
 import { z } from 'zod'
 
-export const speciesCategorySchema = z.enum(['reptile', 'arthropod', 'bird', 'amphibian', 'mammal'])
-
-export type SpeciesCategory = z.infer<typeof speciesCategorySchema>
-
-export const SPECIES_CATEGORIES: readonly SpeciesCategory[] = [
-  'reptile',
-  'arthropod',
-  'bird',
-  'amphibian',
-  'mammal',
-] as const
-
-export const difficultySchema = z.enum(['beginner', 'intermediate', 'advanced'])
-export type Difficulty = z.infer<typeof difficultySchema>
-
-export const spaceNeedSchema = z.enum(['small', 'medium', 'large'])
-export type SpaceNeed = z.infer<typeof spaceNeedSchema>
-
-export const handlingToleranceSchema = z.enum(['low', 'medium', 'high'])
-export type HandlingTolerance = z.infer<typeof handlingToleranceSchema>
-
-export const activityPatternSchema = z.enum(['nocturnal', 'diurnal', 'mixed'])
-export type ActivityPattern = z.infer<typeof activityPatternSchema>
-
-export const filingStatusSchema = z.enum(['white-list', 'regulated', 'unregulated', 'unknown'])
-export type FilingStatus = z.infer<typeof filingStatusSchema>
+// Shared domain enums live in the framework-free @pettography/shared workspace
+// package and are consumed verbatim by both the frontend and backend. They are
+// re-exported here so the established @features/species barrel stays stable.
+export {
+  speciesCategorySchema,
+  SPECIES_CATEGORIES,
+  difficultySchema,
+  spaceNeedSchema,
+  handlingToleranceSchema,
+  activityPatternSchema,
+  filingStatusSchema,
+} from '@pettography/shared'
+export type {
+  SpeciesCategory,
+  Difficulty,
+  SpaceNeed,
+  HandlingTolerance,
+  ActivityPattern,
+  FilingStatus,
+} from '@pettography/shared'
 
 export const speciesSchema = z.object({
   id: z.string(),

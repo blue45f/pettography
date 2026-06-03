@@ -1,8 +1,9 @@
 import { speciesCategorySchema } from '@features/species'
+import { shopKindSchema } from '@pettography/shared'
 import { z } from 'zod'
 
-export const shopKindSchema = z.enum(['food', 'equipment', 'both'])
-export type ShopKind = z.infer<typeof shopKindSchema>
+export { shopKindSchema } from '@pettography/shared'
+export type { ShopKind } from '@pettography/shared'
 
 export const shopSchema = z.object({
   id: z.string(),

@@ -1,7 +1,7 @@
-import { z } from 'zod'
+import type { RegistryFiling } from '@pettography/shared'
 
-export const registryFilingSchema = z.enum(['keeping', 'transfer', 'death', 'microchip'])
-export type RegistryFiling = z.infer<typeof registryFilingSchema>
+export { registryFilingSchema } from '@pettography/shared'
+export type { RegistryFiling } from '@pettography/shared'
 
 export const REGISTRY_FILINGS: readonly RegistryFiling[] = [
   'keeping',
