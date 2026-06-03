@@ -22,11 +22,16 @@ for (const script of requiredScripts) {
   }
 }
 
-if (pkg.workspaces) {
-  const hasApps = fs.existsSync(`${ROOT}/apps`)
-  const hasPackages = fs.existsSync(`${ROOT}/packages`)
-  if (!hasApps && !hasPackages) {
-    missing.push('workspace-structure')
+// pettography uses a root-level web app (src/ + vite.config.ts) alongside a
+// separate backend/ (socket.io, no DB) wired together via pnpm-workspace.yaml.
+// Assert this documented layout directly — package.json has no `workspaces`
+// field (pnpm workspaces are declared in pnpm-workspace.yaml), so we must not
+// gate the structure check on it.
+const requiredLayout = ['backend', 'src', 'vite.config.ts', 'pnpm-workspace.yaml']
+
+for (const entry of requiredLayout) {
+  if (!fs.existsSync(`${ROOT}/${entry}`)) {
+    missing.push(`layout://${entry}`)
   }
 }
 

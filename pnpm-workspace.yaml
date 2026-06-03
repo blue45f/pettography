@@ -2,10 +2,6 @@ packages:
   - '.'
   - 'backend'
 
-onlyBuiltDependencies:
-  - '@nestjs/core'
-  - esbuild
-  - unrs-resolver
 allowBuilds:
   '@nestjs/core': true
   esbuild: true
