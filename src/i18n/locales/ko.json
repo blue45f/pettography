@@ -1125,6 +1125,10 @@
     "lightMode": "라이트 모드",
     "darkMode": "다크 모드"
   },
+  "a11y": {
+    "navigatedTo": "{{title}} 페이지로 이동했습니다",
+    "pageChanged": "페이지가 변경되었습니다"
+  },
   "petSwitcher": {
     "menuLabel": "내 펫 선택",
     "title": "내 펫 ({{count}}마리)",

@@ -1,5 +1,6 @@
 import ErrorBoundary from '@components/common/ErrorBoundary'
 import Loading from '@components/common/Loading'
+import RouteAnnouncer from '@components/common/RouteAnnouncer'
 import SkipLink from '@components/common/SkipLink'
 import BottomNav from '@components/layout/BottomNav'
 import Footer from '@components/layout/Footer'
@@ -29,8 +30,9 @@ function App() {
   return (
     <div className={styles.app}>
       <SkipLink />
+      <RouteAnnouncer />
       <Header onOpenCommand={() => setCommandOpen(true)} />
-      <main id="main-content" className={styles.main} role="main">
+      <main id="main-content" className={styles.main} role="main" tabIndex={-1}>
         <ErrorBoundary>
           <Suspense fallback={<Loading />}>
             <Outlet />

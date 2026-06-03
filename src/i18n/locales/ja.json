@@ -1125,6 +1125,10 @@
     "lightMode": "ライトモード",
     "darkMode": "ダークモード"
   },
+  "a11y": {
+    "navigatedTo": "{{title}} ページに移動しました",
+    "pageChanged": "ページが変更されました"
+  },
   "petSwitcher": {
     "menuLabel": "ペットを選択",
     "title": "マイペット ({{count}}匹)",

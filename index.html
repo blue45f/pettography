@@ -14,6 +14,27 @@
       name="description"
       content="희귀 애완동물 종 선택부터 입양·사육·의료·일상·장례까지, 한 번의 선택으로 세팅하는 위치 기반 포탈."
     />
+    <!-- No-FOUC theme bootstrap: 페인트 전에 data-theme 을 확정해 다크모드 첫 진입 깜빡임을 막는다.
+         저장 형식은 zustand persist 키 'app-store'({state:{theme}})와 일치 (src/hooks/useTheme.ts 참고). -->
+    <script>
+      ;(function () {
+        try {
+          var theme = null
+          var raw = localStorage.getItem('app-store')
+          if (raw) {
+            var parsed = JSON.parse(raw)
+            var stored = parsed && parsed.state && parsed.state.theme
+            if (stored === 'light' || stored === 'dark') theme = stored
+          }
+          if (!theme) {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+          }
+          document.documentElement.dataset.theme = theme
+        } catch (e) {
+          /* localStorage 접근 불가 등 — 기본 라이트 테마로 폴백 */
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>
