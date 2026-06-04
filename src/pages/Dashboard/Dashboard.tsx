@@ -1,6 +1,7 @@
 import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
+import ContentImage from '@components/common/ContentImage'
 import EmptyState from '@components/common/EmptyState'
 import LazyImage from '@components/common/LazyImage'
 import Skeleton from '@components/common/Skeleton'
@@ -431,11 +432,9 @@ function Dashboard() {
           <ul className={styles.galleryRail}>
             {galleryPreview.map((p) => (
               <li key={p.id}>
-                <img
+                <ContentImage
                   src={p.imageUrl}
                   alt={p.caption ?? species?.koreanName ?? 'photo'}
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
                   className={styles.galleryThumb}
                 />
               </li>

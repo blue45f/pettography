@@ -1,0 +1,8 @@
+.fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  font-size: 2rem;
+}
