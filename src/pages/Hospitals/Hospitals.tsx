@@ -45,7 +45,7 @@ function Hospitals() {
     [profile.location],
   )
 
-  const { data, isLoading } = useHospitalsList({
+  const { data, isLoading, isError } = useHospitalsList({
     category: category === 'all' ? undefined : category,
     origin,
   })
@@ -128,7 +128,15 @@ function Hospitals() {
       <KakaoMap center={mapCenter} markers={mapMarkers} height={320} />
 
       {isLoading && <Skeleton variant="rectangular" height={120} lines={3} />}
-      {sorted && sorted.length === 0 && (
+      {isError && (
+        <EmptyState
+          variant="discover"
+          icon="⚠️"
+          title={t('common.error')}
+          description={t('common.loadErrorHint')}
+        />
+      )}
+      {!isError && sorted && sorted.length === 0 && (
         <EmptyState variant="discover" icon="🏥" title={t('hospitals.noResult')} />
       )}
 

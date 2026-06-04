@@ -43,7 +43,7 @@ function SpeciesCatalog() {
     navigate(`/compare?species=${comparePicks.join(',')}`)
   }
 
-  const { data, isLoading } = useSpeciesList(category === 'all' ? {} : { category })
+  const { data, isLoading, isError } = useSpeciesList(category === 'all' ? {} : { category })
 
   const filtered = useMemo(() => {
     if (!data) return undefined
@@ -137,7 +137,15 @@ function SpeciesCatalog() {
       </p>
 
       {isLoading && <Skeleton variant="rectangular" height={100} lines={3} />}
-      {filtered && filtered.length === 0 && (
+      {isError && (
+        <EmptyState
+          variant="discover"
+          icon="⚠️"
+          title={t('common.error')}
+          description={t('common.loadErrorHint')}
+        />
+      )}
+      {!isError && filtered && filtered.length === 0 && (
         <EmptyState variant="discover" icon="🔍" title={t('species.noResult')} />
       )}
 

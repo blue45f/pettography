@@ -15,6 +15,7 @@
     "skipToContent": "Skip to main content",
     "loading": "Loading...",
     "error": "Something went wrong.",
+    "loadErrorHint": "Check your connection and try again in a moment.",
     "retry": "Retry",
     "cancel": "Cancel",
     "confirm": "Confirm",
