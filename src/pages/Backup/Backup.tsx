@@ -62,12 +62,19 @@ function Backup() {
   const fileInput = useRef<HTMLInputElement | null>(null)
   const [keys, setKeys] = useState<string[]>(() => collectKeys())
   const [pending, setPending] = useState<PendingImport | null>(null)
+  const [wipePending, setWipePending] = useState(false)
   const confirmRef = useRef<HTMLDivElement | null>(null)
+  const wipeConfirmRef = useRef<HTMLDivElement | null>(null)
 
   // Move focus into the restore-confirmation dialog when it opens (WAI-ARIA alertdialog).
   useEffect(() => {
     if (pending) confirmRef.current?.focus()
   }, [pending])
+
+  // Same focus handling for the wipe-confirmation dialog.
+  useEffect(() => {
+    if (wipePending) wipeConfirmRef.current?.focus()
+  }, [wipePending])
 
   function handleExport() {
     const envelope = buildEnvelope()
@@ -121,12 +128,12 @@ function Backup() {
     setPending(null)
   }
 
-  function handleWipe() {
-    if (!window.confirm(t('backup.wipeConfirm'))) return
+  function confirmWipe() {
     for (const k of collectKeys()) {
       localStorage.removeItem(k)
     }
     setKeys([])
+    setWipePending(false)
     toast(t('backup.wipedToast'), 'success')
     setTimeout(() => window.location.reload(), 600)
   }
@@ -226,9 +233,39 @@ function Backup() {
           {t('backup.wipeTitle')}
         </h2>
         <p className={styles.sectionDesc}>{t('backup.wipeDesc')}</p>
-        <Button variant="ghost" onClick={handleWipe} disabled={keys.length === 0}>
+        <Button
+          variant="ghost"
+          onClick={() => setWipePending(true)}
+          disabled={keys.length === 0 || wipePending}
+        >
           {t('backup.wipeButton')}
         </Button>
+
+        {wipePending && (
+          <div
+            ref={wipeConfirmRef}
+            tabIndex={-1}
+            className={styles.confirmPanel}
+            role="alertdialog"
+            aria-labelledby="wipe-confirm-heading"
+          >
+            <h3 id="wipe-confirm-heading" className={styles.confirmTitle}>
+              {t('backup.wipeTitle')}
+            </h3>
+            <p className={styles.confirmWarning}>
+              <span aria-hidden="true">⚠️ </span>
+              {t('backup.wipeConfirm')}
+            </p>
+            <div className={styles.confirmActions}>
+              <Button variant="primary" onClick={confirmWipe}>
+                {t('backup.wipeButton')}
+              </Button>
+              <Button variant="ghost" onClick={() => setWipePending(false)}>
+                {t('common.cancel')}
+              </Button>
+            </div>
+          </div>
+        )}
       </section>
     </section>
   )
