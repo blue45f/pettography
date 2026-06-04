@@ -21,14 +21,17 @@ interface ContentImageProps {
  */
 function ContentImage({ src, alt, className = '' }: ContentImageProps) {
   const { t } = useTranslation()
-  const [error, setError] = useState(false)
+  // Track the URL that failed rather than a bare boolean, so a new `src`
+  // (retry/edit/Storybook controls) recovers automatically during render —
+  // no effect, no set-state-in-effect.
+  const [erroredSrc, setErroredSrc] = useState<string | null>(null)
 
-  if (error) {
+  if (erroredSrc === src) {
     return (
       <div
         className={`${className} ${styles.fallback}`}
         role="img"
-        aria-label={t('common.imageLoadError')}
+        aria-label={alt ? `${alt} (${t('common.imageLoadError')})` : t('common.imageLoadError')}
       >
         <span aria-hidden="true">&#x26A0;</span>
       </div>
@@ -42,7 +45,7 @@ function ContentImage({ src, alt, className = '' }: ContentImageProps) {
       loading="lazy"
       referrerPolicy="no-referrer"
       className={className}
-      onError={() => setError(true)}
+      onError={() => setErroredSrc(src)}
     />
   )
 }
