@@ -4,6 +4,18 @@
 > **처음 선택 → 입양 → 사육 → 의료 → 일상 → 노령기 → 장례·추모** + 한국 2025-12-14 야생생물법 보관신고 가이드까지 단일 앱.
 > 위치 기반(서울 송파구 기본)으로 특수동물 병원·먹이/용품 샵·커뮤니티·장례 서비스를 큐레이션합니다.
 
+## 화면
+
+<p align="center">
+  <img src="docs/screenshots/home.png" alt="Pettography 홈 — 희귀 애완동물 라이프사이클 포탈" width="820" />
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/home-mobile.png" alt="Pettography 모바일 홈" width="240" />
+</p>
+
+> 로컬 실행 화면 — `pnpm dev` (localStorage 기반, 백엔드 없이 동작).
+
 ## 핵심 가치
 
 - **"처음 선택" 강조 온보딩** — 카테고리(파충류/절지류/조류/양서류/소형 포유류) → 종 → 위치 → 검토 4단계. 규제 카테고리 선택 시 [야생생물법 보관신고 안내] 카드 자동 노출.

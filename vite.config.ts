@@ -9,6 +9,11 @@ export default defineConfig({
   plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
   resolve: {
     alias: {
+      // @pettography/shared 는 CJS(dist)로 빌드되는데, Vite 는 워크스페이스 패키지를
+      // pre-bundle 하지 않아 `export *` 재노출 심볼의 ESM named import 가 깨진다(dev 화이트스크린).
+      // TS 소스를 직접 가리켜 Vite 가 컴파일하게 해 dist CJS interop·stale-dist 문제를 원천 제거.
+      // (백엔드는 package.json main(dist)을 그대로 사용하므로 영향 없음)
+      '@pettography/shared': path.resolve(__dirname, './packages/shared/src/index.ts'),
       '@': path.resolve(__dirname, './src'),
       '@components': path.resolve(__dirname, './src/components'),
       '@pages': path.resolve(__dirname, './src/pages'),
