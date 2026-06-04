@@ -1,6 +1,7 @@
 import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
+import ContentImage from '@components/common/ContentImage'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
 import Select from '@components/common/Select'
@@ -247,11 +248,9 @@ function Diary() {
                   </div>
                   <p className={styles.entryBody}>{entry.body}</p>
                   {entry.imageUrl && (
-                    <img
+                    <ContentImage
                       src={entry.imageUrl}
                       alt={entry.body.slice(0, 60)}
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
                       className={styles.entryImage}
                     />
                   )}

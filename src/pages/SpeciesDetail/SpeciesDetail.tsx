@@ -1,6 +1,7 @@
 import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
+import ContentImage from '@components/common/ContentImage'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
 import PetBadge from '@components/common/PetBadge'
@@ -245,11 +246,9 @@ function SpeciesDetail() {
           <ul className={styles.galleryGrid}>
             {speciesPhotos.map((p) => (
               <li key={p.id} className={styles.galleryItem}>
-                <img
+                <ContentImage
                   src={p.imageUrl}
                   alt={p.caption ?? species.koreanName}
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
                   className={styles.galleryImage}
                 />
                 <div className={styles.galleryMeta}>
