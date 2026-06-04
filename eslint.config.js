@@ -51,6 +51,13 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       ...security.configs.recommended.rules,
       'security/detect-object-injection': 'off',
+      // 네이티브 window.confirm/alert/prompt 금지 — Modal/Toast 등 브랜드 UI를 쓴다.
+      'no-restricted-globals': [
+        'error',
+        { name: 'confirm', message: '브랜드 확인 다이얼로그를 사용하세요 (window.confirm 금지).' },
+        { name: 'alert', message: 'Toast/Modal을 사용하세요 (window.alert 금지).' },
+        { name: 'prompt', message: '입력 다이얼로그/폼을 사용하세요 (window.prompt 금지).' },
+      ],
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'react-compiler/react-compiler': 'error',
       'import-x/order': [
