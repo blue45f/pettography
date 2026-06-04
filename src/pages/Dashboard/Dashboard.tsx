@@ -626,7 +626,10 @@ function Dashboard() {
           </Link>
         </header>
         {hospitalsQuery.isLoading && <Skeleton variant="rectangular" height={120} lines={2} />}
-        {hospitalsQuery.data && hospitalsQuery.data.length === 0 && (
+        {hospitalsQuery.isError && (
+          <EmptyState icon="⚠️" title={t('common.error')} description={t('common.loadErrorHint')} />
+        )}
+        {!hospitalsQuery.isError && hospitalsQuery.data && hospitalsQuery.data.length === 0 && (
           <EmptyState icon="🏥" title={t('dashboard.emptyHospitals')} />
         )}
         <div className={styles.cardGrid}>
@@ -654,7 +657,10 @@ function Dashboard() {
           </Link>
         </header>
         {shopsQuery.isLoading && <Skeleton variant="rectangular" height={120} lines={2} />}
-        {shopsQuery.data && shopsQuery.data.length === 0 && (
+        {shopsQuery.isError && (
+          <EmptyState icon="⚠️" title={t('common.error')} description={t('common.loadErrorHint')} />
+        )}
+        {!shopsQuery.isError && shopsQuery.data && shopsQuery.data.length === 0 && (
           <EmptyState icon="🛒" title={t('dashboard.emptyShops')} />
         )}
         <div className={styles.cardGrid}>
@@ -682,6 +688,9 @@ function Dashboard() {
           </Link>
         </header>
         {careQuery.isLoading && <Skeleton variant="text" lines={3} />}
+        {careQuery.isError && (
+          <EmptyState icon="⚠️" title={t('common.error')} description={t('common.loadErrorHint')} />
+        )}
         {careQuery.data && (
           <Card padding="md">
             <Card.Body>
@@ -690,7 +699,7 @@ function Dashboard() {
             </Card.Body>
           </Card>
         )}
-        {!careQuery.isLoading && !careQuery.data && (
+        {!careQuery.isLoading && !careQuery.isError && !careQuery.data && (
           <EmptyState icon="📝" title={t('care.notFound')} />
         )}
       </section>
@@ -746,6 +755,9 @@ function Dashboard() {
           </Link>
         </header>
         {communitiesQuery.isLoading && <Skeleton variant="rectangular" height={80} lines={2} />}
+        {communitiesQuery.isError && (
+          <EmptyState icon="⚠️" title={t('common.error')} description={t('common.loadErrorHint')} />
+        )}
         <div className={styles.cardGrid}>
           {communitiesQuery.data?.slice(0, 3).map((c) => (
             <Card key={c.id} padding="md">
@@ -769,6 +781,9 @@ function Dashboard() {
             {t('dashboard.viewAdoption')} →
           </Link>
         </header>
+        {adoptionQuery.isError && (
+          <EmptyState icon="⚠️" title={t('common.error')} description={t('common.loadErrorHint')} />
+        )}
         <div className={styles.cardGrid}>
           {adoptionQuery.data?.slice(0, 3).map((a) => (
             <Card key={a.id} padding="md">
@@ -795,6 +810,9 @@ function Dashboard() {
             {t('dashboard.viewFuneral')} →
           </Link>
         </header>
+        {funeralQuery.isError && (
+          <EmptyState icon="⚠️" title={t('common.error')} description={t('common.loadErrorHint')} />
+        )}
         <div className={styles.cardGrid}>
           {funeralQuery.data?.slice(0, 3).map((f) => (
             <Card key={f.id} padding="md">
@@ -824,6 +842,9 @@ function Dashboard() {
           </Link>
         </header>
         {externalLinksQuery.isLoading && <Skeleton variant="rectangular" height={80} lines={2} />}
+        {externalLinksQuery.isError && (
+          <EmptyState icon="⚠️" title={t('common.error')} description={t('common.loadErrorHint')} />
+        )}
         <div className={styles.cardGrid}>
           {externalLinksQuery.data?.slice(0, 4).map((link) => (
             <Card key={link.id} padding="md">
