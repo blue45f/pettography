@@ -139,7 +139,9 @@
   transition:
     color var(--motion-fast),
     background-color var(--motion-fast),
-    border-color var(--motion-fast);
+    border-color var(--motion-fast),
+    box-shadow var(--motion-fast),
+    transform var(--motion-fast);
 }
 
 .filterChip:hover {
@@ -147,10 +149,17 @@
   border-color: var(--color-primary);
 }
 
+/* Press feedback matches the vote button so the chip vocabulary is consistent. */
+.filterChip:active {
+  transform: scale(0.96);
+}
+
 .filterActive {
   background: var(--gradient-brand);
   color: var(--color-on-brand);
   border-color: transparent;
+  /* The selected filter reads as lifted, not just recoloured. */
+  box-shadow: var(--shadow-sm);
 }
 
 .filterActive:hover {
@@ -255,10 +264,21 @@
     transform var(--motion-base);
 }
 
-.figure:hover,
-.figure:focus-within {
+/* Interaction is scoped to the whole tile, not the figure alone: the only
+   focusable controls (vote/delete) live in a sibling row below the photo, so
+   hovering or focusing anywhere in the tile lifts the photograph it belongs to. */
+.tile:hover .figure,
+.tile:focus-within .figure {
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
+}
+
+/* Keyboard parity: when a control inside the tile takes keyboard focus, ring
+   the framed photograph it acts on. `:has(:focus-visible)` keeps the ring off
+   on plain mouse clicks. */
+.tile:has(:focus-visible) .figure {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .photo {
@@ -285,6 +305,15 @@
   );
   color: oklch(0.97 0.01 268);
   pointer-events: none;
+  /* Photo leads at rest; the meta gradient deepens just enough on interaction
+     to confirm the tile is live. Opacity-cheap, layout-free. */
+  transition: opacity var(--motion-base);
+  opacity: 0.94;
+}
+
+.tile:hover .scrim,
+.tile:focus-within .scrim {
+  opacity: 1;
 }
 
 .themeChip {

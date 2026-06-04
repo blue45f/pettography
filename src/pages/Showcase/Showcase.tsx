@@ -170,7 +170,12 @@ function Showcase() {
       />
 
       {visiblePosts.length === 0 ? (
-        <EmptyState icon="📷" title={t('showcase.empty')} description={t('showcase.emptyHint')} />
+        <EmptyState
+          variant="discover"
+          icon="📷"
+          title={t('showcase.empty')}
+          description={t('showcase.emptyHint')}
+        />
       ) : (
         <ul className={styles.grid}>
           {visiblePosts.map((post, index) => {

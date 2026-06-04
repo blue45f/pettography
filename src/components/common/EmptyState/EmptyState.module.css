@@ -34,6 +34,32 @@
   gap: var(--spacing-sm);
 }
 
+/* --- Browse/search empty: discover --- */
+/* Stays quiet so it never competes with filters, but on a photo wall a bare
+   void reads as broken. A soft dashed hairline frames the gallery gap as
+   "waiting for the first shot", and the icon eases in once. */
+.discover {
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--color-surface-muted) 55%, transparent);
+}
+
+.discover .icon {
+  opacity: 0.85;
+  animation: emptyStateFadeIn var(--motion-slow) both;
+}
+
+@keyframes emptyStateFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 0.85;
+    transform: translateY(0);
+  }
+}
+
 /* --- Contained variants: log / gated --- */
 /* A quiet tinted panel that frames the first run as a primer, not a void.
    On-brand: surface-muted fill + soft border + radius-lg. No side-stripe,
