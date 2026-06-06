@@ -9,7 +9,7 @@ import {
   type Difficulty,
   type SpeciesCategory,
 } from '@features/species'
-import useDocumentTitle from '@hooks/useDocumentTitle'
+import usePageMeta from '@hooks/usePageMeta'
 import { useDeferredValue, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
@@ -22,7 +22,11 @@ const COMPARE_MAX = 3
 function SpeciesCatalog() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  useDocumentTitle(t('species.catalogTitle'))
+  usePageMeta({
+    title: `${t('species.catalogTitle')} · ${t('common.appName')}`,
+    description: t('pageMeta.speciesDescription'),
+    path: '/species',
+  })
 
   const [category, setCategory] = useState<SpeciesCategory | 'all'>('all')
   const [difficulty, setDifficulty] = useState<Difficulty | 'all'>('all')

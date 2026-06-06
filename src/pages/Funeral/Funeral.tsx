@@ -5,7 +5,7 @@ import Skeleton from '@components/common/Skeleton'
 import { useFuneralList } from '@features/funeral'
 import { useOnboardingStore } from '@features/onboarding'
 import { SPECIES_CATEGORIES, type SpeciesCategory } from '@features/species'
-import useDocumentTitle from '@hooks/useDocumentTitle'
+import usePageMeta from '@hooks/usePageMeta'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -15,7 +15,11 @@ import styles from './Funeral.module.css'
 function Funeral() {
   const { t } = useTranslation()
   const profile = useOnboardingStore((s) => s.profile)
-  useDocumentTitle(t('funeral.title'))
+  usePageMeta({
+    title: `${t('funeral.title')} · ${t('common.appName')}`,
+    description: t('pageMeta.funeralDescription'),
+    path: '/funeral',
+  })
 
   const [category, setCategory] = useState<SpeciesCategory | 'all'>(profile.category ?? 'all')
   const { data, isLoading } = useFuneralList({

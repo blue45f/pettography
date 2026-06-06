@@ -4077,5 +4077,12 @@
       "envMinistry": "Ministry of Environment (me.go.kr) filing guide"
     },
     "disclaimer": "Ministry of Environment guidance is the final authority. This is a user-facing summary, not legal advice."
+  },
+  "pageMeta": {
+    "homeDescription": "A location-based lifecycle portal for rare pets — from picking a species to adoption, husbandry, vet care, daily life, and farewell, all set up in one choice.",
+    "speciesDescription": "Compare rare animal species such as reptiles, birds, and exotics by category, difficulty, and keyword to find the right fit for you.",
+    "careDescription": "Environment, feeding, and health checkpoints for your chosen species at a glance — a step-by-step care guide for new keepers.",
+    "toolsDescription": "Feeding, budget, environment, and health tools for husbandry in one place. Your records stay safely in this browser.",
+    "funeralDescription": "Government-registered pet funeral providers and memorial services — with you through the final farewell."
   }
 }

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Pettography">
+  <defs>
+    <!-- Page background: light tinted neutral with soft hero gradient (gradient-hero) -->
+    <radialGradient id="heroA" cx="0%" cy="0%" r="95%">
+      <stop offset="0" stop-color="#6366f1" stop-opacity="0.22" />
+      <stop offset="0.6" stop-color="#6366f1" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="heroB" cx="100%" cy="0%" r="80%">
+      <stop offset="0" stop-color="#f43f5e" stop-opacity="0.18" />
+      <stop offset="0.65" stop-color="#f43f5e" stop-opacity="0" />
+    </radialGradient>
+    <!-- Brand gradient (gradient-brand) -->
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366f1" />
+      <stop offset="0.5" stop-color="#8b5cf6" />
+      <stop offset="1" stop-color="#f43f5e" />
+    </linearGradient>
+    <!-- Logo tile background (matches icon.svg bg) -->
+    <linearGradient id="tileBg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#eef2ff" />
+      <stop offset="0.55" stop-color="#fff7ed" />
+      <stop offset="1" stop-color="#ffe4e6" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base surface -->
+  <rect width="1200" height="630" fill="#fafafa" />
+  <rect width="1200" height="630" fill="url(#heroA)" />
+  <rect width="1200" height="630" fill="url(#heroB)" />
+
+  <!-- Brand accent bar bottom -->
+  <rect x="0" y="618" width="1200" height="12" fill="url(#brand)" />
+
+  <!-- Logo mark: photo frame + species curve (echoes icon.svg) -->
+  <g transform="translate(90 198) scale(1.0)">
+    <rect x="0" y="0" width="236" height="236" rx="50" fill="url(#tileBg)" />
+    <rect x="25" y="38" width="186" height="150" rx="26" fill="#ffffff" stroke="#c7d2fe" stroke-width="8" />
+    <path d="M47 144c18-27 43-40 75-39 25 .8 46 11.4 63 31" fill="none" stroke="url(#brand)" stroke-width="11" stroke-linecap="round" />
+    <path d="M56 68h48m-48 22h30" stroke="#94a3b8" stroke-width="9" stroke-linecap="round" />
+    <path d="M141 74c17-8 32 3 35 16 4 19-11 36-30 34-9-.8-15-5-19-11 12 1 21-6 24-15 2-8-.1-16-10-24Z" fill="#4f46e5" opacity="0.92" />
+    <circle cx="164" cy="88" r="4" fill="#f8fafc" />
+    <path d="M101 122c12-18 42-15 54 2 9 13 2 30-14 34-13 3-25-2-35-15" fill="none" stroke="#0f172a" stroke-width="10" stroke-linecap="round" />
+    <path d="M136 158c12 4 26-1 35-13" fill="none" stroke="#f43f5e" stroke-width="9" stroke-linecap="round" />
+    <circle cx="78" cy="180" r="15" fill="#16a34a" />
+    <path d="M71 180l6 6 12-15" fill="none" stroke="#f8fafc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+
+  <!-- Wordmark + tagline -->
+  <g font-family="'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+    <text x="384" y="278" font-size="78" font-weight="800" letter-spacing="-1.5" fill="#0f172a">Pettography</text>
+    <text x="386" y="338" font-size="31" font-weight="600" fill="#4f46e5">희귀 애완동물 라이프사이클 포탈</text>
+    <text x="386" y="388" font-size="25" font-weight="400" fill="#475569">종 선택 · 입양 · 사육 · 의료 · 일상 · 장례</text>
+    <text x="386" y="424" font-size="25" font-weight="400" fill="#475569">파충류 · 조류 · 특수동물, 한 곳에서 시작하세요</text>
+  </g>
+
+  <!-- Category chips -->
+  <g font-family="'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="600">
+    <g>
+      <rect x="386" y="460" width="112" height="48" rx="24" fill="#eef2ff" />
+      <text x="442" y="491" fill="#4f46e5" text-anchor="middle">🦎 파충류</text>
+    </g>
+    <g>
+      <rect x="510" y="460" width="100" height="48" rx="24" fill="#fff1f2" />
+      <text x="560" y="491" fill="#e11d48" text-anchor="middle">🐦 조류</text>
+    </g>
+    <g>
+      <rect x="622" y="460" width="138" height="48" rx="24" fill="#f5f5f7" />
+      <text x="691" y="491" fill="#475569" text-anchor="middle">🕷️ 특수동물</text>
+    </g>
+  </g>
+</svg>

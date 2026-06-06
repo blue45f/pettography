@@ -1,7 +1,7 @@
 import Badge from '@components/common/Badge'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
-import useDocumentTitle from '@hooks/useDocumentTitle'
+import usePageMeta from '@hooks/usePageMeta'
 import { useDeferredValue, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -14,7 +14,11 @@ const TOTAL_TOOLS = ALL_TOOLS.length
 
 function Tools() {
   const { t } = useTranslation()
-  useDocumentTitle(t('tools.title'))
+  usePageMeta({
+    title: `${t('tools.title')} · ${t('common.appName')}`,
+    description: t('pageMeta.toolsDescription'),
+    path: '/tools',
+  })
 
   const [query, setQuery] = useState('')
   const deferredQuery = useDeferredValue(query)

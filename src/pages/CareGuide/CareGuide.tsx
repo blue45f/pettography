@@ -5,7 +5,7 @@ import Skeleton from '@components/common/Skeleton'
 import { useCareGuide } from '@features/care-guides'
 import { useOnboardingStore } from '@features/onboarding'
 import { useSpecies } from '@features/species'
-import useDocumentTitle from '@hooks/useDocumentTitle'
+import usePageMeta from '@hooks/usePageMeta'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router'
 
@@ -16,7 +16,11 @@ function CareGuide() {
   const params = useParams<{ speciesId?: string }>()
   const profile = useOnboardingStore((s) => s.profile)
   const targetId = params.speciesId ?? profile.speciesId ?? undefined
-  useDocumentTitle(t('care.title'))
+  usePageMeta({
+    title: `${t('care.title')} · ${t('common.appName')}`,
+    description: t('pageMeta.careDescription'),
+    path: '/care',
+  })
 
   const { data: species } = useSpecies(targetId)
   const { data: guide, isLoading } = useCareGuide(targetId)

@@ -1,7 +1,7 @@
 import Button from '@components/common/Button'
 import LazyImage from '@components/common/LazyImage'
 import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
-import useDocumentTitle from '@hooks/useDocumentTitle'
+import usePageMeta from '@hooks/usePageMeta'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
@@ -24,7 +24,11 @@ function Landing() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const profile = useOnboardingStore((s) => s.profile)
-  useDocumentTitle(t('common.appName'))
+  usePageMeta({
+    title: `${t('common.appName')} · ${t('common.appTagline')}`,
+    description: t('pageMeta.homeDescription'),
+    path: '/',
+  })
 
   const completed = isOnboardingComplete(profile)
   const primaryTarget = completed ? '/dashboard' : '/onboarding'
