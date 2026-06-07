@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { z } from 'zod'
 
 import api, { ApiError, addRequestInterceptor, addResponseInterceptor } from './api'
 
@@ -351,5 +352,46 @@ describe('api', () => {
     expect(err.name).toBe('ApiError')
     expect(err.status).toBe(404)
     expect(err.message).toBe('not found')
+  })
+
+  it('getValidated는 스키마 검증이 성공하면 파싱된 데이터를 반환한다', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ id: '123', count: 42 }), { status: 200 }),
+      )
+    vi.stubGlobal('fetch', fetchMock)
+
+    const schema = z.object({ id: z.string(), count: z.number() })
+    const result = await api.getValidated('/test-valid', schema)
+    expect(result.data).toEqual({ id: '123', count: 42 })
+    vi.unstubAllGlobals()
+  })
+
+  it('getValidated는 스키마 검증이 실패하면 ApiError를 던진다', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ id: 123, count: 'not-a-number' }), { status: 200 }),
+      )
+    vi.stubGlobal('fetch', fetchMock)
+
+    const schema = z.object({ id: z.string(), count: z.number() })
+    await expect(api.getValidated('/test-invalid', schema)).rejects.toThrow(ApiError)
+    vi.unstubAllGlobals()
+  })
+
+  it('postValidated는 스키마 검증이 성공하면 파싱된 데이터를 반환한다', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ id: '123', updated: true }), { status: 200 }),
+      )
+    vi.stubGlobal('fetch', fetchMock)
+
+    const schema = z.object({ id: z.string(), updated: z.boolean() })
+    const result = await api.postValidated('/test-post-valid', { name: 'hello' }, schema)
+    expect(result.data).toEqual({ id: '123', updated: true })
+    vi.unstubAllGlobals()
   })
 })

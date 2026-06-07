@@ -1,4 +1,5 @@
 import ky from 'ky'
+import { z } from 'zod'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
@@ -49,6 +50,12 @@ const responseInterceptors: ResponseInterceptor[] = []
 
 const apiClient = ky.create({
   throwHttpErrors: false,
+  timeout: 10000,
+  retry: {
+    limit: 2,
+    methods: ['get'],
+    statusCodes: [408, 413, 429, 500, 502, 503, 504],
+  },
 })
 
 function toHeaderRecord(headers?: HeadersInit): Record<string, string> {
@@ -163,11 +170,42 @@ export const api = {
     return request<T>(endpoint, { ...options, method: 'GET' })
   },
 
+  getValidated<T>(
+    endpoint: string,
+    schema: z.ZodType<T>,
+    options?: RequestOptions,
+  ): Promise<ApiResponse<T>> {
+    return this.get<unknown>(endpoint, options).then((res) => {
+      const parsed = schema.safeParse(res.data)
+      if (!parsed.success) {
+        console.error(`[API Validation Error] ${endpoint}:`, parsed.error)
+        throw new ApiError(res.status, `Data validation error! ${parsed.error.message}`)
+      }
+      return { ...res, data: parsed.data }
+    })
+  },
+
   post<T>(endpoint: string, body?: unknown, options?: RequestOptions) {
     return request<T>(endpoint, {
       ...options,
       method: 'POST',
       body: serializeBody(body),
+    })
+  },
+
+  postValidated<T>(
+    endpoint: string,
+    body: unknown,
+    schema: z.ZodType<T>,
+    options?: RequestOptions,
+  ): Promise<ApiResponse<T>> {
+    return this.post<unknown>(endpoint, body, options).then((res) => {
+      const parsed = schema.safeParse(res.data)
+      if (!parsed.success) {
+        console.error(`[API Validation Error] ${endpoint}:`, parsed.error)
+        throw new ApiError(res.status, `Data validation error! ${parsed.error.message}`)
+      }
+      return { ...res, data: parsed.data }
     })
   },
 

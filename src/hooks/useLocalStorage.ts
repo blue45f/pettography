@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 
 function readFromStorage<T>(key: string, fallback: T): T {
   if (typeof window === 'undefined') {
@@ -18,12 +18,17 @@ function useLocalStorage<T>(
   initialValue: T,
 ): [T, (value: T | ((prev: T) => T)) => void, () => void] {
   const [storedValue, setStoredValue] = useState<T>(() => readFromStorage(key, initialValue))
+  const storedValueRef = useRef(storedValue)
+
+  useEffect(() => {
+    storedValueRef.current = storedValue
+  }, [storedValue])
 
   const setValue = useCallback(
     (value: T | ((prev: T) => T)) => {
-      const valueToStore = value instanceof Function ? value(storedValue) : value
-      setStoredValue(valueToStore)
       try {
+        const valueToStore = value instanceof Function ? value(storedValueRef.current) : value
+        setStoredValue(valueToStore)
         if (typeof window !== 'undefined') {
           window.localStorage.setItem(key, JSON.stringify(valueToStore))
           window.dispatchEvent(new Event('local-storage'))
@@ -32,7 +37,7 @@ function useLocalStorage<T>(
         console.warn(`Error setting localStorage key "${key}":`, error)
       }
     },
-    [key, storedValue],
+    [key],
   )
 
   const removeValue = useCallback(() => {
