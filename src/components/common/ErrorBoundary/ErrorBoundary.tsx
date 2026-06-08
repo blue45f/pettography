@@ -1,3 +1,4 @@
+import i18next from 'i18next'
 import { Component, ErrorInfo, ReactNode } from 'react'
 
 import styles from './ErrorBoundary.module.css'
@@ -38,12 +39,15 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
       return (
         <div className={styles.container}>
-          <h2 className={styles.title}>문제가 발생했습니다</h2>
+          <h2 className={styles.title}>
+            {i18next.t('error.boundaryTitle', '문제가 발생했습니다')}
+          </h2>
           <p className={styles.message}>
-            {this.state.error?.message || '알 수 없는 오류가 발생했습니다.'}
+            {this.state.error?.message ||
+              i18next.t('error.boundaryMessage', '알 수 없는 오류가 발생했습니다.')}
           </p>
           <button className={styles.button} onClick={this.handleReset}>
-            다시 시도
+            {i18next.t('error.boundaryReset', '다시 시도')}
           </button>
         </div>
       )

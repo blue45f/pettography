@@ -29,7 +29,7 @@
     "test:i18n": "vitest run src/i18n/locales.test.ts",
     "typecheck": "tsc -b --noEmit",
     "audit:security": "pnpm audit --audit-level high",
-    "ci": "pnpm run build:shared && pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test:run && pnpm run build",
+    "ci": "pnpm run build:shared && pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test:run && pnpm run audit:a11y && pnpm run build",
     "verify": "pnpm run validate:architecture && pnpm run ci",
     "verify:backend": "pnpm --filter pettography-backend run verify",
     "verify:all": "pnpm run verify && pnpm run verify:backend",
@@ -37,7 +37,9 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky",
-    "validate:architecture": "node scripts/validate-architecture.mjs"
+    "validate:architecture": "node scripts/validate-architecture.mjs",
+    "audit:a11y": "node scripts/audit-frontend-a11y.mjs",
+    "test:a11y": "node scripts/audit-frontend-a11y.test.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",

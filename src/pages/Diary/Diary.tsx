@@ -20,7 +20,7 @@ import { useOnboardingStore } from '@features/onboarding'
 import { useSpecies, useSpeciesList } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
@@ -60,22 +60,90 @@ function Diary() {
     }
   }
 
-  const {
-    register,
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<DiaryFormValues>({
-    resolver: zodResolver(diaryFormSchema),
-    defaultValues: {
+  const DRAFT_KEY = 'pettography.diary.draft'
+  const DEFAULT_FORM_VALUES: DiaryFormValues = useMemo(
+    () => ({
       category: 'feeding',
       occurredAt: todayIso(),
       body: '',
       weightGram: null,
       imageUrl: '',
-    },
+    }),
+    [],
+  )
+
+  const [initialDraft] = useState<DiaryFormValues>(() => {
+    if (typeof window === 'undefined') return DEFAULT_FORM_VALUES
+    try {
+      const raw = window.localStorage.getItem(DRAFT_KEY)
+      if (!raw) return DEFAULT_FORM_VALUES
+      return JSON.parse(raw) as DiaryFormValues
+    } catch {
+      return DEFAULT_FORM_VALUES
+    }
   })
+
+  const hasSavedDraft = useMemo(() => {
+    if (typeof window === 'undefined') return false
+    try {
+      const raw = window.localStorage.getItem(DRAFT_KEY)
+      if (!raw) return false
+      const parsed = JSON.parse(raw) as DiaryFormValues
+      return (parsed.body?.trim() || '') !== '' || (parsed.imageUrl?.trim() || '') !== ''
+    } catch {
+      return false
+    }
+  }, [])
+
+  const [draftDismissed, setDraftDismissed] = useState(false)
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<DiaryFormValues>({
+    resolver: zodResolver(diaryFormSchema),
+    defaultValues: initialDraft,
+  })
+
+  // Watch and auto-save draft to localStorage with debounce
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    let timerId: number | undefined
+    // eslint-disable-next-line react-hooks/incompatible-library
+    const subscription = watch((data) => {
+      if (timerId !== undefined) {
+        window.clearTimeout(timerId)
+      }
+      timerId = window.setTimeout(() => {
+        try {
+          window.localStorage.setItem(DRAFT_KEY, JSON.stringify(data))
+        } catch {
+          // silently ignore quota errors
+        }
+      }, 600) as unknown as number
+    })
+    return () => {
+      if (timerId !== undefined) {
+        window.clearTimeout(timerId)
+      }
+      subscription.unsubscribe()
+    }
+  }, [watch])
+
+  const discardDraft = () => {
+    try {
+      window.localStorage.removeItem(DRAFT_KEY)
+    } catch {
+      // ignore
+    }
+    reset(DEFAULT_FORM_VALUES)
+    setDraftDismissed(true)
+    toast(t('diary.draftDiscarded', '임시 저장된 일지를 초기화했습니다.'), 'info')
+  }
 
   const watchedCategory = useWatch({ control, name: 'category' })
   const stats = useMemo(() => diaryStats(entries), [entries])
@@ -90,6 +158,11 @@ function Diary() {
       imageUrl: values.imageUrl?.trim() || null,
     })
     toast(t('common.save'), 'success')
+    try {
+      window.localStorage.removeItem(DRAFT_KEY)
+    } catch {
+      // ignore
+    }
     reset({
       category: values.category,
       occurredAt: todayIso(),
@@ -97,6 +170,7 @@ function Diary() {
       weightGram: null,
       imageUrl: '',
     })
+    setDraftDismissed(true)
   })
 
   return (
@@ -144,6 +218,16 @@ function Diary() {
       <Card padding="lg">
         <Card.Body>
           <h2 className={styles.formTitle}>{t('diary.newEntry')}</h2>
+          {hasSavedDraft && !draftDismissed && (
+            <div className={styles.draftAlert} role="status">
+              <span className={styles.draftAlertText}>
+                ✍️ {t('diary.draftLoaded', '작성 중이던 임시 저장본을 불러왔습니다.')}
+              </span>
+              <Button size="sm" variant="outline" onClick={discardDraft}>
+                {t('diary.discardDraft', '초기화')}
+              </Button>
+            </div>
+          )}
           <form onSubmit={onSubmit} className={styles.form} noValidate>
             <div className={styles.formRow}>
               <Select

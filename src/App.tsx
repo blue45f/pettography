@@ -6,6 +6,7 @@ import BottomNav from '@components/layout/BottomNav'
 import Footer from '@components/layout/Footer'
 import Header from '@components/layout/Header'
 import SosFab from '@components/layout/SosFab'
+import { useOnboardingStore } from '@features/onboarding'
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Outlet } from 'react-router'
 
@@ -15,6 +16,15 @@ const CommandPalette = lazy(() => import('@components/layout/CommandPalette'))
 
 function App() {
   const [commandOpen, setCommandOpen] = useState(false)
+  const category = useOnboardingStore((s) => s.profile.category)
+
+  useEffect(() => {
+    if (category) {
+      document.documentElement.setAttribute('data-category', category)
+    } else {
+      document.documentElement.removeAttribute('data-category')
+    }
+  }, [category])
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {

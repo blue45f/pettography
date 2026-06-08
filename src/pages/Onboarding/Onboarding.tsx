@@ -21,6 +21,41 @@ import styles from './Onboarding.module.css'
 
 import type { SpeciesCategory } from '@features/species'
 
+const NICKNAME_ADJECTIVES = [
+  '귀여운',
+  '용감한',
+  '얌전한',
+  '소중한',
+  '활기찬',
+  '차분한',
+  '똑똑한',
+  '시크한',
+  '눈부신',
+  '호기심많은',
+  '듬직한',
+  '포근한',
+  '신비로운',
+  '명랑한',
+  '느긋한',
+]
+
+const NICKNAME_NOUNS: Record<string, string[]> = {
+  reptile: ['게코', '카멜레온', '이구아나', '비어디', '모니터', '거북이', '콘스네이크'],
+  amphibian: ['팩맨', '우파루파', '뉴트', '청개구리', '다트프로그', '샐러맨더'],
+  arthropod: ['타란튤라', '전갈', '사마귀', '사슴벌레', '장수풍뎅이', '지네'],
+  mammal: ['슈가글라이더', '페렛', '친칠라', '고슴도치', '햄스터', '마우스'],
+  bird: ['왕관앵무', '사랑앵무', '카나리아', '문조', '핀치', '올빼미', '매'],
+}
+
+function generateRandomNickname(category?: string | null): string {
+  const adjs = NICKNAME_ADJECTIVES
+  const adj = adjs[Math.floor(Math.random() * adjs.length)]
+  const cat = category && NICKNAME_NOUNS[category] ? category : 'reptile'
+  const nouns = NICKNAME_NOUNS[cat] || NICKNAME_NOUNS.reptile
+  const noun = nouns[Math.floor(Math.random() * nouns.length)]
+  return `${adj} ${noun}`
+}
+
 function Onboarding() {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -285,15 +320,28 @@ function Onboarding() {
               <label className={styles.petNameLabel} htmlFor="onboarding-pet-name">
                 {t('onboarding.petNameLabel')}
               </label>
-              <input
-                id="onboarding-pet-name"
-                type="text"
-                maxLength={40}
-                placeholder={t('onboarding.petNamePlaceholder')}
-                value={profile.petName ?? ''}
-                onChange={(e) => setPetName(e.target.value)}
-                className={styles.petNameInput}
-              />
+              <div className={styles.petNameRow}>
+                <input
+                  id="onboarding-pet-name"
+                  type="text"
+                  maxLength={40}
+                  placeholder={t('onboarding.petNamePlaceholder')}
+                  value={profile.petName ?? ''}
+                  onChange={(e) => setPetName(e.target.value)}
+                  className={styles.petNameInput}
+                />
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={() => {
+                    const name = generateRandomNickname(profile.category)
+                    setPetName(name)
+                    toast(t('onboarding.suggestedToast', { name }), 'info')
+                  }}
+                >
+                  {t('onboarding.randomNameButton')}
+                </Button>
+              </div>
               <dl className={styles.summary}>
                 <div className={styles.summaryRow}>
                   <dt>{t('onboarding.reviewCategory')}</dt>

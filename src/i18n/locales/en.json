@@ -138,6 +138,8 @@
     "locationHint": "Pick a suggested area or use your current location.",
     "petNameLabel": "Pet name (optional)",
     "petNamePlaceholder": "e.g. Leo",
+    "randomNameButton": "Suggest 🎲",
+    "suggestedToast": "Suggested new name: {{name}}",
     "registryNoticeEyebrow": "Heads up · Wildlife Act",
     "registryNoticeTitle": "This category is filing-required",
     "registryNoticeBody": "Effective 2025-12-14, mammals, birds, reptiles and amphibians require Ministry of Environment filings on keeping, transfer and death. Check the guide before you start.",
@@ -4084,5 +4086,10 @@
     "careDescription": "Environment, feeding, and health checkpoints for your chosen species at a glance — a step-by-step care guide for new keepers.",
     "toolsDescription": "Feeding, budget, environment, and health tools for husbandry in one place. Your records stay safely in this browser.",
     "funeralDescription": "Government-registered pet funeral providers and memorial services — with you through the final farewell."
+  },
+  "error": {
+    "boundaryTitle": "An error occurred",
+    "boundaryMessage": "An unexpected error has occurred.",
+    "boundaryReset": "Try Again"
   }
 }

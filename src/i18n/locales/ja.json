@@ -138,6 +138,8 @@
     "locationHint": "おすすめエリアから選ぶか、現在地を使ってもかまいません。",
     "petNameLabel": "ペットの名前 (任意)",
     "petNamePlaceholder": "例: レオ",
+    "randomNameButton": "名前おすすめ 🎲",
+    "suggestedToast": "新しい名前をおすすめしました: {{name}}",
     "registryNoticeEyebrow": "注意 · 野生生物法",
     "registryNoticeTitle": "選んだカテゴリは保管申告の対象です",
     "registryNoticeBody": "2025年12月14日施行の野生生物保護法により、哺乳類・鳥類・爬虫類・両生類は保管・譲渡・譲受・死亡の際に環境部への申告が必要です。まずはガイドを確認してみましょう。",
@@ -4084,5 +4086,10 @@
     "careDescription": "選んだ種の環境・餌・健康チェックポイントをひと目で。飼育初心者のためのステップ別ケアガイド。",
     "toolsDescription": "給餌・費用・環境・健康など飼育に必要なツールを一か所に。記録はこのブラウザに安全に保存されます。",
     "funeralDescription": "政府登録の動物葬祭業者と追悼サービスのご案内。最後のお別れまで寄り添います。"
+  },
+  "error": {
+    "boundaryTitle": "エラーが発生しました",
+    "boundaryMessage": "予期しないエラーが発生しました。",
+    "boundaryReset": "再試行"
   }
 }
