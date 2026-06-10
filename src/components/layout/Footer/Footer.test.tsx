@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router'
 import { describe, expect, it } from 'vitest'
 
 import Footer from './Footer'
+import footerCss from './Footer.module.css?raw'
 
 function renderFooter() {
   return render(
@@ -43,5 +44,24 @@ describe('Footer', () => {
       'href',
       expect.stringContaining('https://termsdesk.vercel.app/support/pettography'),
     )
+  })
+})
+
+// jsdom cannot compute CSS layout, so these guards assert the wrap rules at the
+// stylesheet source level (same static-scan approach as scripts/audit-frontend-a11y.mjs).
+// The link row grew past one-line capacity at 600-1024px viewports; without these
+// rules the labels squeeze into multi-line fragments or overflow horizontally.
+describe('Footer responsive layout guards', () => {
+  it('lets the copyright row and the link row wrap at mid-width viewports', () => {
+    expect(/\.container\s*\{[^}]*\}/.exec(footerCss)?.[0]).toContain('flex-wrap: wrap')
+    expect(/\.links\s*\{[^}]*\}/.exec(footerCss)?.[0]).toContain('flex-wrap: wrap')
+  })
+
+  it('keeps each link label on a single line so links wrap as whole units', () => {
+    expect(/\.link\s*\{[^}]*\}/.exec(footerCss)?.[0]).toContain('white-space: nowrap')
+  })
+
+  it('avoids mid-word breaks in the Korean copyright text', () => {
+    expect(/\.copyright\s*\{[^}]*\}/.exec(footerCss)?.[0]).toContain('word-break: keep-all')
   })
 })
