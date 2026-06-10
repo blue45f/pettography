@@ -259,6 +259,12 @@ export const routes = [
       { path: 'food', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Food')) },
       { path: 'events', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Events')) },
       { path: 'about', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/About')) },
+      { path: 'terms', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Policy')) },
+      {
+        path: 'privacy',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Policy')),
+      },
       { path: 'faq', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Faq')) },
       { path: 'herd', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Herd')) },
       { path: 'contact', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Contact')) },

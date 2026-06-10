@@ -27,4 +27,21 @@ describe('Footer', () => {
     expect(screen.getByRole('link', { name: /보관신고|Wildlife/ })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /GitHub/ })).toBeInTheDocument()
   })
+
+  it('routes terms and privacy to internal policy pages', () => {
+    renderFooter()
+    expect(screen.getByRole('link', { name: '이용약관' })).toHaveAttribute('href', '/terms')
+    expect(screen.getByRole('link', { name: '개인정보처리방침' })).toHaveAttribute(
+      'href',
+      '/privacy',
+    )
+  })
+
+  it('keeps the TermsDesk support board link external', () => {
+    renderFooter()
+    expect(screen.getByRole('link', { name: /TermsDesk/ })).toHaveAttribute(
+      'href',
+      expect.stringContaining('https://termsdesk.vercel.app/support/pettography'),
+    )
+  })
 })

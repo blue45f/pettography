@@ -988,6 +988,21 @@
     "about": "紹介",
     "faq": "よくある質問"
   },
+  "policy": {
+    "eyebrow": "法的情報",
+    "lead": "Pettography に適用される正式なポリシーです。TermsDesk でバージョンとハッシュにより管理されています。",
+    "termsTitle": "利用規約",
+    "privacyTitle": "プライバシーポリシー",
+    "errorTitle": "ドキュメントを読み込めませんでした",
+    "errorBody": "ネットワーク状態を確認して、もう一度お試しください。",
+    "errorHint": "同じ内容は TermsDesk の原文ページでも確認できます。",
+    "openOnTermsDesk": "TermsDesk で原文を見る",
+    "versionLabel": "バージョン",
+    "effectiveAtLabel": "施行日",
+    "hashLabel": "整合性ハッシュ",
+    "changeSummaryLabel": "最終変更",
+    "sourceNote": "この文書は TermsDesk で発行・バージョン管理されています。"
+  },
   "faq": {
     "title": "よくある質問",
     "subtitle": "はじめての方からよく寄せられる10の質問。各回答の下に関連ページへのショートカットがあります。",
@@ -4110,7 +4125,9 @@
     "speciesDescription": "爬虫類・鳥類・エキゾチックアニマルなど希少種をカテゴリ・難易度・キーワードで比較し、自分に合う種を見つけましょう。",
     "careDescription": "選んだ種の環境・餌・健康チェックポイントをひと目で。飼育初心者のためのステップ別ケアガイド。",
     "toolsDescription": "給餌・費用・環境・健康など飼育に必要なツールを一か所に。記録はこのブラウザに安全に保存されます。",
-    "funeralDescription": "政府登録の動物葬祭業者と追悼サービスのご案内。最後のお別れまで寄り添います。"
+    "funeralDescription": "政府登録の動物葬祭業者と追悼サービスのご案内。最後のお別れまで寄り添います。",
+    "termsDescription": "Pettography 利用規約。TermsDesk でバージョンとハッシュにより管理される正本を提供します。",
+    "privacyDescription": "Pettography プライバシーポリシー。処理目的・項目・保有期間と利用者の権利を案内します。"
   },
   "error": {
     "boundaryTitle": "エラーが発生しました",

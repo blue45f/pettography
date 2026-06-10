@@ -988,6 +988,21 @@
     "about": "About",
     "faq": "FAQ"
   },
+  "policy": {
+    "eyebrow": "Legal",
+    "lead": "The authoritative policies that govern Pettography, published and version-controlled on TermsDesk.",
+    "termsTitle": "Terms of Service",
+    "privacyTitle": "Privacy Policy",
+    "errorTitle": "Could not load the document",
+    "errorBody": "Check your network connection and try again.",
+    "errorHint": "You can also read the same document on TermsDesk.",
+    "openOnTermsDesk": "View on TermsDesk",
+    "versionLabel": "Version",
+    "effectiveAtLabel": "Effective from",
+    "hashLabel": "Integrity hash",
+    "changeSummaryLabel": "Latest change",
+    "sourceNote": "This document is published and version-controlled on TermsDesk."
+  },
   "faq": {
     "title": "Frequently asked questions",
     "subtitle": "The ten things first-time users ask. Each answer links to the page that handles it.",
@@ -4110,7 +4125,9 @@
     "speciesDescription": "Compare rare animal species such as reptiles, birds, and exotics by category, difficulty, and keyword to find the right fit for you.",
     "careDescription": "Environment, feeding, and health checkpoints for your chosen species at a glance — a step-by-step care guide for new keepers.",
     "toolsDescription": "Feeding, budget, environment, and health tools for husbandry in one place. Your records stay safely in this browser.",
-    "funeralDescription": "Government-registered pet funeral providers and memorial services — with you through the final farewell."
+    "funeralDescription": "Government-registered pet funeral providers and memorial services — with you through the final farewell.",
+    "termsDescription": "Pettography Terms of Service — the authoritative copy, version-controlled with content hashes on TermsDesk.",
+    "privacyDescription": "Pettography Privacy Policy — what we process, why, for how long, and your rights."
   },
   "error": {
     "boundaryTitle": "An error occurred",
