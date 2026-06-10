@@ -21,6 +21,8 @@ import { Link } from 'react-router'
 
 import styles from './Contact.module.css'
 
+const SUPPORT_URL = 'https://termsdesk.vercel.app/support/pettography'
+
 const STATUS_VARIANT: Record<string, 'warning' | 'primary' | 'success'> = {
   received: 'warning',
   'in-review': 'primary',
@@ -84,6 +86,39 @@ function Contact() {
         </h2>
         <p className={styles.altDesc}>{t('contact.altHint')}</p>
         <div className={styles.altList}>
+          <div className={styles.altItem}>
+            <a
+              href={`${SUPPORT_URL}?category=site-inquiry`}
+              target="_blank"
+              rel="noreferrer"
+              className={styles.altLabel}
+            >
+              TermsDesk {t('contact.categories.general' as const)} →
+            </a>
+            <span className={styles.altDesc}>{t('contact.altForum')}</span>
+          </div>
+          <div className={styles.altItem}>
+            <a
+              href={`${SUPPORT_URL}?category=partnership`}
+              target="_blank"
+              rel="noreferrer"
+              className={styles.altLabel}
+            >
+              TermsDesk {t('contact.categories.partnership' as const)} →
+            </a>
+            <span className={styles.altDesc}>{t('contact.altPartners')}</span>
+          </div>
+          <div className={styles.altItem}>
+            <a
+              href={`${SUPPORT_URL}?category=bug`}
+              target="_blank"
+              rel="noreferrer"
+              className={styles.altLabel}
+            >
+              TermsDesk {t('contact.categories.bug' as const)} →
+            </a>
+            <span className={styles.altDesc}>{t('contact.emptyHint')}</span>
+          </div>
           <div className={styles.altItem}>
             <Link to="/forum" className={styles.altLabel}>
               {t('nav.forum')} →
