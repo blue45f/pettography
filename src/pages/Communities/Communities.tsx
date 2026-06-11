@@ -212,10 +212,20 @@ function Communities() {
 
       <Card padding="md" className={styles.suggestCard}>
         <Card.Body>
+          <h2 className={styles.suggestTitle}>{t('communities.cafesPromoTitle')}</h2>
+          <p className={styles.suggestDesc}>{t('communities.cafesPromoDesc')}</p>
+          <Link to="/cafes" className={styles.suggestLink}>
+            {t('communities.cafesPromoCta')} →
+          </Link>
+        </Card.Body>
+      </Card>
+
+      <Card padding="md" className={styles.suggestCard}>
+        <Card.Body>
           <h2 className={styles.suggestTitle}>{t('communities.suggestTitle')}</h2>
           <p className={styles.suggestDesc}>{t('communities.suggestDesc')}</p>
           <Link
-            to="/contact?category=feature"
+            to="/contact?category=question"
             className={styles.suggestLink}
             onClick={() => recordDemoLog('suggest', t('communities.demoSuggestAction'))}
           >

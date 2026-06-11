@@ -105,6 +105,7 @@ export const TOOL_GROUPS: readonly ToolGroup[] = [
     emoji: '👥',
     tools: [
       { path: '/forum', navKey: 'forum' },
+      { path: '/cafes', navKey: 'cafes' },
       { path: '/qna', navKey: 'qna' },
       { path: '/showcase', navKey: 'showcase' },
       { path: '/meetups', navKey: 'meetups' },

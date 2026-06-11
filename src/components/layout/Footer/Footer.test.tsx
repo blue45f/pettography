@@ -38,11 +38,11 @@ describe('Footer', () => {
     )
   })
 
-  it('keeps the TermsDesk support board link external', () => {
+  it('routes bug reports to the in-app inquiry form preselecting the category', () => {
     renderFooter()
-    expect(screen.getByRole('link', { name: /TermsDesk/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /버그 제보|Report a bug/ })).toHaveAttribute(
       'href',
-      expect.stringContaining('https://termsdesk.vercel.app/support/pettography'),
+      '/contact?category=bug',
     )
   })
 })
