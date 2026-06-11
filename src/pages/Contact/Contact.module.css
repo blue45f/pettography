@@ -1,59 +1,22 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-lg);
+  max-width: 720px;
 }
 
-.hero {
-  background: var(--gradient-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--spacing-2xl);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.title {
-  font-size: var(--font-size-4xl);
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  color: var(--color-text);
+.header h1 {
+  font-size: var(--font-size-3xl);
 }
 
 .subtitle {
   color: var(--color-text-secondary);
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-.categoryBadges {
-  display: flex;
-  justify-content: center;
-  gap: var(--spacing-xs);
-  flex-wrap: wrap;
-  margin-top: var(--spacing-sm);
-}
-
-.categoryBadge {
-  padding: var(--spacing-xs) var(--spacing-md);
-  background: var(--color-surface);
-  border: 1px solid var(--color-primary);
-  color: var(--color-primary);
-  border-radius: var(--radius-pill);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
+  margin-top: var(--spacing-xs);
+  max-width: 56ch;
 }
 
 .formCard {
-  background: var(--color-surface);
   box-shadow: var(--shadow-md);
-}
-
-.formTitle {
-  font-size: var(--font-size-xl);
-  margin-bottom: var(--spacing-md);
 }
 
 .form {
@@ -64,7 +27,7 @@
 
 .formRow {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(160px, 220px) 1fr;
   gap: var(--spacing-md);
 }
 
@@ -74,80 +37,170 @@
   }
 }
 
+/* Honeypot stays in the DOM for bots but never reaches humans:
+   no display:none (some bots skip hidden fields), just moved off-canvas. */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.submitError {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-md);
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+}
+
+.privacyNote {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
 .formActions {
   display: flex;
   justify-content: flex-end;
-  gap: var(--spacing-sm);
 }
 
-.sectionTitle {
-  font-size: var(--font-size-2xl);
+.receiptCard {
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-success);
+}
+
+.receiptHead {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start;
   margin-bottom: var(--spacing-md);
 }
 
-.list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.inquiryHeader {
-  display: flex;
-  justify-content: space-between;
+.receiptIcon {
+  display: inline-flex;
   align-items: center;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-xs);
-  flex-wrap: wrap;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  font-size: var(--font-size-xl);
+  flex-shrink: 0;
 }
 
-.inquiryMeta {
+.receiptTitle {
+  font-size: var(--font-size-xl);
+}
+
+.receiptDesc {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
-  margin-bottom: var(--spacing-xs);
+  margin-top: var(--spacing-2xs);
 }
 
-.inquiryBody {
+.receiptGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin: 0;
+}
+
+.receiptRow {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: baseline;
+}
+
+.receiptRow dt {
+  flex: 0 0 96px;
+  color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
-  white-space: pre-wrap;
 }
 
-.inquiryActions {
-  margin-top: var(--spacing-sm);
+.receiptRow dd {
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+.receiptId {
+  font-family: var(--font-family-mono, monospace);
+  word-break: break-all;
+}
+
+.receiptActions {
+  margin-top: var(--spacing-md);
   display: flex;
   justify-content: flex-end;
 }
 
-.altRoutes {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
+.channels {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  font-size: var(--font-size-sm);
+}
+
+.channelsLabel {
+  color: var(--color-text-muted);
+}
+
+.channelLink {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.channelLink:hover {
+  text-decoration: underline;
+}
+
+.history {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
 }
 
-.altList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-md);
+.historyTitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
 }
 
-.altItem {
+.historyList {
+  list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 220px;
-  flex: 1;
+  gap: var(--spacing-xs);
 }
 
-.altLabel {
-  font-weight: 700;
-  color: var(--color-text);
+.historyItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
 }
 
-.altDesc {
+.historyMeta {
+  min-width: 0;
+}
+
+.historyItemTitle {
+  display: block;
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.historySub {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.historyId {
+  font-family: var(--font-family-mono, monospace);
 }

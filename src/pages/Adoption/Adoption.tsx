@@ -75,7 +75,7 @@ function Adoption() {
                 <a href={a.url} target="_blank" rel="noreferrer" className={styles.linkAction}>
                   {t('common.openLink')} ↗
                 </a>{' '}
-                <Link to="/contact?category=general" className={styles.linkAction}>
+                <Link to="/contact?category=contact" className={styles.linkAction}>
                   {t('adoption.inquireCta')}
                 </Link>
               </Card.Body>

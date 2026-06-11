@@ -1,3 +1,5 @@
+import AttachmentGallery from '@components/common/AttachmentGallery'
+import AttachmentPicker from '@components/common/AttachmentPicker'
 import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
@@ -31,6 +33,8 @@ import { useTranslation } from 'react-i18next'
 
 import styles from './Forum.module.css'
 
+import type { Attachment } from '@features/attachments'
+
 function Forum() {
   const { t } = useTranslation()
   const { toast } = useToast()
@@ -60,6 +64,7 @@ function Forum() {
   const [sort, setSort] = useState<ForumSort>('hot')
   const [search, setSearch] = useState('')
   const [openPostId, setOpenPostId] = useState<string | null>(null)
+  const [pendingAttachments, setPendingAttachments] = useState<Attachment[]>([])
 
   const visiblePosts = selectPosts(posts, repliesMap, ownPostIds, category, sort, search)
 
@@ -84,8 +89,9 @@ function Forum() {
   }, [lastAuthor, dirtyFields.author, setValue])
 
   const onSubmit = handleSubmit((values) => {
-    addPost(values)
+    addPost({ ...values, attachments: pendingAttachments })
     toast(t('forum.postedToast'), 'success')
+    setPendingAttachments([])
     reset({ category: values.category, author: values.author, title: '', body: '' })
   })
 
@@ -181,6 +187,11 @@ function Forum() {
               error={errors.body?.message ? t(errors.body.message) : undefined}
               {...register('body')}
             />
+            <AttachmentPicker
+              attachments={pendingAttachments}
+              onChange={setPendingAttachments}
+              onError={(message) => toast(message, 'error')}
+            />
             <div className={styles.composerActions}>
               <Button type="submit" variant="primary" isLoading={isSubmitting}>
                 {t('forum.publish')}
@@ -236,6 +247,7 @@ function Forum() {
                     </button>
                   </div>
                   <p className={styles.postBody}>{post.body}</p>
+                  <AttachmentGallery attachments={post.attachments} />
 
                   <div className={styles.postStats}>
                     <button
@@ -287,6 +299,9 @@ function Forum() {
                   {post.autoHidden && ownPostIds[post.id] && (
                     <p className={styles.hiddenNotice}>{t('forum.hiddenNotice')}</p>
                   )}
+                  {post.hiddenByAdmin && ownPostIds[post.id] && (
+                    <p className={styles.hiddenNotice}>{t('forum.adminHiddenNotice')}</p>
+                  )}
 
                   {isOpen && (
                     <ReplyThread
@@ -334,6 +349,7 @@ function selectPosts(
   const needle = search.trim().toLowerCase()
   const filtered = posts.filter((p) => {
     if (p.autoHidden && !ownPostIds[p.id]) return false
+    if (p.hiddenByAdmin && !ownPostIds[p.id]) return false
     if (category !== 'all' && p.category !== category) return false
     if (!needle) return true
     return p.title.toLowerCase().includes(needle) || p.body.toLowerCase().includes(needle)
@@ -446,6 +462,31 @@ function ReplyNode({
   const canReply = depth + 1 < FORUM_MAX_REPLY_DEPTH
   const owned = Boolean(ownReplyIds[node.reply.id])
   const reported = Boolean(reportedReplyIds[node.reply.id])
+
+  if (node.reply.deleted) {
+    return (
+      <li className={styles.replyItem}>
+        <p className={styles.deletedReply}>{t('forum.deletedReply')}</p>
+        {node.children.length > 0 && (
+          <ul className={styles.replyChildren}>
+            {node.children.map((child) => (
+              <ReplyNode
+                key={child.reply.id}
+                node={child}
+                depth={depth + 1}
+                ownReplyIds={ownReplyIds}
+                reportedReplyIds={reportedReplyIds}
+                lastAuthor={lastAuthor}
+                onSend={onSend}
+                onRemove={onRemove}
+                onReport={onReport}
+              />
+            ))}
+          </ul>
+        )}
+      </li>
+    )
+  }
 
   return (
     <li className={styles.replyItem}>

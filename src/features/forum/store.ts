@@ -1,9 +1,10 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { FORUM_AUTO_HIDE_THRESHOLD } from './schema'
+import { FORUM_AUTO_HIDE_THRESHOLD, removeReplyFromList } from './schema'
 
 import type { ForumPost, ForumReply } from './schema'
+import type { Attachment } from '@features/attachments'
 import type { SpeciesCategory } from '@features/species'
 
 const VIEW_DEDUP_MS = 5 * 60 * 1000
@@ -25,6 +26,7 @@ interface ForumState {
     title: string
     author: string
     body: string
+    attachments?: Attachment[]
   }) => ForumPost
   addReply: (input: {
     postId: string
@@ -38,6 +40,8 @@ interface ForumState {
   recordView: (postId: string) => void
   reportPost: (postId: string) => boolean
   reportReply: (postId: string, replyId: string) => boolean
+  setPostHiddenByAdmin: (postId: string, hidden: boolean) => void
+  removePostAttachment: (postId: string, attachmentId: string) => void
   hydrateSeed: (seed: ForumPost[], replies: Record<string, ForumReply[]>) => void
 }
 
@@ -53,6 +57,8 @@ const SEED_POSTS: ForumPost[] = [
     views: 87,
     reportCount: 0,
     autoHidden: false,
+    hiddenByAdmin: false,
+    attachments: [],
   },
   {
     id: 'seed-post-2',
@@ -65,6 +71,8 @@ const SEED_POSTS: ForumPost[] = [
     views: 41,
     reportCount: 0,
     autoHidden: false,
+    hiddenByAdmin: false,
+    attachments: [],
   },
   {
     id: 'seed-post-3',
@@ -77,6 +85,8 @@ const SEED_POSTS: ForumPost[] = [
     views: 132,
     reportCount: 0,
     autoHidden: false,
+    hiddenByAdmin: false,
+    attachments: [],
   },
 ]
 
@@ -91,6 +101,7 @@ const SEED_REPLIES: Record<string, ForumReply[]> = {
       createdAt: '2026-05-20T15:00:00.000Z',
       reportCount: 0,
       autoHidden: false,
+      deleted: false,
     },
     {
       id: 'seed-reply-1a',
@@ -101,6 +112,7 @@ const SEED_REPLIES: Record<string, ForumReply[]> = {
       createdAt: '2026-05-20T15:30:00.000Z',
       reportCount: 0,
       autoHidden: false,
+      deleted: false,
     },
   ],
   'seed-post-3': [
@@ -113,6 +125,7 @@ const SEED_REPLIES: Record<string, ForumReply[]> = {
       createdAt: '2026-05-25T21:00:00.000Z',
       reportCount: 0,
       autoHidden: false,
+      deleted: false,
     },
   ],
 }
@@ -143,12 +156,17 @@ export const useForumStore = create<ForumState>()(
       addPost: (input) => {
         const post: ForumPost = {
           id: crypto.randomUUID(),
-          ...input,
+          category: input.category,
+          title: input.title,
+          author: input.author,
+          body: input.body,
           createdAt: new Date().toISOString(),
           likes: 0,
           views: 0,
           reportCount: 0,
           autoHidden: false,
+          hiddenByAdmin: false,
+          attachments: input.attachments ?? [],
         }
         set((state) => ({
           posts: [post, ...state.posts],
@@ -167,6 +185,7 @@ export const useForumStore = create<ForumState>()(
           createdAt: new Date().toISOString(),
           reportCount: 0,
           autoHidden: false,
+          deleted: false,
         }
         set((state) => {
           const next = { ...state.replies }
@@ -203,13 +222,25 @@ export const useForumStore = create<ForumState>()(
       removeReply: (postId, replyId) =>
         set((state) => {
           const list = state.replies[postId] ?? []
-          const next = { ...state.replies, [postId]: list.filter((r) => r.id !== replyId) }
+          const next = { ...state.replies, [postId]: removeReplyFromList(list, replyId) }
           const nextOwn = { ...state.ownReplyIds }
           delete nextOwn[replyId]
           const nextReported = { ...state.reportedReplyIds }
           delete nextReported[replyId]
           return { replies: next, ownReplyIds: nextOwn, reportedReplyIds: nextReported }
         }),
+      setPostHiddenByAdmin: (postId, hidden) =>
+        set((state) => ({
+          posts: state.posts.map((p) => (p.id === postId ? { ...p, hiddenByAdmin: hidden } : p)),
+        })),
+      removePostAttachment: (postId, attachmentId) =>
+        set((state) => ({
+          posts: state.posts.map((p) =>
+            p.id === postId
+              ? { ...p, attachments: p.attachments.filter((a) => a.id !== attachmentId) }
+              : p,
+          ),
+        })),
       reportPost: (postId) => {
         if (get().reportedPostIds[postId]) return false
         set((state) => {
@@ -281,9 +312,28 @@ export const useForumStore = create<ForumState>()(
     }),
     {
       name: 'pettography.forum',
-      version: 6,
+      version: 7,
       storage: createJSONStorage(() => localStorage),
       migrate: (persisted: unknown, version) => {
+        // v7 normaliser — applied to every earlier shape at the end of the
+        // chain so the new moderation/attachment/thread fields always exist.
+        const withV7Fields = (state: ForumState): ForumState => ({
+          ...state,
+          posts: (state.posts ?? []).map((p) => ({
+            ...p,
+            hiddenByAdmin: typeof p.hiddenByAdmin === 'boolean' ? p.hiddenByAdmin : false,
+            attachments: Array.isArray(p.attachments) ? p.attachments : [],
+          })),
+          replies: Object.fromEntries(
+            Object.entries(state.replies ?? {}).map(([postId, list]) => [
+              postId,
+              (list ?? []).map((r) => ({
+                ...r,
+                deleted: typeof r.deleted === 'boolean' ? r.deleted : false,
+              })),
+            ]),
+          ),
+        })
         const base = (persisted ?? {}) as LegacyForumState & Partial<ForumState>
         const normaliseReplies = (
           replies: Record<string, ForumReply[]> | undefined,
@@ -300,6 +350,7 @@ export const useForumStore = create<ForumState>()(
               createdAt: r.createdAt,
               reportCount: typeof r.reportCount === 'number' ? r.reportCount : 0,
               autoHidden: typeof r.autoHidden === 'boolean' ? r.autoHidden : false,
+              deleted: false,
             }))
           }
           return out
@@ -310,18 +361,23 @@ export const useForumStore = create<ForumState>()(
             reportCount: typeof p.reportCount === 'number' ? p.reportCount : 0,
             autoHidden: typeof p.autoHidden === 'boolean' ? p.autoHidden : false,
           }))
-        if (version >= 6) return persisted as ForumState
+        if (version >= 7) return persisted as ForumState
+        if (version >= 6) return withV7Fields(persisted as ForumState)
         if (version >= 5) {
           const state = persisted as Partial<ForumState>
-          return { ...state, lastReadAt: state.lastReadAt ?? {} } as ForumState
+          return withV7Fields({ ...state, lastReadAt: state.lastReadAt ?? {} } as ForumState)
         }
         if (version >= 4) {
           const state = persisted as Partial<ForumState>
-          return { ...state, lastAuthor: state.lastAuthor ?? '', lastReadAt: {} } as ForumState
+          return withV7Fields({
+            ...state,
+            lastAuthor: state.lastAuthor ?? '',
+            lastReadAt: {},
+          } as ForumState)
         }
         if (version >= 2 && persisted && typeof persisted === 'object') {
           const state = persisted as Partial<ForumState>
-          return {
+          return withV7Fields({
             ...state,
             posts: normalisePosts(state.posts ?? []),
             replies: normaliseReplies(state.replies),
@@ -329,7 +385,7 @@ export const useForumStore = create<ForumState>()(
             ownReplyIds: state.ownReplyIds ?? {},
             reportedPostIds: state.reportedPostIds ?? {},
             reportedReplyIds: state.reportedReplyIds ?? {},
-          } as ForumState
+          } as ForumState)
         }
         const posts: ForumPost[] = (base.posts ?? []).map((p) => ({
           id: p.id,
@@ -342,8 +398,10 @@ export const useForumStore = create<ForumState>()(
           views: typeof p.views === 'number' ? p.views : 0,
           reportCount: 0,
           autoHidden: false,
+          hiddenByAdmin: false,
+          attachments: [],
         }))
-        return {
+        return withV7Fields({
           posts: posts.length > 0 ? posts : SEED_POSTS,
           replies: normaliseReplies(base.replies as Record<string, ForumReply[]> | undefined),
           likedPostIds: {},
@@ -352,7 +410,7 @@ export const useForumStore = create<ForumState>()(
           ownReplyIds: {},
           reportedPostIds: {},
           reportedReplyIds: {},
-        } as unknown as ForumState
+        } as unknown as ForumState)
       },
     },
   ),

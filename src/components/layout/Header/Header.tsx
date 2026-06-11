@@ -55,14 +55,15 @@ function Header({ onOpenCommand }: HeaderProps) {
         { path: '/diary', label: t('nav.diary') },
         { path: '/calendar', label: t('nav.calendar') },
         { path: '/forum', label: t('nav.forum') },
+        { path: '/cafes', label: t('nav.cafes') },
         { path: '/registry', label: t('nav.registry') },
         { path: '/partners', label: t('nav.partners') },
-        { path: '/partner-dashboard', label: t('nav.partnerDashboard') },
         { path: '/admin', label: t('nav.admin') },
         { path: '/contact', label: t('nav.contact') },
       ]
     : [
         { path: '/forum', label: t('nav.forum') },
+        { path: '/cafes', label: t('nav.cafes') },
         { path: '/resources', label: t('nav.resources') },
         { path: '/partners', label: t('nav.partners') },
         { path: '/registry', label: t('nav.registry') },

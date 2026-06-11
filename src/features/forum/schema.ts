@@ -1,3 +1,4 @@
+import { attachmentSchema } from '@features/attachments'
 import { speciesCategorySchema } from '@features/species'
 import { z } from 'zod'
 
@@ -12,6 +13,8 @@ export const forumPostSchema = z.object({
   views: z.number().int().nonnegative().default(0),
   reportCount: z.number().int().nonnegative().default(0),
   autoHidden: z.boolean().default(false),
+  hiddenByAdmin: z.boolean().default(false),
+  attachments: z.array(attachmentSchema).max(8).default([]),
 })
 
 export const FORUM_AUTO_HIDE_THRESHOLD = 5
@@ -39,10 +42,12 @@ export const forumReplySchema = z.object({
   postId: z.string(),
   parentReplyId: z.string().nullable().default(null),
   author: z.string().min(1).max(40),
-  body: z.string().min(1).max(800),
+  // Deleted placeholders keep their node in the thread with an empty body.
+  body: z.string().max(800),
   createdAt: z.string(),
   reportCount: z.number().int().nonnegative().default(0),
   autoHidden: z.boolean().default(false),
+  deleted: z.boolean().default(false),
 })
 
 export const FORUM_REPORT_REASONS = [
@@ -82,6 +87,35 @@ export function buildReplyTree(replies: readonly ForumReply[]): ForumReplyNode[]
   }
   sortNodes(roots)
   return roots
+}
+
+/**
+ * Removes a reply from a flat thread list while keeping the tree readable:
+ * a reply that still has children collapses into a "deleted" placeholder
+ * (empty body, node retained) instead of orphaning its descendants. Leaf
+ * removals also garbage-collect any placeholder ancestors that became
+ * childless, so placeholder chains never linger.
+ */
+export function removeReplyFromList(list: readonly ForumReply[], replyId: string): ForumReply[] {
+  const hasChildren = list.some((r) => r.parentReplyId === replyId)
+  let next: ForumReply[]
+  if (hasChildren) {
+    next = list.map((r) => (r.id === replyId ? { ...r, body: '', deleted: true } : r))
+  } else {
+    next = list.filter((r) => r.id !== replyId)
+  }
+  // GC: drop deleted placeholders that no longer shelter any children.
+  let changed = true
+  while (changed) {
+    changed = false
+    const parentIds = new Set(next.map((r) => r.parentReplyId).filter(Boolean))
+    const pruned = next.filter((r) => !(r.deleted && !parentIds.has(r.id)))
+    if (pruned.length !== next.length) {
+      next = pruned
+      changed = true
+    }
+  }
+  return next
 }
 
 export const forumPostFormSchema = z.object({
