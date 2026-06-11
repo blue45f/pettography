@@ -68,7 +68,7 @@
     "@rolldown/plugin-babel": "^0.2.3",
     "@storybook/addon-a11y": "^10.4.2",
     "@storybook/addon-themes": "^10.4.2",
-    "@storybook/react-vite": "^10.4.2",
+    "@storybook/react-vite": "^10.4.3",
     "@tanstack/react-query-devtools": "^5.101.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
