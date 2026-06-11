@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AdoptionModule } from './adoption/adoption.module';
 import { CareGuidesModule } from './care-guides/care-guides.module';
 import { CommunitiesModule } from './communities/communities.module';
@@ -12,9 +14,11 @@ import { PartnersModule } from './partners/partners.module';
 import { RegistryModule } from './registry/registry.module';
 import { ShopsModule } from './shops/shops.module';
 import { SpeciesModule } from './species/species.module';
+import { resolveThrottleOptions } from './common/http-hardening';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot(resolveThrottleOptions()),
     HealthModule,
     SpeciesModule,
     HospitalsModule,
@@ -29,5 +33,6 @@ import { SpeciesModule } from './species/species.module';
     RegistryModule,
     CompareModule,
   ],
+  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],
 })
 export class AppModule {}

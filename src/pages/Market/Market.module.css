@@ -101,14 +101,58 @@
 }
 
 /* ── Composer ── */
+.composerGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: var(--spacing-md);
+  align-items: start;
+}
+
 .composerCard {
   background: var(--color-surface);
   box-shadow: var(--shadow-md);
 }
 
+.composerHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
 .composerTitle {
   font-size: var(--font-size-lg);
-  margin-bottom: var(--spacing-md);
+}
+
+.draftNotice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.draftButton {
+  min-height: 36px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.draftButton:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .composerForm {
@@ -145,6 +189,29 @@
 .composerActions {
   display: flex;
   justify-content: flex-end;
+}
+
+.previewPanel {
+  position: sticky;
+  top: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.previewTitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 900px) {
+  .composerGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .previewPanel {
+    position: static;
+  }
 }
 
 /* ── Listing grid ── */

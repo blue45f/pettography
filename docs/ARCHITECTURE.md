@@ -88,13 +88,13 @@ i18next와 react-i18next를 사용합니다.
 
 ## 품질 게이트
 
-| 단계           | 명령                               | 목적                                               |
-| -------------- | ---------------------------------- | -------------------------------------------------- |
-| pre-commit     | `pnpm exec lint-staged`            | staged 파일 자동 lint/format                       |
-| commit-msg     | `pnpm exec commitlint --edit "$1"` | Conventional Commit 강제                           |
-| pre-push       | `pnpm verify:push`                 | 포맷, lint, typecheck, test, build, security audit |
-| 수동 전체 검증 | `pnpm verify`                      | 로컬 릴리스 전 기본 검증                           |
-| 보안 검증      | `pnpm lint:security`               | ESLint 보안 규칙과 dependency audit                |
+| 단계           | 명령                               | 목적                                                         |
+| -------------- | ---------------------------------- | ------------------------------------------------------------ |
+| pre-commit     | `pnpm exec lint-staged`            | staged 파일 자동 lint/format                                 |
+| commit-msg     | `pnpm exec commitlint --edit "$1"` | Conventional Commit 강제                                     |
+| pre-push       | `pnpm verify:push`                 | env 검증, 포맷, lint, typecheck, test, build, security audit |
+| 수동 전체 검증 | `pnpm verify`                      | 아키텍처/env 검증 포함 로컬 릴리스 전 기본 검증              |
+| 보안 검증      | `pnpm lint:security`               | ESLint 보안 규칙과 dependency audit                          |
 
 ## 빌드 파이프라인
 

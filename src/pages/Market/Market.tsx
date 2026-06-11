@@ -36,12 +36,109 @@ import { Link } from 'react-router'
 
 import styles from './Market.module.css'
 
+export const MARKET_LISTING_DRAFT_KEY = 'pettography.market.listingDraft'
+
+const MARKET_DRAFT_SAVE_DELAY_MS = 500
+
 function isExternalContact(contact: string): boolean {
   return /^https?:\/\//i.test(contact.trim())
 }
 
 function formatPrice(priceKrw: number): string {
   return new Intl.NumberFormat('ko-KR').format(priceKrw)
+}
+
+function createDefaultListingValues(lastAuthor = ''): ListingFormValues {
+  return {
+    title: '',
+    speciesId: null,
+    morph: '',
+    region: 'songpa',
+    cbStatus: 'cb',
+    isFree: false,
+    priceKrw: null,
+    contact: '',
+    description: '',
+    author: lastAuthor,
+  }
+}
+
+function readSavedListingDraft(defaultValues: ListingFormValues): ListingFormValues | null {
+  if (typeof window === 'undefined') return null
+
+  try {
+    const raw = window.localStorage.getItem(MARKET_LISTING_DRAFT_KEY)
+    if (!raw) return null
+
+    const parsed = JSON.parse(raw) as Partial<ListingFormValues>
+    return {
+      ...defaultValues,
+      title: readString(parsed.title),
+      speciesId: typeof parsed.speciesId === 'string' && parsed.speciesId ? parsed.speciesId : null,
+      morph: readString(parsed.morph),
+      region: isMarketRegion(parsed.region) ? parsed.region : defaultValues.region,
+      cbStatus: isCbStatus(parsed.cbStatus) ? parsed.cbStatus : defaultValues.cbStatus,
+      isFree: typeof parsed.isFree === 'boolean' ? parsed.isFree : defaultValues.isFree,
+      priceKrw: readPrice(parsed.priceKrw),
+      contact: readString(parsed.contact),
+      description: readString(parsed.description),
+      author: readString(parsed.author) || defaultValues.author,
+    }
+  } catch {
+    return null
+  }
+}
+
+function readString(value: unknown): string {
+  return typeof value === 'string' ? value : ''
+}
+
+function readPrice(value: unknown): number | null {
+  return typeof value === 'number' && Number.isInteger(value) && value >= 0 ? value : null
+}
+
+function isMarketRegion(value: unknown): value is MarketRegion {
+  return typeof value === 'string' && MARKET_REGIONS.includes(value as MarketRegion)
+}
+
+function isCbStatus(value: unknown): value is (typeof CB_STATUSES)[number] {
+  return typeof value === 'string' && CB_STATUSES.includes(value as (typeof CB_STATUSES)[number])
+}
+
+function hasMeaningfulDraft(values: Partial<ListingFormValues>): boolean {
+  return Boolean(
+    values.title?.trim() ||
+    values.speciesId ||
+    values.morph?.trim() ||
+    values.contact?.trim() ||
+    values.description?.trim() ||
+    values.isFree ||
+    values.priceKrw != null,
+  )
+}
+
+function persistListingDraft(values: Partial<ListingFormValues>): void {
+  if (typeof window === 'undefined') return
+
+  try {
+    if (!hasMeaningfulDraft(values)) {
+      window.localStorage.removeItem(MARKET_LISTING_DRAFT_KEY)
+      return
+    }
+    window.localStorage.setItem(MARKET_LISTING_DRAFT_KEY, JSON.stringify(values))
+  } catch {
+    /* localStorage quota/private mode: draft save is best-effort. */
+  }
+}
+
+function clearListingDraft(): void {
+  if (typeof window === 'undefined') return
+
+  try {
+    window.localStorage.removeItem(MARKET_LISTING_DRAFT_KEY)
+  } catch {
+    /* ignore */
+  }
 }
 
 function Market() {
@@ -304,6 +401,18 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
   const { t } = useTranslation()
   const { toast } = useToast()
   const addListing = useMarketStore((s) => s.addListing)
+  const [previewCreatedAt] = useState(() => new Date().toISOString())
+  const [initialDraft] = useState(() => {
+    const defaults = createDefaultListingValues(lastAuthor)
+    const saved = readSavedListingDraft(defaults)
+    return {
+      values: saved ?? defaults,
+      restored: Boolean(saved),
+    }
+  })
+  const [formValues, setFormValues] = useState(initialDraft.values)
+  const [formKey, setFormKey] = useState(0)
+  const [draftRestored, setDraftRestored] = useState(initialDraft.restored)
 
   const {
     register,
@@ -314,25 +423,75 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
     formState: { errors, isSubmitting, dirtyFields },
   } = useForm<ListingFormValues>({
     resolver: zodResolver(listingFormSchema),
-    defaultValues: {
-      title: '',
-      speciesId: null,
-      morph: '',
-      region: 'songpa',
-      cbStatus: 'cb',
-      isFree: false,
-      priceKrw: null,
-      contact: '',
-      description: '',
-      author: lastAuthor,
-    },
+    defaultValues: initialDraft.values,
+    values: formValues,
   })
 
   useEffect(() => {
-    if (!dirtyFields.author) setValue('author', lastAuthor)
+    if (lastAuthor && !dirtyFields.author) setValue('author', lastAuthor)
   }, [lastAuthor, dirtyFields.author, setValue])
 
-  const isFree = useWatch({ control, name: 'isFree' })
+  const [
+    previewTitle = '',
+    previewSpeciesId = null,
+    previewMorph = '',
+    previewRegion = 'songpa',
+    previewCbStatus = 'cb',
+    isFree = false,
+    previewPriceKrw = null,
+    previewContact = '',
+    previewDescription = '',
+    previewAuthor = '',
+  ] = useWatch({
+    control,
+    name: [
+      'title',
+      'speciesId',
+      'morph',
+      'region',
+      'cbStatus',
+      'isFree',
+      'priceKrw',
+      'contact',
+      'description',
+      'author',
+    ],
+  })
+
+  const draftValues = useMemo<ListingFormValues>(
+    () => ({
+      title: previewTitle,
+      speciesId: previewSpeciesId,
+      morph: previewMorph,
+      region: previewRegion,
+      cbStatus: previewCbStatus,
+      isFree,
+      priceKrw: previewPriceKrw,
+      contact: previewContact,
+      description: previewDescription,
+      author: previewAuthor,
+    }),
+    [
+      previewTitle,
+      previewSpeciesId,
+      previewMorph,
+      previewRegion,
+      previewCbStatus,
+      isFree,
+      previewPriceKrw,
+      previewContact,
+      previewDescription,
+      previewAuthor,
+    ],
+  )
+
+  useEffect(() => {
+    const timerId = window.setTimeout(
+      () => persistListingDraft(draftValues),
+      MARKET_DRAFT_SAVE_DELAY_MS,
+    )
+    return () => window.clearTimeout(timerId)
+  }, [draftValues])
 
   const speciesOptions = useMemo(
     () => [
@@ -341,6 +500,57 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
     ],
     [species, t],
   )
+
+  const selectedSpecies = useMemo(
+    () => species.find((sp) => sp.id === previewSpeciesId),
+    [species, previewSpeciesId],
+  )
+
+  const previewListing = useMemo<Listing>(
+    () => ({
+      id: 'market-preview',
+      author: previewAuthor.trim() || t('market.preview.authorPlaceholder'),
+      title: previewTitle.trim() || t('market.preview.titlePlaceholder'),
+      speciesId: previewSpeciesId || null,
+      category: selectedSpecies?.category ?? null,
+      morph: previewMorph.trim(),
+      isFree,
+      priceKrw: isFree ? null : previewPriceKrw,
+      region: previewRegion,
+      cbStatus: previewCbStatus,
+      contact: previewContact.trim() || t('market.contactPlaceholder'),
+      description: previewDescription.trim() || t('market.preview.descriptionPlaceholder'),
+      createdAt: previewCreatedAt,
+    }),
+    [
+      previewAuthor,
+      previewTitle,
+      previewSpeciesId,
+      selectedSpecies?.category,
+      previewMorph,
+      isFree,
+      previewPriceKrw,
+      previewRegion,
+      previewCbStatus,
+      previewContact,
+      previewDescription,
+      previewCreatedAt,
+      t,
+    ],
+  )
+
+  function replaceFormValues(values: ListingFormValues) {
+    setFormValues(values)
+    reset(values)
+    setFormKey((key) => key + 1)
+  }
+
+  function discardDraft() {
+    const defaults = createDefaultListingValues(lastAuthor)
+    clearListingDraft()
+    replaceFormValues(defaults)
+    setDraftRestored(false)
+  }
 
   const onSubmit = handleSubmit((values) => {
     const speciesId = values.speciesId || null
@@ -361,7 +571,9 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
       description: values.description,
     })
     toast(t('market.postedToast'), 'success')
-    reset({
+    clearListingDraft()
+    setDraftRestored(false)
+    replaceFormValues({
       title: '',
       speciesId: null,
       morph: '',
@@ -376,117 +588,143 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
   })
 
   return (
-    <Card padding="lg" className={styles.composerCard}>
-      <Card.Body>
-        <h2 className={styles.composerTitle}>{t('market.newListingTitle')}</h2>
-        <form onSubmit={onSubmit} className={styles.composerForm} noValidate>
-          <Input
-            label={t('market.titleLabel')}
-            placeholder={t('market.titlePlaceholder')}
-            error={errors.title?.message ? t(errors.title.message) : undefined}
-            {...register('title')}
-          />
+    <div className={styles.composerGrid}>
+      <Card padding="lg" className={styles.composerCard}>
+        <Card.Body>
+          <div className={styles.composerHeader}>
+            <h2 className={styles.composerTitle}>{t('market.newListingTitle')}</h2>
+            {draftRestored && (
+              <div className={styles.draftNotice} role="status">
+                <span>{t('market.draftRestored')}</span>
+                <button type="button" className={styles.draftButton} onClick={discardDraft}>
+                  {t('market.discardDraft')}
+                </button>
+              </div>
+            )}
+          </div>
 
-          <div className={styles.composerRow}>
-            <Select
-              label={t('market.species')}
-              options={speciesOptions}
-              {...register('speciesId')}
-            />
+          <form key={formKey} onSubmit={onSubmit} className={styles.composerForm} noValidate>
             <Input
-              label={t('market.morphLabel')}
-              placeholder={t('market.morphPlaceholder')}
-              error={errors.morph?.message ? t(errors.morph.message) : undefined}
-              {...register('morph')}
+              label={t('market.titleLabel')}
+              placeholder={t('market.titlePlaceholder')}
+              error={errors.title?.message ? t(errors.title.message) : undefined}
+              {...register('title')}
             />
-          </div>
 
-          <div className={styles.composerRow}>
-            <Select
-              label={t('market.regionLabel')}
-              options={MARKET_REGIONS.map((r) => ({ value: r, label: t(`market.regions.${r}`) }))}
-              {...register('region')}
-            />
-            <Select
-              label={t('market.cbLabel')}
-              options={CB_STATUSES.map((c) => ({ value: c, label: t(`market.cb.${c}`) }))}
-              {...register('cbStatus')}
-            />
-          </div>
+            <div className={styles.composerRow}>
+              <Select
+                label={t('market.species')}
+                options={speciesOptions}
+                {...register('speciesId')}
+              />
+              <Input
+                label={t('market.morphLabel')}
+                placeholder={t('market.morphPlaceholder')}
+                error={errors.morph?.message ? t(errors.morph.message) : undefined}
+                {...register('morph')}
+              />
+            </div>
 
-          <div className={styles.freeRow}>
-            <Controller
-              control={control}
-              name="isFree"
-              render={({ field }) => (
-                <Switch
-                  checked={field.value}
-                  onChange={(checked) => {
-                    field.onChange(checked)
-                    if (checked) setValue('priceKrw', null, { shouldValidate: true })
-                  }}
-                  label={t('market.freeToggle')}
-                />
-              )}
-            />
-            {!isFree && (
+            <div className={styles.composerRow}>
+              <Select
+                label={t('market.regionLabel')}
+                options={MARKET_REGIONS.map((r) => ({
+                  value: r,
+                  label: t(`market.regions.${r}`),
+                }))}
+                {...register('region')}
+              />
+              <Select
+                label={t('market.cbLabel')}
+                options={CB_STATUSES.map((c) => ({ value: c, label: t(`market.cb.${c}`) }))}
+                {...register('cbStatus')}
+              />
+            </div>
+
+            <div className={styles.freeRow}>
               <Controller
                 control={control}
-                name="priceKrw"
+                name="isFree"
                 render={({ field }) => (
-                  <Input
-                    type="number"
-                    min={0}
-                    inputMode="numeric"
-                    label={t('market.priceLabel')}
-                    placeholder={t('market.pricePlaceholder')}
-                    error={errors.priceKrw?.message ? t(errors.priceKrw.message) : undefined}
-                    value={field.value ?? ''}
-                    onChange={(e) => {
-                      const raw = e.target.value
-                      field.onChange(raw === '' ? null : Number(raw))
+                  <Switch
+                    checked={field.value}
+                    onChange={(checked) => {
+                      field.onChange(checked)
+                      if (checked) setValue('priceKrw', null, { shouldValidate: true })
                     }}
-                    onBlur={field.onBlur}
-                    name={field.name}
-                    ref={field.ref}
+                    label={t('market.freeToggle')}
                   />
                 )}
               />
-            )}
-          </div>
-          {isFree && <p className={styles.freeHint}>{t('market.freeHint')}</p>}
+              {!isFree && (
+                <Controller
+                  control={control}
+                  name="priceKrw"
+                  render={({ field }) => (
+                    <Input
+                      type="number"
+                      min={0}
+                      inputMode="numeric"
+                      label={t('market.priceLabel')}
+                      placeholder={t('market.pricePlaceholder')}
+                      error={errors.priceKrw?.message ? t(errors.priceKrw.message) : undefined}
+                      value={field.value ?? ''}
+                      onChange={(e) => {
+                        const raw = e.target.value
+                        field.onChange(raw === '' ? null : Number(raw))
+                      }}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      ref={field.ref}
+                    />
+                  )}
+                />
+              )}
+            </div>
+            {isFree && <p className={styles.freeHint}>{t('market.freeHint')}</p>}
 
-          <Input
-            label={t('market.contactLabel')}
-            placeholder={t('market.contactPlaceholder')}
-            helperText={t('market.contactHelper')}
-            error={errors.contact?.message ? t(errors.contact.message) : undefined}
-            {...register('contact')}
-          />
+            <Input
+              label={t('market.contactLabel')}
+              placeholder={t('market.contactPlaceholder')}
+              helperText={t('market.contactHelper')}
+              error={errors.contact?.message ? t(errors.contact.message) : undefined}
+              {...register('contact')}
+            />
 
-          <Textarea
-            label={t('market.descriptionLabel')}
-            rows={3}
-            placeholder={t('market.descriptionPlaceholder')}
-            error={errors.description?.message ? t(errors.description.message) : undefined}
-            {...register('description')}
-          />
+            <Textarea
+              label={t('market.descriptionLabel')}
+              rows={3}
+              placeholder={t('market.descriptionPlaceholder')}
+              error={errors.description?.message ? t(errors.description.message) : undefined}
+              {...register('description')}
+            />
 
-          <Input
-            label={t('market.author')}
-            placeholder={t('market.authorPlaceholder')}
-            error={errors.author?.message ? t(errors.author.message) : undefined}
-            {...register('author')}
-          />
+            <Input
+              label={t('market.author')}
+              placeholder={t('market.authorPlaceholder')}
+              error={errors.author?.message ? t(errors.author.message) : undefined}
+              {...register('author')}
+            />
 
-          <div className={styles.composerActions}>
-            <Button type="submit" variant="primary" isLoading={isSubmitting}>
-              {t('market.publish')}
-            </Button>
-          </div>
-        </form>
-      </Card.Body>
-    </Card>
+            <div className={styles.composerActions}>
+              <Button type="submit" variant="primary" isLoading={isSubmitting}>
+                {t('market.publish')}
+              </Button>
+            </div>
+          </form>
+        </Card.Body>
+      </Card>
+
+      <aside className={styles.previewPanel} role="region" aria-label={t('market.preview.title')}>
+        <h2 className={styles.previewTitle}>{t('market.preview.title')}</h2>
+        <ListingCard
+          listing={previewListing}
+          species={selectedSpecies}
+          isOwn={false}
+          onRemove={() => {}}
+        />
+      </aside>
+    </div>
   )
 }
 

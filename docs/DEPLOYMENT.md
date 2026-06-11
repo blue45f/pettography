@@ -53,6 +53,7 @@ pnpm run build        # tsc -b && vite build  ->  dist/
 | `VITE_KAKAO_MAP_KEY` | `<카카오 JS 키>`                               | 카카오맵 SDK 키. 미설정 시 placeholder 지도. |
 
 > 빌드 타임 변수입니다(`import.meta.env.VITE_*`). 값 변경 후에는 재배포가 필요합니다.
+> `VITE_*` 값은 브라우저에 노출됩니다. token/password/secret류 값은 `pnpm run validate:env`에서 차단됩니다.
 
 ### 수동(대시보드) 단계 — 최초 1회
 
@@ -141,6 +142,8 @@ docker run --rm -p 3001:3001 \
 | Render env     | `CORS_ORIGINS`           | 권장   | 프론트 origin. 미설정 시 localhost만 허용 |
 | Render env     | `NODE_ENV`               | 자동   | `render.yaml`에서 production              |
 | Render env     | `PORT`                   | 자동   | Render 주입                               |
+| Render env     | `API_THROTTLE_TTL_MS`    | 선택   | 기본 60000ms                              |
+| Render env     | `API_THROTTLE_LIMIT`     | 선택   | 기본 120 requests/window                  |
 
 > CI의 배포 step들은 secret이 없으면 **조용히 skip**하도록 설계되어 있습니다. 따라서 실제 배포를 켜려면 위 secret/대시보드 단계가 **수동으로** 선행되어야 합니다.
 

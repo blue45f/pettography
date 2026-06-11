@@ -5,19 +5,20 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Backup.module.css'
+import {
+  type BackupEnvelope,
+  createBackupEnvelope,
+  isBackupData,
+  verifyBackupEnvelope,
+} from './backupEnvelope'
 
 const BACKUP_KEY_PREFIXES = ['pettography.', 'onboarding-store']
-
-interface BackupEnvelope {
-  app: 'pettography'
-  version: 1
-  exportedAt: string
-  data: Record<string, string>
-}
+const MAX_BACKUP_FILE_BYTES = 2 * 1024 * 1024
 
 interface PendingImport {
   exportedAt: string
   data: Record<string, string>
+  checksum?: string
 }
 
 function collectKeys(): string[] {
@@ -36,22 +37,13 @@ function isBackupKey(key: string): boolean {
   return BACKUP_KEY_PREFIXES.some((prefix) => key.startsWith(prefix))
 }
 
-function isBackupData(data: unknown): data is Record<string, unknown> {
-  return typeof data === 'object' && data !== null && !Array.isArray(data)
-}
-
-function buildEnvelope(): BackupEnvelope {
+async function buildEnvelope(): Promise<BackupEnvelope> {
   const data: Record<string, string> = {}
   for (const k of collectKeys()) {
     const v = localStorage.getItem(k)
     if (v !== null) data[k] = v
   }
-  return {
-    app: 'pettography',
-    version: 1,
-    exportedAt: new Date().toISOString(),
-    data,
-  }
+  return createBackupEnvelope(data)
 }
 
 function Backup() {
@@ -76,8 +68,8 @@ function Backup() {
     if (wipePending) wipeConfirmRef.current?.focus()
   }, [wipePending])
 
-  function handleExport() {
-    const envelope = buildEnvelope()
+  async function handleExport() {
+    const envelope = await buildEnvelope()
     const blob = new Blob([JSON.stringify(envelope, null, 2)], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
@@ -93,18 +85,36 @@ function Backup() {
 
   async function handleFile(file: File) {
     try {
+      if (file.size > MAX_BACKUP_FILE_BYTES) {
+        throw new Error('too-large')
+      }
       const text = await file.text()
       const parsed = JSON.parse(text) as Partial<BackupEnvelope>
       if (parsed.app !== 'pettography' || parsed.version !== 1 || !isBackupData(parsed.data)) {
         throw new Error('invalid')
       }
+      const envelope: BackupEnvelope = {
+        app: parsed.app,
+        version: parsed.version,
+        exportedAt: typeof parsed.exportedAt === 'string' ? parsed.exportedAt : '',
+        data: Object.fromEntries(
+          Object.entries(parsed.data).filter(
+            (entry): entry is [string, string] => typeof entry[1] === 'string',
+          ),
+        ),
+        checksum: parsed.checksum,
+      }
+      if (!(await verifyBackupEnvelope(envelope))) {
+        throw new Error('checksum')
+      }
       const importable: Record<string, string> = {}
-      for (const [k, v] of Object.entries(parsed.data)) {
+      for (const [k, v] of Object.entries(envelope.data)) {
         if (isBackupKey(k) && typeof v === 'string') importable[k] = v
       }
       setPending({
-        exportedAt: typeof parsed.exportedAt === 'string' ? parsed.exportedAt : '',
+        exportedAt: envelope.exportedAt,
         data: importable,
+        checksum: envelope.checksum?.value,
       })
     } catch {
       toast(t('backup.invalidFileToast'), 'error')
@@ -159,7 +169,7 @@ function Backup() {
             keys.map((k) => <li key={k}>{k}</li>)
           )}
         </ul>
-        <Button variant="primary" onClick={handleExport} disabled={keys.length === 0}>
+        <Button variant="primary" onClick={() => void handleExport()} disabled={keys.length === 0}>
           {t('backup.exportButton')}
         </Button>
       </section>
@@ -207,6 +217,11 @@ function Backup() {
             <p className={styles.confirmMeta}>
               {t('backup.confirmIncludes', { count: pendingKeys.length })}
             </p>
+            {pending.checksum && (
+              <p className={styles.confirmMeta}>
+                {t('backup.confirmChecksum', { hash: pending.checksum.slice(0, 12) })}
+              </p>
+            )}
             <ul className={styles.confirmKeys}>
               {pendingKeys.map((k) => (
                 <li key={k}>{k.replace('pettography.', '')}</li>

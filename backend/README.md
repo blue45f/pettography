@@ -30,6 +30,8 @@ pnpm format      # prettier --write
 
 전역 prefix는 `/api`입니다. CORS 허용 origin은 `CORS_ORIGINS` 환경변수(쉼표 구분)로 설정하며, 미설정 시 `http://localhost:5173` (Vite dev server)으로 fallback합니다. REST API와 `/consult` socket.io 게이트웨이가 같은 allowlist를 공유합니다.
 
+형제 Nest API(PromptMarket/Offhours/Termsdesk)의 공통 하드닝 패턴을 반영해 부트스트랩에서 `helmet` 보안 헤더와 `compression`을 적용하고, `@nestjs/throttler` 전역 가드로 기본 `60초/120요청` 제한을 둡니다. 제한값은 `API_THROTTLE_TTL_MS`, `API_THROTTLE_LIMIT`로 조정합니다. OpenAPI 문서는 `/api/docs`, JSON 문서는 `/api/docs-json`에서 확인할 수 있습니다.
+
 ## 배포
 
 프로덕션 배포는 `backend/Dockerfile`(멀티스테이지, node:22-alpine, 프로덕션 의존성만, non-root, `node dist/main.js`)로 컨테이너를 빌드하며 `render.yaml` Blueprint로 Render에 올립니다. 전체 절차(환경변수, GitHub secret, 대시보드 단계)는 [`docs/DEPLOYMENT.md`](../docs/DEPLOYMENT.md)를 참고하세요.
@@ -47,6 +49,8 @@ docker run --rm -p 3001:3001 -e CORS_ORIGINS=http://localhost:5173 pettography-b
 | Method | Path                          | 설명                                                                                             |
 | ------ | ----------------------------- | ------------------------------------------------------------------------------------------------ |
 | GET    | `/api/health`                 | `{ status: 'ok', uptime }`                                                                       |
+| GET    | `/api/docs`                   | Swagger/OpenAPI UI                                                                               |
+| GET    | `/api/docs-json`              | OpenAPI JSON                                                                                     |
 | GET    | `/api/species`                | 종 목록. 쿼리: `category`, `difficulty`, `q` (한글명/학명/slug/태그 부분일치)                    |
 | GET    | `/api/species/:idOrSlug`      | 단일 종. id (`sp-001`) 또는 slug (`leopard-gecko`) 둘 다 허용                                    |
 | GET    | `/api/hospitals`              | 병원 목록. 쿼리: `category`, `lat`, `lng`, `radiusKm`. 좌표 주면 `distanceKm` 포함 + 거리순 정렬 |
@@ -108,6 +112,7 @@ backend/
 │  ├─ common/
 │  │  ├─ types.ts                  # 도메인 타입 정의
 │  │  ├─ geo.ts                    # haversine 거리
+│  │  ├─ http-hardening.ts         # helmet/Swagger/throttle 설정
 │  │  └─ geo.spec.ts
 │  ├─ data/                        # in-memory 시드
 │  │  ├─ species.seed.ts

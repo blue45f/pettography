@@ -29,8 +29,8 @@
     "test:i18n": "vitest run src/i18n/locales.test.ts",
     "typecheck": "tsc -b --noEmit",
     "audit:security": "pnpm audit --audit-level high",
-    "ci": "pnpm run build:shared && pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test:run && pnpm run audit:a11y && pnpm run build",
-    "verify": "pnpm run validate:architecture && pnpm run ci",
+    "ci": "pnpm run build:shared && pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test:run && pnpm run test:node && pnpm run audit:a11y && pnpm run build",
+    "verify": "pnpm run validate:architecture && pnpm run validate:env && pnpm run ci",
     "verify:backend": "pnpm --filter pettography-backend run verify",
     "verify:all": "pnpm run verify && pnpm run verify:backend",
     "verify:push": "pnpm run verify && pnpm run lint:security",
@@ -39,7 +39,10 @@
     "prepare": "husky",
     "validate:architecture": "node scripts/validate-architecture.mjs",
     "audit:a11y": "node scripts/audit-frontend-a11y.mjs",
-    "test:a11y": "node scripts/audit-frontend-a11y.test.mjs"
+    "test:a11y": "node scripts/audit-frontend-a11y.test.mjs",
+    "test:env": "node --test scripts/validate-env.test.mjs",
+    "test:node": "node --test scripts/*.test.mjs",
+    "validate:env": "node scripts/validate-env.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",

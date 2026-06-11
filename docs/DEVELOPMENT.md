@@ -17,6 +17,8 @@
 - `pnpm run lint`
 - `pnpm run typecheck`
 - `pnpm run test`
+- `pnpm run test:node`
+- `pnpm run validate:env`
 - `pnpm run verify`
 - `pnpm run ci`
 
@@ -24,7 +26,8 @@
 
 1. 도메인 경계와 공유 타입 계약 변경은 `docs/ARCHITECTURE.md`에서 먼저 반영합니다.
 2. 계약 변경이 API/스키마에 영향을 주면 문서와 테스트 계획을 함께 갱신합니다.
-3. `pnpm run verify`는 `validate:architecture`가 선행된 상태여야 합니다.
+3. `pnpm run verify`는 `validate:architecture`와 `validate:env`가 선행된 상태여야 합니다.
+4. 새 `scripts/*.test.mjs` 기반 점검을 추가하면 `pnpm run test:node`로 묶어 CI 체인에 포함합니다.
 
 ## 접근성 (a11y) 패턴
 
