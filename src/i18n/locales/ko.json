@@ -300,7 +300,8 @@
   },
   "hospitals": {
     "title": "특수동물 병원",
-    "subtitle": "위치 기준 거리순으로 정렬됩니다.",
+    "subtitle": "이름순·응급 진료 우선으로 정렬할 수 있어요.",
+    "subtitleWithLocation": "내 위치 기준 거리순으로 정렬됩니다.",
     "filterByCategory": "카테고리 필터",
     "filterAll": "전체",
     "emergencyBadge": "24시 응급",
@@ -979,7 +980,7 @@
     "noRelatedHospitals": "이 카테고리를 진료하는 등록 병원이 아직 없어요.",
     "noRelatedShops": "이 카테고리를 다루는 등록 샵이 아직 없어요.",
     "noRelatedSpecies": "다른 종이 곧 추가됩니다.",
-    "compareTickAdd": "{{name}}을(를) 비교에 추가",
+    "compareTickAdd": "{{name, josa(을/를)}} 비교에 추가",
     "compareTickRemove": "비교에서 제거",
     "compareBarLabel": "비교 카트",
     "compareBarPicked": "{{count}}/{{max}}종 선택됨",
@@ -3326,7 +3327,7 @@
     },
     "paperwork": {
       "title": "규제종 서류 확인",
-      "desc": "{{name}}은(는) 규제종입니다. 이동·양도 시 보관신고 등 관련 서류를 미리 확인하세요.",
+      "desc": "{{name, josa(은/는)}} 규제종입니다. 이동·양도 시 보관신고 등 관련 서류를 미리 확인하세요.",
       "link": "등록 관리에서 확인하기"
     },
     "empty": {

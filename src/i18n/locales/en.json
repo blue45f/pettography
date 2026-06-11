@@ -300,7 +300,8 @@
   },
   "hospitals": {
     "title": "Specialist vets",
-    "subtitle": "Sorted by distance from your location",
+    "subtitle": "Sort by name or put emergency clinics first.",
+    "subtitleWithLocation": "Sorted by distance from your location.",
     "filterByCategory": "Filter by category",
     "filterAll": "All",
     "emergencyBadge": "24h emergency",

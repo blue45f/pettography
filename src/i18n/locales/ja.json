@@ -300,7 +300,8 @@
   },
   "hospitals": {
     "title": "エキゾチックアニマル病院",
-    "subtitle": "位置基準の距離順に並びます。",
+    "subtitle": "名前順や救急診療を優先して並べ替えられます。",
+    "subtitleWithLocation": "現在地を基準に距離順で並びます。",
     "filterByCategory": "カテゴリで絞り込み",
     "filterAll": "すべて",
     "emergencyBadge": "24時間救急",

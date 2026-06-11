@@ -74,7 +74,9 @@ function Hospitals() {
     <section className={styles.page}>
       <header className={styles.header}>
         <h1>{t('hospitals.title')}</h1>
-        <p className={styles.subtitle}>{t('hospitals.subtitle')}</p>
+        <p className={styles.subtitle}>
+          {t(profile.location ? 'hospitals.subtitleWithLocation' : 'hospitals.subtitle')}
+        </p>
         {profile.location && (
           <p className={styles.locationNote}>
             {t('dashboard.locationNote', { label: profile.location.label })}
