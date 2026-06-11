@@ -990,7 +990,6 @@
   },
   "policy": {
     "eyebrow": "법적 고지",
-    "lead": "Pettography 서비스에 적용되는 정책 정본입니다. TermsDesk에서 버전과 해시로 관리됩니다.",
     "termsTitle": "이용약관",
     "privacyTitle": "개인정보처리방침",
     "errorTitle": "문서를 불러오지 못했습니다",
@@ -1000,8 +999,7 @@
     "versionLabel": "버전",
     "effectiveAtLabel": "시행일",
     "hashLabel": "무결성 해시",
-    "changeSummaryLabel": "최근 변경",
-    "sourceNote": "이 문서는 TermsDesk에서 발행·버전 관리되는 정본입니다."
+    "changeSummaryLabel": "최근 변경"
   },
   "faq": {
     "title": "자주 묻는 질문",
@@ -4126,7 +4124,7 @@
     "careDescription": "선택한 종의 환경·먹이·건강 체크포인트를 한눈에. 사육 입문자를 위한 단계별 관리 가이드.",
     "toolsDescription": "급이·비용·환경·건강 등 사육에 필요한 도구를 한 곳에 모았습니다. 기록은 이 브라우저에 안전하게 저장됩니다.",
     "funeralDescription": "정부 등록 동물장묘업체와 추모 서비스 안내. 마지막 인사까지 함께합니다.",
-    "termsDescription": "Pettography 서비스 이용약관. TermsDesk에서 버전과 해시로 관리되는 정본을 제공합니다.",
+    "termsDescription": "Pettography 서비스 이용약관.",
     "privacyDescription": "Pettography 개인정보처리방침. 처리 목적·항목·보유 기간과 이용자 권리를 안내합니다."
   },
   "error": {

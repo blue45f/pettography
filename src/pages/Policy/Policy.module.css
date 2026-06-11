@@ -29,14 +29,6 @@
   text-wrap: balance;
 }
 
-.lead {
-  font-size: var(--font-size-lg);
-  color: var(--color-text-secondary);
-  line-height: 1.55;
-  max-width: 60ch;
-  text-wrap: pretty;
-}
-
 .skeletonGroup {
   display: flex;
   flex-direction: column;

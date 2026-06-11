@@ -81,7 +81,6 @@ function Policy() {
       <header className={styles.header}>
         <p className={styles.eyebrow}>{t('policy.eyebrow')}</p>
         <h1 className={styles.title}>{data?.name ?? fallbackTitle}</h1>
-        <p className={styles.lead}>{t('policy.lead')}</p>
       </header>
 
       {isPending && (
@@ -148,7 +147,6 @@ function Policy() {
               </p>
             )}
             <p className={styles.sourceNote}>
-              {t('policy.sourceNote')}{' '}
               <a
                 href={externalUrl}
                 target="_blank"
