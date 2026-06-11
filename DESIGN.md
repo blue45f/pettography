@@ -29,7 +29,7 @@ Gradient `--gradient-brand` (`#6366f1 → #8b5cf6 → #f43f5e`)는 **CTA·active
 
 ## Typography
 
-폰트: Pretendard 우선, 시스템 sans 폴백. display 헤딩은 letter-spacing -0.01em + text-wrap: balance.
+폰트: Pretendard Variable 우선(index.html에서 jsdelivr dynamic subset CSS 로드, `font-display: swap`), 시스템 sans 폴백. display 헤딩은 letter-spacing -0.01em + text-wrap: balance.
 
 Scale: clamp() fluid, 320~1280 viewport 사이 부드럽게 보간.
 

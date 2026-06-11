@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Pettography">
+  <!-- Maskable/apple-touch source: icon.svg 아트를 0.8 스케일로 중앙 배치(상하좌우 10%씩, 총 20% 세이프존 패딩)하고
+       전체 캔버스를 동일 bg 그라디언트로 풀블리드 — 원형 마스크/iOS 라운딩에도 잘림·투명 모서리가 없다.
+       icon-maskable-512.png / apple-touch-icon.png 는 이 파일을 래스터한 결과물. -->
+  <defs>
+    <linearGradient id="bgFull" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#eef2ff" />
+      <stop offset="0.55" stop-color="#fff7ed" />
+      <stop offset="1" stop-color="#ffe4e6" />
+    </linearGradient>
+    <linearGradient id="bg" x1="28" y1="18" x2="230" y2="238" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#eef2ff" />
+      <stop offset="0.55" stop-color="#fff7ed" />
+      <stop offset="1" stop-color="#ffe4e6" />
+    </linearGradient>
+    <linearGradient id="brand" x1="58" y1="59" x2="206" y2="206" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4f46e5" />
+      <stop offset="0.58" stop-color="#7c3aed" />
+      <stop offset="1" stop-color="#f43f5e" />
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" fill="url(#bgFull)" />
+  <g transform="translate(25.6 25.6) scale(0.8)">
+    <rect x="10" y="10" width="236" height="236" rx="50" fill="url(#bg)" />
+    <rect x="35" y="48" width="186" height="150" rx="26" fill="#ffffff" stroke="#c7d2fe" stroke-width="8" />
+    <path d="M57 154c18-27 43-40 75-39 25 .8 46 11.4 63 31" fill="none" stroke="url(#brand)" stroke-width="11" stroke-linecap="round" />
+    <path d="M66 78h48m-48 22h30" stroke="#94a3b8" stroke-width="9" stroke-linecap="round" />
+    <path d="M151 84c17-8 32 3 35 16 4 19-11 36-30 34-9-.8-15-5-19-11 12 1 21-6 24-15 2-8-.1-16-10-24Z" fill="#4f46e5" opacity="0.92" />
+    <circle cx="174" cy="98" r="4" fill="#f8fafc" />
+    <path d="M111 132c12-18 42-15 54 2 9 13 2 30-14 34-13 3-25-2-35-15" fill="none" stroke="#0f172a" stroke-width="10" stroke-linecap="round" />
+    <path d="M146 168c12 4 26-1 35-13" fill="none" stroke="#f43f5e" stroke-width="9" stroke-linecap="round" />
+    <circle cx="88" cy="190" r="15" fill="#16a34a" />
+    <path d="M81 190l6 6 12-15" fill="none" stroke="#f8fafc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

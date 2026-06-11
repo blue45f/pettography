@@ -3,12 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <meta name="theme-color" content="#1d4ed8" />
+    <!-- theme-color: 브랜드 primary(--color-primary-600) / 다크는 --color-background(#0b1120). global.css 토큰과 동기. -->
+    <meta name="theme-color" content="#4f46e5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Pettography" />
+
+    <!-- Pretendard Variable (한글 가변 폰트) — dynamic subset: 화면에 쓰인 글자의 unicode-range
+         조각만 내려받는다(font-display: swap). 미로드 시 global.css --font-family 시스템 폴백. -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      rel="stylesheet"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+    />
+
     <title>Pettography · 희귀 애완동물 라이프사이클 포탈</title>
     <meta
       name="description"

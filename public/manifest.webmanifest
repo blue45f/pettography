@@ -2,19 +2,59 @@
   "name": "Pettography",
   "short_name": "Pettography",
   "description": "희귀 애완동물 종 선택부터 입양·사육·의료·일상·장례까지 단일 앱에서 안내하는 위치 기반 포탈.",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#ffffff",
-  "theme_color": "#1d4ed8",
+  "background_color": "#fafafa",
+  "theme_color": "#4f46e5",
   "lang": "ko",
+  "categories": ["lifestyle", "pets", "health"],
   "icons": [
     {
       "src": "/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "응급 SOS",
+      "short_name": "SOS",
+      "url": "/sos",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "내 포탈",
+      "short_name": "포탈",
+      "url": "/dashboard",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "도구 모음",
+      "short_name": "도구",
+      "url": "/tools",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }

@@ -1,17 +1,26 @@
-// Pettography Service Worker v2
+// Pettography Service Worker v3
 // Strategies:
 // - App shell: precache
 // - Navigation: network-first with offline fallback
 // - Static assets (.js/.css/.woff2/images): stale-while-revalidate
-// - Fonts (Google): cache-first with 30d expiry
+// - Fonts (Pretendard via cdn.jsdelivr.net): cache-first (version-pinned URLs, immutable)
 // - API GETs: network-only (never cached — data freshness)
 
-const CACHE_VERSION = 'v2'
+const CACHE_VERSION = 'v3'
 const CACHE_SHELL = `pettography-shell-${CACHE_VERSION}`
 const CACHE_ASSETS = `pettography-assets-${CACHE_VERSION}`
 const CACHE_FONTS = `pettography-fonts-${CACHE_VERSION}`
 
-const APP_SHELL = ['/', '/index.html', '/manifest.webmanifest', '/icon.svg']
+const APP_SHELL = [
+  '/',
+  '/index.html',
+  '/manifest.webmanifest',
+  '/icon.svg',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/icon-maskable-512.png',
+  '/apple-touch-icon.png',
+]
 
 // Install: precache shell, activate immediately
 self.addEventListener('install', (event) => {
@@ -57,8 +66,8 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  // Google Fonts → cache-first (fonts are immutable)
-  if (url.host === 'fonts.googleapis.com' || url.host === 'fonts.gstatic.com') {
+  // Pretendard CDN → cache-first (version-pinned URLs are immutable)
+  if (url.host === 'cdn.jsdelivr.net') {
     event.respondWith(
       caches.match(request).then((cached) => {
         if (cached) return cached
