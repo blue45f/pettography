@@ -13,7 +13,7 @@ import {
 import { useSpeciesList } from '@features/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
 
@@ -32,7 +32,7 @@ function CafeCreate() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<CafeFormValues>({
@@ -46,7 +46,8 @@ function CafeCreate() {
     },
   })
 
-  const selectedEmoji = watch('emoji')
+  // watch() 는 React Compiler 와 호환되지 않아(eslint incompatible-library) 구독형 useWatch 사용
+  const selectedEmoji = useWatch({ control, name: 'emoji' })
 
   const onSubmit = handleSubmit((values) => {
     const species = speciesList.find((sp) => sp.id === values.speciesId)
