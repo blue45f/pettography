@@ -3,8 +3,6 @@ import { Link } from 'react-router'
 
 import styles from './Footer.module.css'
 
-const SUPPORT_URL = 'https://termsdesk.vercel.app/support/pettography'
-
 function Footer() {
   const { t } = useTranslation()
   const currentYear = new Date().getFullYear()
@@ -26,14 +24,9 @@ function Footer() {
           <Link to="/privacy" className={styles.link}>
             {t('footer.privacy')}
           </Link>
-          <a
-            href={`${SUPPORT_URL}?category=bug`}
-            target="_blank"
-            rel="noreferrer"
-            className={styles.link}
-          >
-            TermsDesk {t('contact.categories.bug')}
-          </a>
+          <Link to="/contact?category=bug" className={styles.link}>
+            {t('footer.reportBug')}
+          </Link>
           <Link to="/faq" className={styles.link}>
             {t('footer.faq')}
           </Link>

@@ -53,6 +53,21 @@ export const routes = [
         lazy: lazyPage(() => import('@pages/Communities')),
       },
       {
+        path: 'cafes',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/Cafes')),
+      },
+      {
+        path: 'cafes/new',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/CafeCreate')),
+      },
+      {
+        path: 'cafes/:cafeId',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/CafeDetail')),
+      },
+      {
         path: 'adoption',
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Adoption')),
@@ -106,6 +121,21 @@ export const routes = [
         path: 'admin',
         HydrateFallback: Loading,
         lazy: lazyPage(() => import('@pages/Admin')),
+      },
+      {
+        path: 'admin/moderation',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/AdminModeration')),
+      },
+      {
+        path: 'admin/cafes',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/AdminCafes')),
+      },
+      {
+        path: 'admin/partners',
+        HydrateFallback: Loading,
+        lazy: lazyPage(() => import('@pages/AdminPartners')),
       },
       { path: 'sos', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Sos')) },
       {

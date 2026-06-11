@@ -4,9 +4,17 @@ import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
-import { useConsultStore, vetsMock, type Vet } from '@features/vet-consult'
+import {
+  isConsultRemote,
+  useConsultStore,
+  useConsultThread,
+  useConsultVets,
+  useSendVetMessage,
+  vetsMock,
+  type Vet,
+} from '@features/vet-consult'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Consult.module.css'
@@ -23,18 +31,29 @@ function Consult() {
   useDocumentTitle(t('consult.title'))
 
   const activeVetId = useConsultStore((s) => s.activeVetId)
-  const messages = useConsultStore((s) => s.messages)
+  const localMessages = useConsultStore((s) => s.messages)
   const setActiveVet = useConsultStore((s) => s.setActiveVet)
   const addMessage = useConsultStore((s) => s.addMessage)
 
+  const vetsQuery = useConsultVets()
+  const threadQuery = useConsultThread(isConsultRemote ? activeVetId : null)
+  const sendMutation = useSendVetMessage(activeVetId)
+
   const [draft, setDraft] = useState('')
-  const activeVet = useMemo(() => vetsMock.find((v) => v.id === activeVetId) ?? null, [activeVetId])
-  const conversation = activeVetId ? (messages[activeVetId] ?? []) : []
+  const vets = isConsultRemote ? (vetsQuery.data ?? []) : vetsMock
+  const activeVet = vets.find((v) => v.id === activeVetId) ?? null
+  const conversation = isConsultRemote
+    ? (threadQuery.data ?? [])
+    : activeVetId
+      ? (localMessages[activeVetId] ?? [])
+      : []
   const replyTimerRef = useRef<number | null>(null)
 
+  // vets 는 조건식 산출물이라 렌더마다 식별자가 바뀐다 — 원시값(첫 수의사 id)만 의존해 재실행 안정화
+  const firstVetId = vets[0]?.id ?? null
   useEffect(() => {
-    if (!activeVetId && vetsMock[0]) setActiveVet(vetsMock[0].id)
-  }, [activeVetId, setActiveVet])
+    if (!activeVetId && firstVetId) setActiveVet(firstVetId)
+  }, [activeVetId, firstVetId, setActiveVet])
 
   useEffect(
     () => () => {
@@ -46,6 +65,13 @@ function Consult() {
   function send() {
     const trimmed = draft.trim()
     if (!trimmed || !activeVet) return
+    if (isConsultRemote) {
+      sendMutation.mutate(trimmed, {
+        onSuccess: () => setDraft(''),
+        onError: () => toast(t('consult.sendFailed'), 'error'),
+      })
+      return
+    }
     addMessage(activeVet.id, 'user', trimmed)
     setDraft('')
     const replyDelay = 700
@@ -64,11 +90,24 @@ function Consult() {
       <header className={styles.header}>
         <h1>{t('consult.title')}</h1>
         <p className={styles.subtitle}>{t('consult.subtitle')}</p>
+        <p className={styles.modeLine}>
+          <span
+            className={[styles.modeDot, isConsultRemote ? styles.modeDotLive : ''].join(' ')}
+            aria-hidden="true"
+          />
+          {isConsultRemote ? t('consult.modeLive') : t('consult.modeDemo')}
+        </p>
       </header>
 
       <div className={styles.layout}>
         <aside className={styles.vetList} aria-label={t('consult.vetListLabel')}>
-          {vetsMock.map((vet) => {
+          {isConsultRemote && vetsQuery.isLoading && (
+            <p className={styles.vetListStatus}>{t('common.loadingShort')}</p>
+          )}
+          {isConsultRemote && vetsQuery.isError && (
+            <p className={styles.vetListStatus}>{t('consult.loadFailed')}</p>
+          )}
+          {vets.map((vet) => {
             const isActive = activeVet?.id === vet.id
             return (
               <button
@@ -122,8 +161,11 @@ function Consult() {
                 </header>
 
                 <ol className={styles.transcript}>
-                  {conversation.length === 0 && (
+                  {conversation.length === 0 && !threadQuery.isLoading && (
                     <li className={styles.empty}>{t('consult.firstMessageHint')}</li>
+                  )}
+                  {isConsultRemote && threadQuery.isLoading && (
+                    <li className={styles.empty}>{t('consult.syncing')}</li>
                   )}
                   {conversation.map((msg) => (
                     <li
@@ -158,7 +200,12 @@ function Consult() {
                     onChange={(e) => setDraft(e.target.value)}
                     aria-label={t('consult.placeholder')}
                   />
-                  <Button type="submit" variant="primary" disabled={!draft.trim()}>
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    disabled={!draft.trim()}
+                    isLoading={sendMutation.isPending}
+                  >
                     {t('consult.send')}
                   </Button>
                 </form>

@@ -43,4 +43,17 @@ export class ConsultService {
     const vet = this.findVet(vetId);
     return `[${vet.name}] 메시지 잘 받았습니다. 사진 한 장과 사육 환경(온도·습도)을 알려주시면 1차 답변 드리겠습니다.`;
   }
+
+  /**
+   * Appends the vet auto-reply after the same delay the gateway uses. REST
+   * pollers pick it up on their next tick. `unref()` keeps the timer from
+   * holding the process (or Jest) open.
+   */
+  scheduleAutoReply(vetId: string, delayMs = 700): void {
+    this.findVet(vetId);
+    const timer = setTimeout(() => {
+      this.appendMessage(vetId, 'vet', this.buildAutoReply(vetId));
+    }, delayMs);
+    timer.unref?.();
+  }
 }

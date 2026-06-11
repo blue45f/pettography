@@ -4,12 +4,6 @@
   gap: var(--spacing-xl);
 }
 
-.gate {
-  text-align: center;
-  max-width: 480px;
-  margin: var(--spacing-2xl) auto;
-}
-
 .header {
   display: flex;
   flex-direction: column;
@@ -25,9 +19,73 @@
   color: var(--color-text-secondary);
 }
 
+.localNotice {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
 .sectionTitle {
   font-size: var(--font-size-2xl);
   margin-bottom: var(--spacing-md);
+}
+
+.areaList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.areaLink {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: var(--color-text);
+  box-shadow: var(--shadow-xs);
+  transition:
+    border-color var(--motion-fast),
+    box-shadow var(--motion-fast),
+    transform var(--motion-fast);
+}
+
+.areaLink:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.areaEmoji {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft);
+  font-size: var(--font-size-xl);
+  flex-shrink: 0;
+}
+
+.areaMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  flex: 1;
+  min-width: 0;
+}
+
+.areaTitle {
+  font-weight: 700;
+}
+
+.areaDesc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
 }
 
 .statsGrid {
@@ -62,36 +120,4 @@
 
 [data-theme='dark'] .tileValue {
   color: var(--color-primary-200);
-}
-
-.list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.appHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-sm);
-}
-
-.appMeta {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  margin-top: var(--spacing-xs);
-}
-
-.appBody {
-  font-size: var(--font-size-sm);
-  margin-bottom: var(--spacing-sm);
-}
-
-.appActions {
-  display: flex;
-  gap: var(--spacing-sm);
-  flex-wrap: wrap;
 }
