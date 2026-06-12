@@ -7,12 +7,13 @@ import Footer from '@components/layout/Footer'
 import Header from '@components/layout/Header'
 import SosFab from '@components/layout/SosFab'
 import { useOnboardingStore } from '@features/onboarding'
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazyRetry } from '@utils/lazyRetry'
+import { Suspense, useEffect, useState } from 'react'
 import { Outlet } from 'react-router'
 
 import styles from './App.module.css'
 
-const CommandPalette = lazy(() => import('@components/layout/CommandPalette'))
+const CommandPalette = lazyRetry(() => import('@components/layout/CommandPalette'))
 
 function App() {
   const [commandOpen, setCommandOpen] = useState(false)

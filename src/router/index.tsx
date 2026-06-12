@@ -1,5 +1,6 @@
 import Loading from '@components/common/Loading'
 import RouteError from '@components/common/RouteError'
+import { retryImport } from '@utils/lazyRetry'
 import { createBrowserRouter, type RouteObject } from 'react-router'
 
 import type { ComponentType } from 'react'
@@ -12,7 +13,7 @@ interface PageModule {
 
 function lazyPage(loadPage: () => Promise<PageModule>) {
   return async () => {
-    const { default: Component } = await loadPage()
+    const { default: Component } = await retryImport(loadPage)
     return { Component }
   }
 }
