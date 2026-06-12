@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /admin
+
+Sitemap: https://pettography.vercel.app/sitemap.xml

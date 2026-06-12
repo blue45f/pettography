@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://pettography.vercel.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://pettography.vercel.app/about</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/adoption</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/budget</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/cafes</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/calendar</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/care</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/caresheet</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/dashboard</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/diary</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/enclosure</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/events</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/faq</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/forum</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/health</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/market</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/privacy</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/qna</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/routine</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/safety</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/species</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/terms</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/tools</loc><priority>0.8</priority></url>
+  <url><loc>https://pettography.vercel.app/wishlist</loc><priority>0.8</priority></url>
+</urlset>
