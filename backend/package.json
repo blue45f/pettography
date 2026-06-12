@@ -6,7 +6,7 @@
   "packageManager": "pnpm@11.4.0",
   "license": "UNLICENSED",
   "engines": {
-    "node": ">=22",
+    "node": ">=24.16.0",
     "pnpm": ">=11"
   },
   "scripts": {
