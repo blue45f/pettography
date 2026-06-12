@@ -3,7 +3,7 @@
 # Runtime: Node 22 (alpine), NestJS 11 (Express + socket.io).
 
 # ---------- Stage 1: build ----------
-FROM node:22-alpine AS build
+FROM node:24-alpine AS build
 WORKDIR /app
 
 # pnpm via corepack (lockfile is at the repo root in the pnpm workspace).
@@ -26,7 +26,7 @@ RUN pnpm --filter pettography-backend run build
 RUN pnpm --filter pettography-backend deploy --prod --legacy /app/deploy
 
 # ---------- Stage 2: runtime ----------
-FROM node:22-alpine AS runtime
+FROM node:24-alpine AS runtime
 WORKDIR /app
 
 ENV NODE_ENV=production
