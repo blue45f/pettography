@@ -1,44 +1,33 @@
-import { InputHTMLAttributes, useId } from 'react'
+import type { InputHTMLAttributes, Ref } from 'react'
 
-import styles from './Input.module.css'
+import { Field } from '@/components/ui/Field'
+import { Input as KitInput } from '@/components/ui/Input'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   error?: string
   helperText?: string
-  ref?: React.Ref<HTMLInputElement>
+  ref?: Ref<HTMLInputElement>
 }
 
-function Input({ label, error, helperText, className = '', id, ref, ...props }: InputProps) {
-  const generatedId = useId()
-  const inputId = id || generatedId
-
-  const inputClasses = [styles.input, error ? styles.error : '', className]
-    .filter(Boolean)
-    .join(' ')
-
+/**
+ * Legacy common Input — now a thin wrapper over the `ui/` kit Field + Input so
+ * every existing caller renders the canonical kit styling without changing its
+ * API. The kit Field owns id wiring, label, error/description copy and the
+ * `aria-invalid` / `aria-describedby` plumbing the legacy markup did by hand.
+ * Legacy `helperText` maps onto the field description (hidden while an error
+ * shows, matching the old behaviour).
+ */
+function Input({ label, error, helperText, className, id, ref, ...props }: InputProps) {
   return (
-    <div className={styles.wrapper}>
-      {label && (
-        <label htmlFor={inputId} className={styles.label}>
-          {label}
-        </label>
-      )}
-      <input
-        ref={ref}
-        id={inputId}
-        className={inputClasses}
-        aria-invalid={!!error}
-        aria-describedby={error ? `${inputId}-error` : undefined}
-        {...props}
-      />
-      {error && (
-        <span id={`${inputId}-error`} className={styles.errorText}>
-          {error}
-        </span>
-      )}
-      {helperText && !error && <span className={styles.helperText}>{helperText}</span>}
-    </div>
+    <Field id={id} error={error} description={helperText}>
+      {label ? <Field.Label>{label}</Field.Label> : null}
+      <Field.Control>
+        {(controlProps) => (
+          <KitInput ref={ref} className={className} {...controlProps} {...props} />
+        )}
+      </Field.Control>
+    </Field>
   )
 }
 

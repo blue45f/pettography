@@ -48,4 +48,30 @@ describe('Button', () => {
     const { container } = render(<Button variant="outline">클릭</Button>)
     expect(container.querySelector('button')).toBeTruthy()
   })
+
+  it('모든 variant가 버튼으로 렌더링된다 (secondary 포함)', () => {
+    for (const variant of ['primary', 'secondary', 'outline', 'ghost'] as const) {
+      const { unmount } = render(<Button variant={variant}>{variant}</Button>)
+      expect(screen.getByRole('button', { name: variant })).toBeInTheDocument()
+      unmount()
+    }
+  })
+
+  it('fullWidth는 w-full 클래스를 추가한다', () => {
+    render(<Button fullWidth>전체폭</Button>)
+    expect(screen.getByRole('button', { name: '전체폭' })).toHaveClass('w-full')
+  })
+
+  it('size를 적용해 버튼을 렌더링한다', () => {
+    for (const size of ['sm', 'md', 'lg'] as const) {
+      const { unmount } = render(<Button size={size}>{size}</Button>)
+      expect(screen.getByRole('button', { name: size })).toBeInTheDocument()
+      unmount()
+    }
+  })
+
+  it('isLoading 상태에서 스피너(decorative)를 표시한다', () => {
+    const { container } = render(<Button isLoading>저장</Button>)
+    expect(container.querySelector('[aria-hidden="true"]')).toBeTruthy()
+  })
 })

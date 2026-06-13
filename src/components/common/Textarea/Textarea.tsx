@@ -1,44 +1,33 @@
-import { TextareaHTMLAttributes, useId } from 'react'
+import type { Ref, TextareaHTMLAttributes } from 'react'
 
-import styles from './Textarea.module.css'
+import { Field } from '@/components/ui/Field'
+import { Textarea as KitTextarea } from '@/components/ui/Textarea'
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string
   error?: string
   helperText?: string
-  ref?: React.Ref<HTMLTextAreaElement>
+  ref?: Ref<HTMLTextAreaElement>
 }
 
-function Textarea({ label, error, helperText, className = '', id, ref, ...props }: TextareaProps) {
-  const generatedId = useId()
-  const textareaId = id || generatedId
-
-  const textareaClasses = [styles.textarea, error ? styles.error : '', className]
-    .filter(Boolean)
-    .join(' ')
-
+/**
+ * Legacy common Textarea — now a thin wrapper over the `ui/` kit Field +
+ * Textarea so every existing caller renders the canonical kit styling without
+ * changing its API. The kit Field owns id wiring, label, error/description copy
+ * and the `aria-invalid` / `aria-describedby` plumbing the legacy markup did by
+ * hand. Legacy `helperText` maps onto the field description (hidden while an
+ * error shows, matching the old behaviour).
+ */
+function Textarea({ label, error, helperText, className, id, ref, ...props }: TextareaProps) {
   return (
-    <div className={styles.wrapper}>
-      {label && (
-        <label htmlFor={textareaId} className={styles.label}>
-          {label}
-        </label>
-      )}
-      <textarea
-        ref={ref}
-        id={textareaId}
-        className={textareaClasses}
-        aria-invalid={!!error}
-        aria-describedby={error ? `${textareaId}-error` : undefined}
-        {...props}
-      />
-      {error && (
-        <span id={`${textareaId}-error`} className={styles.errorText}>
-          {error}
-        </span>
-      )}
-      {helperText && !error && <span className={styles.helperText}>{helperText}</span>}
-    </div>
+    <Field id={id} error={error} description={helperText}>
+      {label ? <Field.Label>{label}</Field.Label> : null}
+      <Field.Control>
+        {(controlProps) => (
+          <KitTextarea ref={ref} className={className} {...controlProps} {...props} />
+        )}
+      </Field.Control>
+    </Field>
   )
 }
 
