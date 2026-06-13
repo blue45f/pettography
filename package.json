@@ -51,6 +51,8 @@
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
     "@pettography/shared": "workspace:*",
+    "@radix-ui/react-label": "^2.1.9",
+    "@radix-ui/react-slot": "^1.2.5",
     "@tanstack/react-query": "^5.101.0",
     "clsx": "^2.1.1",
     "i18next": "^26.3.1",
