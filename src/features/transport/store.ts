@@ -46,7 +46,7 @@ export const useTransportStore = create<TransportState>()(
           trips: state.trips.map((trip) =>
             trip.id === id
               ? { ...trip, checklist: { ...trip.checklist, [key]: !trip.checklist[key] } }
-              : trip,
+              : trip
           ),
         })),
       removeTrip: (id) => set((state) => ({ trips: state.trips.filter((t) => t.id !== id) })),
@@ -55,8 +55,8 @@ export const useTransportStore = create<TransportState>()(
     {
       name: 'pettography.transport',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

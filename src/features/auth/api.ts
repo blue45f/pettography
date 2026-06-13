@@ -94,7 +94,7 @@ export async function listAccounts(): Promise<PublicAccount[]> {
 
 export async function updateAccount(
   accountId: string,
-  input: AdminUpdateAccountInput,
+  input: AdminUpdateAccountInput
 ): Promise<PublicAccount> {
   const response = await api.patch<PublicAccount>(`auth/admin/accounts/${accountId}`, input)
   return publicAccountSchema.parse(response.data)
@@ -112,7 +112,7 @@ export async function listAuditLogs(): Promise<AuditLog[]> {
 export async function listForbiddenWords(): Promise<ForbiddenWordRule[]> {
   const response = await api.getValidated(
     'moderation/admin/forbidden-words',
-    z.array(forbiddenWordRuleSchema),
+    z.array(forbiddenWordRuleSchema)
   )
   return response.data
 }
@@ -121,18 +121,18 @@ export async function createForbiddenWord(input: ForbiddenWordInput): Promise<Fo
   const response = await api.postValidated(
     'moderation/admin/forbidden-words',
     input,
-    forbiddenWordRuleSchema,
+    forbiddenWordRuleSchema
   )
   return response.data
 }
 
 export async function updateForbiddenWord(
   id: string,
-  input: Partial<ForbiddenWordInput>,
+  input: Partial<ForbiddenWordInput>
 ): Promise<ForbiddenWordRule> {
   const response = await api.patch<ForbiddenWordRule>(
     `moderation/admin/forbidden-words/${id}`,
-    input,
+    input
   )
   return forbiddenWordRuleSchema.parse(response.data)
 }

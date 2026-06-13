@@ -539,7 +539,7 @@ function MentorComposer({ onCreated }: MentorComposerProps) {
                             field.onChange(
                               e.target.checked
                                 ? [...field.value, c]
-                                : field.value.filter((v) => v !== c),
+                                : field.value.filter((v) => v !== c)
                             )
                           }}
                         />

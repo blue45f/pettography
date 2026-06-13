@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "packageManager": "pnpm@11.4.0",
   "type": "module",
+  "prettier": "@heejun/prettier-config",
   "engines": {
     "node": ">=24.16.0",
     "pnpm": ">=11"
@@ -78,6 +79,7 @@
     "@commitlint/cli": "^21.0.2",
     "@commitlint/config-conventional": "^21.0.2",
     "@eslint/js": "^10.0.1",
+    "@heejun/prettier-config": "^3.0.0",
     "@rolldown/plugin-babel": "^0.2.3",
     "@storybook/addon-a11y": "^10.4.2",
     "@storybook/addon-themes": "^10.4.2",

@@ -32,7 +32,7 @@ export function Alert({ tone = 'info', title, action, className, children, ...pr
       className={cn(
         'flex items-start justify-between gap-4 rounded-md border px-5 py-3',
         tones[tone],
-        className,
+        className
       )}
       {...props}
     >

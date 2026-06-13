@@ -110,7 +110,7 @@ function CostReport() {
         month: e.spentAt.slice(0, 7),
         petId: e.petId ?? null,
       })),
-    [entries],
+    [entries]
   )
 
   // Years that actually have data, descending.
@@ -133,7 +133,7 @@ function CostReport() {
       effectiveYear === null
         ? allExpenses
         : allExpenses.filter((e) => Number(e.month.slice(0, 4)) === effectiveYear),
-    [allExpenses, effectiveYear],
+    [allExpenses, effectiveYear]
   )
 
   const categoryTotals = useMemo(() => totalsByCategory(expenses), [expenses])
@@ -147,7 +147,7 @@ function CostReport() {
   const projected = useMemo(() => projectedAnnual(allExpenses, todayIso()), [allExpenses])
   const thisYearTotal = useMemo(
     () => annualTotal(allExpenses, currentYear),
-    [allExpenses, currentYear],
+    [allExpenses, currentYear]
   )
 
   const categoryMax = categoryTotals[0]?.totalKrw ?? 0
@@ -160,7 +160,7 @@ function CostReport() {
         y: m.totalKrw,
         label: m.month,
       })),
-    [monthTotals],
+    [monthTotals]
   )
 
   const hasData = allExpenses.length > 0

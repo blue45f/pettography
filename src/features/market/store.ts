@@ -81,6 +81,6 @@ export const useMarketStore = create<MarketState>()(
       name: 'pettography.market',
       version: 1,
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )

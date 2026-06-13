@@ -69,7 +69,7 @@ function Diary() {
       weightGram: null,
       imageUrl: '',
     }),
-    [],
+    []
   )
 
   const [initialDraft] = useState<DiaryFormValues>(() => {

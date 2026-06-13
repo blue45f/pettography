@@ -79,24 +79,24 @@ function Dashboard() {
 
   const origin = useMemo(
     () => (profile.location ? { lat: profile.location.lat, lng: profile.location.lng } : undefined),
-    [profile.location],
+    [profile.location]
   )
 
   const { data: species } = useSpecies(profile.speciesId ?? undefined)
   const hospitalsQuery = useHospitalsList(
-    profile.category ? { category: profile.category, origin } : { origin },
+    profile.category ? { category: profile.category, origin } : { origin }
   )
   const shopsQuery = useShopsList(
-    profile.category ? { category: profile.category, origin } : { origin },
+    profile.category ? { category: profile.category, origin } : { origin }
   )
   const careQuery = useCareGuide(profile.speciesId ?? undefined)
   const communitiesQuery = useCommunitiesList(
-    profile.category ? { category: profile.category } : {},
+    profile.category ? { category: profile.category } : {}
   )
   const adoptionQuery = useAdoptionList(profile.category ? { category: profile.category } : {})
   const funeralQuery = useFuneralList(profile.category ? { category: profile.category } : {})
   const externalLinksQuery = useExternalLinks(
-    profile.category ? { speciesCategory: profile.category as ExtSpeciesCategory } : {},
+    profile.category ? { speciesCategory: profile.category as ExtSpeciesCategory } : {}
   )
   const diaryEntries = useActivePetDiary()
   const diaryAggregate = useMemo(() => diaryStats(diaryEntries), [diaryEntries])
@@ -127,7 +127,7 @@ function Dashboard() {
   const habitatSummary = useMemo(() => {
     const range = recommendationFor(profile.category)
     const sortedEntries = [...habitatEntries].sort((a, b) =>
-      b.measuredAt.localeCompare(a.measuredAt),
+      b.measuredAt.localeCompare(a.measuredAt)
     )
     const latest = sortedEntries[0] ?? null
     const breaches = detectBreaches(latest, range)
@@ -998,7 +998,7 @@ function countWeekActivity(
   diary: { occurredAt: string }[],
   photos: { addedAt: string }[],
   completions: Record<string, string>,
-  weights: { measuredAt: string }[],
+  weights: { measuredAt: string }[]
 ) {
   const weekAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000).toISOString().slice(0, 10)
   const since = (iso: string) => iso.slice(0, 10) >= weekAgo

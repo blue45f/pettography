@@ -39,6 +39,6 @@ export const useKitStore = create<KitStoreState>()(
     {
       name: 'pettography.kit',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )

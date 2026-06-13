@@ -45,7 +45,7 @@ function CommandPalette({ onClose }: CommandPaletteProps) {
           .filter(
             (sp) =>
               sp.koreanName.toLowerCase().includes(q) ||
-              (sp.scientificName ?? '').toLowerCase().includes(q),
+              (sp.scientificName ?? '').toLowerCase().includes(q)
           )
           .slice(0, MAX_SPECIES)
           .map((sp) => ({

@@ -38,7 +38,7 @@ function Caresheet() {
 
   const activePet = useMemo(
     () => pets.find((p) => p.id === activePetId) ?? null,
-    [pets, activePetId],
+    [pets, activePetId]
   )
   const petName = activePet?.petName?.trim() || species?.koreanName || t('caresheet.petFallback')
 

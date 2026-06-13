@@ -32,7 +32,7 @@ describe('readinessPct', () => {
   it('rounds a partial completion', () => {
     // 3 of 7 -> 42.857 -> 43
     expect(
-      readinessPct(makeItem({ readiness: { space: true, budget: true, vet: true } }), TOTAL),
+      readinessPct(makeItem({ readiness: { space: true, budget: true, vet: true } }), TOTAL)
     ).toBe(43)
   })
 
@@ -42,7 +42,7 @@ describe('readinessPct', () => {
 
   it('caps at the declared total even with extra true keys', () => {
     const readiness: Record<string, boolean> = Object.fromEntries(
-      READINESS_ITEMS.map((id) => [id, true]),
+      READINESS_ITEMS.map((id) => [id, true])
     )
     readiness.extra = true
     expect(readinessPct(makeItem({ readiness }), TOTAL)).toBe(100)

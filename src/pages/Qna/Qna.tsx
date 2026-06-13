@@ -104,9 +104,9 @@ function Qna() {
         tagFilter,
         sort,
         speciesById,
-        profile.category ?? null,
+        profile.category ?? null
       ),
-    [questions, answerCounts, speciesFilter, tagFilter, sort, speciesById, profile.category],
+    [questions, answerCounts, speciesFilter, tagFilter, sort, speciesById, profile.category]
   )
 
   function handleToggleOpen(id: string) {
@@ -119,7 +119,7 @@ function Qna() {
         value: s.id,
         label: `${s.heroEmoji} ${s.koreanName}`,
       })),
-    [species],
+    [species]
   )
 
   return (
@@ -313,7 +313,7 @@ function selectQuestions(
   tagFilter: string | null,
   sort: QnaSort,
   speciesById: Map<string, Species>,
-  activeCategory: string | null,
+  activeCategory: string | null
 ): QnaQuestion[] {
   const filtered = questions.filter((q) => {
     if (speciesFilter !== 'all' && q.speciesId !== speciesFilter) return false

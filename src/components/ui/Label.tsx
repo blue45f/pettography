@@ -15,7 +15,7 @@ export function Label({ className, required, children, ...props }: LabelProps) {
       className={cn(
         'inline-flex items-center gap-1 text-sm font-medium leading-tight text-ink ' +
           'peer-disabled:cursor-not-allowed peer-disabled:opacity-50',
-        className,
+        className
       )}
       {...props}
     >

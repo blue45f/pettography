@@ -6,7 +6,7 @@ function installKakaoBootstrap() {
   class FakeLatLng {
     constructor(
       public lat: number,
-      public lng: number,
+      public lng: number
     ) {}
 
     getLat() {
@@ -102,10 +102,10 @@ describe('loadKakaoMap', () => {
       Promise.race([
         attempt.then(
           () => 'resolved',
-          () => 'rejected',
+          () => 'rejected'
         ),
         new Promise<'pending'>((resolve) => window.setTimeout(() => resolve('pending'), 0)),
-      ]),
+      ])
     ).resolves.toBe('rejected')
   })
 })

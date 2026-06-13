@@ -57,6 +57,6 @@ export const useAuthStore = create<AuthState>()(
         state.isAuthenticated = derived.isAuthenticated
         state.isAdmin = derived.isAdmin
       },
-    },
-  ),
+    }
+  )
 )

@@ -51,8 +51,8 @@ export const useBrumationStore = create<BrumationState>()(
     {
       name: 'pettography.brumation',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

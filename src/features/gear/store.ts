@@ -43,7 +43,7 @@ export const useGearStore = create<GearState>()(
       markReplaced: (id, dateISO) =>
         set((state) => ({
           items: state.items.map((item) =>
-            item.id === id ? { ...item, installedAt: dateISO.slice(0, 10) } : item,
+            item.id === id ? { ...item, installedAt: dateISO.slice(0, 10) } : item
           ),
         })),
       removeItem: (id) => set((state) => ({ items: state.items.filter((i) => i.id !== id) })),
@@ -52,8 +52,8 @@ export const useGearStore = create<GearState>()(
     {
       name: 'pettography.gear',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

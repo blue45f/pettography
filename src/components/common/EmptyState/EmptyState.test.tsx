@@ -36,7 +36,7 @@ describe('EmptyState', () => {
           variant="log"
           title="아직 급이 기록이 없어요"
           hint="팁: 거부한 먹이도 함께 남겨두세요."
-        />,
+        />
       )
       expect(screen.getByText('팁: 거부한 먹이도 함께 남겨두세요.')).toBeInTheDocument()
     })

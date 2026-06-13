@@ -35,7 +35,7 @@ export const useBcsStore = create<BcsState>()(
         }
         set((state) => ({
           entries: [entry, ...state.entries].sort((a, b) =>
-            b.assessedAt.localeCompare(a.assessedAt),
+            b.assessedAt.localeCompare(a.assessedAt)
           ),
         }))
         return entry
@@ -46,8 +46,8 @@ export const useBcsStore = create<BcsState>()(
     {
       name: 'pettography.bcs',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /** BCS entries scoped to the active pet (legacy untagged entries fall through). */

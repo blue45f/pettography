@@ -35,7 +35,7 @@ self.addEventListener('activate', (event) => {
     caches
       .keys()
       .then((keys) => Promise.all(keys.filter((k) => !valid.has(k)).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim()),
+      .then(() => self.clients.claim())
   )
 })
 
@@ -61,7 +61,7 @@ self.addEventListener('fetch', (event) => {
           }
           return response
         })
-        .catch(() => caches.match('/index.html')),
+        .catch(() => caches.match('/index.html'))
     )
     return
   }
@@ -78,7 +78,7 @@ self.addEventListener('fetch', (event) => {
           }
           return response
         })
-      }),
+      })
     )
     return
   }
@@ -97,7 +97,7 @@ self.addEventListener('fetch', (event) => {
           })
           .catch(() => cached)
         return cached || fetchPromise
-      }),
+      })
     )
     return
   }

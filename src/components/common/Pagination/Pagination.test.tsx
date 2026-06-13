@@ -37,7 +37,7 @@ describe('Pagination', () => {
 
   it('totalPages가 1이면 렌더링하지 않는다', () => {
     const { container } = render(
-      <Pagination currentPage={1} totalPages={1} onPageChange={vi.fn()} />,
+      <Pagination currentPage={1} totalPages={1} onPageChange={vi.fn()} />
     )
     expect(container.innerHTML).toBe('')
   })

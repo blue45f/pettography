@@ -33,7 +33,7 @@ export function Switch({ className, size = 'md', ...props }: SwitchProps) {
           'disabled:cursor-not-allowed disabled:opacity-50 ' +
           'data-[state=checked]:bg-brand',
         tracks[size],
-        className,
+        className
       )}
       {...props}
     >
@@ -41,7 +41,7 @@ export function Switch({ className, size = 'md', ...props }: SwitchProps) {
         className={cn(
           'pointer-events-none block translate-x-0 rounded-full bg-white shadow-sm ' +
             'transition-transform duration-150 ease-quint',
-          thumbs[size],
+          thumbs[size]
         )}
       />
     </SwitchPrimitive.Root>

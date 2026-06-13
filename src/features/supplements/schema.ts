@@ -36,7 +36,7 @@ export type DustingLog = z.infer<typeof dustingLogSchema>
  */
 export const scheduleConfigSchema = z.partialRecord(
   supplementTypeSchema,
-  z.number().int().positive(),
+  z.number().int().positive()
 )
 export type ScheduleConfig = z.infer<typeof scheduleConfigSchema>
 

@@ -24,7 +24,7 @@ function Morphs() {
   const morphs = useMemo(() => MORPHS.filter((m) => m.speciesSlug === selectedSlug), [selectedSlug])
   const selectedSpecies = useMemo(
     () => availableSpecies.find((s) => s.slug === selectedSlug),
-    [availableSpecies, selectedSlug],
+    [availableSpecies, selectedSlug]
   )
 
   return (

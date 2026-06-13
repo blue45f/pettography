@@ -38,7 +38,7 @@ describe('cycleStatus', () => {
 
   it('treats trace toxin readings as zero for the cycled decision', () => {
     expect(cycleStatus(reading({ ammoniaPpm: 0.05, nitritePpm: 0.05, nitratePpm: 10 }))).toBe(
-      'cycled',
+      'cycled'
     )
   })
 
@@ -56,7 +56,7 @@ describe('cycleStatus', () => {
 
   it('is unknown when a toxin reading is missing entirely', () => {
     expect(cycleStatus(reading({ ammoniaPpm: 0, nitritePpm: null, nitratePpm: 20 }))).toBe(
-      'unknown',
+      'unknown'
     )
   })
 
@@ -125,7 +125,7 @@ describe('trend', () => {
         reading({ measuredAt: '2024-01-01', nitratePpm: 10 }),
         reading({ measuredAt: '2024-01-02', nitratePpm: null }),
       ],
-      'nitratePpm',
+      'nitratePpm'
     )
     expect(points.map((p) => p.y)).toEqual([10, 30])
     expect(points.map((p) => p.measuredAt)).toEqual(['2024-01-01', '2024-01-03'])

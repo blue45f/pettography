@@ -51,7 +51,7 @@ function Cohab() {
         value: s.id,
         label: `${s.heroEmoji} ${s.koreanName}`,
       })),
-    [speciesList],
+    [speciesList]
   )
 
   // Resolve the effective A/B ids: an explicit pick wins, otherwise default A to
@@ -62,11 +62,11 @@ function Cohab() {
 
   const speciesA = useMemo(
     () => speciesList.find((s) => s.id === resolvedAId) ?? null,
-    [speciesList, resolvedAId],
+    [speciesList, resolvedAId]
   )
   const speciesB = useMemo(
     () => speciesList.find((s) => s.id === resolvedBId) ?? null,
-    [speciesList, resolvedBId],
+    [speciesList, resolvedBId]
   )
 
   const result = useMemo(() => {
@@ -76,7 +76,7 @@ function Cohab() {
 
   const socialSpecies = useMemo(
     () => speciesList.filter((s) => SOCIAL_SLUGS.includes(s.slug)),
-    [speciesList],
+    [speciesList]
   )
 
   return (

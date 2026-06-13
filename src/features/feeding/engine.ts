@@ -36,7 +36,7 @@ export function nextFeedingDate(lastFedISO: string, freqDays: number): string {
 export function daysUntilFeeding(
   lastFedISO: string,
   freqDays: number,
-  today: string = new Date().toISOString().slice(0, 10),
+  today: string = new Date().toISOString().slice(0, 10)
 ): number {
   return daysBetween(today, nextFeedingDate(lastFedISO, freqDays))
 }

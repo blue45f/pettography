@@ -60,7 +60,7 @@ function crewKinds(crewIds: string[]): Set<string> {
 
 /** Coarse moisture band for a category — drives "is this a humid build?" logic. */
 export function humidityProfileForCategory(
-  category: SpeciesCategory | null | undefined,
+  category: SpeciesCategory | null | undefined
 ): HumidityBand {
   switch (category) {
     case 'amphibian':

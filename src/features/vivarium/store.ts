@@ -63,8 +63,8 @@ export const useVivariumStore = create<VivariumState>()(
     {
       name: 'pettography.vivarium',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /** Saved builds scoped to the active pet (legacy untagged builds fall through). */

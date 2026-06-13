@@ -30,7 +30,7 @@ function withDistance(hospital: Hospital, origin?: Coordinates): HospitalWithDis
 }
 
 export async function listHospitals(
-  params: ListHospitalsParams = {},
+  params: ListHospitalsParams = {}
 ): Promise<HospitalWithDistance[]> {
   if (USE_REMOTE) {
     const search: Record<string, string> = {}

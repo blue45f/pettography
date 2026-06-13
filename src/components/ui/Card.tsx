@@ -9,7 +9,7 @@ export function Card({ className, ...props }: CardProps) {
     <div
       className={cn(
         'flex flex-col rounded-lg border border-line bg-panel text-ink shadow-sm',
-        className,
+        className
       )}
       {...props}
     />

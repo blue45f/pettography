@@ -61,11 +61,11 @@ function Feeding() {
 
   const activeSpecies = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId) ?? null,
-    [speciesList, profile.speciesId],
+    [speciesList, profile.speciesId]
   )
   const rule = useMemo(
     () => feedingRule(activeSpecies?.slug, activeSpecies?.category ?? profile.category),
-    [activeSpecies, profile.category],
+    [activeSpecies, profile.category]
   )
   const freqDays = rule ? recommendFrequencyDays(rule, ageStage) : null
   const snakeSizing = usesBodyWeightSizing(rule)
@@ -147,7 +147,7 @@ function Feeding() {
     downloadTextFile(
       'pettography-feeding.csv',
       buildCsv(['date', 'item', 'quantity', 'accepted', 'notes'], rows),
-      'text/csv;charset=utf-8',
+      'text/csv;charset=utf-8'
     )
   }
 

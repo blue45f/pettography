@@ -66,6 +66,6 @@ export const usePartnersStore = create<PartnersState>()(
     {
       name: 'pettography.partners',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )

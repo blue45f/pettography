@@ -56,7 +56,7 @@ function computeMetrics(petId: string, pet: PetProfile, stores: HerdStoreData): 
 
   const cutoff30 = Date.now() - 30 * 24 * 3600 * 1000
   m.diaryRecent30 = stores.diaryEntries.filter(
-    (e) => matches(e.petId) && new Date(e.occurredAt).getTime() >= cutoff30,
+    (e) => matches(e.petId) && new Date(e.occurredAt).getTime() >= cutoff30
   ).length
 
   const weights = stores.weights.filter((w) => matches(w.petId))

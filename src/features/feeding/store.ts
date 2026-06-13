@@ -48,8 +48,8 @@ export const useFeedingStore = create<FeedingState>()(
     {
       name: 'pettography.feeding',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

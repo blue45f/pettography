@@ -270,7 +270,7 @@ const CATEGORY_FALLBACK: Readonly<Record<SpeciesCategory, SpeciesTemplate>> = {
 /** Resolve a starting template by species slug, falling back to the category. */
 export function templateForSpecies(
   slug: string | null | undefined,
-  category: SpeciesCategory | null | undefined,
+  category: SpeciesCategory | null | undefined
 ): SpeciesTemplate | null {
   if (slug && SPECIES_TEMPLATES[slug]) return SPECIES_TEMPLATES[slug]
   if (category) return CATEGORY_FALLBACK[category]

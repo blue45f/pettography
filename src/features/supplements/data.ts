@@ -67,7 +67,7 @@ export function supplementGuidance(category: SpeciesCategory | null | undefined)
  */
 export function defaultIntervalDays(
   category: SpeciesCategory | null | undefined,
-  type: SupplementType,
+  type: SupplementType
 ): number | null {
   if (!category) return null
   return CATEGORY_CADENCE[category].intervalDays[type]

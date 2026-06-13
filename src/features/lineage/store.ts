@@ -72,6 +72,6 @@ export const useLineageStore = create<LineageState>()(
     {
       name: 'pettography.lineage',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )

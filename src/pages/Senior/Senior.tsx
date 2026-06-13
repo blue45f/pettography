@@ -65,7 +65,7 @@ function Senior() {
 
   const activeSpecies = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId) ?? null,
-    [speciesList, profile.speciesId],
+    [speciesList, profile.speciesId]
   )
 
   const seniorProfile = useActivePetSenior()
@@ -74,11 +74,11 @@ function Senior() {
 
   const ageYears = useMemo(
     () => (seniorProfile.ageMonths === null ? null : monthsToYears(seniorProfile.ageMonths)),
-    [seniorProfile.ageMonths],
+    [seniorProfile.ageMonths]
   )
 
   const hasLifespan = Boolean(
-    activeSpecies && activeSpecies.lifespanMaxYears > 0 && activeSpecies.lifespanMinYears > 0,
+    activeSpecies && activeSpecies.lifespanMaxYears > 0 && activeSpecies.lifespanMinYears > 0
   )
 
   const stage = useMemo<LifeStage | null>(() => {
@@ -96,7 +96,7 @@ function Senior() {
     return expectedRemainingYears(
       ageYears,
       activeSpecies.lifespanMinYears,
-      activeSpecies.lifespanMaxYears,
+      activeSpecies.lifespanMaxYears
     )
   }, [ageYears, activeSpecies])
 
@@ -106,7 +106,7 @@ function Senior() {
 
   const checklistStats = useMemo(
     () => checklistProgress(SENIOR_CHECKLIST, seniorProfile.checklist),
-    [seniorProfile.checklist],
+    [seniorProfile.checklist]
   )
 
   const {

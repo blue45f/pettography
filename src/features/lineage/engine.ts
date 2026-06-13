@@ -45,7 +45,7 @@ export interface Ancestor {
 export function ancestors(
   animalId: string,
   animals: LineageAnimal[],
-  maxDepth: number,
+  maxDepth: number
 ): Ancestor[] {
   const index = byId(animals)
   const out: Ancestor[] = []
@@ -100,7 +100,7 @@ export interface PedigreeNode {
 export function pedigree(
   animalId: string,
   animals: LineageAnimal[],
-  depth: number,
+  depth: number
 ): PedigreeNode | null {
   const index = byId(animals)
   const root = index.get(animalId)
@@ -113,7 +113,7 @@ function build(
   depth: number,
   maxDepth: number,
   index: Map<string, LineageAnimal>,
-  path: Set<string>,
+  path: Set<string>
 ): PedigreeNode {
   // Mark this animal as on the current ancestry path for cycle detection.
   const nextPath = new Set(path)
@@ -135,7 +135,7 @@ function build(
 function resolveParent(
   parentId: string | null,
   index: Map<string, LineageAnimal>,
-  path: Set<string>,
+  path: Set<string>
 ): LineageAnimal | null {
   if (!parentId) return null
   if (path.has(parentId)) return null // cycle guard
@@ -157,7 +157,7 @@ export function offspringOf(animalId: string, animals: LineageAnimal[]): Lineage
 export function knownAncestorCount(
   animalId: string,
   animals: LineageAnimal[],
-  maxDepth: number,
+  maxDepth: number
 ): number {
   return ancestors(animalId, animals, maxDepth).length
 }

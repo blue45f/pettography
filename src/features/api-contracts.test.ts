@@ -36,7 +36,7 @@ describe('frontend/backend API contracts', () => {
   it('keeps backend forum responses compatible with the frontend forum schemas', () => {
     expect(forumPostSchema.array().safeParse(FORUM_POSTS_SEED).success).toBe(true)
     expect(
-      forumReplySchema.array().safeParse(Object.values(FORUM_REPLIES_SEED).flat()).success,
+      forumReplySchema.array().safeParse(Object.values(FORUM_REPLIES_SEED).flat()).success
     ).toBe(true)
   })
 

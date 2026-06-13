@@ -80,7 +80,7 @@ function Pagination({
           >
             {page}
           </button>
-        ),
+        )
       )}
 
       <button

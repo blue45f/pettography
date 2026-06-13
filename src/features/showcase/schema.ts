@@ -56,7 +56,7 @@ export function voteCount(post: ShowcasePost, votedIds: Record<string, true>): n
 export function topPostForTheme(
   posts: readonly ShowcasePost[],
   votedIds: Record<string, true>,
-  themeId: ShowcaseThemeId,
+  themeId: ShowcaseThemeId
 ): ShowcasePost | null {
   let best: ShowcasePost | null = null
   let bestVotes = -1

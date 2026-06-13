@@ -117,7 +117,7 @@ describe('nextDoseDate stepping', () => {
     const m = med({ doses: given('2024-01-01') })
     expect(nextDoseDate(m, '2024-01-04')).toBe('2024-01-04')
     expect(nextDoseDate(med({ doses: given('2024-01-01', '2024-01-04') }), '2024-01-05')).toBe(
-      '2024-01-07',
+      '2024-01-07'
     )
   })
 
@@ -231,7 +231,7 @@ describe('quarantineDoneCode', () => {
 
   it('is cleared whenever clearedAt is set, regardless of date', () => {
     expect(quarantineDoneCode(quarantine({ clearedAt: '2024-01-10' }), '2024-01-15')).toBe(
-      'cleared',
+      'cleared'
     )
   })
 })

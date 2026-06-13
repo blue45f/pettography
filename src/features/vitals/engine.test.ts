@@ -9,7 +9,7 @@ function reading(
   measuredAt: string,
   type: VitalType,
   bpmValue: number,
-  createdAt = `${measuredAt}T00:00:00.000Z`,
+  createdAt = `${measuredAt}T00:00:00.000Z`
 ): VitalReading {
   return {
     id: `${measuredAt}-${type}-${bpmValue}`,

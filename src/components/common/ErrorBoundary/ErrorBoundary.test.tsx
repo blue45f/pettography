@@ -20,7 +20,7 @@ describe('ErrorBoundary', () => {
     render(
       <ErrorBoundary>
         <Bomb on={false} />
-      </ErrorBoundary>,
+      </ErrorBoundary>
     )
     expect(screen.getByText('ok')).toBeInTheDocument()
   })
@@ -30,7 +30,7 @@ describe('ErrorBoundary', () => {
     render(
       <ErrorBoundary>
         <Bomb on={true} />
-      </ErrorBoundary>,
+      </ErrorBoundary>
     )
     expect(screen.getByRole('heading', { name: '문제가 발생했습니다' })).toBeInTheDocument()
     expect(screen.getByText('boom!')).toBeInTheDocument()
@@ -42,7 +42,7 @@ describe('ErrorBoundary', () => {
     render(
       <ErrorBoundary fallback={<div>custom</div>}>
         <Bomb on={true} />
-      </ErrorBoundary>,
+      </ErrorBoundary>
     )
     expect(screen.getByText('custom')).toBeInTheDocument()
   })
@@ -55,13 +55,13 @@ describe('ErrorBoundary', () => {
     const { rerender } = render(
       <ErrorBoundary>
         <Bomb on={true} />
-      </ErrorBoundary>,
+      </ErrorBoundary>
     )
     expect(screen.getByText('boom!')).toBeInTheDocument()
     rerender(
       <ErrorBoundary>
         <Toggleable />
-      </ErrorBoundary>,
+      </ErrorBoundary>
     )
     await userEvent.click(screen.getByRole('button', { name: '다시 시도' }))
     expect(screen.getByText('ok')).toBeInTheDocument()
@@ -77,7 +77,7 @@ describe('ErrorBoundary', () => {
     render(
       <ErrorBoundary>
         <Empty />
-      </ErrorBoundary>,
+      </ErrorBoundary>
     )
     expect(screen.getByText('알 수 없는 오류가 발생했습니다.')).toBeInTheDocument()
   })

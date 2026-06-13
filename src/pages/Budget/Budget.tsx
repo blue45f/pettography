@@ -55,12 +55,12 @@ function Budget() {
   const breakdown = useMemo(() => monthBreakdown(entries), [entries])
   const compare = useMemo(
     () => compareAgainstRecommended(breakdown.totalKrw, species?.monthlyBudgetKrw ?? null),
-    [breakdown.totalKrw, species?.monthlyBudgetKrw],
+    [breakdown.totalKrw, species?.monthlyBudgetKrw]
   )
 
   const maxCategory = useMemo(
     () => Math.max(...Object.values(breakdown.byCategory), 1),
-    [breakdown.byCategory],
+    [breakdown.byCategory]
   )
 
   const monthLabel = useMemo(() => {

@@ -20,7 +20,7 @@ export const useInquiryStore = create<InquiryState>()(
         set((state) => ({
           receipts: [receipt, ...state.receipts.filter((r) => r.id !== receipt.id)].slice(
             0,
-            MAX_RECEIPTS,
+            MAX_RECEIPTS
           ),
         })),
       removeReceipt: (id) =>
@@ -29,6 +29,6 @@ export const useInquiryStore = create<InquiryState>()(
     {
       name: 'pettography.inquiry',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )

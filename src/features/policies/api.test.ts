@@ -37,16 +37,16 @@ afterEach(() => {
 describe('policy urls', () => {
   it('builds the TermsDesk public JSON endpoint per slug', () => {
     expect(policyApiUrl('terms-of-service')).toBe(
-      'https://termsdesk.vercel.app/api/public/pettography/policies/terms-of-service',
+      'https://termsdesk.vercel.app/api/public/pettography/policies/terms-of-service'
     )
     expect(policyApiUrl('privacy-policy')).toBe(
-      'https://termsdesk.vercel.app/api/public/pettography/policies/privacy-policy',
+      'https://termsdesk.vercel.app/api/public/pettography/policies/privacy-policy'
     )
   })
 
   it('builds the rendered fallback page url per slug', () => {
     expect(policyPublicUrl('privacy-policy')).toBe(
-      'https://termsdesk.vercel.app/p/pettography/privacy-policy',
+      'https://termsdesk.vercel.app/p/pettography/privacy-policy'
     )
   })
 })
@@ -66,7 +66,7 @@ describe('fetchPolicy', () => {
 
   it('tolerates extra fields and missing optional metadata', async () => {
     fetchMock.mockResolvedValue(
-      mockOk({ ...basePayload, orgName: 'Pettography', availableVersions: ['v1'] }),
+      mockOk({ ...basePayload, orgName: 'Pettography', availableVersions: ['v1'] })
     )
 
     const policy = await fetchPolicy('terms-of-service')
@@ -86,7 +86,7 @@ describe('fetchPolicy', () => {
     fetchMock.mockResolvedValue(mockOk({ policySlug: 'terms-of-service' }))
 
     await expect(fetchPolicy('terms-of-service')).rejects.toThrow(
-      'TermsDesk policy payload failed validation',
+      'TermsDesk policy payload failed validation'
     )
     consoleError.mockRestore()
   })

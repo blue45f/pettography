@@ -36,7 +36,7 @@ export const useRoutineStore = create<RoutineState>()(
         set((state) => ({
           customTasks: state.customTasks.filter((t) => t.id !== id),
           completions: Object.fromEntries(
-            Object.entries(state.completions).filter(([k]) => k !== id),
+            Object.entries(state.completions).filter(([k]) => k !== id)
           ),
         })),
       markDone: (id) =>
@@ -54,8 +54,8 @@ export const useRoutineStore = create<RoutineState>()(
     {
       name: 'pettography.routine',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 export function useActivePetCustomTasks(): RoutineTask[] {
@@ -68,7 +68,7 @@ export function useActivePetCustomTasks(): RoutineTask[] {
 export function isDoneWithinWindow(
   completedAt: string | undefined,
   cadence: RoutineCadence,
-  now: Date = new Date(),
+  now: Date = new Date()
 ): boolean {
   if (!completedAt) return false
   const done = new Date(completedAt).getTime()

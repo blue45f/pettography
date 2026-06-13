@@ -63,8 +63,8 @@ export const useWaterStore = create<WaterState>()(
     {
       name: 'pettography.water',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

@@ -49,7 +49,7 @@ function Shops() {
 
   const origin = useMemo(
     () => (profile.location ? { lat: profile.location.lat, lng: profile.location.lng } : undefined),
-    [profile.location],
+    [profile.location]
   )
 
   const { data, isLoading } = useShopsList({

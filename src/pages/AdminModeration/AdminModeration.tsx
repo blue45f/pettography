@@ -69,7 +69,7 @@ function AdminModeration() {
         onToggleHidden: (hidden) => setForumHidden(post.id, hidden),
         onRemove: () => removeForumPost(post.id),
         onRemoveAttachment: (attachmentId) => removeForumAttachment(post.id, attachmentId),
-      }),
+      })
     ),
     ...Object.entries(cafePostsMap).flatMap(([cafeId, posts]) =>
       posts.map((post): ModerationRow => {
@@ -90,7 +90,7 @@ function AdminModeration() {
           onRemove: () => removeCafePost(cafeId, post.id),
           onRemoveAttachment: (attachmentId) => removeCafeAttachment(cafeId, post.id, attachmentId),
         }
-      }),
+      })
     ),
   ].sort((a, b) => b.createdAt.localeCompare(a.createdAt))
 

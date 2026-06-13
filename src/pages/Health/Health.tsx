@@ -59,7 +59,7 @@ function Health() {
       [...weights]
         .sort((a, b) => a.measuredAt.localeCompare(b.measuredAt))
         .map((w) => ({ x: new Date(w.measuredAt).getTime(), y: w.grams })),
-    [weights],
+    [weights]
   )
 
   const weightForm = useForm<WeightFormValues>({

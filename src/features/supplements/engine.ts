@@ -27,7 +27,7 @@ export function nextDusting(lastDustedISO: string, intervalDays: number): string
  */
 export function daysUntil(
   dateISO: string,
-  todayISO: string = new Date().toISOString().slice(0, 10),
+  todayISO: string = new Date().toISOString().slice(0, 10)
 ): number {
   return daysBetween(todayISO, dateISO)
 }
@@ -46,7 +46,7 @@ export type DustingStatusCode = 'due' | 'soon' | 'ok' | 'never'
 export function dustingStatus(
   lastDustedISO: string | null | undefined,
   intervalDays: number,
-  todayISO: string = new Date().toISOString().slice(0, 10),
+  todayISO: string = new Date().toISOString().slice(0, 10)
 ): DustingStatusCode {
   if (!lastDustedISO) return 'never'
   const due = nextDusting(lastDustedISO, intervalDays)

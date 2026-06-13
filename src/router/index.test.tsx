@@ -24,7 +24,7 @@ describe('router architecture', () => {
         'communities',
         'adoption',
         'funeral',
-      ]),
+      ])
     )
   })
 })

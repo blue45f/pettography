@@ -115,7 +115,7 @@ export function projectedAnnual(expenses: ReportExpense[], todayISO: string): nu
   // so future-dated current-year expenses do not inflate the projection.
   const spentThisYear = expenses.reduce(
     (sum, e) => (yearOf(e.month) === year && e.month <= currentMonth ? sum + e.amountKrw : sum),
-    0,
+    0
   )
   if (spentThisYear === 0) return 0
   return Math.round((spentThisYear / elapsedMonths) * 12)

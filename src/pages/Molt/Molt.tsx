@@ -146,7 +146,7 @@ function Molt() {
     downloadTextFile(
       'pettography-molt.csv',
       buildCsv(['date', 'kind', 'note'], rows),
-      'text/csv;charset=utf-8',
+      'text/csv;charset=utf-8'
     )
   }
 

@@ -51,7 +51,7 @@ export const useBreedingStore = create<BreedingState>()(
         }
         set((state) => ({
           pairings: [pairing, ...state.pairings].sort((a, b) =>
-            b.pairedAt.localeCompare(a.pairedAt),
+            b.pairedAt.localeCompare(a.pairedAt)
           ),
         }))
         return pairing
@@ -103,8 +103,8 @@ export const useBreedingStore = create<BreedingState>()(
     {
       name: 'pettography.breeding',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

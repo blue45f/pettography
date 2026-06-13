@@ -43,8 +43,8 @@ export const useGeneticsStore = create<GeneticsState>()(
     {
       name: 'pettography.genetics',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /** Saved pairings scoped to the active pet (legacy untagged entries fall through). */

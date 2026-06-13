@@ -30,7 +30,7 @@ describe('Toast', () => {
     render(
       <ToastProvider>
         <div />
-      </ToastProvider>,
+      </ToastProvider>
     )
     expect(screen.getByLabelText('알림')).toBeInTheDocument()
   })
@@ -39,7 +39,7 @@ describe('Toast', () => {
     render(
       <ToastProvider>
         <Trigger message="hello world" duration={1500} />
-      </ToastProvider>,
+      </ToastProvider>
     )
 
     fireEvent.click(screen.getByRole('button', { name: 'fire' }))
@@ -53,7 +53,7 @@ describe('Toast', () => {
     render(
       <ToastProvider>
         <Trigger message="boom" type="error" />
-      </ToastProvider>,
+      </ToastProvider>
     )
     fireEvent.click(screen.getByRole('button', { name: 'fire' }))
     expect(screen.getByRole('alert').className).toMatch(/error/)
@@ -73,7 +73,7 @@ describe('Toast', () => {
     render(
       <ToastProvider>
         <TripleFire />
-      </ToastProvider>,
+      </ToastProvider>
     )
     fireEvent.click(screen.getByRole('button', { name: 's' }))
     fireEvent.click(screen.getByRole('button', { name: 'w' }))
@@ -88,7 +88,7 @@ describe('Toast', () => {
     render(
       <ToastProvider>
         <Trigger message="dismiss me" duration={9999} />
-      </ToastProvider>,
+      </ToastProvider>
     )
     fireEvent.click(screen.getByRole('button', { name: 'fire' }))
     expect(screen.getByRole('status')).toBeInTheDocument()
@@ -106,7 +106,7 @@ describe('Toast', () => {
     render(
       <ToastProvider>
         <Trigger message="a" duration={9999} />
-      </ToastProvider>,
+      </ToastProvider>
     )
     fireEvent.click(screen.getByRole('button', { name: 'fire' }))
     fireEvent.click(screen.getByRole('button', { name: 'fire' }))

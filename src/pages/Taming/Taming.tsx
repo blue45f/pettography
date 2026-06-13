@@ -234,7 +234,7 @@ function Taming() {
                   field.onChange(
                     selected.includes(sign)
                       ? selected.filter((s) => s !== sign)
-                      : [...selected, sign],
+                      : [...selected, sign]
                   )
                 }
                 return (

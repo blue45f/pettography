@@ -58,7 +58,7 @@ function parseCorsOrigins(value) {
 const frontendEnvSchema = z.object({
   VITE_API_URL: optionalTrimmedString().refine(
     (value) => value === undefined || isHttpUrl(value) || isSameOriginPath(value),
-    'must be an http(s) URL or a same-origin path beginning with /',
+    'must be an http(s) URL or a same-origin path beginning with /'
   ),
   VITE_KAKAO_MAP_KEY: optionalTrimmedString(),
 })
@@ -67,7 +67,7 @@ const backendEnvSchema = z.object({
   PORT: parseOptionalPositiveInt(3001).refine((port) => port <= 65535, 'must be <= 65535'),
   CORS_ORIGINS: z.preprocess(
     parseCorsOrigins,
-    z.array(z.string().refine(isHttpUrl, 'must be an http(s) URL')).default([]),
+    z.array(z.string().refine(isHttpUrl, 'must be an http(s) URL')).default([])
   ),
   API_THROTTLE_TTL_MS: parseOptionalPositiveInt(60000),
   API_THROTTLE_LIMIT: parseOptionalPositiveInt(120),
@@ -81,8 +81,8 @@ export function validateFrontendEnv(env = process.env) {
   if (publicSecretNames.length > 0) {
     throw new Error(
       `frontend env validation failed: public Vite env cannot expose secret-looking names: ${publicSecretNames.join(
-        ', ',
-      )}`,
+        ', '
+      )}`
     )
   }
 

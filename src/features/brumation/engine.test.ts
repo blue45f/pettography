@@ -91,7 +91,7 @@ describe('phaseSchedule', () => {
 
   it('tolerates a full ISO timestamp by slicing to the day', () => {
     expect(phaseSchedule(plan({ startDate: '2024-01-01T18:30:00.000Z' }))[0].startDate).toBe(
-      '2024-01-01',
+      '2024-01-01'
     )
   })
 })

@@ -96,7 +96,7 @@ describe('api', () => {
     expect(toHeaderRecord(getRequestMeta(fetchSpy).headers)).toEqual(
       expect.objectContaining({
         'x-custom': 'test',
-      }),
+      })
     )
 
     remove()
@@ -104,7 +104,7 @@ describe('api', () => {
 
   it('응답 인터셉터를 실행한다', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
-      new Response(JSON.stringify({ ok: true }), { status: 200 }),
+      new Response(JSON.stringify({ ok: true }), { status: 200 })
     )
 
     const interceptor = vi.fn((res: Response) => res)
@@ -120,7 +120,7 @@ describe('api', () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(
-        new Response(JSON.stringify({ id: 3, updated: true }), { status: 200 }),
+        new Response(JSON.stringify({ id: 3, updated: true }), { status: 200 })
       )
     vi.stubGlobal('fetch', fetchMock)
 
@@ -274,7 +274,7 @@ describe('api', () => {
     vi.stubGlobal('fetch', fetchMock)
 
     const remove = addResponseInterceptor(
-      async () => new Response(JSON.stringify({ replaced: true }), { status: 200 }),
+      async () => new Response(JSON.stringify({ replaced: true }), { status: 200 })
     )
 
     const result = await api.get('/test')
@@ -358,7 +358,7 @@ describe('api', () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(
-        new Response(JSON.stringify({ id: '123', count: 42 }), { status: 200 }),
+        new Response(JSON.stringify({ id: '123', count: 42 }), { status: 200 })
       )
     vi.stubGlobal('fetch', fetchMock)
 
@@ -372,7 +372,7 @@ describe('api', () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(
-        new Response(JSON.stringify({ id: 123, count: 'not-a-number' }), { status: 200 }),
+        new Response(JSON.stringify({ id: 123, count: 'not-a-number' }), { status: 200 })
       )
     vi.stubGlobal('fetch', fetchMock)
 
@@ -385,7 +385,7 @@ describe('api', () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(
-        new Response(JSON.stringify({ id: '123', updated: true }), { status: 200 }),
+        new Response(JSON.stringify({ id: '123', updated: true }), { status: 200 })
       )
     vi.stubGlobal('fetch', fetchMock)
 

@@ -57,7 +57,7 @@ export const useSuppliesStore = create<SuppliesState>()(
             const daysSince = daysBetween(new Date(item.lastRestockedAt), new Date(restockedAt))
             const remaining = Math.max(
               0,
-              item.lastQuantity - (daysSince / 7) * item.weeklyConsumption,
+              item.lastQuantity - (daysSince / 7) * item.weeklyConsumption
             )
             return {
               ...item,
@@ -71,8 +71,8 @@ export const useSuppliesStore = create<SuppliesState>()(
     {
       name: 'pettography.supplies',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 function daysBetween(a: Date, b: Date): number {

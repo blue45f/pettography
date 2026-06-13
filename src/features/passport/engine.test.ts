@@ -50,7 +50,7 @@ describe('computeMetrics', () => {
   it('counts daysTogether as whole days from createdAt to today (UTC)', () => {
     const metrics = computeMetrics(
       input({ petCreatedAt: '2024-01-01T09:30:00.000Z' }),
-      '2024-01-31',
+      '2024-01-31'
     )
     expect(metrics.daysTogether).toBe(30)
   })
@@ -86,7 +86,7 @@ describe('computeMetrics', () => {
         ],
         clutches: [{ laidAt: '2024-03-01' }],
       }),
-      '2024-06-01',
+      '2024-06-01'
     )
     expect(metrics.diaryCount).toBe(2)
     expect(metrics.moltCount).toBe(2)
@@ -103,7 +103,7 @@ describe('computeMetrics', () => {
         water: [{}, {}, {}, {}],
         growth: [{}, {}, {}, {}, {}],
       }),
-      '2024-06-01',
+      '2024-06-01'
     )
     expect(metrics.weightCount).toBe(3)
     expect(metrics.bcsCount).toBe(1)
@@ -123,7 +123,7 @@ describe('computeMetrics', () => {
           { kind: 'in_progress', occurredAt: '2024-05-01' },
         ],
       }),
-      '2024-06-01',
+      '2024-06-01'
     )
     expect(metrics.moltCount).toBe(5)
     expect(metrics.completeShedCount).toBe(2)
@@ -139,7 +139,7 @@ describe('computeMetrics', () => {
             { fedAt: '2024-01-10', accepted: true },
           ],
         }),
-        '2024-06-01',
+        '2024-06-01'
       )
       expect(metrics.feedingAcceptedStreak).toBe(3)
     })
@@ -154,7 +154,7 @@ describe('computeMetrics', () => {
             { fedAt: '2024-01-30', accepted: true },
           ],
         }),
-        '2024-06-01',
+        '2024-06-01'
       )
       // sorted desc: 01-30 ✓, 01-20 ✓, 01-10 ✗ → streak 2
       expect(metrics.feedingAcceptedStreak).toBe(2)
@@ -168,7 +168,7 @@ describe('computeMetrics', () => {
             { fedAt: '2024-01-10', accepted: false },
           ],
         }),
-        '2024-06-01',
+        '2024-06-01'
       )
       expect(metrics.feedingAcceptedStreak).toBe(0)
     })
@@ -236,7 +236,7 @@ describe('evaluateAchievements', () => {
     const lastUnlockedIndex = [...rows].map((r) => r.unlocked).lastIndexOf(true)
     expect(lastUnlockedIndex).toBeLessThan(firstLockedIndex)
     expect(rows.filter((r) => r.unlocked).map((r) => r.def.id)).toEqual(
-      expect.arrayContaining(['diary1', 'bond7']),
+      expect.arrayContaining(['diary1', 'bond7'])
     )
   })
 

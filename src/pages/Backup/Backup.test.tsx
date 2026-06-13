@@ -10,7 +10,7 @@ function renderBackup() {
   return render(
     <ToastProvider>
       <Backup />
-    </ToastProvider>,
+    </ToastProvider>
   )
 }
 
@@ -30,14 +30,14 @@ describe('Backup', () => {
         'pettography.diary': 'saved-diary',
         'onboarding-store': 'saved-onboarding',
       },
-      exportedAt,
+      exportedAt
     )
     const second = await createBackupEnvelope(
       {
         'onboarding-store': 'saved-onboarding',
         'pettography.diary': 'saved-diary',
       },
-      exportedAt,
+      exportedAt
     )
 
     expect(first.checksum).toEqual({
@@ -72,7 +72,7 @@ describe('Backup', () => {
         }),
       ],
       'pettography-backup.json',
-      { type: 'application/json' },
+      { type: 'application/json' }
     )
 
     await user.upload(fileInput as HTMLInputElement, backupFile)
@@ -101,7 +101,7 @@ describe('Backup', () => {
     const user = userEvent.setup()
     const envelope = await createBackupEnvelope(
       { 'pettography.diary': 'restored-diary' },
-      '2026-06-08T00:00:00.000Z',
+      '2026-06-08T00:00:00.000Z'
     )
 
     const { container } = renderBackup()
@@ -125,7 +125,7 @@ describe('Backup', () => {
     localStorage.setItem('pettography.diary', 'old-diary')
     const envelope = await createBackupEnvelope(
       { 'pettography.diary': 'restored-diary' },
-      '2026-06-08T00:00:00.000Z',
+      '2026-06-08T00:00:00.000Z'
     )
 
     const { container } = renderBackup()
@@ -139,7 +139,7 @@ describe('Backup', () => {
         }),
       ],
       'pettography-backup-tampered.json',
-      { type: 'application/json' },
+      { type: 'application/json' }
     )
 
     await user.upload(fileInput as HTMLInputElement, backupFile)
@@ -167,7 +167,7 @@ describe('Backup', () => {
         }),
       ],
       'pettography-backup.json',
-      { type: 'application/json' },
+      { type: 'application/json' }
     )
 
     await user.upload(fileInput as HTMLInputElement, backupFile)

@@ -41,7 +41,7 @@ export const useVitalsStore = create<VitalsState>()(
         }
         set((state) => ({
           readings: [reading, ...state.readings].sort((a, b) =>
-            b.measuredAt.localeCompare(a.measuredAt),
+            b.measuredAt.localeCompare(a.measuredAt)
           ),
         }))
         return reading
@@ -53,8 +53,8 @@ export const useVitalsStore = create<VitalsState>()(
     {
       name: 'pettography.vitals',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /** Vital readings scoped to the active pet (legacy untagged readings fall through). */

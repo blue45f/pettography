@@ -35,7 +35,7 @@ function Switch({
       className={cn(
         'inline-flex items-center gap-2',
         disabled && 'cursor-not-allowed opacity-50',
-        className,
+        className
       )}
     >
       <KitSwitch

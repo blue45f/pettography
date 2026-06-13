@@ -41,7 +41,7 @@ function feedingAcceptedStreak(feedings: PassportMetricInput['feedings']): numbe
  */
 export function computeMetrics(
   input: PassportMetricInput,
-  todayISO: string = new Date().toISOString().slice(0, 10),
+  todayISO: string = new Date().toISOString().slice(0, 10)
 ): Record<MetricKey, number> {
   const { petCreatedAt, diary, molts, feedings, clutches, weights, bcs, vitals, water, growth } =
     input

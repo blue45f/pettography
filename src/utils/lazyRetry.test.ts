@@ -6,7 +6,7 @@ function settleProbe(promise: Promise<unknown>): Promise<'settled' | 'pending'> 
   return Promise.race([
     promise.then(
       () => 'settled' as const,
-      () => 'settled' as const,
+      () => 'settled' as const
     ),
     new Promise<'pending'>((resolve) => {
       setTimeout(() => resolve('pending'), 25)

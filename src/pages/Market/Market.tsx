@@ -113,7 +113,7 @@ function hasMeaningfulDraft(values: Partial<ListingFormValues>): boolean {
     values.contact?.trim() ||
     values.description?.trim() ||
     values.isFree ||
-    values.priceKrw != null,
+    values.priceKrw != null
   )
 }
 
@@ -174,7 +174,7 @@ function Market() {
 
   const visibleListings = useMemo(
     () => selectListings(listings, { category, region, freeOnly, sort }),
-    [listings, category, region, freeOnly, sort],
+    [listings, category, region, freeOnly, sort]
   )
 
   return (
@@ -482,13 +482,13 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
       previewContact,
       previewDescription,
       previewAuthor,
-    ],
+    ]
   )
 
   useEffect(() => {
     const timerId = window.setTimeout(
       () => persistListingDraft(draftValues),
-      MARKET_DRAFT_SAVE_DELAY_MS,
+      MARKET_DRAFT_SAVE_DELAY_MS
     )
     return () => window.clearTimeout(timerId)
   }, [draftValues])
@@ -498,12 +498,12 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
       { value: '', label: t('market.speciesUnselected') },
       ...species.map((sp) => ({ value: sp.id, label: `${sp.heroEmoji} ${sp.koreanName}` })),
     ],
-    [species, t],
+    [species, t]
   )
 
   const selectedSpecies = useMemo(
     () => species.find((sp) => sp.id === previewSpeciesId),
-    [species, previewSpeciesId],
+    [species, previewSpeciesId]
   )
 
   const previewListing = useMemo<Listing>(
@@ -536,7 +536,7 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
       previewDescription,
       previewCreatedAt,
       t,
-    ],
+    ]
   )
 
   function replaceFormValues(values: ListingFormValues) {

@@ -64,8 +64,8 @@ export const useSupplementsStore = create<SupplementsState>()(
     {
       name: 'pettography.supplements',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

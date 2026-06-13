@@ -62,7 +62,7 @@ describe('RouteAnnouncer', () => {
 
     await waitFor(() => {
       expect(screen.getByRole('status')).toHaveTextContent(
-        '대시보드 · Pettography 페이지로 이동했습니다',
+        '대시보드 · Pettography 페이지로 이동했습니다'
       )
     })
     expect(document.getElementById('main-content')).toHaveFocus()

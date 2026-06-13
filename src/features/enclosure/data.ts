@@ -68,7 +68,7 @@ export interface ResolvedMin extends MinEnclosure {
  */
 export function minEnclosure(
   slug: string | null | undefined,
-  category: SpeciesCategory | null | undefined,
+  category: SpeciesCategory | null | undefined
 ): ResolvedMin {
   if (slug && MIN_ENCLOSURE[slug]) {
     return { ...MIN_ENCLOSURE[slug], source: 'species' }

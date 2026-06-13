@@ -51,7 +51,7 @@ function Habitat() {
   const recommendation = useMemo(() => recommendationFor(profile.category), [profile.category])
   const breaches = useMemo(
     () => detectBreaches(stats.latest, recommendation),
-    [stats.latest, recommendation],
+    [stats.latest, recommendation]
   )
 
   const tempPoints: SparklinePoint[] = useMemo(
@@ -59,14 +59,14 @@ function Habitat() {
       entries
         .filter((e) => e.temperatureC !== null)
         .map((e) => ({ x: new Date(e.measuredAt).getTime(), y: e.temperatureC as number })),
-    [entries],
+    [entries]
   )
   const humidityPoints: SparklinePoint[] = useMemo(
     () =>
       entries
         .filter((e) => e.humidityPct !== null)
         .map((e) => ({ x: new Date(e.measuredAt).getTime(), y: e.humidityPct as number })),
-    [entries],
+    [entries]
   )
 
   const form = useForm<HabitatFormValues>({
@@ -117,7 +117,7 @@ function Habitat() {
     downloadTextFile(
       'pettography-habitat.csv',
       buildCsv(['date', 'temp_c', 'humidity_pct', 'uvb_hours', 'note'], rows),
-      'text/csv;charset=utf-8',
+      'text/csv;charset=utf-8'
     )
   }
 

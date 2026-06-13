@@ -9,7 +9,7 @@ function renderFooter() {
   return render(
     <MemoryRouter>
       <Footer />
-    </MemoryRouter>,
+    </MemoryRouter>
   )
 }
 
@@ -34,7 +34,7 @@ describe('Footer', () => {
     expect(screen.getByRole('link', { name: '이용약관' })).toHaveAttribute('href', '/terms')
     expect(screen.getByRole('link', { name: '개인정보처리방침' })).toHaveAttribute(
       'href',
-      '/privacy',
+      '/privacy'
     )
   })
 
@@ -42,7 +42,7 @@ describe('Footer', () => {
     renderFooter()
     expect(screen.getByRole('link', { name: /버그 제보|Report a bug/ })).toHaveAttribute(
       'href',
-      '/contact?category=bug',
+      '/contact?category=bug'
     )
   })
 })
