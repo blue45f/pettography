@@ -210,6 +210,14 @@
     "subtitle": "선택한 종 기준으로 가까운 정보부터 보여드립니다.",
     "selectedSpecies": "내가 고른 종",
     "speciesChange": "다른 종으로 바꾸기",
+    "firstRun": {
+      "title": "반려동물을 추가하고 시작해요",
+      "description": "종을 고르면 가까운 병원·먹이샵·관리 가이드가 자동으로 큐레이션됩니다.",
+      "hint": "1분이면 끝나요. 언제든 다른 종으로 바꾸거나 추가할 수 있어요.",
+      "cta": "반려동물 추가하기"
+    },
+    "discoverTitle": "더 둘러보기",
+    "discoverHint": "병원·샵·가이드·커뮤니티 등 부가 정보를 펼쳐서 확인하세요.",
     "nearHospitalsTitle": "내 주변 특수동물 병원",
     "nearShopsTitle": "내 주변 먹이/용품 샵",
     "careGuideTitle": "오늘의 관리 팁",
@@ -3826,7 +3834,8 @@
     "navigate": "이동",
     "select": "선택",
     "close": "닫기",
-    "openLabel": "명령 팔레트 열기 (⌘K)"
+    "openLabel": "명령 팔레트 열기 (⌘K)",
+    "openTrigger": "검색"
   },
   "pagination": {
     "nav": "페이지 네비게이션",

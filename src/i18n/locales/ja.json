@@ -210,6 +210,14 @@
     "subtitle": "選んだ種を基準に、近い情報から表示します。",
     "selectedSpecies": "選んだ種",
     "speciesChange": "別の種に変える",
+    "firstRun": {
+      "title": "ペットを追加して始めましょう",
+      "description": "種を選ぶと、近くの病院・ショップ・飼育ガイドを自動でおすすめします。",
+      "hint": "1分ほどで完了します。いつでも種を変えたり追加できます。",
+      "cta": "ペットを追加"
+    },
+    "discoverTitle": "もっと見る",
+    "discoverHint": "病院・ショップ・ガイド・コミュニティなどの情報を開いて確認できます。",
     "nearHospitalsTitle": "近くのエキゾチックアニマル病院",
     "nearShopsTitle": "近くの餌・用品ショップ",
     "careGuideTitle": "今日の飼育のコツ",
@@ -3826,7 +3834,8 @@
     "navigate": "移動",
     "select": "選択",
     "close": "閉じる",
-    "openLabel": "コマンドパレットを開く (⌘K)"
+    "openLabel": "コマンドパレットを開く (⌘K)",
+    "openTrigger": "検索"
   },
   "pagination": {
     "nav": "ページネーション",

@@ -187,11 +187,22 @@
   color: var(--color-primary);
 }
 
+.commandText {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .commandKbd {
   font-size: var(--font-size-xs);
   font-weight: 700;
   font-family: inherit;
   color: var(--color-text-muted);
+  padding: var(--spacing-2xs);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  line-height: 1;
 }
 
 .moreItem {

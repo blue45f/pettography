@@ -160,6 +160,7 @@ function Header({ onOpenCommand }: HeaderProps) {
               aria-label={t('command.openLabel')}
             >
               <span aria-hidden="true">🔍</span>
+              <span className={styles.commandText}>{t('command.openTrigger')}</span>
               <kbd className={styles.commandKbd}>⌘K</kbd>
             </button>
           )}
