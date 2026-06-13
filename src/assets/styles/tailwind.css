@@ -1,0 +1,95 @@
+/* =========================================================================
+   Tailwind v4 — additive layer for pettography.
+
+   Preflight is intentionally OMITTED: global.css owns the base reset (`*`
+   box-sizing, body/typography element styles) and the full CSS-variable design
+   system (:root, [data-theme='dark'], [data-category='…']). Importing only the
+   `theme` and `utilities` layers makes Tailwind utilities available for new and
+   migrated components WITHOUT shifting any current page.
+
+   @theme maps the Tailwind color namespace onto the EXISTING tokens defined in
+   global.css :root. pettography's source tokens are already prefixed
+   `--color-*` / `--radius-*` / `--shadow-*` / `--spacing-*` — names that would
+   collide with (and self-reference) Tailwind's own theme keys — so the keys
+   here use DISTINCT names (brand / coral / ink / surface / line / state-*) that
+   resolve to the live tokens via var(). Resolving through var() lets the
+   utilities track the runtime [data-theme] / [data-category] switches.
+
+   Tokens whose source name equals a Tailwind theme key are deliberately NOT
+   remapped (no self-referential `--x: var(--x)`): global.css already defines
+   them unlayered in :root, so that value wins and the matching Tailwind utility
+   resolves to it automatically —
+     • spacing  → --spacing-sm … --spacing-3xl  (p-/m-/gap- utilities)
+     • radius   → --radius-xs … --radius-xl      (rounded-* utilities)
+     • shadow   → --shadow-xs … --shadow-lg      (shadow-* utilities)
+     • leading  → --leading-tight … --relaxed    (leading-* utilities)
+     • font     → --font-family / --font-display  (font-* utilities)
+
+   Adopt full preflight later, page-by-page, as components migrate to Tailwind.
+   ========================================================================= */
+@layer theme, base, components, utilities;
+
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+@theme {
+  /* ----------------------------------------------------------------------
+     Colors → mapped via var() so utilities follow the live theme / category.
+     Distinct names avoid a self-referential cycle with the source --color-*
+     tokens (bg-brand, text-ink, border-line, …).
+     ---------------------------------------------------------------------- */
+
+  /* brand (primary) scale — category themes recolor these at runtime */
+  --color-brand-50: var(--color-primary-50);
+  --color-brand-100: var(--color-primary-100);
+  --color-brand-200: var(--color-primary-200);
+  --color-brand-300: var(--color-primary-300);
+  --color-brand-400: var(--color-primary-400);
+  --color-brand-500: var(--color-primary-500);
+  --color-brand-600: var(--color-primary-600);
+  --color-brand-700: var(--color-primary-700);
+  --color-brand-800: var(--color-primary-800);
+  --color-brand: var(--color-primary);
+  --color-brand-hover: var(--color-primary-hover);
+  --color-brand-soft: var(--color-primary-soft);
+
+  /* accent (coral) scale */
+  --color-coral-50: var(--color-accent-50);
+  --color-coral-100: var(--color-accent-100);
+  --color-coral-300: var(--color-accent-300);
+  --color-coral-500: var(--color-accent-500);
+  --color-coral-600: var(--color-accent-600);
+  --color-coral: var(--color-accent);
+  --color-coral-soft: var(--color-accent-soft);
+
+  /* semantic role tokens (distinct keys → no self-reference) */
+  --color-muted: var(--color-secondary);
+  --color-app: var(--color-background);
+  --color-panel: var(--color-surface);
+  --color-panel-elevated: var(--color-surface-elevated);
+  --color-panel-muted: var(--color-surface-muted);
+  --color-ink: var(--color-text);
+  --color-ink-secondary: var(--color-text-secondary);
+  --color-ink-muted: var(--color-text-muted);
+  --color-on-brand: var(--color-on-brand);
+  --color-on-warning: var(--color-on-warning);
+  --color-line: var(--color-border);
+  --color-line-strong: var(--color-border-strong);
+
+  /* state tokens */
+  --color-state-error: var(--color-error);
+  --color-state-success: var(--color-success);
+  --color-state-warning: var(--color-warning);
+  --color-state-info: var(--color-info);
+
+  /* ----------------------------------------------------------------------
+     Motion easing → ease-expo / ease-quint (Tailwind's --ease-* namespace;
+     no collision with the source --easing-* names).
+     ---------------------------------------------------------------------- */
+  --ease-expo: var(--easing-expo);
+  --ease-quint: var(--easing-quint);
+
+  /* content max-width → max-w-layout (literal: source --layout-max uses min()
+     which Tailwind's theme value must be a static length for utility output) */
+  --container-layout: 1280px;
+}

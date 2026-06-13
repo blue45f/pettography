@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 
 import AppProviders from '@/app/AppProviders'
 
+import '@assets/styles/tailwind.css'
 import '@assets/styles/global.css'
 import '@/i18n'
 

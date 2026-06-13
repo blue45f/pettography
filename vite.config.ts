@@ -2,11 +2,12 @@
 import path from 'path'
 
 import babel from '@rolldown/plugin-babel'
+import tailwindcss from '@tailwindcss/vite'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
+  plugins: [react(), babel({ presets: [reactCompilerPreset()] }), tailwindcss()],
   resolve: {
     alias: {
       // @pettography/shared 는 CJS(dist)로 빌드되는데, Vite 는 워크스페이스 패키지를
