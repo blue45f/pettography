@@ -1,5 +1,5 @@
-import { Type } from 'class-transformer';
-import { IsEnum, IsLatitude, IsLongitude, IsNumber, IsOptional, Min } from 'class-validator';
+import { createZodDto } from 'nestjs-zod';
+import { z } from 'zod';
 import type { SpeciesCategory } from '../../common/types';
 
 const SPECIES_CATEGORIES = [
@@ -10,24 +10,11 @@ const SPECIES_CATEGORIES = [
   'mammal',
 ] as const satisfies readonly SpeciesCategory[];
 
-export class QueryHospitalsDto {
-  @IsOptional()
-  @IsEnum(SPECIES_CATEGORIES)
-  category?: SpeciesCategory;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsLatitude()
-  lat?: number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsLongitude()
-  lng?: number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber()
-  @Min(0)
-  radiusKm?: number;
-}
+export class QueryHospitalsDto extends createZodDto(
+  z.object({
+    category: z.enum(SPECIES_CATEGORIES).optional(),
+    lat: z.coerce.number().min(-90).max(90).optional(),
+    lng: z.coerce.number().min(-180).max(180).optional(),
+    radiusKm: z.coerce.number().min(0).optional(),
+  }),
+) {}

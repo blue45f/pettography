@@ -1,4 +1,4 @@
-import { UsePipes, ValidationPipe } from '@nestjs/common';
+import { UsePipes } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
@@ -14,6 +14,7 @@ import { JoinRoomDto } from './dto/join-room.dto';
 import { SendMessageDto } from './dto/send-message.dto';
 import type { Vet, VetMessage } from '../common/types';
 import { resolveCorsOrigins } from '../common/cors';
+import { ZodValidationPipe } from '../common/zod-validation.pipe';
 
 const AUTO_REPLY_DELAY_MS = 700;
 
@@ -24,7 +25,7 @@ const AUTO_REPLY_DELAY_MS = 700;
     credentials: true,
   },
 })
-@UsePipes(new ValidationPipe({ whitelist: true, transform: true }))
+@UsePipes(new ZodValidationPipe())
 export class ConsultGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server!: Server;

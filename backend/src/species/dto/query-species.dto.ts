@@ -1,4 +1,5 @@
-import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { createZodDto } from 'nestjs-zod';
+import { z } from 'zod';
 import type { SpeciesCategory, SpeciesDifficulty } from '../../common/types';
 
 const SPECIES_CATEGORIES = [
@@ -15,16 +16,10 @@ const SPECIES_DIFFICULTIES = [
   'advanced',
 ] as const satisfies readonly SpeciesDifficulty[];
 
-export class QuerySpeciesDto {
-  @IsOptional()
-  @IsEnum(SPECIES_CATEGORIES)
-  category?: SpeciesCategory;
-
-  @IsOptional()
-  @IsEnum(SPECIES_DIFFICULTIES)
-  difficulty?: SpeciesDifficulty;
-
-  @IsOptional()
-  @IsString()
-  q?: string;
-}
+export class QuerySpeciesDto extends createZodDto(
+  z.object({
+    category: z.enum(SPECIES_CATEGORIES).optional(),
+    difficulty: z.enum(SPECIES_DIFFICULTIES).optional(),
+    q: z.string().optional(),
+  }),
+) {}

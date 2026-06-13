@@ -1,12 +1,13 @@
 import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule } from '@nestjs/swagger';
+import { cleanupOpenApiDoc } from 'nestjs-zod';
 import compression from 'compression';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { resolveCorsOrigins } from './common/cors';
 import { buildOpenApiConfig, createHelmetOptions } from './common/http-hardening';
+import { ZodValidationPipe } from './common/zod-validation.pipe';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
@@ -15,14 +16,8 @@ async function bootstrap(): Promise<void> {
   app.use(helmet(createHelmetOptions()));
   app.setGlobalPrefix('api');
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      transform: true,
-      transformOptions: { enableImplicitConversion: true },
-      forbidNonWhitelisted: false,
-    }),
-  );
+  // Zod 스키마(createZodDto) 기반 전역 검증. 미지정 키는 zod 기본 동작(strip)으로 제거된다.
+  app.useGlobalPipes(new ZodValidationPipe());
 
   app.enableCors({
     origin: resolveCorsOrigins(),
@@ -30,7 +25,8 @@ async function bootstrap(): Promise<void> {
   });
 
   const openApiConfig = buildOpenApiConfig();
-  const openApiDocument = SwaggerModule.createDocument(app, openApiConfig);
+  // cleanupOpenApiDoc: createZodDto 가 붙인 zod 메타데이터를 OpenAPI 스키마로 정리한다.
+  const openApiDocument = cleanupOpenApiDoc(SwaggerModule.createDocument(app, openApiConfig));
   SwaggerModule.setup('api/docs', app, openApiDocument, {
     jsonDocumentUrl: 'api/docs-json',
   });

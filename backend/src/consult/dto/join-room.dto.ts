@@ -1,7 +1,8 @@
-import { IsString, MinLength } from 'class-validator';
+import { createZodDto } from 'nestjs-zod';
+import { z } from 'zod';
 
-export class JoinRoomDto {
-  @IsString()
-  @MinLength(1)
-  vetId!: string;
-}
+export class JoinRoomDto extends createZodDto(
+  z.object({
+    vetId: z.string().min(1, '수의사 ID가 필요합니다.'),
+  }),
+) {}
