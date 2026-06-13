@@ -69,6 +69,18 @@ export type VetMessageRole = VetRole
 /** Frontend alias kept for verbatim import compatibility. */
 export type VetConsultRole = VetRole
 
+export const accountRoleSchema = z.enum(['member', 'moderator', 'admin'])
+export type AccountRole = z.infer<typeof accountRoleSchema>
+
+export const accountStatusSchema = z.enum(['active', 'suspended', 'withdrawn'])
+export type AccountStatus = z.infer<typeof accountStatusSchema>
+
+export const forbiddenWordActionSchema = z.enum(['block', 'review'])
+export type ForbiddenWordAction = z.infer<typeof forbiddenWordActionSchema>
+
+export const forbiddenWordMatchTypeSchema = z.enum(['contains', 'whole_word'])
+export type ForbiddenWordMatchType = z.infer<typeof forbiddenWordMatchTypeSchema>
+
 export const registryFilingSchema = z.enum(['keeping', 'transfer', 'death', 'microchip'])
 export type RegistryFiling = z.infer<typeof registryFilingSchema>
 /** Backend alias kept for verbatim import compatibility. */

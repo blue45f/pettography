@@ -1,25 +1,41 @@
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
-import { useAdminStore } from '@features/admin'
+import Input from '@components/common/Input'
+import { login, useAuthStore } from '@features/auth'
+import { useState, type FormEvent, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import styles from './AdminGate.module.css'
-
-import type { ReactNode } from 'react'
 
 interface AdminGateProps {
   children: ReactNode
 }
 
-/**
- * Shared gate for every /admin route. The repo has no auth, so this is a
- * deliberate local-only demo toggle (persisted per browser) — the gate copy
- * says so instead of pretending to be a login.
- */
 function AdminGate({ children }: AdminGateProps) {
   const { t } = useTranslation()
-  const isAdmin = useAdminStore((s) => s.isAdmin)
-  const enableAdmin = useAdminStore((s) => s.enableAdmin)
+  const isAdmin = useAuthStore((s) => s.isAdmin)
+  const clearSession = useAuthStore((s) => s.clearSession)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setError('')
+    setSubmitting(true)
+    try {
+      const session = await login({ email, password })
+      if (session.account.role !== 'admin' && session.account.role !== 'moderator') {
+        clearSession()
+        setError(t('admin.gateRoleError'))
+      }
+    } catch {
+      setError(t('admin.gateLoginError'))
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   if (!isAdmin) {
     return (
@@ -28,9 +44,32 @@ function AdminGate({ children }: AdminGateProps) {
           <Card.Body>
             <h1>{t('admin.gateTitle')}</h1>
             <p className={styles.subtitle}>{t('admin.gateDesc')}</p>
-            <Button variant="primary" onClick={enableAdmin}>
-              {t('admin.enable')}
-            </Button>
+            <form className={styles.form} onSubmit={onSubmit}>
+              <Input
+                label={t('admin.email')}
+                type="email"
+                autoComplete="email"
+                value={email}
+                onChange={(event) => setEmail(event.currentTarget.value)}
+                required
+              />
+              <Input
+                label={t('admin.password')}
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(event) => setPassword(event.currentTarget.value)}
+                required
+              />
+              {error && (
+                <p className={styles.error} role="alert">
+                  {error}
+                </p>
+              )}
+              <Button variant="primary" type="submit" isLoading={submitting}>
+                {t('admin.login')}
+              </Button>
+            </form>
           </Card.Body>
         </Card>
       </section>

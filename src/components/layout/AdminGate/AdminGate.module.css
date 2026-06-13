@@ -18,3 +18,14 @@
   color: var(--color-text-secondary);
   margin-bottom: var(--spacing-md);
 }
+
+.form {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.error {
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
