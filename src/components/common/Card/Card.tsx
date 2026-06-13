@@ -1,6 +1,7 @@
-import styles from './Card.module.css'
-
 import type { ReactNode } from 'react'
+
+import { Card as KitCard } from '@/components/ui/Card'
+import { cn } from '@/utils/cn'
 
 interface CardProps {
   children: ReactNode
@@ -9,44 +10,52 @@ interface CardProps {
   hoverable?: boolean
 }
 
+// The kit Card carries no padding (it expects Card.Body); the legacy Card put
+// padding straight on the surface. Preserve that by mapping the legacy
+// `padding` scale onto utility classes applied to the kit surface.
+const PADDING_MAP: Record<NonNullable<CardProps['padding']>, string> = {
+  none: '',
+  sm: 'p-3',
+  md: 'p-4',
+  lg: 'p-6',
+}
+
+/**
+ * Legacy common Card — now a thin wrapper over the `ui/` kit Card so existing
+ * callers render the canonical kit surface without changing their API.
+ * Legacy-only `padding` and `hoverable` are handled here.
+ */
 function Card({ children, className = '', padding = 'md', hoverable = false }: CardProps) {
-  const cardClasses = [
-    styles.card,
-    styles[`padding-${padding}`],
-    hoverable ? styles.hoverable : '',
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ')
-
-  return <div className={cardClasses}>{children}</div>
+  return (
+    <KitCard
+      className={cn(
+        'overflow-hidden',
+        PADDING_MAP[padding],
+        hoverable &&
+          'transition-shadow duration-150 ease-quint hover:-translate-y-0.5 hover:shadow-md',
+        className,
+      )}
+    >
+      {children}
+    </KitCard>
+  )
 }
 
-interface CardHeaderProps {
+interface CardSectionProps {
   children: ReactNode
   className?: string
 }
 
-function CardHeader({ children, className = '' }: CardHeaderProps) {
-  return <div className={`${styles.header} ${className}`}>{children}</div>
+function CardHeader({ children, className = '' }: CardSectionProps) {
+  return <KitCard.Header className={cn(className)}>{children}</KitCard.Header>
 }
 
-interface CardBodyProps {
-  children: ReactNode
-  className?: string
+function CardBody({ children, className = '' }: CardSectionProps) {
+  return <KitCard.Body className={cn(className)}>{children}</KitCard.Body>
 }
 
-function CardBody({ children, className = '' }: CardBodyProps) {
-  return <div className={`${styles.body} ${className}`}>{children}</div>
-}
-
-interface CardFooterProps {
-  children: ReactNode
-  className?: string
-}
-
-function CardFooter({ children, className = '' }: CardFooterProps) {
-  return <div className={`${styles.footer} ${className}`}>{children}</div>
+function CardFooter({ children, className = '' }: CardSectionProps) {
+  return <KitCard.Footer className={cn(className)}>{children}</KitCard.Footer>
 }
 
 Card.Header = CardHeader

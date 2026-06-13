@@ -18,4 +18,12 @@ describe('Badge', () => {
     const { container } = render(<Badge className="custom">Test</Badge>)
     expect(container.querySelector('.custom')).toBeTruthy()
   })
+
+  it('모든 variant가 span으로 렌더링된다', () => {
+    for (const variant of ['default', 'primary', 'success', 'warning', 'error'] as const) {
+      const { unmount } = render(<Badge variant={variant}>{variant}</Badge>)
+      expect(screen.getByText(variant).tagName).toBe('SPAN')
+      unmount()
+    }
+  })
 })
