@@ -1,6 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { CareGuidesService } from './care-guides.service';
-import type { CareGuide } from '../common/types';
+import { Controller, Get, Param } from '@nestjs/common'
+import { CareGuidesService } from './care-guides.service'
+import type { CareGuide } from '../common/types'
 
 @Controller('care-guides')
 export class CareGuidesController {
@@ -8,6 +8,6 @@ export class CareGuidesController {
 
   @Get(':speciesId')
   findOne(@Param('speciesId') speciesId: string): CareGuide {
-    return this.careGuidesService.findBySpeciesId(speciesId);
+    return this.careGuidesService.findBySpeciesId(speciesId)
   }
 }

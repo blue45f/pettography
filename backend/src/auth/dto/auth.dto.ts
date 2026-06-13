@@ -1,5 +1,5 @@
-import { createZodDto } from 'nestjs-zod';
-import { z } from 'zod';
+import { createZodDto } from 'nestjs-zod'
+import { z } from 'zod'
 
 export class RegisterDto extends createZodDto(
   z.object({
@@ -13,7 +13,7 @@ export class RegisterDto extends createZodDto(
       .string()
       .min(8, '비밀번호는 8자 이상이어야 합니다.')
       .max(128, '비밀번호는 128자 이하로 입력해주세요.'),
-  }),
+  })
 ) {}
 
 export class LoginDto extends createZodDto(
@@ -27,7 +27,7 @@ export class LoginDto extends createZodDto(
       .string()
       .min(1, '비밀번호를 입력해주세요.')
       .max(128, '비밀번호는 128자 이하로 입력해주세요.'),
-  }),
+  })
 ) {}
 
 export class UpdateProfileDto extends createZodDto(
@@ -43,7 +43,7 @@ export class UpdateProfileDto extends createZodDto(
       .min(8, '비밀번호는 8자 이상이어야 합니다.')
       .max(128, '비밀번호는 128자 이하로 입력해주세요.')
       .optional(),
-  }),
+  })
 ) {}
 
 export class WithdrawAccountDto extends createZodDto(
@@ -52,5 +52,5 @@ export class WithdrawAccountDto extends createZodDto(
       .string()
       .min(1, '비밀번호를 입력해주세요.')
       .max(128, '비밀번호는 128자 이하로 입력해주세요.'),
-  }),
+  })
 ) {}

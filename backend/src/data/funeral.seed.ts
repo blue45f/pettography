@@ -1,4 +1,4 @@
-import type { FuneralService } from '../common/types';
+import type { FuneralService } from '../common/types'
 
 export const FUNERAL_SEED: FuneralService[] = [
   {
@@ -64,4 +64,4 @@ export const FUNERAL_SEED: FuneralService[] = [
     certified: false,
     phone: '1577-0000',
   },
-];
+]

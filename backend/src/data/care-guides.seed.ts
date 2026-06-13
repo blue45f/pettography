@@ -1,4 +1,4 @@
-import type { CareGuide } from '../common/types';
+import type { CareGuide } from '../common/types'
 
 export const CARE_GUIDES_SEED: CareGuide[] = [
   {
@@ -222,4 +222,4 @@ export const CARE_GUIDES_SEED: CareGuide[] = [
     ],
     references: [{ label: 'Hedgehog Welfare Society', url: 'https://hedgehogwelfare.org/' }],
   },
-];
+]

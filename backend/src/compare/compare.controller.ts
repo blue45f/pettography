@@ -1,6 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
-import { CompareService } from './compare.service';
-import type { CompareDimension } from '../common/types';
+import { Controller, Get } from '@nestjs/common'
+import { CompareService } from './compare.service'
+import type { CompareDimension } from '../common/types'
 
 @Controller('compare')
 export class CompareController {
@@ -8,6 +8,6 @@ export class CompareController {
 
   @Get('dimensions')
   findDimensions(): CompareDimension[] {
-    return this.compareService.findDimensions();
+    return this.compareService.findDimensions()
   }
 }

@@ -1,4 +1,4 @@
-import type { ForumPost, ForumReply } from '../common/types';
+import type { ForumPost, ForumReply } from '../common/types'
 
 export const FORUM_POSTS_SEED: ForumPost[] = [
   {
@@ -25,7 +25,7 @@ export const FORUM_POSTS_SEED: ForumPost[] = [
     body: '복부 색이 어두워지고 먹이를 거부하면 탈피 신호입니다. 이때 굴 입구를 막거나 자세가 옆으로 누우면 절대 건드리지 마세요. 1~2주 굶어도 정상.',
     createdAt: '2026-05-25T20:00:00.000Z',
   },
-];
+]
 
 export const FORUM_REPLIES_SEED: Record<string, ForumReply[]> = {
   'seed-post-1': [
@@ -46,4 +46,4 @@ export const FORUM_REPLIES_SEED: Record<string, ForumReply[]> = {
       createdAt: '2026-05-25T21:00:00.000Z',
     },
   ],
-};
+}

@@ -1,8 +1,8 @@
-import { createZodDto } from 'nestjs-zod';
-import { z } from 'zod';
-import type { PartnerKind } from '../../common/types';
+import { createZodDto } from 'nestjs-zod'
+import { z } from 'zod'
+import type { PartnerKind } from '../../common/types'
 
-const PARTNER_KINDS = ['shop', 'hospital', 'treat-shop'] as const satisfies readonly PartnerKind[];
+const PARTNER_KINDS = ['shop', 'hospital', 'treat-shop'] as const satisfies readonly PartnerKind[]
 
 export class CreatePartnerDto extends createZodDto(
   z.object({
@@ -19,5 +19,5 @@ export class CreatePartnerDto extends createZodDto(
       .max(1000, '소개는 1000자 이하로 입력해주세요.'),
     // 빈 문자열·null 은 미입력으로 허용하고, 값이 있으면 프로토콜 포함 URL 이어야 한다.
     url: z.union([z.url('유효한 URL을 입력해주세요.'), z.literal('')]).nullish(),
-  }),
+  })
 ) {}

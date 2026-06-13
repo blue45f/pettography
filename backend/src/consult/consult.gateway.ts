@@ -1,4 +1,4 @@
-import { UsePipes } from '@nestjs/common';
+import { UsePipes } from '@nestjs/common'
 import {
   ConnectedSocket,
   MessageBody,
@@ -7,16 +7,16 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-} from '@nestjs/websockets';
-import type { Server, Socket } from 'socket.io';
-import { ConsultService } from './consult.service';
-import { JoinRoomDto } from './dto/join-room.dto';
-import { SendMessageDto } from './dto/send-message.dto';
-import type { Vet, VetMessage } from '../common/types';
-import { resolveCorsOrigins } from '../common/cors';
-import { ZodValidationPipe } from '../common/zod-validation.pipe';
+} from '@nestjs/websockets'
+import type { Server, Socket } from 'socket.io'
+import { ConsultService } from './consult.service'
+import { JoinRoomDto } from './dto/join-room.dto'
+import { SendMessageDto } from './dto/send-message.dto'
+import type { Vet, VetMessage } from '../common/types'
+import { resolveCorsOrigins } from '../common/cors'
+import { ZodValidationPipe } from '../common/zod-validation.pipe'
 
-const AUTO_REPLY_DELAY_MS = 700;
+const AUTO_REPLY_DELAY_MS = 700
 
 @WebSocketGateway({
   namespace: '/consult',
@@ -28,12 +28,12 @@ const AUTO_REPLY_DELAY_MS = 700;
 @UsePipes(new ZodValidationPipe())
 export class ConsultGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
-  server!: Server;
+  server!: Server
 
   constructor(private readonly consultService: ConsultService) {}
 
   handleConnection(client: Socket): void {
-    client.emit('consult:vets', this.consultService.listVets());
+    client.emit('consult:vets', this.consultService.listVets())
   }
 
   handleDisconnect(): void {
@@ -43,45 +43,45 @@ export class ConsultGateway implements OnGatewayConnection, OnGatewayDisconnect 
   @SubscribeMessage('consult:join')
   handleJoin(
     @ConnectedSocket() client: Socket,
-    @MessageBody() payload: JoinRoomDto,
+    @MessageBody() payload: JoinRoomDto
   ): { vet: Vet; messages: VetMessage[] } {
-    const vet = this.consultService.findVet(payload.vetId);
-    void client.join(this.roomOf(vet.id));
-    return { vet, messages: this.consultService.listMessages(vet.id) };
+    const vet = this.consultService.findVet(payload.vetId)
+    void client.join(this.roomOf(vet.id))
+    return { vet, messages: this.consultService.listMessages(vet.id) }
   }
 
   @SubscribeMessage('consult:leave')
   handleLeave(
     @ConnectedSocket() client: Socket,
-    @MessageBody() payload: JoinRoomDto,
+    @MessageBody() payload: JoinRoomDto
   ): { ok: true } {
-    void client.leave(this.roomOf(payload.vetId));
-    return { ok: true };
+    void client.leave(this.roomOf(payload.vetId))
+    return { ok: true }
   }
 
   @SubscribeMessage('consult:send')
   handleSend(
     @ConnectedSocket() client: Socket,
-    @MessageBody() payload: SendMessageDto,
+    @MessageBody() payload: SendMessageDto
   ): VetMessage {
-    const userMessage = this.consultService.appendMessage(payload.vetId, 'user', payload.body);
-    const room = this.roomOf(payload.vetId);
-    void client.join(room);
-    this.server.to(room).emit('consult:message', userMessage);
+    const userMessage = this.consultService.appendMessage(payload.vetId, 'user', payload.body)
+    const room = this.roomOf(payload.vetId)
+    void client.join(room)
+    this.server.to(room).emit('consult:message', userMessage)
 
     setTimeout(() => {
       const reply = this.consultService.appendMessage(
         payload.vetId,
         'vet',
-        this.consultService.buildAutoReply(payload.vetId),
-      );
-      this.server.to(room).emit('consult:message', reply);
-    }, AUTO_REPLY_DELAY_MS);
+        this.consultService.buildAutoReply(payload.vetId)
+      )
+      this.server.to(room).emit('consult:message', reply)
+    }, AUTO_REPLY_DELAY_MS)
 
-    return userMessage;
+    return userMessage
   }
 
   private roomOf(vetId: string): string {
-    return `consult:${vetId}`;
+    return `consult:${vetId}`
   }
 }

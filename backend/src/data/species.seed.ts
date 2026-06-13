@@ -1,4 +1,4 @@
-import type { Species } from '../common/types';
+import type { Species } from '../common/types'
 
 export const SPECIES_SEED: Species[] = [
   {
@@ -353,4 +353,4 @@ export const SPECIES_SEED: Species[] = [
     monthlyBudgetKrw: 15000,
     filingStatus: 'white-list',
   },
-];
+]

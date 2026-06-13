@@ -1,6 +1,6 @@
-import { createZodDto } from 'nestjs-zod';
-import { z } from 'zod';
-import type { SpeciesCategory } from '../../common/types';
+import { createZodDto } from 'nestjs-zod'
+import { z } from 'zod'
+import type { SpeciesCategory } from '../../common/types'
 
 const SPECIES_CATEGORIES = [
   'reptile',
@@ -8,7 +8,7 @@ const SPECIES_CATEGORIES = [
   'bird',
   'amphibian',
   'mammal',
-] as const satisfies readonly SpeciesCategory[];
+] as const satisfies readonly SpeciesCategory[]
 
 export class CreatePostDto extends createZodDto(
   z.object({
@@ -19,5 +19,5 @@ export class CreatePostDto extends createZodDto(
       .min(1, '작성자를 입력해주세요.')
       .max(40, '작성자는 40자 이하로 입력해주세요.'),
     body: z.string().min(1, '본문을 입력해주세요.').max(2000, '본문은 2000자 이하로 입력해주세요.'),
-  }),
+  })
 ) {}

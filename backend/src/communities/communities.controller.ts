@@ -1,7 +1,7 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { CommunitiesService } from './communities.service';
-import { QueryCommunitiesDto } from './dto/query-communities.dto';
-import type { Community } from '../common/types';
+import { Controller, Get, Query } from '@nestjs/common'
+import { CommunitiesService } from './communities.service'
+import { QueryCommunitiesDto } from './dto/query-communities.dto'
+import type { Community } from '../common/types'
 
 @Controller('communities')
 export class CommunitiesController {
@@ -9,6 +9,6 @@ export class CommunitiesController {
 
   @Get()
   findAll(@Query() query: QueryCommunitiesDto): Community[] {
-    return this.communitiesService.findAll(query);
+    return this.communitiesService.findAll(query)
   }
 }

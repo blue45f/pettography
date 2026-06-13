@@ -1,4 +1,4 @@
-import type { Community } from '../common/types';
+import type { Community } from '../common/types'
 
 export const COMMUNITIES_SEED: Community[] = [
   {
@@ -81,4 +81,4 @@ export const COMMUNITIES_SEED: Community[] = [
     kind: 'forum',
     language: 'en',
   },
-];
+]

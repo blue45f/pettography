@@ -1,6 +1,6 @@
-import { createZodDto } from 'nestjs-zod';
-import { z } from 'zod';
-import type { SpeciesCategory } from '../../common/types';
+import { createZodDto } from 'nestjs-zod'
+import { z } from 'zod'
+import type { SpeciesCategory } from '../../common/types'
 
 const SPECIES_CATEGORIES = [
   'reptile',
@@ -8,10 +8,10 @@ const SPECIES_CATEGORIES = [
   'bird',
   'amphibian',
   'mammal',
-] as const satisfies readonly SpeciesCategory[];
+] as const satisfies readonly SpeciesCategory[]
 
 export class QueryCommunitiesDto extends createZodDto(
   z.object({
     category: z.enum(SPECIES_CATEGORIES).optional(),
-  }),
+  })
 ) {}

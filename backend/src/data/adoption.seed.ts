@@ -1,4 +1,4 @@
-import type { AdoptionListing } from '../common/types';
+import type { AdoptionListing } from '../common/types'
 
 export const ADOPTION_SEED: AdoptionListing[] = [
   {
@@ -76,4 +76,4 @@ export const ADOPTION_SEED: AdoptionListing[] = [
     supportedCategories: ['amphibian'],
     description: '아홀로틀 성체·유생 입양. 분양 시 수조 셋업 가이드 동봉.',
   },
-];
+]

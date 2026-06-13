@@ -1,6 +1,6 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { ShopsService, ShopWithDistance } from './shops.service';
-import { QueryShopsDto } from './dto/query-shops.dto';
+import { Controller, Get, Query } from '@nestjs/common'
+import { ShopsService, ShopWithDistance } from './shops.service'
+import { QueryShopsDto } from './dto/query-shops.dto'
 
 @Controller('shops')
 export class ShopsController {
@@ -8,6 +8,6 @@ export class ShopsController {
 
   @Get()
   findAll(@Query() query: QueryShopsDto): ShopWithDistance[] {
-    return this.shopsService.findAll(query);
+    return this.shopsService.findAll(query)
   }
 }

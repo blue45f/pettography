@@ -1,6 +1,6 @@
-import { createZodDto } from 'nestjs-zod';
-import { z } from 'zod';
-import type { ShopKind, SpeciesCategory } from '../../common/types';
+import { createZodDto } from 'nestjs-zod'
+import { z } from 'zod'
+import type { ShopKind, SpeciesCategory } from '../../common/types'
 
 const SPECIES_CATEGORIES = [
   'reptile',
@@ -8,9 +8,9 @@ const SPECIES_CATEGORIES = [
   'bird',
   'amphibian',
   'mammal',
-] as const satisfies readonly SpeciesCategory[];
+] as const satisfies readonly SpeciesCategory[]
 
-const SHOP_KINDS = ['food', 'equipment', 'both'] as const satisfies readonly ShopKind[];
+const SHOP_KINDS = ['food', 'equipment', 'both'] as const satisfies readonly ShopKind[]
 
 export class QueryShopsDto extends createZodDto(
   z.object({
@@ -19,5 +19,5 @@ export class QueryShopsDto extends createZodDto(
     lat: z.coerce.number().min(-90).max(90).optional(),
     lng: z.coerce.number().min(-180).max(180).optional(),
     radiusKm: z.coerce.number().min(0).optional(),
-  }),
+  })
 ) {}

@@ -1,7 +1,7 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
-import { ConsultService } from './consult.service';
-import { PostMessageDto } from './dto/post-message.dto';
-import type { Vet, VetMessage } from '../common/types';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common'
+import { ConsultService } from './consult.service'
+import { PostMessageDto } from './dto/post-message.dto'
+import type { Vet, VetMessage } from '../common/types'
 
 @Controller('consult')
 export class ConsultController {
@@ -9,17 +9,17 @@ export class ConsultController {
 
   @Get('vets')
   listVets(): Vet[] {
-    return this.consultService.listVets();
+    return this.consultService.listVets()
   }
 
   @Get('vets/:id')
   getVet(@Param('id') id: string): Vet {
-    return this.consultService.findVet(id);
+    return this.consultService.findVet(id)
   }
 
   @Get('vets/:id/messages')
   listMessages(@Param('id') id: string): VetMessage[] {
-    return this.consultService.listMessages(id);
+    return this.consultService.listMessages(id)
   }
 
   /**
@@ -31,8 +31,8 @@ export class ConsultController {
   @Post('vets/:id/messages')
   @HttpCode(HttpStatus.CREATED)
   createMessage(@Param('id') id: string, @Body() dto: PostMessageDto): VetMessage {
-    const message = this.consultService.appendMessage(id, 'user', dto.body);
-    this.consultService.scheduleAutoReply(id);
-    return message;
+    const message = this.consultService.appendMessage(id, 'user', dto.body)
+    this.consultService.scheduleAutoReply(id)
+    return message
   }
 }

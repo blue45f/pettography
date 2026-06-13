@@ -1,4 +1,4 @@
-import type { Vet, VetMessage } from '../common/types';
+import type { Vet, VetMessage } from '../common/types'
 
 export const VETS_SEED: Vet[] = [
   {
@@ -51,6 +51,6 @@ export const VETS_SEED: Vet[] = [
     avatarEmoji: '🧑‍⚕️',
     hourlyKrw: 45000,
   },
-];
+]
 
-export const VET_MESSAGES_SEED: Record<string, VetMessage[]> = {};
+export const VET_MESSAGES_SEED: Record<string, VetMessage[]> = {}
