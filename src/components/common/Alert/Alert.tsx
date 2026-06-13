@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import styles from './Alert.module.css'
+import { Alert as KitAlert } from '@/components/ui/Alert'
 
 type AlertVariant = 'info' | 'success' | 'warning' | 'error'
 
@@ -14,6 +14,13 @@ interface AlertProps {
   className?: string
 }
 
+/**
+ * Legacy common Alert — now a thin wrapper over the `ui/` kit Alert so every
+ * existing caller renders the canonical token styling without changing its API.
+ * The legacy `variant` maps directly onto the kit `tone`; the optional inline
+ * dismiss button (shown when `dismissible`) keeps its `common.dismiss` label
+ * and removes the banner from the tree on click, mirroring the old behavior.
+ */
 function Alert({
   children,
   variant = 'info',
@@ -32,25 +39,26 @@ function Alert({
     onDismiss?.()
   }
 
-  const alertClasses = [styles.alert, styles[variant], className].filter(Boolean).join(' ')
-
   return (
-    <div className={alertClasses} role="alert">
-      <div className={styles.content}>
-        {title && <strong className={styles.title}>{title}</strong>}
-        <div className={styles.message}>{children}</div>
-      </div>
-      {dismissible && (
-        <button
-          className={styles.close}
-          onClick={handleDismiss}
-          aria-label={t('common.dismiss')}
-          type="button"
-        >
-          &times;
-        </button>
-      )}
-    </div>
+    <KitAlert
+      tone={variant}
+      title={title}
+      className={className}
+      action={
+        dismissible ? (
+          <button
+            type="button"
+            onClick={handleDismiss}
+            aria-label={t('common.dismiss')}
+            className="flex size-7 shrink-0 items-center justify-center rounded-md text-xl leading-none text-current opacity-60 transition-opacity duration-150 ease-quint hover:bg-panel-muted hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+          >
+            &times;
+          </button>
+        ) : undefined
+      }
+    >
+      {children}
+    </KitAlert>
   )
 }
 

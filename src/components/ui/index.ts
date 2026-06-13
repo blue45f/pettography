@@ -7,6 +7,9 @@ export type {
   AccordionTriggerProps,
 } from '@/components/ui/Accordion'
 
+export { Alert } from '@/components/ui/Alert'
+export type { AlertProps, AlertTone } from '@/components/ui/Alert'
+
 export { Badge } from '@/components/ui/Badge'
 export type { BadgeProps, BadgeTone } from '@/components/ui/Badge'
 
