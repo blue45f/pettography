@@ -2,6 +2,8 @@ import { mkdirSync } from 'fs';
 import { DatabaseSync } from 'node:sqlite';
 import { dirname, join } from 'path';
 
+import { storeBackend } from '../db/store-backend';
+
 const memoryStore = new Map<string, unknown>();
 const databaseCache = new Map<string, DatabaseSync>();
 
@@ -32,6 +34,17 @@ export class JsonFileStore<T> {
       return clone(memoryStore.get(this.documentName) as T);
     }
 
+    // Neon 백엔드(DATABASE_URL 설정 시): 하이드레이트된 캐시에서 동기 로드.
+    if (storeBackend.enabled) {
+      const fromDb = storeBackend.read<T>(this.documentName);
+      if (fromDb === undefined) {
+        const initial = this.defaults();
+        this.save(initial);
+        return clone(initial);
+      }
+      return clone(fromDb);
+    }
+
     const row = this.database
       .prepare('SELECT data FROM app_state_documents WHERE name = ?')
       .get(this.documentName) as { data: string } | undefined;
@@ -47,6 +60,12 @@ export class JsonFileStore<T> {
     const snapshot = clone(value);
     if (this.useMemory) {
       memoryStore.set(this.documentName, snapshot);
+      return;
+    }
+
+    // Neon 백엔드: 캐시 갱신 + write-behind upsert(동기 계약 유지).
+    if (storeBackend.enabled) {
+      storeBackend.write(this.documentName, snapshot);
       return;
     }
 
