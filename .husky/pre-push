@@ -1,1 +1,3 @@
-pnpm verify:push
+#!/usr/bin/env sh
+set -e
+pnpm run verify:push

@@ -53,6 +53,13 @@ storybook-static
 # Husky
 .husky/_
 
+# Runtime data store (backend SQLite/JSON state)
+.data
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
 # Misc
 *.tsbuildinfo
 .vercel

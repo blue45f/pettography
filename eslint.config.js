@@ -58,10 +58,10 @@ export default tseslint.config(
         { name: 'alert', message: 'Toast/Modal을 사용하세요 (window.alert 금지).' },
         { name: 'prompt', message: '입력 다이얼로그/폼을 사용하세요 (window.prompt 금지).' },
       ],
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'react-refresh/only-export-components': ['error', { allowConstantExport: true }],
       'react-compiler/react-compiler': 'error',
       'import-x/order': [
-        'warn',
+        'error',
         {
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'type'],
           'newlines-between': 'always',
@@ -69,8 +69,8 @@ export default tseslint.config(
         },
       ],
       'import-x/no-duplicates': 'error',
-      'import-x/first': 'warn',
-      'import-x/newline-after-import': 'warn',
+      'import-x/first': 'error',
+      'import-x/newline-after-import': 'error',
     },
   },
   {
