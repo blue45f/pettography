@@ -210,6 +210,14 @@
     "subtitle": "Curated around the species you picked.",
     "selectedSpecies": "Your species",
     "speciesChange": "Change species",
+    "firstRun": {
+      "title": "Add a pet to get started",
+      "description": "Pick a species and we'll curate nearby vets, shops, and care guides for you.",
+      "hint": "Takes about a minute. You can switch species or add more anytime.",
+      "cta": "Add a pet"
+    },
+    "discoverTitle": "Explore more",
+    "discoverHint": "Expand to browse vets, shops, guides, communities, and more.",
     "nearHospitalsTitle": "Vets near you",
     "nearShopsTitle": "Shops near you",
     "careGuideTitle": "Today's care tip",
@@ -3826,7 +3834,8 @@
     "navigate": "navigate",
     "select": "select",
     "close": "close",
-    "openLabel": "Open command palette (⌘K)"
+    "openLabel": "Open command palette (⌘K)",
+    "openTrigger": "Search"
   },
   "pagination": {
     "nav": "Pagination",

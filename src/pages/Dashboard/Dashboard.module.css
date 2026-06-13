@@ -193,6 +193,21 @@
   font-size: var(--font-size-sm);
 }
 
+/* "Explore more" disclosure group: collapses the secondary discovery sections
+   into the existing Accordion so the first glance stays calm. */
+.discoverSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* When the per-section "view all" link trails the card grid inside an Accordion
+   panel, lift it onto its own line with breathing room. */
+.cardGrid + .sectionLink {
+  display: inline-block;
+  margin-top: var(--spacing-md);
+}
+
 .gridSection {
   display: flex;
   flex-direction: column;
@@ -674,6 +689,46 @@
   }
 
   .attentionItem:hover {
+    transform: none;
+  }
+}
+
+/* First-run primer: shown in the header's species slot when no active species
+   is resolved. Sits in the same flex slot as .speciesCard so the layout holds. */
+.firstRunPrimer {
+  min-width: 280px;
+  flex: 0 1 340px;
+  min-height: 0;
+}
+
+.firstRunCta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-pill);
+  background: var(--gradient-brand);
+  color: var(--color-on-brand);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--motion-fast),
+    box-shadow var(--motion-fast);
+}
+
+.firstRunCta:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .firstRunCta {
+    transition: none;
+  }
+
+  .firstRunCta:hover {
     transform: none;
   }
 }
