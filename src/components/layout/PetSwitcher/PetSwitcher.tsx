@@ -1,5 +1,5 @@
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpeciesList } from '@features/species'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpeciesList } from '@domains/species'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 

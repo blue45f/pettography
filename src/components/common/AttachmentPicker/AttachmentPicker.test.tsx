@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import AttachmentPicker from './AttachmentPicker'
 
-import type { Attachment } from '@features/attachments'
+import type { Attachment } from '@domains/attachments'
 
 const pdfAttachment: Attachment = {
   id: 'att-pdf',

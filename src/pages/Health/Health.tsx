@@ -18,9 +18,9 @@ import {
   weightTrend,
   type VaccinationFormValues,
   type WeightFormValues,
-} from '@features/health'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies } from '@features/species'
+} from '@domains/health'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpecies } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'

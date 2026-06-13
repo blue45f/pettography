@@ -7,8 +7,8 @@ import PetBadge, { ShowAllPetsToggle } from '@components/common/PetBadge'
 import Progress from '@components/common/Progress'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpeciesList } from '@features/species'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpeciesList } from '@domains/species'
 import {
   CLEANUP_CREW,
   PLANTS,
@@ -27,7 +27,7 @@ import {
   type MaintenanceLevel,
   type SubstrateRole,
   type VivariumBuild,
-} from '@features/vivarium'
+} from '@domains/vivarium'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

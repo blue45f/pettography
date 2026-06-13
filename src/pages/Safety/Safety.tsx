@@ -5,7 +5,7 @@ import Card from '@components/common/Card'
 import Progress from '@components/common/Progress'
 import Switch from '@components/common/Switch'
 import { useToast } from '@components/common/Toast'
-import { useOnboardingStore } from '@features/onboarding'
+import { useOnboardingStore } from '@domains/onboarding'
 import {
   ALL_SAFETY_ITEM_IDS,
   auditProgress,
@@ -16,8 +16,8 @@ import {
   useActivePetAudit,
   useSafetyStore,
   type SafetyLevel,
-} from '@features/safety'
-import { useSpeciesList } from '@features/species'
+} from '@domains/safety'
+import { useSpeciesList } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'

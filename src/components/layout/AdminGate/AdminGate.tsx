@@ -1,7 +1,7 @@
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import Input from '@components/common/Input'
-import { login, useAuthStore } from '@features/auth'
+import { login, useAuthStore } from '@domains/auth'
 import { useState, type FormEvent, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 

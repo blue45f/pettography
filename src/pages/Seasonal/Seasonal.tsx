@@ -1,6 +1,6 @@
 import Badge from '@components/common/Badge'
 import Card from '@components/common/Card'
-import { useOnboardingStore } from '@features/onboarding'
+import { useOnboardingStore } from '@domains/onboarding'
 import {
   SEASONAL_GUIDE,
   brumationRelevant,
@@ -10,8 +10,8 @@ import {
   guideForSeason,
   orderedSeasonsFrom,
   type Season,
-} from '@features/seasonal'
-import { SPECIES_CATEGORIES, useSpeciesList, type SpeciesCategory } from '@features/species'
+} from '@domains/seasonal'
+import { SPECIES_CATEGORIES, useSpeciesList, type SpeciesCategory } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

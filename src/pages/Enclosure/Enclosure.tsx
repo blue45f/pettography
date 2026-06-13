@@ -13,9 +13,9 @@ import {
   useEnclosureStore,
   verdict,
   type EnclosureFormValues,
-} from '@features/enclosure'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpeciesList } from '@features/species'
+} from '@domains/enclosure'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'

@@ -1,4 +1,4 @@
-import { useOnboardingStore } from '@features/onboarding'
+import { useOnboardingStore } from '@domains/onboarding'
 import { useTranslation } from 'react-i18next'
 
 import styles from './ShowAllPetsToggle.module.css'

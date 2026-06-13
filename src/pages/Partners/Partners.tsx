@@ -10,7 +10,7 @@ import {
   usePartnersStore,
   type PartnerFormValues,
   type PartnerKind,
-} from '@features/partners'
+} from '@domains/partners'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useForm } from 'react-hook-form'

@@ -22,9 +22,9 @@ import {
   type GearFormValues,
   type GearStatus,
   type GearItem,
-} from '@features/gear'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpeciesList } from '@features/species'
+} from '@domains/gear'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useToday } from '@hooks/useToday'

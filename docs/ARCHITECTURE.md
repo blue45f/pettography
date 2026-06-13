@@ -8,7 +8,8 @@
 2. **서버 상태와 클라이언트 상태 분리** - 비동기 서버 상태는 TanStack Query, 사용자/테마 같은 클라이언트 상태는 Zustand가 담당합니다.
 3. **Data Router 우선** - React Router 7의 Data Router 객체 라우팅과 route-level `lazy` module을 사용합니다.
 4. **검증 가능한 스캐폴딩** - lint, typecheck, test, build, i18n 키 동기화, security audit을 스크립트와 Husky 훅으로 고정합니다.
-5. **점진적 확장** - 기능이 커질 때 `features/<domain>` 안에 schema, api, queries, store를 함께 배치합니다.
+5. **점진적 확장** - 기능이 커질 때 `domains/<domain>` 안에 schema, api, queries, store를 함께 배치합니다.
+6. **계층 경계 강제** - app → domains → infrastructure → shared 4계층을 eslint-plugin-boundaries로 강제합니다. 상위 계층만 하위를 import 할 수 있습니다.
 
 ## 디렉토리 구조
 
@@ -19,12 +20,12 @@ src/
 ├── components/      재사용 가능한 UI 컴포넌트
 │   ├── common/      범용 컴포넌트
 │   └── layout/      레이아웃 컴포넌트
-├── features/        도메인 모듈 (예: todos)
-├── hooks/           커스텀 React 훅
+├── domains/         도메인 모듈 (기능별, 계층=domains)
+├── hooks/           커스텀 React 훅 (계층=shared)
 ├── i18n/            i18next 설정, 로케일, 키 동기화 테스트
-├── pages/           라우트 단위 화면 컴포넌트
-├── router/          Data Router route object 정의
-├── services/        범용 API 클라이언트
+├── infrastructure/  범용 API 클라이언트 (계층=infrastructure)
+├── pages/           라우트 단위 화면 컴포넌트 (계층=app)
+├── router/          Data Router route object 정의 (계층=app)
 ├── store/           Zustand 기반 앱 전역 상태
 ├── test/            Vitest setup
 ├── types/           공유 타입
@@ -70,7 +71,7 @@ export const routes = [
 
 ### 서버 상태
 
-TanStack Query를 사용합니다. query key, query hook, mutation hook은 가능하면 `features/<domain>/queries.ts`에 둡니다.
+TanStack Query를 사용합니다. query key, query hook, mutation hook은 가능하면 `domains/<domain>/queries.ts`에 둡니다.
 
 ### 클라이언트 상태
 

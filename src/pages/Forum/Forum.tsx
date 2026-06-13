@@ -22,9 +22,9 @@ import {
   type ForumReplyFormValues,
   type ForumReplyNode,
   type ForumSort,
-} from '@features/forum'
-import { useOnboardingStore } from '@features/onboarding'
-import { SPECIES_CATEGORIES, type SpeciesCategory } from '@features/species'
+} from '@domains/forum'
+import { useOnboardingStore } from '@domains/onboarding'
+import { SPECIES_CATEGORIES, type SpeciesCategory } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useEffect, useState } from 'react'
@@ -33,7 +33,7 @@ import { useTranslation } from 'react-i18next'
 
 import styles from './Forum.module.css'
 
-import type { Attachment } from '@features/attachments'
+import type { Attachment } from '@domains/attachments'
 
 function Forum() {
   const { t } = useTranslation()

@@ -13,7 +13,7 @@ import {
   type InquiryCategory,
   type InquiryFormValues,
   type StoredInquiryReceipt,
-} from '@features/inquiry'
+} from '@domains/inquiry'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useState } from 'react'

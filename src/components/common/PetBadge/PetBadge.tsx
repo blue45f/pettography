@@ -1,5 +1,5 @@
 import Badge from '@components/common/Badge'
-import { useOnboardingStore } from '@features/onboarding'
+import { useOnboardingStore } from '@domains/onboarding'
 
 import { usePetLabel } from './usePetLabel'
 

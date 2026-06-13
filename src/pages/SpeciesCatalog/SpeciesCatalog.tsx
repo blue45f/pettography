@@ -8,7 +8,7 @@ import {
   useSpeciesList,
   type Difficulty,
   type SpeciesCategory,
-} from '@features/species'
+} from '@domains/species'
 import usePageMeta from '@hooks/usePageMeta'
 import { useDeferredValue, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

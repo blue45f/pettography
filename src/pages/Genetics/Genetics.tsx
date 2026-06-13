@@ -17,9 +17,9 @@ import {
   type GeneTrait,
   type ParentGenotype,
   type Zygosity,
-} from '@features/genetics'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpeciesList } from '@features/species'
+} from '@domains/genetics'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpeciesList } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

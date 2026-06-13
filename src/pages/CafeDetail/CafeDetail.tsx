@@ -17,7 +17,7 @@ import {
   type CafeCommentFormValues,
   type CafePost,
   type CafePostFormValues,
-} from '@features/cafes'
+} from '@domains/cafes'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useState } from 'react'
@@ -27,7 +27,7 @@ import { Link, useParams } from 'react-router'
 
 import styles from './CafeDetail.module.css'
 
-import type { Attachment } from '@features/attachments'
+import type { Attachment } from '@domains/attachments'
 
 function CafeDetail() {
   const { t } = useTranslation()

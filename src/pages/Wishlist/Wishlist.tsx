@@ -8,7 +8,7 @@ import Select from '@components/common/Select'
 import Switch from '@components/common/Switch'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
-import { useSpeciesList, type Difficulty, type Species } from '@features/species'
+import { useSpeciesList, type Difficulty, type Species } from '@domains/species'
 import {
   PRIORITIES,
   READINESS_ITEMS,
@@ -21,7 +21,7 @@ import {
   type Priority,
   type WishlistFormValues,
   type WishlistItem,
-} from '@features/wishlist'
+} from '@domains/wishlist'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'

@@ -15,9 +15,9 @@ import {
   useDiaryStore,
   type DiaryCategory,
   type DiaryFormValues,
-} from '@features/diary'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies, useSpeciesList } from '@features/species'
+} from '@domains/diary'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpecies, useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useEffect, useMemo, useState } from 'react'

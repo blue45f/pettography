@@ -19,14 +19,14 @@ import {
   type ListingFormValues,
   type MarketRegion,
   type MarketSort,
-} from '@features/market'
-import { useOnboardingStore } from '@features/onboarding'
+} from '@domains/market'
+import { useOnboardingStore } from '@domains/onboarding'
 import {
   SPECIES_CATEGORIES,
   useSpeciesList,
   type Species,
   type SpeciesCategory,
-} from '@features/species'
+} from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useEffect, useMemo, useState } from 'react'

@@ -4,7 +4,7 @@ import Input from '@components/common/Input'
 import PetBadge from '@components/common/PetBadge'
 import Select from '@components/common/Select'
 import { useToast } from '@components/common/Toast'
-import { useOnboardingStore } from '@features/onboarding'
+import { useOnboardingStore } from '@domains/onboarding'
 import {
   BUILTIN_ROUTINES,
   isDoneWithinWindow,
@@ -15,7 +15,7 @@ import {
   type RoutineCadence,
   type RoutineFormValues,
   type RoutineTask,
-} from '@features/routine'
+} from '@domains/routine'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'

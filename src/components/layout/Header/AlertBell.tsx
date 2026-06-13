@@ -1,4 +1,4 @@
-import { actionableCount } from '@features/alerts'
+import { actionableCount } from '@domains/alerts'
 import { useAggregatedAlerts } from '@hooks/useAggregatedAlerts'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router'

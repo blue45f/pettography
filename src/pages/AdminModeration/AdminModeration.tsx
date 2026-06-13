@@ -4,8 +4,8 @@ import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import { useToast } from '@components/common/Toast'
 import AdminGate from '@components/layout/AdminGate'
-import { useCafesStore } from '@features/cafes'
-import { useForumStore } from '@features/forum'
+import { useCafesStore } from '@domains/cafes'
+import { useForumStore } from '@domains/forum'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +13,7 @@ import { Link } from 'react-router'
 
 import styles from './AdminModeration.module.css'
 
-import type { Attachment } from '@features/attachments'
+import type { Attachment } from '@domains/attachments'
 
 type ModerationFilter = 'all' | 'flagged' | 'hidden'
 

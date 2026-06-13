@@ -1,7 +1,7 @@
 import LanguageToggle from '@components/common/LanguageToggle'
 import ThemeToggle from '@components/common/ThemeToggle'
 import PetSwitcher from '@components/layout/PetSwitcher'
-import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
+import { isOnboardingComplete, useOnboardingStore } from '@domains/onboarding'
 import { lazyRetry } from '@utils/lazyRetry'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'

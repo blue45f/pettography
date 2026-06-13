@@ -9,10 +9,10 @@ import {
   suggestedReserveKrw,
   useActivePetReserve,
   useReserveStore,
-} from '@features/insurance'
-import { useOnboardingStore } from '@features/onboarding'
-import { isRegulated } from '@features/registry'
-import { useSpecies } from '@features/species'
+} from '@domains/insurance'
+import { useOnboardingStore } from '@domains/onboarding'
+import { isRegulated } from '@domains/registry'
+import { useSpecies } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

@@ -6,8 +6,8 @@ import EmptyState from '@components/common/EmptyState'
 import Sparkline from '@components/common/Sparkline'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpeciesList } from '@features/species'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpeciesList } from '@domains/species'
 import {
   bpm,
   respGuidanceCategory,
@@ -19,7 +19,7 @@ import {
   VITAL_DURATIONS,
   VITAL_TYPES,
   type VitalType,
-} from '@features/vitals'
+} from '@domains/vitals'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import useInterval from '@hooks/useInterval'
 import { buildCsv } from '@utils/csv'

@@ -10,9 +10,9 @@ import {
   resolveTriage,
   topicsForCategory,
   type Severity,
-} from '@features/assistant'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpeciesList } from '@features/species'
+} from '@domains/assistant'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpeciesList } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

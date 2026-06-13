@@ -1,5 +1,5 @@
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpeciesList } from '@features/species'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpeciesList } from '@domains/species'
 
 export interface PetLabel {
   name: string

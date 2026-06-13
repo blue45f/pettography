@@ -9,7 +9,7 @@ import { z } from 'zod'
  * imports only the *types* via `import type`, so zod never enters its runtime.
  *
  * Shapes here are a pure consolidation of the previously duplicated
- * definitions in `src/features/*` and `backend/src/common/types.ts`.
+ * definitions in `src/domains/*` and `backend/src/common/types.ts`.
  * Do not change these value sets without updating both consumers.
  */
 

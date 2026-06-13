@@ -1,5 +1,5 @@
 import Badge from '@components/common/Badge'
-import { daysUntil, eventsByMonth, PET_EVENTS_2026, type PetEvent } from '@features/events'
+import { daysUntil, eventsByMonth, PET_EVENTS_2026, type PetEvent } from '@domains/events'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'

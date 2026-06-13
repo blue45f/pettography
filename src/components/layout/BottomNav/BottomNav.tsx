@@ -1,4 +1,4 @@
-import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
+import { isOnboardingComplete, useOnboardingStore } from '@domains/onboarding'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router'
 

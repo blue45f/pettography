@@ -13,7 +13,7 @@ import {
   useActivePetSupplies,
   useSuppliesStore,
   type SupplyFormValues,
-} from '@features/supplies'
+} from '@domains/supplies'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useState } from 'react'

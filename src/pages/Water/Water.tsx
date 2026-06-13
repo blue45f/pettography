@@ -7,8 +7,8 @@ import Input from '@components/common/Input'
 import Sparkline from '@components/common/Sparkline'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies, useSpeciesList } from '@features/species'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpecies, useSpeciesList } from '@domains/species'
 import {
   cycleStatus,
   latestReading,
@@ -23,7 +23,7 @@ import {
   type WaterFormValues,
   type WaterParam,
   type WaterReading,
-} from '@features/water'
+} from '@domains/water'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { buildCsv } from '@utils/csv'

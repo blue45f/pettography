@@ -8,15 +8,15 @@ import {
   useExternalLinks,
   type LinkCategory,
   type SpeciesCategory as ExtSpeciesCategory,
-} from '@features/external-links'
-import { useOnboardingStore } from '@features/onboarding'
+} from '@domains/external-links'
+import { useOnboardingStore } from '@domains/onboarding'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useDeferredValue, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Resources.module.css'
 
-import type { SpeciesCategory } from '@features/species'
+import type { SpeciesCategory } from '@domains/species'
 
 const RESOURCES_SPECIES_FILTER: readonly (ExtSpeciesCategory | 'all')[] = [
   'all',

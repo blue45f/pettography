@@ -24,12 +24,12 @@
       "@components/*": ["./src/components/*"],
       "@pages/*": ["./src/pages/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@services/*": ["./src/services/*"],
+      "@infrastructure/*": ["./src/infrastructure/*"],
       "@utils/*": ["./src/utils/*"],
       "@types/*": ["./src/types/*"],
       "@store/*": ["./src/store/*"],
       "@assets/*": ["./src/assets/*"],
-      "@features/*": ["./src/features/*"],
+      "@domains/*": ["./src/domains/*"],
       "@router/*": ["./src/router/*"],
       "@i18n/*": ["./src/i18n/*"]
     }

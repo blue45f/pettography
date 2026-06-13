@@ -4,7 +4,7 @@ import {
   AttachmentRejectionError,
   fileToAttachment,
   type Attachment,
-} from '@features/attachments'
+} from '@domains/attachments'
 import { useId, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 

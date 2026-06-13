@@ -1,6 +1,6 @@
 import AttachmentGallery from './AttachmentGallery'
 
-import type { Attachment } from '@features/attachments'
+import type { Attachment } from '@domains/attachments'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 const TINY_PNG =

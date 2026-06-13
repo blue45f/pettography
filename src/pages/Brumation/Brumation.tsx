@@ -24,9 +24,9 @@ import {
   type BrumationPhaseId,
   type BrumationPlan,
   type PhaseDays,
-} from '@features/brumation'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies, useSpeciesList } from '@features/species'
+} from '@domains/brumation'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpecies, useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useToday } from '@hooks/useToday'

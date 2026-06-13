@@ -9,8 +9,8 @@ import Select from '@components/common/Select'
 import Switch from '@components/common/Switch'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpeciesList } from '@features/species'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpeciesList } from '@domains/species'
 import {
   categoryTip,
   checklistProgress,
@@ -23,7 +23,7 @@ import {
   useActivePetTrips,
   useTransportStore,
   type TripFormValues,
-} from '@features/transport'
+} from '@domains/transport'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'

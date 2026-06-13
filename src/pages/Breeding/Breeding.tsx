@@ -24,9 +24,9 @@ import {
   type ClutchStatusCode,
   type Pairing,
   type PairingFormValues,
-} from '@features/breeding'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies, useSpeciesList } from '@features/species'
+} from '@domains/breeding'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpecies, useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useRef } from 'react'

@@ -26,9 +26,9 @@ import {
   type Mentor,
   type MentorFormInputValues,
   type MentorFormValues,
-} from '@features/meetups'
-import { useOnboardingStore } from '@features/onboarding'
-import { SPECIES_CATEGORIES, type SpeciesCategory } from '@features/species'
+} from '@domains/meetups'
+import { useOnboardingStore } from '@domains/onboarding'
+import { SPECIES_CATEGORIES, type SpeciesCategory } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useEffect, useState } from 'react'

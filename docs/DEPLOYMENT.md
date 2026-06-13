@@ -9,7 +9,7 @@
 | **Frontend** | Vite + React 19 SPA                        | **Vercel**          | `dist/` 정적 번들               | `.github/workflows/deploy-vercel.yml`  |
 | **Backend**  | NestJS 11 (Express) + socket.io 게이트웨이 | **Render** (Docker) | `backend/dist/main.js` 컨테이너 | `.github/workflows/deploy-backend.yml` |
 
-- 프론트엔드는 정적 SPA입니다. `VITE_API_URL`이 설정되면 NestJS API를 호출하고, 미설정 시 in-memory mock으로 fallback합니다 (`src/features/*/api.ts`).
+- 프론트엔드는 정적 SPA입니다. `VITE_API_URL`이 설정되면 NestJS API를 호출하고, 미설정 시 in-memory mock으로 fallback합니다 (`src/domains/*/api.ts`).
 - 백엔드는 DB/인증이 없는 **상태 비저장 in-memory API**(+ `/consult` WebSocket)입니다 — 컨테이너 호스팅(Render/Fly)에 적합합니다.
 - 두 티어는 **독립 배포**됩니다. 프론트엔드는 Vercel CDN, 백엔드는 Render 컨테이너로 나갑니다. 둘을 잇는 것은 `VITE_API_URL`(프론트→백엔드 주소)과 `CORS_ORIGINS`(백엔드가 허용할 프론트 origin) 두 환경변수입니다.
 

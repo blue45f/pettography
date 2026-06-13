@@ -34,4 +34,4 @@ pnpm run dev:backend    # backend dev 서버 (--filter pettography-backend)
 
 ## 코드 스타일
 
-프론트는 React/Vite 계층을 `src/app`, `src/components`, `src/features`, `src/services` 중심으로 유지합니다. backend는 NestJS module/controller/service 경계를 유지하고 DTO validation을 우선합니다.
+프론트는 React/Vite 계층을 `src/app`, `src/components`, `src/domains`, `src/infrastructure` 중심으로 유지합니다. backend는 NestJS module/controller/service 경계를 유지하고 DTO validation을 우선합니다.

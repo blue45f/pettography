@@ -12,8 +12,8 @@
 | PromptMarket                      | 등록 폼 draft 자동 저장 + live preview 패턴                                         | `src/pages/Market/Market.tsx`, `src/pages/Market/Market.module.css`                        | `pnpm run test:run src/pages/Market/Market.test.tsx src/i18n/locales.test.ts`                   |
 | termsdesk, spa-seo-gateway        | canonical SHA-256 hash 감사 패턴을 Backup export/import 무결성 checksum으로 반영    | `src/pages/Backup/backupEnvelope.ts`, `src/pages/Backup/Backup.tsx`                        | `pnpm run test:run src/pages/Backup/Backup.test.tsx src/i18n/locales.test.ts`                   |
 | multi-environment-setting         | 환경별 설정 검증 패턴을 Vite/Nest env 계약 검증 게이트로 축소 반영                  | `scripts/validate-env.mjs`, `.env.example`, `package.json`                                 | `pnpm run test:env`, `pnpm run validate:env`                                                    |
-| rotifolk, offhours                | public API contract 테스트 패턴                                                     | `src/features/api-contracts.test.ts`                                                       | `pnpm run test:run src/features/api-contracts.test.ts`                                          |
-| resume                            | MSW 원격 API 테스트 패턴을 fetch-stub 기반 remote mode 테스트로 경량 반영           | `src/features/remote-api-mode.test.ts`                                                     | `pnpm run test:run src/features/remote-api-mode.test.ts`                                        |
+| rotifolk, offhours                | public API contract 테스트 패턴                                                     | `src/domains/api-contracts.test.ts`                                                        | `pnpm run test:run src/domains/api-contracts.test.ts`                                           |
+| resume                            | MSW 원격 API 테스트 패턴을 fetch-stub 기반 remote mode 테스트로 경량 반영           | `src/domains/remote-api-mode.test.ts`                                                      | `pnpm run test:run src/domains/remote-api-mode.test.ts`                                         |
 
 ## 프로젝트별 비교 결과
 

@@ -17,8 +17,8 @@ import {
   type LineageFormValues,
   type PedigreeNode,
   type Sex,
-} from '@features/lineage'
-import { useSpeciesList, type Species } from '@features/species'
+} from '@domains/lineage'
+import { useSpeciesList, type Species } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'
