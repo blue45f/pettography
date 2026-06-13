@@ -51,7 +51,9 @@
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
     "@pettography/shared": "workspace:*",
+    "@radix-ui/react-accordion": "^1.2.13",
     "@radix-ui/react-label": "^2.1.9",
+    "@radix-ui/react-progress": "^1.1.9",
     "@radix-ui/react-slot": "^1.2.5",
     "@radix-ui/react-switch": "^1.3.0",
     "@radix-ui/react-tabs": "^1.1.14",

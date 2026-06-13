@@ -1,6 +1,7 @@
-import { useState, useId, createElement, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
-import styles from './Accordion.module.css'
+import { Accordion as KitAccordion } from '@/components/ui/Accordion'
+import { cn } from '@/utils/cn'
 
 interface AccordionItem {
   id: string
@@ -17,6 +18,15 @@ interface AccordionProps {
   headingLevel?: 2 | 3 | 4 | 5 | 6
 }
 
+/**
+ * Legacy common Accordion — now a thin wrapper over the `ui/` kit Accordion
+ * (Radix) so existing callers render the canonical kit styling without changing
+ * their data-driven API. The kit owns the heading/trigger/region roles,
+ * `aria-expanded`/`aria-controls` wiring and keyboard navigation the legacy
+ * implemented by hand. Item `id`s map to Radix `value`s; `allowMultiple` picks
+ * the Radix `single` (collapsible) vs `multiple` variant; `defaultOpen` seeds
+ * the matching `defaultValue` shape.
+ */
 function Accordion({
   items,
   allowMultiple = false,
@@ -24,68 +34,27 @@ function Accordion({
   className = '',
   headingLevel = 3,
 }: AccordionProps) {
-  const baseId = useId()
-  const [openItems, setOpenItems] = useState<Set<string>>(new Set(defaultOpen))
+  const triggers = items.map((item) => (
+    <KitAccordion.Item key={item.id} value={item.id} disabled={item.disabled}>
+      <KitAccordion.Trigger headingLevel={headingLevel}>{item.title}</KitAccordion.Trigger>
+      <KitAccordion.Content>{item.content}</KitAccordion.Content>
+    </KitAccordion.Item>
+  ))
 
-  const toggle = (id: string) => {
-    setOpenItems((prev) => {
-      const next = new Set(allowMultiple ? prev : [])
-      if (prev.has(id)) {
-        next.delete(id)
-      } else {
-        next.add(id)
-      }
-      return next
-    })
+  // Radix `Root` is a discriminated union on `type`; the two branches take
+  // differently-shaped value props, so render each explicitly.
+  if (allowMultiple) {
+    return (
+      <KitAccordion type="multiple" defaultValue={defaultOpen} className={cn(className)}>
+        {triggers}
+      </KitAccordion>
+    )
   }
 
-  const HeadingTag = `h${headingLevel}` as 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-
   return (
-    <div className={`${styles.accordion} ${className}`}>
-      {items.map((item) => {
-        const isOpen = openItems.has(item.id)
-        const headerId = `${baseId}-header-${item.id}`
-        const panelId = `${baseId}-panel-${item.id}`
-
-        return (
-          <div key={item.id} className={styles.item}>
-            {createElement(
-              HeadingTag,
-              null,
-              <button
-                id={headerId}
-                className={`${styles.trigger} ${isOpen ? styles.open : ''}`}
-                onClick={() => toggle(item.id)}
-                aria-expanded={isOpen}
-                aria-controls={panelId}
-                disabled={item.disabled}
-                type="button"
-              >
-                <span>{item.title}</span>
-                <span
-                  className={`${styles.icon} ${isOpen ? styles.iconOpen : ''}`}
-                  aria-hidden="true"
-                >
-                  &#x203A;
-                </span>
-              </button>,
-            )}
-            <div
-              id={panelId}
-              className={`${styles.panel} ${isOpen ? styles.panelOpen : ''}`}
-              role="region"
-              aria-labelledby={headerId}
-              hidden={!isOpen}
-            >
-              <div className={styles.panelInner}>
-                <div className={styles.content}>{item.content}</div>
-              </div>
-            </div>
-          </div>
-        )
-      })}
-    </div>
+    <KitAccordion type="single" collapsible defaultValue={defaultOpen[0]} className={cn(className)}>
+      {triggers}
+    </KitAccordion>
   )
 }
 

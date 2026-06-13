@@ -1,3 +1,12 @@
+export { Accordion } from '@/components/ui/Accordion'
+export type {
+  AccordionContentProps,
+  AccordionHeadingLevel,
+  AccordionItemProps,
+  AccordionProps,
+  AccordionTriggerProps,
+} from '@/components/ui/Accordion'
+
 export { Badge } from '@/components/ui/Badge'
 export type { BadgeProps, BadgeTone } from '@/components/ui/Badge'
 
@@ -18,6 +27,9 @@ export type { InputProps } from '@/components/ui/Input'
 
 export { Label } from '@/components/ui/Label'
 export type { LabelProps } from '@/components/ui/Label'
+
+export { Progress } from '@/components/ui/Progress'
+export type { ProgressProps, ProgressSize, ProgressTone } from '@/components/ui/Progress'
 
 export { Skeleton } from '@/components/ui/Skeleton'
 export type { SkeletonProps } from '@/components/ui/Skeleton'

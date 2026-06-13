@@ -26,7 +26,8 @@ describe('Progress', () => {
 
   it('값을 0-100%로 제한한다', () => {
     const { container } = render(<Progress value={150} />)
-    const bar = container.querySelector('[class*="bar"]')
+    // The kit indicator is the only element carrying the scaleX transform.
+    const bar = container.querySelector('[style*="scaleX"]')
     expect(bar).toBeTruthy()
     // clamped to 100% -> scaleX(1) (transform avoids animating the layout `width`)
     expect(bar?.getAttribute('style')).toContain('scaleX(1)')
