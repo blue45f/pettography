@@ -1,4 +1,5 @@
 import ToastProvider from '@components/common/Toast'
+import { installAuthInterceptors } from '@features/auth'
 import { QueryClientProvider, type QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RouterProvider } from 'react-router'
@@ -6,6 +7,8 @@ import { RouterProvider } from 'react-router'
 import { appQueryClient } from './queryClient'
 
 import { router as defaultRouter } from '@/router'
+
+installAuthInterceptors()
 
 interface AppProvidersProps {
   queryClient?: QueryClient

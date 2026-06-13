@@ -16,6 +16,10 @@ export type {
   PartnerStatus,
   VetStatus,
   VetMessageRole,
+  AccountRole,
+  AccountStatus,
+  ForbiddenWordAction,
+  ForbiddenWordMatchType,
   WildlifeFilingKey,
 } from '@pettography/shared';
 
@@ -34,6 +38,10 @@ import type {
   PartnerStatus,
   VetStatus,
   VetMessageRole,
+  AccountRole,
+  AccountStatus,
+  ForbiddenWordAction,
+  ForbiddenWordMatchType,
   WildlifeFilingKey,
 } from '@pettography/shared';
 
@@ -141,16 +149,75 @@ export interface ForumPost {
   category: SpeciesCategory;
   title: string;
   author: string;
+  authorId?: string;
   body: string;
   createdAt: string;
+  reportCount?: number;
+  autoHidden?: boolean;
+  hiddenByAdmin?: boolean;
+  moderationStatus?: 'visible' | 'needs_review';
+  moderationHits?: string[];
 }
 
 export interface ForumReply {
   id: string;
   postId: string;
   author: string;
+  authorId?: string;
   body: string;
   createdAt: string;
+  reportCount?: number;
+  autoHidden?: boolean;
+  hiddenByAdmin?: boolean;
+  deleted?: boolean;
+  moderationStatus?: 'visible' | 'needs_review';
+  moderationHits?: string[];
+}
+
+export interface Account {
+  id: string;
+  email: string;
+  name: string;
+  passwordHash: string | null;
+  role: AccountRole;
+  status: AccountStatus;
+  createdAt: string;
+  updatedAt: string;
+  lastLoginAt?: string | null;
+  withdrawnAt?: string | null;
+}
+
+export type PublicAccount = Omit<Account, 'passwordHash'>;
+
+export interface AccountSession {
+  id: string;
+  accountId: string;
+  tokenHash: string;
+  createdAt: string;
+  expiresAt: string;
+  revokedAt?: string | null;
+}
+
+export interface AuditLog {
+  id: string;
+  actorId: string | null;
+  action: string;
+  targetType: string;
+  targetId: string;
+  createdAt: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface ForbiddenWordRule {
+  id: string;
+  phrase: string;
+  normalizedPhrase: string;
+  action: ForbiddenWordAction;
+  matchType: ForbiddenWordMatchType;
+  enabled: boolean;
+  note?: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface PartnerApplication {

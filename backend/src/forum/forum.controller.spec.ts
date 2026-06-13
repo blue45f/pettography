@@ -1,17 +1,26 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { BadRequestException } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { AuthGuard } from '../auth/auth.guard';
+import { AuthService } from '../auth/auth.service';
+import { resetStateStoresForTest } from '../common/json-store';
+import { ModerationService } from '../moderation/moderation.service';
 import { ForumController } from './forum.controller';
 import { ForumService } from './forum.service';
 
 describe('ForumController', () => {
   let controller: ForumController;
+  let moderation: ModerationService;
 
   beforeEach(async () => {
+    resetStateStoresForTest();
     const moduleRef: TestingModule = await Test.createTestingModule({
       controllers: [ForumController],
-      providers: [ForumService],
+      providers: [ForumService, ModerationService, AuthService, AuthGuard, Reflector],
     }).compile();
 
     controller = moduleRef.get(ForumController);
+    moderation = moduleRef.get(ModerationService);
   });
 
   describe('GET /forum/posts', () => {
@@ -30,6 +39,41 @@ describe('ForumController', () => {
       const result = controller.findAllPosts({ category: 'reptile' });
       expect(result.length).toBeGreaterThan(0);
       expect(result.every((p) => p.category === 'reptile')).toBe(true);
+    });
+
+    it('marks posts for review when review rules match', () => {
+      moderation.createForbiddenWord({
+        phrase: '리뷰필요',
+        action: 'review',
+        matchType: 'contains',
+      });
+
+      const reviewed = controller.createPost({
+        category: 'reptile',
+        title: '리뷰필요 제목',
+        author: '테스터',
+        body: '일반 본문',
+      });
+
+      expect(reviewed.moderationStatus).toBe('needs_review');
+      expect(reviewed.moderationHits).toEqual(['리뷰필요']);
+    });
+
+    it('rejects posts when block rules match', () => {
+      moderation.createForbiddenWord({
+        phrase: '차단어',
+        action: 'block',
+        matchType: 'contains',
+      });
+
+      expect(() =>
+        controller.createPost({
+          category: 'bird',
+          title: '앵무새 질문',
+          author: '테스터',
+          body: '차단어 포함',
+        }),
+      ).toThrow(BadRequestException);
     });
   });
 
