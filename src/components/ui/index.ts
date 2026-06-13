@@ -22,5 +22,16 @@ export type { LabelProps } from '@/components/ui/Label'
 export { Skeleton } from '@/components/ui/Skeleton'
 export type { SkeletonProps } from '@/components/ui/Skeleton'
 
+export { Switch } from '@/components/ui/Switch'
+export type { SwitchProps, SwitchSize } from '@/components/ui/Switch'
+
+export { Tabs } from '@/components/ui/Tabs'
+export type {
+  TabsContentProps,
+  TabsListProps,
+  TabsProps,
+  TabsTriggerProps,
+} from '@/components/ui/Tabs'
+
 export { Textarea } from '@/components/ui/Textarea'
 export type { TextareaProps } from '@/components/ui/Textarea'
