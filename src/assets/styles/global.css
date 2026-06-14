@@ -6,55 +6,64 @@
 
 :root {
   /* Brand palette (Indigo + Coral) */
-  --color-primary-50: #eef2ff;
-  --color-primary-100: #e0e7ff;
-  --color-primary-200: #c7d2fe;
-  --color-primary-300: #a5b4fc;
-  --color-primary-400: #818cf8;
-  --color-primary-500: #6366f1;
-  --color-primary-600: #4f46e5;
-  --color-primary-700: #4338ca;
-  --color-primary-800: #3730a3;
+  --color-primary-50: oklch(0.962 0.018 272.3);
+  --color-primary-100: oklch(0.93 0.033 272.8);
+  --color-primary-200: oklch(0.87 0.062 274);
+  --color-primary-300: oklch(0.785 0.104 274.7);
+  --color-primary-400: oklch(0.68 0.158 276.9);
+  --color-primary-500: oklch(0.585 0.204 277.1);
+  --color-primary-600: oklch(0.511 0.23 277);
+  --color-primary-700: oklch(0.457 0.215 277);
+  --color-primary-800: oklch(0.398 0.177 277.4);
 
   --color-primary: var(--color-primary-600);
   --color-primary-hover: var(--color-primary-700);
-  --color-primary-alpha: rgba(99, 102, 241, 0.12);
+  --color-primary-alpha: oklch(0.585 0.204 277.1 / 0.12);
   --color-primary-soft: var(--color-primary-50);
 
-  --color-accent-50: #fff1f2;
-  --color-accent-100: #ffe4e6;
-  --color-accent-300: #fda4af;
-  --color-accent-500: #f43f5e;
-  --color-accent-600: #e11d48;
+  --color-accent-50: oklch(0.969 0.015 12.4);
+  --color-accent-100: oklch(0.941 0.03 12.6);
+  --color-accent-300: oklch(0.81 0.106 11.6);
+  --color-accent-500: oklch(0.645 0.215 16.4);
+  --color-accent-600: oklch(0.586 0.222 17.6);
 
   --color-accent: var(--color-accent-500);
   --color-accent-soft: var(--color-accent-50);
 
-  --color-secondary: #475569;
-  --color-background: #fafafa;
-  --color-surface: #ffffff;
-  --color-surface-elevated: #ffffff;
-  --color-surface-muted: #f5f5f7;
-  --color-text: #0f172a;
-  --color-text-secondary: #475569;
-  --color-text-muted: #94a3b8;
-  --color-border: #e5e7eb;
-  --color-border-strong: #cbd5e1;
-  --color-error: #ef4444;
-  --color-error-alpha: rgba(239, 68, 68, 0.1);
-  --color-success: #16a34a;
-  --color-warning: #f59e0b;
-  --color-info: #0ea5e9;
+  --color-secondary: oklch(0.446 0.037 257.3);
+  --color-background: oklch(0.985 0 0);
+  --color-surface: oklch(1 0 0);
+  --color-surface-elevated: oklch(1 0 0);
+  --color-surface-muted: oklch(0.971 0.003 286.4);
+  --color-text: oklch(0.208 0.04 265.8);
+  --color-text-secondary: oklch(0.446 0.037 257.3);
+  --color-text-muted: oklch(0.711 0.035 256.8);
+  --color-border: oklch(0.928 0.006 264.5);
+  --color-border-strong: oklch(0.869 0.02 252.9);
+  --color-error: oklch(0.637 0.208 25.3);
+  --color-error-alpha: oklch(0.637 0.208 25.3 / 0.1);
+  --color-success: oklch(0.627 0.17 149.2);
+  --color-warning: oklch(0.769 0.1647 70.1);
+  --color-info: oklch(0.685 0.148 237.32);
 
   --gradient-hero:
-    radial-gradient(120% 80% at 0% 0%, rgba(99, 102, 241, 0.22), transparent 60%),
-    radial-gradient(80% 60% at 100% 0%, rgba(244, 63, 94, 0.18), transparent 65%),
-    linear-gradient(180deg, #fafafa, #ffffff 60%);
-  --gradient-brand: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #f43f5e 100%);
-  --color-on-brand: #ffffff;
-  --color-on-warning: #1e293b;
-  --gradient-card: linear-gradient(140deg, rgba(99, 102, 241, 0.06), rgba(244, 63, 94, 0.04));
-  --gradient-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.5));
+    radial-gradient(120% 80% at 0% 0%, oklch(0.585 0.204 277.1 / 0.22), transparent 60%),
+    radial-gradient(80% 60% at 100% 0%, oklch(0.645 0.215 16.4 / 0.18), transparent 65%),
+    linear-gradient(180deg, oklch(0.985 0 0), oklch(1 0 0) 60%);
+  --gradient-brand: linear-gradient(
+    135deg,
+    oklch(0.585 0.204 277.1) 0%,
+    oklch(0.606 0.219 292.7) 50%,
+    oklch(0.645 0.215 16.4) 100%
+  );
+  --color-on-brand: oklch(1 0 0);
+  --color-on-warning: oklch(0.279 0.037 260);
+  --gradient-card: linear-gradient(
+    140deg,
+    oklch(0.585 0.204 277.1 / 0.06),
+    oklch(0.645 0.215 16.4 / 0.04)
+  );
+  --gradient-glass: linear-gradient(180deg, oklch(1 0 0 / 0.7), oklch(1 0 0 / 0.5));
 
   /* 'Pretendard Variable'은 index.html의 jsdelivr dynamic subset CSS가 로드(font-display: swap).
      'Pretendard'는 로컬 설치본 대비 폴백, 이후는 시스템 sans. */
@@ -100,10 +109,12 @@
 
   --border-radius: var(--radius-md);
 
-  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.06);
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-md: 0 10px 25px -10px rgba(15, 23, 42, 0.15), 0 4px 12px rgba(15, 23, 42, 0.06);
-  --shadow-lg: 0 24px 48px -20px rgba(15, 23, 42, 0.25), 0 10px 22px rgba(15, 23, 42, 0.08);
+  --shadow-xs: 0 1px 2px oklch(0.208 0.04 265.8 / 0.06);
+  --shadow-sm: 0 1px 3px oklch(0.208 0.04 265.8 / 0.08), 0 1px 2px oklch(0.208 0.04 265.8 / 0.04);
+  --shadow-md:
+    0 10px 25px -10px oklch(0.208 0.04 265.8 / 0.15), 0 4px 12px oklch(0.208 0.04 265.8 / 0.06);
+  --shadow-lg:
+    0 24px 48px -20px oklch(0.208 0.04 265.8 / 0.25), 0 10px 22px oklch(0.208 0.04 265.8 / 0.08);
   --shadow-glow: 0 0 0 6px var(--color-primary-alpha);
 
   /* ease-out-expo: more modern, decelerating curve */
@@ -129,37 +140,45 @@
 [data-theme='dark'] {
   --color-primary: var(--color-primary-300);
   --color-primary-hover: var(--color-primary-200);
-  --color-primary-alpha: rgba(165, 180, 252, 0.18);
-  --color-primary-soft: rgba(99, 102, 241, 0.14);
-  --color-accent: #fb7185;
-  --color-accent-soft: rgba(244, 63, 94, 0.18);
-  --color-secondary: #cbd5e1;
-  --color-background: #0b1120;
-  --color-surface: #111827;
-  --color-surface-elevated: #1f2937;
-  --color-surface-muted: #1e293b;
-  --color-text: #f1f5f9;
-  --color-text-secondary: #cbd5e1;
-  --color-text-muted: #94a3b8;
-  --color-border: #1f2937;
-  --color-border-strong: #334155;
-  --color-error: #fca5a5;
-  --color-error-alpha: rgba(252, 165, 165, 0.18);
-  --color-success: #4ade80;
-  --color-warning: #fcd34d;
-  --color-info: #38bdf8;
+  --color-primary-alpha: oklch(0.785 0.104 274.7 / 0.18);
+  --color-primary-soft: oklch(0.585 0.204 277.1 / 0.14);
+  --color-accent: oklch(0.719 0.169 13.4);
+  --color-accent-soft: oklch(0.645 0.215 16.4 / 0.18);
+  --color-secondary: oklch(0.869 0.02 252.9);
+  --color-background: oklch(0.18 0.032 266.6);
+  --color-surface: oklch(0.21 0.032 264.7);
+  --color-surface-elevated: oklch(0.278 0.03 256.8);
+  --color-surface-muted: oklch(0.279 0.037 260);
+  --color-text: oklch(0.968 0.007 247.9);
+  --color-text-secondary: oklch(0.869 0.02 252.9);
+  --color-text-muted: oklch(0.711 0.035 256.8);
+  --color-border: oklch(0.278 0.03 256.8);
+  --color-border-strong: oklch(0.372 0.039 257.3);
+  --color-error: oklch(0.808 0.103 19.6);
+  --color-error-alpha: oklch(0.808 0.103 19.6 / 0.18);
+  --color-success: oklch(0.8 0.182 151.7);
+  --color-warning: oklch(0.879 0.1534 91.6);
+  --color-info: oklch(0.754 0.139 232.7);
 
   --gradient-hero:
-    radial-gradient(120% 80% at 0% 0%, rgba(99, 102, 241, 0.28), transparent 60%),
-    radial-gradient(80% 60% at 100% 0%, rgba(244, 63, 94, 0.2), transparent 65%),
-    linear-gradient(180deg, #0b1120, #111827 60%);
-  --gradient-card: linear-gradient(140deg, rgba(99, 102, 241, 0.16), rgba(244, 63, 94, 0.1));
-  --gradient-glass: linear-gradient(180deg, rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.4));
+    radial-gradient(120% 80% at 0% 0%, oklch(0.585 0.204 277.1 / 0.28), transparent 60%),
+    radial-gradient(80% 60% at 100% 0%, oklch(0.645 0.215 16.4 / 0.2), transparent 65%),
+    linear-gradient(180deg, oklch(0.18 0.032 266.6), oklch(0.21 0.032 264.7) 60%);
+  --gradient-card: linear-gradient(
+    140deg,
+    oklch(0.585 0.204 277.1 / 0.16),
+    oklch(0.645 0.215 16.4 / 0.1)
+  );
+  --gradient-glass: linear-gradient(
+    180deg,
+    oklch(0.21 0.032 264.7 / 0.7),
+    oklch(0.21 0.032 264.7 / 0.4)
+  );
 
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 10px 25px -10px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 24px 48px -20px rgba(0, 0, 0, 0.6), 0 10px 22px rgba(0, 0, 0, 0.35);
+  --shadow-xs: 0 1px 2px oklch(0 0 0 / 0.4);
+  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.5), 0 1px 2px oklch(0 0 0 / 0.4);
+  --shadow-md: 0 10px 25px -10px oklch(0 0 0 / 0.5), 0 4px 12px oklch(0 0 0 / 0.3);
+  --shadow-lg: 0 24px 48px -20px oklch(0 0 0 / 0.6), 0 10px 22px oklch(0 0 0 / 0.35);
 
   color-scheme: dark;
 }
@@ -296,112 +315,132 @@ p {
 
 /* --- Reptile (Sage / Forest Green Theme) --- */
 [data-category='reptile'] {
-  --color-primary-50: #f0fdf4;
-  --color-primary-100: #dcfce7;
-  --color-primary-200: #bbf7d0;
-  --color-primary-300: #86efac;
-  --color-primary-400: #4ade80;
-  --color-primary-500: #22c55e;
-  --color-primary-600: #16a34a;
-  --color-primary-700: #15803d;
-  --color-primary-800: #166534;
+  --color-primary-50: oklch(0.982 0.018 155.8);
+  --color-primary-100: oklch(0.962 0.043 156.7);
+  --color-primary-200: oklch(0.925 0.081 156);
+  --color-primary-300: oklch(0.871 0.136 154.4);
+  --color-primary-400: oklch(0.8 0.182 151.7);
+  --color-primary-500: oklch(0.723 0.192 149.6);
+  --color-primary-600: oklch(0.627 0.17 149.2);
+  --color-primary-700: oklch(0.527 0.137 150.1);
+  --color-primary-800: oklch(0.448 0.108 151.33);
 
   --color-primary: var(--color-primary-600);
   --color-primary-hover: var(--color-primary-700);
-  --color-primary-alpha: rgba(34, 197, 94, 0.12);
+  --color-primary-alpha: oklch(0.723 0.192 149.6 / 0.12);
   --color-primary-soft: var(--color-primary-50);
-  --gradient-brand: linear-gradient(135deg, #22c55e 0%, #10b981 50%, #f43f5e 100%);
-  --color-on-brand: #ffffff;
+  --gradient-brand: linear-gradient(
+    135deg,
+    oklch(0.723 0.192 149.6) 0%,
+    oklch(0.696 0.149 162.5) 50%,
+    oklch(0.645 0.215 16.4) 100%
+  );
+  --color-on-brand: oklch(1 0 0);
 }
 
 [data-theme='dark'][data-category='reptile'],
 [data-category='reptile'][data-theme='dark'] {
   --color-primary: var(--color-primary-300);
   --color-primary-hover: var(--color-primary-200);
-  --color-primary-alpha: rgba(134, 239, 172, 0.18);
-  --color-primary-soft: rgba(34, 197, 94, 0.14);
+  --color-primary-alpha: oklch(0.871 0.136 154.4 / 0.18);
+  --color-primary-soft: oklch(0.723 0.192 149.6 / 0.14);
 }
 
 /* --- Amphibian (Teal / Cyan Water Theme) --- */
 [data-category='amphibian'] {
-  --color-primary-50: #f0fdfa;
-  --color-primary-100: #ccfbf1;
-  --color-primary-200: #99f6e4;
-  --color-primary-300: #5eead4;
-  --color-primary-400: #2dd4bf;
-  --color-primary-500: #14b8a6;
-  --color-primary-600: #0d9488;
-  --color-primary-700: #0f766e;
-  --color-primary-800: #115e59;
+  --color-primary-50: oklch(0.984 0.014 180.7);
+  --color-primary-100: oklch(0.953 0.05 180.8);
+  --color-primary-200: oklch(0.91 0.093 180.4);
+  --color-primary-300: oklch(0.855 0.125 181.1);
+  --color-primary-400: oklch(0.785 0.1325 181.9);
+  --color-primary-500: oklch(0.704 0.123 182.5);
+  --color-primary-600: oklch(0.6 0.1038 184.7);
+  --color-primary-700: oklch(0.511 0.086 186.4);
+  --color-primary-800: oklch(0.437 0.0705 188.2);
 
   --color-primary: var(--color-primary-600);
   --color-primary-hover: var(--color-primary-700);
-  --color-primary-alpha: rgba(20, 184, 166, 0.12);
+  --color-primary-alpha: oklch(0.704 0.123 182.5 / 0.12);
   --color-primary-soft: var(--color-primary-50);
-  --gradient-brand: linear-gradient(135deg, #14b8a6 0%, #06b6d4 50%, #f43f5e 100%);
-  --color-on-brand: #ffffff;
+  --gradient-brand: linear-gradient(
+    135deg,
+    oklch(0.704 0.123 182.5) 0%,
+    oklch(0.715 0.1257 215.2) 50%,
+    oklch(0.645 0.215 16.4) 100%
+  );
+  --color-on-brand: oklch(1 0 0);
 }
 
 [data-theme='dark'][data-category='amphibian'],
 [data-category='amphibian'][data-theme='dark'] {
   --color-primary: var(--color-primary-300);
   --color-primary-hover: var(--color-primary-200);
-  --color-primary-alpha: rgba(94, 234, 212, 0.18);
-  --color-primary-soft: rgba(20, 184, 166, 0.14);
+  --color-primary-alpha: oklch(0.855 0.125 181.1 / 0.18);
+  --color-primary-soft: oklch(0.704 0.123 182.5 / 0.14);
 }
 
 /* --- Arthropod (Amber / Earthy Tobacco Theme) --- */
 [data-category='arthropod'] {
-  --color-primary-50: #fdfbeb;
-  --color-primary-100: #fef9c3;
-  --color-primary-200: #fef08a;
-  --color-primary-300: #fde047;
-  --color-primary-400: #facc15;
-  --color-primary-500: #eab308;
-  --color-primary-600: #ca8a04;
-  --color-primary-700: #a16207;
-  --color-primary-800: #854d0e;
+  --color-primary-50: oklch(0.985 0.021 101);
+  --color-primary-100: oklch(0.973 0.069 103.2);
+  --color-primary-200: oklch(0.945 0.124 101.5);
+  --color-primary-300: oklch(0.905 0.1657 98.1);
+  --color-primary-400: oklch(0.861 0.17311 91.9);
+  --color-primary-500: oklch(0.795 0.16167 86);
+  --color-primary-600: oklch(0.681 0.1423 75.8);
+  --color-primary-700: oklch(0.554 0.1207 66.4);
+  --color-primary-800: oklch(0.476 0.1034 61.9);
 
   --color-primary: var(--color-primary-600);
   --color-primary-hover: var(--color-primary-700);
-  --color-primary-alpha: rgba(234, 179, 8, 0.12);
+  --color-primary-alpha: oklch(0.795 0.16167 86 / 0.12);
   --color-primary-soft: var(--color-primary-50);
-  --gradient-brand: linear-gradient(135deg, #eab308 0%, #f97316 50%, #f43f5e 100%);
-  --color-on-brand: #ffffff;
+  --gradient-brand: linear-gradient(
+    135deg,
+    oklch(0.795 0.16167 86) 0%,
+    oklch(0.705 0.1867 47.6) 50%,
+    oklch(0.645 0.215 16.4) 100%
+  );
+  --color-on-brand: oklch(1 0 0);
 }
 
 [data-theme='dark'][data-category='arthropod'],
 [data-category='arthropod'][data-theme='dark'] {
   --color-primary: var(--color-primary-300);
   --color-primary-hover: var(--color-primary-200);
-  --color-primary-alpha: rgba(253, 224, 71, 0.18);
-  --color-primary-soft: rgba(234, 179, 8, 0.14);
+  --color-primary-alpha: oklch(0.905 0.1657 98.1 / 0.18);
+  --color-primary-soft: oklch(0.795 0.16167 86 / 0.14);
 }
 
 /* --- Mammal (Rose / Pink Soft Theme) --- */
 [data-category='mammal'] {
-  --color-primary-50: #fff1f2;
-  --color-primary-100: #ffe4e6;
-  --color-primary-200: #fecdd3;
-  --color-primary-300: #fda4af;
-  --color-primary-400: #fb7185;
-  --color-primary-500: #f43f5e;
-  --color-primary-600: #e11d48;
-  --color-primary-700: #be185d;
-  --color-primary-800: #9f1239;
+  --color-primary-50: oklch(0.969 0.015 12.4);
+  --color-primary-100: oklch(0.941 0.03 12.6);
+  --color-primary-200: oklch(0.892 0.056 10);
+  --color-primary-300: oklch(0.81 0.106 11.6);
+  --color-primary-400: oklch(0.719 0.169 13.4);
+  --color-primary-500: oklch(0.645 0.215 16.4);
+  --color-primary-600: oklch(0.586 0.222 17.6);
+  --color-primary-700: oklch(0.525 0.199 4);
+  --color-primary-800: oklch(0.455 0.1713 13.7);
 
   --color-primary: var(--color-primary-600);
   --color-primary-hover: var(--color-primary-700);
-  --color-primary-alpha: rgba(244, 63, 94, 0.12);
+  --color-primary-alpha: oklch(0.645 0.215 16.4 / 0.12);
   --color-primary-soft: var(--color-primary-50);
-  --gradient-brand: linear-gradient(135deg, #f43f5e 0%, #d946ef 50%, #8b5cf6 100%);
-  --color-on-brand: #ffffff;
+  --gradient-brand: linear-gradient(
+    135deg,
+    oklch(0.645 0.215 16.4) 0%,
+    oklch(0.667 0.259 322.1) 50%,
+    oklch(0.606 0.219 292.7) 100%
+  );
+  --color-on-brand: oklch(1 0 0);
 }
 
 [data-theme='dark'][data-category='mammal'],
 [data-category='mammal'][data-theme='dark'] {
   --color-primary: var(--color-primary-300);
   --color-primary-hover: var(--color-primary-200);
-  --color-primary-alpha: rgba(253, 164, 189, 0.18);
-  --color-primary-soft: rgba(244, 63, 94, 0.14);
+  --color-primary-alpha: oklch(0.814 0.109 1.5 / 0.18);
+  --color-primary-soft: oklch(0.645 0.215 16.4 / 0.14);
 }
