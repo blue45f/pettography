@@ -6,7 +6,7 @@
 - 프레임워크: NestJS 11.x (Express adapter)
 - 데이터: in-memory TypeScript seed (`src/data/`)
 - DB/ORM 없음 (요구사항)
-- 인증 없음 (요구사항)
+- 인증: 이메일/비밀번호 자체 인증 — 세션은 서명된 JWT(HS256), 비밀번호는 scrypt 해시. 자세한 내용은 [`docs/AUTH.md`](../docs/AUTH.md)
 
 ## 실행
 

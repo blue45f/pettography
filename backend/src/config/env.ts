@@ -18,6 +18,8 @@ const KNOWN_INSECURE_DEFAULTS = new Set([
   'change-me-in-production',
   // 이 레포의 dev 전용 관리자 비밀번호 기본값(auth.service.ts).
   'admin-1234',
+  // 이 레포의 dev 전용 JWT 서명 시크릿 기본값(auth/jwt.ts).
+  'dev-only-change-me-pettography-jwt',
 ])
 
 function emptyToUndefined(value: unknown): unknown {
@@ -56,6 +58,7 @@ const backendEnvSchema = z.object({
   API_THROTTLE_LIMIT: optionalCount(),
   DATABASE_URL: optionalString(),
   PETTOGRAPHY_SESSION_TTL_MS: optionalCount(),
+  PETTOGRAPHY_JWT_SECRET: optionalString(),
   PETTOGRAPHY_ADMIN_EMAIL: optionalString(),
   PETTOGRAPHY_ADMIN_PASSWORD: optionalString(),
   PETTOGRAPHY_ADMIN_NAME: optionalString(),
@@ -93,6 +96,17 @@ export function validateBackendEnv(
     } else if (KNOWN_INSECURE_DEFAULTS.has(adminPassword)) {
       logger.error(
         '[env] SECURITY WARNING: NODE_ENV=production but PETTOGRAPHY_ADMIN_PASSWORD is a well-known insecure default. Rotate it to a strong, unique secret immediately.'
+      )
+    }
+
+    const jwtSecret = env.PETTOGRAPHY_JWT_SECRET?.trim()
+    if (!jwtSecret) {
+      logger.warn(
+        '[env] WARNING: NODE_ENV=production but PETTOGRAPHY_JWT_SECRET is unset — session JWTs are signed with the insecure dev default. Set a strong, unique secret.'
+      )
+    } else if (KNOWN_INSECURE_DEFAULTS.has(jwtSecret)) {
+      logger.error(
+        '[env] SECURITY WARNING: NODE_ENV=production but PETTOGRAPHY_JWT_SECRET is a well-known insecure default. Rotate it to a strong, unique secret immediately.'
       )
     }
 
