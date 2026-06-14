@@ -29,7 +29,7 @@ describe('remote API mode', () => {
       new Response(JSON.stringify([speciesMock[0]]), {
         headers: { 'Content-Type': 'application/json' },
         status: 200,
-      }),
+      })
     )
     stubRemoteApi(fetchMock)
     const { listSpecies } = await import('./species/api')
@@ -49,7 +49,7 @@ describe('remote API mode', () => {
       new Response(JSON.stringify([{ ...speciesMock[0], category: 'dog' }]), {
         headers: { 'Content-Type': 'application/json' },
         status: 200,
-      }),
+      })
     )
     stubRemoteApi(fetchMock)
     const { listSpecies } = await import('./species/api')
@@ -63,7 +63,7 @@ describe('remote API mode', () => {
       new Response(JSON.stringify([remoteHospital]), {
         headers: { 'Content-Type': 'application/json' },
         status: 200,
-      }),
+      })
     )
     stubRemoteApi(fetchMock)
     const { listHospitals } = await import('./hospitals/api')

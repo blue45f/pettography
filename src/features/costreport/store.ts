@@ -16,6 +16,6 @@ export const useCostReportStore = create<CostReportState>()(
     {
       name: 'pettography.costreport',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )

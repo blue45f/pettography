@@ -87,7 +87,7 @@ const HIGH_STRESS_SIGN_COUNT = 3
  */
 export function handlingGuidanceCode(
   tolerance: HandlingTolerance | null | undefined,
-  sessions: HandlingSession[],
+  sessions: HandlingSession[]
 ): GuidanceCode {
   if (sessions.length === 0) return 'noData'
 

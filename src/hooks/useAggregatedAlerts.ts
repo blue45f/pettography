@@ -354,6 +354,6 @@ export function useAggregatedAlerts(): AlertItem[] {
       speciesList,
       today,
       t,
-    ],
+    ]
   )
 }

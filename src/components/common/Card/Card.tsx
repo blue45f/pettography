@@ -33,7 +33,7 @@ function Card({ children, className = '', padding = 'md', hoverable = false }: C
         PADDING_MAP[padding],
         hoverable &&
           'transition-shadow duration-150 ease-quint hover:-translate-y-0.5 hover:shadow-md',
-        className,
+        className
       )}
     >
       {children}

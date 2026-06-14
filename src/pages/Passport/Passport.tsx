@@ -35,7 +35,7 @@ const TIER_VARIANT: Record<AchievementTier, 'default' | 'primary' | 'success' | 
 /** Keep the same fall-through scoping the per-feature hooks use. */
 function scopeToActivePet<T extends { petId?: string | null }>(
   items: T[],
-  activePetId: string | null,
+  activePetId: string | null
 ): T[] {
   if (!activePetId) return items
   return items.filter((item) => !item.petId || item.petId === activePetId)
@@ -68,27 +68,27 @@ function Passport() {
 
   const activePet = useMemo(
     () => pets.find((p) => p.id === activePetId) ?? null,
-    [pets, activePetId],
+    [pets, activePetId]
   )
 
   const species = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId) ?? null,
-    [speciesList, profile.speciesId],
+    [speciesList, profile.speciesId]
   )
 
   // Scope each activity list to the active pet (legacy unscoped entries fall through).
   const diary = useMemo(
     () => scopeToActivePet(diaryEntries, activePetId),
-    [diaryEntries, activePetId],
+    [diaryEntries, activePetId]
   )
   const molts = useMemo(() => scopeToActivePet(moltEvents, activePetId), [moltEvents, activePetId])
   const feedings = useMemo(
     () => scopeToActivePet(feedingLogs, activePetId),
-    [feedingLogs, activePetId],
+    [feedingLogs, activePetId]
   )
   const petClutches = useMemo(
     () => scopeToActivePet(clutches, activePetId),
-    [clutches, activePetId],
+    [clutches, activePetId]
   )
 
   const today = todayIso()
@@ -108,7 +108,7 @@ function Passport() {
           water,
           growth,
         },
-        today,
+        today
       ),
     [
       activePet?.createdAt,
@@ -122,7 +122,7 @@ function Passport() {
       water,
       growth,
       today,
-    ],
+    ]
   )
 
   const achievements = useMemo(() => evaluateAchievements(metrics), [metrics])

@@ -57,7 +57,7 @@ async function computeBackupChecksum(envelope: Omit<BackupEnvelope, 'checksum'>)
 
 export async function createBackupEnvelope(
   data: Record<string, string>,
-  exportedAt = new Date().toISOString(),
+  exportedAt = new Date().toISOString()
 ): Promise<ChecksummedBackupEnvelope> {
   const envelope = {
     app: 'pettography',

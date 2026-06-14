@@ -16,7 +16,7 @@ import type { GrowthEntry, GrowthNorm } from './schema'
 function entry(
   measuredAt: string,
   weightGram: number,
-  lengthCm: number | null = null,
+  lengthCm: number | null = null
 ): GrowthEntry {
   return {
     id: measuredAt,

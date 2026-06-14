@@ -42,7 +42,7 @@ function clearRetryMark(): void {
  */
 export async function retryImport<T>(
   load: () => Promise<T>,
-  reload: () => void = () => window.location.reload(),
+  reload: () => void = () => window.location.reload()
 ): Promise<T> {
   try {
     const mod = await load()

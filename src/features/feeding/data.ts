@@ -137,7 +137,7 @@ export const FEEDING_RULES: Record<string, FeedingRule> = {
  */
 export function feedingRule(
   slug: string | null | undefined,
-  category: SpeciesCategory | null | undefined,
+  category: SpeciesCategory | null | undefined
 ): FeedingRule | null {
   if (slug && FEEDING_RULES[slug]) return FEEDING_RULES[slug]
   if (category && CATEGORY_FALLBACK_RULES[category]) return CATEGORY_FALLBACK_RULES[category]

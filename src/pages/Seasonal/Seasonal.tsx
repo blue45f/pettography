@@ -31,14 +31,14 @@ function Seasonal() {
 
   const activeSpecies = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId) ?? null,
-    [speciesList, profile.speciesId],
+    [speciesList, profile.speciesId]
   )
 
   // The category whose tips we surface. Prefer the active pet's category; when
   // there is no pet, let the visitor pick one (seeded to the active category or
   // the reptile default). This is the only piece of local UI state.
   const [pickedCategory, setPickedCategory] = useState<SpeciesCategory>(
-    () => profile.category ?? DEFAULT_CATEGORY,
+    () => profile.category ?? DEFAULT_CATEGORY
   )
 
   const hasActivePet = Boolean(profile.category)

@@ -44,7 +44,7 @@ export function seasonForMonth(monthIndex: number): SeasonId {
 /** The recommended day-length window for a category in a season (table lookup). */
 export function recommendedRange(
   category: SpeciesCategory | null | undefined,
-  season: SeasonId,
+  season: SeasonId
 ): DayLengthRange {
   return recommendedDayLength(category, season)
 }

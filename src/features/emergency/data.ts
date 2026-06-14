@@ -188,7 +188,7 @@ export const NATIONAL_HOTLINES: readonly {
 ] as const
 
 export function findChecklist(
-  category: SpeciesCategory | null | undefined,
+  category: SpeciesCategory | null | undefined
 ): CategoryEmergency | undefined {
   if (!category) return undefined
   return EMERGENCY_CHECKLISTS.find((c) => c.category === category)

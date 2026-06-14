@@ -86,7 +86,7 @@ describe('submitInquiry', () => {
         body: '열 글자 이상 본문입니다.',
         originUrl: 'https://pettography.vercel.app/contact',
         website: '',
-      }),
+      })
     ).rejects.toThrow('HTTP error! status: 429')
   })
 
@@ -101,7 +101,7 @@ describe('submitInquiry', () => {
         body: '품질 검수 관련 문의 본문입니다.',
         originUrl: 'https://pettography.vercel.app/contact',
         website: '',
-      }),
+      })
     ).rejects.toThrow('TermsDesk inquiry receipt failed validation')
     consoleError.mockRestore()
   })

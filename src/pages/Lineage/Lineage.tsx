@@ -70,17 +70,17 @@ function Lineage() {
   // The currently selected animal still exists? (it may have been removed)
   const selected = useMemo(
     () => (selectedId ? (animals.find((a) => a.id === selectedId) ?? null) : null),
-    [animals, selectedId],
+    [animals, selectedId]
   )
 
   const tree = useMemo(
     () => (selected ? pedigree(selected.id, animals, PEDIGREE_DEPTH) : null),
-    [animals, selected],
+    [animals, selected]
   )
 
   const offspring = useMemo(
     () => (selected ? offspringOf(selected.id, animals) : []),
-    [animals, selected],
+    [animals, selected]
   )
 
   const ancestorCountById = useMemo(() => {

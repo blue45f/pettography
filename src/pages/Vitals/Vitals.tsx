@@ -46,7 +46,7 @@ function Vitals() {
 
   const activeSpecies = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId) ?? null,
-    [speciesList, profile.speciesId],
+    [speciesList, profile.speciesId]
   )
 
   const activeReadings = useActivePetVitals()
@@ -86,7 +86,7 @@ function Vitals() {
         return next
       })
     },
-    phase === 'running' ? 1000 : null,
+    phase === 'running' ? 1000 : null
   )
 
   const selectType = (next: VitalType) => {
@@ -154,7 +154,7 @@ function Vitals() {
 
   const historyList = useMemo(
     () => sortByDate(readings.filter((r) => r.type === historyType)).reverse(),
-    [readings, historyType],
+    [readings, historyType]
   )
 
   const petLabel = (petId: string | null | undefined) => {
@@ -173,7 +173,7 @@ function Vitals() {
     downloadTextFile(
       'pettography-vitals.csv',
       buildCsv(['date', 'type', 'bpm', 'duration_sec', 'taps', 'note'], rows),
-      'text/csv;charset=utf-8',
+      'text/csv;charset=utf-8'
     )
   }
 

@@ -57,7 +57,7 @@ function Transport() {
   const { data: speciesList = [] } = useSpeciesList({})
   const activeSpecies = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId) ?? null,
-    [speciesList, profile.speciesId],
+    [speciesList, profile.speciesId]
   )
 
   const today = todayISO()

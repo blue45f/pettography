@@ -273,7 +273,7 @@ export const useCafesStore = create<CafesState>()(
       setCafeArchived: (cafeId, archived) =>
         set((state) => ({
           cafes: state.cafes.map((c) =>
-            c.id === cafeId ? { ...c, archivedByAdmin: archived } : c,
+            c.id === cafeId ? { ...c, archivedByAdmin: archived } : c
           ),
         })),
       removeCafe: (cafeId) =>
@@ -282,7 +282,7 @@ export const useCafesStore = create<CafesState>()(
           const nextPosts = { ...state.posts }
           delete nextPosts[cafeId]
           const nextComments = Object.fromEntries(
-            Object.entries(state.comments).filter(([postId]) => !removedPostIds.has(postId)),
+            Object.entries(state.comments).filter(([postId]) => !removedPostIds.has(postId))
           )
           const nextJoined = { ...state.joinedCafeIds }
           delete nextJoined[cafeId]
@@ -301,7 +301,7 @@ export const useCafesStore = create<CafesState>()(
           posts: {
             ...state.posts,
             [cafeId]: (state.posts[cafeId] ?? []).map((p) =>
-              p.id === postId ? { ...p, hiddenByAdmin: hidden } : p,
+              p.id === postId ? { ...p, hiddenByAdmin: hidden } : p
             ),
           },
         })),
@@ -312,7 +312,7 @@ export const useCafesStore = create<CafesState>()(
             [cafeId]: (state.posts[cafeId] ?? []).map((p) =>
               p.id === postId
                 ? { ...p, attachments: p.attachments.filter((a) => a.id !== attachmentId) }
-                : p,
+                : p
             ),
           },
         })),
@@ -321,8 +321,8 @@ export const useCafesStore = create<CafesState>()(
       name: 'pettography.cafes',
       version: 1,
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /** Members shown = seeded baseline + the local member when joined. */

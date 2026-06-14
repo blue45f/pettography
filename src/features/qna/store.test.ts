@@ -93,7 +93,7 @@ describe('qna store — voting', () => {
         questions: [{ ...SEED_QUESTIONS[0], baseVotes: 0 }],
         ownQ: { [SEED_QUESTIONS[0].id]: true },
       },
-      false,
+      false
     )
     const id = SEED_QUESTIONS[0].id
     // pretend the user had voted, so toggling removes a vote from a 0 floor

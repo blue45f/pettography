@@ -59,7 +59,7 @@ function Consult() {
     () => () => {
       if (replyTimerRef.current !== null) window.clearTimeout(replyTimerRef.current)
     },
-    [],
+    []
   )
 
   function send() {
@@ -79,7 +79,7 @@ function Consult() {
       addMessage(
         activeVet.id,
         'vet',
-        `[${activeVet.name}] 메시지 잘 받았습니다. 사진 한 장 보내주시고, 사육 환경(온도·습도) 알려주시면 1차 답변 드리겠습니다.`,
+        `[${activeVet.name}] 메시지 잘 받았습니다. 사진 한 장 보내주시고, 사육 환경(온도·습도) 알려주시면 1차 답변 드리겠습니다.`
       )
       toast(t('consult.replyToast'), 'success')
     }, replyDelay)

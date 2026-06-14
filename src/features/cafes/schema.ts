@@ -96,7 +96,7 @@ export function buildCommentThreads(comments: readonly CafeComment[]): CafeComme
     }
   }
   return [...threads.values()].sort((a, b) =>
-    a.comment.createdAt.localeCompare(b.comment.createdAt),
+    a.comment.createdAt.localeCompare(b.comment.createdAt)
   )
 }
 
@@ -107,7 +107,7 @@ export function buildCommentThreads(comments: readonly CafeComment[]): CafeComme
  */
 export function removeCommentFromList(
   list: readonly CafeComment[],
-  commentId: string,
+  commentId: string
 ): CafeComment[] {
   const hasChildren = list.some((c) => c.parentCommentId === commentId)
   let next: CafeComment[]

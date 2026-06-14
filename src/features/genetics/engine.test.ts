@@ -98,7 +98,7 @@ describe('calculateOutcomes', () => {
     const visible = outcomes.filter((o) => o.visible.includes('Spider'))
     expect(totalProbability(visible)).toBeCloseTo(0.5)
     expect(outcomes.some((o) => o.visible.includes('Spider') && o.genotype.spider === 2)).toBe(
-      false,
+      false
     )
   })
 
@@ -106,12 +106,12 @@ describe('calculateOutcomes', () => {
     const outcomes = calculateOutcomes(
       [albino, pastel],
       { albino: 1, pastel: 1 },
-      { albino: 1, pastel: 1 },
+      { albino: 1, pastel: 1 }
     )
     expect(totalProbability(outcomes)).toBeCloseTo(1)
     // visual Albino + Super Pastel = 0.25 * 0.25
     const both = outcomes.find(
-      (o) => o.visible.includes('Albino') && o.visible.includes('Super Pastel'),
+      (o) => o.visible.includes('Albino') && o.visible.includes('Super Pastel')
     )
     expect(both?.probability).toBeCloseTo(0.0625)
   })

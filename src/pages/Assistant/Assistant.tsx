@@ -34,7 +34,7 @@ function Assistant() {
   const { data: speciesList = [] } = useSpeciesList({})
   const species = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId) ?? null,
-    [speciesList, profile.speciesId],
+    [speciesList, profile.speciesId]
   )
   const category = profile.category
 

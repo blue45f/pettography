@@ -99,8 +99,8 @@ function Backup() {
         exportedAt: typeof parsed.exportedAt === 'string' ? parsed.exportedAt : '',
         data: Object.fromEntries(
           Object.entries(parsed.data).filter(
-            (entry): entry is [string, string] => typeof entry[1] === 'string',
-          ),
+            (entry): entry is [string, string] => typeof entry[1] === 'string'
+          )
         ),
         checksum: parsed.checksum,
       }

@@ -71,8 +71,8 @@ export const useLightingStore = create<LightingState>()(
     {
       name: 'pettography.lighting',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

@@ -34,7 +34,7 @@ function useClipboard(resetDelay = 2000): UseClipboardReturn {
         setCopied(false)
       }
     },
-    [resetDelay],
+    [resetDelay]
   )
 
   useEffect(() => {

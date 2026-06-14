@@ -24,7 +24,7 @@ interface SubmitInquiryOptions {
 
 export async function submitInquiry(
   submission: InquirySubmission,
-  { signal }: SubmitInquiryOptions = {},
+  { signal }: SubmitInquiryOptions = {}
 ): Promise<InquiryReceipt> {
   const payload: Record<string, string> = {
     category: submission.category,

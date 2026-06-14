@@ -59,7 +59,7 @@ export function isRedFlag(topicId: string, optionId: string): boolean {
 export function resolveTriage(
   topicId: string,
   optionId: string,
-  data: AssistantData,
+  data: AssistantData
 ): TriageResult | null {
   const decision = decisionForTopic(topicId, data)
   if (!decision) return null
@@ -83,7 +83,7 @@ export function resolveTriage(
 export function categoryNote(
   topicId: string,
   category: SpeciesCategory | null,
-  data: AssistantData,
+  data: AssistantData
 ): string | null {
   if (!category) return null
   return data.categoryNotes[topicId]?.[category] ?? null
@@ -96,7 +96,7 @@ export function categoryNote(
  */
 export function topicsForCategory(
   category: SpeciesCategory | null,
-  data: AssistantData,
+  data: AssistantData
 ): readonly SymptomTopic[] {
   const topics = data.topics
   if (!category) return topics

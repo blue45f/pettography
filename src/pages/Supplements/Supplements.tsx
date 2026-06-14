@@ -96,12 +96,12 @@ function Supplements() {
         const delta = due
           ? Math.round(
               (new Date(`${due}T00:00:00Z`).getTime() - new Date(`${today}T00:00:00Z`).getTime()) /
-                86_400_000,
+                86_400_000
             )
           : null
         return { type, last, interval, status, due, delta }
       }),
-    [logs, schedule, category, today],
+    [logs, schedule, category, today]
   )
 
   const {

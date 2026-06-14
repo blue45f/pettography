@@ -10,7 +10,7 @@ import '@/i18n'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AppProviders />
-  </StrictMode>,
+  </StrictMode>
 )
 
 if ('serviceWorker' in navigator && import.meta.env.PROD) {

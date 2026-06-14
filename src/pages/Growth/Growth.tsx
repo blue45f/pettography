@@ -54,7 +54,7 @@ function Growth() {
 
   const activeSpecies = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId) ?? null,
-    [speciesList, profile.speciesId],
+    [speciesList, profile.speciesId]
   )
   const norm = useMemo(() => growthNorm(activeSpecies?.slug), [activeSpecies?.slug])
 
@@ -117,7 +117,7 @@ function Growth() {
     downloadTextFile(
       'pettography-growth.csv',
       buildCsv(['date', 'weight_g', 'length_cm', 'note'], rows),
-      'text/csv;charset=utf-8',
+      'text/csv;charset=utf-8'
     )
   }
 

@@ -13,7 +13,7 @@ function mutantAlleleProb(z: Zygosity): number {
  */
 export function offspringZygosityDist(
   sire: Zygosity,
-  dam: Zygosity,
+  dam: Zygosity
 ): readonly [number, number, number] {
   const ps = mutantAlleleProb(sire)
   const pd = mutantAlleleProb(dam)
@@ -26,7 +26,7 @@ export function offspringZygosityDist(
 /** What a single gene at a given zygosity contributes to the visible / het labels. */
 function geneContribution(
   trait: GeneTrait,
-  z: Zygosity,
+  z: Zygosity
 ): { visible: string | null; het: string | null } {
   if (z === 0) return { visible: null, het: null }
   switch (trait.mode) {
@@ -56,7 +56,7 @@ const ZYGOSITIES: readonly Zygosity[] = [0, 1, 2]
 export function calculateOutcomes(
   traits: GeneTrait[],
   sire: ParentGenotype,
-  dam: ParentGenotype,
+  dam: ParentGenotype
 ): OffspringOutcome[] {
   let outcomes: OffspringOutcome[] = [{ genotype: {}, visible: [], hets: [], probability: 1 }]
 
@@ -100,7 +100,7 @@ export interface PhenotypeGroup {
  */
 export function groupByPhenotype(
   outcomes: OffspringOutcome[],
-  normalLabel: string,
+  normalLabel: string
 ): PhenotypeGroup[] {
   const groups = new Map<string, OffspringOutcome[]>()
   for (const o of outcomes) {

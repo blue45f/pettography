@@ -33,7 +33,7 @@ function toPct(done: number, total: number): number {
 /** Overall completion across every audit item. */
 export function auditProgress(
   checked: Record<string, boolean>,
-  allItemIds: readonly string[],
+  allItemIds: readonly string[]
 ): AuditProgress {
   const total = allItemIds.length
   const done = countDone(checked, allItemIds)
@@ -43,7 +43,7 @@ export function auditProgress(
 /** Completion for a single group's items. */
 export function groupProgress(
   checked: Record<string, boolean>,
-  groupItemIds: readonly string[],
+  groupItemIds: readonly string[]
 ): AuditProgress {
   const total = groupItemIds.length
   const done = countDone(checked, groupItemIds)

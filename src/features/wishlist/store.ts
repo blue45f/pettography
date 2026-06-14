@@ -15,7 +15,7 @@ interface WishlistState {
   toggleReadiness: (id: string, key: string) => void
   updateItem: (
     id: string,
-    patch: Partial<Pick<WishlistItem, 'priority' | 'targetDate' | 'notes'>>,
+    patch: Partial<Pick<WishlistItem, 'priority' | 'targetDate' | 'notes'>>
   ) => void
   removeItem: (id: string) => void
   clear: () => void
@@ -45,7 +45,7 @@ export const useWishlistStore = create<WishlistState>()(
           items: state.items.map((item) =>
             item.id === id
               ? { ...item, readiness: { ...item.readiness, [key]: !item.readiness[key] } }
-              : item,
+              : item
           ),
         })),
 
@@ -73,6 +73,6 @@ export const useWishlistStore = create<WishlistState>()(
     {
       name: 'pettography.wishlist',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )

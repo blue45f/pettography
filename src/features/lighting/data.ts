@@ -82,7 +82,7 @@ const FALLBACK_CATEGORY: SpeciesCategory = 'reptile'
  */
 export function recommendedDayLength(
   category: SpeciesCategory | null | undefined,
-  season: SeasonId,
+  season: SeasonId
 ): DayLengthRange {
   const table = DAY_LENGTH_TABLE[category ?? FALLBACK_CATEGORY]
   return table[season]

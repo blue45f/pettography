@@ -79,7 +79,7 @@ function gearItem(
   typeId: GearType,
   name: string,
   installedAt: string,
-  intervalMonths: number,
+  intervalMonths: number
 ): GearItem {
   return {
     id: `g-${typeId}`,
@@ -220,7 +220,7 @@ describe('buildAlerts', () => {
 
   it('uses the latest BCS entry by date for the welfare flag', () => {
     const alerts = buildAlerts(
-      emptyInput({ bcs: [bcsEntry(3, '2024-05-01'), bcsEntry(1, '2024-06-01')] }),
+      emptyInput({ bcs: [bcsEntry(3, '2024-05-01'), bcsEntry(1, '2024-06-01')] })
     )
     expect(alerts).toHaveLength(1)
     expect(alerts[0].params).toEqual({ status: 'bcs.status.under' })
@@ -228,7 +228,7 @@ describe('buildAlerts', () => {
 
   it('flags an overdue supplement dusting (schedule override) as due', () => {
     const alerts = buildAlerts(
-      emptyInput({ dustings: [dustingLog('calcium', '2024-05-01')], supSchedule: { calcium: 2 } }),
+      emptyInput({ dustings: [dustingLog('calcium', '2024-05-01')], supSchedule: { calcium: 2 } })
     )
     expect(alerts).toHaveLength(1)
     expect(alerts[0]).toMatchObject({
@@ -282,7 +282,7 @@ describe('buildAlerts', () => {
     const alerts = buildAlerts(
       emptyInput({
         molts: [completeMolt('2024-01-01'), completeMolt('2024-02-01'), completeMolt('2024-03-01')],
-      }),
+      })
     )
     expect(alerts).toHaveLength(1)
     expect(alerts[0]).toMatchObject({
@@ -363,7 +363,7 @@ describe('buildAlerts', () => {
         dustings: [dustingLog('calcium', '2024-05-01')], // due
         supSchedule: { calcium: 2 },
         vaccinations: [vaccinationEntry('2020-01-01')], // overdue
-      }),
+      })
     )
     expect(alerts.map((a) => a.severity)).toEqual(['overdue', 'due', 'soon'])
   })

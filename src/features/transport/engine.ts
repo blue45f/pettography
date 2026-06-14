@@ -30,7 +30,7 @@ function toUtcDay(dateISO: string): number {
  */
 export function checklistProgress(
   trip: Pick<Trip, 'checklist'>,
-  allItemIds: readonly string[],
+  allItemIds: readonly string[]
 ): ChecklistProgress {
   const total = allItemIds.length
   let done = 0

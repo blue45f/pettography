@@ -42,7 +42,7 @@ function Hospitals() {
 
   const origin = useMemo(
     () => (profile.location ? { lat: profile.location.lat, lng: profile.location.lng } : undefined),
-    [profile.location],
+    [profile.location]
   )
 
   const { data, isLoading, isError } = useHospitalsList({
@@ -55,7 +55,7 @@ function Hospitals() {
   const mapCenter = useMemo(
     () =>
       profile.location ? { lat: profile.location.lat, lng: profile.location.lng } : SONGPA_CENTER,
-    [profile.location],
+    [profile.location]
   )
 
   const mapMarkers: KakaoMapMarker[] = useMemo(
@@ -67,7 +67,7 @@ function Hospitals() {
         title: h.name,
         popupHtml: `<div style="padding:8px;font-size:13px"><strong>${h.name}</strong><br/>${h.district}</div>`,
       })) ?? [],
-    [sorted],
+    [sorted]
   )
 
   return (

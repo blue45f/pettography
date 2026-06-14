@@ -37,7 +37,7 @@ export const useGrowthStore = create<GrowthState>()(
         }
         set((state) => ({
           entries: [entry, ...state.entries].sort((a, b) =>
-            b.measuredAt.localeCompare(a.measuredAt),
+            b.measuredAt.localeCompare(a.measuredAt)
           ),
         }))
         return entry
@@ -48,8 +48,8 @@ export const useGrowthStore = create<GrowthState>()(
     {
       name: 'pettography.growth',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /** Growth entries scoped to the active pet (legacy untagged entries fall through). */

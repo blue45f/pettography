@@ -238,7 +238,7 @@ export const useForumStore = create<ForumState>()(
           posts: state.posts.map((p) =>
             p.id === postId
               ? { ...p, attachments: p.attachments.filter((a) => a.id !== attachmentId) }
-              : p,
+              : p
           ),
         })),
       reportPost: (postId) => {
@@ -278,7 +278,7 @@ export const useForumStore = create<ForumState>()(
         const liked = Boolean(get().likedPostIds[postId])
         set((state) => {
           const posts = state.posts.map((p) =>
-            p.id === postId ? { ...p, likes: Math.max(0, p.likes + (liked ? -1 : 1)) } : p,
+            p.id === postId ? { ...p, likes: Math.max(0, p.likes + (liked ? -1 : 1)) } : p
           )
           const nextLiked = { ...state.likedPostIds }
           if (liked) delete nextLiked[postId]
@@ -331,12 +331,12 @@ export const useForumStore = create<ForumState>()(
                 ...r,
                 deleted: typeof r.deleted === 'boolean' ? r.deleted : false,
               })),
-            ]),
+            ])
           ),
         })
         const base = (persisted ?? {}) as LegacyForumState & Partial<ForumState>
         const normaliseReplies = (
-          replies: Record<string, ForumReply[]> | undefined,
+          replies: Record<string, ForumReply[]> | undefined
         ): Record<string, ForumReply[]> => {
           if (!replies) return SEED_REPLIES
           const out: Record<string, ForumReply[]> = {}
@@ -412,6 +412,6 @@ export const useForumStore = create<ForumState>()(
           reportedReplyIds: {},
         } as unknown as ForumState)
       },
-    },
-  ),
+    }
+  )
 )

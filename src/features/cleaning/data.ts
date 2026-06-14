@@ -37,7 +37,7 @@ const FALLBACK_INTERVALS: Record<CleanType, number> = {
 /** Recommended interval in days for a clean type, scoped to the category. */
 export function defaultIntervalDays(
   type: CleanType,
-  category: SpeciesCategory | null | undefined,
+  category: SpeciesCategory | null | undefined
 ): number {
   if (category && DEFAULT_INTERVALS[category]) return DEFAULT_INTERVALS[category][type]
   return FALLBACK_INTERVALS[type]

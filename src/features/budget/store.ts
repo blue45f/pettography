@@ -45,8 +45,8 @@ export const useBudgetStore = create<BudgetState>()(
     {
       name: 'pettography.budget',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 export function useActivePetBudget(): ExpenseEntry[] {
@@ -69,7 +69,7 @@ export interface MonthBreakdown {
 
 export function monthBreakdown(
   entries: ExpenseEntry[],
-  refDate: Date = new Date(),
+  refDate: Date = new Date()
 ): MonthBreakdown {
   const key = monthKey(refDate)
   const inMonth = entries.filter((e) => monthKey(new Date(e.spentAt)) === key)
@@ -98,7 +98,7 @@ export interface BudgetCompare {
 
 export function compareAgainstRecommended(
   spentKrw: number,
-  recommendedKrw: number | null,
+  recommendedKrw: number | null
 ): BudgetCompare {
   if (!recommendedKrw || recommendedKrw <= 0) {
     return { spentKrw, recommendedKrw, percent: null, status: 'under' }

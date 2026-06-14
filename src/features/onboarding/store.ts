@@ -48,7 +48,7 @@ function makePet(seed?: Partial<PetProfile>): PetProfile {
 
 function projectProfile(
   pet: PetProfile | undefined,
-  completedAt: string | null,
+  completedAt: string | null
 ): OnboardingProfile {
   if (!pet) return EMPTY_PROFILE
   return {
@@ -62,7 +62,7 @@ function projectProfile(
 
 function updateActive(
   state: OnboardingState,
-  patch: (pet: PetProfile) => PetProfile,
+  patch: (pet: PetProfile) => PetProfile
 ): Partial<OnboardingState> {
   const id = state.activePetId
   if (!id) return {}
@@ -90,7 +90,7 @@ export const useOnboardingStore = create<OnboardingState>()(
             ...p,
             category,
             speciesId: p.category === category ? p.speciesId : null,
-          })),
+          }))
         ),
 
       setSpecies: (speciesId) => set((state) => updateActive(state, (p) => ({ ...p, speciesId }))),
@@ -151,7 +151,7 @@ export const useOnboardingStore = create<OnboardingState>()(
       renamePet: (id, name) =>
         set((state) => {
           const pets = state.pets.map((p) =>
-            p.id === id ? { ...p, petName: name.trim() || null } : p,
+            p.id === id ? { ...p, petName: name.trim() || null } : p
           )
           const active = pets.find((p) => p.id === state.activePetId)
           return { pets, profile: projectProfile(active, state.completedAt) }
@@ -191,8 +191,8 @@ export const useOnboardingStore = create<OnboardingState>()(
           profile: projectProfile(pet, p.completedAt),
         } as unknown as OnboardingState
       },
-    },
-  ),
+    }
+  )
 )
 
 export function isOnboardingComplete(profile: OnboardingProfile): boolean {

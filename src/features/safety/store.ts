@@ -41,8 +41,8 @@ export const useSafetyStore = create<SafetyStoreState>()(
     {
       name: 'pettography.safety',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

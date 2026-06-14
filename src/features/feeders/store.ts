@@ -21,7 +21,7 @@ interface FeedersState {
   markFed: (id: string, dateISO: string) => void
   updateColony: (
     id: string,
-    patch: Partial<Pick<FeederColony, 'type' | 'name' | 'startedAt' | 'estimateCount' | 'notes'>>,
+    patch: Partial<Pick<FeederColony, 'type' | 'name' | 'startedAt' | 'estimateCount' | 'notes'>>
   ) => void
   removeColony: (id: string) => void
   clear: () => void
@@ -44,7 +44,7 @@ export const useFeedersStore = create<FeedersState>()(
         }
         set((state) => ({
           colonies: [colony, ...state.colonies].sort((a, b) =>
-            b.startedAt.localeCompare(a.startedAt),
+            b.startedAt.localeCompare(a.startedAt)
           ),
         }))
         return colony
@@ -52,7 +52,7 @@ export const useFeedersStore = create<FeedersState>()(
       markFed: (id, dateISO) =>
         set((state) => ({
           colonies: state.colonies.map((c) =>
-            c.id === id ? { ...c, lastFedAt: dateISO.slice(0, 10) } : c,
+            c.id === id ? { ...c, lastFedAt: dateISO.slice(0, 10) } : c
           ),
         })),
       updateColony: (id, patch) =>
@@ -66,6 +66,6 @@ export const useFeedersStore = create<FeedersState>()(
     {
       name: 'pettography.feeders',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )

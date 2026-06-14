@@ -286,7 +286,7 @@ function Forum() {
                             const ok = reportPost(post.id)
                             toast(
                               ok ? t('forum.reportedToast') : t('forum.reportedAlready'),
-                              ok ? 'success' : 'error',
+                              ok ? 'success' : 'error'
                             )
                           }}
                         >
@@ -322,7 +322,7 @@ function Forum() {
                         const ok = reportReply(post.id, replyId)
                         toast(
                           ok ? t('forum.reportedToast') : t('forum.reportedAlready'),
-                          ok ? 'success' : 'error',
+                          ok ? 'success' : 'error'
                         )
                       }}
                     />
@@ -343,7 +343,7 @@ function selectPosts(
   ownPostIds: Record<string, true>,
   category: SpeciesCategory | 'all',
   sort: ForumSort,
-  search: string,
+  search: string
 ): ForumPost[] {
   const now = Date.now()
   const needle = search.trim().toLowerCase()
@@ -365,7 +365,7 @@ function selectPosts(
         replies: repliesMap[a.id]?.length ?? 0,
         createdAt: a.createdAt,
       },
-      now,
+      now
     )
     const bScore = hotScore(
       {
@@ -374,7 +374,7 @@ function selectPosts(
         replies: repliesMap[b.id]?.length ?? 0,
         createdAt: b.createdAt,
       },
-      now,
+      now
     )
     return bScore - aScore
   })

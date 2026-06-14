@@ -54,7 +54,7 @@ function Feeders() {
 
   const typeOptions = useMemo(
     () => FEEDER_TYPES.map((type) => ({ value: type, label: t(`feeders.types.${type}`) })),
-    [t],
+    [t]
   )
 
   const {

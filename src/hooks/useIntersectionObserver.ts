@@ -14,7 +14,7 @@ interface UseIntersectionObserverReturn {
 }
 
 function useIntersectionObserver(
-  options: UseIntersectionObserverOptions = {},
+  options: UseIntersectionObserverOptions = {}
 ): UseIntersectionObserverReturn {
   const { threshold = 0, rootMargin = '0px', root = null, triggerOnce = false } = options
   const ref = useRef<Element | null>(null)
@@ -34,7 +34,7 @@ function useIntersectionObserver(
           observer.unobserve(element)
         }
       },
-      { threshold, rootMargin, root },
+      { threshold, rootMargin, root }
     )
 
     observer.observe(element)

@@ -169,7 +169,7 @@ function Water() {
     downloadTextFile(
       'pettography-water.csv',
       buildCsv(['date', 'temp_c', 'ph', 'ammonia_ppm', 'nitrite_ppm', 'nitrate_ppm', 'note'], rows),
-      'text/csv;charset=utf-8',
+      'text/csv;charset=utf-8'
     )
   }
 

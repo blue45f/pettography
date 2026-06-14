@@ -21,7 +21,7 @@ export function useToday(): string {
       now.getUTCDate() + 1,
       0,
       0,
-      5,
+      5
     )
     const timer = setTimeout(() => setToday(todayIso()), nextRollover - now.getTime())
     return () => clearTimeout(timer)

@@ -8,7 +8,7 @@ import type { BcsEntry } from './schema'
 function entry(
   assessedAt: string,
   score: number,
-  createdAt = `${assessedAt}T00:00:00.000Z`,
+  createdAt = `${assessedAt}T00:00:00.000Z`
 ): BcsEntry {
   return {
     id: `${assessedAt}-${score}`,

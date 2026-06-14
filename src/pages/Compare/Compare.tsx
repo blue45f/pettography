@@ -33,7 +33,7 @@ function Compare() {
       picked
         .map((id) => allSpecies.find((s) => s.id === id || s.slug === id))
         .filter(Boolean) as Species[],
-    [picked, allSpecies],
+    [picked, allSpecies]
   )
 
   function setPicked(next: string[]) {

@@ -57,7 +57,7 @@ export function loadKakaoMap(): Promise<KakaoMapsApi | null> {
       () => fail(new Error('Failed to load Kakao Maps SDK'), script),
       {
         once: true,
-      },
+      }
     )
     document.head.appendChild(script)
   }).catch((error: unknown) => {

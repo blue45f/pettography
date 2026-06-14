@@ -37,7 +37,7 @@ export function nextDue(lastCleanedISO: string, intervalDays: number): string {
  */
 export function daysUntil(
   dateISO: string,
-  todayISO: string = new Date().toISOString().slice(0, 10),
+  todayISO: string = new Date().toISOString().slice(0, 10)
 ): number {
   const diff = toUtcDate(dateISO).getTime() - toUtcDate(todayISO).getTime()
   return Math.round(diff / MS_PER_DAY)
@@ -53,7 +53,7 @@ export function daysUntil(
 export function cleanStatus(
   lastCleanedISO: string | null,
   intervalDays: number,
-  todayISO: string = new Date().toISOString().slice(0, 10),
+  todayISO: string = new Date().toISOString().slice(0, 10)
 ): CleanStatus {
   if (!lastCleanedISO) return 'never'
   const due = nextDue(lastCleanedISO, intervalDays)

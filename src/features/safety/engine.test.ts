@@ -66,7 +66,7 @@ describe('groupProgress', () => {
     const overall = auditProgress(checked, ALL_SAFETY_ITEM_IDS)
     const summedDone = SAFETY_ITEMS.reduce(
       (acc, g) => acc + groupProgress(checked, g.itemIds).done,
-      0,
+      0
     )
     expect(summedDone).toBe(overall.done)
     expect(overall.pct).toBe(100)

@@ -32,7 +32,7 @@ function PolicyBody({ blocks }: { blocks: PolicyBlock[] }) {
           return createElement(
             `h${block.level}`,
             { key: index, className: styles.bodyHeading },
-            block.text,
+            block.text
           )
         }
         if (block.kind === 'list') {

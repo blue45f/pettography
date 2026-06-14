@@ -72,13 +72,13 @@ describe('validateAttachmentCandidate', () => {
 
   it('rejects pdfs over the cap but lets large images reach the resize pipeline', () => {
     expect(
-      validateAttachmentCandidate({ type: 'application/pdf', size: ATTACHMENT_MAX_BYTES + 1 }, 0),
+      validateAttachmentCandidate({ type: 'application/pdf', size: ATTACHMENT_MAX_BYTES + 1 }, 0)
     ).toBe('tooLarge')
     expect(
-      validateAttachmentCandidate({ type: 'image/jpeg', size: ATTACHMENT_MAX_BYTES * 3 }, 0),
+      validateAttachmentCandidate({ type: 'image/jpeg', size: ATTACHMENT_MAX_BYTES * 3 }, 0)
     ).toBeNull()
     expect(
-      validateAttachmentCandidate({ type: 'image/jpeg', size: ATTACHMENT_MAX_BYTES * 13 }, 0),
+      validateAttachmentCandidate({ type: 'image/jpeg', size: ATTACHMENT_MAX_BYTES * 13 }, 0)
     ).toBe('tooLarge')
   })
 })

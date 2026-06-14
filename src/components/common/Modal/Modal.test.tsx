@@ -9,7 +9,7 @@ describe('Modal', () => {
     render(
       <Modal isOpen={false} onClose={vi.fn()}>
         내용
-      </Modal>,
+      </Modal>
     )
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
@@ -18,7 +18,7 @@ describe('Modal', () => {
     render(
       <Modal isOpen={true} onClose={vi.fn()}>
         모달 내용
-      </Modal>,
+      </Modal>
     )
     expect(screen.getByRole('dialog')).toBeInTheDocument()
     expect(screen.getByText('모달 내용')).toBeInTheDocument()
@@ -28,7 +28,7 @@ describe('Modal', () => {
     render(
       <Modal isOpen={true} onClose={vi.fn()} title="확인">
         내용
-      </Modal>,
+      </Modal>
     )
     expect(screen.getByText('확인')).toBeInTheDocument()
   })
@@ -39,7 +39,7 @@ describe('Modal', () => {
     render(
       <Modal isOpen={true} onClose={onClose} title="테스트">
         내용
-      </Modal>,
+      </Modal>
     )
 
     await user.click(screen.getByLabelText('닫기'))
@@ -52,7 +52,7 @@ describe('Modal', () => {
     render(
       <Modal isOpen={true} onClose={onClose}>
         내용
-      </Modal>,
+      </Modal>
     )
 
     await user.keyboard('{Escape}')
@@ -63,7 +63,7 @@ describe('Modal', () => {
     render(
       <Modal isOpen={true} onClose={vi.fn()}>
         내용
-      </Modal>,
+      </Modal>
     )
     expect(screen.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
   })

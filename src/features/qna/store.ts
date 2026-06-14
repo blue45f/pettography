@@ -95,7 +95,7 @@ export const useQnaStore = create<QnaState>()(
         set((state) => {
           if (!state.ownQ[id]) return {}
           const removedAnswerIds = new Set(
-            state.answers.filter((a) => a.questionId === id).map((a) => a.id),
+            state.answers.filter((a) => a.questionId === id).map((a) => a.id)
           )
           const nextVotedA = { ...state.votedA }
           const nextOwnA = { ...state.ownA }
@@ -133,7 +133,7 @@ export const useQnaStore = create<QnaState>()(
         const voted = Boolean(get().votedQ[id])
         set((state) => {
           const questions = state.questions.map((q) =>
-            q.id === id ? { ...q, baseVotes: Math.max(0, q.baseVotes + (voted ? -1 : 1)) } : q,
+            q.id === id ? { ...q, baseVotes: Math.max(0, q.baseVotes + (voted ? -1 : 1)) } : q
           )
           const nextVoted = { ...state.votedQ }
           if (voted) delete nextVoted[id]
@@ -146,7 +146,7 @@ export const useQnaStore = create<QnaState>()(
         const voted = Boolean(get().votedA[id])
         set((state) => {
           const answers = state.answers.map((a) =>
-            a.id === id ? { ...a, baseVotes: Math.max(0, a.baseVotes + (voted ? -1 : 1)) } : a,
+            a.id === id ? { ...a, baseVotes: Math.max(0, a.baseVotes + (voted ? -1 : 1)) } : a
           )
           const nextVoted = { ...state.votedA }
           if (voted) delete nextVoted[id]
@@ -173,8 +173,8 @@ export const useQnaStore = create<QnaState>()(
       name: 'pettography.qna',
       version: 1,
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /** Resolved vote count for a question (currently the persisted base count). */

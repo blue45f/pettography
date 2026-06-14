@@ -80,13 +80,13 @@ describe('showcase store', () => {
       expect(useShowcaseStore.getState().toggleVote(post.id)).toBe(true)
       expect(useShowcaseStore.getState().votedIds[post.id]).toBe(true)
       expect(
-        voteCount(useShowcaseStore.getState().posts[0], useShowcaseStore.getState().votedIds),
+        voteCount(useShowcaseStore.getState().posts[0], useShowcaseStore.getState().votedIds)
       ).toBe(1)
 
       expect(useShowcaseStore.getState().toggleVote(post.id)).toBe(false)
       expect(useShowcaseStore.getState().votedIds[post.id]).toBeUndefined()
       expect(
-        voteCount(useShowcaseStore.getState().posts[0], useShowcaseStore.getState().votedIds),
+        voteCount(useShowcaseStore.getState().posts[0], useShowcaseStore.getState().votedIds)
       ).toBe(0)
     })
   })

@@ -18,7 +18,7 @@ test('accepts empty optional environment with safe local defaults', () => {
 test('accepts public frontend URLs as either absolute URLs or same-origin paths', () => {
   assert.equal(
     validateFrontendEnv({ VITE_API_URL: 'https://api.example.com' }).VITE_API_URL,
-    'https://api.example.com',
+    'https://api.example.com'
   )
   assert.equal(validateFrontendEnv({ VITE_API_URL: '/api' }).VITE_API_URL, '/api')
 })
@@ -44,7 +44,7 @@ test('normalizes backend numeric and CORS environment values', () => {
       CORS_ORIGINS: ['https://pettography.example', 'http://localhost:5173'],
       API_THROTTLE_TTL_MS: 30000,
       API_THROTTLE_LIMIT: 50,
-    },
+    }
   )
 })
 
@@ -57,6 +57,6 @@ test('rejects invalid backend environment values', () => {
         API_THROTTLE_TTL_MS: '-1',
         API_THROTTLE_LIMIT: '0',
       }),
-    /PORT.*CORS_ORIGINS.*API_THROTTLE_TTL_MS.*API_THROTTLE_LIMIT/s,
+    /PORT.*CORS_ORIGINS.*API_THROTTLE_TTL_MS.*API_THROTTLE_LIMIT/s
   )
 })

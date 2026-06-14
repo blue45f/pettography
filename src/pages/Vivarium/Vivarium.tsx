@@ -64,11 +64,11 @@ function Vivarium() {
 
   const activeSpecies = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId) ?? null,
-    [speciesList, profile.speciesId],
+    [speciesList, profile.speciesId]
   )
   const template = useMemo(
     () => templateForSpecies(activeSpecies?.slug, profile.category),
-    [activeSpecies?.slug, profile.category],
+    [activeSpecies?.slug, profile.category]
   )
   const isAquatic = template?.aquatic === true
 
@@ -111,7 +111,7 @@ function Vivarium() {
       plantIds,
       humidityPct: toNumberOrNull(humidity),
     }),
-    [substrateIds, crewIds, plantIds, humidity],
+    [substrateIds, crewIds, plantIds, humidity]
   )
 
   const maintenance = useMemo(() => maintenanceScore(selection), [selection])

@@ -33,11 +33,11 @@ function Insurance() {
   const exotic = isRegulated(category) && category !== 'mammal'
   const suggestion = useMemo(
     () => suggestedReserveKrw(species?.monthlyBudgetKrw ?? 0),
-    [species?.monthlyBudgetKrw],
+    [species?.monthlyBudgetKrw]
   )
   const accumulated = useMemo(
     () => monthlyContributionKrw * monthsBetween(startedAt),
-    [monthlyContributionKrw, startedAt],
+    [monthlyContributionKrw, startedAt]
   )
 
   const [draft, setDraft] = useState(String(monthlyContributionKrw || ''))

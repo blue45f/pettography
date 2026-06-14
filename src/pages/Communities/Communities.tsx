@@ -57,7 +57,7 @@ const writeCommunityDemoLogs = (logs: CommunityDemoLog[]) => {
   try {
     window.localStorage.setItem(
       COMMUNITY_DEMO_LOG_KEY,
-      JSON.stringify(logs.slice(-COMMUNITY_DEMO_LOG_LIMIT)),
+      JSON.stringify(logs.slice(-COMMUNITY_DEMO_LOG_LIMIT))
     )
   } catch {
     // Demo log persistence is optional.
@@ -90,7 +90,7 @@ function Communities() {
       openCount: demoLogs.filter((log) => log.action === 'open').length,
       suggestCount: demoLogs.filter((log) => log.action === 'suggest').length,
     }),
-    [demoLogs],
+    [demoLogs]
   )
   const recentDemoLogs = useMemo(() => demoLogs.slice().reverse().slice(0, 3), [demoLogs])
   const selectCategory = (next: SpeciesCategory | 'all', label: string) => {

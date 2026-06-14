@@ -39,7 +39,7 @@ export const useTamingStore = create<TamingState>()(
         }
         set((state) => ({
           sessions: [session, ...state.sessions].sort((a, b) =>
-            b.sessionAt.localeCompare(a.sessionAt),
+            b.sessionAt.localeCompare(a.sessionAt)
           ),
         }))
         return session
@@ -51,8 +51,8 @@ export const useTamingStore = create<TamingState>()(
     {
       name: 'pettography.taming',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

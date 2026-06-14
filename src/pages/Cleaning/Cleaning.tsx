@@ -87,7 +87,7 @@ function Cleaning() {
         const due = last ? nextDue(last, interval) : null
         return { type, last, interval, status, due }
       }),
-    [logs, category, today],
+    [logs, category, today]
   )
 
   function petLabel(petId: string | null | undefined): { name: string; emoji: string } | null {
@@ -121,7 +121,7 @@ function Cleaning() {
     if (status === 'never' || due === null) return t('cleaning.status.never')
     const left = Math.round(
       (new Date(`${due}T00:00:00Z`).getTime() - new Date(`${today}T00:00:00Z`).getTime()) /
-        86_400_000,
+        86_400_000
     )
     if (left === 0) return t('cleaning.dday.today')
     if (left < 0) return t('cleaning.dday.over', { count: Math.abs(left) })

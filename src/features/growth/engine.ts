@@ -21,7 +21,7 @@ export function daysSpan(entries: GrowthEntry[]): number {
   if (entries.length < 2) return 0
   const sorted = sortByDate(entries)
   return Math.round(
-    (toUtc(sorted[sorted.length - 1].measuredAt) - toUtc(sorted[0].measuredAt)) / DAY,
+    (toUtc(sorted[sorted.length - 1].measuredAt) - toUtc(sorted[0].measuredAt)) / DAY
   )
 }
 
@@ -80,7 +80,7 @@ export function growthStats(entries: GrowthEntry[], norm: GrowthNorm | null): Gr
  */
 export function chartPoints(
   entries: GrowthEntry[],
-  norm: GrowthNorm | null,
+  norm: GrowthNorm | null
 ): {
   points: { x: number; y: number; weightGram: number; measuredAt: string }[]
   minW: number

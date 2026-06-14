@@ -20,7 +20,7 @@ function renderMarket() {
           <Market />
         </MemoryRouter>
       </ToastProvider>
-    </QueryClientProvider>,
+    </QueryClientProvider>
   )
 }
 
@@ -54,7 +54,7 @@ describe('Market', () => {
         contact: 'keeper@example.com',
         description: '먹이 반응과 탈피 기록을 같이 전달합니다.',
         author: '테스터',
-      }),
+      })
     )
 
     renderMarket()

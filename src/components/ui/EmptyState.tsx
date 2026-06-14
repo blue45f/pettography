@@ -25,7 +25,7 @@ export function EmptyState({
       className={cn(
         'flex flex-col items-center justify-center gap-3 rounded-lg border border-line ' +
           'bg-panel-muted px-6 py-12 text-center',
-        className,
+        className
       )}
       {...props}
     >

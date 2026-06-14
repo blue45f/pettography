@@ -28,7 +28,7 @@ function renderHeader(initial = '/') {
       <MemoryRouter initialEntries={[initial]}>
         <Header />
       </MemoryRouter>
-    </QueryClientProvider>,
+    </QueryClientProvider>
   )
 }
 

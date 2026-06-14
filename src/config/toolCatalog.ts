@@ -158,5 +158,5 @@ export const ALL_TOOLS: readonly FlatTool[] = TOOL_GROUPS.flatMap((group) =>
     navKey: tool.navKey,
     groupId: group.id,
     emoji: group.emoji,
-  })),
+  }))
 )

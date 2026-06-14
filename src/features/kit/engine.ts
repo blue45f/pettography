@@ -30,7 +30,7 @@ function toPct(done: number, total: number): number {
 /** Overall readiness across every checklist item. */
 export function kitProgress(
   checked: Record<string, boolean>,
-  allItemIds: readonly string[],
+  allItemIds: readonly string[]
 ): KitProgress {
   const total = allItemIds.length
   const done = countDone(checked, allItemIds)
@@ -40,7 +40,7 @@ export function kitProgress(
 /** Readiness for a single group's items. */
 export function groupProgress(
   checked: Record<string, boolean>,
-  groupItemIds: readonly string[],
+  groupItemIds: readonly string[]
 ): KitProgress {
   const total = groupItemIds.length
   const done = countDone(checked, groupItemIds)

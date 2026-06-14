@@ -27,7 +27,7 @@ export interface HatchWindow {
 /** Estimate the hatch window from a laid date and the species' reference table. */
 export function estimateHatchWindow(
   laidAtISO: string,
-  slug: string | null | undefined,
+  slug: string | null | undefined
 ): HatchWindow {
   const ref = incubationRef(slug)
   const earliest = addDays(laidAtISO, ref.minDays)
@@ -50,7 +50,7 @@ export function daysUntil(dateISO: string, todayISO: string): number {
 export function incubationProgress(
   laidAtISO: string,
   slug: string | null | undefined,
-  todayISO: string,
+  todayISO: string
 ): number {
   const ref = incubationRef(slug)
   const elapsed = -daysUntil(laidAtISO, todayISO) // days since the eggs were laid
@@ -74,7 +74,7 @@ export type ClutchStatusCode = 'incubating' | 'due' | 'overdue' | 'hatched' | 'f
 export function clutchStatusLabelCode(
   clutch: Clutch,
   todayISO: string,
-  slug: string | null | undefined,
+  slug: string | null | undefined
 ): ClutchStatusCode {
   if (clutch.status === 'hatched') return 'hatched'
   if (clutch.status === 'failed') return 'failed'

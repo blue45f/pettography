@@ -329,7 +329,7 @@ function PostItem({
                         isReplyTarget={replyTarget === thread.comment.id}
                         onToggleReply={() =>
                           setReplyTarget((prev) =>
-                            prev === thread.comment.id ? null : thread.comment.id,
+                            prev === thread.comment.id ? null : thread.comment.id
                           )
                         }
                         onRemove={() => onRemoveComment(thread.comment.id)}

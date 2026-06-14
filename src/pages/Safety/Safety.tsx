@@ -48,7 +48,7 @@ function Safety() {
 
   const activeSpecies = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId),
-    [speciesList, profile.speciesId],
+    [speciesList, profile.speciesId]
   )
 
   const petName = profile.petName?.trim() || activeSpecies?.koreanName || ''

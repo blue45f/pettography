@@ -50,7 +50,7 @@ describe('estimateHatchWindow', () => {
 
   it('tolerates a full ISO timestamp by slicing to the day', () => {
     expect(estimateHatchWindow('2024-01-01T18:30:00.000Z', 'ball-python').earliest).toBe(
-      '2024-02-25',
+      '2024-02-25'
     )
   })
 })
@@ -97,13 +97,13 @@ describe('incubationProgress', () => {
 describe('clutchStatusLabelCode', () => {
   it('returns the user-set hatched status regardless of dates', () => {
     expect(clutchStatusLabelCode(clutch({ status: 'hatched' }), '2024-01-02', 'ball-python')).toBe(
-      'hatched',
+      'hatched'
     )
   })
 
   it('returns the user-set failed status regardless of dates', () => {
     expect(clutchStatusLabelCode(clutch({ status: 'failed' }), '2024-01-02', 'ball-python')).toBe(
-      'failed',
+      'failed'
     )
   })
 

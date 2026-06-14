@@ -38,7 +38,7 @@ type ResponseInterceptor = (response: Response) => Response | Promise<Response>
 class ApiError extends Error {
   constructor(
     public status: number,
-    message: string,
+    message: string
   ) {
     super(message)
     this.name = 'ApiError'
@@ -173,7 +173,7 @@ export const api = {
   getValidated<T>(
     endpoint: string,
     schema: z.ZodType<T>,
-    options?: RequestOptions,
+    options?: RequestOptions
   ): Promise<ApiResponse<T>> {
     return this.get<unknown>(endpoint, options).then((res) => {
       const parsed = schema.safeParse(res.data)
@@ -197,7 +197,7 @@ export const api = {
     endpoint: string,
     body: unknown,
     schema: z.ZodType<T>,
-    options?: RequestOptions,
+    options?: RequestOptions
   ): Promise<ApiResponse<T>> {
     return this.post<unknown>(endpoint, body, options).then((res) => {
       const parsed = schema.safeParse(res.data)

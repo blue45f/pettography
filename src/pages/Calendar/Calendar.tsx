@@ -120,7 +120,7 @@ function Calendar() {
       Math.round(
         (new Date(`${iso.slice(0, 10)}T00:00:00Z`).getTime() -
           new Date(`${today}T00:00:00Z`).getTime()) /
-          86_400_000,
+          86_400_000
       )
     const withinWindow = (daysLeft: number) => daysLeft <= HORIZON_DAYS && daysLeft >= -30
 

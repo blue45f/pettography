@@ -18,7 +18,7 @@ function TabsList({ className, ...props }: TabsListProps) {
     <TabsPrimitive.List
       className={cn(
         'flex gap-1 overflow-x-auto border-b-2 border-line [-webkit-overflow-scrolling:touch]',
-        className,
+        className
       )}
       {...props}
     />
@@ -36,7 +36,7 @@ function TabsTrigger({ className, ...props }: TabsTriggerProps) {
           'focus-visible:ring-offset-2 focus-visible:ring-offset-app ' +
           'disabled:cursor-not-allowed disabled:opacity-50 ' +
           'data-[state=active]:border-brand data-[state=active]:text-brand',
-        className,
+        className
       )}
       {...props}
     />
@@ -49,7 +49,7 @@ function TabsContent({ className, ...props }: TabsContentProps) {
       className={cn(
         'py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand ' +
           'focus-visible:ring-offset-2 focus-visible:ring-offset-app',
-        className,
+        className
       )}
       {...props}
     />

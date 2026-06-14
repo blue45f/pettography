@@ -53,7 +53,7 @@ export function Progress({
       className={cn(
         'relative w-full overflow-hidden rounded-full border border-line bg-panel-muted',
         tracks[size],
-        className,
+        className
       )}
       {...props}
     >
@@ -61,7 +61,7 @@ export function Progress({
         // scaleX (origin-left) animates the transform, not the layout `width`.
         className={cn(
           'size-full origin-left rounded-full transition-transform duration-300 ease-out',
-          tones[tone],
+          tones[tone]
         )}
         style={{ transform: `scaleX(${percentage / 100})` }}
       />

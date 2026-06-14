@@ -61,7 +61,7 @@ function Gear() {
   const { data: speciesList = [] } = useSpeciesList({})
   const activeSpecies = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId),
-    [speciesList, profile.speciesId],
+    [speciesList, profile.speciesId]
   )
 
   const items = useActivePetGear()

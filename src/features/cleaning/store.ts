@@ -44,8 +44,8 @@ export const useCleaningStore = create<CleaningState>()(
     {
       name: 'pettography.cleaning',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

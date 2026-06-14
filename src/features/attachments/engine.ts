@@ -74,7 +74,7 @@ interface FileCandidate {
  */
 export function validateAttachmentCandidate(
   file: FileCandidate,
-  existingCount: number,
+  existingCount: number
 ): AttachmentRejectionReason | null {
   if (existingCount >= ATTACHMENT_MAX_COUNT) return 'tooMany'
   const kind = classifyAttachmentMime(file.type)

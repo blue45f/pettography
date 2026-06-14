@@ -54,7 +54,7 @@ describe('maintenanceScore', () => {
     const result = maintenanceScore(sel({ substrateIds: ['sub-organic'], humidityPct: 80 }))
     expect(result.factors).toContain('noDrainage')
     const drained = maintenanceScore(
-      sel({ substrateIds: ['sub-hydroball', 'sub-organic'], humidityPct: 80 }),
+      sel({ substrateIds: ['sub-hydroball', 'sub-organic'], humidityPct: 80 })
     )
     expect(drained.factors).not.toContain('noDrainage')
     expect(drained.score).toBeGreaterThan(result.score)
@@ -72,7 +72,7 @@ describe('maintenanceScore', () => {
         crewIds: ['crew-dairy-cow', 'crew-springtail'],
         plantIds: ['plant-pothos', 'plant-bromeliad'],
         humidityPct: 70,
-      }),
+      })
     )
     expect(result.level).toBe('low')
     expect(result.score).toBeGreaterThanOrEqual(70)
@@ -104,7 +104,7 @@ describe('readinessChecklist', () => {
         substrateIds: ['sub-hydroball', 'sub-organic', 'sub-leaf-litter'],
         crewIds: ['crew-springtail'],
         plantIds: ['plant-pothos'],
-      }),
+      })
     )
     const byId = Object.fromEntries(items.map((i) => [i.id, i.ok]))
     expect(byId.hasDrainage).toBe(true)

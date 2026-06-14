@@ -57,7 +57,7 @@ function AccordionTrigger({
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand ' +
               'focus-visible:ring-offset-2 focus-visible:ring-offset-app ' +
               'disabled:cursor-not-allowed disabled:opacity-50',
-            className,
+            className
           )}
           {...props}
         >
@@ -66,7 +66,7 @@ function AccordionTrigger({
             aria-hidden="true"
             className="size-5 shrink-0 text-ink-secondary transition-transform duration-150 ease-quint group-data-[state=open]:rotate-90"
           />
-        </AccordionPrimitive.Trigger>,
+        </AccordionPrimitive.Trigger>
       )}
     </AccordionPrimitive.Header>
   )

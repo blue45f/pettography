@@ -22,7 +22,7 @@ interface EnclosureState {
       lengthCm?: number | null
       widthCm?: number | null
       heightCm?: number | null
-    },
+    }
   ) => EnclosureCheck
   reset: (petKey: string) => void
   clear: () => void
@@ -57,8 +57,8 @@ export const useEnclosureStore = create<EnclosureState>()(
     {
       name: 'pettography.enclosure',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

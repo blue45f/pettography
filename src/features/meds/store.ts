@@ -87,7 +87,7 @@ export const useMedsStore = create<MedsState>()(
         }
         set((state) => ({
           medications: [med, ...state.medications].sort((a, b) =>
-            b.startedAt.localeCompare(a.startedAt),
+            b.startedAt.localeCompare(a.startedAt)
           ),
         }))
         return med
@@ -99,7 +99,7 @@ export const useMedsStore = create<MedsState>()(
       markDose: (medId, dateISO, given) =>
         set((state) => ({
           medications: state.medications.map((m) =>
-            m.id === medId ? { ...m, doses: upsertDose(m.doses, dateISO, given) } : m,
+            m.id === medId ? { ...m, doses: upsertDose(m.doses, dateISO, given) } : m
           ),
         })),
 
@@ -137,7 +137,7 @@ export const useMedsStore = create<MedsState>()(
         }
         set((state) => ({
           quarantines: [quarantine, ...state.quarantines].sort((a, b) =>
-            b.startedAt.localeCompare(a.startedAt),
+            b.startedAt.localeCompare(a.startedAt)
           ),
         }))
         return quarantine
@@ -146,7 +146,7 @@ export const useMedsStore = create<MedsState>()(
       clearQuarantine: (id) =>
         set((state) => ({
           quarantines: state.quarantines.map((q) =>
-            q.id === id ? { ...q, clearedAt: q.clearedAt ?? today() } : q,
+            q.id === id ? { ...q, clearedAt: q.clearedAt ?? today() } : q
           ),
         })),
 
@@ -158,8 +158,8 @@ export const useMedsStore = create<MedsState>()(
     {
       name: 'pettography.meds',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

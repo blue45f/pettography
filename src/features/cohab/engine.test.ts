@@ -42,7 +42,7 @@ describe('cohabVerdict — different species', () => {
 
   it('is order-independent in its verdict', () => {
     expect(cohabVerdict(ballPython, tarantula).verdict).toBe(
-      cohabVerdict(tarantula, ballPython).verdict,
+      cohabVerdict(tarantula, ballPython).verdict
     )
   })
 

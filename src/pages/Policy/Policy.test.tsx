@@ -44,7 +44,7 @@ function renderPolicy(path: '/terms' | '/privacy') {
       <MemoryRouter initialEntries={[path]}>
         <Policy />
       </MemoryRouter>
-    </QueryClientProvider>,
+    </QueryClientProvider>
   )
 }
 
@@ -71,11 +71,11 @@ describe('Policy', () => {
 
     // 본문: 조문 헤딩 + 문단 + 불릿 리스트
     expect(
-      await screen.findByRole('heading', { level: 2, name: '제1조 (목적)' }),
+      await screen.findByRole('heading', { level: 2, name: '제1조 (목적)' })
     ).toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 1, name: '이용약관' })).toBeInTheDocument()
     expect(fetchMock.mock.calls[0][0]).toBe(
-      'https://termsdesk.vercel.app/api/public/pettography/policies/terms-of-service',
+      'https://termsdesk.vercel.app/api/public/pettography/policies/terms-of-service'
     )
     expect(screen.getByText('이 약관은 이용 조건을 정합니다.')).toBeInTheDocument()
     expect(screen.getAllByRole('listitem')).toHaveLength(2)
@@ -97,10 +97,10 @@ describe('Policy', () => {
     renderPolicy('/privacy')
 
     expect(
-      await screen.findByRole('heading', { level: 1, name: '개인정보처리방침' }),
+      await screen.findByRole('heading', { level: 1, name: '개인정보처리방침' })
     ).toBeInTheDocument()
     expect(fetchMock.mock.calls[0][0]).toBe(
-      'https://termsdesk.vercel.app/api/public/pettography/policies/privacy-policy',
+      'https://termsdesk.vercel.app/api/public/pettography/policies/privacy-policy'
     )
   })
 
@@ -114,14 +114,14 @@ describe('Policy', () => {
     const fallbackLink = screen.getByRole('link', { name: /TermsDesk에서 원문 보기/ })
     expect(fallbackLink).toHaveAttribute(
       'href',
-      'https://termsdesk.vercel.app/p/pettography/terms-of-service',
+      'https://termsdesk.vercel.app/p/pettography/terms-of-service'
     )
 
     fetchMock.mockImplementation(() => mockOk(termsPayload))
     await user.click(screen.getByRole('button', { name: '다시 시도' }))
 
     await waitFor(() =>
-      expect(screen.getByRole('heading', { level: 2, name: '제1조 (목적)' })).toBeInTheDocument(),
+      expect(screen.getByRole('heading', { level: 2, name: '제1조 (목적)' })).toBeInTheDocument()
     )
   })
 
@@ -133,7 +133,7 @@ describe('Policy', () => {
 
     expect(screen.getByRole('link', { name: /개인정보처리방침/ })).toHaveAttribute(
       'href',
-      '/privacy',
+      '/privacy'
     )
   })
 })

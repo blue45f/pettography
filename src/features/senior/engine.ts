@@ -34,7 +34,7 @@ function hasLifespan(min: number | null | undefined, max: number | null | undefi
 export function lifeStage(
   ageYears: number,
   lifespanMinYears: number | null | undefined,
-  lifespanMaxYears: number | null | undefined,
+  lifespanMaxYears: number | null | undefined
 ): LifeStage | null {
   if (ageYears < 0) return null
   if (!hasLifespan(lifespanMinYears, lifespanMaxYears)) return null
@@ -58,7 +58,7 @@ export function isSeniorStage(stage: LifeStage | null): boolean {
  */
 export function lifeProgressPct(
   ageYears: number,
-  lifespanMaxYears: number | null | undefined,
+  lifespanMaxYears: number | null | undefined
 ): number | null {
   if (typeof lifespanMaxYears !== 'number' || lifespanMaxYears <= 0) return null
   const pct = (Math.max(ageYears, 0) / lifespanMaxYears) * 100
@@ -73,7 +73,7 @@ export function lifeProgressPct(
 export function expectedRemainingYears(
   ageYears: number,
   lifespanMinYears: number | null | undefined,
-  lifespanMaxYears: number | null | undefined,
+  lifespanMaxYears: number | null | undefined
 ): number | null {
   if (!hasLifespan(lifespanMinYears, lifespanMaxYears)) return null
   const min = lifespanMinYears as number
@@ -86,7 +86,7 @@ export function expectedRemainingYears(
 /** Count of completed checklist items given a (possibly sparse) completion map. */
 export function checklistProgress(
   itemIds: readonly string[],
-  checklist: Record<string, boolean>,
+  checklist: Record<string, boolean>
 ): { done: number; total: number; pct: number } {
   const total = itemIds.length
   const done = itemIds.reduce((acc, id) => acc + (checklist[id] ? 1 : 0), 0)

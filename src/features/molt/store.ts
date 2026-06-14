@@ -44,8 +44,8 @@ export const useMoltStore = create<MoltState>()(
     {
       name: 'pettography.molt',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 )
 
 /**

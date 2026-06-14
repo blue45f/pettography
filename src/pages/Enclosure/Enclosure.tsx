@@ -46,17 +46,17 @@ function Enclosure() {
 
   const activeSpecies = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId) ?? null,
-    [speciesList, profile.speciesId],
+    [speciesList, profile.speciesId]
   )
 
   const min = useMemo(
     () => minEnclosure(activeSpecies?.slug ?? null, profile.category),
-    [activeSpecies?.slug, profile.category],
+    [activeSpecies?.slug, profile.category]
   )
 
   const minLiters = useMemo(
     () => enclosureVolumeLiters(min.lengthCm, min.widthCm, min.heightCm),
-    [min],
+    [min]
   )
 
   const form = useForm<EnclosureFormValues>({
@@ -77,7 +77,7 @@ function Enclosure() {
       w: Number.isFinite(watchedWidth) ? watchedWidth : null,
       h: Number.isFinite(watchedHeight) ? watchedHeight : null,
     }),
-    [watchedLength, watchedWidth, watchedHeight],
+    [watchedLength, watchedWidth, watchedHeight]
   )
 
   const minDims = useMemo(() => ({ l: min.lengthCm, w: min.widthCm, h: min.heightCm }), [min])
@@ -88,7 +88,7 @@ function Enclosure() {
       current.l !== null && current.w !== null && current.h !== null
         ? enclosureVolumeLiters(current.l, current.w, current.h)
         : null,
-    [current],
+    [current]
   )
 
   const onSubmit = form.handleSubmit((values) => {

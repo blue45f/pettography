@@ -10,7 +10,7 @@ function useMediaQuery(query: string): boolean {
         mediaQuery.removeEventListener('change', notify)
       }
     },
-    [query],
+    [query]
   )
 
   const getSnapshot = useCallback(() => {
