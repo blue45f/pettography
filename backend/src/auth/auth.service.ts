@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common'
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from 'crypto'
 import { JsonFileStore } from '../common/json-store'
+import { getJwtSecret, looksLikeJwt, signJwt, verifyJwt } from './jwt'
 import type {
   Account,
   AccountRole,
@@ -85,8 +86,7 @@ export class AuthService implements OnModuleInit {
   }
 
   logout(token: string): void {
-    const tokenHash = hashToken(token)
-    const session = this.state.sessions.find((candidate) => candidate.tokenHash === tokenHash)
+    const session = this.resolveSession(token)
     if (session && !session.revokedAt) {
       session.revokedAt = new Date().toISOString()
       this.audit(session.accountId, 'auth.logout', 'session', session.id)
@@ -95,9 +95,8 @@ export class AuthService implements OnModuleInit {
   }
 
   authenticateToken(token: string): PublicAccount | null {
-    const tokenHash = hashToken(token)
+    const session = this.resolveSession(token)
     const now = Date.now()
-    const session = this.state.sessions.find((candidate) => candidate.tokenHash === tokenHash)
     if (!session || session.revokedAt || new Date(session.expiresAt).getTime() <= now) {
       return null
     }
@@ -106,6 +105,30 @@ export class AuthService implements OnModuleInit {
       return null
     }
     return toPublicAccount(account)
+  }
+
+  /**
+   * Resolve a bearer token to its backing session row, supporting both schemes:
+   *
+   * 1. Signed JWT (current): verify the HS256 signature + expiry, then look the
+   *    session up by its `sid` claim. The server-side row is still consulted so
+   *    revocation (logout, password change, suspend, withdraw) keeps working.
+   * 2. Legacy opaque token: scrypt-hash the token and match it against the
+   *    stored `tokenHash`. This keeps already-issued opaque sessions valid so
+   *    existing users are NOT locked out — re-login simply upgrades them to JWT.
+   */
+  private resolveSession(token: string): AccountSession | undefined {
+    if (looksLikeJwt(token)) {
+      const payload = verifyJwt(token, getJwtSecret())
+      if (payload) {
+        return this.state.sessions.find((candidate) => candidate.id === payload.sid)
+      }
+      // A dotted token that fails JWT verification is not a legacy opaque token
+      // (those are single base64url segments), so do not fall through.
+      return undefined
+    }
+    const tokenHash = hashToken(token)
+    return this.state.sessions.find((candidate) => candidate.tokenHash === tokenHash)
   }
 
   getProfile(accountId: string): PublicAccount {
@@ -250,14 +273,23 @@ export class AuthService implements OnModuleInit {
   }
 
   private issueSession(account: Account) {
-    const token = randomBytes(32).toString('base64url')
+    const sessionId = randomUUID()
     const now = Date.now()
+    const expiresAt = now + SESSION_TTL_MS
+    // Signed HS256 JWT. The session row is still persisted (looked up by `sid`)
+    // so server-side revocation continues to work; no token material is stored.
+    const token = signJwt({
+      sub: account.id,
+      sid: sessionId,
+      iat: Math.floor(now / 1000),
+      exp: Math.floor(expiresAt / 1000),
+    })
     this.state.sessions.push({
-      id: randomUUID(),
+      id: sessionId,
       accountId: account.id,
-      tokenHash: hashToken(token),
+      tokenHash: null,
       createdAt: new Date(now).toISOString(),
-      expiresAt: new Date(now + SESSION_TTL_MS).toISOString(),
+      expiresAt: new Date(expiresAt).toISOString(),
       revokedAt: null,
     })
     this.save()

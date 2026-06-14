@@ -192,7 +192,12 @@ export type PublicAccount = Omit<Account, 'passwordHash'>
 export interface AccountSession {
   id: string
   accountId: string
-  tokenHash: string
+  /**
+   * Legacy opaque-token sessions store a scrypt hash of the bearer token for
+   * lookup. JWT sessions are looked up by `id` (the JWT `sid` claim) instead,
+   * so `tokenHash` is null for them — no derivable token material is persisted.
+   */
+  tokenHash: string | null
   createdAt: string
   expiresAt: string
   revokedAt?: string | null
