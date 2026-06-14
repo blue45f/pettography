@@ -12,11 +12,11 @@ import {
   useActivePetPhotos,
   useGalleryStore,
   type PhotoInput,
-} from '@features/gallery'
-import { useHospitalsList } from '@features/hospitals'
-import { useOnboardingStore } from '@features/onboarding'
-import { useShopsList } from '@features/shops'
-import { useSpecies, useSpeciesList } from '@features/species'
+} from '@domains/gallery'
+import { useHospitalsList } from '@domains/hospitals'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useShopsList } from '@domains/shops'
+import { useSpecies, useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'

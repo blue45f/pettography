@@ -3,7 +3,7 @@ import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import { usePetLabel } from '@components/common/PetBadge'
 import Sparkline from '@components/common/Sparkline'
-import { useBudgetStore } from '@features/budget'
+import { useBudgetStore } from '@domains/budget'
 import {
   annualTotal,
   grandTotal,
@@ -15,8 +15,8 @@ import {
   totalsByPet,
   useCostReportStore,
   type ReportExpense,
-} from '@features/costreport'
-import { useOnboardingStore } from '@features/onboarding'
+} from '@domains/costreport'
+import { useOnboardingStore } from '@domains/onboarding'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'

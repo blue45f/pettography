@@ -17,7 +17,7 @@ import {
   type FeederColony,
   type FeederFormValues,
   type FeedStatus,
-} from '@features/feeders'
+} from '@domains/feeders'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'

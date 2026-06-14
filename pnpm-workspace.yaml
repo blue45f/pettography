@@ -5,6 +5,9 @@ packages:
 
 overrides:
   esbuild: '>=0.28.1'
+  # @heejun/eslint-config 가 끌어오는 eslint-plugin-boundaries 의 전이 의존
+  # handlebars(<=4.7.8) 취약점 패치(devDeps 전용, 빌드 산출물 미포함).
+  handlebars: '>=4.7.9'
 
 allowBuilds:
   '@nestjs/core': true
@@ -15,4 +18,5 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@types/node@25.9.3'
   - 'esbuild@0.28.1'
+  - '@heejun/eslint-config@4.0.0'
   - '@heejun/prettier-config@3.0.0'

@@ -19,10 +19,10 @@ import {
   useBcsStore,
   type BcsFormValues,
   type BcsStatus,
-} from '@features/bcs'
-import { useActivePetHealth, weightTrend } from '@features/health'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies, useSpeciesList } from '@features/species'
+} from '@domains/bcs'
+import { useActivePetHealth, weightTrend } from '@domains/health'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpecies, useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'

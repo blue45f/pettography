@@ -15,8 +15,8 @@ import {
   groupProgress,
   useKitStore,
   type KitContactFormValues,
-} from '@features/kit'
-import { useOnboardingStore } from '@features/onboarding'
+} from '@domains/kit'
+import { useOnboardingStore } from '@domains/onboarding'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'

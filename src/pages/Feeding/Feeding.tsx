@@ -21,9 +21,9 @@ import {
   usesBodyWeightSizing,
   type AgeStage,
   type FeedFormValues,
-} from '@features/feeding'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpeciesList } from '@features/species'
+} from '@domains/feeding'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { buildCsv } from '@utils/csv'

@@ -1,10 +1,10 @@
-import { isKakaoMapConfigured, loadKakaoMap } from '@features/map'
+import { isKakaoMapConfigured, loadKakaoMap } from '@domains/map'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import styles from './KakaoMap.module.css'
 
-import type { KakaoMap as KakaoMapInstance, KakaoMapsApi } from '@features/map'
+import type { KakaoMap as KakaoMapInstance, KakaoMapsApi } from '@domains/map'
 
 export interface KakaoMapMarker {
   id: string

@@ -16,13 +16,13 @@ import {
   useAuthStore,
   type AdminUpdateAccountInput,
   type ForbiddenWordInput,
-} from '@features/auth'
-import { useCafesStore } from '@features/cafes'
-import { useDiaryStore } from '@features/diary'
-import { useForumStore } from '@features/forum'
-import { useOnboardingStore } from '@features/onboarding'
-import { usePartnersStore } from '@features/partners'
-import { useConsultStore } from '@features/vet-consult'
+} from '@domains/auth'
+import { useCafesStore } from '@domains/cafes'
+import { useDiaryStore } from '@domains/diary'
+import { useForumStore } from '@domains/forum'
+import { useOnboardingStore } from '@domains/onboarding'
+import { usePartnersStore } from '@domains/partners'
+import { useConsultStore } from '@domains/vet-consult'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState, type ChangeEvent, type FormEvent } from 'react'

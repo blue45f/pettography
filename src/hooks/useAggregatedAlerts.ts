@@ -1,26 +1,26 @@
-import { sortAlerts, type AlertItem } from '@features/alerts'
-import { latestBcs, statusForScore, useActivePetBcs } from '@features/bcs'
-import { clutchStatusLabelCode, useActivePetClutches } from '@features/breeding'
-import { currentPhase, useActivePetPlans } from '@features/brumation'
+import { sortAlerts, type AlertItem } from '@domains/alerts'
+import { latestBcs, statusForScore, useActivePetBcs } from '@domains/bcs'
+import { clutchStatusLabelCode, useActivePetClutches } from '@domains/breeding'
+import { currentPhase, useActivePetPlans } from '@domains/brumation'
 import {
   CLEAN_TYPES,
   cleanStatus,
   defaultIntervalDays as defaultCleanInterval,
   latestByType as latestCleanByType,
   useActivePetCleanings,
-} from '@features/cleaning'
-import { dueDate, gearStatus, useActivePetGear } from '@features/gear'
-import { upcomingDues, useActivePetHealth, type VaccinationEntry } from '@features/health'
+} from '@domains/cleaning'
+import { dueDate, gearStatus, useActivePetGear } from '@domains/gear'
+import { upcomingDues, useActivePetHealth, type VaccinationEntry } from '@domains/health'
 import {
   doseStatusCode,
   nextDoseDate,
   quarantineDoneCode,
   useActivePetMeds,
   useActivePetQuarantines,
-} from '@features/meds'
-import { predictNext, useActivePetMolts } from '@features/molt'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpeciesList, type SpeciesCategory } from '@features/species'
+} from '@domains/meds'
+import { predictNext, useActivePetMolts } from '@domains/molt'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpeciesList, type SpeciesCategory } from '@domains/species'
 import {
   defaultIntervalDays,
   dustingStatus,
@@ -29,8 +29,8 @@ import {
   useActivePetDustings,
   useSupplementsStore,
   type ScheduleConfig,
-} from '@features/supplements'
-import { cycleStatus, latestReading, useActivePetReadings } from '@features/water'
+} from '@domains/supplements'
+import { cycleStatus, latestReading, useActivePetReadings } from '@domains/water'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 

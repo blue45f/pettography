@@ -6,7 +6,7 @@ import Input from '@components/common/Input'
 import Select from '@components/common/Select'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
-import { useOnboardingStore } from '@features/onboarding'
+import { useOnboardingStore } from '@domains/onboarding'
 import {
   answersFor,
   parseTags,
@@ -24,8 +24,8 @@ import {
   type QnaQuestionFormInputValues,
   type QnaQuestionFormValues,
   type QnaSort,
-} from '@features/qna'
-import { useSpeciesList, type Species } from '@features/species'
+} from '@domains/qna'
+import { useSpeciesList, type Species } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useEffect, useMemo, useState } from 'react'

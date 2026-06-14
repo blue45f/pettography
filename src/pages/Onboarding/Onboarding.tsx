@@ -3,15 +3,15 @@ import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import Progress from '@components/common/Progress'
 import { useToast } from '@components/common/Toast'
-import { LOCATION_PRESETS, findPreset } from '@features/location'
+import { LOCATION_PRESETS, findPreset } from '@domains/location'
 import {
   isOnboardingComplete,
   ONBOARDING_STEPS,
   useOnboardingStore,
   type OnboardingStep,
-} from '@features/onboarding'
-import { isRegulated } from '@features/registry'
-import { SPECIES_CATEGORIES, useSpeciesList } from '@features/species'
+} from '@domains/onboarding'
+import { isRegulated } from '@domains/registry'
+import { SPECIES_CATEGORIES, useSpeciesList } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,7 +19,7 @@ import { Link, useNavigate } from 'react-router'
 
 import styles from './Onboarding.module.css'
 
-import type { SpeciesCategory } from '@features/species'
+import type { SpeciesCategory } from '@domains/species'
 
 const NICKNAME_ADJECTIVES = [
   '귀여운',

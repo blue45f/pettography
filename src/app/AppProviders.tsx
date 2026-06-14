@@ -1,5 +1,5 @@
 import ToastProvider from '@components/common/Toast'
-import { installAuthInterceptors } from '@features/auth'
+import { installAuthInterceptors } from '@domains/auth'
 import { QueryClientProvider, type QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RouterProvider } from 'react-router'

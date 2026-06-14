@@ -19,7 +19,7 @@ reviews:
     - '!**/pnpm-lock.yaml'
     - '!**/.claude/**'
   path_instructions:
-    - path: 'src/features/**/*.ts'
+    - path: 'src/domains/**/*.ts'
       instructions: |
         Zustand persist 스토어와 Zod schema를 함께 검토하세요.
         - localStorage 키 변경 시 마이그레이션 함수 존재 여부를 확인하세요.

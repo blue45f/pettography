@@ -7,8 +7,8 @@ import Input from '@components/common/Input'
 import Sparkline from '@components/common/Sparkline'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies, useSpeciesList } from '@features/species'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpecies, useSpeciesList } from '@domains/species'
 import {
   CALMNESS_LEVELS,
   STRESS_SIGNS,
@@ -22,7 +22,7 @@ import {
   useTamingStore,
   type HandlingFormValues,
   type StressSign,
-} from '@features/taming'
+} from '@domains/taming'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'

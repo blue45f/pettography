@@ -7,7 +7,7 @@ import {
   usePolicy,
   type PolicyBlock,
   type PolicySlug,
-} from '@features/policies'
+} from '@domains/policies'
 import usePageMeta from '@hooks/usePageMeta'
 import { createElement } from 'react'
 import { useTranslation } from 'react-i18next'

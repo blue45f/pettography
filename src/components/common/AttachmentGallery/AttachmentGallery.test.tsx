@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 import AttachmentGallery from './AttachmentGallery'
 
-import type { Attachment } from '@features/attachments'
+import type { Attachment } from '@domains/attachments'
 
 const TINY_PNG =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=='

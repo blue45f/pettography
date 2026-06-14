@@ -17,9 +17,9 @@ import {
   useActivePetLighting,
   useLightingStore,
   type LightingFormValues,
-} from '@features/lighting'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies } from '@features/species'
+} from '@domains/lighting'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpecies } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'

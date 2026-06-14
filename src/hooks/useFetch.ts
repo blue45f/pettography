@@ -1,4 +1,4 @@
-import api from '@services/api'
+import api from '@infrastructure/api'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 

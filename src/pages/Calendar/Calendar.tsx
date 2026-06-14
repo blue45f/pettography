@@ -7,12 +7,12 @@ import {
   latestByType as latestCleanByType,
   nextDue as nextCleanDue,
   useActivePetCleanings,
-} from '@features/cleaning'
-import { dueDate, useActivePetGear } from '@features/gear'
-import { upcomingDues, useActivePetHealth } from '@features/health'
-import { useOnboardingStore } from '@features/onboarding'
-import { useActivePetFilings, REGISTRY_FILINGS } from '@features/registry'
-import { useSpecies } from '@features/species'
+} from '@domains/cleaning'
+import { dueDate, useActivePetGear } from '@domains/gear'
+import { upcomingDues, useActivePetHealth } from '@domains/health'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useActivePetFilings, REGISTRY_FILINGS } from '@domains/registry'
+import { useSpecies } from '@domains/species'
 import {
   defaultIntervalDays,
   latestByType,
@@ -20,8 +20,8 @@ import {
   SUPPLEMENT_TYPES,
   useActivePetDustings,
   useSupplementsStore,
-} from '@features/supplements'
-import { supplyStatus, useActivePetSupplies } from '@features/supplies'
+} from '@domains/supplements'
+import { supplyStatus, useActivePetSupplies } from '@domains/supplies'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { downloadTextFile } from '@utils/download'
 import { buildIcs, type IcsEvent } from '@utils/ics'

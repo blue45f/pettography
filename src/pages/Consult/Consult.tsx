@@ -12,7 +12,7 @@ import {
   useSendVetMessage,
   vetsMock,
   type Vet,
-} from '@features/vet-consult'
+} from '@domains/vet-consult'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'

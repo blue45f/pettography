@@ -15,8 +15,8 @@ import {
   useActivePetHabitat,
   useHabitatStore,
   type HabitatFormValues,
-} from '@features/habitat'
-import { useOnboardingStore } from '@features/onboarding'
+} from '@domains/habitat'
+import { useOnboardingStore } from '@domains/onboarding'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { buildCsv } from '@utils/csv'

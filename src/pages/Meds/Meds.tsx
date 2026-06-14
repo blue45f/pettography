@@ -32,7 +32,7 @@ import {
   type MedicationFormValues,
   type Quarantine,
   type QuarantineFormValues,
-} from '@features/meds'
+} from '@domains/meds'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useForm } from 'react-hook-form'

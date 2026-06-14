@@ -1,7 +1,7 @@
 import Badge from '@components/common/Badge'
 import EmptyState from '@components/common/EmptyState'
 import Skeleton from '@components/common/Skeleton'
-import { useSpeciesList, type Species } from '@features/species'
+import { useSpeciesList, type Species } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'

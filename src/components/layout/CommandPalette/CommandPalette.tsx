@@ -1,5 +1,5 @@
 import Modal from '@components/common/Modal'
-import { useSpeciesList } from '@features/species'
+import { useSpeciesList } from '@domains/species'
 import { useMemo, useState, type KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'

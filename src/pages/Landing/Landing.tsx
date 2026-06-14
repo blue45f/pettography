@@ -1,6 +1,6 @@
 import Button from '@components/common/Button'
 import LazyImage from '@components/common/LazyImage'
-import { isOnboardingComplete, useOnboardingStore } from '@features/onboarding'
+import { isOnboardingComplete, useOnboardingStore } from '@domains/onboarding'
 import usePageMeta from '@hooks/usePageMeta'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'

@@ -7,7 +7,7 @@ import LazyImage from '@components/common/LazyImage'
 import Select from '@components/common/Select'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
-import { useOnboardingStore } from '@features/onboarding'
+import { useOnboardingStore } from '@domains/onboarding'
 import {
   CONTEST_THEMES,
   CURRENT_THEME_ID,
@@ -21,8 +21,8 @@ import {
   type ShowcasePost,
   type ShowcaseSort,
   type ShowcaseThemeId,
-} from '@features/showcase'
-import { useSpeciesList, type Species } from '@features/species'
+} from '@domains/showcase'
+import { useSpeciesList, type Species } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useEffect, useMemo, useState } from 'react'

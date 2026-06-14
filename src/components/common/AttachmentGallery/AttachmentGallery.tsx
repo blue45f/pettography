@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import styles from './AttachmentGallery.module.css'
 
-import type { Attachment } from '@features/attachments'
+import type { Attachment } from '@domains/attachments'
 
 interface AttachmentGalleryProps {
   attachments: readonly Attachment[]

@@ -21,9 +21,9 @@ import {
   type CleaningFormValues,
   type CleanStatus,
   type CleanType,
-} from '@features/cleaning'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies, useSpeciesList } from '@features/species'
+} from '@domains/cleaning'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpecies, useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useToday } from '@hooks/useToday'

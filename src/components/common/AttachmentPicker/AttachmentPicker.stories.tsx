@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import AttachmentPicker from './AttachmentPicker'
 
-import type { Attachment } from '@features/attachments'
+import type { Attachment } from '@domains/attachments'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 const meta: Meta<typeof AttachmentPicker> = {

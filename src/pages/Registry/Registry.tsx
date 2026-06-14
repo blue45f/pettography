@@ -1,13 +1,13 @@
 import Badge from '@components/common/Badge'
-import { useOnboardingStore } from '@features/onboarding'
+import { useOnboardingStore } from '@domains/onboarding'
 import {
   isRegulated,
   REGISTRY_FILINGS,
   REGISTRY_LINKS,
   useActivePetFilings,
   useRegistryStore,
-} from '@features/registry'
-import { useSpecies, type FilingStatus } from '@features/species'
+} from '@domains/registry'
+import { useSpecies, type FilingStatus } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useTranslation } from 'react-i18next'
 

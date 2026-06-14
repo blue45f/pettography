@@ -2,15 +2,15 @@ import Button from '@components/common/Button'
 import Input from '@components/common/Input'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
-import { useOnboardingStore } from '@features/onboarding'
+import { useOnboardingStore } from '@domains/onboarding'
 import {
   isCardComplete,
   petIdSchema,
   useActivePetIdCard,
   usePetIdStore,
   type PetIdValues,
-} from '@features/petid'
-import { useSpecies } from '@features/species'
+} from '@domains/petid'
+import { useSpecies } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useEffect } from 'react'

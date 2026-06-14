@@ -5,7 +5,7 @@ import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
-import { latestBcs, useActivePetBcs } from '@features/bcs'
+import { latestBcs, useActivePetBcs } from '@domains/bcs'
 import {
   chartPoints,
   growthNorm,
@@ -15,9 +15,9 @@ import {
   useGrowthStore,
   type GrowthFormValues,
   type WeightStatus,
-} from '@features/growth'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpeciesList } from '@features/species'
+} from '@domains/growth'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { buildCsv } from '@utils/csv'

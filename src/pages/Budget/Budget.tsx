@@ -17,9 +17,9 @@ import {
   useBudgetStore,
   type ExpenseCategory,
   type ExpenseFormValues,
-} from '@features/budget'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies } from '@features/species'
+} from '@domains/budget'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpecies } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'

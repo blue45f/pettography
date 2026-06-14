@@ -7,8 +7,8 @@ import Input from '@components/common/Input'
 import Select from '@components/common/Select'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
-import { useOnboardingStore } from '@features/onboarding'
-import { useSpecies, useSpeciesList } from '@features/species'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpecies, useSpeciesList } from '@domains/species'
 import {
   categoryDusts,
   defaultIntervalDays,
@@ -25,7 +25,7 @@ import {
   type DustingLog,
   type DustingStatusCode,
   type SupplementType,
-} from '@features/supplements'
+} from '@domains/supplements'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'

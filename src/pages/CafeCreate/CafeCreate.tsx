@@ -9,8 +9,8 @@ import {
   cafeFormSchema,
   useCafesStore,
   type CafeFormValues,
-} from '@features/cafes'
-import { useSpeciesList } from '@features/species'
+} from '@domains/cafes'
+import { useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useForm, useWatch } from 'react-hook-form'
