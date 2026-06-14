@@ -1,4 +1,4 @@
-import type { PartnerApplication } from '../common/types';
+import type { PartnerApplication } from '../common/types'
 
 export const PARTNERS_SEED: PartnerApplication[] = [
   {
@@ -24,4 +24,4 @@ export const PARTNERS_SEED: PartnerApplication[] = [
     status: 'approved',
     createdAt: '2026-05-18T16:00:00.000Z',
   },
-];
+]

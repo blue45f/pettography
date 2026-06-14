@@ -1,4 +1,4 @@
-import type { Shop } from '../common/types';
+import type { Shop } from '../common/types'
 
 export const SHOPS_SEED: Shop[] = [
   {
@@ -109,4 +109,4 @@ export const SHOPS_SEED: Shop[] = [
     supportedCategories: ['reptile'],
     notes: '온라인 한정 모프 콘스네이크/크레스티드 분양',
   },
-];
+]

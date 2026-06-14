@@ -1,4 +1,4 @@
-import type { Hospital } from '../common/types';
+import type { Hospital } from '../common/types'
 
 export const HOSPITALS_SEED: Hospital[] = [
   {
@@ -92,4 +92,4 @@ export const HOSPITALS_SEED: Hospital[] = [
     hasEmergency: false,
     mapUrl: 'https://map.naver.com/p/search/방이%20파충류클리닉',
   },
-];
+]

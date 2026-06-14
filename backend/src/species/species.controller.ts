@@ -1,7 +1,7 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
-import { SpeciesService } from './species.service';
-import { QuerySpeciesDto } from './dto/query-species.dto';
-import type { Species } from '../common/types';
+import { Controller, Get, Param, Query } from '@nestjs/common'
+import { SpeciesService } from './species.service'
+import { QuerySpeciesDto } from './dto/query-species.dto'
+import type { Species } from '../common/types'
 
 @Controller('species')
 export class SpeciesController {
@@ -9,11 +9,11 @@ export class SpeciesController {
 
   @Get()
   findAll(@Query() query: QuerySpeciesDto): Species[] {
-    return this.speciesService.findAll(query);
+    return this.speciesService.findAll(query)
   }
 
   @Get(':idOrSlug')
   findOne(@Param('idOrSlug') idOrSlug: string): Species {
-    return this.speciesService.findOne(idOrSlug);
+    return this.speciesService.findOne(idOrSlug)
   }
 }

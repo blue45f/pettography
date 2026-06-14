@@ -3,7 +3,7 @@ import type {
   RegistryLinks,
   SpeciesCategory,
   WildlifeFiling,
-} from '../common/types';
+} from '../common/types'
 
 export const REGISTRY_FILINGS_SEED: WildlifeFiling[] = [
   {
@@ -38,20 +38,20 @@ export const REGISTRY_FILINGS_SEED: WildlifeFiling[] = [
     dueWindowDays: 30,
     officialUrl: 'https://www.wildlife.go.kr/front/keeping/identifyApply.do',
   },
-];
+]
 
 export const REGULATED_CATEGORIES_SEED: SpeciesCategory[] = [
   'reptile',
   'amphibian',
   'bird',
   'mammal',
-];
+]
 
 export const REGISTRY_LINKS_SEED: RegistryLinks = {
   wildlifeRegistry: 'https://www.wildlife.go.kr/',
   animalRegistry: 'https://www.animal.go.kr/',
   envMinistry: 'https://www.me.go.kr/',
-};
+}
 
 export const COMPARE_DIMENSIONS_SEED: CompareDimension[] = [
   { key: 'category', label: '분류', type: 'category' },
@@ -63,4 +63,4 @@ export const COMPARE_DIMENSIONS_SEED: CompareDimension[] = [
   { key: 'budget', label: '월 예산', type: 'currency' },
   { key: 'beginnerTip', label: '입문 팁', type: 'text' },
   { key: 'commonProblem', label: '흔한 트러블', type: 'text' },
-];
+]

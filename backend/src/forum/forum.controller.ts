@@ -10,15 +10,15 @@ import {
   Post,
   Query,
   UseGuards,
-} from '@nestjs/common';
-import { CurrentAccount, Public, Roles } from '../auth/auth.decorators';
-import { AuthGuard } from '../auth/auth.guard';
-import { ForumService } from './forum.service';
-import { QueryForumDto } from './dto/query-forum.dto';
-import { CreatePostDto } from './dto/create-post.dto';
-import { CreateReplyDto } from './dto/create-reply.dto';
-import { UpdateForumModerationDto } from './dto/update-forum-moderation.dto';
-import type { ForumPost, ForumReply, PublicAccount } from '../common/types';
+} from '@nestjs/common'
+import { CurrentAccount, Public, Roles } from '../auth/auth.decorators'
+import { AuthGuard } from '../auth/auth.guard'
+import { ForumService } from './forum.service'
+import { QueryForumDto } from './dto/query-forum.dto'
+import { CreatePostDto } from './dto/create-post.dto'
+import { CreateReplyDto } from './dto/create-reply.dto'
+import { UpdateForumModerationDto } from './dto/update-forum-moderation.dto'
+import type { ForumPost, ForumReply, PublicAccount } from '../common/types'
 
 @Controller('forum')
 export class ForumController {
@@ -29,15 +29,15 @@ export class ForumController {
   @UseGuards(AuthGuard)
   findAllPosts(
     @Query() query: QueryForumDto,
-    @CurrentAccount() account?: PublicAccount,
+    @CurrentAccount() account?: PublicAccount
   ): ForumPost[] {
-    return this.forumService.findAllPosts(query, account);
+    return this.forumService.findAllPosts(query, account)
   }
 
   @Post('posts')
   @UseGuards(AuthGuard)
   createPost(@Body() body: CreatePostDto, @CurrentAccount() account?: PublicAccount): ForumPost {
-    return this.forumService.createPost(body, account);
+    return this.forumService.createPost(body, account)
   }
 
   @Get('posts/:id')
@@ -45,9 +45,9 @@ export class ForumController {
   @UseGuards(AuthGuard)
   findOnePost(
     @Param('id') id: string,
-    @CurrentAccount() account?: PublicAccount,
+    @CurrentAccount() account?: PublicAccount
   ): { post: ForumPost; replies: ForumReply[] } {
-    return this.forumService.findOnePost(id, account);
+    return this.forumService.findOnePost(id, account)
   }
 
   @Post('posts/:id/replies')
@@ -55,16 +55,16 @@ export class ForumController {
   createReply(
     @Param('id') id: string,
     @Body() body: CreateReplyDto,
-    @CurrentAccount() account?: PublicAccount,
+    @CurrentAccount() account?: PublicAccount
   ): ForumReply {
-    return this.forumService.createReply(id, body, account);
+    return this.forumService.createReply(id, body, account)
   }
 
   @Delete('posts/:id')
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   removePost(@Param('id') id: string, @CurrentAccount() account?: PublicAccount): void {
-    this.forumService.removePost(id, account);
+    this.forumService.removePost(id, account)
   }
 
   @Delete('posts/:id/replies/:replyId')
@@ -73,16 +73,16 @@ export class ForumController {
   removeReply(
     @Param('id') id: string,
     @Param('replyId') replyId: string,
-    @CurrentAccount() account?: PublicAccount,
+    @CurrentAccount() account?: PublicAccount
   ): void {
-    this.forumService.removeReply(id, replyId, account);
+    this.forumService.removeReply(id, replyId, account)
   }
 
   @Patch('admin/posts/:id/moderation')
   @UseGuards(AuthGuard)
   @Roles('admin', 'moderator')
   updatePostModeration(@Param('id') id: string, @Body() body: UpdateForumModerationDto): ForumPost {
-    return this.forumService.updatePostModeration(id, body);
+    return this.forumService.updatePostModeration(id, body)
   }
 
   @Patch('admin/posts/:id/replies/:replyId/moderation')
@@ -91,8 +91,8 @@ export class ForumController {
   updateReplyModeration(
     @Param('id') id: string,
     @Param('replyId') replyId: string,
-    @Body() body: UpdateForumModerationDto,
+    @Body() body: UpdateForumModerationDto
   ): ForumReply {
-    return this.forumService.updateReplyModeration(id, replyId, body);
+    return this.forumService.updateReplyModeration(id, replyId, body)
   }
 }

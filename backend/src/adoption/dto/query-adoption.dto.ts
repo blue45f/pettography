@@ -1,5 +1,6 @@
-import { IsEnum, IsOptional } from 'class-validator';
-import type { SpeciesCategory } from '../../common/types';
+import { createZodDto } from 'nestjs-zod'
+import { z } from 'zod'
+import type { SpeciesCategory } from '../../common/types'
 
 const SPECIES_CATEGORIES = [
   'reptile',
@@ -7,10 +8,10 @@ const SPECIES_CATEGORIES = [
   'bird',
   'amphibian',
   'mammal',
-] as const satisfies readonly SpeciesCategory[];
+] as const satisfies readonly SpeciesCategory[]
 
-export class QueryAdoptionDto {
-  @IsOptional()
-  @IsEnum(SPECIES_CATEGORIES)
-  category?: SpeciesCategory;
-}
+export class QueryAdoptionDto extends createZodDto(
+  z.object({
+    category: z.enum(SPECIES_CATEGORIES).optional(),
+  })
+) {}

@@ -1,5 +1,5 @@
-import { db, dbEnabled } from './client';
-import { documents } from './schema';
+import { db, dbEnabled } from './client'
+import { documents } from './schema'
 
 /**
  * JsonFileStore의 Neon 백엔드.
@@ -9,29 +9,29 @@ import { documents } from './schema';
  * DATABASE_URL 미설정 시 비활성 → JsonFileStore는 기존 node:sqlite 백엔드로 동작한다.
  */
 class StoreBackend {
-  private cache = new Map<string, unknown>();
-  private hydrated = false;
+  private cache = new Map<string, unknown>()
+  private hydrated = false
 
   get enabled(): boolean {
-    return dbEnabled;
+    return dbEnabled
   }
 
   async hydrate(): Promise<void> {
-    if (!dbEnabled || !db || this.hydrated) return;
-    const rows = await db.select().from(documents);
+    if (!dbEnabled || !db || this.hydrated) return
+    const rows = await db.select().from(documents)
     for (const row of rows) {
-      this.cache.set(row.name, row.data);
+      this.cache.set(row.name, row.data)
     }
-    this.hydrated = true;
+    this.hydrated = true
   }
 
   read<T>(name: string): T | undefined {
-    return this.cache.get(name) as T | undefined;
+    return this.cache.get(name) as T | undefined
   }
 
   write(name: string, value: unknown): void {
-    if (!dbEnabled || !db) return;
-    this.cache.set(name, value);
+    if (!dbEnabled || !db) return
+    this.cache.set(name, value)
     void db
       .insert(documents)
       .values({ name, data: value })
@@ -40,9 +40,9 @@ class StoreBackend {
         set: { data: value, updatedAt: new Date() },
       })
       .catch((error: unknown) => {
-        console.error(`[store-backend] upsert failed for ${name}:`, error);
-      });
+        console.error(`[store-backend] upsert failed for ${name}:`, error)
+      })
   }
 }
 
-export const storeBackend = new StoreBackend();
+export const storeBackend = new StoreBackend()
