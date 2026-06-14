@@ -1,6 +1,8 @@
-import { SelectHTMLAttributes, useId } from 'react'
+import { useId } from 'react'
 
 import styles from './Select.module.css'
+
+import type { SelectHTMLAttributes } from 'react'
 
 interface SelectOption {
   value: string

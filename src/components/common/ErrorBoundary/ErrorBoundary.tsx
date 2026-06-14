@@ -1,7 +1,9 @@
 import i18next from 'i18next'
-import { Component, ErrorInfo, ReactNode } from 'react'
+import { Component } from 'react'
 
 import styles from './ErrorBoundary.module.css'
+
+import type { ErrorInfo, ReactNode } from 'react'
 
 interface ErrorBoundaryProps {
   children: ReactNode
