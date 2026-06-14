@@ -8,9 +8,13 @@ import { AppModule } from './app.module'
 import { resolveCorsOrigins } from './common/cors'
 import { buildOpenApiConfig, createHelmetOptions } from './common/http-hardening'
 import { ZodValidationPipe } from './common/zod-validation.pipe'
+import { validateBackendEnv } from './config/env'
 import { storeBackend } from './db/store-backend'
 
 async function bootstrap(): Promise<void> {
+  // 환경변수 비차단 검증 — 형식 오류/운영 안전하지 않은 기본값을 경고만 한다(부팅 안 깸).
+  validateBackendEnv()
+
   // Neon 백엔드 하이드레이트 — 서비스 생성 전 캐시를 채운다(DATABASE_URL 없으면 no-op).
   await storeBackend.hydrate()
 
