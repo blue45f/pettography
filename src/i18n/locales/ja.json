@@ -1053,7 +1053,15 @@
   "notFound": {
     "title": "ページが見つかりません",
     "description": "リクエストされたページは存在しないか、移動されました。",
-    "goHome": "ホームへ移動"
+    "goHome": "ホームへ移動",
+    "goBack": "前のページへ",
+    "suggestionsTitle": "こちらもどうぞ",
+    "suggestionsLabel": "おすすめページ",
+    "links": {
+      "species": "種を見る",
+      "dashboard": "ダッシュボード",
+      "sos": "緊急"
+    }
   },
   "header": {
     "primaryNav": "メインナビゲーション",
@@ -1070,7 +1078,8 @@
     "contact": "問い合わせ",
     "about": "紹介",
     "faq": "よくある質問",
-    "reportBug": "バグを報告"
+    "reportBug": "バグを報告",
+    "design": "デザインシステム"
   },
   "policy": {
     "eyebrow": "法的情報",
