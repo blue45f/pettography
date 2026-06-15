@@ -100,7 +100,7 @@ function Sos() {
                   variant="primary"
                   size="lg"
                   onClick={() => {
-                    window.location.href = `tel:${h.phone}`
+                    globalThis.location.href = `tel:${h.phone}`
                   }}
                 >
                   {t('sos.callNow')}

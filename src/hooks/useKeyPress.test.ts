@@ -11,30 +11,30 @@ describe('useKeyPress', () => {
 
   it('returns true on keydown of target key', () => {
     const { result } = renderHook(() => useKeyPress('Escape'))
-    act(() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })))
+    act(() => globalThis.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })))
     expect(result.current).toBe(true)
   })
 
   it('returns false again after keyup', () => {
     const { result } = renderHook(() => useKeyPress('a'))
-    act(() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'a' })))
+    act(() => globalThis.dispatchEvent(new KeyboardEvent('keydown', { key: 'a' })))
     expect(result.current).toBe(true)
-    act(() => window.dispatchEvent(new KeyboardEvent('keyup', { key: 'a' })))
+    act(() => globalThis.dispatchEvent(new KeyboardEvent('keyup', { key: 'a' })))
     expect(result.current).toBe(false)
   })
 
   it('ignores other keys', () => {
     const { result } = renderHook(() => useKeyPress('Escape'))
-    act(() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' })))
+    act(() => globalThis.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' })))
     expect(result.current).toBe(false)
-    act(() => window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' })))
+    act(() => globalThis.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' })))
     expect(result.current).toBe(false)
   })
 
   it('cleans up listeners on unmount', () => {
     const { result, unmount } = renderHook(() => useKeyPress('x'))
     unmount()
-    act(() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'x' })))
+    act(() => globalThis.dispatchEvent(new KeyboardEvent('keydown', { key: 'x' })))
     expect(result.current).toBe(false)
   })
 })

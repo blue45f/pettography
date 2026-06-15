@@ -69,7 +69,7 @@ export type ClutchStatusCode = 'incubating' | 'due' | 'overdue' | 'hatched' | 'f
  * into `due` (today is within the earliest→latest window) or `overdue` (today
  * is past the latest plausible hatch); otherwise it stays `incubating`.
  *
- * `slug` is the species slug used to look up the incubation window.
+ * `slug` is the species slug used to look up the incubation globalThis.
  */
 export function clutchStatusLabelCode(
   clutch: Clutch,

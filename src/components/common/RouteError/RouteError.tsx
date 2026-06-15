@@ -23,7 +23,7 @@ function RouteError() {
       <h1 className={styles.title}>{t('error.boundaryTitle')}</h1>
       <p className={styles.message}>{message}</p>
       <div className={styles.actions}>
-        <button type="button" className={styles.retry} onClick={() => window.location.reload()}>
+        <button type="button" className={styles.retry} onClick={() => globalThis.location.reload()}>
           {t('error.boundaryReset')}
         </button>
         <Link to="/" className={styles.home}>

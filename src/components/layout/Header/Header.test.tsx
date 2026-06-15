@@ -9,7 +9,7 @@ import Header from './Header'
 beforeEach(() => {
   localStorage.clear()
   useAppStore.setState(useAppStore.getInitialState(), true)
-  window.matchMedia = vi.fn().mockReturnValue({
+  globalThis.matchMedia = vi.fn().mockReturnValue({
     matches: false,
     media: '',
     onchange: null,

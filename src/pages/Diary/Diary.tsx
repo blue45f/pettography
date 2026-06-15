@@ -75,7 +75,7 @@ function Diary() {
   const [initialDraft] = useState<DiaryFormValues>(() => {
     if (typeof window === 'undefined') return DEFAULT_FORM_VALUES
     try {
-      const raw = window.localStorage.getItem(DRAFT_KEY)
+      const raw = globalThis.localStorage.getItem(DRAFT_KEY)
       if (!raw) return DEFAULT_FORM_VALUES
       return JSON.parse(raw) as DiaryFormValues
     } catch {
@@ -86,7 +86,7 @@ function Diary() {
   const hasSavedDraft = useMemo(() => {
     if (typeof window === 'undefined') return false
     try {
-      const raw = window.localStorage.getItem(DRAFT_KEY)
+      const raw = globalThis.localStorage.getItem(DRAFT_KEY)
       if (!raw) return false
       const parsed = JSON.parse(raw) as DiaryFormValues
       return (parsed.body?.trim() || '') !== '' || (parsed.imageUrl?.trim() || '') !== ''
@@ -116,11 +116,11 @@ function Diary() {
     // eslint-disable-next-line react-hooks/incompatible-library
     const subscription = watch((data) => {
       if (timerId !== undefined) {
-        window.clearTimeout(timerId)
+        globalThis.clearTimeout(timerId)
       }
-      timerId = window.setTimeout(() => {
+      timerId = globalThis.setTimeout(() => {
         try {
-          window.localStorage.setItem(DRAFT_KEY, JSON.stringify(data))
+          globalThis.localStorage.setItem(DRAFT_KEY, JSON.stringify(data))
         } catch {
           // silently ignore quota errors
         }
@@ -128,7 +128,7 @@ function Diary() {
     })
     return () => {
       if (timerId !== undefined) {
-        window.clearTimeout(timerId)
+        globalThis.clearTimeout(timerId)
       }
       subscription.unsubscribe()
     }
@@ -136,7 +136,7 @@ function Diary() {
 
   const discardDraft = () => {
     try {
-      window.localStorage.removeItem(DRAFT_KEY)
+      globalThis.localStorage.removeItem(DRAFT_KEY)
     } catch {
       // ignore
     }
@@ -159,7 +159,7 @@ function Diary() {
     })
     toast(t('common.save'), 'success')
     try {
-      window.localStorage.removeItem(DRAFT_KEY)
+      globalThis.localStorage.removeItem(DRAFT_KEY)
     } catch {
       // ignore
     }

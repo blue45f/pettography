@@ -107,7 +107,7 @@ function PetSwitcher() {
               addPet()
               setOpen(false)
               if (typeof window !== 'undefined') {
-                window.location.assign('/onboarding')
+                globalThis.location.assign('/onboarding')
               }
             }}
           >

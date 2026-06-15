@@ -10,7 +10,7 @@ function resolveBaseUrl(): string {
     return base
   }
 
-  const origin = typeof window === 'undefined' ? 'http://localhost' : window.location.origin
+  const origin = typeof window === 'undefined' ? 'http://localhost' : globalThis.location.origin
 
   return new URL(base || '/', origin).toString().replace(/\/$/, '')
 }

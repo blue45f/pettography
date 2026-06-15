@@ -131,7 +131,7 @@ function Backup() {
     }
     toast(t('backup.importedToast'), 'success')
     setPending(null)
-    setTimeout(() => window.location.reload(), 600)
+    setTimeout(() => globalThis.location.reload(), 600)
   }
 
   function cancelImport() {
@@ -145,7 +145,7 @@ function Backup() {
     setKeys([])
     setWipePending(false)
     toast(t('backup.wipedToast'), 'success')
-    setTimeout(() => window.location.reload(), 600)
+    setTimeout(() => globalThis.location.reload(), 600)
   }
 
   const pendingKeys = pending ? Object.keys(pending.data).sort() : []

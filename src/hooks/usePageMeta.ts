@@ -78,7 +78,7 @@ export default function usePageMeta({ title, description, path }: PageMeta): voi
 
   useEffect(() => {
     // canonical/og:url 은 쿼리스트링을 제외한 경로만 사용 (검색 파라미터 중복 인덱싱 방지).
-    const url = SITE_URL + (path ?? window.location.pathname)
+    const url = SITE_URL + (path ?? globalThis.location.pathname)
 
     document.title = title
     writeMeta('meta[property="og:title"]', title)

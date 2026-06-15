@@ -62,7 +62,7 @@ function Caresheet() {
   return (
     <section className={styles.page}>
       <div className={styles.controls}>
-        <Button variant="primary" onClick={() => window.print()}>
+        <Button variant="primary" onClick={() => globalThis.print()}>
           {t('caresheet.print')}
         </Button>
         <p className={styles.hint}>{t('caresheet.hint')}</p>

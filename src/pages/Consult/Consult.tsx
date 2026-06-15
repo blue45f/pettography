@@ -57,7 +57,7 @@ function Consult() {
 
   useEffect(
     () => () => {
-      if (replyTimerRef.current !== null) window.clearTimeout(replyTimerRef.current)
+      if (replyTimerRef.current !== null) globalThis.clearTimeout(replyTimerRef.current)
     },
     []
   )
@@ -75,7 +75,7 @@ function Consult() {
     addMessage(activeVet.id, 'user', trimmed)
     setDraft('')
     const replyDelay = 700
-    replyTimerRef.current = window.setTimeout(() => {
+    replyTimerRef.current = globalThis.setTimeout(() => {
       addMessage(
         activeVet.id,
         'vet',

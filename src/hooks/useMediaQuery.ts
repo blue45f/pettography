@@ -4,7 +4,7 @@ function useMediaQuery(query: string): boolean {
   const subscribe = useCallback(
     (notify: () => void) => {
       if (typeof window === 'undefined') return () => {}
-      const mediaQuery = window.matchMedia(query)
+      const mediaQuery = globalThis.matchMedia(query)
       mediaQuery.addEventListener('change', notify)
       return () => {
         mediaQuery.removeEventListener('change', notify)
@@ -15,7 +15,7 @@ function useMediaQuery(query: string): boolean {
 
   const getSnapshot = useCallback(() => {
     if (typeof window === 'undefined') return false
-    return window.matchMedia(query).matches
+    return globalThis.matchMedia(query).matches
   }, [query])
 
   const getServerSnapshot = useCallback(() => false, [])

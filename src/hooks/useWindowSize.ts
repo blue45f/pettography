@@ -7,8 +7,8 @@ interface WindowSize {
 
 function useWindowSize(): WindowSize {
   const [size, setSize] = useState<WindowSize>(() => ({
-    width: typeof window !== 'undefined' ? window.innerWidth : 0,
-    height: typeof window !== 'undefined' ? window.innerHeight : 0,
+    width: typeof window !== 'undefined' ? globalThis.innerWidth : 0,
+    height: typeof window !== 'undefined' ? globalThis.innerHeight : 0,
   }))
 
   useEffect(() => {
@@ -17,13 +17,13 @@ function useWindowSize(): WindowSize {
     const handleResize = () => {
       cancelAnimationFrame(rafId)
       rafId = requestAnimationFrame(() => {
-        setSize({ width: window.innerWidth, height: window.innerHeight })
+        setSize({ width: globalThis.innerWidth, height: globalThis.innerHeight })
       })
     }
 
-    window.addEventListener('resize', handleResize)
+    globalThis.addEventListener('resize', handleResize)
     return () => {
-      window.removeEventListener('resize', handleResize)
+      globalThis.removeEventListener('resize', handleResize)
       cancelAnimationFrame(rafId)
     }
   }, [])

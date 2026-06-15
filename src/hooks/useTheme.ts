@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react'
 
 function getSystemTheme(): Theme {
   if (typeof window === 'undefined') return 'light'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return globalThis.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
 function getStoredTheme(): Theme | null {
@@ -35,9 +35,9 @@ function useTheme() {
   }, [theme])
 
   useEffect(() => {
-    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return
+    if (typeof window === 'undefined' || typeof globalThis.matchMedia !== 'function') return
 
-    const mql = window.matchMedia('(prefers-color-scheme: dark)')
+    const mql = globalThis.matchMedia('(prefers-color-scheme: dark)')
     const handleChange = (event: MediaQueryListEvent) => {
       if (getStoredTheme() !== null) return
       setStoreTheme(event.matches ? 'dark' : 'light')

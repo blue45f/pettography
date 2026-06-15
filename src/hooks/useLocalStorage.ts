@@ -5,7 +5,7 @@ function readFromStorage<T>(key: string, fallback: T): T {
     return fallback
   }
   try {
-    const item = window.localStorage.getItem(key)
+    const item = globalThis.localStorage.getItem(key)
     return item ? (JSON.parse(item) as T) : fallback
   } catch (error) {
     console.warn(`Error reading localStorage key "${key}":`, error)
@@ -30,8 +30,8 @@ function useLocalStorage<T>(
         const valueToStore = value instanceof Function ? value(storedValueRef.current) : value
         setStoredValue(valueToStore)
         if (typeof window !== 'undefined') {
-          window.localStorage.setItem(key, JSON.stringify(valueToStore))
-          window.dispatchEvent(new Event('local-storage'))
+          globalThis.localStorage.setItem(key, JSON.stringify(valueToStore))
+          globalThis.dispatchEvent(new Event('local-storage'))
         }
       } catch (error) {
         console.warn(`Error setting localStorage key "${key}":`, error)
@@ -43,9 +43,9 @@ function useLocalStorage<T>(
   const removeValue = useCallback(() => {
     try {
       if (typeof window !== 'undefined') {
-        window.localStorage.removeItem(key)
+        globalThis.localStorage.removeItem(key)
         setStoredValue(initialValue)
-        window.dispatchEvent(new Event('local-storage'))
+        globalThis.dispatchEvent(new Event('local-storage'))
       }
     } catch (error) {
       console.warn(`Error removing localStorage key "${key}":`, error)
@@ -57,12 +57,12 @@ function useLocalStorage<T>(
       setStoredValue(readFromStorage(key, initialValue))
     }
 
-    window.addEventListener('storage', handleStorageChange)
-    window.addEventListener('local-storage', handleStorageChange)
+    globalThis.addEventListener('storage', handleStorageChange)
+    globalThis.addEventListener('local-storage', handleStorageChange)
 
     return () => {
-      window.removeEventListener('storage', handleStorageChange)
-      window.removeEventListener('local-storage', handleStorageChange)
+      globalThis.removeEventListener('storage', handleStorageChange)
+      globalThis.removeEventListener('local-storage', handleStorageChange)
     }
   }, [key, initialValue])
 

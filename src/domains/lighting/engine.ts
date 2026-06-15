@@ -49,7 +49,7 @@ export function recommendedRange(
   return recommendedDayLength(category, season)
 }
 
-/** How a measured day length compares to the recommended window. */
+/** How a measured day length compares to the recommended globalThis. */
 export type DayLengthVerdict = 'low' | 'ok' | 'high'
 
 /**

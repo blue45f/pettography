@@ -260,7 +260,7 @@ function PetId() {
             type="button"
             variant="primary"
             disabled={!complete}
-            onClick={() => window.print()}
+            onClick={() => globalThis.print()}
           >
             {t('petid.print')}
           </Button>

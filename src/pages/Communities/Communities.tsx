@@ -31,7 +31,7 @@ const readCommunityDemoLogs = (): CommunityDemoLog[] => {
   if (typeof window === 'undefined') return []
 
   try {
-    const raw = window.localStorage.getItem(COMMUNITY_DEMO_LOG_KEY)
+    const raw = globalThis.localStorage.getItem(COMMUNITY_DEMO_LOG_KEY)
     if (!raw) return []
     const parsed = JSON.parse(raw)
     if (!Array.isArray(parsed)) return []
@@ -55,7 +55,7 @@ const writeCommunityDemoLogs = (logs: CommunityDemoLog[]) => {
   if (typeof window === 'undefined') return
 
   try {
-    window.localStorage.setItem(
+    globalThis.localStorage.setItem(
       COMMUNITY_DEMO_LOG_KEY,
       JSON.stringify(logs.slice(-COMMUNITY_DEMO_LOG_LIMIT))
     )

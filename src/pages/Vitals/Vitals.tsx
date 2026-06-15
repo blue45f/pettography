@@ -70,7 +70,7 @@ function Vitals() {
   const stats = useMemo(() => vitalsStats(readings), [readings])
 
   // Live bpm estimate while running uses elapsed time; the finished reading
-  // uses the full window. Derived during render — never via an effect.
+  // uses the full globalThis. Derived during render — never via an effect.
   const elapsed = duration - remaining
   const liveBpm = phase === 'running' ? bpm(taps, elapsed) : bpm(taps, duration)
 

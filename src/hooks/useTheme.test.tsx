@@ -7,7 +7,7 @@ import useTheme from './useTheme'
 const initialSnapshot = useAppStore.getState()
 
 function setMatches(matches: boolean) {
-  window.matchMedia = vi.fn().mockReturnValue({
+  globalThis.matchMedia = vi.fn().mockReturnValue({
     matches,
     media: '',
     onchange: null,
@@ -87,7 +87,7 @@ describe('useTheme', () => {
       removeListener: vi.fn(),
       dispatchEvent: vi.fn(),
     }
-    window.matchMedia = vi.fn().mockReturnValue(mql)
+    globalThis.matchMedia = vi.fn().mockReturnValue(mql)
 
     const { result, unmount } = renderHook(() => useTheme())
 

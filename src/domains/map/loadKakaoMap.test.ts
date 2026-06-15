@@ -40,7 +40,7 @@ function installKakaoBootstrap() {
     },
   } satisfies KakaoMapsBootstrap
 
-  window.kakao = bootstrap
+  globalThis.kakao = bootstrap
 
   return bootstrap
 }
@@ -50,12 +50,12 @@ describe('loadKakaoMap', () => {
     vi.resetModules()
     vi.stubEnv('VITE_KAKAO_MAP_KEY', 'test-key')
     document.head.innerHTML = ''
-    delete window.kakao
+    delete globalThis.kakao
   })
 
   afterEach(() => {
     vi.unstubAllEnvs()
-    delete window.kakao
+    delete globalThis.kakao
     document.head.innerHTML = ''
   })
 
@@ -104,7 +104,7 @@ describe('loadKakaoMap', () => {
           () => 'resolved',
           () => 'rejected'
         ),
-        new Promise<'pending'>((resolve) => window.setTimeout(() => resolve('pending'), 0)),
+        new Promise<'pending'>((resolve) => globalThis.setTimeout(() => resolve('pending'), 0)),
       ])
     ).resolves.toBe('rejected')
   })

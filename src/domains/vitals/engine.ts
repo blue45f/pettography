@@ -1,7 +1,7 @@
 import type { VitalReading, VitalType } from './schema'
 
 /**
- * Breaths/beats per minute from a tap count over a window.
+ * Breaths/beats per minute from a tap count over a globalThis.
  * round(taps / seconds * 60); seconds <= 0 guards to 0 (no divide-by-zero).
  */
 export function bpm(taps: number, seconds: number): number {

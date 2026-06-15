@@ -12,12 +12,12 @@ function useKeyPress(targetKey: string): boolean {
       if (e.key === targetKey) setIsPressed(false)
     }
 
-    window.addEventListener('keydown', handleDown)
-    window.addEventListener('keyup', handleUp)
+    globalThis.addEventListener('keydown', handleDown)
+    globalThis.addEventListener('keyup', handleUp)
 
     return () => {
-      window.removeEventListener('keydown', handleDown)
-      window.removeEventListener('keyup', handleUp)
+      globalThis.removeEventListener('keydown', handleDown)
+      globalThis.removeEventListener('keyup', handleUp)
     }
   }, [targetKey])
 

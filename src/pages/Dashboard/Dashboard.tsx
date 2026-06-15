@@ -982,7 +982,7 @@ function Dashboard() {
       </section>
 
       <div className={styles.footerActions}>
-        <Button variant="ghost" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        <Button variant="ghost" onClick={() => globalThis.scrollTo({ top: 0, behavior: 'smooth' })}>
           ↑ Top
         </Button>
       </div>

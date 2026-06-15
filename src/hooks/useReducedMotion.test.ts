@@ -4,7 +4,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import useReducedMotion from './useReducedMotion'
 
 function setMatchMedia(matches: boolean) {
-  window.matchMedia = vi.fn().mockReturnValue({
+  globalThis.matchMedia = vi.fn().mockReturnValue({
     matches,
     media: '',
     onchange: null,

@@ -38,9 +38,9 @@ function useRouteAnnouncer(): string {
       }
 
       const reduceMotion =
-        typeof window.matchMedia === 'function' &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
+        typeof globalThis.matchMedia === 'function' &&
+        globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches
+      globalThis.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
     })
 
     return () => cancelAnimationFrame(frame)

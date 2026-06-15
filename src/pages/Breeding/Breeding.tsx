@@ -487,7 +487,7 @@ function ClutchCard({
   const isActive = clutch.status === 'incubating'
 
   // Days to the midpoint hatch estimate; only meaningful while incubating.
-  const ddays = daysUntil(window.midpoint, today)
+  const ddays = daysUntil(globalThis.midpoint, today)
   const ddayLabel =
     ddays > 0 ? `D-${ddays}` : ddays === 0 ? t('breeding.dday.today') : `D+${Math.abs(ddays)}`
 
@@ -551,7 +551,7 @@ function ClutchCard({
         <p className={styles.window}>
           {t('breeding.clutch.windowLabel')}{' '}
           <span className={styles.windowDates}>
-            {window.earliest} ~ {window.latest}
+            {globalThis.earliest} ~ {globalThis.latest}
           </span>
         </p>
 

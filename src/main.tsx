@@ -5,7 +5,7 @@ import AppProviders from '@/app/AppProviders'
 import { validateFrontendEnv } from '@/config/env'
 
 import '@assets/styles/tailwind.css'
-import '@assets/styles/global.css'
+import '@assets/styles/globalThis.css'
 import '@/i18n'
 
 // 환경변수 비차단 검증 — 잘못된 VITE_* 값을 콘솔 경고로만 드러낸다(앱 시작 안 깸).
@@ -18,7 +18,7 @@ createRoot(document.getElementById('root')!).render(
 )
 
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
-  window.addEventListener('load', () => {
+  globalThis.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').catch((err) => {
       console.error('Service worker registration failed:', err)
     })

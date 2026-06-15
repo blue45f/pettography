@@ -28,7 +28,7 @@ describe('useWindowSize', () => {
     act(() => {
       Object.defineProperty(window, 'innerWidth', { configurable: true, value: 320 })
       Object.defineProperty(window, 'innerHeight', { configurable: true, value: 240 })
-      window.dispatchEvent(new Event('resize'))
+      globalThis.dispatchEvent(new Event('resize'))
     })
     expect(result.current).toEqual({ width: 320, height: 240 })
   })

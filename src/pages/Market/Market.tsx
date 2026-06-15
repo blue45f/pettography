@@ -67,7 +67,7 @@ function readSavedListingDraft(defaultValues: ListingFormValues): ListingFormVal
   if (typeof window === 'undefined') return null
 
   try {
-    const raw = window.localStorage.getItem(MARKET_LISTING_DRAFT_KEY)
+    const raw = globalThis.localStorage.getItem(MARKET_LISTING_DRAFT_KEY)
     if (!raw) return null
 
     const parsed = JSON.parse(raw) as Partial<ListingFormValues>
@@ -122,10 +122,10 @@ function persistListingDraft(values: Partial<ListingFormValues>): void {
 
   try {
     if (!hasMeaningfulDraft(values)) {
-      window.localStorage.removeItem(MARKET_LISTING_DRAFT_KEY)
+      globalThis.localStorage.removeItem(MARKET_LISTING_DRAFT_KEY)
       return
     }
-    window.localStorage.setItem(MARKET_LISTING_DRAFT_KEY, JSON.stringify(values))
+    globalThis.localStorage.setItem(MARKET_LISTING_DRAFT_KEY, JSON.stringify(values))
   } catch {
     /* localStorage quota/private mode: draft save is best-effort. */
   }
@@ -135,7 +135,7 @@ function clearListingDraft(): void {
   if (typeof window === 'undefined') return
 
   try {
-    window.localStorage.removeItem(MARKET_LISTING_DRAFT_KEY)
+    globalThis.localStorage.removeItem(MARKET_LISTING_DRAFT_KEY)
   } catch {
     /* ignore */
   }
@@ -486,11 +486,11 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
   )
 
   useEffect(() => {
-    const timerId = window.setTimeout(
+    const timerId = globalThis.setTimeout(
       () => persistListingDraft(draftValues),
       MARKET_DRAFT_SAVE_DELAY_MS
     )
-    return () => window.clearTimeout(timerId)
+    return () => globalThis.clearTimeout(timerId)
   }, [draftValues])
 
   const speciesOptions = useMemo(

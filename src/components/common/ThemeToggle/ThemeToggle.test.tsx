@@ -6,7 +6,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import ThemeToggle from './ThemeToggle'
 
 function setMatches(matches: boolean) {
-  window.matchMedia = vi.fn().mockReturnValue({
+  globalThis.matchMedia = vi.fn().mockReturnValue({
     matches,
     media: '',
     onchange: null,

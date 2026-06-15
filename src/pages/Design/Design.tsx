@@ -478,7 +478,7 @@ function MotionSection() {
 
   const play = useCallback((token: string) => {
     setPlaying(token)
-    window.setTimeout(() => setPlaying((cur) => (cur === token ? null : cur)), 600)
+    globalThis.setTimeout(() => setPlaying((cur) => (cur === token ? null : cur)), 600)
   }, [])
 
   return (

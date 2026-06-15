@@ -25,7 +25,7 @@ export function loadKakaoMap(): Promise<KakaoMapsApi | null> {
       reject(error)
     }
     const finish = () => {
-      const bootstrap = window.kakao
+      const bootstrap = globalThis.kakao
       if (!bootstrap?.maps) {
         fail(new Error('Kakao Maps SDK did not initialize'))
         return
@@ -36,7 +36,7 @@ export function loadKakaoMap(): Promise<KakaoMapsApi | null> {
       })
     }
     if (existing) {
-      if (window.kakao?.maps) finish()
+      if (globalThis.kakao?.maps) finish()
       else {
         existing.addEventListener('load', finish, { once: true })
         existing.addEventListener('error', () => fail(new Error('Failed to load Kakao Maps SDK')), {

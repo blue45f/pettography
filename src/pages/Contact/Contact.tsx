@@ -79,7 +79,7 @@ function Contact() {
         title: values.title,
         body: values.body,
         contactEmail: values.contactEmail?.trim() ? values.contactEmail.trim() : undefined,
-        originUrl: window.location.href,
+        originUrl: globalThis.location.href,
         website: values.website ?? '',
       })
       const stored: StoredInquiryReceipt = {

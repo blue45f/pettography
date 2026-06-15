@@ -23,7 +23,7 @@ function Harness() {
 
 beforeEach(() => {
   document.title = 'Pettography'
-  window.matchMedia = vi.fn().mockReturnValue({
+  globalThis.matchMedia = vi.fn().mockReturnValue({
     matches: false,
     media: '',
     onchange: null,
@@ -33,7 +33,7 @@ beforeEach(() => {
     removeListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })
-  window.scrollTo = vi.fn()
+  globalThis.scrollTo = vi.fn()
 })
 
 afterEach(() => {
@@ -66,6 +66,6 @@ describe('RouteAnnouncer', () => {
       )
     })
     expect(document.getElementById('main-content')).toHaveFocus()
-    expect(window.scrollTo).toHaveBeenCalled()
+    expect(globalThis.scrollTo).toHaveBeenCalled()
   })
 })
