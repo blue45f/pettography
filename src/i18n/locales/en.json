@@ -1053,7 +1053,15 @@
   "notFound": {
     "title": "Page not found",
     "description": "The page you requested does not exist or has been moved.",
-    "goHome": "Go home"
+    "goHome": "Go home",
+    "goBack": "Go back",
+    "suggestionsTitle": "Or jump to",
+    "suggestionsLabel": "Suggested pages",
+    "links": {
+      "species": "Browse species",
+      "dashboard": "Dashboard",
+      "sos": "Emergency"
+    }
   },
   "header": {
     "primaryNav": "Primary navigation",
@@ -1070,7 +1078,8 @@
     "contact": "Contact",
     "about": "About",
     "faq": "FAQ",
-    "reportBug": "Report a bug"
+    "reportBug": "Report a bug",
+    "design": "Design system"
   },
   "policy": {
     "eyebrow": "Legal",

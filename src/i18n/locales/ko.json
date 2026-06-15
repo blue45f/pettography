@@ -1053,7 +1053,15 @@
   "notFound": {
     "title": "페이지를 찾을 수 없습니다",
     "description": "요청하신 페이지가 존재하지 않거나 이동되었습니다.",
-    "goHome": "홈으로 이동"
+    "goHome": "홈으로 이동",
+    "goBack": "이전 페이지로",
+    "suggestionsTitle": "이런 페이지는 어때요",
+    "suggestionsLabel": "추천 페이지",
+    "links": {
+      "species": "종 둘러보기",
+      "dashboard": "대시보드",
+      "sos": "응급실"
+    }
   },
   "header": {
     "primaryNav": "메인 네비게이션",
@@ -1070,7 +1078,8 @@
     "contact": "문의하기",
     "about": "소개",
     "faq": "자주 묻는 질문",
-    "reportBug": "버그 제보"
+    "reportBug": "버그 제보",
+    "design": "디자인 시스템"
   },
   "policy": {
     "eyebrow": "법적 고지",

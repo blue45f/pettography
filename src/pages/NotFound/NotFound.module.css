@@ -3,16 +3,95 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 6rem 1rem;
+  padding: clamp(3rem, 8vw, 6rem) var(--layout-pad);
   gap: var(--spacing-md);
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.code {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 12vw, 7rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .description {
   color: var(--color-text-secondary);
-  max-width: 480px;
+  max-width: 48ch;
+  line-height: var(--leading-normal);
+  text-wrap: pretty;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.suggestions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.suggestionsTitle {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+}
+
+.links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  transition:
+    border-color var(--motion-fast),
+    color var(--motion-fast),
+    background-color var(--motion-fast);
+}
+
+.link:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background-color: var(--color-primary-soft);
+}
+
+.linkIcon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
