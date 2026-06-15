@@ -81,7 +81,7 @@
     "@heejun/eslint-config": "^5.0.0",
     "@heejun/prettier-config": "^3.0.0",
     "@rolldown/plugin-babel": "^0.2.3",
-    "@storybook/addon-a11y": "^10.4.2",
+    "@storybook/addon-a11y": "^10.4.4",
     "@storybook/addon-themes": "^10.4.4",
     "@storybook/react-vite": "^10.4.3",
     "@tailwindcss/vite": "^4.3.0",
