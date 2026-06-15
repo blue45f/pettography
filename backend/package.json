@@ -24,7 +24,8 @@
     "test:cov": "jest --coverage",
     "ci": "pnpm --filter @pettography/shared run build && pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build",
     "verify": "pnpm run ci",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "db:seed": "ts-node -P tsconfig.json src/db/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.26",

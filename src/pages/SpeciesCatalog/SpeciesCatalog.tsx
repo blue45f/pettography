@@ -1,7 +1,9 @@
 import Badge from '@components/common/Badge'
+import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
+import Select from '@components/common/Select'
 import Skeleton from '@components/common/Skeleton'
 import {
   SPECIES_CATEGORIES,
@@ -19,6 +21,9 @@ import styles from './SpeciesCatalog.module.css'
 const DIFFICULTIES: readonly Difficulty[] = ['beginner', 'intermediate', 'advanced'] as const
 const COMPARE_MAX = 3
 
+const SORT_OPTIONS = ['relevance', 'nameAsc', 'lifespanDesc', 'budgetAsc'] as const
+type SortKey = (typeof SORT_OPTIONS)[number]
+
 function SpeciesCatalog() {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -31,8 +36,17 @@ function SpeciesCatalog() {
   const [category, setCategory] = useState<SpeciesCategory | 'all'>('all')
   const [difficulty, setDifficulty] = useState<Difficulty | 'all'>('all')
   const [query, setQuery] = useState('')
+  const [sort, setSort] = useState<SortKey>('relevance')
   const [comparePicks, setComparePicks] = useState<string[]>([])
   const deferredQuery = useDeferredValue(query)
+
+  const hasActiveFilters = category !== 'all' || difficulty !== 'all' || query.trim() !== ''
+
+  function resetFilters() {
+    setCategory('all')
+    setDifficulty('all')
+    setQuery('')
+  }
 
   function toggleCompare(id: string) {
     setComparePicks((prev) => {
@@ -52,7 +66,7 @@ function SpeciesCatalog() {
   const filtered = useMemo(() => {
     if (!data) return undefined
     const q = deferredQuery.trim().toLowerCase()
-    return data.filter((s) => {
+    const matches = data.filter((s) => {
       if (difficulty !== 'all' && s.difficulty !== difficulty) return false
       if (!q) return true
       return (
@@ -61,7 +75,19 @@ function SpeciesCatalog() {
         s.tags.some((tag) => tag.toLowerCase().includes(q))
       )
     })
-  }, [data, deferredQuery, difficulty])
+    // 'relevance' keeps the curated seed order; other keys sort a copy so the
+    // source array is never mutated.
+    if (sort === 'relevance') return matches
+    const sorted = [...matches]
+    if (sort === 'nameAsc') {
+      sorted.sort((a, b) => a.koreanName.localeCompare(b.koreanName))
+    } else if (sort === 'lifespanDesc') {
+      sorted.sort((a, b) => b.lifespanMaxYears - a.lifespanMaxYears)
+    } else if (sort === 'budgetAsc') {
+      sorted.sort((a, b) => a.monthlyBudgetKrw - b.monthlyBudgetKrw)
+    }
+    return sorted
+  }, [data, deferredQuery, difficulty, sort])
 
   return (
     <section className={styles.page}>
@@ -136,9 +162,21 @@ function SpeciesCatalog() {
         ))}
       </div>
 
-      <p className={styles.countLine}>
-        {filtered ? t('species.resultCount', { count: filtered.length }) : '...'}
-      </p>
+      <div className={styles.resultRow}>
+        <p className={styles.countLine}>
+          {filtered ? t('species.resultCount', { count: filtered.length }) : '...'}
+        </p>
+        <Select
+          className={styles.sortSelect}
+          aria-label={t('species.sortLabel')}
+          value={sort}
+          onChange={(e) => setSort(e.target.value as SortKey)}
+          options={SORT_OPTIONS.map((key) => ({
+            value: key,
+            label: t(`species.sort${key.charAt(0).toUpperCase()}${key.slice(1)}`),
+          }))}
+        />
+      </div>
 
       {isLoading && <Skeleton variant="rectangular" height={100} lines={3} />}
       {isError && (
@@ -150,7 +188,19 @@ function SpeciesCatalog() {
         />
       )}
       {!isError && filtered && filtered.length === 0 && (
-        <EmptyState variant="discover" icon="🔍" title={t('species.noResult')} />
+        <EmptyState
+          variant="discover"
+          icon="🔍"
+          title={t('species.noResult')}
+          description={t('species.noResultHint')}
+          action={
+            hasActiveFilters ? (
+              <Button variant="outline" size="sm" onClick={resetFilters}>
+                {t('species.resetFilters')}
+              </Button>
+            ) : undefined
+          }
+        />
       )}
 
       <ul className={styles.grid}>
@@ -179,6 +229,11 @@ function SpeciesCatalog() {
                         {t('care.lifespanYears', {
                           min: s.lifespanMinYears,
                           max: s.lifespanMaxYears,
+                        })}
+                      </Badge>
+                      <Badge variant="warning">
+                        {t('species.monthlyBudgetBadge', {
+                          amount: s.monthlyBudgetKrw.toLocaleString('ko'),
                         })}
                       </Badge>
                     </div>
