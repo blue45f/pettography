@@ -28,7 +28,7 @@
     "db:seed": "ts-node -P tsconfig.json src/db/seed.ts"
   },
   "dependencies": {
-    "@nestjs/common": "^11.1.26",
+    "@nestjs/common": "^11.1.27",
     "@nestjs/core": "^11.1.26",
     "@nestjs/platform-express": "^11.1.26",
     "@nestjs/platform-socket.io": "^11.1.26",
