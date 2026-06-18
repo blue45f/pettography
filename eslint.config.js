@@ -16,6 +16,7 @@ export default defineConfig(
     '**/*.tsbuildinfo',
     // backend/ 는 자체 eslint.config.mjs 를 가진다 — 루트 설정 대상 아님.
     'backend',
+    'apps/toss',
     '.claude',
     // DeskCloud 위젯은 외부 온보딩형 single-file 벤더 위젯(소스 무수정 원칙)이라
     // 레포 strict 린트 대상에서 제외한다.

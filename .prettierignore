@@ -13,3 +13,6 @@ pnpm-lock.yaml
 backend
 # 벤더 single-file 위젯(소스 무수정) — 포맷 검사 제외
 src/components/deskcloud
+
+# apps/toss는 별도 toss 미니앱(자체 TDS/granite) — 루트 포맷·린트 대상 아님
+apps/toss
