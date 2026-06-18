@@ -1,0 +1,397 @@
+/**
+ * DeskCloud 네이티브 통합 스타일 — 앱의 OKLCH 토큰만 사용한다.
+ * 외부 위젯 CSS·프레임워크·글래스모피즘·사이드스트라이프·그라디언트 텍스트 없음.
+ * 모든 색/간격/모션은 global.css 의 토큰을 참조해 다크/라이트·reduced-motion 자동 대응.
+ */
+
+/* ── 플로팅 런처(DeskHub 진입 버튼) ─────────────────────────────────────── */
+.launcher {
+  position: fixed;
+  right: calc(var(--spacing-md) + var(--safe-pad-right));
+  bottom: calc(var(--deskhub-bottom, 5.5rem) + var(--safe-pad-bottom));
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition:
+    transform var(--motion-fast),
+    box-shadow var(--motion-fast),
+    background var(--motion-fast);
+}
+
+.launcher:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+  background: var(--color-surface-muted);
+}
+
+.launcher:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.launcherIcon {
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.launcherBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 1.25rem;
+  padding-inline: 0.35em;
+  block-size: 1.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-on-brand);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 860px) {
+  .launcher {
+    --deskhub-bottom: 8.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .launcher {
+    transition: none;
+  }
+  .launcher:hover {
+    transform: none;
+  }
+}
+
+/* ── DeskHub 시트 본문(Modal 안에 들어감) ──────────────────────────────── */
+.hub {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--motion-fast),
+    color var(--motion-fast),
+    border-color var(--motion-fast);
+}
+
+.tab:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.tab[aria-selected='true'] {
+  background: var(--color-primary-alpha);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.tabBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 1.15rem;
+  padding-inline: 0.3em;
+  block-size: 1.15rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-on-brand);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.panel {
+  min-block-size: 18rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab {
+    transition: none;
+  }
+}
+
+/* ── 공통 리스트/카드 행 ────────────────────────────────────────────────── */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.rowHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.rowTitle {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+.rowMeta {
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.rowBody {
+  font-size: var(--font-size-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-text-secondary);
+  max-inline-size: 70ch;
+  text-wrap: pretty;
+}
+
+/* 서버 sanitize 된 HTML 본문(changelog/community)의 가독 기본값. */
+.prose {
+  font-size: var(--font-size-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-text-secondary);
+  max-inline-size: 70ch;
+  text-wrap: pretty;
+}
+
+.prose :is(p, ul, ol) {
+  margin-block: var(--spacing-2xs);
+}
+
+.prose :is(ul, ol) {
+  padding-inline-start: 1.25em;
+}
+
+.prose a {
+  color: var(--color-primary);
+  text-underline-offset: 2px;
+}
+
+.unread {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+/* ── 미디어 갤러리 그리드 ───────────────────────────────────────────────── */
+.mediaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  gap: var(--spacing-sm);
+  list-style: none;
+}
+
+.mediaItem {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+}
+
+.mediaItem img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── 검색 결과 ──────────────────────────────────────────────────────────── */
+.searchForm {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.searchInput {
+  flex: 1;
+}
+
+.hit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: inherit;
+  text-decoration: none;
+}
+
+.hit:hover {
+  background: var(--color-surface-muted);
+}
+
+.hit:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.hitTitle {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.hitTitle mark,
+.hitSnippet mark {
+  background: var(--color-primary-alpha);
+  color: inherit;
+  border-radius: var(--radius-xs);
+  padding-inline: 0.1em;
+}
+
+.hitSnippet {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  max-inline-size: 70ch;
+  text-wrap: pretty;
+}
+
+/* ── 리뷰 별점 ──────────────────────────────────────────────────────────── */
+.stars {
+  display: inline-flex;
+  gap: 0.1em;
+  color: var(--color-warning);
+  font-size: var(--font-size-base);
+  line-height: 1;
+}
+
+.starsMuted {
+  color: var(--color-text-muted);
+}
+
+.aggregate {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+}
+
+.aggregateScore {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 폼(피드백/리뷰 제출) ───────────────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.fieldLabel {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ratingGroup {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.ratingButton {
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  transition:
+    background var(--motion-fast),
+    border-color var(--motion-fast),
+    color var(--motion-fast);
+}
+
+.ratingButton:hover {
+  border-color: var(--color-primary);
+}
+
+.ratingButton[aria-pressed='true'] {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-brand);
+}
+
+.ratingButton:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: flex-end;
+}
+
+.error {
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ratingButton {
+    transition: none;
+  }
+}

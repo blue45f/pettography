@@ -15,6 +15,12 @@ export default defineConfig({
       // TS 소스를 직접 가리켜 Vite 가 컴파일하게 해 dist CJS interop·stale-dist 문제를 원천 제거.
       // (백엔드는 package.json main(dist)을 그대로 사용하므로 영향 없음)
       '@pettography/shared': path.resolve(__dirname, './packages/shared/src/index.ts'),
+      // @heejun/deskcloud 는 socket.io-client 를 *선택적* peer(realtime/chat 의 동적
+      // import)로만 참조한다. 이 앱은 그 클라이언트를 쓰지 않아 미설치 상태인데, Vite
+      // dev dep-optimizer 가 그 bare import 를 해석하려다 실패한다. 가벼운 스텁으로
+      // 별칭해 dev 해석을 통과시킨다(스텁은 호출 시 명시적으로 실패; 미사용이라
+      // 프로덕션 빌드에선 트리셰이크로 제거됨).
+      'socket.io-client': path.resolve(__dirname, './src/infrastructure/socket-io-client-stub.ts'),
       '@': path.resolve(__dirname, './src'),
       '@components': path.resolve(__dirname, './src/components'),
       '@pages': path.resolve(__dirname, './src/pages'),
