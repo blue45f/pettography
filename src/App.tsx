@@ -2,8 +2,7 @@ import ErrorBoundary from '@components/common/ErrorBoundary'
 import Loading from '@components/common/Loading'
 import RouteAnnouncer from '@components/common/RouteAnnouncer'
 import SkipLink from '@components/common/SkipLink'
-import { DeskCloudWidgets } from '@components/deskcloud/DeskCloudWidgets'
-import { FeedbackWidget } from '@components/feedback/FeedbackWidget'
+import { DeskHub } from '@components/deskcloud/DeskHub'
 import BottomNav from '@components/layout/BottomNav'
 import Footer from '@components/layout/Footer'
 import Header from '@components/layout/Header'
@@ -55,12 +54,10 @@ function App() {
       <Footer />
       <SosFab />
       <BottomNav />
-      {/* SurveyDesk 피드백 위젯 — VITE_SURVEYDESK_URL 미설정 시 렌더 안 함(현재 기본값). */}
-      {import.meta.env.VITE_SURVEYDESK_URL && (
-        <FeedbackWidget appId="pettography" endpoint={import.meta.env.VITE_SURVEYDESK_URL} />
-      )}
-      {/* DeskCloud 위젯 — 각 Desk 는 자신의 VITE_*DESK_URL 이 설정될 때만 렌더(미설정=비활성). */}
-      <DeskCloudWidgets />
+      {/* DeskCloud 네이티브 통합 — 활성 Desk(VITE_<DESK>DESK_URL 설정분)만 허브에 노출.
+          위젯 임베드 대신 발행된 SDK(@heejun/deskcloud)를 쓰고 앱 토큰으로 렌더한다.
+          활성 Desk 가 없으면 아무것도 렌더하지 않는다(기본값=완전 비활성·가역적). */}
+      <DeskHub />
       {commandOpen && (
         <Suspense fallback={null}>
           <CommandPalette onClose={() => setCommandOpen(false)} />

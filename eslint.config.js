@@ -18,9 +18,6 @@ export default defineConfig(
     'backend',
     'apps/toss',
     '.claude',
-    // DeskCloud 위젯은 외부 온보딩형 single-file 벤더 위젯(소스 무수정 원칙)이라
-    // 레포 strict 린트 대상에서 제외한다.
-    '**/components/deskcloud/**',
   ]),
 
   // 공유 베이스(TS + import 위생 + 커스텀 규칙 + prettier 충돌 비활성).

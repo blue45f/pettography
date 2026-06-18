@@ -15,6 +15,9 @@ importers:
 
   .:
     dependencies:
+      '@heejun/deskcloud':
+        specifier: ^0.1.0
+        version: 0.1.0
       '@hookform/resolvers':
         specifier: ^5.4.0
         version: 5.4.0(react-hook-form@7.79.0(react@19.2.7))
@@ -966,6 +969,15 @@ packages:
       '@noble/hashes': ^1.8.0 || ^2.0.0
     peerDependenciesMeta:
       '@noble/hashes':
+        optional: true
+
+  '@heejun/deskcloud@0.1.0':
+    resolution: {integrity: sha512-1MB6mBKqhQ9Qa+hfM1cJH7peqBhdwVeQ6kWJfUkA0Jfoy2278RgNUMelVpFDfrB6zkqnMvLaLP8WppIoiFXWjA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      socket.io-client: '>=4'
+    peerDependenciesMeta:
+      socket.io-client:
         optional: true
 
   '@heejun/eslint-config@5.0.0':
@@ -7012,6 +7024,8 @@ snapshots:
   '@exodus/bytes@1.15.1(@noble/hashes@1.8.0)':
     optionalDependencies:
       '@noble/hashes': 1.8.0
+
+  '@heejun/deskcloud@0.1.0': {}
 
   '@heejun/eslint-config@5.0.0(@typescript-eslint/parser@8.61.0(eslint@10.5.0(jiti@2.7.0))(typescript@6.0.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@4.4.5(eslint-plugin-import-x@4.16.2(@typescript-eslint/utils@8.61.0(eslint@10.5.0(jiti@2.7.0))(typescript@6.0.3))(eslint-import-resolver-node@0.3.9)(eslint@10.5.0(jiti@2.7.0)))(eslint@10.5.0(jiti@2.7.0)))(eslint@10.5.0(jiti@2.7.0))(typescript@6.0.3)':
     dependencies:
