@@ -2,6 +2,16 @@ packages:
   - '.'
   - 'backend'
   - 'packages/shared'
+  - 'apps/*'
+  - '!apps/toss'
+
+onlyBuiltDependencies:
+  - esbuild
+  - unrs-resolver
+  - '@sentry/cli'
+  - '@swc/core'
+  - protobufjs
+  - '@nestjs/core'
 
 overrides:
   esbuild: '>=0.28.1'
@@ -15,7 +25,10 @@ overrides:
 allowBuilds:
   '@nestjs/core': true
   '@scarf/scarf': false
+  '@sentry/cli': true
+  '@swc/core': true
   esbuild: true
+  protobufjs: true
   unrs-resolver: true
 
 minimumReleaseAgeExclude:
