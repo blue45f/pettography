@@ -200,12 +200,19 @@
   z-index: 1;
 }
 
+/* Region/tagline label above the hero title. Sentence case (no shouty caps)
+   and a contrast-safe colour: muted gray (L≈0.71) fails 4.5:1 on the light
+   hero wash, so this leans on the brand hue, which clears the bar in both
+   themes. */
 .eyebrow {
-  text-transform: uppercase;
-  font-size: var(--font-size-xs);
-  letter-spacing: 0.12em;
-  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.01em;
+  color: var(--color-primary-700);
   font-weight: 700;
+}
+
+[data-theme='dark'] .eyebrow {
+  color: var(--color-primary-200);
 }
 
 .title {

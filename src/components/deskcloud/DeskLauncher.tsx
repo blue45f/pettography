@@ -117,7 +117,9 @@ export function DeskLauncher({
         ref={triggerRef}
         type="button"
         className="dl-fab"
-        style={{ bottom: `calc(${offset}px + env(safe-area-inset-bottom, 0px))` }}
+        // --dl-offset 로 세로 위치를 넘기고, CSS 가 모바일에서는 하단 내비 높이만큼
+        // 추가로 끌어올린다(겹침 방지). order 는 여러 런처를 60px 간격으로 쌓는다.
+        style={{ ['--dl-offset' as string]: `${offset}px` }}
         aria-haspopup="dialog"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
@@ -168,6 +170,7 @@ const LAUNCHER_CSS = `
 .dl-fab {
   position: fixed;
   right: calc(16px + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--dl-offset, 16px) + env(safe-area-inset-bottom, 0px));
   z-index: 2147482000;
   display: inline-flex;
   align-items: center;
@@ -241,6 +244,15 @@ const LAUNCHER_CSS = `
 
 @keyframes dl-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes dl-pop { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+
+/* 모바일(≤860px): 하단 글래스 내비(BottomNav)와 SOS FAB 위로 런처를 끌어올려 겹침 방지.
+   BottomNav ~56px + SOS FAB 영역을 합쳐 ~96px 만큼 기준선을 올린다. */
+@media (max-width: 860px) {
+  .dl-fab {
+    bottom: calc(var(--dl-offset, 16px) + 96px + env(safe-area-inset-bottom, 0px));
+  }
+  .dl-overlay { align-items: center; justify-content: center; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .dl-fab, .dl-overlay, .dl-panel {
