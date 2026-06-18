@@ -15,6 +15,7 @@
  * ──────────────────────────────────────────────────────────────────────────
  */
 import {
+  createAdClient,
   createChangelogClient,
   createCommunityClient,
   createMediaClient,
@@ -22,6 +23,7 @@ import {
   createReviewClient,
   createSearchClient,
   createSurveyClient,
+  type AdClient,
   type ChangelogClient,
   type CommunityClient,
   type MediaClient,
@@ -62,6 +64,7 @@ const configs = {
   community: readDeskConfig(env.VITE_COMMUNITYDESK_URL, env.VITE_COMMUNITYDESK_PK),
   review: readDeskConfig(env.VITE_REVIEWDESK_URL, env.VITE_REVIEWDESK_PK),
   media: readDeskConfig(env.VITE_MEDIADESK_URL, env.VITE_MEDIADESK_PK),
+  ad: readDeskConfig(env.VITE_ADDESK_URL, env.VITE_ADDESK_PK),
 } as const
 
 export type DeskName = keyof typeof configs
@@ -87,6 +90,7 @@ let searchClient: SearchClient | null | undefined
 let communityClient: CommunityClient | null | undefined
 let reviewClient: ReviewClient | null | undefined
 let mediaClient: MediaClient | null | undefined
+let adClient: AdClient | null | undefined
 
 /** SurveyDesk — 피드백/설문 제출(getActive/submit). 비활성이면 null. */
 export function getSurveyClient(): SurveyClient | null {
@@ -143,3 +147,23 @@ export function getMediaClient(): MediaClient | null {
   }
   return mediaClient
 }
+
+/** AdDesk — 슬롯 배너 서빙/추적(serve/trackImpression/trackClick). 비활성이면 null. */
+export function getAdClient(): AdClient | null {
+  if (adClient === undefined) {
+    adClient = configs.ad ? createAdClient(configs.ad) : null
+  }
+  return adClient
+}
+
+/**
+ * SpeciesCatalog "추천(Sponsored)" 레일이 서빙하는 슬롯 키들(슬롯당 1 크리에이티브).
+ * `VITE_ADDESK_SLOTS`(콤마 구분)로 배포별 오버라이드. 활성 크리에이티브를 반환하는
+ * 슬롯만 렌더되므로, 미설정 슬롯(과 AdDesk OFF 전체)은 보이지 않는다.
+ */
+export const adSlots: string[] = (
+  env.VITE_ADDESK_SLOTS ?? 'species-spotlight-1,species-spotlight-2,species-spotlight-3'
+)
+  .split(',')
+  .map((s: string) => s.trim())
+  .filter(Boolean)

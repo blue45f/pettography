@@ -5,6 +5,7 @@ import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
 import Select from '@components/common/Select'
 import Skeleton from '@components/common/Skeleton'
+import { SponsoredRail } from '@components/deskcloud/SponsoredRail'
 import {
   SPECIES_CATEGORIES,
   useSpeciesList,
@@ -177,6 +178,9 @@ function SpeciesCatalog() {
           }))}
         />
       </div>
+
+      {/* 추천(Sponsored) 레일 — 네이티브 AdDesk; 서빙될 때만 렌더 */}
+      <SponsoredRail />
 
       {isLoading && <Skeleton variant="rectangular" height={100} lines={3} />}
       {isError && (
