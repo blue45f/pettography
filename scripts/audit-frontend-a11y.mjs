@@ -10,6 +10,8 @@ export function findClickableNonInteractiveElements(root = ROOT) {
   const files = listFiles(srcDir, (file) => {
     if (!/\.(tsx)$/.test(file)) return false
     if (/\.(test|spec)\.tsx$/.test(file)) return false
+    // 벤더 single-file 위젯(소스 무수정 원칙)은 스캔 제외.
+    if (file.includes('/deskcloud/')) return false
     return true
   })
   const findings = []

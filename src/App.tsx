@@ -2,6 +2,7 @@ import ErrorBoundary from '@components/common/ErrorBoundary'
 import Loading from '@components/common/Loading'
 import RouteAnnouncer from '@components/common/RouteAnnouncer'
 import SkipLink from '@components/common/SkipLink'
+import { DeskCloudWidgets } from '@components/deskcloud/DeskCloudWidgets'
 import { FeedbackWidget } from '@components/feedback/FeedbackWidget'
 import BottomNav from '@components/layout/BottomNav'
 import Footer from '@components/layout/Footer'
@@ -58,6 +59,8 @@ function App() {
       {import.meta.env.VITE_SURVEYDESK_URL && (
         <FeedbackWidget appId="pettography" endpoint={import.meta.env.VITE_SURVEYDESK_URL} />
       )}
+      {/* DeskCloud 위젯 — 각 Desk 는 자신의 VITE_*DESK_URL 이 설정될 때만 렌더(미설정=비활성). */}
+      <DeskCloudWidgets />
       {commandOpen && (
         <Suspense fallback={null}>
           <CommandPalette onClose={() => setCommandOpen(false)} />

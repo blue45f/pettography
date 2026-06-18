@@ -11,3 +11,5 @@ package-lock.json
 pnpm-lock.yaml
 .husky/_
 backend
+# 벤더 single-file 위젯(소스 무수정) — 포맷 검사 제외
+src/components/deskcloud

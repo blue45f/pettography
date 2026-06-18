@@ -480,14 +480,14 @@ function ClutchCard({
 }: ClutchCardProps) {
   const { t } = useTranslation()
   const code = clutchStatusLabelCode(clutch, today, slug)
-  const window = estimateHatchWindow(clutch.laidAt, slug)
+  const hatchWindow = estimateHatchWindow(clutch.laidAt, slug)
   const progress = incubationProgress(clutch.laidAt, slug, today)
   const ref = incubationRef(slug)
   const fertility = fertilityRate(clutch)
   const isActive = clutch.status === 'incubating'
 
   // Days to the midpoint hatch estimate; only meaningful while incubating.
-  const ddays = daysUntil(globalThis.midpoint, today)
+  const ddays = daysUntil(hatchWindow.midpoint, today)
   const ddayLabel =
     ddays > 0 ? `D-${ddays}` : ddays === 0 ? t('breeding.dday.today') : `D+${Math.abs(ddays)}`
 
@@ -551,7 +551,7 @@ function ClutchCard({
         <p className={styles.window}>
           {t('breeding.clutch.windowLabel')}{' '}
           <span className={styles.windowDates}>
-            {globalThis.earliest} ~ {globalThis.latest}
+            {hatchWindow.earliest} ~ {hatchWindow.latest}
           </span>
         </p>
 

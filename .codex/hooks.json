@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node '/Users/hjunkim/WebstormProjects/pettography/.codex/hooks/i18n-parity.mjs'"
+          }
+        ]
+      }
+    ]
+  }
+}

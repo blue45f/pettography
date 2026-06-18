@@ -17,6 +17,9 @@ export default defineConfig(
     // backend/ 는 자체 eslint.config.mjs 를 가진다 — 루트 설정 대상 아님.
     'backend',
     '.claude',
+    // DeskCloud 위젯은 외부 온보딩형 single-file 벤더 위젯(소스 무수정 원칙)이라
+    // 레포 strict 린트 대상에서 제외한다.
+    '**/components/deskcloud/**',
   ]),
 
   // 공유 베이스(TS + import 위생 + 커스텀 규칙 + prettier 충돌 비활성).
@@ -54,7 +57,10 @@ export default defineConfig(
     rules: {
       'no-restricted-globals': [
         'error',
-        { name: 'confirm', message: '브랜드 확인 다이얼로그를 사용하세요 (globalThis.confirm 금지).' },
+        {
+          name: 'confirm',
+          message: '브랜드 확인 다이얼로그를 사용하세요 (globalThis.confirm 금지).',
+        },
         { name: 'alert', message: 'Toast/Modal을 사용하세요 (globalThis.alert 금지).' },
         { name: 'prompt', message: '입력 다이얼로그/폼을 사용하세요 (globalThis.prompt 금지).' },
       ],

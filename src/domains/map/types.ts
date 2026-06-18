@@ -42,4 +42,6 @@ declare global {
   interface Window {
     kakao?: KakaoMapsBootstrap
   }
+  // SDK 는 전역에 kakao 를 붙인다 — window.kakao 와 globalThis.kakao 양쪽에서 접근 가능하도록 선언.
+  var kakao: KakaoMapsBootstrap | undefined
 }

@@ -47,7 +47,7 @@ function Consult() {
     : activeVetId
       ? (localMessages[activeVetId] ?? [])
       : []
-  const replyTimerRef = useRef<number | null>(null)
+  const replyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // vets 는 조건식 산출물이라 렌더마다 식별자가 바뀐다 — 원시값(첫 수의사 id)만 의존해 재실행 안정화
   const firstVetId = vets[0]?.id ?? null
