@@ -104,7 +104,9 @@ export function groupByPhenotype(
 ): PhenotypeGroup[] {
   const groups = new Map<string, OffspringOutcome[]>()
   for (const o of outcomes) {
-    const key = o.visible.length ? [...o.visible].sort().join(' · ') : normalLabel
+    const key = o.visible.length
+      ? [...o.visible].sort((a, b) => a.localeCompare(b)).join(' · ')
+      : normalLabel
     const bucket = groups.get(key)
     if (bucket) bucket.push(o)
     else groups.set(key, [o])

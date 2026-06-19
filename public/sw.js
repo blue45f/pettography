@@ -103,8 +103,11 @@ globalThis.addEventListener('fetch', (event) => {
   }
 })
 
-// Message handler: allow clients to request immediate update
+// Message handler: allow same-origin clients to request immediate update.
+// Reject any message whose origin is not our own — only our own pages may ask
+// the worker to skip waiting.
 globalThis.addEventListener('message', (event) => {
+  if (event.origin && event.origin !== globalThis.location.origin) return
   if (event.data?.type === 'SKIP_WAITING') {
     globalThis.skipWaiting()
   }

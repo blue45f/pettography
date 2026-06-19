@@ -1,0 +1,41 @@
+/*
+ * Scroll-reveal that enhances an already-visible default. The element is fully
+ * visible with no JS and no observer (SSR / headless / no-JS all render the
+ * content). Only once JS marks the element `data-reveal-armed` does it adopt the
+ * pre-reveal offset; the observer then flips `data-reveal-shown` to play the
+ * entrance. So content is never gated on a transition that might not fire.
+ *
+ * Transform + opacity only (no layout properties), per DESIGN.md motion rules.
+ */
+.reveal {
+  /* Default (no JS, or reduced-motion): visible, no offset. */
+  opacity: 1;
+}
+
+.reveal[data-reveal-armed='true'] {
+  opacity: 0;
+  transform: var(--reveal-from, translateY(20px));
+  transition:
+    opacity var(--motion-slow),
+    transform var(--motion-slow);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal[data-reveal-armed='true'][data-reveal-shown='true'] {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/*
+ * Reduced motion: never arm the offset even if JS sets the attribute, so the
+ * content simply appears. Belt-and-suspenders with the global reset.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .reveal[data-reveal-armed='true'] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

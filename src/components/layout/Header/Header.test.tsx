@@ -6,6 +6,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import Header from './Header'
 
+import { AuthProvider } from '@/lib/firebaseAuth'
+
 beforeEach(() => {
   localStorage.clear()
   useAppStore.setState(useAppStore.getInitialState(), true)
@@ -25,9 +27,11 @@ function renderHeader(initial = '/') {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } })
   return render(
     <QueryClientProvider client={queryClient}>
-      <MemoryRouter initialEntries={[initial]}>
-        <Header />
-      </MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter initialEntries={[initial]}>
+          <Header />
+        </MemoryRouter>
+      </AuthProvider>
     </QueryClientProvider>
   )
 }

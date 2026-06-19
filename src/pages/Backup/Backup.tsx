@@ -30,7 +30,7 @@ function collectKeys(): string[] {
       keys.push(k)
     }
   }
-  return keys.sort()
+  return keys.sort((a, b) => a.localeCompare(b))
 }
 
 function isBackupKey(key: string): boolean {
@@ -148,7 +148,7 @@ function Backup() {
     setTimeout(() => globalThis.location.reload(), 600)
   }
 
-  const pendingKeys = pending ? Object.keys(pending.data).sort() : []
+  const pendingKeys = pending ? Object.keys(pending.data).sort((a, b) => a.localeCompare(b)) : []
 
   return (
     <section className={styles.page}>

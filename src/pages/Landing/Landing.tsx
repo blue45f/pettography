@@ -1,5 +1,6 @@
 import Button from '@components/common/Button'
 import LazyImage from '@components/common/LazyImage'
+import Reveal from '@components/common/Reveal'
 import { isOnboardingComplete, useOnboardingStore } from '@domains/onboarding'
 import usePageMeta from '@hooks/usePageMeta'
 import { useTranslation } from 'react-i18next'
@@ -20,6 +21,19 @@ const HERO_SHOTS = [
   { seed: 'petto-hero-tarantula', emoji: '🕷️' },
 ] as const
 
+/**
+ * The four pillars of the portal, mapped to the existing `landing.feature*`
+ * copy. Each glyph is the domain cue; the brand carries the colour. Keeps the
+ * grid to four (not the banned endless icon-card wall) and each tile earns a
+ * distinct affordance via the corner index + glyph.
+ */
+const FEATURES = [
+  { key: 'Species', glyph: '🧬' },
+  { key: 'Location', glyph: '📍' },
+  { key: 'Care', glyph: '🩺' },
+  { key: 'Lifecycle', glyph: '🔄' },
+] as const
+
 function Landing() {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -36,6 +50,7 @@ function Landing() {
   return (
     <div className={styles.landing}>
       <section className={styles.hero} aria-labelledby="hero-title">
+        <span className={styles.heroAura} aria-hidden="true" />
         <div className={styles.heroContent}>
           <p className={styles.eyebrow}>
             {profile.location?.label
@@ -54,6 +69,7 @@ function Landing() {
               {t('nav.match')}
             </Button>
           </div>
+          <p className={styles.ctaHelper}>{t('landing.ctaHelper')}</p>
         </div>
         <div className={styles.heroCollage} aria-hidden="true">
           {HERO_SHOTS.map((shot, idx) => (
@@ -70,14 +86,40 @@ function Landing() {
         </div>
       </section>
 
+      <section className={styles.features} aria-labelledby="features-title">
+        <Reveal>
+          <h2 id="features-title" className={styles.sectionTitle}>
+            {t('landing.featuresTitle')}
+          </h2>
+        </Reveal>
+        <Reveal delay={60}>
+          <p className={styles.sectionLead}>{t('landing.featuresSubtitle')}</p>
+        </Reveal>
+        <ul className={styles.featureGrid}>
+          {FEATURES.map((feature, idx) => (
+            <Reveal as="li" key={feature.key} delay={idx * 90} className={styles.feature}>
+              <span aria-hidden="true" className={styles.featureGlyph}>
+                {feature.glyph}
+              </span>
+              <h3 className={styles.featureTitle}>{t(`landing.feature${feature.key}Title`)}</h3>
+              <p className={styles.featureDesc}>{t(`landing.feature${feature.key}Desc`)}</p>
+            </Reveal>
+          ))}
+        </ul>
+      </section>
+
       <section className={styles.lifecycle} aria-labelledby="lifecycle-title">
-        <h2 id="lifecycle-title" className={styles.sectionTitle}>
-          {t('lifecycle.title')}
-        </h2>
-        <p className={styles.sectionLead}>{t('lifecycle.subtitle')}</p>
+        <Reveal>
+          <h2 id="lifecycle-title" className={styles.sectionTitle}>
+            {t('lifecycle.title')}
+          </h2>
+        </Reveal>
+        <Reveal delay={60}>
+          <p className={styles.sectionLead}>{t('lifecycle.subtitle')}</p>
+        </Reveal>
         <ol className={styles.steps}>
           {LIFECYCLE_STEPS.map((id, idx) => (
-            <li key={id} className={styles.step}>
+            <Reveal as="li" key={id} delay={Math.min(idx, 4) * 70} className={styles.step}>
               <span aria-hidden="true" className={styles.stepNo}>
                 {String(idx + 1).padStart(2, '0')}
               </span>
@@ -85,7 +127,7 @@ function Landing() {
                 <h3 className={styles.stepTitle}>{t(`lifecycle.stages.${id}`)}</h3>
                 <p className={styles.stepDesc}>{t(`lifecycle.stageDesc.${id}`)}</p>
               </div>
-            </li>
+            </Reveal>
           ))}
         </ol>
       </section>

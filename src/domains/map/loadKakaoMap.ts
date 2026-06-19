@@ -31,8 +31,8 @@ export function loadKakaoMap(): Promise<KakaoMapsApi | null> {
         return
       }
       bootstrap.maps.load(() => {
-        const { Map, LatLng, Marker, InfoWindow, event } = bootstrap.maps
-        resolve({ Map, LatLng, Marker, InfoWindow, event })
+        const { Map: KakaoMap, LatLng, Marker, InfoWindow, event } = bootstrap.maps
+        resolve({ Map: KakaoMap, LatLng, Marker, InfoWindow, event })
       })
     }
     if (existing) {

@@ -42,7 +42,7 @@ describe('Footer', () => {
     renderFooter()
     expect(screen.getByRole('link', { name: /버그 제보|Report a bug/ })).toHaveAttribute(
       'href',
-      '/contact?category=bug'
+      '/support?category=bug'
     )
   })
 })

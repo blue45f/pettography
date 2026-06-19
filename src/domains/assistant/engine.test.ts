@@ -151,8 +151,8 @@ describe('topicsForCategory', () => {
     const result = topicsForCategory('reptile', ASSISTANT_DATA)
     expect(result[0]?.id).toBe('tempHumidity')
     expect(result).toHaveLength(ASSISTANT_DATA.topics.length)
-    const ids = result.map((tp) => tp.id).sort()
-    const originalIds = ASSISTANT_DATA.topics.map((tp) => tp.id).sort()
+    const ids = result.map((tp) => tp.id).sort((a, b) => a.localeCompare(b))
+    const originalIds = ASSISTANT_DATA.topics.map((tp) => tp.id).sort((a, b) => a.localeCompare(b))
     expect(ids).toEqual(originalIds)
   })
 

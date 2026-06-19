@@ -17,13 +17,13 @@ function flattenKeys(value: LocaleTree, prefix = ''): string[] {
 }
 
 describe('i18n locale resources', () => {
-  const koKeys = flattenKeys(ko).sort()
+  const koKeys = flattenKeys(ko).sort((a, b) => a.localeCompare(b))
 
   it('keeps Korean and English translation keys in sync', () => {
-    expect(flattenKeys(en).sort()).toEqual(koKeys)
+    expect(flattenKeys(en).sort((a, b) => a.localeCompare(b))).toEqual(koKeys)
   })
 
   it('keeps Korean and Japanese translation keys in sync', () => {
-    expect(flattenKeys(ja).sort()).toEqual(koKeys)
+    expect(flattenKeys(ja).sort((a, b) => a.localeCompare(b))).toEqual(koKeys)
   })
 })

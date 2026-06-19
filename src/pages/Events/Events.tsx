@@ -22,7 +22,7 @@ function Events() {
   }, [region])
 
   const byMonth = useMemo(() => eventsByMonth(filtered), [filtered])
-  const monthKeys = useMemo(() => [...byMonth.keys()].sort(), [byMonth])
+  const monthKeys = useMemo(() => [...byMonth.keys()].sort((a, b) => a.localeCompare(b)), [byMonth])
 
   return (
     <section className={styles.page}>

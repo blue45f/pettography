@@ -40,6 +40,52 @@
   }
 }
 
+/* Decorative brand aura behind the hero copy: a soft conic-tinted orb that
+   breathes slowly to give the first fold life without distracting from the
+   text. Purely decorative (aria-hidden), opacity/transform only, and stilled
+   under reduced-motion. Sits below content (z-index 0) and above the surface. */
+.heroAura {
+  position: absolute;
+  z-index: 0;
+  inset-block-start: -18%;
+  inset-inline-start: -12%;
+  width: min(36rem, 70%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--gradient-brand);
+  opacity: 0.16;
+  filter: blur(46px);
+  pointer-events: none;
+  animation: auraDrift 14s ease-in-out infinite alternate;
+}
+
+[data-theme='dark'] .heroAura {
+  opacity: 0.24;
+}
+
+@container main (min-width: 760px) {
+  .heroAura {
+    inset-inline-start: auto;
+    inset-inline-end: -8%;
+    inset-block-start: -22%;
+  }
+}
+
+@keyframes auraDrift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(2%, 4%, 0) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroAura {
+    animation: none;
+  }
+}
+
 .heroContent {
   position: relative;
   z-index: 1;
@@ -249,6 +295,98 @@
   justify-content: center;
   flex-wrap: wrap;
   margin-top: var(--spacing-sm);
+}
+
+/* Quiet reassurance line under the CTAs: low-commitment, contrast-safe. */
+.ctaHelper {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-2xs);
+}
+
+/* Four-pillar feature row. Distinct affordance from the lifecycle list (free
+   tiles vs. bordered table), capped at four so it never becomes the banned
+   endless icon-card wall. Brand-soft medallion + glyph carries the domain. */
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.featureGrid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  /* Lift toward the viewer on hover/focus: transform + shadow only. */
+  translate: 0 0;
+  transition:
+    translate var(--motion-base),
+    box-shadow var(--motion-base),
+    border-color var(--motion-base);
+}
+
+.feature:hover,
+.feature:focus-within {
+  translate: 0 -4px;
+  box-shadow:
+    var(--shadow-md),
+    0 22px 38px -24px var(--color-primary-alpha);
+  border-color: var(--color-primary-300);
+}
+
+[data-theme='dark'] .feature:hover,
+[data-theme='dark'] .feature:focus-within {
+  border-color: var(--color-primary-600);
+}
+
+.featureGlyph {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: var(--spacing-2xs);
+  font-size: 1.5rem;
+  line-height: 1;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary-soft);
+  transition: transform var(--motion-base);
+}
+
+.feature:hover .featureGlyph,
+.feature:focus-within .featureGlyph {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature:hover .featureGlyph,
+  .feature:focus-within .featureGlyph {
+    transform: none;
+  }
+}
+
+.featureTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.featureDesc {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
 }
 
 .lifecycle {
