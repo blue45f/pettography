@@ -5,6 +5,7 @@ import ContentImage from '@components/common/ContentImage'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
 import PetBadge from '@components/common/PetBadge'
+import ShareButton from '@components/common/ShareButton'
 import Skeleton from '@components/common/Skeleton'
 import { useToast } from '@components/common/Toast'
 import {
@@ -84,6 +85,12 @@ function SpeciesDetail() {
   }
 
   const siblings = siblingsQuery.data?.filter((s) => s.id !== species.id) ?? []
+  // Canonical, human-readable share target — slug-based so the link survives
+  // id changes and reads cleanly when pasted. Falls back to the current href.
+  const shareUrl =
+    typeof location !== 'undefined'
+      ? `${location.origin}/species/${species.slug}`
+      : `/species/${species.slug}`
 
   return (
     <section className={styles.page}>
@@ -150,6 +157,14 @@ function SpeciesDetail() {
         <Link to={`/care/${species.id}`} className={styles.secondaryLink}>
           {t('care.title')} →
         </Link>
+        <ShareButton
+          variant="outline"
+          title={`${species.koreanName} · ${t('common.appName')}`}
+          text={species.summary}
+          url={shareUrl}
+        >
+          {t('species.shareSpecies')}
+        </ShareButton>
       </div>
 
       <section aria-labelledby="related-hospitals-heading" className={styles.relatedSection}>

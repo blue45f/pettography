@@ -13,9 +13,9 @@ import {
   type SpeciesCategory,
 } from '@domains/species'
 import usePageMeta from '@hooks/usePageMeta'
-import { useDeferredValue, useMemo, useState } from 'react'
+import { useCallback, useDeferredValue, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useNavigate } from 'react-router'
+import { Link, useNavigate, useSearchParams } from 'react-router'
 
 import styles from './SpeciesCatalog.module.css'
 
@@ -24,6 +24,15 @@ const COMPARE_MAX = 3
 
 const SORT_OPTIONS = ['relevance', 'nameAsc', 'lifespanDesc', 'budgetAsc'] as const
 type SortKey = (typeof SORT_OPTIONS)[number]
+
+const CATEGORY_VALUES = new Set<string>(SPECIES_CATEGORIES)
+const DIFFICULTY_VALUES = new Set<string>(DIFFICULTIES)
+const SORT_VALUES = new Set<string>(SORT_OPTIONS)
+
+/** Read a typed enum value from the URL, falling back when absent or invalid. */
+function readParam<T extends string>(raw: string | null, allowed: Set<string>, fallback: T): T {
+  return raw && allowed.has(raw) ? (raw as T) : fallback
+}
 
 function SpeciesCatalog() {
   const { t } = useTranslation()
@@ -34,20 +43,72 @@ function SpeciesCatalog() {
     path: '/species',
   })
 
-  const [category, setCategory] = useState<SpeciesCategory | 'all'>('all')
-  const [difficulty, setDifficulty] = useState<Difficulty | 'all'>('all')
-  const [query, setQuery] = useState('')
-  const [sort, setSort] = useState<SortKey>('relevance')
+  // Filter/sort live in the URL so a curated browse is shareable, bookmarkable,
+  // and survives a refresh — matching how /compare already deep-links picks.
+  const [params, setParams] = useSearchParams()
+  const category = readParam<SpeciesCategory | 'all'>(
+    params.get('category'),
+    CATEGORY_VALUES,
+    'all'
+  )
+  const difficulty = readParam<Difficulty | 'all'>(
+    params.get('difficulty'),
+    DIFFICULTY_VALUES,
+    'all'
+  )
+  const sort = readParam<SortKey>(params.get('sort'), SORT_VALUES, 'relevance')
+  const query = params.get('q') ?? ''
   const [comparePicks, setComparePicks] = useState<string[]>([])
   const deferredQuery = useDeferredValue(query)
 
   const hasActiveFilters = category !== 'all' || difficulty !== 'all' || query.trim() !== ''
 
-  function resetFilters() {
-    setCategory('all')
-    setDifficulty('all')
-    setQuery('')
-  }
+  // Write one param, dropping it when it returns to the default so URLs stay
+  // tidy. `replace` keeps filter tweaks out of the history stack.
+  const patchParam = useCallback(
+    (key: string, value: string, isDefault: boolean) => {
+      setParams(
+        (prev) => {
+          const next = new URLSearchParams(prev)
+          if (isDefault) next.delete(key)
+          else next.set(key, value)
+          return next
+        },
+        { replace: true }
+      )
+    },
+    [setParams]
+  )
+
+  const setCategory = useCallback(
+    (value: SpeciesCategory | 'all') => patchParam('category', value, value === 'all'),
+    [patchParam]
+  )
+  const setDifficulty = useCallback(
+    (value: Difficulty | 'all') => patchParam('difficulty', value, value === 'all'),
+    [patchParam]
+  )
+  const setSort = useCallback(
+    (value: SortKey) => patchParam('sort', value, value === 'relevance'),
+    [patchParam]
+  )
+  const setQuery = useCallback(
+    (value: string) => patchParam('q', value, value.trim() === ''),
+    [patchParam]
+  )
+
+  const resetFilters = useCallback(() => {
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams(prev)
+        next.delete('category')
+        next.delete('difficulty')
+        next.delete('q')
+        return next
+      },
+      { replace: true }
+    )
+  }, [setParams])
 
   function toggleCompare(id: string) {
     setComparePicks((prev) => {
@@ -164,9 +225,16 @@ function SpeciesCatalog() {
       </div>
 
       <div className={styles.resultRow}>
-        <p className={styles.countLine}>
-          {filtered ? t('species.resultCount', { count: filtered.length }) : '...'}
-        </p>
+        <div className={styles.resultMeta}>
+          <p className={styles.countLine}>
+            {filtered ? t('species.resultCount', { count: filtered.length }) : '...'}
+          </p>
+          {hasActiveFilters && (
+            <button type="button" className={styles.resetChip} onClick={resetFilters}>
+              {t('species.resetFilters')} ✕
+            </button>
+          )}
+        </div>
         <Select
           className={styles.sortSelect}
           aria-label={t('species.sortLabel')}

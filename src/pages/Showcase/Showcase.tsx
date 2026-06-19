@@ -5,6 +5,7 @@ import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
 import LazyImage from '@components/common/LazyImage'
 import Select from '@components/common/Select'
+import ShareButton from '@components/common/ShareButton'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
 import { useOnboardingStore } from '@domains/onboarding'
@@ -67,6 +68,9 @@ function Showcase() {
 
   const currentTheme = CONTEST_THEMES.find((th) => th.id === CURRENT_THEME_ID)
   const winner = topPostForTheme(posts, votedIds, CURRENT_THEME_ID)
+  // Posts are client-local (no per-post route), so sharing points at the
+  // gallery itself — enough to invite a friend to the contest.
+  const showcaseUrl = typeof location !== 'undefined' ? `${location.origin}/showcase` : '/showcase'
 
   const visiblePosts = useMemo(() => {
     const filtered = posts.filter((p) => filter === 'all' || p.themeId === filter)
@@ -224,6 +228,16 @@ function Showcase() {
                   >
                     <span aria-hidden="true">{voted ? '♥' : '♡'}</span> {voteCount(post, votedIds)}
                   </button>
+                  <ShareButton
+                    variant="ghost"
+                    size="sm"
+                    title={t('showcase.shareTitle', { author: post.author })}
+                    text={post.caption || t(`showcase.themes.${post.themeId}.name`)}
+                    url={showcaseUrl}
+                    aria-label={t('showcase.sharePost')}
+                  >
+                    {t('common.share')}
+                  </ShareButton>
                   {owned && (
                     <button
                       type="button"

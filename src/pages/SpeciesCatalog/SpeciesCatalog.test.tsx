@@ -8,11 +8,11 @@ import SpeciesCatalog from './SpeciesCatalog'
 
 import { createAppQueryClient } from '@/app/queryClient'
 
-function renderCatalog() {
+function renderCatalog(initialEntry = '/species') {
   const queryClient = createAppQueryClient()
   return render(
     <QueryClientProvider client={queryClient}>
-      <MemoryRouter>
+      <MemoryRouter initialEntries={[initialEntry]}>
         <SpeciesCatalog />
       </MemoryRouter>
     </QueryClientProvider>
@@ -82,5 +82,31 @@ describe('SpeciesCatalog', () => {
     })
     const titles = await speciesTitlesInOrder()
     expect(titles.slice(0, 3)).toEqual(['레오파드 게코', '크레스티드 게코', '볼파이톤'])
+  })
+
+  it('hydrates the sort order from the URL search params', async () => {
+    renderCatalog('/species?sort=budgetAsc')
+    await waitFor(() => {
+      expect(screen.getByText('마다가스카르 휘파람 바퀴')).toBeInTheDocument()
+    })
+    const titles = await speciesTitlesInOrder()
+    // The budget-ascending order puts the cheapest species first.
+    expect(titles[0]).toBe('마다가스카르 휘파람 바퀴')
+  })
+
+  it('shows an inline reset chip when the URL carries an active query', async () => {
+    const user = userEvent.setup()
+    renderCatalog('/species?q=zzz-no-such-species')
+    // No species matches → empty state, and the inline reset chip is offered.
+    await screen.findByText('조건에 맞는 종을 찾지 못했어요.')
+    // The inline chip carries a ✕ glyph, distinguishing it from the empty-state
+    // button that shares the same label.
+    const resetChip = screen.getByRole('button', { name: '필터 초기화 ✕' })
+
+    await user.click(resetChip)
+
+    await waitFor(() => {
+      expect(screen.getByText('레오파드 게코')).toBeInTheDocument()
+    })
   })
 })

@@ -35,7 +35,10 @@
     "distanceKm": "{{km}}km",
     "phone": "Phone",
     "address": "Address",
-    "inquire": "Inquire"
+    "inquire": "Inquire",
+    "share": "Share",
+    "linkCopied": "Link copied",
+    "shareUnsupported": "Sharing isn't supported in this browser"
   },
   "nav": {
     "dashboard": "My portal",
@@ -1030,6 +1033,7 @@
     "monthlyBudgetBadge": "₩{{amount}}/mo",
     "resetFilters": "Reset filters",
     "noResultHint": "Try a different keyword or filter, or browse every species again.",
+    "shareSpecies": "Share species",
     "gallery": {
       "title": "{{name}} photo wall",
       "subtitle": "Bookmark photo URLs you've spotted on Instagram, Korean cafes or DC galleries. We don't host images, we just keep the link and credit the source.",
@@ -1538,6 +1542,8 @@
     "delete": "Delete",
     "vote": "Vote",
     "unvote": "Remove vote",
+    "sharePost": "Share photo",
+    "shareTitle": "{{author}}'s contest photo · Pettography",
     "empty": "No photos yet",
     "emptyHint": "Be the first to share a shot!",
     "errors": {

@@ -35,7 +35,10 @@
     "distanceKm": "{{km}}km",
     "phone": "電話",
     "address": "住所",
-    "inquire": "問い合わせる"
+    "inquire": "問い合わせる",
+    "share": "共有",
+    "linkCopied": "リンクをコピーしました",
+    "shareUnsupported": "このブラウザでは共有できません"
   },
   "nav": {
     "dashboard": "マイポータル",
@@ -1030,6 +1033,7 @@
     "monthlyBudgetBadge": "月額 ₩{{amount}}",
     "resetFilters": "フィルターをリセット",
     "noResultHint": "キーワードやフィルターを変えるか、すべての種をもう一度見てみましょう。",
+    "shareSpecies": "この種を共有",
     "gallery": {
       "title": "{{name}} の写真まとめ",
       "subtitle": "Instagram・カフェ・DCギャラリーで見た写真のURLをまとめておくと、同じ種を飼う他のユーザーも参考にできます。自前のホスティングはせず、外部URLのみ記録します。",
@@ -1538,6 +1542,8 @@
     "delete": "削除",
     "vote": "投票する",
     "unvote": "投票を取り消す",
+    "sharePost": "この写真を共有",
+    "shareTitle": "{{author}} さんのコンテスト写真 · Pettography",
     "empty": "まだ投稿された写真がありません",
     "emptyHint": "最初の写真の主役になってみましょう!",
     "errors": {
