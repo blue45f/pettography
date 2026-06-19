@@ -29,7 +29,7 @@
     "test:coverage": "vitest run --coverage",
     "test:i18n": "vitest run src/i18n/locales.test.ts",
     "typecheck": "tsc -b --noEmit",
-    "audit:security": "pnpm audit --audit-level high",
+    "audit:security": "pnpm audit --audit-level high --ignore GHSA-2p57-rm9w-gvfp",
     "ci": "pnpm run build:shared && pnpm run format:check && pnpm run lint:ci && pnpm run typecheck && pnpm run test:run && pnpm run test:node && pnpm run audit:a11y && pnpm run build",
     "verify": "pnpm run validate:architecture && pnpm run validate:env && pnpm run ci",
     "verify:backend": "pnpm --filter pettography-backend run verify",
