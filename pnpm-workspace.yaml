@@ -26,6 +26,9 @@ overrides:
   undici: '^7.28.0'
 
 allowBuilds:
+  # firebase web SDK 의 @firebase/util postinstall 은 우리 사용처(클라이언트 인증)에
+  # 불필요하다 — 실행하지 않도록 false 로 명시해 ERR_PNPM_IGNORED_BUILDS 를 잠재운다.
+  '@firebase/util': false
   '@nestjs/core': true
   '@scarf/scarf': false
   '@sentry/cli': true

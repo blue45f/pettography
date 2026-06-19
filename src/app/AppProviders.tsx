@@ -6,6 +6,7 @@ import { RouterProvider } from 'react-router'
 
 import { appQueryClient } from './queryClient'
 
+import { AuthProvider } from '@/lib/firebaseAuth'
 import { router as defaultRouter } from '@/router'
 
 installAuthInterceptors()
@@ -23,9 +24,11 @@ function AppProviders({
 }: AppProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ToastProvider>
-        <RouterProvider router={router} />
-      </ToastProvider>
+      <AuthProvider>
+        <ToastProvider>
+          <RouterProvider router={router} />
+        </ToastProvider>
+      </AuthProvider>
       {showDevtools && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   )

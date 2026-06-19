@@ -82,7 +82,7 @@ export default defineConfig(
       { type: 'domains', pattern: 'src/domains/*/**/*', mode: 'full' },
       {
         type: 'shared',
-        pattern: 'src/{components,hooks,utils,store,config,i18n,types,assets}/**/*',
+        pattern: 'src/{components,hooks,utils,store,config,i18n,types,assets,lib}/**/*',
         mode: 'full',
       },
       { type: 'infrastructure', pattern: 'src/infrastructure/**/*', mode: 'full' },

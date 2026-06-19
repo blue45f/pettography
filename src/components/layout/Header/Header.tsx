@@ -1,5 +1,6 @@
 import LanguageToggle from '@components/common/LanguageToggle'
 import ThemeToggle from '@components/common/ThemeToggle'
+import MemberAuthControl from '@components/layout/MemberAuthControl'
 import PetSwitcher from '@components/layout/PetSwitcher'
 import { isOnboardingComplete, useOnboardingStore } from '@domains/onboarding'
 import { lazyRetry } from '@utils/lazyRetry'
@@ -174,6 +175,7 @@ function Header({ onOpenCommand }: HeaderProps) {
           )}
           <LanguageToggle />
           <ThemeToggle />
+          <MemberAuthControl />
         </div>
         <button
           className={styles.menuButton}
