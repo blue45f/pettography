@@ -108,6 +108,7 @@
     "food": "Food",
     "events": "Pet fairs",
     "contact": "Contact",
+    "support": "Support",
     "onboarding": "First pick",
     "short": {
       "dashboard": "Home",
@@ -1084,6 +1085,7 @@
     "privacy": "Privacy policy",
     "terms": "Terms of service",
     "contact": "Contact",
+    "support": "Support board",
     "about": "About",
     "faq": "FAQ",
     "reportBug": "Report a bug",

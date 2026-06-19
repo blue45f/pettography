@@ -108,6 +108,7 @@
     "food": "餌ガイド",
     "events": "展示会スケジュール",
     "contact": "問い合わせ",
+    "support": "問い合わせ",
     "onboarding": "はじめての選択",
     "short": {
       "dashboard": "ポータル",
@@ -1084,6 +1085,7 @@
     "privacy": "プライバシーポリシー",
     "terms": "利用規約",
     "contact": "問い合わせ",
+    "support": "問い合わせ掲示板",
     "about": "紹介",
     "faq": "よくある質問",
     "reportBug": "バグを報告",

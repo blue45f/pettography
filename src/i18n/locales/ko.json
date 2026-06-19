@@ -108,6 +108,7 @@
     "food": "먹이 가이드",
     "events": "박람회 일정",
     "contact": "문의하기",
+    "support": "문의",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -1084,6 +1085,7 @@
     "privacy": "개인정보처리방침",
     "terms": "이용약관",
     "contact": "문의하기",
+    "support": "문의 게시판",
     "about": "소개",
     "faq": "자주 묻는 질문",
     "reportBug": "버그 제보",

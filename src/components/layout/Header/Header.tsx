@@ -60,6 +60,7 @@ function Header({ onOpenCommand }: HeaderProps) {
         { path: '/registry', label: t('nav.registry') },
         { path: '/partners', label: t('nav.partners') },
         { path: '/admin', label: t('nav.admin') },
+        { path: '/support', label: t('nav.support') },
         { path: '/contact', label: t('nav.contact') },
       ]
     : [
@@ -69,6 +70,7 @@ function Header({ onOpenCommand }: HeaderProps) {
         { path: '/partners', label: t('nav.partners') },
         { path: '/registry', label: t('nav.registry') },
         { path: '/compare', label: t('nav.compare') },
+        { path: '/support', label: t('nav.support') },
         { path: '/contact', label: t('nav.contact') },
         { path: '/sos', label: t('nav.sos') },
       ]
