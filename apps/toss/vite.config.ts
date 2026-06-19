@@ -13,7 +13,7 @@ const appSrc = fileURLToPath(new URL('../../src', import.meta.url))
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({ babel: { plugins: [['babel-plugin-react-compiler', {}]] } })],
   build: { target: 'esnext' },
   resolve: {
     dedupe: ['react', 'react-dom'],
