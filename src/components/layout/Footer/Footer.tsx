@@ -39,8 +39,8 @@ function Footer() {
           <Link to="/registry" className={styles.link}>
             {t('nav.registry')}
           </Link>
-          <Link to="/design" className={styles.link}>
-            {t('footer.design')}
+          <Link to="/sitemap" className={styles.link}>
+            사이트맵
           </Link>
           <a
             href="https://github.com/blue45f/pettography"

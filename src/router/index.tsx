@@ -301,6 +301,7 @@ export const routes = [
       { path: 'contact', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Contact')) },
       { path: 'support', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Support')) },
       { path: 'design', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Design')) },
+      { path: 'sitemap', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/Sitemap')) },
       { path: '*', HydrateFallback: Loading, lazy: lazyPage(() => import('@pages/NotFound')) },
     ],
   },

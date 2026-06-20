@@ -97,6 +97,7 @@ function Header({ onOpenCommand }: HeaderProps) {
       <div className={styles.container}>
         <Link to="/" className={styles.logo} aria-label={t('common.appName')}>
           <span aria-hidden="true">🐾</span> {t('common.appName')}
+          <span className={styles.betaBadge}>BETA</span>
         </Link>
         <Link to="/sos" className={styles.sosChip} aria-label={t('nav.sos')}>
           {t('nav.sos')}

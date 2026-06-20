@@ -47,6 +47,25 @@
   color: var(--color-primary-100);
 }
 
+.betaBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border: 1px solid color-mix(in oklch, var(--color-primary) 38%, transparent);
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-700);
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+[data-theme='dark'] .betaBadge {
+  color: var(--color-primary-100);
+}
+
 .sosChip {
   display: inline-flex;
   align-items: center;
