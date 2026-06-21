@@ -47,7 +47,11 @@
     "test:a11y": "node scripts/audit-frontend-a11y.test.mjs",
     "test:env": "node --test scripts/validate-env.test.mjs",
     "test:node": "node --test scripts/*.test.mjs",
-    "validate:env": "node scripts/validate-env.mjs"
+    "validate:env": "node scripts/validate-env.mjs",
+    "turbo:build": "pnpm exec turbo run build",
+    "turbo:typecheck": "pnpm exec turbo run typecheck",
+    "turbo:lint": "pnpm exec turbo run lint",
+    "turbo:test": "pnpm exec turbo run test --concurrency=1"
   },
   "dependencies": {
     "@heejun/deskcloud": "^0.1.0",
@@ -111,6 +115,7 @@
     "prettier": "^3.8.4",
     "storybook": "^10.4.4",
     "tailwindcss": "^4.3.0",
+    "turbo": "^2.9.18",
     "typescript": "^6.0.3",
     "vite": "^8.0.16",
     "vitest": "^4.1.8"
