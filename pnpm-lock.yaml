@@ -21,7 +21,7 @@ importers:
         version: 0.1.0
       '@hookform/resolvers':
         specifier: ^5.4.0
-        version: 5.4.0(react-hook-form@7.79.0(react@19.2.7))
+        version: 5.4.0(react-hook-form@7.80.0(react@19.2.7))
       '@pettography/shared':
         specifier: workspace:*
         version: link:packages/shared
@@ -77,8 +77,8 @@ importers:
         specifier: ^19.2.7
         version: 19.2.7(react@19.2.7)
       react-hook-form:
-        specifier: ^7.79.0
-        version: 7.79.0(react@19.2.7)
+        specifier: ^7.80.0
+        version: 7.80.0(react@19.2.7)
       react-i18next:
         specifier: ^17.0.8
         version: 17.0.8(i18next@26.3.1(typescript@6.0.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)
@@ -5807,8 +5807,8 @@ packages:
     peerDependencies:
       react: ^19.2.7
 
-  react-hook-form@7.79.0:
-    resolution: {integrity: sha512-mhYp/MTmXvzYX6AJcJVko0rktoIhhmRnEouObj4wF5i/tCttgJvnp1+9wRkpITZjDTqpo4IOSJqu0dBlPlV/Lw==}
+  react-hook-form@7.80.0:
+    resolution: {integrity: sha512-4P+fk6oXsxY+6xSj7Euhc2sumQD8zQqCuVHoJwoyp9EchP+IUW9OESB7uHFJOKsIBQ4MQqYE84INJFqUCYNoOg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
@@ -7958,10 +7958,10 @@ snapshots:
     dependencies:
       prettier: 3.8.4
 
-  '@hookform/resolvers@5.4.0(react-hook-form@7.79.0(react@19.2.7))':
+  '@hookform/resolvers@5.4.0(react-hook-form@7.80.0(react@19.2.7))':
     dependencies:
       '@standard-schema/utils': 0.3.0
-      react-hook-form: 7.79.0(react@19.2.7)
+      react-hook-form: 7.80.0(react@19.2.7)
 
   '@humanfs/core@0.19.2':
     dependencies:
@@ -12816,7 +12816,7 @@ snapshots:
       react: 19.2.7
       scheduler: 0.27.0
 
-  react-hook-form@7.79.0(react@19.2.7):
+  react-hook-form@7.80.0(react@19.2.7):
     dependencies:
       react: 19.2.7
 
