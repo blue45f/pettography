@@ -1052,6 +1052,12 @@
   "landing": {
     "title": "はじめての選択から、最後のお別れまで。",
     "description": "希少動物と過ごす7つの段階。一度の選択で、病院・餌・飼育・コミュニティ・葬儀までまとめてセットアップします。",
+    "proofSpeciesLabel": "種単位のキュレーション",
+    "proofSpeciesValue": "爬虫類・節足動物・希少種",
+    "proofLocationLabel": "位置ベース",
+    "proofLocationValue": "近くの病院・ショップ案内",
+    "proofLifecycleLabel": "ライフサイクル",
+    "proofLifecycleValue": "7段階すべて",
     "primaryCta": "はじめての選択をスタート",
     "secondaryCta": "サンプルを見てみる",
     "ctaHelper": "無料で開始。カード不要、数分でセットアップ完了。",

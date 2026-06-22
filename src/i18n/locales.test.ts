@@ -16,14 +16,16 @@ function flattenKeys(value: LocaleTree, prefix = ''): string[] {
   })
 }
 
+const byLocale = (a: string, b: string): number => a.localeCompare(b)
+
 describe('i18n locale resources', () => {
-  const koKeys = flattenKeys(ko).sort((a, b) => a.localeCompare(b))
+  const koKeys = flattenKeys(ko).sort(byLocale)
 
   it('keeps Korean and English translation keys in sync', () => {
-    expect(flattenKeys(en).sort((a, b) => a.localeCompare(b))).toEqual(koKeys)
+    expect(flattenKeys(en).sort(byLocale)).toEqual(koKeys)
   })
 
   it('keeps Korean and Japanese translation keys in sync', () => {
-    expect(flattenKeys(ja).sort((a, b) => a.localeCompare(b))).toEqual(koKeys)
+    expect(flattenKeys(ja).sort(byLocale)).toEqual(koKeys)
   })
 })

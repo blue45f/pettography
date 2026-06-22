@@ -1052,6 +1052,12 @@
   "landing": {
     "title": "From the first pick to the last farewell.",
     "description": "Seven stages with your rare pet, one choice that sets up vets, food, care, community and farewell.",
+    "proofSpeciesLabel": "Species-first",
+    "proofSpeciesValue": "Reptiles, arthropods & rare species",
+    "proofLocationLabel": "Location-aware",
+    "proofLocationValue": "Nearby vets & shops",
+    "proofLifecycleLabel": "Lifecycle",
+    "proofLifecycleValue": "All seven stages",
     "primaryCta": "Start first pick",
     "secondaryCta": "Browse sample",
     "ctaHelper": "Free to start. No card. Set up in a couple of minutes.",

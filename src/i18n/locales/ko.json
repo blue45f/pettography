@@ -1052,6 +1052,12 @@
   "landing": {
     "title": "처음 선택부터 마지막 인사까지.",
     "description": "희귀 동물과 함께하는 7단계, 한 번의 선택으로 병원·먹이·관리·커뮤니티·장례까지 모두 세팅합니다.",
+    "proofSpeciesLabel": "종 단위 큐레이션",
+    "proofSpeciesValue": "파충류·절지류·희귀종",
+    "proofLocationLabel": "위치 기반",
+    "proofLocationValue": "가까운 병원·샵 안내",
+    "proofLifecycleLabel": "라이프사이클",
+    "proofLifecycleValue": "7단계 전 과정",
     "primaryCta": "처음 선택 시작",
     "secondaryCta": "샘플 둘러보기",
     "ctaHelper": "무료로 시작. 카드 없이, 몇 분이면 세팅 완료.",

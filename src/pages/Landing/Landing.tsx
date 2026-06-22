@@ -8,7 +8,20 @@ import { useNavigate } from 'react-router'
 
 import styles from './Landing.module.css'
 
+import type { CSSProperties } from 'react'
+
 const LIFECYCLE_STEPS = ['pick', 'adopt', 'raise', 'vet', 'daily', 'senior', 'funeral'] as const
+
+/**
+ * Hero proof chips. Three balanced label/value pairs that say what the portal
+ * actually does, not vanity hero-metrics. They stagger in beneath the CTA so
+ * the first fold carries a beat of "here's why this is for you".
+ */
+const PROOF_CHIPS = [
+  { id: 'species', icon: '🦎' },
+  { id: 'location', icon: '📍' },
+  { id: 'lifecycle', icon: '🌿' },
+] as const
 
 /**
  * Hero collage shots. Real keeper photography drops in here later; picsum
@@ -24,8 +37,7 @@ const HERO_SHOTS = [
 /**
  * The four pillars of the portal, mapped to the existing `landing.feature*`
  * copy. Each glyph is the domain cue; the brand carries the colour. Keeps the
- * grid to four (not the banned endless icon-card wall) and each tile earns a
- * distinct affordance via the corner index + glyph.
+ * grid to four and each tile earns a distinct affordance via the glyph.
  */
 const FEATURES = [
   { key: 'Species', glyph: '🧬' },
@@ -62,14 +74,39 @@ function Landing() {
           </h1>
           <p className={styles.description}>{t('landing.description')}</p>
           <div className={styles.ctaRow}>
-            <Button variant="primary" size="lg" onClick={() => navigate(primaryTarget)}>
+            <Button
+              variant="primary"
+              size="lg"
+              className={styles.ctaPrimary}
+              onClick={() => navigate(primaryTarget)}
+            >
               {completed ? t('nav.dashboard') : t('landing.primaryCta')}
             </Button>
             <Button variant="outline" size="lg" onClick={() => navigate('/match')}>
               {t('nav.match')}
             </Button>
           </div>
-          <p className={styles.ctaHelper}>{t('landing.ctaHelper')}</p>
+          <ul className={styles.proof}>
+            {PROOF_CHIPS.map((chip, idx) => (
+              <li
+                key={chip.id}
+                className={styles.proofChip}
+                style={{ '--i': idx } as CSSProperties}
+              >
+                <span className={styles.proofIcon} aria-hidden="true">
+                  {chip.icon}
+                </span>
+                <span className={styles.proofText}>
+                  <span className={styles.proofValue}>
+                    {t(`landing.proof${cap(chip.id)}Value`)}
+                  </span>
+                  <span className={styles.proofLabel}>
+                    {t(`landing.proof${cap(chip.id)}Label`)}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
         <div className={styles.heroCollage} aria-hidden="true">
           {HERO_SHOTS.map((shot, idx) => (
@@ -133,6 +170,10 @@ function Landing() {
       </section>
     </div>
   )
+}
+
+function cap(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1)
 }
 
 export default Landing
