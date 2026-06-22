@@ -53,7 +53,7 @@
     "@heejun/deskcloud": "^0.1.0",
     "@hookform/resolvers": "^5.4.0",
     "@pettography/shared": "workspace:*",
-    "@radix-ui/react-accordion": "^1.2.13",
+    "@radix-ui/react-accordion": "^1.2.14",
     "@radix-ui/react-label": "^2.1.9",
     "@radix-ui/react-progress": "^1.1.9",
     "@radix-ui/react-slot": "^1.2.5",
