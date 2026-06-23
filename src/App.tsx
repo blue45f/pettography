@@ -18,7 +18,24 @@ const CommandPalette = lazyRetry(() => import('@components/layout/CommandPalette
 
 function App() {
   const [commandOpen, setCommandOpen] = useState(false)
+  const [showSplash, setShowSplash] = useState(true)
+  const [isFading, setIsFading] = useState(false)
   const category = useOnboardingStore((s) => s.profile.category)
+
+  useEffect(() => {
+    const fadeTimer = setTimeout(() => {
+      setIsFading(true)
+    }, 1800)
+
+    const removeTimer = setTimeout(() => {
+      setShowSplash(false)
+    }, 2600)
+
+    return () => {
+      clearTimeout(fadeTimer)
+      clearTimeout(removeTimer)
+    }
+  }, [])
 
   useEffect(() => {
     if (category) {
@@ -41,6 +58,25 @@ function App() {
 
   return (
     <div className={styles.app}>
+      {showSplash && (
+        <div className={`${styles.splashOverlay} ${isFading ? styles.hidden : ''}`} aria-hidden="true">
+          <div className={styles.splashCircle} />
+          <div className={styles.splashContent}>
+            <svg className={styles.splashLogo} viewBox="0 0 24 24" fill="currentColor">
+              {/* Central pad */}
+              <path d="M12 10.5c-2.2 0-4 1.8-3.5 4.5.4 2.2 3.5 3 3.5 3s3.1-.8 3.5-3c.5-2.7-1.3-4.5-3.5-4.5z" />
+              {/* Toes */}
+              <circle cx="8.5" cy="6.5" r="1.8" />
+              <circle cx="15.5" cy="6.5" r="1.8" />
+              <circle cx="5" cy="9.5" r="1.8" />
+              <circle cx="19" cy="9.5" r="1.8" />
+            </svg>
+            <h1 className={styles.splashTitle}>PETTOGRAPHY</h1>
+            <div className={styles.splashLine} />
+            <span className={styles.splashSubtitle}>BETA SERVICE</span>
+          </div>
+        </div>
+      )}
       <SkipLink />
       <RouteAnnouncer />
       <Header onOpenCommand={() => setCommandOpen(true)} />
