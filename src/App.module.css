@@ -46,7 +46,9 @@
   align-items: center;
   justify-content: center;
   background: radial-gradient(circle at center, #1b262c 0%, #0f172a 100%);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
   user-select: none;
 }
@@ -112,7 +114,8 @@
 }
 
 @keyframes pulseGlow {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0.95);
     opacity: 0.5;
   }

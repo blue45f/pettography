@@ -59,7 +59,10 @@ function App() {
   return (
     <div className={styles.app}>
       {showSplash && (
-        <div className={`${styles.splashOverlay} ${isFading ? styles.hidden : ''}`} aria-hidden="true">
+        <div
+          className={`${styles.splashOverlay} ${isFading ? styles.hidden : ''}`}
+          aria-hidden="true"
+        >
           <div className={styles.splashCircle} />
           <div className={styles.splashContent}>
             <svg className={styles.splashLogo} viewBox="0 0 24 24" fill="currentColor">
