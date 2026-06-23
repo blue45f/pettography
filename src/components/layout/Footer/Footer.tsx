@@ -71,8 +71,8 @@ function Footer() {
             </div>
           </div>
           <div className={styles.businessBottom}>
-            <span>© {currentYear} Pettography. All rights reserved.</span>
-            <span>위치 기반 매칭 데모 서비스</span>
+            <span>© {currentYear} Pettography (Beta). All rights reserved.</span>
+            <span>위치 기반 매칭 베타 서비스</span>
           </div>
         </div>
       </div>
