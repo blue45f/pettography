@@ -48,3 +48,37 @@
     justify-content: center;
   }
 }
+
+.businessInfo {
+  width: 100%;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border-subtle, rgba(0, 0, 0, 0.08));
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.businessGrid {
+  display: grid;
+  grid-template-cols: 1fr;
+  gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .businessGrid {
+    grid-template-cols: repeat(4, 1fr);
+  }
+}
+
+.businessBottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+  border-top: 1px dashed var(--color-border-subtle, rgba(0, 0, 0, 0.05));
+  font-size: 10px;
+}

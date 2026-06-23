@@ -51,6 +51,30 @@ function Footer() {
             GitHub ↗
           </a>
         </div>
+        <div className={styles.businessInfo}>
+          <div className={styles.businessGrid}>
+            <div>
+              <p style={{ fontWeight: 'bold' }}>상호: 에이치준랩스</p>
+              <p>대표자: 김희준 | 개인정보보호책임자: 김희준</p>
+            </div>
+            <div>
+              <p>사업자등록번호: 355-07-03473</p>
+              <p>주소: 서울특별시 송파구 가락로34길 13, 101호(방이동)</p>
+            </div>
+            <div>
+              <p>이메일: blue45f@gmail.com</p>
+              <p>전화번호: 010-3873-4197</p>
+            </div>
+            <div>
+              <p>호스팅 서비스: Vercel (Frontend)</p>
+              <p>플랫폼 형태: 희귀 반려동물 예약 및 케어 플랫폼</p>
+            </div>
+          </div>
+          <div className={styles.businessBottom}>
+            <span>© {currentYear} Pettography. All rights reserved.</span>
+            <span>위치 기반 매칭 데모 서비스</span>
+          </div>
+        </div>
       </div>
     </footer>
   )
