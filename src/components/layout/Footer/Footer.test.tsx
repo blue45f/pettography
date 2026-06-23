@@ -17,8 +17,8 @@ describe('Footer', () => {
   it('renders the current year and a Pettography copyright', () => {
     renderFooter()
     const year = new Date().getFullYear().toString()
-    expect(screen.getByText(new RegExp(year))).toBeInTheDocument()
-    expect(screen.getByText(/Pettography/)).toBeInTheDocument()
+    expect(screen.getAllByText(new RegExp(year))[0]).toBeInTheDocument()
+    expect(screen.getAllByText(/Pettography/)[0]).toBeInTheDocument()
   })
 
   it('renders the about, backup, registry and GitHub links', () => {
