@@ -37,7 +37,13 @@
   --color-surface-muted: oklch(0.971 0.003 286.4);
   --color-text: oklch(0.208 0.04 265.8);
   --color-text-secondary: oklch(0.446 0.037 257.3);
-  --color-text-muted: oklch(0.711 0.035 256.8);
+  /* Muted/label text. Was oklch(0.711 …) (#94a3b8, ≈2.56:1 on white) which
+     failed WCAG-AA for the small labels/empty-state hints that ride it
+     (step numbers, condition labels, "기록 없음" copy on the dashboard).
+     Darkened to land ≈5.0:1 on white / ≈4.6:1 on the subtle surface tint,
+     while staying clearly lighter than --color-text-secondary (7.58:1) so the
+     muted < secondary < primary hierarchy is preserved. */
+  --color-text-muted: oklch(0.54 0.04 256.8);
   --color-border: oklch(0.928 0.006 264.5);
   --color-border-strong: oklch(0.869 0.02 252.9);
   --color-error: oklch(0.637 0.208 25.3);
@@ -45,6 +51,15 @@
   --color-success: oklch(0.627 0.17 149.2);
   --color-warning: oklch(0.769 0.1647 70.1);
   --color-info: oklch(0.685 0.148 237.32);
+
+  /* Text-safe semantic tones — darker variants for SMALL text on the soft
+     (color/15) badge tints. The base --color-* hues are tuned for fills/icons
+     and dip below WCAG-AA (≈2.4–3.1:1) as label text on their own tints; these
+     ride the same hue but land ≥4.5:1 on the tint. Same persimmon-free brand
+     intent, just legible. */
+  --color-success-text: oklch(0.5 0.135 150.5);
+  --color-error-text: oklch(0.505 0.193 26.3);
+  --color-info-text: oklch(0.52 0.124 237.7);
 
   --gradient-hero:
     radial-gradient(120% 80% at 0% 0%, oklch(0.585 0.204 277.1 / 0.22), transparent 60%),
@@ -159,6 +174,12 @@
   --color-success: oklch(0.8 0.182 151.7);
   --color-warning: oklch(0.879 0.1534 91.6);
   --color-info: oklch(0.754 0.139 232.7);
+
+  /* Dark: badge text rides lighter on the dark color/15 tint (already legible,
+     pinned here so the text-safe tokens resolve in both themes). */
+  --color-success-text: oklch(0.84 0.17 153);
+  --color-error-text: oklch(0.82 0.1 19.6);
+  --color-info-text: oklch(0.79 0.13 232.7);
 
   --gradient-hero:
     radial-gradient(120% 80% at 0% 0%, oklch(0.585 0.204 277.1 / 0.28), transparent 60%),

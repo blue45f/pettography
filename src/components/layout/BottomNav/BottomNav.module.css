@@ -31,7 +31,9 @@
   align-items: center;
   gap: 2px;
   padding: 0.6rem 0.25rem 0.5rem;
-  color: var(--color-text-muted);
+  /* text-secondary (≈7.6:1), not text-muted (≈2.6:1) — this is the persistent
+     mobile nav, so its labels must clear WCAG-AA at the 0.7rem size. */
+  color: var(--color-text-secondary);
   font-size: 0.7rem;
   font-weight: 600;
   text-decoration: none;
@@ -61,9 +63,15 @@
 }
 
 .link.active {
-  color: var(--color-primary);
+  /* primary-700 keeps the active label legible (≥4.5:1) even under the lighter
+     category themes (reptile/amphibian/arthropod) where primary-600 dips. */
+  color: var(--color-primary-700);
   border-top-color: var(--color-primary);
   background: var(--color-primary-soft);
+}
+
+[data-theme='dark'] .link.active {
+  color: var(--color-primary-200);
 }
 
 .link.active .icon {

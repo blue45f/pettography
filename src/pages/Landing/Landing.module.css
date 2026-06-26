@@ -4,6 +4,15 @@
   gap: var(--spacing-3xl);
 }
 
+/* On phones the 3xl section rhythm (up to 5rem) buries the features grid a full
+   viewport below the fold; tighten it so the second section peeks within ~one
+   short scroll while keeping the airy desktop cadence. */
+@media (max-width: 600px) {
+  .landing {
+    gap: var(--spacing-xl);
+  }
+}
+
 .hero {
   position: relative;
   isolation: isolate;
@@ -66,6 +75,15 @@
 @media (prefers-reduced-motion: reduce) {
   .heroAura {
     animation: none;
+  }
+}
+
+/* Phone: trim the hero's vertical padding and the gap to the collage so the
+   first fold shows copy + CTAs + proof without a full extra screen of air. */
+@media (max-width: 600px) {
+  .hero {
+    gap: var(--spacing-lg);
+    padding: clamp(1.5rem, 5vw, 2rem) clamp(1.1rem, 4vw, 1.5rem);
   }
 }
 
@@ -157,6 +175,16 @@
   grid-template-rows: repeat(6, 1fr);
   align-self: stretch;
   min-height: clamp(15rem, 32vw, 22rem);
+}
+
+/* The collage is decorative (aria-hidden) — pin a compact height on phones so
+   it accents the fold instead of growing to the 640×800 photo aspect (~440px)
+   and pushing the features grid a whole extra screen down. */
+@media (max-width: 600px) {
+  .heroCollage {
+    height: 12rem;
+    min-height: 0;
+  }
 }
 
 .shot {

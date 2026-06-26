@@ -82,6 +82,11 @@
   --color-state-warning: var(--color-warning);
   --color-state-info: var(--color-info);
 
+  /* text-safe state tones → WCAG-AA badge label text on the color/15 tints */
+  --color-state-error-text: var(--color-error-text);
+  --color-state-success-text: var(--color-success-text);
+  --color-state-info-text: var(--color-info-text);
+
   /* ----------------------------------------------------------------------
      Motion easing → ease-expo / ease-quint (Tailwind's --ease-* namespace;
      no collision with the source --easing-* names).
