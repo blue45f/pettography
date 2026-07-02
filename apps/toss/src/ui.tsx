@@ -2,6 +2,66 @@ import { theme } from './theme'
 
 import type { ReactNode } from 'react'
 
+export function EmojiTile({ emoji, seed, size = 56 }: { emoji: string; seed: string; size?: number }) {
+  const hue = seed.split('').reduce((a, c) => a + c.charCodeAt(0), 0) % 360
+  return (
+    <div
+      aria-hidden
+      style={{
+        width: size,
+        height: size,
+        flexShrink: 0,
+        borderRadius: Math.max(10, Math.round(size * 0.25)),
+        display: 'grid',
+        placeItems: 'center',
+        fontSize: Math.round(size * 0.5),
+        background: `linear-gradient(140deg, oklch(0.42 0.1 ${hue}), oklch(0.28 0.07 ${hue}))`,
+      }}
+    >
+      {emoji}
+    </div>
+  )
+}
+
+export function SectionTitle({
+  children,
+  action,
+}: {
+  children: ReactNode
+  action?: { label: string; onClick: () => void }
+}) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'baseline',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+      }}
+    >
+      <h2 style={{ fontSize: 15.5, fontWeight: 800 }}>{children}</h2>
+      {action && (
+        <button
+          type="button"
+          onClick={action.onClick}
+          className="pressable"
+          style={{
+            border: 'none',
+            background: 'none',
+            padding: 0,
+            color: theme.accent,
+            fontSize: 13,
+            fontWeight: 700,
+            cursor: 'pointer',
+          }}
+        >
+          {action.label} ›
+        </button>
+      )}
+    </div>
+  )
+}
+
 export function Badge({ children, accent }: { children: ReactNode; accent?: boolean }) {
   return (
     <span

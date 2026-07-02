@@ -1,6 +1,8 @@
 import { Button } from '@toss/tds-mobile'
 import { useEffect, useState } from 'react'
 
+import { AdBanner } from '../components/AdBanner'
+import { firePawBurst } from '../components/PawBurst'
 import {
   getSpeciesBySlug,
   CATEGORY_LABEL,
@@ -9,7 +11,8 @@ import {
   ACTIVITY_LABEL,
   won,
 } from '../lib/api'
-import { shareMessage } from '../lib/toss'
+import { useAppStore } from '../lib/store'
+import { getTossShareLinkSafe, haptic, shareMessage, WEB_ORIGIN } from '../lib/toss'
 import { navigate } from '../router'
 import { theme } from '../theme'
 import { Badge, StatStrip } from '../ui'
@@ -36,17 +39,39 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 export function SpeciesDetailPage({ slug = '' }: { slug?: string }) {
   const s = getSpeciesBySlug(slug)
   const [toast, setToast] = useState<string | null>(null)
+  const favorites = useAppStore((st) => st.favorites)
+  const checklist = useAppStore((st) => st.checklist)
+  const toggleFavorite = useAppStore((st) => st.toggleFavorite)
+  const addToChecklist = useAppStore((st) => st.addToChecklist)
+
   useEffect(() => {
     if (!toast) return
     const x = window.setTimeout(() => setToast(null), 1800)
     return () => window.clearTimeout(x)
   }, [toast])
 
+  const isFavorite = s ? favorites.includes(s.id) : false
+  const inChecklist = s ? Boolean(checklist[s.id]) : false
+
+  const onToggleFavorite = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (!s) return
+    if (!isFavorite) {
+      haptic('success')
+      const rect = event.currentTarget.getBoundingClientRect()
+      firePawBurst(rect.left + rect.width / 2, rect.top + rect.height / 2)
+      setToast('서재에 담았어요.')
+    } else {
+      haptic('tickWeak')
+    }
+    toggleFavorite(s.id)
+  }
+
   const Header = (
     <header
       style={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'space-between',
         height: 56,
         padding: '0 8px',
         paddingTop: 'env(safe-area-inset-top)',
@@ -60,7 +85,7 @@ export function SpeciesDetailPage({ slug = '' }: { slug?: string }) {
       <button
         type="button"
         aria-label="뒤로"
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/species')}
         className="pressable"
         style={{
           width: 44,
@@ -74,6 +99,26 @@ export function SpeciesDetailPage({ slug = '' }: { slug?: string }) {
       >
         ←
       </button>
+      {s && (
+        <button
+          type="button"
+          aria-label={isFavorite ? '즐겨찾기 해제' : '즐겨찾기'}
+          aria-pressed={isFavorite}
+          onClick={onToggleFavorite}
+          className="pressable"
+          style={{
+            width: 44,
+            height: 44,
+            background: 'none',
+            border: 'none',
+            fontSize: 22,
+            cursor: 'pointer',
+            color: isFavorite ? theme.accent : theme.textMuted,
+          }}
+        >
+          {isFavorite ? '💚' : '🤍'}
+        </button>
+      )}
     </header>
   )
   if (!s)
@@ -87,10 +132,26 @@ export function SpeciesDetailPage({ slug = '' }: { slug?: string }) {
     )
 
   const hue = s.koreanName.split('').reduce((a, c) => a + c.charCodeAt(0), 0) % 360
+
   const share = async () => {
-    const r = await shareMessage(`[페토그래피] ${s.koreanName} (${s.scientificName})\n${s.summary}`)
-    if (r === 'clipboard') setToast('클립보드에 복사했어요.')
+    const deepLink = `intoss://pettography/species/${encodeURIComponent(s.slug)}`
+    const tossLink = await getTossShareLinkSafe(deepLink, `${WEB_ORIGIN}/og-toss.png`)
+    const fallbackLink = `${WEB_ORIGIN}/species/${encodeURIComponent(s.slug)}`
+    const message = `[페토그래피] ${s.koreanName} (${s.scientificName})\n${s.summary}\n${tossLink ?? fallbackLink}`
+    const r = await shareMessage(message)
+    if (r === 'clipboard') setToast('링크를 클립보드에 복사했어요.')
   }
+
+  const onChecklistCta = () => {
+    if (inChecklist) {
+      navigate('/checklist')
+      return
+    }
+    haptic('success')
+    addToChecklist(s.id)
+    setToast('케어 체크리스트에 담았어요.')
+  }
+
   const stats = [
     { label: '난이도', value: DIFFICULTY_LABEL[s.difficulty] || s.difficulty },
     { label: '수명', value: `${s.lifespanMinYears}~${s.lifespanMaxYears}년` },
@@ -100,7 +161,7 @@ export function SpeciesDetailPage({ slug = '' }: { slug?: string }) {
   return (
     <div style={{ minHeight: '100dvh', background: theme.bg }}>
       {Header}
-      <div className="rise" style={{ padding: '4px 20px 110px' }}>
+      <div className="rise" style={{ padding: '4px 20px 130px' }}>
         <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
           <div
             style={{
@@ -167,19 +228,37 @@ export function SpeciesDetailPage({ slug = '' }: { slug?: string }) {
           </div>
         ) : null}
 
-        <div style={{ marginTop: 22 }}>
+        <div style={{ display: 'flex', gap: 10, marginTop: 22 }}>
           <button
             type="button"
-            onClick={share}
+            onClick={() => navigate(`/compare?a=${encodeURIComponent(s.slug)}`)}
             className="pressable"
             style={{
-              width: '100%',
+              flex: 1,
               minHeight: 52,
               borderRadius: 14,
               border: `1px solid ${theme.border}`,
               background: 'transparent',
               color: theme.text,
-              fontSize: 16,
+              fontSize: 15.5,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
+            ⚖️ 비교하기
+          </button>
+          <button
+            type="button"
+            onClick={share}
+            className="pressable"
+            style={{
+              flex: 1,
+              minHeight: 52,
+              borderRadius: 14,
+              border: `1px solid ${theme.border}`,
+              background: 'transparent',
+              color: theme.text,
+              fontSize: 15.5,
               fontWeight: 700,
               cursor: 'pointer',
             }}
@@ -187,6 +266,8 @@ export function SpeciesDetailPage({ slug = '' }: { slug?: string }) {
             공유하기
           </button>
         </div>
+
+        <AdBanner style={{ marginTop: 22 }} />
       </div>
 
       <div
@@ -200,11 +281,8 @@ export function SpeciesDetailPage({ slug = '' }: { slug?: string }) {
           zIndex: 20,
         }}
       >
-        <Button
-          style={{ width: '100%' }}
-          onClick={() => setToast('케어 체크리스트 저장은 토스 로그인 연동 시 제공돼요.')}
-        >
-          케어 체크리스트 담기
+        <Button style={{ width: '100%' }} onClick={onChecklistCta}>
+          {inChecklist ? '체크리스트 보기' : '케어 체크리스트 담기'}
         </Button>
       </div>
       {toast && (
@@ -222,6 +300,7 @@ export function SpeciesDetailPage({ slug = '' }: { slug?: string }) {
             fontSize: 13.5,
             maxWidth: '90%',
             textAlign: 'center',
+            zIndex: 30,
           }}
         >
           {toast}

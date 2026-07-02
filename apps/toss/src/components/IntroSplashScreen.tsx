@@ -40,8 +40,8 @@ export default function IntroSplashScreen() {
 
     const particles: HeartParticle[] = []
     const colors = [
-      'rgba(244, 143, 177, ', // Pastel Pink
-      'rgba(255, 204, 188, ', // Peach Cream
+      'rgba(143, 212, 168, ', // Soft Mint
+      'rgba(95, 179, 122, ', // Brand Green
       'rgba(255, 235, 156, ', // Pastel Yellow
     ]
 
@@ -85,7 +85,7 @@ export default function IntroSplashScreen() {
     let frame = 0
     const render = () => {
       frame++
-      ctx.fillStyle = '#1e1b18' // Warm Pet Cocoa-dark background
+      ctx.fillStyle = '#0c140e' // Brand deep-green background
       ctx.fillRect(0, 0, width, height)
 
       // Draw and update hearts
@@ -111,7 +111,7 @@ export default function IntroSplashScreen() {
       ctx.letterSpacing = '6px'
       ctx.fillStyle = '#ffffff'
       ctx.shadowBlur = 10
-      ctx.shadowColor = 'rgba(244, 143, 177, 0.5)'
+      ctx.shadowColor = 'rgba(95, 179, 122, 0.55)'
 
       const progress = Math.min(frame / 40, 1)
       const currentText = text.substring(0, Math.floor(text.length * progress))
@@ -121,8 +121,8 @@ export default function IntroSplashScreen() {
       // Sub
       ctx.font = '500 10px monospace'
       ctx.letterSpacing = '2px'
-      ctx.fillStyle = 'rgba(244, 143, 177, 0.8)'
-      ctx.fillText('PET SNAPSHOT JOURNAL', width / 2, height / 2 + 32)
+      ctx.fillStyle = 'rgba(143, 212, 168, 0.9)'
+      ctx.fillText('RARE PET CARE PORTAL', width / 2, height / 2 + 32)
 
       animationFrameId = requestAnimationFrame(render)
     }
@@ -146,7 +146,7 @@ export default function IntroSplashScreen() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#1e1b18',
+        background: '#0c140e',
         opacity: isFading ? 0 : 1,
         transition: 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
         pointerEvents: isFading ? 'none' : 'auto',

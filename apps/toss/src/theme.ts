@@ -14,5 +14,6 @@ export const theme = {
 export const pageShell: React.CSSProperties = {
   maxWidth: 520,
   margin: '0 auto',
-  padding: '4px 16px 40px',
+  // 하단 여백은 플로팅 탭바(≈76px)+세이프에어리어를 피할 만큼 확보해요.
+  padding: '4px 16px calc(118px + env(safe-area-inset-bottom))',
 }

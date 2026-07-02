@@ -27,6 +27,11 @@ export const DIFFICULTY_LABEL: Record<string, string> = {
   advanced: '고급',
 }
 export const SPACE_LABEL: Record<string, string> = { small: '소형', medium: '중형', large: '대형' }
+export const HANDLING_LABEL: Record<string, string> = {
+  low: '낮음',
+  medium: '보통',
+  high: '높음',
+}
 export const ACTIVITY_LABEL: Record<string, string> = {
   nocturnal: '야행성',
   diurnal: '주행성',

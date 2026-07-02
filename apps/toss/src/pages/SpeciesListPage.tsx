@@ -1,37 +1,18 @@
 import { Top } from '@toss/tds-mobile'
 import { useMemo, useState } from 'react'
 
+import { AdBanner } from '../components/AdBanner'
 import { getSpecies, CATEGORY_LABEL, DIFFICULTY_LABEL, won, type Species } from '../lib/api'
 import { navigate } from '../router'
 import { theme, pageShell } from '../theme'
-import { SearchBar, Chips, Badge } from '../ui'
+import { SearchBar, Chips, Badge, EmojiTile } from '../ui'
 
 const ALL = '전체'
 
-function EmojiTile({ emoji, seed, size = 56 }: { emoji: string; seed: string; size?: number }) {
-  const hue = seed.split('').reduce((a, c) => a + c.charCodeAt(0), 0) % 360
-  return (
-    <div
-      style={{
-        width: size,
-        height: size,
-        flexShrink: 0,
-        borderRadius: 14,
-        display: 'grid',
-        placeItems: 'center',
-        fontSize: Math.round(size * 0.5),
-        background: `linear-gradient(140deg, oklch(0.42 0.1 ${hue}), oklch(0.28 0.07 ${hue}))`,
-      }}
-    >
-      {emoji}
-    </div>
-  )
-}
-
-export function SpeciesListPage() {
+export function SpeciesListPage({ initialCategory }: { initialCategory?: string }) {
   const items = getSpecies()
   const [q, setQ] = useState('')
-  const [cat, setCat] = useState(ALL)
+  const [cat, setCat] = useState(initialCategory || ALL)
 
   const cats = useMemo(() => {
     const c = new Map<string, number>()
@@ -69,7 +50,7 @@ export function SpeciesListPage() {
   return (
     <div style={{ minHeight: '100dvh', background: theme.bg }}>
       <Top
-        title={<Top.TitleParagraph size={22}>🦎 페토그래피</Top.TitleParagraph>}
+        title={<Top.TitleParagraph size={22}>🦎 종 도감</Top.TitleParagraph>}
         subtitleBottom={
           <Top.SubtitleParagraph size={15}>희귀 반려동물 종 정보·케어 가이드</Top.SubtitleParagraph>
         }
@@ -136,6 +117,8 @@ export function SpeciesListPage() {
             </p>
           )}
         </div>
+
+        <AdBanner style={{ marginTop: 20 }} />
       </div>
     </div>
   )
