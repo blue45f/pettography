@@ -477,3 +477,31 @@ p {
   --color-primary-alpha: oklch(0.814 0.109 1.5 / 0.18);
   --color-primary-soft: oklch(0.645 0.215 16.4 / 0.14);
 }
+
+/* ==========================================================================
+   Route transitions — View Transitions API (SPA, react-router `viewTransition`)
+   지원 브라우저에서만 동작(미지원은 자동 무전환), 모션 최소화 사용자는 제외.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: vt-page-out 0.2s var(--easing-quint, ease-out) both;
+  }
+
+  ::view-transition-new(root) {
+    animation: vt-page-in 0.26s var(--easing-quint, ease-out) both;
+  }
+}
+
+@keyframes vt-page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes vt-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
+import BgmDock from './BgmDock'
 import styles from './Footer.module.css'
 
 function Footer() {
@@ -51,6 +52,7 @@ function Footer() {
             GitHub ↗
           </a>
         </div>
+        <BgmDock />
         <div className={styles.businessInfo}>
           <div className={styles.businessGrid}>
             <div>

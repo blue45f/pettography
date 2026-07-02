@@ -236,8 +236,33 @@
   z-index: 4;
 }
 
+/* 히어로 동적 연출 — 콜라주 사진에 아주 느린 켄번스(줌+팬). 컨테이너가
+   overflow:hidden이라 가장자리는 잘리고, 사진이 살아 숨쉬는 인상만 남아요. */
+.shot img {
+  animation: kenBurns 16s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.shot2 img {
+  animation-delay: -5s;
+}
+
+.shot3 img {
+  animation-delay: -10s;
+}
+
+@keyframes kenBurns {
+  from {
+    transform: scale(1) translate(0, 0);
+  }
+  to {
+    transform: scale(1.07) translate(-1.5%, 1.2%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .shot {
+  .shot,
+  .shot img {
     animation: none;
   }
 }

@@ -3,6 +3,7 @@ import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
+import Reveal from '@components/common/Reveal'
 import Select from '@components/common/Select'
 import Skeleton from '@components/common/Skeleton'
 import { SponsoredRail } from '@components/deskcloud/SponsoredRail'
@@ -276,11 +277,11 @@ function SpeciesCatalog() {
       )}
 
       <ul className={styles.grid}>
-        {filtered?.map((s) => {
+        {filtered?.map((s, idx) => {
           const isPicked = comparePicks.includes(s.id)
           const canPick = comparePicks.length < COMPARE_MAX || isPicked
           return (
-            <li key={s.id} className={styles.gridItem}>
+            <Reveal as="li" key={s.id} delay={Math.min(idx, 8) * 45} className={styles.gridItem}>
               <Link to={`/species/${s.slug}`} className={styles.cardLink}>
                 <Card padding="lg" hoverable className={styles.card}>
                   <Card.Body>
@@ -330,7 +331,7 @@ function SpeciesCatalog() {
               >
                 {isPicked ? '✓' : '+'}
               </button>
-            </li>
+            </Reveal>
           )
         })}
       </ul>

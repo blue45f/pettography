@@ -43,6 +43,7 @@ function BottomNav() {
             <li key={item.path}>
               <Link
                 to={item.path}
+                viewTransition
                 className={`${styles.link} ${isActive ? styles.active : ''}`}
                 aria-current={isActive ? 'page' : undefined}
               >

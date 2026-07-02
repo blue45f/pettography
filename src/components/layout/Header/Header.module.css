@@ -253,6 +253,25 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   z-index: 110;
+  transform-origin: top right;
+  animation: menuPop 180ms var(--easing-quint) both;
+}
+
+@keyframes menuPop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moreMenu {
+    animation: none;
+  }
 }
 
 .moreLink {

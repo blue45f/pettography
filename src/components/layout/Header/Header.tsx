@@ -95,11 +95,11 @@ function Header({ onOpenCommand }: HeaderProps) {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <Link to="/" className={styles.logo} aria-label={t('common.appName')}>
+        <Link to="/" viewTransition className={styles.logo} aria-label={t('common.appName')}>
           <span aria-hidden="true">🐾</span> {t('common.appName')}
           <span className={styles.betaBadge}>BETA</span>
         </Link>
-        <Link to="/sos" className={styles.sosChip} aria-label={t('nav.sos')}>
+        <Link to="/sos" viewTransition className={styles.sosChip} aria-label={t('nav.sos')}>
           {t('nav.sos')}
         </Link>
         <div className={`${styles.actions} ${menuOpen ? styles.open : ''}`}>
@@ -111,6 +111,7 @@ function Header({ onOpenCommand }: HeaderProps) {
                   <li key={item.path}>
                     <Link
                       to={item.path}
+                      viewTransition
                       className={`${styles.navLink} ${isActive ? styles.active : ''}`}
                       aria-current={isActive ? 'page' : undefined}
                       onClick={closeAll}
@@ -141,6 +142,7 @@ function Header({ onOpenCommand }: HeaderProps) {
                           <Link
                             key={item.path}
                             to={item.path}
+                            viewTransition
                             role="menuitem"
                             className={`${styles.moreLink} ${isActive ? styles.moreLinkActive : ''}`}
                             aria-current={isActive ? 'page' : undefined}
