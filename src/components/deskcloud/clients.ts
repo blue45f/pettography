@@ -157,6 +157,15 @@ export function getAdClient(): AdClient | null {
 }
 
 /**
+ * AdDesk가 데모 키(pk_demo 폴백)로 동작 중인지 — URL만 있고 실 퍼블리셔블 키가 없는
+ * 배포에서 serve 요청은 서버 CORS/인증에 막혀 콘솔 에러만 남긴다. 호출부(SponsoredRail)는
+ * 이 경우 요청 자체를 스킵해야 한다(브라우저 레벨 CORS 로그는 JS로 못 삼킴).
+ */
+export function isAdDeskDemo(): boolean {
+  return configs.ad !== null && configs.ad.publishableKey === PK_DEMO
+}
+
+/**
  * SpeciesCatalog "추천(Sponsored)" 레일이 서빙하는 슬롯 키들(슬롯당 1 크리에이티브).
  * `VITE_ADDESK_SLOTS`(콤마 구분)로 배포별 오버라이드. 활성 크리에이티브를 반환하는
  * 슬롯만 렌더되므로, 미설정 슬롯(과 AdDesk OFF 전체)은 보이지 않는다.

@@ -76,8 +76,10 @@ function KakaoMap({ center, markers = [], level = 6, height = 320, placeholder }
   const wrapperStyle = useMemo(() => ({ height: `${height}px` }), [height])
 
   if (apiState.status === 'unavailable') {
+    // 지도 키 미설정 — 요청받은 height만큼 빈 박스를 차지하지 않고 컴팩트한 한 줄
+    // 안내로 축소해, 아래 목록 콘텐츠가 첫 화면에 바로 보이게 해요.
     return (
-      <div className={styles.placeholder} style={wrapperStyle} aria-hidden="true">
+      <div className={styles.placeholderCompact} aria-hidden="true">
         🗺️ {placeholderText}
       </div>
     )

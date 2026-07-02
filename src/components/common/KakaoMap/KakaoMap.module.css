@@ -18,3 +18,19 @@
   padding: var(--spacing-md);
   text-align: center;
 }
+
+/* 키 미설정(unavailable) — 높이를 강제하지 않는 컴팩트 안내 배너 */
+.placeholderCompact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--border-radius);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  text-align: center;
+}

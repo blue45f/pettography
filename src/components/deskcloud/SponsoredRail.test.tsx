@@ -1,12 +1,13 @@
 import { cleanup, render, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi, type Mock } from 'vitest'
 
-import { getAdClient } from './clients'
+import { getAdClient, isAdDeskDemo } from './clients'
 import { SponsoredRail } from './SponsoredRail'
 
 // AdDesk is env-gated via clients.ts; mock the factory + slots to control state.
 vi.mock('./clients', () => ({
   getAdClient: vi.fn(),
+  isAdDeskDemo: vi.fn(() => false),
   adSlots: ['species-spotlight-1'],
 }))
 
@@ -27,6 +28,21 @@ describe('SponsoredRail', () => {
     const { container } = render(<SponsoredRail />)
     expect(container.querySelector('section')).toBeNull()
     expect(container.textContent).toBe('')
+  })
+
+  it('skips serving entirely on the demo key (pk_demo) — no request, no rail', () => {
+    const serve = vi.fn()
+    // Once만 true — 기본 구현(false)이 다음 테스트에 그대로 남도록.
+    ;(isAdDeskDemo as unknown as Mock).mockReturnValueOnce(true)
+    mockGetAdClient.mockReturnValue({
+      serve,
+      trackImpression: vi.fn(),
+      trackClick: vi.fn(),
+    })
+
+    const { container } = render(<SponsoredRail />)
+    expect(serve).not.toHaveBeenCalled()
+    expect(container.querySelector('section')).toBeNull()
   })
 
   it('renders a sponsored card when a slot serves a creative', async () => {

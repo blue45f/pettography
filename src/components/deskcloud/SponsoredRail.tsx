@@ -16,7 +16,7 @@ import { ArrowUpRight, Info } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { adSlots, getAdClient } from './clients'
+import { adSlots, getAdClient, isAdDeskDemo } from './clients'
 
 type Creative = ServeResult & { creativeId: string; imageUrl: string }
 
@@ -35,7 +35,9 @@ export function SponsoredRail() {
 
   useEffect(() => {
     const client = getAdClient()
-    if (!client || adSlots.length === 0) return
+    // 데모 키(pk_demo)면 serve를 아예 스킵 — 서버가 거부하는 요청은 CORS 콘솔 에러만
+    // 남기고(브라우저 레벨 로그라 JS로 억제 불가) 슬롯은 어차피 접힌다.
+    if (!client || adSlots.length === 0 || isAdDeskDemo()) return
     const ctrl = new AbortController()
     let cancelled = false
     Promise.allSettled(adSlots.map((slot) => client.serve({ slot, signal: ctrl.signal }))).then(

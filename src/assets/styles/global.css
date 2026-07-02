@@ -1,7 +1,15 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* 전역 리셋은 반드시 base 레이어에 — 무계층(unlayered) 규칙은 카스케이드 레이어를
+   항상 이기므로, 무계층 유니버설 리셋은 @layer utilities의 Tailwind 스페이싱
+   유틸리티(p-, m-, px-, py- 계열)를 전부 무효화해 Tailwind 기반 화면(온보딩/샵/
+   매치/서포트 카드)의 패딩을 지웠다. base 레이어(tailwind.css가 선언한
+   theme, base, components, utilities 순서)에 두면 리셋은 유지되면서
+   유틸리티가 정상적으로 이긴다. */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 }
 
 :root {
@@ -78,7 +86,10 @@
     oklch(0.585 0.204 277.1 / 0.06),
     oklch(0.645 0.215 16.4 / 0.04)
   );
-  --gradient-glass: linear-gradient(180deg, oklch(1 0 0 / 0.7), oklch(1 0 0 / 0.5));
+  /* 글래스 표면(Header·BottomNav) — backdrop-filter가 무시되는 환경(일부 WebView/캡쳐)
+     에서도 아래 콘텐츠가 라벨을 관통해 보이지 않도록 사실상 불투명(≥0.92)하게 유지해요.
+     blur는 progressive enhancement로 남아 있어요. */
+  --gradient-glass: linear-gradient(180deg, oklch(1 0 0 / 0.96), oklch(1 0 0 / 0.92));
 
   /* 'Pretendard Variable'은 index.html의 jsdelivr dynamic subset CSS가 로드(font-display: swap).
      'Pretendard'는 로컬 설치본 대비 폴백, 이후는 시스템 sans. */
@@ -190,10 +201,11 @@
     oklch(0.585 0.204 277.1 / 0.16),
     oklch(0.645 0.215 16.4 / 0.1)
   );
+  /* 라이트와 동일한 이유로 다크도 사실상 불투명 유지(blur 미적용 환경 가독성). */
   --gradient-glass: linear-gradient(
     180deg,
-    oklch(0.21 0.032 264.7 / 0.7),
-    oklch(0.21 0.032 264.7 / 0.4)
+    oklch(0.21 0.032 264.7 / 0.96),
+    oklch(0.21 0.032 264.7 / 0.92)
   );
 
   --shadow-xs: 0 1px 2px oklch(0 0 0 / 0.4);
