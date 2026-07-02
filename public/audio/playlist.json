@@ -1,0 +1,18 @@
+{
+  "tracks": [
+    {
+      "src": "/audio/moonpetal-garden.mp3",
+      "title": "Moonpetal Garden (Cottagecore Folk, Female Vocals)",
+      "artist": "MoonpetalMedia",
+      "license": "Pixabay Content License",
+      "creditUrl": "https://pixabay.com/music/folk-moonpetal-garden-cottagecore-folk-song-with-female-vocals-548574/"
+    },
+    {
+      "src": "/audio/mornings-whisper.mp3",
+      "title": "Mornings Whisper (Indie Folk, Male Vocal)",
+      "artist": "kaazoom",
+      "license": "Pixabay Content License",
+      "creditUrl": "https://pixabay.com/music/indie-pop-mornings-whisper-indie-folk-love-song-male-vocal-509675/"
+    }
+  ]
+}
