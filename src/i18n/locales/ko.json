@@ -111,7 +111,7 @@
     "food": "먹이 가이드",
     "events": "박람회 일정",
     "contact": "문의하기",
-    "support": "문의",
+    "support": "도움·지원",
     "onboarding": "처음 선택",
     "short": {
       "dashboard": "포탈",
@@ -440,13 +440,21 @@
   },
   "funeral": {
     "title": "장례·추모",
-    "subtitle": "정부 등록 동물장묘업체와 추모 서비스",
+    "subtitle": "공식 동물장묘업 조회와 장례·추모 서비스 참고 링크",
+    "officialKicker": "Official registry first",
+    "officialTitle": "예약 전 동물장묘업 허가 상태를 먼저 확인하세요",
+    "officialDesc": "업체 허가 상태는 바뀔 수 있습니다. 국가동물보호정보시스템의 반려동물 영업자 안내에서 업체명과 지역으로 다시 조회하세요.",
+    "officialLink": "공식 동물장묘업 조회",
+    "dataNotice": "아래 목록은 탐색을 돕는 참고 링크이며 현재 허가·운영·취급 동물을 보증하지 않습니다.",
     "kindCremation": "화장장",
     "kindMemorial": "추모/메모리얼",
     "kindPickup": "픽업 서비스",
     "kindDirectory": "디렉토리",
-    "certified": "정부 등록",
-    "uncertified": "미등록 주의",
+    "certified": "등록 정보 있음",
+    "uncertified": "등록 확인 필요",
+    "verifyRequired": "공식 등록 재확인",
+    "supportedCategories": "목록상 취급 동물: {{categories}} · 예약 전 업체에 직접 확인",
+    "loadFailed": "장례 서비스 참고 목록을 불러오지 못했습니다.",
     "noResult": "선택한 카테고리에 맞는 장묘업체가 아직 등록되지 않았어요.",
     "inquireCta": "장례 관련 문의"
   },
@@ -470,7 +478,7 @@
   },
   "supplies": {
     "title": "사료·재고 트래커",
-    "subtitle": "살아있는 먹이는 1~2주 보관 한계. 주 소비량으로 자동 남은 일수를 계산하고, 떨어지기 전에 알려드립니다.",
+    "subtitle": "현재 반려동물의 실제 보충 수량과 사용 속도를 기록해 소모품 부족을 미리 살핍니다.",
     "addTitle": "재고 항목 추가",
     "name": "이름",
     "namePlaceholder": "예) 귀뚜라미 M, 둠비아 로치, CGD",
@@ -515,12 +523,25 @@
       "qtyPositive": "수량은 0보다 큰 값이어야 합니다.",
       "consumptionNumber": "주 소비량은 숫자여야 합니다.",
       "consumptionPositive": "주 소비량은 0보다 큰 값이어야 합니다.",
-      "vendorMax": "공급처는 60자 이내입니다."
-    }
+      "vendorMax": "공급처는 60자 이내입니다.",
+      "dateInvalid": "올바른 보충 날짜를 입력해 주세요.",
+      "dateFuture": "미래 날짜의 보충 기록은 저장할 수 없어요.",
+      "qtyMax": "수량은 1,000,000 이하로 입력해 주세요.",
+      "consumptionMax": "주간 소비량은 1,000,000 이하로 입력해 주세요.",
+      "restockRange": "추가 수량은 1부터 1,000,000 사이로 입력해 주세요."
+    },
+    "eyebrow": "PER-PET INVENTORY",
+    "petRequiredTitle": "재고를 관리할 반려동물을 선택해 주세요",
+    "petRequiredBody": "같은 물품도 개체별 사용량이 달라 공용 합계로 섞지 않습니다.",
+    "petRequiredAction": "반려동물 선택하기",
+    "aPet": "반려동물",
+    "estimateNote": "남은 수량과 일수는 입력한 주간 소비량을 일정하다고 가정한 단순 추정입니다. 폐사, 폐기, 계절 변화와 실제 사용량을 반영해 수시로 조정하세요.",
+    "removeConfirm": "재고 항목 “{{name}}”을 삭제할까요?",
+    "removed": "재고 항목을 삭제했어요."
   },
   "budget": {
     "title": "비용 트래커",
-    "subtitle": "이번 달 사육 지출을 카테고리별로 모으고, 종 권장 월 예산과 비교하세요.",
+    "subtitle": "한 반려동물의 실제 지출을 기록하고, 카탈로그 추정치와는 판정 없이 나란히 비교합니다.",
     "thisMonth": "{{month}} 지출",
     "recommended": "권장",
     "remaining": "남음",
@@ -556,8 +577,29 @@
       "amountNumber": "금액은 숫자여야 합니다.",
       "amountPositive": "금액은 0보다 큰 값이어야 합니다.",
       "merchantMax": "상점명은 80자 이내입니다.",
-      "noteMax": "메모는 200자 이내입니다."
-    }
+      "noteMax": "메모는 200자 이내입니다.",
+      "dateInvalid": "올바른 지출 날짜를 입력해 주세요.",
+      "dateFuture": "미래 날짜의 지출은 기록할 수 없어요.",
+      "amountMax": "금액은 10억 원 이하로 입력해 주세요."
+    },
+    "eyebrow": "PRIVATE COST LOG",
+    "petRequiredTitle": "지출을 기록할 반려동물을 선택해 주세요",
+    "petRequiredBody": "비용은 개체별로 분리해 저장합니다. 가구 전체 합계는 비용 보고서에서 확인할 수 있어요.",
+    "petRequiredAction": "반려동물 선택하기",
+    "activePet": "{{name}}의 개별 비용",
+    "aPet": "반려동물",
+    "entryCount": "이번 달 {{count}}건 기록",
+    "catalogReference": "종 카탈로그 월 추정치",
+    "referenceRatio": "참고값 대비 {{pct}}%",
+    "referenceRatioAria": "종 카탈로그 월 추정치 대비 {{pct}}퍼센트",
+    "aboveReference": "참고 추정치보다 {{amount}} 많이 기록됨",
+    "belowReference": "참고 추정치보다 {{amount}} 적게 기록됨",
+    "referenceNote": "적거나 많다고 해서 돌봄이 좋거나 나쁘다는 뜻은 아닙니다. 의료비, 초기 장비, 지역 가격과 실제 필요를 우선하세요.",
+    "openReport": "가구 비용 보고서 보기",
+    "formKicker": "NEW EXPENSE",
+    "privateNote": "비용 내역은 이 브라우저에만 저장됩니다. 카드번호, 계좌번호, 주민등록번호는 입력하지 마세요.",
+    "removeConfirm": "이 지출 기록을 삭제할까요?",
+    "removed": "지출 기록을 삭제했어요."
   },
   "habitat": {
     "title": "환경 모니터",
@@ -686,7 +728,21 @@
     "modeLive": "라이브 모드 — 서버와 주기적으로 동기화 중",
     "loadFailed": "수의사 목록을 불러오지 못했어요.",
     "sendFailed": "메시지를 보내지 못했어요. 다시 시도해주세요.",
-    "syncing": "대화를 불러오는 중..."
+    "syncing": "대화를 불러오는 중...",
+    "subtitleLive": "연결된 상담 서버의 수의사 목록과 대화를 동기화합니다.",
+    "subtitleDemo": "상담 화면을 체험하는 데모이며 실제 의료진과 연결되지 않습니다.",
+    "demoNoticeTitle": "데모 상담입니다",
+    "demoNoticeBody": "표시된 인물·병원·요금과 답변은 예시 데이터이며 실제 진료나 예약이 아닙니다.",
+    "liveNoticeTitle": "서버 연결 상담",
+    "liveNoticeBody": "연결 상태만 의미합니다. 의료진 자격, 비용, 응답 시간은 상담 전에 확인하고 응급 상황에는 채팅을 기다리지 마세요.",
+    "emergencyLink": "응급 SOS 열기",
+    "rate": "{{amount}}/시간",
+    "demoRate": "예시 {{amount}}/시간",
+    "noVets": "현재 표시할 상담 의료진이 없습니다.",
+    "threadFailed": "대화를 동기화하지 못했습니다.",
+    "demoReply": "[{{name}} 데모 자동답변] 메시지를 받았습니다. 이 화면은 실제 진료가 아닙니다. 응급 신호가 있으면 병원에 바로 연락하세요.",
+    "privacyNote": "주민등록번호·결제정보 등 민감정보를 보내지 마세요.",
+    "messageTooLong": "메시지는 {{max}}자 이내로 입력해주세요."
   },
   "forum": {
     "title": "종별 커뮤니티 포럼",
@@ -786,7 +842,7 @@
     "title": "어드민 대시보드",
     "subtitle": "운영 통계·입점 신청 검토·게시판 모더레이션",
     "gateTitle": "관리자 로그인",
-    "gateDesc": "관리자 또는 모더레이터 계정으로 로그인하면 운영 도구가 열립니다.",
+    "gateDesc": "관리자 또는 운영자 계정으로 로그인하세요. 저장된 세션도 서버에서 다시 확인합니다.",
     "email": "이메일",
     "password": "비밀번호",
     "login": "로그인",
@@ -865,7 +921,29 @@
     "cafeArchivedToast": "카페를 보관했습니다",
     "cafeRestoredToast": "카페를 복구했습니다",
     "partnersSubtitle": "입점 신청을 검토하고 승인/반려합니다.",
-    "partnersEmpty": "대기 중인 신청이 없습니다"
+    "partnersEmpty": "대기 중인 신청이 없습니다",
+    "checkingSession": "관리자 세션을 서버에서 확인하고 있어요.",
+    "backToService": "일반 서비스로 돌아가기",
+    "accountsLoadError": "계정 목록을 불러오지 못했습니다.",
+    "rulesLoadError": "금칙어 규칙을 불러오지 못했습니다.",
+    "accountRole": {
+      "member": "일반 회원",
+      "moderator": "운영자",
+      "admin": "관리자"
+    },
+    "accountStatus": {
+      "active": "활성",
+      "suspended": "정지",
+      "withdrawn": "탈퇴"
+    },
+    "confirmRoleChange": "{{name}} 계정의 권한을 변경할까요? 변경 즉시 관리자 기능 접근 범위가 달라질 수 있습니다.",
+    "confirmStatusChange": "{{name}} 계정의 상태를 변경할까요? 정지 또는 탈퇴 상태에서는 로그인이 제한됩니다.",
+    "confirmAccountDelete": "{{name}} 계정을 삭제할까요? 이 작업은 되돌릴 수 없습니다.",
+    "confirmRuleDelete": "금칙어 “{{phrase}}” 규칙을 삭제할까요?",
+    "confirmAttachmentDelete": "첨부파일 “{{name}}”을 삭제할까요?",
+    "confirmContentDelete": "콘텐츠 “{{title}}”을 완전히 삭제할까요? 숨김과 달리 되돌릴 수 없습니다.",
+    "confirmCafeDelete": "카페 “{{name}}”와 관련 로컬 데이터를 삭제할까요?",
+    "confirmApplicationDelete": "제휴 신청 “{{name}}”을 삭제할까요? 상태 변경 대신 기록 자체가 사라집니다."
   },
   "match": {
     "title": "나에게 맞는 펫 찾기",
@@ -877,7 +955,15 @@
     "submit": "결과 보기",
     "restart": "다시 풀기",
     "resultTitle": "추천 결과",
-    "matchScore": "적합도 {{score}}점",
+    "matchScore": "적합도 {{score}} / {{max}}",
+    "monthlyBudget": "{{amount}}/월",
+    "resultDisclaimer": "규칙 기반 참고 순위이며 입양·분양 또는 사육 적합성을 보장하지 않습니다. 종 상세의 환경·수명·법적 요건을 함께 확인하세요.",
+    "loadingTitle": "추천 결과를 계산하고 있어요",
+    "loadingDesc": "최신 종 데이터를 불러온 뒤 답변과 비교합니다.",
+    "loadFailedTitle": "추천 데이터를 불러오지 못했습니다",
+    "loadFailedDesc": "답변은 유지되어 있습니다. 네트워크를 확인하고 다시 시도하세요.",
+    "emptyTitle": "추천할 수 있는 종 데이터가 없습니다",
+    "emptyDesc": "잠시 후 다시 시도하거나 종 카탈로그에서 직접 둘러보세요.",
     "openSpecies": "이 종 자세히 보기",
     "questions": {
       "experience": {
@@ -1098,11 +1184,26 @@
     "privacy": "개인정보처리방침",
     "terms": "이용약관",
     "contact": "문의하기",
-    "support": "문의 게시판",
+    "support": "도움·지원",
     "about": "소개",
     "faq": "자주 묻는 질문",
     "reportBug": "버그 제보",
-    "design": "디자인 시스템"
+    "design": "디자인 시스템",
+    "sitemap": "사이트맵",
+    "navigation": "푸터 탐색",
+    "githubLabel": "Pettography GitHub 저장소 새 창에서 열기",
+    "business": {
+      "name": "상호: 에이치준랩스",
+      "operator": "대표자: 김희준 · 개인정보보호책임자: 김희준",
+      "registration": "사업자등록번호: 355-07-03473",
+      "address": "주소: 서울특별시 송파구 가락로34길 13, 101호(방이동)",
+      "email": "이메일: blue45f@gmail.com",
+      "phone": "전화번호: 010-3873-4197",
+      "hosting": "호스팅 서비스: Vercel (Frontend)",
+      "platform": "플랫폼 형태: 희귀 반려동물 예약 및 케어 플랫폼",
+      "rights": "© {{year}} Pettography (Beta). All rights reserved.",
+      "beta": "위치 기반 매칭 베타 서비스"
+    }
   },
   "policy": {
     "eyebrow": "법적 고지",
@@ -1160,7 +1261,7 @@
       },
       "multiPet": {
         "q": "한 사용자가 여러 마리를 관리할 수 있나요?",
-        "a": "현재는 단일 펫 가정으로 설계되어 있습니다. Multi-pet 지원은 후속 작업으로 계획되어 있으며, 그 전에는 /backup으로 펫별 데이터를 분리 백업해 두는 방법을 권장합니다."
+        "a": "네. 내 포탈에서 여러 반려동물을 등록하고 활성 펫을 전환할 수 있습니다. 기록과 분석은 선택한 펫 기준으로 분리되므로 입력하기 전에 현재 활성 펫을 확인하세요."
       },
       "dataLoss": {
         "q": "브라우저를 지우면 데이터가 사라지나요?",
@@ -1207,13 +1308,13 @@
       "backup": "/backup 페이지에서 전체 데이터를 JSON으로 내보내고 다른 기기에서 복원할 수 있습니다.",
       "species": "종 정보는 국립생물자원관·Reptiles Magazine·MorphMarket 등 외부 자료를 요약·재구성한 가이드입니다.",
       "registry": "야생생물법 신고 안내는 환경부 wildlife.go.kr·animal.go.kr 공식 자료의 요약이며 법적 효력은 공식 자료가 최종 기준입니다.",
-      "external": "32개 외부 링크는 WebSearch + WebFetch로 검증한 한국 실제 사이트이며, 제휴 관계가 없습니다."
+      "external": "외부 링크는 출처를 함께 표시하며 제휴 관계가 없습니다. 중요한 결정 전에는 연결된 공식 원문에서 최신 정보를 다시 확인하세요."
     },
     "limitsTitle": "한계 및 후속 작업",
     "limits": {
       "map": "카카오맵 SDK 미연동 — VITE_KAKAO_MAP_KEY 등록 시 활성화됩니다.",
-      "whiteList": "백색목록 종 분류는 추정치 — 환경부 공식 발표에 따라 갱신 필요.",
-      "multiPet": "Multi-pet (한 사용자 다중 펫) 미지원 — 현재는 단일 펫 가정.",
+      "whiteList": "규제·백색목록 분류는 변경될 수 있으므로 거래·이동 전 환경부 공식 원문을 최종 확인해야 합니다.",
+      "multiPet": "다중 펫을 지원하며 각 기록은 입력 당시 활성 펫에 귀속됩니다. 입력 전 현재 선택을 확인해야 합니다.",
       "insurance": "보험 비교는 강아지·고양이 기준 — 희귀펫은 비상금 적립 권장."
     },
     "backHome": "홈으로",
@@ -1239,8 +1340,8 @@
     "showAll": "모든 펫 기록 보기"
   },
   "herd": {
-    "title": "내 펫 비교",
-    "subtitle": "여러 마리를 키우고 있다면 각 펫의 체중·접종·환경·지출·재고·일지·갤러리·신고 현황을 한 화면에 펼쳐서 비교하세요.",
+    "title": "반려동물 한눈에 보기",
+    "subtitle": "각 기록의 petId가 정확히 일치하는 경우에만 개체별 건강·환경·비용·재고를 모아 봅니다.",
     "singlePetTitle": "비교할 펫이 한 마리뿐입니다",
     "singlePetDesc": "헤더의 펫 스위처에서 '새 펫 추가'로 두 번째 펫을 만들면 비교 뷰가 활성화됩니다.",
     "activeBadge": "현재 활성",
@@ -1259,8 +1360,20 @@
       "noSupplies": "재고 없음",
       "filingsDone": "모두 완료",
       "filingsPending": "미완료 {{count}}건",
-      "breach": "임계 이탈 {{count}}"
-    }
+      "breach": "앱 참고 범위 {{count}}개 이탈"
+    },
+    "eyebrow": "STRICT PER-PET OVERVIEW",
+    "emptyTitle": "등록된 반려동물이 없어요",
+    "emptyDesc": "반려동물을 등록하면 개체별 기록을 안전하게 나눠 볼 수 있어요.",
+    "emptyAction": "반려동물 등록하기",
+    "singlePetNote": "현재 한 마리의 요약을 표시하고 있어요. 다른 반려동물을 추가하면 같은 형식으로 나란히 비교할 수 있습니다.",
+    "unnamed": "이름 없는 반려동물",
+    "due": {
+      "overdue": "{{count}}일 지남",
+      "today": "오늘 예정",
+      "future": "{{count}}일 후"
+    },
+    "supplyDays": "약 {{count}}일"
   },
   "events": {
     "title": "2026 한국 펫 박람회",
@@ -1280,17 +1393,63 @@
     "disclaimer": "일정·장소는 주최사 발표 기준입니다. 예정 일정은 변경될 수 있으니 공식 사이트에서 최종 확인하세요."
   },
   "food": {
-    "title": "먹이 단가·영양 가이드",
-    "subtitle": "한국 파충류·양서류·곤충 사용자가 자주 쓰는 먹이 10종의 평균 단가·영양·주의 사항을 한 표에 모았습니다. 카테고리 필터로 좁혀보세요.",
+    "title": "식단 계획",
+    "subtitle": "판매 상품이나 카테고리 일반식이 아니라, 현재 반려동물의 종·생애 단계·건강 상태를 기준으로 식단을 확인합니다.",
     "filterLabel": "카테고리 필터",
     "allCategories": "전체",
     "cautionLabel": "주의",
     "openShop": "공급처 열기",
-    "disclaimer": "단가는 2025~26년 한국 평균 추정치입니다. 영양 수치는 사료사·연구 자료 요약."
+    "disclaimer": "이 화면은 제품 추천, 급여 처방 또는 수의학적 진단을 제공하지 않습니다.",
+    "eyebrow": "SPECIES-FIRST FEEDING",
+    "petRequiredTitle": "식단을 확인할 반려동물을 선택해 주세요",
+    "petRequiredBody": "같은 파충류·양서류·포유류 안에서도 먹이 요구가 크게 달라 카테고리만으로 추천하지 않습니다.",
+    "petRequiredAction": "반려동물 선택하기",
+    "activePet": "{{name}}의 식단 계획",
+    "aPet": "반려동물",
+    "safetyKicker": "NO GENERIC MENU",
+    "safetyTitle": "종별 근거를 먼저 확인하세요",
+    "safetyBody": "주식, 급여량, 먹이 크기, 보충제와 UVB의 관계는 종과 개체 상태에 따라 달라집니다. 온라인 상품 설명이나 고정 횟수를 처방처럼 사용하지 마세요.",
+    "sourceLink": "MSD 수의학 매뉴얼의 파충류 영양 안내 보기",
+    "planKicker": "DECISION FLOW",
+    "planTitle": "급여 전 확인 순서",
+    "openSpeciesCare": "현재 종의 케어 가이드 보기",
+    "plan": {
+      "staple": {
+        "title": "주식의 형태와 근거",
+        "body": "완전배합식, 전먹이, 생먹이, 식물성 식단 중 무엇이 주식인지 종별 케어시트와 수의사에게 확인합니다."
+      },
+      "size": {
+        "title": "크기와 제공량",
+        "body": "개체의 몸 크기, 성장 단계, 체형과 활동량을 기준으로 먹이 크기와 양을 정합니다."
+      },
+      "variety": {
+        "title": "다양성·영양 균형",
+        "body": "한 품목만 반복하지 말고 주식의 영양 구성, 칼슘·인 균형, 지방과 수분을 함께 검토합니다."
+      },
+      "hygiene": {
+        "title": "보관·해동·위생",
+        "body": "부패, 재냉동, 농약 노출, 야외 채집과 장시간 방치를 피하고 도구와 손을 세척합니다."
+      },
+      "response": {
+        "title": "반응과 몸 상태",
+        "body": "섭취 여부뿐 아니라 체중, 배설, 구토·역류, 활동성과 입 주변 상태를 관찰합니다."
+      }
+    },
+    "actionsLabel": "식단 관련 도구",
+    "actions": {
+      "feedingTitle": "급여 기록",
+      "feedingBody": "실제로 제공한 먹이와 반응을 개체별로 기록합니다.",
+      "feedersTitle": "먹이생물 관리",
+      "feedersBody": "먹이생물의 영양 공급과 위생 상태를 관리합니다.",
+      "supplementsTitle": "보충제 기록",
+      "supplementsBody": "수의사와 확인한 실제 급여 내역만 기록합니다.",
+      "vetTitle": "특수동물 병원",
+      "vetBody": "식욕·체중·배설 이상이 있으면 진료 가능한 병원을 찾습니다."
+    }
   },
   "genetics": {
     "title": "모프 유전 계산기",
-    "subtitle": "부모 두 개체의 모프 유전자형을 고르면 펀넷 사각형으로 자손 표현형 확률을 계산합니다. 각 유전자좌는 서로 독립이라고 가정합니다.",
+    "subtitle": "확인된 단일 유전자와 독립 유전자좌 가정만으로 이론적 확률을 살펴보는 교육용 도구입니다.",
     "speciesLabel": "종 선택",
     "polygenicNote": "이 종의 인기 모프 상당수는 라인브리딩·다인자 유전이라 단순 멘델 계산으로 표현되지 않습니다. 여기서는 단일 유전자 모프만 모델링합니다.",
     "sire": "아빠",
@@ -1309,19 +1468,25 @@
       "odds": "확률"
     },
     "save": {
-      "title": "페어링 저장",
+      "title": "가상 시나리오 저장",
       "label": "페어링 이름",
       "placeholder": "예: 2026 파스텔 × 알비노 계획",
-      "cta": "저장",
-      "empty": "저장한 페어링이 아직 없습니다. 계획 중인 교배를 저장하면 활성 펫별로 모아 볼 수 있습니다.",
+      "cta": "시나리오 저장",
+      "empty": "저장한 가상 시나리오가 없어요.",
       "saved": "페어링을 저장했습니다.",
       "needTrait": "먼저 부모의 모프를 한 개 이상 선택하세요.",
-      "untitled": "이름 없는 페어링"
+      "untitled": "이름 없는 페어링",
+      "removeConfirm": "가상 시나리오 “{{label}}”을 삭제할까요?",
+      "removed": "가상 시나리오를 삭제했어요."
     },
     "legend": {
-      "title": "유전 용어 빠른 안내",
-      "body": "het(헤테로)는 열성 유전자를 1개만 가진 보인자로 겉모습은 노말이지만 자손에 물려줍니다. 공우성(코도미넌트)은 1카피가 기본 모프, 2카피가 다른 '슈퍼' 폼으로 발현합니다. 우성은 1카피만 있어도 발현합니다. '66% het' 표시는 노말로 보이는 자손이 보인자일 확률입니다."
-    }
+      "title": "단순 모델의 한계",
+      "body": "표시 확률은 각 알이 독립적으로 같은 이론 확률을 가진다는 뜻이며, 실제 한 클러치의 비율이나 건강·생존을 보장하지 않습니다."
+    },
+    "eyebrow": "EDUCATIONAL PROBABILITY MODEL",
+    "modelWarningTitle": "결과는 번식 권장이나 생존 예측이 아닙니다",
+    "modelWarningBody": "계통 불일치, 대립유전자 복합체, 연관 유전자, 불완전 침투, 성연관, 배아 치사와 건강·복지 문제는 이 단순 모델이 계산하지 못합니다. 스파이더·릴리화이트 및 안전하게 모델링할 수 없는 조합은 목록에서 제외했습니다. 실제 번식은 유전자 검사, 혈통 확인, 건강검진과 특수동물 수의사의 검토가 필요합니다.",
+    "sourceLink": "스파이더 볼파이톤 내이 기형 연구 보기"
   },
   "molt": {
     "title": "탈피 / 털갈이 추적기",
@@ -1384,6 +1549,7 @@
     "history": {
       "sincePrev": "이전 기록 +{{count}}일",
       "remove": "삭제",
+      "removeConfirm": "이 탈피 기록을 삭제할까요?",
       "speciesUnknown": "(종 선택 전 기록)"
     },
     "empty": {
@@ -1398,7 +1564,7 @@
   },
   "vivarium": {
     "title": "바이오액티브 비바리움 설계",
-    "subtitle": "기질 레이어, 클린업 크루, 식물을 조합해 스스로 정화되는 사육장을 설계하세요.",
+    "subtitle": "자동 완성 점수 없이, 현재 반려동물의 바이오액티브 재료와 측정 목표를 수동으로 정리하는 설계 메모입니다.",
     "intro": "바이오액티브 사육장은 배수층·토양·낙엽 위에 등각류와 톡토기 같은 클린업 크루, 살아있는 식물을 더해 배설물과 곰팡이를 스스로 분해하는 작은 생태계입니다. 종에 맞는 온습도 그래디언트까지 맞추면 청소 부담이 크게 줄어듭니다.",
     "loadTemplate": "추천 템플릿 불러오기",
     "templateApplied": "추천 템플릿을 불러왔어요.",
@@ -1433,7 +1599,8 @@
       "crew": "클린업 크루",
       "crewHint": "등각류·톡토기 등 (복수 선택)",
       "plants": "식물",
-      "plantsHint": "빛·습도에 맞춰 선택"
+      "plantsHint": "빛·습도에 맞춰 선택",
+      "note": "아래 항목은 설계 메모용 재료 목록이며 현재 종에 대한 자동 추천이 아닙니다."
     },
     "gradient": {
       "hot": "핫존 °C",
@@ -1485,17 +1652,46 @@
       "crew": "크루 {{count}}종",
       "plants": "식물 {{count}}종",
       "humidity": "습도 {{value}}%",
-      "temp": "{{hot}}/{{cool}}°C"
+      "temp": "{{hot}}/{{cool}}°C",
+      "removeConfirm": "설계 “{{name}}”을 삭제할까요?",
+      "removed": "비바리움 설계를 삭제했어요."
     },
     "aquatic": {
       "title": "이 종은 완전 수생이에요",
-      "body": "토양형 바이오액티브 비바리움 대신 수조 기반 설계가 필요합니다. 저온 유지, 여과, 질소 사이클 관리가 핵심이며 육상 기질 레이어는 적용되지 않습니다."
+      "body": "토양형 바이오액티브 비바리움 대신 수조 기반 설계가 필요합니다. 저온 유지, 여과, 질소 사이클 관리가 핵심이며 육상 기질 레이어는 적용되지 않습니다.",
+      "openWater": "수질 관리 도구 열기"
     },
     "errors": {
       "nameRequired": "빌드 이름을 입력해 주세요.",
       "nameMax": "이름은 80자 이하로 입력해 주세요.",
       "notesMax": "메모는 500자 이하로 입력해 주세요.",
-      "emptyBuild": "기질·크루·식물 중 하나 이상을 선택해 주세요."
+      "emptyBuild": "기질·크루·식물 중 하나 이상을 선택해 주세요.",
+      "numberInvalid": "온도와 습도는 숫자로 입력해 주세요.",
+      "range": "온도는 -20~60℃, 습도는 0~100% 범위로 입력해 주세요.",
+      "gradientOrder": "고온 지점은 저온 지점보다 낮을 수 없어요."
+    },
+    "eyebrow": "MANUAL HABITAT DRAFT",
+    "petRequiredTitle": "설계를 저장할 반려동물을 선택해 주세요",
+    "petRequiredBody": "바닥재, 식물, 미소생물과 환경 목표는 개체별로 검토해야 하므로 공용 설계로 저장하지 않습니다.",
+    "petRequiredAction": "반려동물 선택하기",
+    "aPet": "반려동물",
+    "safetyTitle": "바이오액티브는 자가 청소나 무관리 환경이 아닙니다",
+    "safetyBody": "식물·바닥재·클린업 크루는 섭취 독성, 농약·비료, 습도, 통풍, 탈출, 번식과 폐기 위험을 종별로 검토해야 합니다. 배설물 제거, 물·유리·장비 청소와 건강 관찰은 계속 필요합니다.",
+    "sourceLink": "MSD 수의학 매뉴얼의 사육 환경 안내 보기",
+    "summary": {
+      "title": "선택 요약",
+      "layers": "바닥재",
+      "crew": "클린업 크루",
+      "plants": "식물",
+      "note": "개수가 많다고 안정적이거나 관리가 쉬운 환경이라는 뜻은 아닙니다."
+    },
+    "review": {
+      "title": "저장 전 직접 확인할 질문",
+      "species": "각 재료가 현재 종의 피부, 호흡기, 섭취 행동과 굴파기 습성에 안전한가?",
+      "materials": "식물·흙·낙엽에 농약, 비료, 날카로운 조각, 곰팡이와 유해 생물이 없는가?",
+      "gradient": "동물이 실제 머무는 높이와 위치에서 온도·습도 구배를 측정할 수 있는가?",
+      "escape": "동물, 먹이생물과 클린업 크루의 탈출 및 외부 방출을 막을 수 있는가?",
+      "cleaning": "배설물 제거, 부분 교체, 배수 확인과 정기 대청소 계획이 있는가?"
     }
   },
   "showcase": {
@@ -2076,10 +2272,10 @@
     }
   },
   "passport": {
-    "title": "펫 여권",
-    "subtitle": "함께한 기록으로 만든 우리 아이만의 여권과 업적이에요.",
+    "title": "돌봄 요약 카드",
+    "subtitle": "경쟁형 업적 대신, 현재 반려동물에게 어떤 돌봄 기록이 쌓였는지 한눈에 확인합니다.",
     "card": {
-      "docType": "Keeper Passport",
+      "docType": "PET CARE SUMMARY",
       "unnamed": "이름 없는 친구",
       "speciesUnknown": "종 미설정",
       "daysTogether": "함께한 일수",
@@ -2087,7 +2283,11 @@
       "badges": "획득 업적",
       "shareNote": "이 여권은 화면을 캡처해 그대로 공유할 수 있어요. 우리 아이의 성장 기록을 자랑해 보세요.",
       "holder": "보호자 · {{name}}",
-      "aria": "{{name}}의 펫 여권 카드"
+      "aria": "{{name}}의 펫 여권 카드",
+      "localOnly": "이 기기 전용",
+      "totalRecords": "돌봄 기록",
+      "localReference": "로컬 참조 코드",
+      "notOfficial": "Pettography가 로컬에서 만든 비공식 요약 카드입니다. 등록증, 진료기록, 검역·여행 서류 또는 소유권 증명이 아닙니다."
     },
     "stats": {
       "aria": "활동 통계 요약",
@@ -2109,10 +2309,11 @@
       "gold": "골드"
     },
     "empty": {
-      "title": "아직 업적이 없어요",
-      "desc": "일지를 쓰고 탈피·급여를 기록하면 업적이 하나씩 열려요. 첫 기록을 남겨보세요.",
+      "title": "아직 돌봄 기록이 없어요",
+      "desc": "필요한 관리 도구를 선택해 첫 기록을 남겨보세요. 기록 수를 늘리기 위해 불필요한 행동을 반복할 필요는 없습니다.",
       "noPetTitle": "등록된 펫이 없어요",
-      "noPetDesc": "먼저 우리 아이를 등록하면 함께한 날부터 여권이 만들어져요."
+      "noPetDesc": "먼저 우리 아이를 등록하면 함께한 날부터 여권이 만들어져요.",
+      "cta": "돌봄 대시보드 보기"
     },
     "ach": {
       "weight1": {
@@ -2187,6 +2388,39 @@
         "title": "첫 클러치",
         "desc": "첫 산란(클러치)을 기록했어요."
       }
+    },
+    "eyebrow": "LOCAL CARE CARD",
+    "petRequiredTitle": "요약할 반려동물을 먼저 선택해 주세요",
+    "petRequiredBody": "돌봄 기록은 개체마다 분리되며, 활성 반려동물 없이 다른 동물의 기록을 합치지 않습니다.",
+    "petRequiredAction": "반려동물 선택하기",
+    "privateNote": "이 카드는 이 브라우저의 기록을 요약할 뿐이며 공개 프로필이나 공유용 문서가 아닙니다.",
+    "coverage": {
+      "kicker": "CARE COVERAGE",
+      "title": "돌봄 기록 구성",
+      "total": "총 {{count}}건",
+      "desc": "숫자가 많다고 더 좋은 돌봄을 뜻하지 않습니다. 필요한 항목을 적절한 간격으로 정확하게 기록하는 것이 중요합니다.",
+      "groups": {
+        "journal": {
+          "title": "일지",
+          "desc": "행동과 일상 변화 기록"
+        },
+        "feeding": {
+          "title": "급여",
+          "desc": "먹이 제공과 반응 기록"
+        },
+        "health": {
+          "title": "건강 관찰",
+          "desc": "체중·체형·활력 기록"
+        },
+        "environment": {
+          "title": "환경",
+          "desc": "물·성장·환경 관련 기록"
+        },
+        "molt": {
+          "title": "탈피",
+          "desc": "탈피 과정과 이상 신호 기록"
+        }
+      }
     }
   },
   "assistant": {
@@ -2196,6 +2430,7 @@
     "disclaimer": "규칙 기반 안내입니다. 수의사 진료를 대체하지 않습니다. 조금이라도 이상하면 병원에 연락하세요.",
     "context": "현재 {{name}}({{category}}) 기준으로 안내합니다. 분류 특성에 맞춰 조언이 조정돼요.",
     "contextGeneric": "활성 반려동물이 설정되지 않아 일반 안내를 제공합니다. 온보딩에서 종을 선택하면 분류에 맞춰 조정됩니다.",
+    "choosePet": "반려동물 선택하기",
     "step1Title": "1. 어떤 증상이 보이나요?",
     "step1Hint": "가장 가까운 항목 하나를 선택하세요.",
     "step2Title": "2. 한 가지만 더 확인할게요",
@@ -2532,7 +2767,8 @@
     "title": "장비 교체 관리",
     "subtitle": "사육장 장비의 설치일과 교체 주기를 기록하고 남은 기간을 한눈에 확인하세요. 모든 데이터는 이 브라우저에만 저장됩니다.",
     "uvbAlertTitle": "UVB 램프는 켜져 있어도 교체하세요",
-    "uvbAlertBody": "UVB 램프는 자외선(UV) 출력이 가시광선보다 먼저 약해집니다. 불이 들어와도 UV가 거의 나오지 않을 수 있으니, 멀쩡해 보여도 권장 주기에 맞춰 교체하세요. 방치하면 대사성 골질환(MBD)의 원인이 됩니다.",
+    "uvbAlertBody": "UVB 출력은 가시광선보다 먼저 약해질 수 있습니다. 제품 종류·거리·사용 시간에 따라 수명이 다르므로 점등 여부만 보지 말고 제조사 지침과 가능하면 UV 측정값을 기준으로 관리하세요.",
+    "scheduleNote": "표시되는 교체일은 사용자가 입력한 주기로 계산한 일정 알림이며 장비 성능 측정값이 아닙니다. 제품 설명서와 실제 상태를 우선하세요.",
     "newItem": "새 장비 등록",
     "type": "장비 종류",
     "name": "이름",
@@ -2546,10 +2782,15 @@
     "added": "장비를 등록했어요.",
     "dueDate": "교체 예정일",
     "noSchedule": "일정 없음",
-    "lifeUsed": "수명 {{pct}}% 경과",
+    "lifeUsed": "입력한 교체 주기 {{pct}}% 경과",
     "markReplaced": "교체 완료",
     "replacedToast": "교체를 기록하고 주기를 다시 시작했어요.",
+    "replaceConfirm": "‘{{name}}’ 장비를 오늘 교체한 것으로 기록할까요? 설치일과 교체 주기가 오늘부터 다시 계산됩니다.",
     "remove": "삭제",
+    "removeConfirm": "‘{{name}}’ 장비 기록을 삭제할까요?",
+    "noPetTitle": "먼저 관리할 반려동물을 선택해주세요",
+    "noPetDesc": "장비 기록은 활성 펫별로 분리됩니다. 반려동물을 선택한 뒤 장비를 등록하세요.",
+    "noPetAction": "반려동물 선택하기",
     "emptyTitle": "아직 등록된 장비가 없어요",
     "emptyDesc": "UVB·히팅 램프, 여과기 같은 장비를 등록하면 교체 시기를 놓치지 않도록 알려드려요.",
     "types": {
@@ -2745,8 +2986,9 @@
   },
   "cohab": {
     "title": "합사 가능성 체커",
-    "subtitle": "두 종을 한 사육장에 함께 둘 수 있는지 규칙 기반으로 판정합니다. 대부분의 이색 반려동물은 단독 사육이 원칙이라는 점을 함께 안내합니다.",
-    "empty": "두 종을 선택하면 합사 판정이 표시됩니다.",
+    "subtitle": "두 종의 한 사육장 동거를 안전 우선 규칙으로 검토합니다. 이 도구는 합사를 승인하지 않으며, 대부분의 이색 반려동물은 단독 사육이 기본입니다.",
+    "empty": "종 A와 종 B를 각각 선택하면 보수적인 합사 판정이 표시됩니다.",
+    "loadFailed": "종 데이터를 불러오지 못해 판정할 수 없습니다.",
     "disclaimer": "이 판정은 일반적인 사육 원칙에 근거한 참고용 안내일 뿐, 개체별 상황을 보장하지 않습니다. 합사를 고려한다면 충분한 공간, 격리 검역, 전문가·수의사 상담을 반드시 병행하세요. 의심스러우면 단독 사육이 가장 안전합니다.",
     "principle": {
       "title": "대부분의 이색 반려동물은 단독 사육이 원칙입니다",
@@ -2756,7 +2998,8 @@
       "title": "합사할 두 종 선택",
       "intro": "비교할 두 종을 고르세요. 기본값은 현재 활성 반려동물의 종입니다. 같은 종을 두 번 골라 동족 합사 여부도 확인할 수 있습니다.",
       "speciesA": "종 A",
-      "speciesB": "종 B"
+      "speciesB": "종 B",
+      "choose": "종 B를 선택하세요"
     },
     "verdict": {
       "pair": "{{a}} + {{b}}",
@@ -2765,20 +3008,20 @@
       "label": {
         "no": "합사 권장하지 않음",
         "caution": "매우 신중히 / 비권장",
-        "sameSpeciesOnly": "동족끼리만 가능",
-        "ok": "합사 권장"
+        "sameSpeciesOnly": "동종 조건부 검토",
+        "ok": "동종 조건 확인 필요"
       },
       "headline": {
         "no": "함께 키우지 마세요",
         "caution": "원칙적으로 단독 사육하세요",
-        "sameSpeciesOnly": "다른 종과는 섞지 말고, 같은 종끼리만",
-        "ok": "함께 키우는 것이 좋습니다"
+        "sameSpeciesOnly": "동종이어도 조건과 궁합을 먼저 확인하세요",
+        "ok": "자동 허용할 수 없습니다"
       },
       "summary": {
         "no": "이 조합은 권장하지 않습니다. 한 사육장에 함께 두면 스트레스·공격·포식·질병 전파 위험이 큽니다. 각자 별도의 사육장에서 단독으로 키우세요.",
         "caution": "이 종은 단독 사육이 원칙입니다. 같은 종이라도 한 공간에 두면 영역 다툼과 스트레스로 이어지기 쉬우니, 번식 등 특별한 목적이 없는 한 따로 키우세요.",
-        "sameSpeciesOnly": "이 종은 사회성이 있어 같은 종끼리는 무리 사육이 가능합니다. 단, 다른 종과는 절대 섞지 말고 충분한 공간과 적절한 성비를 확보하세요.",
-        "ok": "이 종은 사회적 동물로, 단독 사육 시 우울·자해 위험이 있어 같은 종 여러 마리를 함께 키우는 것이 권장됩니다. 충분한 공간과 합사 적응 과정을 지키세요."
+        "sameSpeciesOnly": "동종 사회성이 알려진 종이지만 자동으로 합사 가능한 것은 아닙니다. 다른 종과 섞지 말고 공간·성비·중성화·검역·개체 궁합과 즉시 분리 계획을 먼저 확인하세요.",
+        "ok": "사회적 종도 개체 조건에 따라 합사가 실패할 수 있습니다. 전문가 확인과 분리 가능한 예비 사육장 없이 시작하지 마세요."
       }
     },
     "reasons": {
@@ -2806,29 +3049,29 @@
     },
     "social": {
       "title": "사회적 종 (예외) 안내",
-      "intro": "아래 종은 예외적으로 같은 종끼리 무리 사육이 가능하거나 권장됩니다. 그래도 다른 종과 섞는 것은 안 됩니다.",
+      "intro": "아래 종은 동종 사회성이 알려진 예외지만, 개체 성격·성별·중성화·공간·검역 조건을 확인해야 합니다. 다른 종과는 섞지 마세요.",
       "empty": "등록된 사회적 종이 없습니다.",
-      "tag": "사회적 종",
+      "tag": "동종 조건부 검토",
       "notes": {
-        "budgerigar": "여러 마리 합사 권장 — 단독 시 외로움이 큽니다. 넉넉한 새장과 비행 공간 필요.",
-        "cockatiel": "사회성이 높아 무리·짝 사육 가능 — 충분한 공간과 교감 시간을 확보하세요.",
-        "sugar-glider": "단독 사육 금지 — 동성 2마리 이상 합사 필수. 고립 시 우울·자해 발생.",
-        "madagascar-hissing-cockroach": "군집 생활을 하는 사회적 절지류 — 같은 종끼리 무리 사육이 자연스럽습니다."
+        "budgerigar": "동종 사회적 교류가 중요하지만 새장 크기, 개체 궁합, 검역을 먼저 확인해야 합니다.",
+        "cockatiel": "동종 교류가 도움이 될 수 있으나 충분한 공간과 개체별 관찰·분리 계획이 필요합니다.",
+        "sugar-glider": "동종 동반이 권장되는 경우가 많지만 성별·중성화·궁합·도입 절차를 전문가와 확인하세요.",
+        "madagascar-hissing-cockroach": "동종 군집 사육이 가능하지만 밀도, 성비, 은신처와 번식 관리를 확인해야 합니다."
       }
     }
   },
   "wishlist": {
     "title": "위시리스트",
     "subtitle": "언젠가 함께하고 싶은 종을 모으고, 데려오기 전에 준비도를 점검하세요.",
-    "responsibleNote": "데려오기 전에 준비도를 채우세요. 충동이 아니라 준비된 입양이 동물을 지킵니다.",
+    "responsibleNote": "희망 목록은 입양 결정을 재촉하지 않습니다. 규제, 장기 비용, 병원 접근성, 돌봄 대안을 충분히 조사하세요.",
     "added": "위시리스트에 담았어요",
     "remove": "삭제",
     "unknownSpecies": "알 수 없는 종",
     "regulatedWarning": "규제종 · 보관신고 확인",
     "experienceCaution": "고난도 종이에요. 비슷한 경험을 충분히 쌓은 뒤 도전하세요.",
     "budgetHint": "예상 월 유지비 약 {{amount}}원",
-    "readinessTitle": "준비도 체크리스트",
-    "readinessAria": "준비도 {{pct}}% 완료",
+    "readinessTitle": "자기 점검 기록률",
+    "readinessAria": "자기 점검 항목 {{pct}}퍼센트 기록",
     "form": {
       "title": "위시리스트에 추가",
       "species": "종",
@@ -2870,12 +3113,20 @@
     },
     "errors": {
       "speciesRequired": "종을 선택하세요.",
-      "notesMax": "메모는 300자까지 입력할 수 있어요."
-    }
+      "notesMax": "메모는 300자까지 입력할 수 있어요.",
+      "dateInvalid": "올바른 목표 날짜를 입력해 주세요.",
+      "datePast": "목표 날짜는 오늘 이후로 설정해 주세요."
+    },
+    "duplicate": "이미 목록에 있는 종이에요. 기존 카드의 점검 항목을 이어서 확인해 주세요.",
+    "removeConfirm": "이 희망 종과 점검 기록을 삭제할까요?",
+    "removed": "희망 목록에서 삭제했어요.",
+    "catalogError": "종 정보를 불러오지 못해 새 항목을 추가할 수 없어요.",
+    "retry": "다시 불러오기",
+    "readinessNotice": "100%는 입양 승인이나 준비 완료 판정이 아닙니다. 각 항목의 근거와 실제 가능성을 다시 확인하세요."
   },
   "taming": {
     "title": "핸들링 적응",
-    "subtitle": "핸들링은 보호자의 바람이 아니라 동물의 내성에 맞춰요. 천천히, 짧게 기록하며 스트레스 신호와 적응 정도를 살펴보세요.",
+    "subtitle": "친밀도를 경쟁처럼 올리기보다, 한 개체가 보낸 스트레스 신호와 회복 속도를 조용히 기록하세요.",
     "saved": "세션을 기록했어요.",
     "showAllPets": "모든 펫 보기",
     "tolerance": {
@@ -2893,16 +3144,22 @@
       }
     },
     "form": {
-      "title": "세션 기록",
-      "date": "날짜",
-      "duration": "시간(분)",
+      "title": "핸들링 세션 기록",
+      "date": "진행 날짜",
+      "duration": "진행 시간(분)",
       "durationHelp": "동물을 직접 만지거나 다룬 시간",
-      "calmness": "차분함 (1~5)",
+      "calmness": "관찰한 안정도",
       "stressSigns": "스트레스 신호",
       "stressSignsHelp": "이번 세션에서 보인 행동을 모두 선택하세요. 없으면 비워 두세요.",
-      "note": "메모",
-      "notePlaceholder": "상황, 환경, 특이점 등을 적어 두세요.",
-      "submit": "세션 저장"
+      "note": "상황 메모",
+      "notePlaceholder": "접근 방식, 직전 행동, 먹이 반응, 회복까지 걸린 시간 등",
+      "submit": "이 세션 기록하기",
+      "kicker": "NEW SESSION",
+      "durationHelper": "이동·청소 등 불가피한 접촉도 포함할 수 있어요.",
+      "calmnessHelper": "주관적인 메모 도구이며, 건강 상태나 친밀도를 진단하지 않습니다.",
+      "signs": "관찰한 스트레스 신호",
+      "signsHelper": "보인 신호를 모두 선택하세요. 움직이지 않음도 편안함이 아닐 수 있습니다.",
+      "noteHelper": "최대 200자"
     },
     "calmnessScale": {
       "1": "매우 불안",
@@ -2947,10 +3204,16 @@
       "steady": "안정적으로 적응 중이에요. 지금처럼 짧고 부드러운 세션을 유지하세요."
     },
     "history": {
-      "calmness": "차분함 {{value}}/5",
+      "calmness": "안정도 {{value}}/5",
       "duration": "{{count}}분",
       "remove": "삭제",
-      "speciesUnknown": "종 정보 없이 기록됨"
+      "speciesUnknown": "종 정보 없이 기록됨",
+      "title": "세션 기록",
+      "count": "{{count}}건",
+      "emptyTitle": "아직 기록이 없어요",
+      "emptyDesc": "짧고 강요하지 않은 접촉부터 기록해 개체의 한계를 찾아보세요.",
+      "emptyHint": "스트레스 신호가 보이면 즉시 종료하고 충분히 회복하게 해주세요.",
+      "minutes": "{{count}}분"
     },
     "empty": {
       "title": "아직 핸들링 기록이 없어요",
@@ -2963,17 +3226,57 @@
       "durationMax": "시간이 너무 길어요.",
       "calmnessRequired": "차분함을 선택해 주세요.",
       "calmnessRange": "차분함은 1~5 사이여야 해요.",
-      "noteMax": "메모는 200자 이내로 입력해 주세요."
-    }
+      "noteMax": "메모는 200자 이내로 입력해 주세요.",
+      "dateInvalid": "올바른 날짜를 입력해 주세요.",
+      "dateFuture": "미래 날짜의 세션은 기록할 수 없어요."
+    },
+    "eyebrow": "WELFARE LOG",
+    "petRequiredTitle": "기록할 반려동물을 먼저 선택해 주세요",
+    "petRequiredBody": "핸들링 반응은 개체마다 다르므로 동물을 섞어 분석하지 않습니다.",
+    "petRequiredAction": "반려동물 선택하기",
+    "activePet": "{{name}}의 개별 기록",
+    "aPet": "반려동물",
+    "welfareTitle": "반응을 우선해 주세요",
+    "privatePill": "이 기기에만 저장",
+    "calmness": {
+      "1": "매우 긴장",
+      "2": "긴장",
+      "3": "보통",
+      "4": "안정",
+      "5": "편안"
+    },
+    "stats": {
+      "kicker": "PRIVATE PATTERN",
+      "title": "이 개체의 관찰 흐름",
+      "total": "기록 수",
+      "average": "평균 관찰값",
+      "latest": "최근 관찰값",
+      "trend": "시간순 관찰값",
+      "trendRange": "1 긴장 · 5 편안",
+      "trendAria": "{{count}}개 세션의 주관적 안정도 흐름"
+    },
+    "trend": {
+      "notEnough": "비교 자료 부족",
+      "up": "최근 관찰값 상승",
+      "down": "최근 관찰값 하락",
+      "steady": "큰 변화 없음"
+    },
+    "subjectiveNote": "수치는 보호자의 주관적 관찰입니다. 식욕 저하, 호흡 이상, 무기력, 반복적인 방어 행동이 있으면 핸들링을 중단하고 특수동물 진료를 받으세요.",
+    "removeConfirm": "이 핸들링 기록을 삭제할까요?",
+    "removed": "핸들링 기록을 삭제했어요."
   },
   "kit": {
     "title": "응급 키트",
     "subtitle": "정전, 폭염, 갑작스러운 이상 증상. 위기 상황에서는 몇 분이 결정적입니다. 미리 준비해 두면 당황하지 않습니다.",
     "readiness": {
-      "title": "준비 완료도",
-      "desc": "항목을 체크하며 우리 집 응급 대비 수준을 채워 보세요.",
+      "title": "준비물 체크 완료도",
+      "desc": "보유 여부를 직접 다시 확인하며 체크하세요. 비축 상태나 사용 가능성을 자동 검증하지 않습니다.",
       "count": "{{done}}/{{total}}개 준비됨",
-      "aria": "준비 완료도 {{pct}}%"
+      "aria": "준비물 체크 {{pct}}% 완료",
+      "updatedAt": "마지막 변경: {{date}}",
+      "neverReviewed": "아직 확인한 준비물이 없습니다",
+      "reset": "준비물 체크 초기화",
+      "resetConfirm": "응급 준비물 체크 기록을 모두 초기화할까요? 연락처는 유지됩니다."
     },
     "quick": {
       "sosTitle": "응급 SOS",
@@ -3031,13 +3334,15 @@
       "call": "전화",
       "remove": "삭제",
       "emptyTitle": "저장된 연락처가 없어요",
-      "emptyDesc": "자주 찾는 병원이나 도움을 줄 사람의 번호를 미리 등록해 두세요."
+      "emptyDesc": "자주 찾는 병원이나 도움을 줄 사람의 번호를 미리 등록해 두세요.",
+      "removeConfirm": "이 비상 연락처를 삭제할까요?"
     },
     "errors": {
       "labelRequired": "이름을 입력하세요",
       "labelMax": "이름은 40자 이내로 입력하세요",
       "phoneRequired": "전화번호를 입력하세요",
       "phoneMax": "전화번호는 40자 이내로 입력하세요",
+      "phoneInvalid": "전화번호에는 숫자, 공백, 괄호, +, -만 사용할 수 있습니다",
       "noteMax": "메모는 120자 이내로 입력하세요"
     },
     "disclaimer": "이 체크리스트는 사전 대비를 돕기 위한 안내입니다. 실제 응급 상황에서는 즉시 특수동물 병원에 연락하세요."
@@ -3081,7 +3386,7 @@
   },
   "supplements": {
     "title": "보충제 더스팅",
-    "subtitle": "칼슘·D3·종합비타민 더스팅 일정을 관리하고 MBD(대사성 골질환)를 예방하세요.",
+    "subtitle": "자동 권장 주기 대신, 제품·식단·UVB 환경을 검토한 뒤 수의사와 정한 보충 내역만 기록합니다.",
     "showAllPets": "모든 펫 보기",
     "aPet": "반려동물",
     "guidanceTitle": "종 맞춤 가이드",
@@ -3097,7 +3402,7 @@
     "quickLog": "오늘 {{type}} 더스팅",
     "quickLogged": "오늘 {{type}} 더스팅을 기록했어요.",
     "remove": "삭제",
-    "disclaimer": "본 일정은 일반적인 가이드입니다. 정확한 보충 계획은 개체의 나이·UVB·주식에 따라 다르며, 이상 징후가 보이면 엑조틱 전문 수의사와 상담하세요.",
+    "disclaimer": "이 기록은 진단이나 처방을 대신하지 않습니다.",
     "mbd": {
       "title": "MBD 예방",
       "body": "칼슘 부족과 UVB 부족은 대사성 골질환(MBD)의 주원인입니다. 곤충식·초식 파충류는 칼슘 더스팅을 거르지 마세요."
@@ -3127,35 +3432,51 @@
       "notDusted": "더스팅 안 함"
     },
     "stats": {
-      "title": "요약",
-      "total": "총 기록",
-      "lastDusted": "마지막 더스팅",
-      "never": "없음"
+      "title": "개별 기록 요약",
+      "total": "전체 기록",
+      "lastDusted": "최근 기록",
+      "never": "기록 없음",
+      "kicker": "RECORD SUMMARY",
+      "recordOnly": "횟수는 적정성 판정이 아닙니다. 실제 계획은 제품 라벨과 수의사 지시를 따르세요."
     },
     "form": {
-      "title": "더스팅 기록",
-      "type": "보충제 종류",
-      "dustedAt": "더스팅 날짜",
-      "note": "메모",
-      "notePlaceholder": "예: 칼슘 가볍게, 먹이 거부 없음",
-      "noteHelper": "선택 사항 · 최대 200자",
-      "submit": "기록 추가"
+      "title": "보충 내역 기록",
+      "type": "제품 유형",
+      "dustedAt": "급여 날짜",
+      "note": "제품·급여량 메모",
+      "notePlaceholder": "제품명, 농도, 급여량, 식단 또는 수의사 지시",
+      "noteHelper": "최대 200자. 민감한 진료 정보는 입력하지 마세요.",
+      "submit": "급여 내역 기록",
+      "kicker": "CONFIRMED RECORD",
+      "safeHelper": "이미 급여한 내역만 기록하세요. 이 앱은 다음 투여일을 자동 처방하지 않습니다."
     },
     "history": {
-      "title": "기록",
-      "emptyTitle": "아직 더스팅 기록이 없어요",
-      "emptyDesc": "위 빠른 기록 버튼이나 폼으로 첫 더스팅을 남겨보세요.",
-      "hint": "팁: 칼슘과 종합비타민을 구분해 적으면 과다·결핍을 피할 수 있어요."
+      "title": "급여 기록",
+      "emptyTitle": "기록된 급여 내역이 없어요",
+      "emptyDesc": "수의사와 확인한 계획에 따라 실제 급여 후 기록하세요.",
+      "hint": "UVB, 온도, 식단 상태도 함께 점검해야 합니다.",
+      "count": "{{count}}건"
     },
     "errors": {
       "dateRequired": "날짜를 입력하세요.",
-      "noteMax": "메모는 200자 이하로 입력하세요."
-    }
+      "noteMax": "메모는 200자 이하로 입력하세요.",
+      "dateInvalid": "올바른 급여 날짜를 입력해 주세요.",
+      "dateFuture": "아직 급여하지 않은 미래 날짜는 기록할 수 없어요."
+    },
+    "eyebrow": "VET-ALIGNED LOG",
+    "petRequiredTitle": "기록할 반려동물을 먼저 선택해 주세요",
+    "petRequiredBody": "보충제 기록은 종뿐 아니라 개체의 식단과 건강 상태에 따라 달라 다른 동물과 합치지 않습니다.",
+    "petRequiredAction": "반려동물 선택하기",
+    "safeTitle": "이 화면은 투여 처방이 아닌 기록 도구입니다",
+    "safeBody": "칼슘·비타민 D3·종합비타민 필요량은 종, 제품 농도, 식단, 성장 단계, UVB 노출과 질환에 따라 달라집니다. 새 제품이나 주기는 특수동물 수의사와 먼저 확인하세요.",
+    "sourceLink": "MSD 수의학 매뉴얼의 파충류 영양 안내 보기",
+    "removeConfirm": "이 보충제 급여 기록을 삭제할까요?",
+    "removed": "보충제 기록을 삭제했어요."
   },
   "feeders": {
     "title": "먹이 컬처",
-    "subtitle": "직접 사육하는 먹이 곤충과 바이오액티브 청소부대를 관리해 늘 건강하고 영양 가득한 먹이를 유지하세요.",
-    "gutLoadNote": "자가 사육 먹이는 gut-load(먹이에게 먹이 주기)로 영양을 채워야 펫 건강에 직결됩니다. 콜로니에 채소·곡물·전용 사료를 주기적으로 급여하세요.",
+    "subtitle": "먹이생물과 클린업 크루를 한곳에서 관리하되, 급여용과 생태계 유지용 작업을 구분해 기록합니다.",
+    "gutLoadNote": "급여용 먹이생물은 종에 맞는 영양 공급과 신선한 수분원이 필요합니다. 클린업 크루는 상태 점검과 배지 관리 중심으로 기록하세요.",
     "toastAdded": "콜로니를 추가했어요.",
     "toastFed": "{{name}} 콜로니에 먹이를 줬어요.",
     "toastRemoved": "콜로니를 삭제했어요.",
@@ -3169,7 +3490,8 @@
       "estimateHelper": "비워 두면 미확인으로 기록돼요.",
       "notes": "메모",
       "notesPlaceholder": "사육 통 크기, 먹이 종류, 분양 계획 등",
-      "submit": "콜로니 추가"
+      "submit": "콜로니 추가",
+      "kicker": "NEW COLONY"
     },
     "types": {
       "dubia": "두비아바퀴",
@@ -3193,7 +3515,8 @@
       "estimateValue": "약 {{count}}마리",
       "estimateUnknown": "미확인",
       "lastFed": "마지막 급여",
-      "lastFedNever": "기록 없음"
+      "lastFedNever": "기록 없음",
+      "lastMaintained": "최근 상태 점검"
     },
     "care": {
       "show": "사육 팁 보기",
@@ -3218,7 +3541,8 @@
     },
     "actions": {
       "markFed": "먹이 줌 (gut-load)",
-      "remove": "삭제"
+      "remove": "삭제",
+      "markMaintained": "오늘 상태 점검"
     },
     "empty": {
       "title": "아직 등록된 콜로니가 없어요",
@@ -3231,19 +3555,35 @@
       "estimateNumber": "개체 수는 숫자로 입력하세요.",
       "estimateInt": "개체 수는 정수로 입력하세요.",
       "estimateNonnegative": "개체 수는 0 이상이어야 해요.",
-      "notesMax": "메모는 300자 이내로 입력하세요."
-    }
+      "notesMax": "메모는 300자 이내로 입력하세요.",
+      "estimateMax": "추정 개체 수는 1,000,000 이하로 입력해 주세요.",
+      "dateInvalid": "올바른 시작 날짜를 입력해 주세요.",
+      "dateFuture": "군체 시작일은 미래로 설정할 수 없어요."
+    },
+    "eyebrow": "COLONY DESK",
+    "safetyTitle": "영양과 위생을 함께 관리하세요",
+    "safetyNote": "야외 채집 개체, 곰팡이·부패 먹이, 농약 노출 가능 개체는 급여하지 말고 취급 후 손과 도구를 씻으세요.",
+    "maintenanceStatus": {
+      "fedRecently": "최근 점검",
+      "feedSoon": "곧 점검",
+      "overdue": "점검 필요",
+      "never": "점검 기록 없음",
+      "recorded": "점검 기록 있음"
+    },
+    "toastMaintained": "{{name}}의 상태 점검을 기록했어요.",
+    "removeConfirm": "{{name}} 군체와 모든 기록을 삭제할까요?"
   },
   "lineage": {
     "title": "혈통도",
-    "subtitle": "보유한 개체와 부모(부·모) 관계를 등록하고, 선택한 개체의 3대 혈통과 자손을 한눈에 확인하세요. 개체별로 관리되는 전역 기록입니다.",
+    "subtitle": "가구 전체의 개체와 알려진 부모 관계를 기록하되, 입력한 혈통과 모프를 검증된 사실로 표시하지 않습니다.",
     "remove": "삭제",
     "speciesUnspecified": "종 미지정",
     "errors": {
       "nameRequired": "개체 이름을 입력하세요.",
       "nameMax": "이름은 최대 60자까지 입력할 수 있습니다.",
       "morphMax": "모프는 최대 60자까지 입력할 수 있습니다.",
-      "notesMax": "메모는 최대 300자까지 입력할 수 있습니다."
+      "notesMax": "메모는 최대 300자까지 입력할 수 있습니다.",
+      "sameParent": "부와 모에 같은 개체를 지정할 수 없어요."
     },
     "sex": {
       "male": "수컷",
@@ -3297,11 +3637,15 @@
     "toast": {
       "added": "{{name}} 개체를 등록했습니다.",
       "removed": "{{name}} 개체를 삭제했습니다."
-    }
+    },
+    "eyebrow": "HOUSEHOLD PEDIGREE NOTES",
+    "provenanceTitle": "혈통 정보는 사용자가 입력한 참고 기록입니다",
+    "provenanceBody": "공식 혈통서, 유전자 검사 또는 소유권 증명이 아닙니다. 출처 문서와 검사 결과는 별도로 보관하고, 모르는 부모·종·성별은 추정해서 채우지 마세요.",
+    "removeConfirm": "“{{name}}”을 삭제할까요? 이 개체를 부모로 참조하는 자손 {{count}}건의 연결도 해제됩니다."
   },
   "costreport": {
     "title": "비용 리포트",
-    "subtitle": "기록한 사육 비용을 연간 합계, 월 평균, 카테고리·반려동물별로 모아 한눈에 봅니다.",
+    "subtitle": "반려동물별 비용 기록을 가구 전체 관점에서 중립적으로 모아 봅니다.",
     "yearLabel": "기간 선택",
     "allTime": "전체 기간",
     "yearChip": "{{year}}년",
@@ -3310,7 +3654,7 @@
       "year": "{{year}}년 합계"
     },
     "perMonth": "기록된 달 기준 평균",
-    "projectedHint": "올해 누적 {{amount}} 기준 추정",
+    "projectedHint": "현재까지 {{amount}}를 기준으로 단순 환산한 추정치",
     "monthsValue": "{{n}}개월",
     "entriesHint": "총 {{n}}건의 지출",
     "tiles": {
@@ -3327,7 +3671,7 @@
     "petTitle": "반려동물별 지출",
     "petDesc": "등록한 반려동물별로 지출을 비교합니다.",
     "unscopedPet": "지정 안 됨",
-    "allPetsNote": "모든 반려동물의 비용을 합산해 분석합니다.",
+    "allPetsNote": "가구 전체에 저장된 반려동물별 비용을 합산합니다. 미래 비용을 보장하거나 재무 조언을 제공하지 않습니다.",
     "empty": {
       "title": "아직 분석할 비용이 없어요",
       "description": "먼저 비용을 기록하면 합계와 추이를 자동으로 정리해 드려요.",
@@ -3336,7 +3680,10 @@
   },
   "transport": {
     "title": "이동 플래너",
-    "subtitle": "병원·이사·전시회 등 이동을 안전하게 준비하세요. 안전한 이동장, 온도 유지, 스트레스 최소화가 핵심입니다.",
+    "subtitle": "병원·이사·전시회 이동을 활성 펫별로 준비하세요. 이동장·온도·스트레스·서류를 직접 확인하는 계획 도구입니다.",
+    "noPetTitle": "이동할 반려동물을 먼저 선택해주세요",
+    "noPetDesc": "이동 일정과 체크리스트는 활성 펫별로 분리됩니다.",
+    "noPetAction": "반려동물 선택하기",
     "tipLabel": "이동 팁",
     "created": "이동 일정을 추가했어요.",
     "disclaimer": "이 체크리스트는 안전한 이동을 돕기 위한 안내입니다. 종·개체 상태에 따라 수의사와 상의해 준비하세요.",
@@ -3351,7 +3698,7 @@
       "tempControl": "보온·보냉 — 핫팩·아이스팩",
       "thermometer": "이동 중 온도 확인",
       "coverDark": "어둡게 덮어 스트레스 줄이기",
-      "noFeedBefore": "이동 전 급여 자제 — 역류 방지",
+      "noFeedBefore": "종별 이동 전 급이 지침 확인 — 임의 금식 금지",
       "water": "도착 후 수분 공급",
       "secureLid": "탈출 방지 잠금",
       "paperwork": "규제종 서류 챙기기"
@@ -3387,6 +3734,7 @@
       "durationLabel": "예상 시간",
       "durationValue": "{{hours}}시간",
       "remove": "삭제",
+      "removeConfirm": "이 이동 일정과 체크 기록을 삭제할까요?",
       "paperworkHint": "규제종은 이동 전 보관신고·서류를 확인하세요."
     },
     "checklist": {
@@ -3459,24 +3807,32 @@
   },
   "safety": {
     "title": "안전 점검",
-    "subtitle": "탈출, 화상, 감전, 익사, 부상을 미리 막는 사육장 안전 점검입니다. 사고는 예방이 전부입니다.",
+    "subtitle": "탈출, 화상, 감전, 익사, 부상을 줄이기 위한 사육장 확인 목록입니다. 체크 표시는 실제 환경 검증을 대신하지 않습니다.",
+    "noPetTitle": "안전 점검할 반려동물을 선택해주세요",
+    "noPetDesc": "점검 기록은 활성 펫별로 분리됩니다.",
+    "noPetAction": "반려동물 선택하기",
+    "verificationTitle": "체크 완료는 안전 보장이 아닙니다",
+    "verificationBody": "사육장 구조·장비·배치를 바꾼 뒤에는 다시 직접 확인하고, 손상된 전기·가열 장비는 즉시 사용을 중단하세요.",
     "creed": "사고는 예방이 전부 — 한 항목씩 확인하며 위험을 미리 없애세요.",
     "risksTitle": "종별 주의 위험",
     "risksIntro": "지금 활성화된 반려동물의 분류에서 특히 흔한 사고 유형입니다.",
     "risksAlertTitle": "이 분류에서 특히 조심하세요",
     "disclaimer": "이 점검표는 일반적인 사육 안전 가이드이며 모든 위험을 포괄하지 않습니다. 종과 개체에 맞게 추가로 확인하세요.",
     "levels": {
-      "low": "위험",
-      "medium": "보통",
-      "high": "안전"
+      "low": "확인 필요",
+      "medium": "점검 중",
+      "high": "항목 확인 완료"
     },
     "score": {
-      "title": "안전 점수",
-      "desc": "확인한 항목 비율로 사육장의 전반적인 안전 수준을 보여줍니다.",
+      "title": "점검 완료도",
+      "desc": "사용자가 확인 표시한 항목의 비율입니다. 실제 위험도 측정값이 아닙니다.",
       "count": "{{done}} / {{total}} 확인",
       "aria": "안전 점검 {{pct}}% 완료",
       "reset": "이 점검 초기화",
-      "resetDone": "점검을 초기화했습니다."
+      "resetDone": "점검을 초기화했습니다.",
+      "resetConfirm": "현재 활성 펫의 안전 점검 기록을 모두 초기화할까요?",
+      "updatedAt": "마지막 변경: {{date}}",
+      "neverReviewed": "아직 확인한 항목이 없습니다"
     },
     "checklist": {
       "title": "안전 점검표",
@@ -3603,7 +3959,9 @@
     "overview": {
       "title": "네 계절 한눈에 보기",
       "lead": "{{category}} 기준 계절별 핵심 포인트입니다. 현재 계절이 강조됩니다."
-    }
+    },
+    "contextTitle": "대한민국의 일반적인 계절 흐름을 기준으로 합니다",
+    "contextBody": "실제 관리는 현재 지역, 실내 미기후, 일조량과 개체 상태를 우선하세요. 동면·브루메이션은 겨울이라는 이유만으로 유도하지 말고 종 적합성, 건강검진, 체중과 수의사 계획이 모두 확인된 경우에만 검토하세요."
   },
   "lighting": {
     "title": "조명 · 광주기",
@@ -3773,7 +4131,7 @@
   },
   "enclosure": {
     "title": "사육장 크기 점검",
-    "subtitle": "내 종에게 권장되는 최소 사육장 크기를 확인하고, 지금 쓰는 사육장 치수를 입력해 충분한지 점검하세요.",
+    "subtitle": "현재 사육장 치수를 앱의 계획 참고값과 비교하고, 실제 성체 크기·행동·온습도 구배에 맞춰 검토하세요.",
     "noSpeciesTitle": "선택된 종 없음",
     "basis": {
       "species": "{{name}} 기준 권장 최소 크기예요.",
@@ -3785,12 +4143,13 @@
       "arthropod": "절지류",
       "bird": "조류",
       "amphibian": "양서류",
-      "mammal": "포유류"
+      "mammal": "포유류",
+      "unknown": "종 미지정"
     },
-    "recommendedTitle": "권장 최소 크기",
+    "recommendedTitle": "앱의 공간 계획 참고값",
     "badge": {
-      "speciesMin": "종별 기준",
-      "categoryMin": "분류군 기준"
+      "speciesMin": "종별 카탈로그 값",
+      "categoryMin": "카테고리 임시값"
     },
     "cm": "cm",
     "approxLiters": "약 {{liters}}L 부피",
@@ -3802,30 +4161,30 @@
       "legSpan": "다리 폭의 2~3배 바닥 너비가 적당해요. 너무 크면 먹이 사냥이 어려워집니다.",
       "flightWidth": "새는 좌우 날갯짓 폭(가로)이 가장 중요해요. 폭이 넓을수록 좋습니다."
     },
-    "currentTitle": "현재 사육장 치수",
-    "currentHelp": "지금 사용 중인 사육장의 안쪽 치수를 cm 단위로 입력하세요.",
+    "currentTitle": "현재 사육장 실측",
+    "currentHelp": "내부에서 실제로 사용할 수 있는 길이·너비·높이를 센티미터로 입력하세요.",
     "length": "길이 (cm)",
     "width": "너비 (cm)",
     "height": "높이 (cm)",
     "save": "치수 저장",
     "saved": "사육장 치수를 저장했어요.",
-    "verdictTitle": "판정",
+    "verdictTitle": "참고값 비교",
     "verdict": {
-      "adequate": "적정",
-      "upgrade": "확장 권장",
-      "unknown": "정보 부족",
-      "adequateMsg": "권장 최소 크기를 모두 충족해요. 더 넓힐수록 좋습니다.",
-      "upgradeMsg": "최소 기준에 못 미치는 치수가 있어요. 아래에서 부족한 항목을 확인하고 확장을 고려하세요.",
-      "unknownHint": "세 치수를 모두 입력하면 적정 여부를 판정해 드려요."
+      "adequate": "세 치수 참고값 이상",
+      "upgrade": "일부 치수 참고값 미만",
+      "unknown": "실측 대기",
+      "adequateMsg": "입력한 세 치수가 앱 참고값 이상입니다. 이것만으로 사육장이 적합하다는 뜻은 아닙니다.",
+      "upgradeMsg": "앱 참고값보다 작은 치수가 있습니다. 종별 근거를 다시 확인하고 확장 계획을 검토하세요.",
+      "unknownHint": "세 치수를 모두 입력하면 앱 참고값과 나란히 비교합니다."
     },
     "dimension": "치수",
     "yourSize": "내 사육장",
-    "minSize": "최소 기준",
+    "minSize": "앱 참고값",
     "status": "상태",
-    "ok": "충족",
-    "short": "부족",
+    "ok": "참고값 이상",
+    "short": "참고값 미만",
     "yourVolume": "내 사육장 부피 약 {{liters}}L",
-    "floorNote": "권장 최소 크기는 하한선이지 목표치가 아니에요. 대부분의 종은 더 넓은 사육장에서 더 건강합니다.",
+    "floorNote": "부피가 같아도 바닥 면적과 높이의 기능은 서로 대체되지 않습니다. 이 비교는 법적 기준, 수의학적 판정 또는 동물복지 인증이 아닙니다.",
     "errors": {
       "lengthNumber": "길이를 숫자로 입력하세요.",
       "lengthPositive": "길이는 0보다 커야 해요.",
@@ -3836,7 +4195,21 @@
       "heightNumber": "높이를 숫자로 입력하세요.",
       "heightPositive": "높이는 0보다 커야 해요.",
       "heightRange": "높이가 너무 큽니다. 다시 확인하세요."
-    }
+    },
+    "eyebrow": "SPACE PLANNER",
+    "petRequiredTitle": "비교할 반려동물을 먼저 선택해 주세요",
+    "petRequiredBody": "사육 공간 기준은 종과 개체에 따라 달라 활성 반려동물 없이 저장하지 않습니다.",
+    "petRequiredAction": "반려동물 선택하기",
+    "aPet": "반려동물",
+    "referenceWarningTitle": "참고값은 적합성 보증이 아닙니다",
+    "referenceWarningBody": "표시 치수는 앱 카탈로그의 초기 계획값입니다. 성체 예상 크기, 활동성, 수목성·굴성·수생 행동, 환기, 온도·습도 구배와 은신처를 반영해 종별 최신 케어시트와 특수동물 전문가에게 확인하세요.",
+    "referenceKicker": "CATALOG REFERENCE",
+    "measureKicker": "YOUR MEASUREMENT",
+    "reset": "실측값 지우기",
+    "resetConfirm": "이 반려동물의 사육장 실측값을 지울까요?",
+    "resetDone": "사육장 실측값을 지웠어요.",
+    "savedAt": "최근 저장: {{date}}",
+    "compareKicker": "REFERENCE CHECK"
   },
   "tools": {
     "title": "도구 모음",
@@ -3917,8 +4290,8 @@
     }
   },
   "morphs": {
-    "title": "인기 모프 카탈로그",
-    "subtitle": "한국에서 흔히 분양되는 모프(색·패턴 변이)와 2025~26년 평균 가격대. 베이스 종을 고르면 모프 카드와 분양 사이트가 표시됩니다.",
+    "title": "모프 용어 참고",
+    "subtitle": "가격과 희소도 대신 외형 용어를 이해하고, 선택 번식과 연관될 수 있는 건강·복지 위험을 먼저 확인합니다.",
     "pickSpecies": "종 선택",
     "empty": "표시할 종이 없습니다.",
     "openDetail": "종 상세 보기",
@@ -3928,11 +4301,18 @@
       "rare": "희귀"
     },
     "breedersTitle": "한국 브리더·분양 사이트",
-    "disclaimer": "가격대는 2025~26년 시장 평균 추정치입니다. 실제 분양가는 베이비/성체, 헤테로/호모, 모프 콤보 여부에 따라 크게 다릅니다."
+    "disclaimer": "가격, 판매처와 브리더 추천은 제공하지 않습니다. 입양 전 개체 건강, 출처, 혈통, 법적 의무와 평생 돌봄 가능성을 확인하세요.",
+    "eyebrow": "WELFARE-FIRST TERMINOLOGY",
+    "welfareTitle": "외형은 건강보다 우선할 수 없습니다",
+    "welfareBody": "색·무늬 변이는 중립적일 수도 있지만 일부 선택 계통은 신경학적 이상, 피부·눈 민감성 또는 치사 조합과 연관될 수 있습니다. 외형만으로 건강한 개체나 안전한 번식 조합을 판단하지 마세요.",
+    "sourceLink": "스파이더 볼파이톤 내이 기형 연구 보기",
+    "contextKicker": "VISUAL TERMS",
+    "cardNote": "이 설명은 외형 용어 참고이며 유전자형, 건강 상태, 희소도 또는 가치를 인증하지 않습니다.",
+    "openGenetics": "제한된 교육용 유전 확률 모델 보기"
   },
   "setup": {
-    "title": "사육장 초기 셋업 견적",
-    "subtitle": "종 카테고리를 고르면 첫 달에 필요한 사육 도구 6~8가지와 입문~고급 가격 범위 합계를 보여드립니다. 한국 파충류·절지류·양서류·조류·소형포유류 입문자가 가장 자주 빠뜨리는 항목을 표준화했습니다.",
+    "title": "사육 환경 준비 순서",
+    "subtitle": "가격표를 먼저 채우기보다 종별 요구를 확인하고, 장비를 설치·측정·시험한 뒤 입양 또는 이동을 진행합니다.",
     "pickCategory": "카테고리 선택",
     "empty": "카테고리를 선택하세요",
     "emptyDesc": "위 chip에서 키우려는 카테고리를 누르면 체크리스트가 나타납니다.",
@@ -3941,27 +4321,78 @@
     "includeOptional": "옵션 항목 포함",
     "optional": "옵션",
     "shopsTitle": "한국 파충류·이색 펫 전문 쇼핑몰",
-    "disclaimer": "외부 쇼핑몰은 제휴 관계가 없습니다. 가격·재고는 각 사이트 기준이 최종입니다."
+    "disclaimer": "표시 순서는 일반적인 준비 흐름이며 종별 케어시트, 제조사 안전 지침과 특수동물 전문가의 판단을 우선하세요.",
+    "eyebrow": "SETUP SEQUENCE",
+    "petRequiredTitle": "환경을 준비할 반려동물을 선택해 주세요",
+    "petRequiredBody": "같은 카테고리에서도 공간, 온도, 조명, 물과 안전 요구가 달라 개체 정보 없이 장비를 추천하지 않습니다.",
+    "petRequiredAction": "반려동물 선택하기",
+    "activePet": "{{name}}의 준비 흐름",
+    "aPet": "반려동물",
+    "principleKicker": "REQUIREMENTS BEFORE SHOPPING",
+    "principleTitle": "구매보다 요구조건 확정이 먼저입니다",
+    "principleBody": "장비 가격과 상점 링크는 빠르게 변하고, 비싼 장비가 자동으로 적합한 환경을 만들지 않습니다. 종별 성체 크기, 열·빛·습도·물 요구와 안전 실패 시 대안을 먼저 문서화하세요.",
+    "sourceLink": "MSD 수의학 매뉴얼의 파충류 사육 환경 안내 보기",
+    "orderKicker": "SAFE ORDER",
+    "orderTitle": "안전한 준비 순서",
+    "openShops": "요구조건 확정 후 상점 찾기",
+    "openStep": "열기",
+    "steps": {
+      "research": {
+        "title": "종별 최신 케어 근거 확인",
+        "body": "성체 크기, 행동, 식단, 수명, 법적 의무와 진료 접근성을 먼저 확인합니다."
+      },
+      "space": {
+        "title": "사용 가능한 내부 공간 설계",
+        "body": "바닥 면적과 높이, 은신처, 이동 동선, 환기와 탈출 방지를 함께 검토합니다."
+      },
+      "climate": {
+        "title": "열·조명·주야 주기 설계",
+        "body": "온도 구배, UVB 필요 여부, 광주기와 야간 열원을 종별 근거에 맞게 정합니다."
+      },
+      "monitor": {
+        "title": "측정 장비와 기준점 배치",
+        "body": "동물이 실제 머무는 위치에서 온도, 습도와 수질을 측정할 수 있게 센서를 배치합니다."
+      },
+      "safety": {
+        "title": "고장·화상·정전·탈출 대비",
+        "body": "서모스탯, 보호망, 전선 고정, 비상 연락처와 이동용 키트를 준비합니다."
+      },
+      "supplies": {
+        "title": "소모품과 교체 주기 계획",
+        "body": "먹이, 바닥재, 필터, 조명과 약품의 실제 소모량을 추정하고 여유분을 정합니다."
+      },
+      "dryRun": {
+        "title": "동물 없이 시험 운전",
+        "body": "최소 며칠간 주야 변화를 측정하고 목표 범위가 유지되는지 확인한 뒤 입주를 진행합니다."
+      }
+    }
   },
   "insurance": {
     "title": "펫보험 & 비상금 가이드",
-    "subtitle": "국내 펫보험은 강아지·고양이 위주입니다. 파충류·양서류·절지류 사육자에게는 보험 적용이 사실상 어렵기 때문에 응급 진료비를 미리 적립해 두는 비상금 운영을 권장합니다.",
-    "exoticWarningTitle": "주의 — 희귀펫 보험 가입 거의 불가",
-    "exoticWarningBody": "현재 선택한 카테고리는 대부분의 국내 펫보험 가입 대상이 아닙니다. 응급 시 자기부담이 100%이므로 아래 비상금 적립을 강력히 권장합니다.",
+    "subtitle": "국내 펫보험은 공식 상품별 가입 대상을 직접 확인해야 합니다. 이 화면은 보험 가입 권유가 아닌 공식 사이트 안내와 브라우저 내 비상금 계획 도구입니다.",
+    "exoticWarningTitle": "가입 대상은 상품별 확인이 필요합니다",
+    "exoticWarningBody": "Pettography에서 다루는 희귀 반려동물은 개·고양이 중심 상품의 대상에서 제외될 수 있습니다. 보험사 공식 상품 설명과 약관을 확인하세요.",
     "reserveTitle": "비상금 적립",
-    "reserveDesc": "월별 일정 금액을 응급 진료비 대비로 적립하세요. 누적 금액과 시작일을 이 브라우저에 저장합니다.",
-    "reserveSuggestion": "{{name}} 권장 월 예산의 3배 (약 ₩{{amount}})를 비상금 목표로 적립해 두면 응급 1~2회 진료비를 커버합니다.",
+    "reserveDesc": "매달 따로 둘 계획 금액을 기록하세요. 이 기능은 실제 계좌 입금이나 잔액을 추적하지 않고 계획값만 이 브라우저에 저장합니다.",
+    "reserveSuggestion": "비상금 목표는 실제 진료비와 가계 상황을 확인해 직접 정하세요.",
+    "budgetContext": "{{name}}의 앱 내 월 사육 예산 참고값은 {{amount}}입니다. 이 값은 진료비나 적정 비상금 추정치가 아닙니다.",
     "monthlyContribution": "월 적립 금액 (원)",
     "save": "저장",
-    "savedToast": "적립 금액을 저장했습니다",
+    "savedToast": "월 계획 금액을 저장했습니다",
+    "reset": "계획 초기화",
+    "resetConfirm": "현재 활성 펫의 비상금 계획과 시작일을 초기화할까요?",
+    "resetToast": "비상금 계획을 초기화했습니다",
     "startedAt": "시작일",
     "monthsRunning": "경과 개월수",
-    "accumulated": "누적 금액",
+    "accumulated": "계획상 누적액",
+    "calculationNote": "계획상 누적액은 월 계획 금액 × 완료된 경과 개월로 계산한 참고값이며 실제 저축 잔액이 아닙니다.",
     "errors": {
-      "contribution": "적립 금액은 0원 이상의 숫자여야 합니다."
+      "contribution": "월 계획 금액은 0원 이상의 숫자여야 합니다.",
+      "contributionMax": "월 계획 금액은 {{amount}} 이하여야 합니다."
     },
-    "providersTitle": "국내 펫보험 5사 비교 (강아지·고양이 위주)",
-    "providersDesc": "각 카드를 누르면 보험사 공식 사이트로 이동합니다. 보험료는 종·연령·보장 옵션에 따라 변동합니다.",
+    "providersTitle": "보험사 공식 가입대상 확인",
+    "providersDesc": "보험료와 가입 대상은 자주 바뀌므로 비교값을 고정 표시하지 않습니다. 각 보험사의 공식 상품 설명에서 현재 반려동물의 가입 가능 여부를 확인하세요.",
+    "providerVerify": "가입 동물, 연령, 보장 범위, 보험료를 공식 사이트에서 확인",
     "coversDogCat": "강아지·고양이 가입",
     "noDogCat": "미가입",
     "coversExotic": "희귀펫 가입",
@@ -3969,7 +4400,7 @@
     "perMonth": "/월",
     "openSite": "공식 사이트 열기",
     "compareLinksTitle": "보험 비교 외부 자료",
-    "disclaimer": "보험료·보장 범위는 공식 약관이 최종 기준입니다. 본 페이지는 큐레이션 가이드입니다."
+    "disclaimer": "보험료·가입 대상·보장 범위는 공식 상품 설명과 약관이 최종 기준입니다. 비상금 계산은 금융상품이나 저축 내역이 아닌 개인 계획 도구입니다."
   },
   "calendar": {
     "exportIcs": "캘린더로 내보내기 (.ics)",
@@ -4052,7 +4483,16 @@
     "wipeButton": "전체 데이터 삭제",
     "wipeConfirm": "모든 기록을 삭제할까요? 되돌릴 수 없습니다.",
     "wipedToast": "데이터를 삭제했습니다",
-    "empty": "아직 저장된 데이터가 없습니다."
+    "empty": "아직 저장된 데이터가 없습니다.",
+    "storedCount": "이 브라우저에 데이터 저장소 {{count}}개가 있습니다.",
+    "formatNote": "백업 형식 v2 · SHA-256 무결성 검증",
+    "fileHint": "Pettography에서 내보낸 JSON · 최대 2MB",
+    "rollbackNote": "저장 오류가 발생하면 복원 전 데이터로 자동 되돌립니다.",
+    "exportFailedToast": "백업 파일을 만들지 못했습니다. 브라우저 저장 권한을 확인해주세요.",
+    "fileTooLargeToast": "백업 파일은 2MB 이하여야 합니다.",
+    "restoreFailedToast": "복원하지 못해 기존 데이터로 되돌렸습니다.",
+    "wipeFailedToast": "삭제하지 못해 기존 데이터로 되돌렸습니다.",
+    "rollbackFailedToast": "작업에 실패했고 자동 되돌리기도 완료하지 못했습니다. 페이지를 닫기 전에 남아 있는 데이터를 내보내세요."
   },
   "petid": {
     "title": "펫 ID 카드",
@@ -4060,7 +4500,7 @@
       "petNameRequired": "이름을 입력하세요",
       "petNameMax": "이름은 40자 이내로 입력하세요",
       "speciesLabelRequired": "종을 입력하세요",
-      "speciesLabelMax": "종 이름은 40자 이내로 입력하세요",
+      "speciesLabelMax": "종 정보는 80자 이하로 입력해 주세요.",
       "ownerNameRequired": "보호자 이름을 입력하세요",
       "ownerNameMax": "보호자 이름은 40자 이내로 입력하세요",
       "ownerPhoneRequired": "연락처를 입력하세요",
@@ -4068,9 +4508,10 @@
       "regionMax": "지역은 60자 이내로 입력하세요",
       "registrationNumberMax": "등록번호는 60자 이내로 입력하세요",
       "distinctMarksMax": "특징은 240자 이내로 입력하세요",
-      "foundInstructionsMax": "안내문은 240자 이내로 입력하세요"
+      "foundInstructionsMax": "안내문은 240자 이내로 입력하세요",
+      "ownerPhoneInvalid": "전화번호에는 숫자, 공백, +, -, 괄호와 마침표만 사용할 수 있어요."
     },
-    "subtitle": "분실·탈출 시를 대비해 사육장 옆/지갑에 두는 인쇄용 카드. 보호자 연락처와 발견자 안내가 함께 들어갑니다. 모든 정보는 이 브라우저에만 저장됩니다.",
+    "subtitle": "분실 시 연락에 필요한 최소 정보만 담은 인쇄용 카드를 반려동물별로 만듭니다.",
     "fillFromOnboarding": "온보딩 정보로 채우기",
     "save": "카드 저장",
     "clear": "초기화",
@@ -4097,7 +4538,15 @@
       "registrationNumber": "환경부 보관신고 또는 RFID 번호",
       "distinctMarks": "예: 꼬리 일부 절단, 등에 흰 점",
       "foundInstructions": "예: 야행성이라 어두운 곳을 좋아함. 직사광선 피하고 종이상자에 보관 후 연락주세요."
-    }
+    },
+    "eyebrow": "PRINTABLE LOST-PET CARD",
+    "petRequiredTitle": "카드를 만들 반려동물을 선택해 주세요",
+    "petRequiredBody": "소유자 연락처가 포함되므로 반려동물 없이 공용 카드로 저장하지 않습니다.",
+    "petRequiredAction": "반려동물 선택하기",
+    "privacyTitle": "인쇄물에는 개인정보가 그대로 노출됩니다",
+    "privacyBody": "필요한 이름·전화번호·지역만 입력하고 주소, 주민등록번호, 계좌정보는 넣지 마세요. 배포 전 연락처가 최신인지 확인하고 회수하기 어려운 장소에는 붙이지 마세요.",
+    "clearConfirm": "이 반려동물의 카드와 입력한 연락처를 모두 지울까요?",
+    "clearedToast": "반려동물 ID 카드 정보를 지웠어요."
   },
   "compare": {
     "title": "종 비교",
@@ -4141,12 +4590,15 @@
   },
   "registry": {
     "title": "야생동물 보관신고 가이드",
-    "subtitle": "지정관리 야생동물(포유류·조류·파충류·양서류)을 키우거나 거래·폐사할 때 환경부 신고가 필요합니다. 본인 펫의 신고 상태를 체크리스트로 관리하세요.",
-    "effectiveNote": "시행: 2025년 12월 14일 (야생생물 보호 및 관리에 관한 법률)",
+    "subtitle": "지정관리 야생동물 신고 여부는 카테고리가 아니라 종·보유 경위·행위에 따라 달라집니다. 공식 법령과 담당 지자체 안내를 확인하며 개인 체크리스트를 관리하세요.",
+    "effectiveNote": "관련 개정 제도 시행: 2025년 12월 14일 · 적용 여부는 종별 공식 확인 필요",
     "categoryStatusLabel": "내 펫 카테고리",
     "regulatedBadge": "신고 대상",
     "unregulatedBadge": "신고 대상 아님",
     "noCategory": "온보딩에서 카테고리를 먼저 선택하세요",
+    "categoryCheckRequired": "종별 공식 확인 필요",
+    "speciesDataBasis": "앱 참고 데이터",
+    "speciesLoadFailed": "종별 참고 상태를 불러오지 못했습니다",
     "speciesFilingLabel": "내 종의 백색목록 상태",
     "filingStatus": {
       "white-list": "백색목록 (거래 허가)",
@@ -4155,11 +4607,12 @@
       "unknown": "확인 필요"
     },
     "checklistProgress": "체크리스트 진척도",
-    "filingsTitle": "필수 신고 4종",
+    "filingsTitle": "상황별 확인 체크리스트",
     "linksTitle": "정부·공식 사이트",
     "markDone": "완료 체크",
     "markedDone": "완료됨",
     "reset": "체크리스트 초기화",
+    "resetConfirm": "현재 활성 펫의 개인 체크 기록을 모두 지울까요? 법적 신고 자체는 취소되지 않습니다.",
     "filings": {
       "keeping": {
         "title": "보관 신고",
@@ -4183,11 +4636,12 @@
       }
     },
     "links": {
+      "law": "국가법령정보센터 야생생물법 원문",
       "wildlifeRegistry": "환경부 야생생물 통합포털 (wildlife.go.kr)",
       "animalRegistry": "국가동물보호정보시스템 (animal.go.kr)",
       "envMinistry": "환경부 (me.go.kr) 야생동물 보관신고 안내"
     },
-    "disclaimer": "법령 해석은 환경부 공식 안내가 최종 기준입니다. 본 가이드는 사용자 편의를 위한 요약입니다."
+    "disclaimer": "이 체크 표시는 개인 메모이며 신고 완료 증명이나 법률 자문이 아닙니다. 국가법령정보센터·공식 포털·관할 지자체의 최신 안내가 최종 기준입니다."
   },
   "pageMeta": {
     "homeDescription": "희귀 애완동물 종 선택부터 입양·사육·의료·일상·장례까지, 한 번의 선택으로 세팅하는 위치 기반 라이프사이클 포탈.",
@@ -4200,8 +4654,11 @@
   },
   "error": {
     "boundaryTitle": "문제가 발생했습니다",
-    "boundaryMessage": "알 수 없는 오류가 발생했습니다.",
-    "boundaryReset": "다시 시도"
+    "boundaryMessage": "화면을 표시하는 중 예상하지 못한 문제가 발생했습니다. 입력한 데이터는 이 브라우저에 그대로 남아 있습니다.",
+    "boundaryHint": "다시 시도해도 반복되면 홈으로 이동하거나 지원 화면에서 해결 경로를 확인해주세요.",
+    "boundaryReset": "화면 다시 시도",
+    "boundaryHome": "홈으로 이동",
+    "boundarySupport": "도움·지원 보기"
   },
   "attachments": {
     "label": "첨부 파일",
@@ -4234,6 +4691,7 @@
     "join": "가입",
     "joined": "가입됨",
     "leave": "탈퇴",
+    "confirmLeave": "이 카페에서 탈퇴할까요?",
     "members": "멤버 {{count}}명",
     "postsCount": "글 {{count}}개",
     "noResult": "검색 결과가 없어요",
@@ -4321,15 +4779,25 @@
     "submittedToast": "문의가 접수되었습니다",
     "failed": "문의 접수에 실패했어요. 잠시 후 다시 시도해주세요.",
     "receiptTitle": "문의가 접수되었습니다",
-    "receiptDesc": "아래 접수 번호로 처리 상태를 확인할 수 있어요.",
+    "receiptDesc": "접수 번호는 이 브라우저에 저장됩니다. 후속 문의가 필요할 때 활용하세요.",
     "receiptId": "접수 번호",
     "receiptStatus": "상태",
     "receiptAt": "접수 시각",
+    "copyReceiptId": "번호 복사",
+    "receiptCopied": "접수 번호를 복사했습니다",
+    "receiptCopyFailed": "접수 번호를 복사하지 못했습니다",
     "newInquiry": "새 문의 작성",
     "status": {
-      "new": "접수됨"
+      "new": "접수됨",
+      "inReview": "검토 중",
+      "resolved": "해결됨",
+      "closed": "종료됨",
+      "unknown": "상태 확인 필요"
     },
     "historyTitle": "이 브라우저에서 보낸 문의",
+    "removeReceipt": "{{title}} 문의의 로컬 접수 기록 삭제",
+    "removeReceiptConfirm": "‘{{title}}’ 문의의 접수 기록을 이 브라우저에서 삭제할까요? 실제 문의 접수는 취소되지 않습니다.",
+    "receiptRemovedToast": "이 브라우저의 접수 기록을 삭제했습니다",
     "altTitle": "다른 채널",
     "channelForum": "커뮤니티 포럼",
     "channelConsult": "수의사 상담",
@@ -4339,7 +4807,78 @@
       "titleMax": "제목은 140자 이내예요.",
       "bodyMin": "내용은 10자 이상 적어주세요.",
       "bodyMax": "내용은 4000자 이내예요.",
+      "emailMax": "이메일 주소는 254자 이내예요.",
       "emailInvalid": "올바른 이메일 주소를 입력해주세요."
     }
+  },
+  "support": {
+    "eyebrow": "Pettography Support",
+    "title": "막힌 순간, 가장 짧은 해결 경로",
+    "subtitle": "응급 상황은 즉시 분리하고, 일반 문제는 스스로 해결하거나 운영팀에 비공개로 접수할 수 있도록 안내합니다.",
+    "promise": "응급 · 자가 해결 · 운영 문의를 한곳에서 분기",
+    "urgentKicker": "Emergency first",
+    "urgentTitle": "동물의 상태가 급하다면 문의 답변을 기다리지 마세요",
+    "urgentDesc": "1분 응급 체크로 위험 신호를 확인하고, 가까운 특수동물 병원에 바로 연락하세요.",
+    "openSos": "응급 SOS 열기",
+    "findHospital": "가까운 병원 찾기",
+    "selfHelpKicker": "Resolve now",
+    "selfHelpTitle": "운영팀 답변 전 바로 확인할 수 있어요",
+    "selfHelpDesc": "자주 발생하는 문제부터 데이터 보호까지, 해결 가능성이 높은 순서로 정리했습니다.",
+    "paths": {
+      "faq": {
+        "title": "자주 묻는 질문",
+        "desc": "처음 사용, 기록, 법·신고, 지도 문제의 빠른 답변"
+      },
+      "tools": {
+        "title": "도구 모음",
+        "desc": "사육 계산기와 체크 도구를 검색해 바로 실행"
+      },
+      "backup": {
+        "title": "데이터 백업·복원",
+        "desc": "브라우저 변경, 초기화, 데이터 이동 전에 기록 보호"
+      }
+    },
+    "trustKicker": "Your privacy",
+    "trustTitle": "문의 전에 알아둘 점",
+    "privateTitle": "공개 게시판에 올리지 않아요",
+    "privateDesc": "문의 내용과 선택 입력한 이메일은 운영팀 접수함으로만 전송됩니다.",
+    "receiptTitle": "접수 번호를 남겨드려요",
+    "receiptDesc": "성공한 문의는 이 브라우저에 접수 번호와 제목을 보관합니다.",
+    "contactKicker": "Still need help?",
+    "contactTitle": "해결되지 않았다면 운영팀에 알려주세요",
+    "contactDesc": "재현 순서, 기대한 결과, 실제 결과를 함께 적으면 더 정확하게 확인할 수 있습니다.",
+    "contactButton": "문의 작성하기",
+    "contactTypeLabel": "문의 유형 바로가기",
+    "contactTypes": {
+      "bug": "버그 제보",
+      "question": "이용 질문",
+      "partnership": "제휴 문의"
+    }
+  },
+  "sitemap": {
+    "eyebrow": "Explore Pettography",
+    "title": "사이트맵",
+    "subtitle": "실제로 이동할 수 있는 Pettography의 모든 사용자 화면을 목적별로 찾고 검색하세요.",
+    "home": "홈",
+    "searchLabel": "페이지 검색",
+    "searchPlaceholder": "예: 급이, 병원, 백업",
+    "clear": "검색 지우기",
+    "resultCount": "이동 가능한 페이지 {{count}}개",
+    "emptyTitle": "일치하는 페이지가 없습니다",
+    "emptyDesc": "다른 기능 이름이나 경로로 검색해보세요.",
+    "groups": {
+      "start": "시작·탐색",
+      "daily": "일상 기록",
+      "planning": "환경·비용·준비",
+      "lifecycle": "생애주기",
+      "community": "병원·커뮤니티·서비스",
+      "learn": "자료·지원·정책"
+    }
+  },
+  "bgm": {
+    "turnOn": "배경 음악 켜기",
+    "turnOff": "배경 음악 끄기",
+    "credit": "{{title}} · {{artist}} ({{license}})",
+    "openCredit": "{{title}} 음악 출처 새 창에서 열기"
   }
 }

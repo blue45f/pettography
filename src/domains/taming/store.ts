@@ -7,7 +7,7 @@ import type { HandlingSession, StressSign } from './schema'
 interface TamingState {
   sessions: HandlingSession[]
   addSession: (input: {
-    petId?: string | null
+    petId?: string
     speciesId: string | null
     sessionAt: string
     durationMin: number
@@ -24,11 +24,11 @@ export const useTamingStore = create<TamingState>()(
     (set) => ({
       sessions: [],
       addSession: ({ petId, speciesId, sessionAt, durationMin, calmness, stressSigns, note }) => {
-        const resolvedPetId =
-          petId === undefined ? useOnboardingStore.getState().activePetId : petId
+        const resolvedPetId = petId ?? useOnboardingStore.getState().activePetId
+        if (!resolvedPetId) throw new Error('An active pet is required to add a handling session.')
         const session: HandlingSession = {
           id: crypto.randomUUID(),
-          petId: resolvedPetId ?? null,
+          petId: resolvedPetId,
           speciesId,
           sessionAt,
           durationMin,
@@ -49,19 +49,16 @@ export const useTamingStore = create<TamingState>()(
       clear: () => set({ sessions: [] }),
     }),
     {
-      name: 'pettography.taming',
+      name: 'pettography.taming.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
-/**
- * Handling sessions scoped to the active pet. Legacy sessions with no petId
- * fall through to the active pet so pre-multi-pet data keeps showing up.
- */
+/** Handling sessions strictly scoped to the active pet. */
 export function useActivePetSessions(): HandlingSession[] {
   const sessions = useTamingStore((s) => s.sessions)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return sessions
-  return sessions.filter((s) => !s.petId || s.petId === activePetId)
+  if (!activePetId) return []
+  return sessions.filter((s) => s.petId === activePetId)
 }

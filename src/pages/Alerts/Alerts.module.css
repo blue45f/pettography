@@ -17,15 +17,32 @@
   text-wrap: pretty;
 }
 
-.note {
-  margin-top: var(--spacing-xs);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
+.summaryBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-muted);
+  flex-wrap: wrap;
 }
 
 .summary {
   font-size: var(--font-size-lg);
   font-weight: 700;
+}
+
+.calendarLink,
+.setupLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .group {
@@ -50,12 +67,22 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: 0;
   list-style: none;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
 }
 
-.itemCard {
-  border: 1px solid var(--color-border);
+.item {
+  border-top: 1px solid var(--color-border);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 72px;
+}
+
+.item:first-child {
+  border-top: 0;
 }
 
 .itemLink {
@@ -65,6 +92,13 @@
   color: var(--color-text);
   text-decoration: none;
   min-height: 44px;
+  padding: var(--spacing-md);
+  transition: background-color var(--motion-fast);
+}
+
+.itemLink:hover,
+.itemLink:focus-visible {
+  background: var(--color-primary-soft);
 }
 
 .itemEmoji {

@@ -1,6 +1,4 @@
 import Badge from '@components/common/Badge'
-import Button from '@components/common/Button'
-import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import { findChecklist, NATIONAL_HOTLINES, type EmergencyChecklistItem } from '@domains/emergency'
 import { useHospitalsList } from '@domains/hospitals'
@@ -44,7 +42,7 @@ function Sos() {
     const onlyEmergency = sorted.filter((h) => h.hasEmergency)
     return {
       primary: onlyEmergency.length ? onlyEmergency : sorted.slice(0, 2),
-      fellBack: !onlyEmergency.length,
+      fellBack: data.length > 0 && !onlyEmergency.length,
     }
   }, [hospitalsQuery.data])
 
@@ -56,18 +54,31 @@ function Sos() {
         <p className={styles.tag}>SOS</p>
         <h1 className={styles.title}>{t('sos.title')}</h1>
         <p className={styles.subtitle}>{t('sos.subtitle')}</p>
+        <div className={styles.locationBar}>
+          <span>
+            {profile.location
+              ? t('dashboard.locationNote', { label: profile.location.label })
+              : t('hospitals.subtitle')}
+          </span>
+          <Link to="/onboarding" className={styles.locationLink}>
+            {t('dashboard.changeLocation')} →
+          </Link>
+        </div>
+        <p className={styles.disclaimer} role="note">
+          {t('sos.disclaimer')}
+        </p>
       </header>
 
       {!profile.category && (
-        <Card padding="lg" className={styles.gateCard}>
-          <Card.Body>
-            <h2 className={styles.gateTitle}>{t('sos.noCategoryTitle')}</h2>
-            <p className={styles.gateDesc}>{t('sos.noCategoryDesc')}</p>
-            <Link to="/onboarding" className={styles.gateCta}>
-              {t('sos.startOnboarding')} →
-            </Link>
-          </Card.Body>
-        </Card>
+        <aside className={styles.gateCard} aria-labelledby="sos-profile-gate">
+          <h2 id="sos-profile-gate" className={styles.gateTitle}>
+            {t('sos.noCategoryTitle')}
+          </h2>
+          <p className={styles.gateDesc}>{t('sos.noCategoryDesc')}</p>
+          <Link to="/onboarding" className={styles.gateCta}>
+            {t('sos.startOnboarding')} →
+          </Link>
+        </aside>
       )}
 
       <section aria-labelledby="sos-vets" className={styles.section}>
@@ -75,43 +86,68 @@ function Sos() {
           <h2 id="sos-vets" className={styles.sectionTitle}>
             {t('sos.nearbyTitle')}
           </h2>
-          {emergencyHospitals.fellBack && <p className={styles.fallback}>{t('sos.noEmergency')}</p>}
+          {!hospitalsQuery.isLoading && !hospitalsQuery.isError && emergencyHospitals.fellBack && (
+            <p className={styles.fallback}>{t('sos.noEmergency')}</p>
+          )}
         </header>
-        {hospitalsQuery.isLoading && <p className={styles.loading}>{t('common.loading')}</p>}
-        <ul className={styles.vetList}>
-          {emergencyHospitals.primary.slice(0, 4).map((h, idx) => (
-            <li key={h.id} className={styles.vetItem}>
-              <div className={styles.vetRank} aria-hidden="true">
-                {String(idx + 1).padStart(2, '0')}
-              </div>
-              <div className={styles.vetBody}>
-                <div className={styles.vetTopRow}>
-                  <h3 className={styles.vetName}>{h.name}</h3>
-                  {h.hasEmergency && <Badge variant="error">{t('hospitals.emergencyBadge')}</Badge>}
+        {hospitalsQuery.isLoading && (
+          <p className={styles.loading} role="status">
+            {t('common.loading')}
+          </p>
+        )}
+        {hospitalsQuery.isError && (
+          <EmptyState
+            variant="discover"
+            icon="⚠️"
+            title={t('common.error')}
+            description={t('common.loadErrorHint')}
+          />
+        )}
+        {!hospitalsQuery.isLoading &&
+          !hospitalsQuery.isError &&
+          emergencyHospitals.primary.length === 0 && (
+            <EmptyState variant="discover" icon="🏥" title={t('hospitals.noResult')} />
+          )}
+        {!hospitalsQuery.isError && emergencyHospitals.primary.length > 0 && (
+          <ul className={styles.vetList}>
+            {emergencyHospitals.primary.slice(0, 4).map((h, idx) => (
+              <li key={h.id} className={styles.vetItem}>
+                <div className={styles.vetRank} aria-hidden="true">
+                  {String(idx + 1).padStart(2, '0')}
                 </div>
-                <p className={styles.vetMeta}>
-                  {h.address}
-                  {Number.isFinite(h.distanceKm) && ` · ${h.distanceKm}km`}
-                </p>
-                <p className={styles.vetHours}>{h.hours}</p>
-              </div>
-              <div className={styles.vetActions}>
-                <Button
-                  variant="primary"
-                  size="lg"
-                  onClick={() => {
-                    globalThis.location.href = `tel:${h.phone}`
-                  }}
-                >
-                  {t('sos.callNow')}
-                </Button>
-                <a href={h.mapUrl} target="_blank" rel="noreferrer" className={styles.mapLink}>
-                  {t('sos.openMap')} ↗
-                </a>
-              </div>
-            </li>
-          ))}
-        </ul>
+                <div className={styles.vetBody}>
+                  <div className={styles.vetTopRow}>
+                    <h3 className={styles.vetName}>{h.name}</h3>
+                    {h.hasEmergency && (
+                      <Badge variant="error">{t('hospitals.emergencyBadge')}</Badge>
+                    )}
+                  </div>
+                  <p className={styles.vetMeta}>
+                    {h.address}
+                    {Number.isFinite(h.distanceKm) && ` · ${h.distanceKm}km`}
+                  </p>
+                  <p className={styles.vetHours}>{h.hours}</p>
+                </div>
+                <div className={styles.vetActions}>
+                  <a
+                    href={`tel:${h.phone}`}
+                    className={styles.callLink}
+                    aria-label={`${h.name}, ${t('sos.callNow')}, ${h.phone}`}
+                  >
+                    <span aria-hidden="true">☎</span>
+                    <span>
+                      {t('sos.callNow')}
+                      <strong>{h.phone}</strong>
+                    </span>
+                  </a>
+                  <a href={h.mapUrl} target="_blank" rel="noreferrer" className={styles.mapLink}>
+                    {t('sos.openMap')} ↗
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       {checklist && (
@@ -167,8 +203,6 @@ function Sos() {
           ))}
         </ul>
       </section>
-
-      <p className={styles.disclaimer}>{t('sos.disclaimer')}</p>
     </section>
   )
 }

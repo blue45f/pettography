@@ -61,14 +61,23 @@
 }
 
 .locationChip {
-  padding: 0.2rem 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.5rem 0.85rem;
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text-secondary);
-  border-radius: 999px;
-  font-size: 0.8rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
   cursor: pointer;
-  transition: all var(--transition);
+  transition:
+    background-color var(--motion-fast),
+    border-color var(--motion-fast),
+    color var(--motion-fast),
+    transform var(--motion-fast);
 }
 
 .locationChip:hover {
@@ -80,6 +89,10 @@
   background: var(--color-primary-alpha);
   border-color: var(--color-primary);
   color: var(--color-primary);
+}
+
+.locationChip:active {
+  transform: scale(0.98);
 }
 
 .speciesCard {
@@ -128,10 +141,9 @@
 }
 
 .eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 0.75rem;
-  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-primary);
   margin-bottom: var(--spacing-2xs);
 }
 
@@ -155,6 +167,9 @@
 }
 
 .speciesAction {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   align-self: flex-start;
   color: var(--color-primary);
   font-size: var(--font-size-sm);
@@ -187,6 +202,9 @@
 }
 
 .sectionLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--color-primary);
   font-weight: 600;
   text-decoration: none;
@@ -238,6 +256,9 @@
 }
 
 .externalLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--color-primary);
   font-weight: 600;
   font-size: var(--font-size-sm);
@@ -254,11 +275,6 @@
   padding: var(--spacing-2xs) 0 var(--spacing-sm);
   margin: 0 calc(-1 * var(--layout-pad));
   padding-inline: var(--layout-pad);
-  scrollbar-width: none;
-}
-
-.lifecycleRail::-webkit-scrollbar {
-  display: none;
 }
 
 .lifecycleStep {
@@ -434,6 +450,7 @@
   transition:
     border-color var(--motion-fast),
     transform var(--motion-fast);
+  min-height: 44px;
 }
 
 .upcomingItem:hover {
@@ -471,8 +488,6 @@
 }
 
 .routineLabel {
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   font-size: var(--font-size-xs);
   font-weight: 700;
   color: var(--color-text-muted);
@@ -491,6 +506,9 @@
 }
 
 .routineLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--color-primary);
   font-weight: 700;
   text-decoration: none;
@@ -509,13 +527,8 @@
   gap: var(--spacing-sm);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scrollbar-width: none;
   margin: 0 calc(-1 * var(--layout-pad));
-  padding-inline: var(--layout-pad);
-}
-
-.galleryRail::-webkit-scrollbar {
-  display: none;
+  padding: 0 var(--layout-pad) var(--spacing-xs);
 }
 
 .galleryThumb {
@@ -534,9 +547,14 @@
 }
 
 .notifyButton {
-  padding: var(--spacing-2xs) var(--spacing-md);
-  background: transparent;
-  border: 1px dashed var(--color-border-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  min-height: 44px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-pill);
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
@@ -558,32 +576,34 @@
 .weeklyList {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
-  gap: var(--spacing-sm);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
 }
 
 .weeklyChip {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2xs);
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--spacing-sm);
   padding: var(--spacing-md);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  background: transparent;
   text-align: center;
-  transition: border-color var(--motion-fast);
 }
 
-.weeklyChip:hover {
-  border-color: var(--color-primary);
+.weeklyChip + .weeklyChip {
+  border-inline-start: 1px solid var(--color-border);
 }
 
 .weeklyNum {
   font-family: var(--font-display);
   font-variant-numeric: tabular-nums;
-  font-size: var(--font-size-3xl);
-  font-weight: 800;
-  letter-spacing: -0.025em;
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  letter-spacing: -0.015em;
   color: var(--color-primary-700);
   line-height: 1;
 }
@@ -596,8 +616,6 @@
   font-size: var(--font-size-xs);
   font-weight: 600;
   color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 .attentionSection {
@@ -630,6 +648,7 @@
   transition:
     border-color var(--motion-fast),
     transform var(--motion-fast);
+  min-height: 44px;
 }
 
 .attentionItem:hover {
@@ -665,6 +684,16 @@
   flex: none;
   font-size: var(--font-size-lg);
   line-height: 1;
+}
+
+.attentionSeverity {
+  flex: none;
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
 }
 
 .attentionLabel {
@@ -705,6 +734,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-xs);
+  min-height: 44px;
   padding: var(--spacing-sm) var(--spacing-lg);
   border-radius: var(--radius-pill);
   background: var(--gradient-brand);
@@ -716,6 +746,55 @@
   transition:
     transform var(--motion-fast),
     box-shadow var(--motion-fast);
+}
+
+@media (max-width: 560px) {
+  .header {
+    padding-inline: var(--spacing-md);
+  }
+
+  .header > div:first-child,
+  .speciesCard,
+  .firstRunPrimer {
+    width: 100%;
+    min-width: 0;
+    flex-basis: 100%;
+  }
+
+  .locationPicker {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .locationPickerLabel {
+    grid-column: 1 / -1;
+  }
+
+  .weeklyList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .weeklyChip:nth-child(3) {
+    border-inline-start: 0;
+  }
+
+  .weeklyChip:nth-child(n + 3) {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .attentionItem {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .attentionLabel {
+    flex-basis: calc(100% - 2rem);
+    white-space: normal;
+  }
+
+  .attentionDate {
+    margin-inline-start: auto;
+  }
 }
 
 .firstRunCta:hover {

@@ -85,7 +85,10 @@
   height: 44px;
   border-radius: var(--radius-md);
   background: var(--color-surface-muted);
-  font-size: var(--font-size-xl);
+  color: var(--color-success);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.04em;
   flex-shrink: 0;
 }
 
@@ -126,6 +129,39 @@
 .receiptId {
   font-family: var(--font-family-mono, monospace);
   word-break: break-all;
+}
+
+.receiptValue {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  min-width: 0;
+}
+
+.copyButton,
+.historyRemove {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 var(--spacing-sm);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  color: var(--color-primary);
+  font: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.copyButton:hover,
+.historyRemove:hover {
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface));
+}
+
+.copyButton:focus-visible,
+.historyRemove:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 28%, transparent);
+  outline-offset: 2px;
 }
 
 .receiptActions {
@@ -197,10 +233,65 @@
 }
 
 .historySub {
+  display: block;
+  margin-top: var(--spacing-2xs);
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
 }
 
 .historyId {
   font-family: var(--font-family-mono, monospace);
+}
+
+.historyActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex-shrink: 0;
+}
+
+.historyRemove {
+  color: var(--color-error);
+}
+
+@media (max-width: 640px) {
+  .page {
+    width: 100%;
+  }
+
+  .formActions button,
+  .receiptActions button {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .receiptRow {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--spacing-2xs);
+  }
+
+  .receiptRow dt {
+    flex-basis: auto;
+  }
+
+  .receiptValue {
+    width: 100%;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .copyButton {
+    width: 100%;
+  }
+
+  .historyItem {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .historyActions {
+    width: 100%;
+    justify-content: space-between;
+  }
 }

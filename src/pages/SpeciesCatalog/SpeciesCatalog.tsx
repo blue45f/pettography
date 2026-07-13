@@ -14,7 +14,7 @@ import {
   type SpeciesCategory,
 } from '@domains/species'
 import usePageMeta from '@hooks/usePageMeta'
-import { useCallback, useDeferredValue, useMemo, useState } from 'react'
+import { useCallback, useDeferredValue, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useSearchParams } from 'react-router'
 
@@ -36,7 +36,7 @@ function readParam<T extends string>(raw: string | null, allowed: Set<string>, f
 }
 
 function SpeciesCatalog() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   usePageMeta({
     title: `${t('species.catalogTitle')} · ${t('common.appName')}`,
@@ -59,10 +59,21 @@ function SpeciesCatalog() {
   )
   const sort = readParam<SortKey>(params.get('sort'), SORT_VALUES, 'relevance')
   const query = params.get('q') ?? ''
-  const [comparePicks, setComparePicks] = useState<string[]>([])
+  const comparePicks = useMemo(() => {
+    const raw = params.get('compare') ?? ''
+    return Array.from(
+      new Set(
+        raw
+          .split(',')
+          .map((value) => value.trim())
+          .filter(Boolean)
+      )
+    ).slice(0, COMPARE_MAX)
+  }, [params])
   const deferredQuery = useDeferredValue(query)
 
-  const hasActiveFilters = category !== 'all' || difficulty !== 'all' || query.trim() !== ''
+  const hasActiveFilters =
+    category !== 'all' || difficulty !== 'all' || sort !== 'relevance' || query.trim() !== ''
 
   // Write one param, dropping it when it returns to the default so URLs stay
   // tidy. `replace` keeps filter tweaks out of the history stack.
@@ -98,6 +109,22 @@ function SpeciesCatalog() {
     [patchParam]
   )
 
+  const setComparePicks = useCallback(
+    (nextPicks: string[]) => {
+      const deduped = Array.from(new Set(nextPicks)).slice(0, COMPARE_MAX)
+      setParams(
+        (prev) => {
+          const next = new URLSearchParams(prev)
+          if (deduped.length === 0) next.delete('compare')
+          else next.set('compare', deduped.join(','))
+          return next
+        },
+        { replace: true }
+      )
+    },
+    [setParams]
+  )
+
   const resetFilters = useCallback(() => {
     setParams(
       (prev) => {
@@ -105,6 +132,7 @@ function SpeciesCatalog() {
         next.delete('category')
         next.delete('difficulty')
         next.delete('q')
+        next.delete('sort')
         return next
       },
       { replace: true }
@@ -112,11 +140,11 @@ function SpeciesCatalog() {
   }, [setParams])
 
   function toggleCompare(id: string) {
-    setComparePicks((prev) => {
-      if (prev.includes(id)) return prev.filter((x) => x !== id)
-      if (prev.length >= COMPARE_MAX) return prev
-      return [...prev, id]
-    })
+    if (comparePicks.includes(id)) {
+      setComparePicks(comparePicks.filter((pick) => pick !== id))
+      return
+    }
+    if (comparePicks.length < COMPARE_MAX) setComparePicks([...comparePicks, id])
   }
 
   function openCompare() {
@@ -124,7 +152,9 @@ function SpeciesCatalog() {
     navigate(`/compare?species=${comparePicks.join(',')}`)
   }
 
-  const { data, isLoading, isError } = useSpeciesList(category === 'all' ? {} : { category })
+  const { data, isLoading, isError, refetch } = useSpeciesList(
+    category === 'all' ? {} : { category }
+  )
 
   const filtered = useMemo(() => {
     if (!data) return undefined
@@ -258,6 +288,11 @@ function SpeciesCatalog() {
           icon="⚠️"
           title={t('common.error')}
           description={t('common.loadErrorHint')}
+          action={
+            <Button variant="outline" size="sm" onClick={() => void refetch()}>
+              {t('common.retry')}
+            </Button>
+          }
         />
       )}
       {!isError && filtered && filtered.length === 0 && (
@@ -306,7 +341,9 @@ function SpeciesCatalog() {
                       </Badge>
                       <Badge variant="warning">
                         {t('species.monthlyBudgetBadge', {
-                          amount: s.monthlyBudgetKrw.toLocaleString('ko'),
+                          amount: s.monthlyBudgetKrw.toLocaleString(
+                            i18n.resolvedLanguage ?? i18n.language
+                          ),
                         })}
                       </Badge>
                     </div>

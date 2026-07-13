@@ -34,8 +34,12 @@ function nowLocalInputValue(): string {
   return new Date(d.getTime() - offset).toISOString().slice(0, 16)
 }
 
+function formatMetric(value: number | null | undefined, unit: string): string {
+  return value === null || value === undefined ? '—' : `${value}${unit}`
+}
+
 function Habitat() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { toast } = useToast()
   useDocumentTitle(t('habitat.title'))
 
@@ -43,11 +47,14 @@ function Habitat() {
   const activeEntries = useActivePetHabitat()
   const allEntries = useHabitatStore((s) => s.entries)
   const [showAllPets, setShowAllPets] = useState(false)
+  const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null)
   const entries = showAllPets ? allEntries : activeEntries
   const addEntry = useHabitatStore((s) => s.addEntry)
   const removeEntry = useHabitatStore((s) => s.removeEntry)
 
-  const stats = useMemo(() => habitatStats(entries), [entries])
+  // All-pet mode is for history and export only. Combining measurements from
+  // different animals would produce unsafe care ranges and misleading trends.
+  const stats = useMemo(() => habitatStats(activeEntries), [activeEntries])
   const recommendation = useMemo(() => recommendationFor(profile.category), [profile.category])
   const breaches = useMemo(
     () => detectBreaches(stats.latest, recommendation),
@@ -56,17 +63,17 @@ function Habitat() {
 
   const tempPoints: SparklinePoint[] = useMemo(
     () =>
-      entries
+      activeEntries
         .filter((e) => e.temperatureC !== null)
         .map((e) => ({ x: new Date(e.measuredAt).getTime(), y: e.temperatureC as number })),
-    [entries]
+    [activeEntries]
   )
   const humidityPoints: SparklinePoint[] = useMemo(
     () =>
-      entries
+      activeEntries
         .filter((e) => e.humidityPct !== null)
         .map((e) => ({ x: new Date(e.measuredAt).getTime(), y: e.humidityPct as number })),
-    [entries]
+    [activeEntries]
   )
 
   const form = useForm<HabitatFormValues>({
@@ -121,6 +128,12 @@ function Habitat() {
     )
   }
 
+  function confirmRemove(id: string) {
+    removeEntry(id)
+    setPendingRemoveId(null)
+    toast(t('common.delete'), 'success')
+  }
+
   return (
     <section className={styles.page}>
       <header className={styles.heroHeader}>
@@ -173,6 +186,7 @@ function Habitat() {
           <form onSubmit={onSubmit} className={styles.formGrid} noValidate>
             <Input
               type="datetime-local"
+              max={nowLocalInputValue()}
               label={t('habitat.measuredAt')}
               error={
                 form.formState.errors.measuredAt?.message
@@ -185,6 +199,8 @@ function Habitat() {
               type="number"
               inputMode="decimal"
               step="0.1"
+              min="-10"
+              max="60"
               label={t('habitat.temperatureC')}
               error={
                 form.formState.errors.temperatureC?.message
@@ -226,9 +242,14 @@ function Habitat() {
               }
               {...form.register('uvbHoursToday', { setValueAs: numberSetter })}
             />
-            <Textarea rows={2} label={t('habitat.note')} {...form.register('note')} />
+            <Textarea
+              rows={2}
+              maxLength={200}
+              label={t('habitat.note')}
+              {...form.register('note')}
+            />
             <div className={styles.formActions}>
-              <Button type="submit" variant="primary">
+              <Button type="submit" variant="primary" isLoading={form.formState.isSubmitting}>
                 {t('habitat.save')}
               </Button>
             </div>
@@ -260,16 +281,16 @@ function Habitat() {
                 <dl className={styles.statsRow}>
                   <div>
                     <dt>{t('habitat.currentValue')}</dt>
-                    <dd>{stats.latest?.temperatureC ?? '—'}℃</dd>
+                    <dd>{formatMetric(stats.latest?.temperatureC, '℃')}</dd>
                   </div>
                   <div>
                     <dt>{t('habitat.avgValue')}</dt>
-                    <dd>{stats.tempAvg ?? '—'}℃</dd>
+                    <dd>{formatMetric(stats.tempAvg, '℃')}</dd>
                   </div>
                   <div>
                     <dt>{t('habitat.rangeValue')}</dt>
                     <dd>
-                      {stats.tempMin}℃ / {stats.tempMax}℃
+                      {formatMetric(stats.tempMin, '℃')} / {formatMetric(stats.tempMax, '℃')}
                     </dd>
                   </div>
                 </dl>
@@ -301,16 +322,17 @@ function Habitat() {
                 <dl className={styles.statsRow}>
                   <div>
                     <dt>{t('habitat.currentValue')}</dt>
-                    <dd>{stats.latest?.humidityPct ?? '—'}%</dd>
+                    <dd>{formatMetric(stats.latest?.humidityPct, '%')}</dd>
                   </div>
                   <div>
                     <dt>{t('habitat.avgValue')}</dt>
-                    <dd>{stats.humidityAvg ?? '—'}%</dd>
+                    <dd>{formatMetric(stats.humidityAvg, '%')}</dd>
                   </div>
                   <div>
                     <dt>{t('habitat.rangeValue')}</dt>
                     <dd>
-                      {stats.humidityMin}% / {stats.humidityMax}%
+                      {formatMetric(stats.humidityMin, '%')} /{' '}
+                      {formatMetric(stats.humidityMax, '%')}
                     </dd>
                   </div>
                 </dl>
@@ -333,14 +355,14 @@ function Habitat() {
               .slice(0, 10)
               .map((e) => (
                 <li key={e.id} className={styles.recentItem}>
-                  <span className={styles.recentDate}>
-                    {new Date(e.measuredAt).toLocaleString('ko', {
+                  <time className={styles.recentDate} dateTime={e.measuredAt}>
+                    {new Date(e.measuredAt).toLocaleString(i18n.resolvedLanguage ?? i18n.language, {
                       month: 'short',
                       day: 'numeric',
                       hour: '2-digit',
                       minute: '2-digit',
                     })}
-                  </span>
+                  </time>
                   <span className={styles.recentVal}>
                     {e.temperatureC !== null ? `${e.temperatureC}℃` : '—'}
                   </span>
@@ -355,10 +377,33 @@ function Habitat() {
                   <button
                     type="button"
                     className={styles.removeBtn}
-                    onClick={() => removeEntry(e.id)}
+                    aria-expanded={pendingRemoveId === e.id}
+                    aria-controls={`habitat-remove-${e.id}`}
+                    onClick={() =>
+                      setPendingRemoveId((current) => (current === e.id ? null : e.id))
+                    }
                   >
                     {t('habitat.remove')}
                   </button>
+                  {pendingRemoveId === e.id && (
+                    <div id={`habitat-remove-${e.id}`} className={styles.deleteConfirm}>
+                      <span className={styles.deletePrompt}>{t('habitat.remove')}?</span>
+                      <button
+                        type="button"
+                        className={styles.cancelBtn}
+                        onClick={() => setPendingRemoveId(null)}
+                      >
+                        {t('common.cancel')}
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.confirmBtn}
+                        onClick={() => confirmRemove(e.id)}
+                      >
+                        {t('common.delete')}
+                      </button>
+                    </div>
+                  )}
                 </li>
               ))}
           </ul>

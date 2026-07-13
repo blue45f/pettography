@@ -31,12 +31,9 @@ import { useToday } from '@hooks/useToday'
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Gear.module.css'
-
-function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
-}
 
 const STATUS_BADGE: Record<GearStatus, 'default' | 'success' | 'warning' | 'error'> = {
   overdue: 'error',
@@ -58,6 +55,7 @@ function Gear() {
   useDocumentTitle(t('gear.title'))
 
   const profile = useOnboardingStore((s) => s.profile)
+  const activePetId = useOnboardingStore((s) => s.activePetId)
   const { data: speciesList = [] } = useSpeciesList({})
   const activeSpecies = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId),
@@ -101,7 +99,7 @@ function Gear() {
     reset({
       typeId: values.typeId,
       name: '',
-      installedAt: todayIso(),
+      installedAt: today,
       intervalMonths: gearPreset(values.typeId).defaultIntervalMonths,
       notes: '',
     })
@@ -113,6 +111,28 @@ function Gear() {
     if (days === 0) return t('gear.dday.today')
     if (days < 0) return t('gear.dday.overdue', { count: Math.abs(days) })
     return t('gear.dday.remaining', { count: days })
+  }
+
+  if (!activePetId) {
+    return (
+      <section className={styles.page}>
+        <header className={styles.header}>
+          <h1>{t('gear.title')}</h1>
+          <p className={styles.subtitle}>{t('gear.subtitle')}</p>
+        </header>
+        <EmptyState
+          variant="gated"
+          icon="🔧"
+          title={t('gear.noPetTitle')}
+          description={t('gear.noPetDesc')}
+          action={
+            <Link to="/onboarding" className={styles.gateLink}>
+              {t('gear.noPetAction')}
+            </Link>
+          }
+        />
+      </section>
+    )
   }
 
   return (
@@ -130,6 +150,7 @@ function Gear() {
       <Alert variant="warning" title={t('gear.uvbAlertTitle')}>
         {t('gear.uvbAlertBody')}
       </Alert>
+      <p className={styles.scheduleNote}>{t('gear.scheduleNote')}</p>
 
       <Card padding="lg">
         <Card.Body>
@@ -154,6 +175,7 @@ function Gear() {
               <Input
                 label={t('gear.name')}
                 placeholder={t('gear.namePlaceholder')}
+                maxLength={60}
                 error={errors.name?.message ? t(errors.name.message) : undefined}
                 {...register('name')}
               />
@@ -161,6 +183,7 @@ function Gear() {
             <div className={styles.formRow}>
               <Input
                 type="date"
+                max={today}
                 label={t('gear.installedAt')}
                 error={errors.installedAt?.message ? t(errors.installedAt.message) : undefined}
                 {...register('installedAt')}
@@ -181,6 +204,7 @@ function Gear() {
             <Textarea
               label={t('gear.notes')}
               rows={2}
+              maxLength={200}
               placeholder={t('gear.notesPlaceholder')}
               error={errors.notes?.message ? t(errors.notes.message) : undefined}
               {...register('notes')}
@@ -237,7 +261,9 @@ function Gear() {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          markReplaced(item.id, todayIso())
+                          if (!globalThis.confirm(t('gear.replaceConfirm', { name: item.name })))
+                            return
+                          markReplaced(item.id, today)
                           toast(t('gear.replacedToast'), 'success')
                         }}
                       >
@@ -246,7 +272,11 @@ function Gear() {
                       <button
                         type="button"
                         className={styles.removeButton}
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => {
+                          if (globalThis.confirm(t('gear.removeConfirm', { name: item.name }))) {
+                            removeItem(item.id)
+                          }
+                        }}
                       >
                         {t('gear.remove')}
                       </button>

@@ -82,8 +82,8 @@ export const useShowcaseStore = create<ShowcaseState>()(
       },
     }),
     {
-      name: 'pettography.showcase',
-      version: 1,
+      name: 'pettography.showcase.v2',
+      version: 2,
       storage: createJSONStorage(() => localStorage),
     }
   )

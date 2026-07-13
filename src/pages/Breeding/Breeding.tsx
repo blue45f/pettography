@@ -29,7 +29,7 @@ import { useOnboardingStore } from '@domains/onboarding'
 import { useSpecies, useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -37,7 +37,8 @@ import { Link } from 'react-router'
 import styles from './Breeding.module.css'
 
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
 }
 
 const STATUS_BADGE: Record<
@@ -78,6 +79,7 @@ function Breeding() {
   const removeClutch = useBreedingStore((s) => s.removeClutch)
 
   const clutchFormRef = useRef<HTMLDivElement>(null)
+  const [pendingPairingRemoveId, setPendingPairingRemoveId] = useState<string | null>(null)
 
   /** Resolve an internal speciesId (sp-…) to its slug for the reference table. */
   function slugFor(speciesId: string | null | undefined): string | null {
@@ -136,7 +138,7 @@ function Breeding() {
       ? pairings.find((p) => p.id === values.pairingId)
       : undefined
     addClutch({
-      pairingId: values.pairingId || null,
+      pairingId: linkedPairing?.id ?? null,
       // Prefer the linked pairing's species, falling back to the active pet's.
       speciesId: linkedPairing?.speciesId ?? profile.speciesId,
       laidAt: values.laidAt,
@@ -159,7 +161,17 @@ function Breeding() {
   /** Prefill the clutch form from a pairing and scroll it into view. */
   function startClutchFor(pairing: Pairing) {
     clutchForm.setValue('pairingId', pairing.id, { shouldDirty: true })
-    clutchFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    clutchFormRef.current?.scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+      block: 'center',
+    })
+  }
+
+  function confirmPairingRemove(id: string) {
+    removePairing(id)
+    setPendingPairingRemoveId(null)
+    toast(t('common.delete'), 'success')
   }
 
   const numberSetter = (v: unknown) => {
@@ -206,6 +218,7 @@ function Breeding() {
             <form onSubmit={onCreatePairing} className={styles.form} noValidate>
               <div className={styles.formRow}>
                 <Input
+                  maxLength={40}
                   label={t('breeding.pairing.sire')}
                   placeholder={t('breeding.pairing.sirePlaceholder')}
                   error={
@@ -216,6 +229,7 @@ function Breeding() {
                   {...pairingForm.register('sireName')}
                 />
                 <Input
+                  maxLength={40}
                   label={t('breeding.pairing.dam')}
                   placeholder={t('breeding.pairing.damPlaceholder')}
                   error={
@@ -227,6 +241,7 @@ function Breeding() {
                 />
                 <Input
                   type="date"
+                  max={today}
                   label={t('breeding.pairing.pairedAt')}
                   error={
                     pairingForm.formState.errors.pairedAt?.message
@@ -239,6 +254,7 @@ function Breeding() {
               <Textarea
                 label={t('breeding.notes')}
                 rows={2}
+                maxLength={300}
                 helperText={t('breeding.notesOptional')}
                 error={
                   pairingForm.formState.errors.notes?.message
@@ -307,7 +323,13 @@ function Breeding() {
                           <button
                             type="button"
                             className={styles.removeButton}
-                            onClick={() => removePairing(pairing.id)}
+                            aria-expanded={pendingPairingRemoveId === pairing.id}
+                            aria-controls={`pairing-remove-${pairing.id}`}
+                            onClick={() =>
+                              setPendingPairingRemoveId((current) =>
+                                current === pairing.id ? null : pairing.id
+                              )
+                            }
                           >
                             {t('breeding.remove')}
                           </button>
@@ -315,6 +337,25 @@ function Breeding() {
                       </div>
                       {pairing.notes.trim() && (
                         <p className={styles.pairingNotes}>{pairing.notes}</p>
+                      )}
+                      {pendingPairingRemoveId === pairing.id && (
+                        <div id={`pairing-remove-${pairing.id}`} className={styles.confirmPanel}>
+                          <span className={styles.confirmPrompt}>{t('breeding.remove')}?</span>
+                          <button
+                            type="button"
+                            className={styles.cancelButton}
+                            onClick={() => setPendingPairingRemoveId(null)}
+                          >
+                            {t('common.cancel')}
+                          </button>
+                          <button
+                            type="button"
+                            className={styles.confirmButton}
+                            onClick={() => confirmPairingRemove(pairing.id)}
+                          >
+                            {t('common.delete')}
+                          </button>
+                        </div>
                       )}
                     </Card.Body>
                   </Card>
@@ -343,6 +384,7 @@ function Breeding() {
                 <div className={styles.formRow}>
                   <Input
                     type="date"
+                    max={today}
                     label={t('breeding.clutch.laidAt')}
                     error={
                       clutchForm.formState.errors.laidAt?.message
@@ -356,6 +398,7 @@ function Breeding() {
                     inputMode="numeric"
                     step="1"
                     min="1"
+                    max="1000"
                     label={t('breeding.clutch.eggCount')}
                     error={
                       clutchForm.formState.errors.eggCount?.message
@@ -371,6 +414,7 @@ function Breeding() {
                     inputMode="numeric"
                     step="1"
                     min="0"
+                    max="1000"
                     label={t('breeding.clutch.fertileCount')}
                     helperText={t('breeding.clutch.fertileHelper')}
                     error={
@@ -384,6 +428,8 @@ function Breeding() {
                     type="number"
                     inputMode="decimal"
                     step="0.1"
+                    min="0"
+                    max="50"
                     label={t('breeding.clutch.temp')}
                     helperText={t('breeding.clutch.tempHelper')}
                     error={
@@ -397,6 +443,7 @@ function Breeding() {
                 <Textarea
                   label={t('breeding.notes')}
                   rows={2}
+                  maxLength={300}
                   helperText={t('breeding.notesOptional')}
                   error={
                     clutchForm.formState.errors.notes?.message
@@ -444,7 +491,14 @@ function Breeding() {
                     updateClutchStatus(clutch.id, 'failed')
                     toast(t('breeding.clutch.markedFailed'), 'info')
                   }}
-                  onRemove={() => removeClutch(clutch.id)}
+                  onIncubating={() => {
+                    updateClutchStatus(clutch.id, 'incubating')
+                    toast(t('breeding.statusCode.incubating'), 'success')
+                  }}
+                  onRemove={() => {
+                    removeClutch(clutch.id)
+                    toast(t('common.delete'), 'success')
+                  }}
                 />
               </li>
             ))}
@@ -465,6 +519,7 @@ interface ClutchCardProps {
   pairingText: string
   onHatched: () => void
   onFailed: () => void
+  onIncubating: () => void
   onRemove: () => void
 }
 
@@ -476,6 +531,7 @@ function ClutchCard({
   pairingText,
   onHatched,
   onFailed,
+  onIncubating,
   onRemove,
 }: ClutchCardProps) {
   const { t } = useTranslation()
@@ -485,6 +541,19 @@ function ClutchCard({
   const ref = incubationRef(slug)
   const fertility = fertilityRate(clutch)
   const isActive = clutch.status === 'incubating'
+  const [pendingStatus, setPendingStatus] = useState<'hatched' | 'failed' | null>(null)
+  const [pendingRemove, setPendingRemove] = useState(false)
+
+  function confirmStatus() {
+    if (pendingStatus === 'hatched') onHatched()
+    if (pendingStatus === 'failed') onFailed()
+    setPendingStatus(null)
+  }
+
+  function confirmRemove() {
+    onRemove()
+    setPendingRemove(false)
+  }
 
   // Days to the midpoint hatch estimate; only meaningful while incubating.
   const ddays = daysUntil(hatchWindow.midpoint, today)
@@ -558,25 +627,92 @@ function ClutchCard({
         {ref.tdsd && <p className={styles.tdsdNote}>{t('breeding.tdsdNote')}</p>}
         <p className={styles.refNote}>{ref.note}</p>
 
+        {code === 'overdue' && (
+          <Link to="/hospitals" className={styles.hospitalLink}>
+            {t('nav.hospitals')}
+          </Link>
+        )}
+
         {clutch.notes.trim() && <p className={styles.clutchNotes}>{clutch.notes}</p>}
 
         <div className={styles.clutchControls}>
           {isActive ? (
             <>
-              <Button type="button" variant="outline" size="sm" onClick={onHatched}>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setPendingStatus('hatched')}
+              >
                 {t('breeding.clutch.markHatched')}
               </Button>
-              <Button type="button" variant="ghost" size="sm" onClick={onFailed}>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => setPendingStatus('failed')}
+              >
                 {t('breeding.clutch.markFailed')}
               </Button>
             </>
           ) : (
-            <span className={styles.ddaySub}>{t(`breeding.statusCode.${code}`)}</span>
+            <Button type="button" variant="outline" size="sm" onClick={onIncubating}>
+              {t('breeding.statusCode.incubating')}
+            </Button>
           )}
-          <button type="button" className={styles.removeButton} onClick={onRemove}>
+          <button
+            type="button"
+            className={styles.removeButton}
+            aria-expanded={pendingRemove}
+            aria-controls={`clutch-remove-${clutch.id}`}
+            onClick={() => setPendingRemove((current) => !current)}
+          >
             {t('breeding.remove')}
           </button>
         </div>
+
+        {pendingStatus && (
+          <div className={styles.confirmPanel} role="group">
+            <span className={styles.confirmPrompt}>
+              {t(
+                pendingStatus === 'hatched'
+                  ? 'breeding.clutch.markHatched'
+                  : 'breeding.clutch.markFailed'
+              )}
+              ?
+            </span>
+            <button
+              type="button"
+              className={styles.cancelButton}
+              onClick={() => setPendingStatus(null)}
+            >
+              {t('common.cancel')}
+            </button>
+            <button type="button" className={styles.statusConfirmButton} onClick={confirmStatus}>
+              {t(
+                pendingStatus === 'hatched'
+                  ? 'breeding.clutch.markHatched'
+                  : 'breeding.clutch.markFailed'
+              )}
+            </button>
+          </div>
+        )}
+
+        {pendingRemove && (
+          <div id={`clutch-remove-${clutch.id}`} className={styles.confirmPanel}>
+            <span className={styles.confirmPrompt}>{t('breeding.remove')}?</span>
+            <button
+              type="button"
+              className={styles.cancelButton}
+              onClick={() => setPendingRemove(false)}
+            >
+              {t('common.cancel')}
+            </button>
+            <button type="button" className={styles.confirmButton} onClick={confirmRemove}>
+              {t('common.delete')}
+            </button>
+          </div>
+        )}
       </Card.Body>
     </Card>
   )

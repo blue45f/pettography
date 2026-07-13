@@ -14,7 +14,7 @@ export const useCostReportStore = create<CostReportState>()(
       setSelectedYear: (year) => set({ selectedYear: year }),
     }),
     {
-      name: 'pettography.costreport',
+      name: 'pettography.costreport.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )

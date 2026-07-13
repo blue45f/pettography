@@ -41,7 +41,14 @@ export const meetupFormSchema = z.object({
     .max(80, 'meetups.errors.titleMax'),
   host: z.string().trim().min(1, 'meetups.errors.hostRequired').max(40, 'meetups.errors.hostMax'),
   region: meetupRegionSchema,
-  datetime: z.string().trim().min(1, 'meetups.errors.datetimeRequired'),
+  datetime: z
+    .string()
+    .trim()
+    .min(1, 'meetups.errors.datetimeRequired')
+    .refine(
+      (value) => Number.isFinite(Date.parse(value)) && Date.parse(value) > Date.now(),
+      'meetups.errors.datetimeRequired'
+    ),
   venue: z
     .string()
     .trim()

@@ -101,27 +101,26 @@ export const useBreedingStore = create<BreedingState>()(
       clear: () => set({ pairings: [], clutches: [] }),
     }),
     {
-      name: 'pettography.breeding',
+      name: 'pettography.breeding.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
 /**
- * Pairings scoped to the active pet. Legacy / unscoped entries (no petId)
- * fall through so they stay visible after the multi-pet migration.
+ * Pairings strictly scoped to the active pet or pre-onboarding null slot.
  */
 export function useActivePetPairings(): Pairing[] {
   const items = useBreedingStore((s) => s.pairings)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return items
-  return items.filter((e) => !e.petId || e.petId === activePetId)
+  if (!activePetId) return items.filter((item) => !item.petId)
+  return items.filter((item) => item.petId === activePetId)
 }
 
-/** Clutches scoped to the active pet (same fall-through rule as pairings). */
+/** Clutches scoped with the same strict pet boundary as pairings. */
 export function useActivePetClutches(): Clutch[] {
   const items = useBreedingStore((s) => s.clutches)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return items
-  return items.filter((e) => !e.petId || e.petId === activePetId)
+  if (!activePetId) return items.filter((item) => !item.petId)
+  return items.filter((item) => item.petId === activePetId)
 }

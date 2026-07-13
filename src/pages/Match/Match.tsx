@@ -2,10 +2,10 @@ import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import Progress from '@components/common/Progress'
-import { rankSpecies, type QuizAnswers } from '@domains/match-quiz'
+import { MATCH_MAX_SCORE, rankSpecies, type QuizAnswers } from '@domains/match-quiz'
 import { useSpeciesList } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -50,14 +50,16 @@ function isComplete(draft: Draft): draft is QuizAnswers {
 }
 
 function Match() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   useDocumentTitle(t('match.title'))
 
   const [draft, setDraft] = useState<Draft>({})
   const [stepIndex, setStepIndex] = useState(0)
   const [submitted, setSubmitted] = useState(false)
 
-  const { data: speciesList = [] } = useSpeciesList({})
+  const speciesQuery = useSpeciesList({})
+  const speciesList = useMemo(() => speciesQuery.data ?? [], [speciesQuery.data])
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null)
   const ranked = useMemo(
     () => (submitted && isComplete(draft) ? rankSpecies(speciesList, draft).slice(0, 3) : []),
     [submitted, draft, speciesList]
@@ -67,6 +69,10 @@ function Match() {
   const isLast = stepIndex === STEPS.length - 1
   const progress = ((stepIndex + 1) / STEPS.length) * 100
   const selected = draft[step]
+
+  useEffect(() => {
+    if (submitted && !speciesQuery.isLoading) resultHeadingRef.current?.focus()
+  }, [speciesQuery.isLoading, submitted])
 
   function pick(value: string) {
     setDraft((d) => ({ ...d, [step]: value }))
@@ -78,12 +84,77 @@ function Match() {
     setSubmitted(false)
   }
 
+  const formatKrw = (value: number) =>
+    new Intl.NumberFormat(i18n.resolvedLanguage ?? i18n.language, {
+      style: 'currency',
+      currency: 'KRW',
+      maximumFractionDigits: 0,
+    }).format(value)
+
+  if (submitted && speciesQuery.isLoading) {
+    return (
+      <section className={styles.page}>
+        <header className={styles.header}>
+          <h1 ref={resultHeadingRef} tabIndex={-1}>
+            {t('match.loadingTitle')}
+          </h1>
+          <p className={styles.subtitle}>{t('match.loadingDesc')}</p>
+        </header>
+        <div className={styles.statusPanel} role="status" aria-busy="true">
+          {t('common.loadingText')}
+        </div>
+      </section>
+    )
+  }
+
+  if (submitted && speciesQuery.isError) {
+    return (
+      <section className={styles.page}>
+        <header className={styles.header}>
+          <h1 ref={resultHeadingRef} tabIndex={-1}>
+            {t('match.loadFailedTitle')}
+          </h1>
+          <p className={styles.subtitle}>{t('match.loadFailedDesc')}</p>
+        </header>
+        <div className={styles.statusPanel} role="alert">
+          <Button type="button" variant="primary" onClick={() => void speciesQuery.refetch()}>
+            {t('common.retry')}
+          </Button>
+          <Button type="button" variant="outline" onClick={restart}>
+            {t('match.restart')}
+          </Button>
+        </div>
+      </section>
+    )
+  }
+
+  if (submitted && ranked.length === 0) {
+    return (
+      <section className={styles.page}>
+        <header className={styles.header}>
+          <h1 ref={resultHeadingRef} tabIndex={-1}>
+            {t('match.emptyTitle')}
+          </h1>
+          <p className={styles.subtitle}>{t('match.emptyDesc')}</p>
+        </header>
+        <div className={styles.statusPanel}>
+          <Button type="button" variant="primary" onClick={restart}>
+            {t('match.restart')}
+          </Button>
+        </div>
+      </section>
+    )
+  }
+
   if (submitted && ranked.length > 0) {
     return (
       <section className={styles.page}>
         <header className={styles.header}>
-          <h1>{t('match.resultTitle')}</h1>
+          <h1 ref={resultHeadingRef} tabIndex={-1}>
+            {t('match.resultTitle')}
+          </h1>
           <p className={styles.subtitle}>{t('match.subtitle', { count: STEPS.length })}</p>
+          <p className={styles.resultDisclaimer}>{t('match.resultDisclaimer')}</p>
         </header>
         <ol className={styles.results}>
           {ranked.map((m, idx) => (
@@ -101,14 +172,16 @@ function Match() {
                       <h2 className={styles.resultTitle}>{m.species.koreanName}</h2>
                       <p className={styles.scientific}>{m.species.scientificName}</p>
                     </div>
-                    <Badge variant="success">{t('match.matchScore', { score: m.score })}</Badge>
+                    <Badge variant="success">
+                      {t('match.matchScore', { score: m.score, max: MATCH_MAX_SCORE })}
+                    </Badge>
                   </div>
                   <p className={styles.resultSummary}>{m.species.summary}</p>
                   <div className={styles.badges}>
                     <Badge variant="primary">{t(`categories.${m.species.category}`)}</Badge>
                     <Badge variant="default">{t(`difficulty.${m.species.difficulty}`)}</Badge>
                     <Badge variant="default">
-                      ₩{m.species.monthlyBudgetKrw.toLocaleString('ko')}/월
+                      {t('match.monthlyBudget', { amount: formatKrw(m.species.monthlyBudgetKrw) })}
                     </Badge>
                     {m.species.filingStatus === 'regulated' && (
                       <Badge variant="warning">{t('registry.filingStatus.regulated')}</Badge>
@@ -129,7 +202,7 @@ function Match() {
           >
             {t('match.compareTop')} →
           </Link>
-          <Button variant="ghost" onClick={restart}>
+          <Button type="button" variant="ghost" onClick={restart}>
             {t('match.restart')}
           </Button>
         </div>
@@ -177,6 +250,7 @@ function Match() {
 
       <div className={styles.footer}>
         <Button
+          type="button"
           variant="ghost"
           onClick={() => setStepIndex((i) => Math.max(0, i - 1))}
           disabled={stepIndex === 0}
@@ -185,6 +259,7 @@ function Match() {
         </Button>
         {isLast ? (
           <Button
+            type="button"
             variant="primary"
             disabled={!isComplete(draft)}
             onClick={() => setSubmitted(true)}
@@ -193,6 +268,7 @@ function Match() {
           </Button>
         ) : (
           <Button
+            type="button"
             variant="primary"
             disabled={!selected}
             onClick={() => setStepIndex((i) => Math.min(STEPS.length - 1, i + 1))}

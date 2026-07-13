@@ -9,6 +9,9 @@
 }
 
 .backLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   text-decoration: none;
@@ -21,6 +24,7 @@
 .backCta {
   display: inline-flex;
   padding: var(--spacing-sm) var(--spacing-lg);
+  min-height: 44px;
   border-radius: var(--radius-pill);
   background: var(--gradient-brand);
   color: var(--color-on-brand);
@@ -81,6 +85,9 @@
 }
 
 .speciesLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--color-primary);
   text-decoration: none;
 }
@@ -167,6 +174,7 @@
 .postBody {
   white-space: pre-wrap;
   color: var(--color-text);
+  overflow-wrap: anywhere;
 }
 
 .hiddenNotice {
@@ -179,6 +187,7 @@
 }
 
 .commentToggle {
+  min-height: 44px;
   margin-top: var(--spacing-md);
   background: none;
   border: 1px solid var(--color-border);
@@ -251,7 +260,8 @@
 .commentAction {
   background: none;
   border: none;
-  padding: 0;
+  min-height: 44px;
+  padding: 0 var(--spacing-xs);
   color: var(--color-primary);
   font-size: var(--font-size-xs);
   cursor: pointer;
@@ -292,7 +302,8 @@
 .dangerLink {
   background: none;
   border: none;
-  padding: 0;
+  min-height: 44px;
+  padding: 0 var(--spacing-xs);
   color: var(--color-error);
   font-size: var(--font-size-xs);
   cursor: pointer;
@@ -300,4 +311,60 @@
 
 .dangerLink:hover {
   text-decoration: underline;
+}
+
+.confirmPanel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.confirmPrompt {
+  margin-right: auto;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.cancelButton,
+.confirmButton {
+  min-height: 44px;
+  padding: 0 var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancelButton {
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.confirmButton {
+  border: 1px solid var(--color-error);
+  background: var(--color-error);
+  color: var(--color-on-brand);
+}
+
+@media (max-width: 640px) {
+  .composerActions button,
+  .commentForm > button,
+  .commentFormNested > button {
+    width: 100%;
+  }
+
+  .postHeader {
+    flex-direction: column;
+  }
+
+  .commentChildren {
+    margin-left: var(--spacing-xs);
+    padding-left: var(--spacing-sm);
+  }
 }

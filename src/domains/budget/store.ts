@@ -7,7 +7,7 @@ import type { ExpenseCategory, ExpenseEntry } from './schema'
 interface BudgetState {
   entries: ExpenseEntry[]
   addEntry: (input: {
-    petId?: string | null
+    petId?: string
     spentAt: string
     amountKrw: number
     category: ExpenseCategory
@@ -23,16 +23,16 @@ export const useBudgetStore = create<BudgetState>()(
     (set) => ({
       entries: [],
       addEntry: ({ petId, spentAt, amountKrw, category, merchant, note }) => {
-        const resolvedPetId =
-          petId === undefined ? (useOnboardingStore.getState().activePetId ?? null) : petId
+        const resolvedPetId = petId ?? useOnboardingStore.getState().activePetId
+        if (!resolvedPetId) throw new Error('An active pet is required to add an expense.')
         const entry: ExpenseEntry = {
           id: crypto.randomUUID(),
           petId: resolvedPetId,
-          spentAt,
+          spentAt: spentAt.slice(0, 10),
           amountKrw,
           category,
-          merchant,
-          note,
+          merchant: merchant?.trim().slice(0, 80),
+          note: note?.trim().slice(0, 200),
         }
         set((state) => ({
           entries: [entry, ...state.entries].sort((a, b) => b.spentAt.localeCompare(a.spentAt)),
@@ -43,7 +43,7 @@ export const useBudgetStore = create<BudgetState>()(
       clear: () => set({ entries: [] }),
     }),
     {
-      name: 'pettography.budget',
+      name: 'pettography.budget.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
@@ -52,12 +52,13 @@ export const useBudgetStore = create<BudgetState>()(
 export function useActivePetBudget(): ExpenseEntry[] {
   const entries = useBudgetStore((s) => s.entries)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return entries
-  return entries.filter((e) => !e.petId || e.petId === activePetId)
+  if (!activePetId) return []
+  return entries.filter((e) => e.petId === activePetId)
 }
 
-function monthKey(date: Date): string {
-  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}`
+function localMonthKey(date: Date): string {
+  const local = new Date(date.getTime() - date.getTimezoneOffset() * 60_000)
+  return local.toISOString().slice(0, 7)
 }
 
 export interface MonthBreakdown {
@@ -71,8 +72,8 @@ export function monthBreakdown(
   entries: ExpenseEntry[],
   refDate: Date = new Date()
 ): MonthBreakdown {
-  const key = monthKey(refDate)
-  const inMonth = entries.filter((e) => monthKey(new Date(e.spentAt)) === key)
+  const key = localMonthKey(refDate)
+  const inMonth = entries.filter((e) => e.spentAt.slice(0, 7) === key)
   const byCategory: Record<ExpenseCategory, number> = {
     feeding: 0,
     gear: 0,

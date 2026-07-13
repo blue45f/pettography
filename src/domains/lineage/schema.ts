@@ -33,13 +33,23 @@ export type LineageAnimal = z.infer<typeof lineageAnimalSchema>
  * empty-string `''` sentinel for the optional selects/text maps to `null`/`''`
  * when persisted by the store.
  */
-export const lineageFormSchema = z.object({
-  name: z.string().trim().min(1, 'lineage.errors.nameRequired').max(60, 'lineage.errors.nameMax'),
-  speciesId: z.string(),
-  sex: sexSchema,
-  morph: z.string().trim().max(60, 'lineage.errors.morphMax'),
-  sireId: z.string(),
-  damId: z.string(),
-  notes: z.string().trim().max(300, 'lineage.errors.notesMax'),
-})
+export const lineageFormSchema = z
+  .object({
+    name: z.string().trim().min(1, 'lineage.errors.nameRequired').max(60, 'lineage.errors.nameMax'),
+    speciesId: z.string(),
+    sex: sexSchema,
+    morph: z.string().trim().max(60, 'lineage.errors.morphMax'),
+    sireId: z.string(),
+    damId: z.string(),
+    notes: z.string().trim().max(300, 'lineage.errors.notesMax'),
+  })
+  .superRefine((values, context) => {
+    if (values.sireId && values.damId && values.sireId === values.damId) {
+      context.addIssue({
+        code: 'custom',
+        path: ['damId'],
+        message: 'lineage.errors.sameParent',
+      })
+    }
+  })
 export type LineageFormValues = z.infer<typeof lineageFormSchema>

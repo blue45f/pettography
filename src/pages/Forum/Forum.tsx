@@ -27,7 +27,7 @@ import { useOnboardingStore } from '@domains/onboarding'
 import { SPECIES_CATEGORIES, type SpeciesCategory } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useEffect, useState } from 'react'
+import { useDeferredValue, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
@@ -36,7 +36,7 @@ import styles from './Forum.module.css'
 import type { Attachment } from '@domains/attachments'
 
 function Forum() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { toast } = useToast()
   useDocumentTitle(t('forum.title'))
 
@@ -65,8 +65,13 @@ function Forum() {
   const [search, setSearch] = useState('')
   const [openPostId, setOpenPostId] = useState<string | null>(null)
   const [pendingAttachments, setPendingAttachments] = useState<Attachment[]>([])
+  const [pendingPostAction, setPendingPostAction] = useState<{
+    postId: string
+    type: 'delete' | 'report'
+  } | null>(null)
+  const deferredSearch = useDeferredValue(search)
 
-  const visiblePosts = selectPosts(posts, repliesMap, ownPostIds, category, sort, search)
+  const visiblePosts = selectPosts(posts, repliesMap, ownPostIds, category, sort, deferredSearch)
 
   const {
     register,
@@ -102,6 +107,18 @@ function Forum() {
       recordView(postId)
       markPostRead(postId)
     }
+  }
+
+  function confirmPostAction() {
+    if (!pendingPostAction) return
+    if (pendingPostAction.type === 'delete') {
+      removePost(pendingPostAction.postId)
+      toast(t('forum.deletedToast'), 'success')
+    } else {
+      const ok = reportPost(pendingPostAction.postId)
+      toast(ok ? t('forum.reportedToast') : t('forum.reportedAlready'), ok ? 'success' : 'error')
+    }
+    setPendingPostAction(null)
   }
 
   return (
@@ -168,6 +185,7 @@ function Forum() {
                 {...register('category')}
               />
               <Input
+                maxLength={40}
                 label={t('forum.author')}
                 placeholder={t('forum.authorPlaceholder')}
                 error={errors.author?.message ? t(errors.author.message) : undefined}
@@ -175,6 +193,7 @@ function Forum() {
               />
             </div>
             <Input
+              maxLength={120}
               label={t('forum.titleLabel')}
               placeholder={t('forum.titlePlaceholder')}
               error={errors.title?.message ? t(errors.title.message) : undefined}
@@ -183,6 +202,7 @@ function Forum() {
             <Textarea
               label={t('forum.bodyLabel')}
               rows={3}
+              maxLength={2000}
               placeholder={t('forum.bodyPlaceholder')}
               error={errors.body?.message ? t(errors.body.message) : undefined}
               {...register('body')}
@@ -206,6 +226,20 @@ function Forum() {
           icon="💬"
           title={search ? t('forum.noResult') : t('forum.empty')}
           description={search ? t('forum.noResultHint') : undefined}
+          action={
+            search || category !== 'all' ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setSearch('')
+                  setCategory('all')
+                }}
+              >
+                {t('species.resetFilters')}
+              </Button>
+            ) : undefined
+          }
         />
       )}
 
@@ -235,12 +269,19 @@ function Forum() {
                       </h3>
                       <p className={styles.postMeta}>
                         <Badge variant="primary">{t(`categories.${post.category}`)}</Badge>{' '}
-                        {post.author} · {new Date(post.createdAt).toLocaleString('ko')}
+                        {post.author} ·{' '}
+                        <time dateTime={post.createdAt}>
+                          {new Date(post.createdAt).toLocaleString(
+                            i18n.resolvedLanguage ?? i18n.language
+                          )}
+                        </time>
                       </p>
                     </div>
                     <button
                       type="button"
                       className={styles.toggleButton}
+                      aria-expanded={isOpen}
+                      aria-controls={`forum-thread-${post.id}`}
                       onClick={() => handleToggleOpen(post.id)}
                     >
                       {isOpen ? t('forum.collapse') : t('forum.expand')}
@@ -270,10 +311,11 @@ function Forum() {
                         <button
                           type="button"
                           className={styles.dangerLink}
-                          onClick={() => {
-                            removePost(post.id)
-                            toast(t('forum.deletedToast'), 'success')
-                          }}
+                          aria-expanded={
+                            pendingPostAction?.postId === post.id &&
+                            pendingPostAction.type === 'delete'
+                          }
+                          onClick={() => setPendingPostAction({ postId: post.id, type: 'delete' })}
                         >
                           {t('forum.delete')}
                         </button>
@@ -282,19 +324,43 @@ function Forum() {
                           type="button"
                           className={styles.ghostLink}
                           disabled={Boolean(reportedPostIds[post.id])}
-                          onClick={() => {
-                            const ok = reportPost(post.id)
-                            toast(
-                              ok ? t('forum.reportedToast') : t('forum.reportedAlready'),
-                              ok ? 'success' : 'error'
-                            )
-                          }}
+                          aria-expanded={
+                            pendingPostAction?.postId === post.id &&
+                            pendingPostAction.type === 'report'
+                          }
+                          onClick={() => setPendingPostAction({ postId: post.id, type: 'report' })}
                         >
                           {reportedPostIds[post.id] ? t('forum.reported') : t('forum.report')}
                         </button>
                       )}
                     </div>
                   </div>
+
+                  {pendingPostAction?.postId === post.id && (
+                    <div className={styles.confirmPanel} role="group">
+                      <span className={styles.confirmPrompt}>
+                        {t(pendingPostAction.type === 'delete' ? 'forum.delete' : 'forum.report')}?
+                      </span>
+                      <button
+                        type="button"
+                        className={styles.cancelButton}
+                        onClick={() => setPendingPostAction(null)}
+                      >
+                        {t('common.cancel')}
+                      </button>
+                      <button
+                        type="button"
+                        className={
+                          pendingPostAction.type === 'delete'
+                            ? styles.confirmDangerButton
+                            : styles.confirmButton
+                        }
+                        onClick={confirmPostAction}
+                      >
+                        {t(pendingPostAction.type === 'delete' ? 'common.delete' : 'forum.report')}
+                      </button>
+                    </div>
+                  )}
 
                   {post.autoHidden && ownPostIds[post.id] && (
                     <p className={styles.hiddenNotice}>{t('forum.hiddenNotice')}</p>
@@ -304,28 +370,30 @@ function Forum() {
                   )}
 
                   {isOpen && (
-                    <ReplyThread
-                      postId={post.id}
-                      replies={replies}
-                      ownReplyIds={ownReplyIds}
-                      reportedReplyIds={reportedReplyIds}
-                      lastAuthor={lastAuthor}
-                      onSend={(values, parentReplyId) => {
-                        addReply({ postId: post.id, parentReplyId, ...values })
-                        toast(t('forum.replyToast'), 'success')
-                      }}
-                      onRemove={(replyId) => {
-                        removeReply(post.id, replyId)
-                        toast(t('forum.deletedToast'), 'success')
-                      }}
-                      onReport={(replyId) => {
-                        const ok = reportReply(post.id, replyId)
-                        toast(
-                          ok ? t('forum.reportedToast') : t('forum.reportedAlready'),
-                          ok ? 'success' : 'error'
-                        )
-                      }}
-                    />
+                    <div id={`forum-thread-${post.id}`}>
+                      <ReplyThread
+                        postId={post.id}
+                        replies={replies}
+                        ownReplyIds={ownReplyIds}
+                        reportedReplyIds={reportedReplyIds}
+                        lastAuthor={lastAuthor}
+                        onSend={(values, parentReplyId) => {
+                          addReply({ postId: post.id, parentReplyId, ...values })
+                          toast(t('forum.replyToast'), 'success')
+                        }}
+                        onRemove={(replyId) => {
+                          removeReply(post.id, replyId)
+                          toast(t('forum.deletedToast'), 'success')
+                        }}
+                        onReport={(replyId) => {
+                          const ok = reportReply(post.id, replyId)
+                          toast(
+                            ok ? t('forum.reportedToast') : t('forum.reportedAlready'),
+                            ok ? 'success' : 'error'
+                          )
+                        }}
+                      />
+                    </div>
                   )}
                 </Card.Body>
               </Card>
@@ -457,8 +525,9 @@ function ReplyNode({
   onRemove,
   onReport,
 }: ReplyNodeProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [composerOpen, setComposerOpen] = useState(false)
+  const [pendingAction, setPendingAction] = useState<'delete' | 'report' | null>(null)
   const canReply = depth + 1 < FORUM_MAX_REPLY_DEPTH
   const owned = Boolean(ownReplyIds[node.reply.id])
   const reported = Boolean(reportedReplyIds[node.reply.id])
@@ -491,7 +560,10 @@ function ReplyNode({
   return (
     <li className={styles.replyItem}>
       <p className={styles.replyMeta}>
-        <strong>{node.reply.author}</strong> · {new Date(node.reply.createdAt).toLocaleString('ko')}
+        <strong>{node.reply.author}</strong> ·{' '}
+        <time dateTime={node.reply.createdAt}>
+          {new Date(node.reply.createdAt).toLocaleString(i18n.resolvedLanguage ?? i18n.language)}
+        </time>
       </p>
       {node.reply.autoHidden && !owned ? (
         <p className={styles.hiddenNotice}>{t('forum.hiddenNotice')}</p>
@@ -513,7 +585,8 @@ function ReplyNode({
           <button
             type="button"
             className={styles.dangerLink}
-            onClick={() => onRemove(node.reply.id)}
+            aria-expanded={pendingAction === 'delete'}
+            onClick={() => setPendingAction('delete')}
           >
             {t('forum.delete')}
           </button>
@@ -522,12 +595,40 @@ function ReplyNode({
             type="button"
             className={styles.ghostLink}
             disabled={reported}
-            onClick={() => onReport(node.reply.id)}
+            aria-expanded={pendingAction === 'report'}
+            onClick={() => setPendingAction('report')}
           >
             {reported ? t('forum.reported') : t('forum.report')}
           </button>
         )}
       </div>
+      {pendingAction && (
+        <div className={styles.confirmPanel} role="group">
+          <span className={styles.confirmPrompt}>
+            {t(pendingAction === 'delete' ? 'forum.delete' : 'forum.report')}?
+          </span>
+          <button
+            type="button"
+            className={styles.cancelButton}
+            onClick={() => setPendingAction(null)}
+          >
+            {t('common.cancel')}
+          </button>
+          <button
+            type="button"
+            className={
+              pendingAction === 'delete' ? styles.confirmDangerButton : styles.confirmButton
+            }
+            onClick={() => {
+              if (pendingAction === 'delete') onRemove(node.reply.id)
+              else onReport(node.reply.id)
+              setPendingAction(null)
+            }}
+          >
+            {t(pendingAction === 'delete' ? 'common.delete' : 'forum.report')}
+          </button>
+        </div>
+      )}
       {composerOpen && canReply && (
         <ReplyComposer
           variant="nested"
@@ -589,6 +690,7 @@ function ReplyComposer({ variant, lastAuthor, onSubmit }: ReplyComposerProps) {
       noValidate
     >
       <Input
+        maxLength={40}
         label={t('forum.author')}
         placeholder={t('forum.authorPlaceholder')}
         error={errors.author?.message ? t(errors.author.message) : undefined}
@@ -596,6 +698,7 @@ function ReplyComposer({ variant, lastAuthor, onSubmit }: ReplyComposerProps) {
       />
       <Textarea
         rows={2}
+        maxLength={800}
         label={t('forum.replyLabel')}
         placeholder={t('forum.replyPlaceholder')}
         error={errors.body?.message ? t(errors.body.message) : undefined}

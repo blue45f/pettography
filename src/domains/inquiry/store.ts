@@ -27,7 +27,7 @@ export const useInquiryStore = create<InquiryState>()(
         set((state) => ({ receipts: state.receipts.filter((r) => r.id !== id) })),
     }),
     {
-      name: 'pettography.inquiry',
+      name: 'pettography.inquiry.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )

@@ -6,8 +6,10 @@ import type { KitContact } from './schema'
 interface KitStoreState {
   /** Checklist item id → ready? */
   checked: Record<string, boolean>
+  checkedUpdatedAt: string | null
   contacts: KitContact[]
   toggleItem: (id: string) => void
+  resetChecklist: () => void
   addContact: (input: { label: string; phone: string; note: string }) => KitContact
   removeContact: (id: string) => void
   clear: () => void
@@ -17,11 +19,14 @@ export const useKitStore = create<KitStoreState>()(
   persist(
     (set) => ({
       checked: {},
+      checkedUpdatedAt: null,
       contacts: [],
       toggleItem: (id) =>
         set((state) => ({
           checked: { ...state.checked, [id]: !state.checked[id] },
+          checkedUpdatedAt: new Date().toISOString(),
         })),
+      resetChecklist: () => set({ checked: {}, checkedUpdatedAt: null }),
       addContact: ({ label, phone, note }) => {
         const contact: KitContact = {
           id: crypto.randomUUID(),
@@ -34,10 +39,10 @@ export const useKitStore = create<KitStoreState>()(
       },
       removeContact: (id) =>
         set((state) => ({ contacts: state.contacts.filter((c) => c.id !== id) })),
-      clear: () => set({ checked: {}, contacts: [] }),
+      clear: () => set({ checked: {}, checkedUpdatedAt: null, contacts: [] }),
     }),
     {
-      name: 'pettography.kit',
+      name: 'pettography.kit.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )

@@ -1,19 +1,22 @@
 import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
+import EmptyState from '@components/common/EmptyState'
 import Progress from '@components/common/Progress'
+import Skeleton from '@components/common/Skeleton'
 import { useToast } from '@components/common/Toast'
 import { LOCATION_PRESETS, findPreset } from '@domains/location'
 import {
   isOnboardingComplete,
   ONBOARDING_STEPS,
   useOnboardingStore,
+  type OnboardingProfile,
   type OnboardingStep,
 } from '@domains/onboarding'
 import { isRegulated } from '@domains/registry'
 import { SPECIES_CATEGORIES, useSpeciesList } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router'
 
@@ -56,6 +59,14 @@ function generateRandomNickname(category?: string | null): string {
   return `${adj} ${noun}`
 }
 
+function getInitialStep(profile: OnboardingProfile): OnboardingStep {
+  if (isOnboardingComplete(profile)) return 'review'
+  if (!profile.category) return 'category'
+  if (!profile.speciesId) return 'species'
+  if (!profile.location) return 'location'
+  return 'review'
+}
+
 function Onboarding() {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -68,21 +79,37 @@ function Onboarding() {
   const setLocation = useOnboardingStore((s) => s.setLocation)
   const setPetName = useOnboardingStore((s) => s.setPetName)
   const complete = useOnboardingStore((s) => s.complete)
-  const reset = useOnboardingStore((s) => s.reset)
 
-  const [step, setStep] = useState<OnboardingStep>(profile.category ? 'species' : 'category')
+  const [step, setStep] = useState<OnboardingStep>(() => getInitialStep(profile))
   const [locating, setLocating] = useState(false)
+  const [petNameDraft, setPetNameDraft] = useState(profile.petName ?? '')
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null)
+  const hasMountedRef = useRef(false)
 
   const stepIndex = ONBOARDING_STEPS.indexOf(step)
   const progressValue = ((stepIndex + 1) / ONBOARDING_STEPS.length) * 100
 
-  const { data: speciesList = [] } = useSpeciesList(
-    profile.category ? { category: profile.category } : {}
-  )
+  const speciesQuery = useSpeciesList(profile.category ? { category: profile.category } : {})
+  const speciesList = speciesQuery.data ?? []
+
+  useEffect(() => {
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true
+      return
+    }
+    stepHeadingRef.current?.focus()
+  }, [step])
+
+  function isStepAvailable(candidate: OnboardingStep): boolean {
+    const candidateIndex = ONBOARDING_STEPS.indexOf(candidate)
+    if (candidateIndex === 0) return true
+    if (candidateIndex === 1) return Boolean(profile.category)
+    return Boolean(profile.category && profile.speciesId)
+  }
 
   function goNext() {
     const next = ONBOARDING_STEPS[stepIndex + 1]
-    if (next) setStep(next)
+    if (next && isStepAvailable(next)) setStep(next)
   }
 
   function goBack() {
@@ -100,7 +127,7 @@ function Onboarding() {
     setStep('location')
   }
 
-  function handleSelectPreset(presetId: string) {
+  function handleSelectPreset(presetId: string, advance = false) {
     const preset = findPreset(presetId)
     if (!preset) return
     setLocation({
@@ -109,6 +136,7 @@ function Onboarding() {
       lat: preset.coords.lat,
       lng: preset.coords.lng,
     })
+    if (advance) setStep('review')
   }
 
   function handleUseCurrent() {
@@ -127,13 +155,14 @@ function Onboarding() {
           lng: pos.coords.longitude,
         })
         setLocating(false)
+        setStep('review')
       },
       () => {
         toast(t('onboarding.currentFailed'), 'error')
-        handleSelectPreset('songpa')
+        handleSelectPreset('songpa', true)
         setLocating(false)
       },
-      { timeout: 5000 }
+      { timeout: 8000, maximumAge: 300000, enableHighAccuracy: false }
     )
   }
 
@@ -141,13 +170,13 @@ function Onboarding() {
     if (!profile.location) {
       handleSelectPreset('songpa')
     }
+    setPetName(petNameDraft)
     complete()
     toast(t('onboarding.finish'), 'success')
     navigate('/dashboard')
   }
 
   function handleReset() {
-    reset()
     setStep('category')
   }
 
@@ -178,7 +207,11 @@ function Onboarding() {
               ]
                 .filter(Boolean)
                 .join(' ')}
-              onClick={() => setStep(s)}
+              onClick={() => {
+                if (isStepAvailable(s)) setStep(s)
+              }}
+              disabled={!isStepAvailable(s)}
+              aria-current={s === step ? 'step' : undefined}
             >
               {idx + 1}. {t(`onboarding.steps.${s}`)}
             </button>
@@ -187,69 +220,91 @@ function Onboarding() {
       </header>
 
       {step === 'category' && (
-        <div className={styles.stepBody}>
-          <h2 className={styles.stepTitle}>{t('onboarding.categoryTitle')}</h2>
+        <div className={styles.stepBody} aria-labelledby="onboarding-category-heading">
+          <h2
+            id="onboarding-category-heading"
+            ref={stepHeadingRef}
+            tabIndex={-1}
+            className={styles.stepTitle}
+          >
+            {t('onboarding.categoryTitle')}
+          </h2>
           <p className={styles.stepHint}>{t('onboarding.categoryHint')}</p>
-          <div className={styles.grid}>
+          <div className={styles.grid} role="group" aria-label={t('onboarding.categoryTitle')}>
             {SPECIES_CATEGORIES.map((category) => (
-              <Card
+              <button
                 key={category}
-                hoverable
-                padding="lg"
+                type="button"
+                aria-pressed={profile.category === category}
                 className={[
                   styles.cardOption,
                   profile.category === category ? styles.cardSelected : '',
                 ]
                   .filter(Boolean)
                   .join(' ')}
+                onClick={() => handleSelectCategory(category)}
               >
-                <Card.Body>
-                  <h3 className={styles.cardTitle}>{t(`categories.${category}`)}</h3>
-                  <p className={styles.cardDesc}>{t(`categories.${category}Desc`)}</p>
-                  <Button
-                    variant={profile.category === category ? 'primary' : 'outline'}
-                    onClick={() => handleSelectCategory(category)}
-                  >
-                    {profile.category === category ? t('common.done') : t('common.next')}
-                  </Button>
-                </Card.Body>
-              </Card>
+                <span className={styles.cardTitle}>{t(`categories.${category}`)}</span>
+                <span className={styles.cardDesc}>{t(`categories.${category}Desc`)}</span>
+                <span className={styles.optionCta} aria-hidden="true">
+                  {profile.category === category
+                    ? `✓ ${t('common.done')}`
+                    : `${t('common.next')} →`}
+                </span>
+              </button>
             ))}
           </div>
         </div>
       )}
 
       {step === 'species' && (
-        <div className={styles.stepBody}>
-          <h2 className={styles.stepTitle}>{t('onboarding.speciesTitle')}</h2>
+        <div className={styles.stepBody} aria-labelledby="onboarding-species-heading">
+          <h2
+            id="onboarding-species-heading"
+            ref={stepHeadingRef}
+            tabIndex={-1}
+            className={styles.stepTitle}
+          >
+            {t('onboarding.speciesTitle')}
+          </h2>
           <p className={styles.stepHint}>{t('onboarding.speciesHint')}</p>
           {!profile.category && (
             <p className={styles.warning}>{t('onboarding.errors.selectCategory')}</p>
           )}
-          <div className={styles.grid}>
-            {speciesList.map((s) => (
-              <Card
-                key={s.id}
-                hoverable
-                padding="lg"
-                className={[
-                  styles.cardOption,
-                  profile.speciesId === s.id ? styles.cardSelected : '',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-              >
-                <Card.Body>
+          {speciesQuery.isLoading && <Skeleton variant="rectangular" height={160} lines={3} />}
+          {speciesQuery.isError && (
+            <EmptyState
+              variant="discover"
+              icon="⚠️"
+              title={t('common.error')}
+              description={t('common.loadErrorHint')}
+            />
+          )}
+          {!speciesQuery.isError && (
+            <div className={styles.grid} role="group" aria-label={t('onboarding.speciesTitle')}>
+              {speciesList.map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  aria-pressed={profile.speciesId === s.id}
+                  className={[
+                    styles.cardOption,
+                    profile.speciesId === s.id ? styles.cardSelected : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  onClick={() => handleSelectSpecies(s.id)}
+                >
                   <div className={styles.speciesHeader}>
                     <span className={styles.heroEmoji} aria-hidden="true">
                       {s.heroEmoji}
                     </span>
                     <div>
-                      <h3 className={styles.cardTitle}>{s.koreanName}</h3>
-                      <p className={styles.scientific}>{s.scientificName}</p>
+                      <span className={styles.cardTitle}>{s.koreanName}</span>
+                      <span className={styles.scientific}>{s.scientificName}</span>
                     </div>
                   </div>
-                  <p className={styles.cardDesc}>{s.summary}</p>
+                  <span className={styles.cardDesc}>{s.summary}</span>
                   <div className={styles.badgeRow}>
                     <Badge variant="primary">{t(`difficulty.${s.difficulty}`)}</Badge>
                     {s.tags.slice(0, 2).map((tag) => (
@@ -258,22 +313,28 @@ function Onboarding() {
                       </Badge>
                     ))}
                   </div>
-                  <Button
-                    variant={profile.speciesId === s.id ? 'primary' : 'outline'}
-                    onClick={() => handleSelectSpecies(s.id)}
-                  >
-                    {profile.speciesId === s.id ? t('common.done') : t('species.selectThis')}
-                  </Button>
-                </Card.Body>
-              </Card>
-            ))}
-          </div>
+                  <span className={styles.optionCta} aria-hidden="true">
+                    {profile.speciesId === s.id
+                      ? `✓ ${t('common.done')}`
+                      : `${t('species.selectThis')} →`}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
       {step === 'location' && (
-        <div className={styles.stepBody}>
-          <h2 className={styles.stepTitle}>{t('onboarding.locationTitle')}</h2>
+        <div className={styles.stepBody} aria-labelledby="onboarding-location-heading">
+          <h2
+            id="onboarding-location-heading"
+            ref={stepHeadingRef}
+            tabIndex={-1}
+            className={styles.stepTitle}
+          >
+            {t('onboarding.locationTitle')}
+          </h2>
           <p className={styles.stepHint}>{t('onboarding.locationHint')}</p>
           <div className={styles.locationActions}>
             <Button variant="primary" onClick={handleUseCurrent} isLoading={locating}>
@@ -281,40 +342,47 @@ function Onboarding() {
             </Button>
           </div>
           <h3 className={styles.subTitle}>{t('onboarding.presetLabel')}</h3>
-          <div className={styles.grid}>
+          <div
+            className={`${styles.grid} ${styles.locationGrid}`}
+            role="group"
+            aria-label={t('onboarding.presetLabel')}
+          >
             {LOCATION_PRESETS.map((preset) => (
-              <Card
+              <button
                 key={preset.id}
-                hoverable
-                padding="lg"
+                type="button"
+                aria-pressed={profile.location?.presetId === preset.id}
                 className={[
                   styles.cardOption,
+                  styles.locationOption,
                   profile.location?.presetId === preset.id ? styles.cardSelected : '',
                 ]
                   .filter(Boolean)
                   .join(' ')}
+                onClick={() => handleSelectPreset(preset.id, true)}
               >
-                <Card.Body>
-                  <h3 className={styles.cardTitle}>{preset.label}</h3>
-                  <p className={styles.cardDesc}>
-                    {preset.coords.lat.toFixed(4)}, {preset.coords.lng.toFixed(4)}
-                  </p>
-                  <Button
-                    variant={profile.location?.presetId === preset.id ? 'primary' : 'outline'}
-                    onClick={() => handleSelectPreset(preset.id)}
-                  >
-                    {profile.location?.presetId === preset.id ? t('common.done') : t('common.next')}
-                  </Button>
-                </Card.Body>
-              </Card>
+                <span className={styles.cardTitle}>{preset.label}</span>
+                <span className={styles.optionCta} aria-hidden="true">
+                  {profile.location?.presetId === preset.id
+                    ? `✓ ${t('common.done')}`
+                    : `${t('common.next')} →`}
+                </span>
+              </button>
             ))}
           </div>
         </div>
       )}
 
       {step === 'review' && (
-        <div className={styles.stepBody}>
-          <h2 className={styles.stepTitle}>{t('onboarding.reviewTitle')}</h2>
+        <div className={styles.stepBody} aria-labelledby="onboarding-review-heading">
+          <h2
+            id="onboarding-review-heading"
+            ref={stepHeadingRef}
+            tabIndex={-1}
+            className={styles.stepTitle}
+          >
+            {t('onboarding.reviewTitle')}
+          </h2>
           <Card padding="lg">
             <Card.Body>
               <label className={styles.petNameLabel} htmlFor="onboarding-pet-name">
@@ -326,8 +394,9 @@ function Onboarding() {
                   type="text"
                   maxLength={40}
                   placeholder={t('onboarding.petNamePlaceholder')}
-                  value={profile.petName ?? ''}
-                  onChange={(e) => setPetName(e.target.value)}
+                  value={petNameDraft}
+                  onChange={(e) => setPetNameDraft(e.target.value)}
+                  onBlur={() => setPetName(petNameDraft)}
                   className={styles.petNameInput}
                 />
                 <Button
@@ -335,6 +404,7 @@ function Onboarding() {
                   type="button"
                   onClick={() => {
                     const name = generateRandomNickname(profile.category)
+                    setPetNameDraft(name)
                     setPetName(name)
                     toast(t('onboarding.suggestedToast', { name }), 'info')
                   }}
@@ -407,7 +477,8 @@ function Onboarding() {
             onClick={goNext}
             disabled={
               (step === 'category' && !profile.category) ||
-              (step === 'species' && !profile.speciesId)
+              (step === 'species' && !profile.speciesId) ||
+              (step === 'location' && locating)
             }
           >
             {t('common.next')}

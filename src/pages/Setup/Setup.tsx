@@ -1,113 +1,122 @@
-import Badge from '@components/common/Badge'
-import EmptyState from '@components/common/EmptyState'
+import Card from '@components/common/Card'
 import { useOnboardingStore } from '@domains/onboarding'
-import { SETUP_GUIDES, SETUP_SHOPS, totalRange } from '@domains/setup'
-import { SPECIES_CATEGORIES, type SpeciesCategory } from '@domains/species'
+import { useSpecies } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Setup.module.css'
+
+const MSD_HUSBANDRY_URL =
+  'https://www.msdvetmanual.com/exotic-and-laboratory-animals/reptiles/management-and-husbandry-of-reptiles'
+
+const SETUP_STEPS = [
+  { id: 'research', href: 'care' },
+  { id: 'space', href: '/enclosure' },
+  { id: 'climate', href: '/lighting' },
+  { id: 'monitor', href: '/habitat' },
+  { id: 'safety', href: '/safety' },
+  { id: 'supplies', href: '/supplies' },
+  { id: 'dryRun', href: '/routine' },
+] as const
 
 function Setup() {
   const { t } = useTranslation()
   useDocumentTitle(t('setup.title'))
 
-  const profileCategory = useOnboardingStore((s) => s.profile.category)
-  const [selected, setSelected] = useState<SpeciesCategory | null>(profileCategory ?? null)
-  const [includeOptional, setIncludeOptional] = useState(true)
+  const profile = useOnboardingStore((state) => state.profile)
+  const activePetId = useOnboardingStore((state) => state.activePetId)
+  const { data: species } = useSpecies(profile.speciesId ?? undefined)
 
-  const parts = useMemo(() => (selected ? SETUP_GUIDES[selected] : []), [selected])
-  const totals = useMemo(() => totalRange(parts, includeOptional), [parts, includeOptional])
+  if (!activePetId) {
+    return (
+      <section className={styles.page}>
+        <header className={styles.header}>
+          <p className={styles.eyebrow}>{t('setup.eyebrow')}</p>
+          <h1>{t('setup.title')}</h1>
+          <p className={styles.subtitle}>{t('setup.subtitle')}</p>
+        </header>
+        <Card padding="lg" className={styles.petGate}>
+          <Card.Body>
+            <span className={styles.gateIcon} aria-hidden="true">
+              🧰
+            </span>
+            <h2>{t('setup.petRequiredTitle')}</h2>
+            <p>{t('setup.petRequiredBody')}</p>
+            <Link to="/onboarding" className={styles.primaryLink}>
+              {t('setup.petRequiredAction')}
+            </Link>
+          </Card.Body>
+        </Card>
+      </section>
+    )
+  }
+
+  const careHref = profile.speciesId ? `/care/${profile.speciesId}` : '/care'
+  const petName = profile.petName?.trim() || species?.koreanName || t('setup.aPet')
 
   return (
     <section className={styles.page}>
       <header className={styles.header}>
+        <p className={styles.eyebrow}>{t('setup.eyebrow')}</p>
         <h1>{t('setup.title')}</h1>
         <p className={styles.subtitle}>{t('setup.subtitle')}</p>
+        <span className={styles.petPill}>
+          <span aria-hidden="true">{species?.heroEmoji ?? '🐾'}</span>
+          {t('setup.activePet', { name: petName })}
+        </span>
       </header>
 
-      <div className={styles.categoryPicker} role="radiogroup" aria-label={t('setup.pickCategory')}>
-        {SPECIES_CATEGORIES.map((c) => (
-          <button
-            key={c}
-            type="button"
-            role="radio"
-            aria-checked={selected === c}
-            onClick={() => setSelected(c)}
-            className={[styles.categoryChip, selected === c ? styles.categoryActive : '']
-              .filter(Boolean)
-              .join(' ')}
+      <Card padding="lg" className={styles.principleCard}>
+        <Card.Body>
+          <p className={styles.sectionKicker}>{t('setup.principleKicker')}</p>
+          <h2 className={styles.sectionTitle}>{t('setup.principleTitle')}</h2>
+          <p className={styles.principleText}>{t('setup.principleBody')}</p>
+          <a
+            className={styles.sourceLink}
+            href={MSD_HUSBANDRY_URL}
+            target="_blank"
+            rel="noreferrer"
           >
-            {t(`categories.${c}`)}
-          </button>
-        ))}
-      </div>
+            {t('setup.sourceLink')}
+          </a>
+        </Card.Body>
+      </Card>
 
-      {!selected ? (
-        <EmptyState icon="🧰" title={t('setup.empty')} description={t('setup.emptyDesc')} />
-      ) : (
-        <>
-          <div className={styles.summary}>
-            <div>
-              <p className={styles.summaryLabel}>{t('setup.totalLabel')}</p>
-              <p className={styles.summaryValue}>
-                ₩{totals.basic.toLocaleString('ko')} ~ ₩{totals.premium.toLocaleString('ko')}
-              </p>
-              <p className={styles.summaryHint}>{t('setup.totalHint')}</p>
-            </div>
-            <label className={styles.optionalToggle}>
-              <input
-                type="checkbox"
-                checked={includeOptional}
-                onChange={(e) => setIncludeOptional(e.target.checked)}
-              />
-              {t('setup.includeOptional')}
-            </label>
-          </div>
-
-          <ol className={styles.partsList}>
-            {parts.map((p, idx) => (
-              <li key={p.id} className={styles.part}>
-                <span aria-hidden="true" className={styles.partNo}>
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
-                <div className={styles.partBody}>
-                  <header className={styles.partHeader}>
-                    <h3 className={styles.partTitle}>{p.label}</h3>
-                    {p.optional && <Badge variant="default">{t('setup.optional')}</Badge>}
-                  </header>
-                  <p className={styles.partDesc}>{p.description}</p>
-                </div>
-                <div className={styles.partPrice}>
-                  <span className={styles.priceRange}>
-                    ₩{p.basicKrw.toLocaleString('ko')}
-                    <span className={styles.priceSep}>~</span>₩{p.premiumKrw.toLocaleString('ko')}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ol>
-
-          <section className={styles.shopSection} aria-labelledby="shops-heading">
-            <h2 id="shops-heading" className={styles.sectionTitle}>
-              {t('setup.shopsTitle')}
+      <section aria-labelledby="setup-order-title">
+        <div className={styles.sectionHead}>
+          <div>
+            <p className={styles.sectionKicker}>{t('setup.orderKicker')}</p>
+            <h2 id="setup-order-title" className={styles.sectionTitle}>
+              {t('setup.orderTitle')}
             </h2>
-            <ul className={styles.shopList}>
-              {SETUP_SHOPS.map((s) => (
-                <li key={s.id}>
-                  <a className={styles.shopLink} href={s.url} target="_blank" rel="noreferrer">
-                    <strong>{s.name}</strong>
-                    <span className={styles.shopTag}>{s.tag}</span>
-                    <span className={styles.shopArrow}>↗</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <p className={styles.disclaimer}>{t('setup.disclaimer')}</p>
-          </section>
-        </>
-      )}
+          </div>
+          <Link to="/shops" className={styles.textLink}>
+            {t('setup.openShops')}
+          </Link>
+        </div>
+        <ol className={styles.steps}>
+          {SETUP_STEPS.map((step, index) => {
+            const href = step.id === 'research' ? careHref : step.href
+            return (
+              <li key={step.id} className={styles.step}>
+                <span className={styles.stepNo} aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <div className={styles.stepBody}>
+                  <h3>{t(`setup.steps.${step.id}.title`)}</h3>
+                  <p>{t(`setup.steps.${step.id}.body`)}</p>
+                </div>
+                <Link to={href} className={styles.stepLink}>
+                  {t('setup.openStep')}
+                </Link>
+              </li>
+            )
+          })}
+        </ol>
+      </section>
+
+      <p className={styles.disclaimer}>{t('setup.disclaimer')}</p>
     </section>
   )
 }

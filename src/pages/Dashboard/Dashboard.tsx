@@ -29,6 +29,8 @@ import { useActivePetFilings, REGISTRY_FILINGS } from '@domains/registry'
 import {
   BUILTIN_ROUTINES,
   isDoneWithinWindow,
+  routineCompletionKey,
+  routineCompletionsForPet,
   useActivePetCustomTasks,
   useRoutineStore,
 } from '@domains/routine'
@@ -38,7 +40,7 @@ import { supplyStatus, useActivePetSupplies } from '@domains/supplies'
 import { useAggregatedAlerts } from '@hooks/useAggregatedAlerts'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useAppStore } from '@store/index'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, Navigate } from 'react-router'
 
@@ -73,6 +75,7 @@ const ATTENTION_DOT_CLASS: Record<string, string> = {
 function Dashboard() {
   const { t } = useTranslation()
   const profile = useOnboardingStore((s) => s.profile)
+  const activePetId = useOnboardingStore((s) => s.activePetId)
   const setLocation = useOnboardingStore((s) => s.setLocation)
   const user = useAppStore((s) => s.user)
   useDocumentTitle(t('nav.dashboard'))
@@ -103,6 +106,9 @@ function Dashboard() {
   const recentDiary = diaryEntries.slice(0, 2)
 
   const { toast } = useToast()
+  const [notificationPermission, setNotificationPermission] = useState<
+    NotificationPermission | 'unsupported'
+  >(() => (typeof Notification === 'undefined' ? 'unsupported' : Notification.permission))
   const { weights, vaccinations } = useActivePetHealth()
   const habitatEntries = useActivePetHabitat()
   const budgetEntries = useActivePetBudget()
@@ -111,6 +117,10 @@ function Dashboard() {
   const galleryPhotos = useActivePetPhotos(profile.speciesId ?? null)
   const routineCustom = useActivePetCustomTasks()
   const routineCompletions = useRoutineStore((s) => s.completions)
+  const activeRoutineCompletions = useMemo(
+    () => routineCompletionsForPet(routineCompletions, activePetId),
+    [routineCompletions, activePetId]
+  )
 
   const aggregatedAlerts = useAggregatedAlerts()
   const attentionCount = actionableCount(aggregatedAlerts)
@@ -153,16 +163,24 @@ function Dashboard() {
     const builtIn = profile.category ? (BUILTIN_ROUTINES[profile.category] ?? []) : []
     const all = [...builtIn, ...routineCustom]
     if (all.length === 0) return { done: 0, total: 0 }
-    const done = all.filter((t) => isDoneWithinWindow(routineCompletions[t.id], t.cadence)).length
+    const done = all.filter((task) =>
+      isDoneWithinWindow(
+        routineCompletions[routineCompletionKey(task.id, activePetId)],
+        task.cadence
+      )
+    ).length
     return { done, total: all.length }
-  }, [profile.category, routineCustom, routineCompletions])
+  }, [profile.category, routineCustom, routineCompletions, activePetId])
 
   const galleryPreview = useMemo(() => {
     if (!profile.speciesId) return [] as typeof galleryPhotos
     return galleryPhotos.filter((p) => p.speciesId === profile.speciesId).slice(0, 6)
   }, [galleryPhotos, profile.speciesId])
 
-  const weekActivity = countWeekActivity(diaryEntries, galleryPhotos, routineCompletions, weights)
+  const weekActivity = useMemo(
+    () => countWeekActivity(diaryEntries, galleryPhotos, activeRoutineCompletions, weights),
+    [diaryEntries, galleryPhotos, activeRoutineCompletions, weights]
+  )
 
   const upcomingPreview = useMemo(() => {
     const items: { id: string; daysLeft: number; label: string; link: string }[] = []
@@ -235,6 +253,7 @@ function Dashboard() {
       return
     }
     void Notification.requestPermission().then((res) => {
+      setNotificationPermission(res)
       if (res === 'granted') toast(t('dashboard.notifyEnabled'), 'success')
       else toast(t('dashboard.notifyDenied'), 'error')
     })
@@ -283,6 +302,7 @@ function Dashboard() {
                     lng: found.coords.lng,
                   })
                 }}
+                aria-pressed={profile.location?.presetId === preset.id}
               >
                 {preset.label}
               </button>
@@ -355,6 +375,9 @@ function Dashboard() {
                   <span className={styles.attentionEmoji} aria-hidden="true">
                     {ALERT_SOURCE_EMOJI[item.source] ?? '🔔'}
                   </span>
+                  <span className={styles.attentionSeverity}>
+                    {t(`alerts.severity.${item.severity}`)}
+                  </span>
                   <span className={styles.attentionLabel}>{t(item.titleKey, item.params)}</span>
                   {item.dateISO && <span className={styles.attentionDate}>{item.dateISO}</span>}
                 </Link>
@@ -388,11 +411,13 @@ function Dashboard() {
         </div>
       </section>
 
-      <div className={styles.notifyRow}>
-        <button type="button" className={styles.notifyButton} onClick={askNotificationPermission}>
-          🔔 {t('dashboard.notifyButton')}
-        </button>
-      </div>
+      {notificationPermission === 'default' && (
+        <div className={styles.notifyRow}>
+          <button type="button" className={styles.notifyButton} onClick={askNotificationPermission}>
+            <span aria-hidden="true">🔔</span> {t('dashboard.notifyButton')}
+          </button>
+        </div>
+      )}
 
       <section aria-labelledby="weekly-heading" className={styles.weeklySection}>
         <header className={styles.sectionHeader}>

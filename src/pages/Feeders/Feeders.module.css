@@ -9,6 +9,15 @@
   font-weight: 800;
 }
 
+.eyebrow,
+.sectionKicker {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .subtitle {
   color: var(--color-text-secondary);
   margin-top: var(--spacing-xs);
@@ -22,6 +31,19 @@
 .noteText {
   color: var(--color-text);
   font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.noteTitle {
+  display: block;
+  margin-bottom: var(--spacing-2xs);
+  font-size: var(--font-size-sm);
+}
+
+.noteFine {
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
   line-height: 1.6;
 }
 
@@ -167,4 +189,26 @@
 
 .removeButton:hover {
   text-decoration: underline;
+}
+
+.careToggle:focus-visible,
+.removeButton:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .formActions > *,
+  .colonyActions > :first-child {
+    width: 100%;
+  }
+
+  .colonyActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .removeButton {
+    width: 100%;
+  }
 }

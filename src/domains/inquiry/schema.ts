@@ -19,10 +19,11 @@ export const inquiryFormSchema = z.object({
   contactEmail: z
     .string()
     .trim()
+    .max(254, 'inquiry.errors.emailMax')
     .optional()
     .refine((v) => !v || EMAIL_RE.test(v), { message: 'inquiry.errors.emailInvalid' }),
   /** Honeypot — rendered invisibly, submitted verbatim, must stay empty for humans. */
-  website: z.string().optional(),
+  website: z.string().max(200).optional(),
 })
 
 export type InquiryFormValues = z.infer<typeof inquiryFormSchema>

@@ -44,16 +44,16 @@ export const useBcsStore = create<BcsState>()(
       clear: () => set({ entries: [] }),
     }),
     {
-      name: 'pettography.bcs',
+      name: 'pettography.bcs.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
-/** BCS entries scoped to the active pet (legacy untagged entries fall through). */
+/** BCS entries strictly scoped to the active pet or pre-onboarding null slot. */
 export function useActivePetBcs(): BcsEntry[] {
   const entries = useBcsStore((s) => s.entries)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return entries
-  return entries.filter((e) => !e.petId || e.petId === activePetId)
+  if (!activePetId) return entries.filter((entry) => !entry.petId)
+  return entries.filter((entry) => entry.petId === activePetId)
 }

@@ -1,3 +1,4 @@
+import Alert from '@components/common/Alert'
 import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
@@ -8,7 +9,6 @@ import {
   enclosureVolumeLiters,
   meetsMinimum,
   minEnclosure,
-  resolvePetKey,
   useActivePetEnclosure,
   useEnclosureStore,
   verdict,
@@ -18,9 +18,10 @@ import { useOnboardingStore } from '@domains/onboarding'
 import { useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Enclosure.module.css'
 
@@ -29,34 +30,33 @@ type DimKey = (typeof DIM_KEYS)[number]
 
 function numberSetter(value: unknown): number {
   if (value === '' || value === null || value === undefined) return Number.NaN
-  const n = Number(value)
-  return Number.isFinite(n) ? n : Number.NaN
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : Number.NaN
 }
 
 function Enclosure() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { toast } = useToast()
   useDocumentTitle(t('enclosure.title'))
 
-  const profile = useOnboardingStore((s) => s.profile)
-  const activePetId = useOnboardingStore((s) => s.activePetId)
+  const profile = useOnboardingStore((state) => state.profile)
+  const activePetId = useOnboardingStore((state) => state.activePetId)
   const { data: speciesList = [] } = useSpeciesList({})
-  const setCheck = useEnclosureStore((s) => s.setCheck)
+  const setCheck = useEnclosureStore((state) => state.setCheck)
+  const resetCheck = useEnclosureStore((state) => state.reset)
   const saved = useActivePetEnclosure()
 
   const activeSpecies = useMemo(
-    () => speciesList.find((s) => s.id === profile.speciesId) ?? null,
-    [speciesList, profile.speciesId]
+    () => speciesList.find((species) => species.id === profile.speciesId) ?? null,
+    [profile.speciesId, speciesList]
   )
-
-  const min = useMemo(
+  const reference = useMemo(
     () => minEnclosure(activeSpecies?.slug ?? null, profile.category),
     [activeSpecies?.slug, profile.category]
   )
-
-  const minLiters = useMemo(
-    () => enclosureVolumeLiters(min.lengthCm, min.widthCm, min.heightCm),
-    [min]
+  const referenceLiters = useMemo(
+    () => enclosureVolumeLiters(reference.lengthCm, reference.widthCm, reference.heightCm),
+    [reference]
   )
 
   const form = useForm<EnclosureFormValues>({
@@ -67,6 +67,15 @@ function Enclosure() {
       heightCm: saved?.heightCm ?? Number.NaN,
     },
   })
+  const resetForm = form.reset
+
+  useEffect(() => {
+    resetForm({
+      lengthCm: saved?.lengthCm ?? Number.NaN,
+      widthCm: saved?.widthCm ?? Number.NaN,
+      heightCm: saved?.heightCm ?? Number.NaN,
+    })
+  }, [activePetId, resetForm, saved?.heightCm, saved?.lengthCm, saved?.widthCm])
 
   const watchedLength = useWatch({ control: form.control, name: 'lengthCm' })
   const watchedWidth = useWatch({ control: form.control, name: 'widthCm' })
@@ -77,12 +86,17 @@ function Enclosure() {
       w: Number.isFinite(watchedWidth) ? watchedWidth : null,
       h: Number.isFinite(watchedHeight) ? watchedHeight : null,
     }),
-    [watchedLength, watchedWidth, watchedHeight]
+    [watchedHeight, watchedLength, watchedWidth]
   )
-
-  const minDims = useMemo(() => ({ l: min.lengthCm, w: min.widthCm, h: min.heightCm }), [min])
-  const result = useMemo(() => verdict(current, minDims), [current, minDims])
-  const shortfall = useMemo(() => meetsMinimum(current, minDims).shortfall, [current, minDims])
+  const referenceDims = useMemo(
+    () => ({ l: reference.lengthCm, w: reference.widthCm, h: reference.heightCm }),
+    [reference]
+  )
+  const result = useMemo(() => verdict(current, referenceDims), [current, referenceDims])
+  const shortfall = useMemo(
+    () => meetsMinimum(current, referenceDims).shortfall,
+    [current, referenceDims]
+  )
   const currentLiters = useMemo(
     () =>
       current.l !== null && current.w !== null && current.h !== null
@@ -92,8 +106,8 @@ function Enclosure() {
   )
 
   const onSubmit = form.handleSubmit((values) => {
-    const petKey = resolvePetKey(activePetId)
-    setCheck(petKey, {
+    if (!activePetId) return
+    setCheck(activePetId, {
       speciesId: profile.speciesId ?? null,
       lengthCm: values.lengthCm,
       widthCm: values.widthCm,
@@ -102,194 +116,224 @@ function Enclosure() {
     toast(t('enclosure.saved'), 'success')
   })
 
-  const verdictVariant: 'success' | 'warning' | 'default' =
-    result === 'adequate' ? 'success' : result === 'upgrade' ? 'warning' : 'default'
+  function handleReset() {
+    if (!activePetId || !window.confirm(t('enclosure.resetConfirm'))) return
+    resetCheck(activePetId)
+    resetForm({ lengthCm: Number.NaN, widthCm: Number.NaN, heightCm: Number.NaN })
+    toast(t('enclosure.resetDone'), 'info')
+  }
 
-  const dimLabel: Record<DimKey, string> = {
+  const dimensionLabel: Record<DimKey, string> = {
     l: t('enclosure.length'),
     w: t('enclosure.width'),
     h: t('enclosure.height'),
   }
-  const dimMin: Record<DimKey, number> = { l: min.lengthCm, w: min.widthCm, h: min.heightCm }
-  const dimCurrent: Record<DimKey, number | null> = { l: current.l, w: current.w, h: current.h }
+  const referenceByDimension: Record<DimKey, number> = {
+    l: reference.lengthCm,
+    w: reference.widthCm,
+    h: reference.heightCm,
+  }
+  const currentByDimension: Record<DimKey, number | null> = current
+
+  if (!activePetId) {
+    return (
+      <section className={styles.page}>
+        <header className={styles.header}>
+          <p className={styles.eyebrow}>{t('enclosure.eyebrow')}</p>
+          <h1>{t('enclosure.title')}</h1>
+          <p className={styles.subtitle}>{t('enclosure.subtitle')}</p>
+        </header>
+        <Card padding="lg" className={styles.petGate}>
+          <Card.Body>
+            <span className={styles.gateIcon} aria-hidden="true">
+              🏡
+            </span>
+            <h2>{t('enclosure.petRequiredTitle')}</h2>
+            <p>{t('enclosure.petRequiredBody')}</p>
+            <Link to="/onboarding" className={styles.primaryLink}>
+              {t('enclosure.petRequiredAction')}
+            </Link>
+          </Card.Body>
+        </Card>
+      </section>
+    )
+  }
 
   return (
     <section className={styles.page}>
       <header className={styles.header}>
+        <p className={styles.eyebrow}>{t('enclosure.eyebrow')}</p>
         <h1>{t('enclosure.title')}</h1>
         <p className={styles.subtitle}>{t('enclosure.subtitle')}</p>
       </header>
 
       <div className={styles.context}>
-        {activeSpecies ? (
-          <>
-            <span className={styles.contextEmoji} aria-hidden="true">
-              {activeSpecies.heroEmoji}
-            </span>
-            <div className={styles.contextText}>
-              <span className={styles.contextName}>
-                {profile.petName?.trim()
-                  ? `${profile.petName.trim()} · ${activeSpecies.koreanName}`
-                  : activeSpecies.koreanName}
-              </span>
-              <span className={styles.contextMeta}>
-                {t('enclosure.basis.species', { name: activeSpecies.koreanName })}
-              </span>
-            </div>
-          </>
-        ) : (
-          <>
-            <span className={styles.contextEmoji} aria-hidden="true">
-              🐾
-            </span>
-            <div className={styles.contextText}>
-              <span className={styles.contextName}>{t('enclosure.noSpeciesTitle')}</span>
-              <span className={styles.contextMeta}>
-                {profile.category
-                  ? t('enclosure.basis.category', {
-                      category: t(`enclosure.categories.${profile.category}`),
-                    })
-                  : t('enclosure.basis.default')}
-              </span>
-            </div>
-          </>
-        )}
+        <span className={styles.contextEmoji} aria-hidden="true">
+          {activeSpecies?.heroEmoji ?? '🐾'}
+        </span>
+        <div className={styles.contextText}>
+          <span className={styles.contextName}>
+            {profile.petName?.trim() || activeSpecies?.koreanName || t('enclosure.aPet')}
+          </span>
+          <span className={styles.contextMeta}>
+            {activeSpecies
+              ? t('enclosure.basis.species', { name: activeSpecies.koreanName })
+              : t('enclosure.basis.category', {
+                  category: profile.category
+                    ? t(`enclosure.categories.${profile.category}`)
+                    : t('enclosure.categories.unknown'),
+                })}
+          </span>
+        </div>
       </div>
 
-      <Card padding="lg">
-        <Card.Body>
-          <div className={styles.minHead}>
-            <h2 className={styles.cardTitle}>{t('enclosure.recommendedTitle')}</h2>
-            <Badge variant={min.source === 'species' ? 'primary' : 'default'}>
-              {min.source === 'species'
-                ? t('enclosure.badge.speciesMin')
-                : t('enclosure.badge.categoryMin')}
-            </Badge>
-          </div>
-          <p className={styles.minDims}>
-            {min.lengthCm} × {min.widthCm} × {min.heightCm} {t('enclosure.cm')}
-          </p>
-          <p className={styles.minLiters}>{t('enclosure.approxLiters', { liters: minLiters })}</p>
-          <p className={styles.ruleNote}>{t(`enclosure.rules.${min.rule}`)}</p>
-        </Card.Body>
-      </Card>
+      <Alert variant="warning" title={t('enclosure.referenceWarningTitle')}>
+        {t('enclosure.referenceWarningBody')}
+      </Alert>
 
-      <Card padding="lg">
-        <Card.Body>
-          <h2 className={styles.cardTitle}>{t('enclosure.currentTitle')}</h2>
-          <p className={styles.helpText}>{t('enclosure.currentHelp')}</p>
-          <form onSubmit={onSubmit} className={styles.dimForm} noValidate>
-            <Input
-              type="number"
-              inputMode="numeric"
-              step="1"
-              min="1"
-              label={t('enclosure.length')}
-              error={
-                form.formState.errors.lengthCm?.message
-                  ? t(form.formState.errors.lengthCm.message)
-                  : undefined
-              }
-              {...form.register('lengthCm', { setValueAs: numberSetter })}
-            />
-            <Input
-              type="number"
-              inputMode="numeric"
-              step="1"
-              min="1"
-              label={t('enclosure.width')}
-              error={
-                form.formState.errors.widthCm?.message
-                  ? t(form.formState.errors.widthCm.message)
-                  : undefined
-              }
-              {...form.register('widthCm', { setValueAs: numberSetter })}
-            />
-            <Input
-              type="number"
-              inputMode="numeric"
-              step="1"
-              min="1"
-              label={t('enclosure.height')}
-              error={
-                form.formState.errors.heightCm?.message
-                  ? t(form.formState.errors.heightCm.message)
-                  : undefined
-              }
-              {...form.register('heightCm', { setValueAs: numberSetter })}
-            />
-            <div className={styles.formActions}>
-              <Button type="submit" variant="primary">
-                {t('enclosure.save')}
-              </Button>
+      <div className={styles.workspace}>
+        <Card padding="lg" className={styles.referenceCard}>
+          <Card.Body>
+            <div className={styles.cardHead}>
+              <div>
+                <p className={styles.sectionKicker}>{t('enclosure.referenceKicker')}</p>
+                <h2 className={styles.cardTitle}>{t('enclosure.recommendedTitle')}</h2>
+              </div>
+              <Badge variant={reference.source === 'species' ? 'primary' : 'default'}>
+                {reference.source === 'species'
+                  ? t('enclosure.badge.speciesMin')
+                  : t('enclosure.badge.categoryMin')}
+              </Badge>
             </div>
-          </form>
-        </Card.Body>
-      </Card>
-
-      <Card padding="lg" className={styles.verdictCard}>
-        <Card.Body>
-          <div className={styles.verdictHead}>
-            <h2 className={styles.cardTitle}>{t('enclosure.verdictTitle')}</h2>
-            <Badge variant={verdictVariant}>{t(`enclosure.verdict.${result}`)}</Badge>
-          </div>
-
-          {result === 'unknown' ? (
-            <p className={styles.verdictMsg}>{t('enclosure.verdict.unknownHint')}</p>
-          ) : (
-            <p className={styles.verdictMsg}>
-              {result === 'adequate'
-                ? t('enclosure.verdict.adequateMsg')
-                : t('enclosure.verdict.upgradeMsg')}
+            <p className={styles.referenceDims}>
+              {reference.lengthCm} × {reference.widthCm} × {reference.heightCm} {t('enclosure.cm')}
             </p>
-          )}
+            <p className={styles.referenceLiters}>
+              {t('enclosure.approxLiters', { liters: referenceLiters })}
+            </p>
+            <p className={styles.ruleNote}>{t(`enclosure.rules.${reference.rule}`)}</p>
+          </Card.Body>
+        </Card>
 
-          <table className={styles.compareTable}>
-            <thead>
-              <tr>
-                <th scope="col">{t('enclosure.dimension')}</th>
-                <th scope="col">{t('enclosure.yourSize')}</th>
-                <th scope="col">{t('enclosure.minSize')}</th>
-                <th scope="col">{t('enclosure.status')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {DIM_KEYS.map((d) => {
-                const cur = dimCurrent[d]
-                const short = shortfall[d]
+        <Card padding="lg">
+          <Card.Body>
+            <p className={styles.sectionKicker}>{t('enclosure.measureKicker')}</p>
+            <h2 className={styles.cardTitle}>{t('enclosure.currentTitle')}</h2>
+            <p className={styles.helpText}>{t('enclosure.currentHelp')}</p>
+            <form onSubmit={onSubmit} className={styles.dimForm} noValidate>
+              {DIM_KEYS.map((dimension) => {
+                const fieldName =
+                  dimension === 'l' ? 'lengthCm' : dimension === 'w' ? 'widthCm' : 'heightCm'
+                const fieldError = form.formState.errors[fieldName]
                 return (
-                  <tr key={d}>
-                    <th scope="row">{dimLabel[d]}</th>
-                    <td className={styles.numCell}>
-                      {cur === null ? '—' : `${cur} ${t('enclosure.cm')}`}
-                    </td>
-                    <td className={styles.numCell}>
-                      {dimMin[d]} {t('enclosure.cm')}
-                    </td>
-                    <td>
-                      {cur === null ? (
-                        <span className={styles.statusMuted}>—</span>
-                      ) : short ? (
-                        <Badge variant="warning">{t('enclosure.short')}</Badge>
-                      ) : (
-                        <Badge variant="success">{t('enclosure.ok')}</Badge>
-                      )}
-                    </td>
-                  </tr>
+                  <Input
+                    key={dimension}
+                    type="number"
+                    inputMode="numeric"
+                    step="1"
+                    min="1"
+                    max="2000"
+                    label={dimensionLabel[dimension]}
+                    error={fieldError?.message ? t(fieldError.message) : undefined}
+                    {...form.register(fieldName, { setValueAs: numberSetter })}
+                  />
                 )
               })}
-            </tbody>
-          </table>
+              <div className={styles.formActions}>
+                {saved && (
+                  <Button type="button" variant="outline" onClick={handleReset}>
+                    {t('enclosure.reset')}
+                  </Button>
+                )}
+                <Button type="submit" variant="primary">
+                  {t('enclosure.save')}
+                </Button>
+              </div>
+            </form>
+            {saved && (
+              <p className={styles.savedAt}>
+                {t('enclosure.savedAt', {
+                  date: new Intl.DateTimeFormat(i18n.resolvedLanguage ?? 'ko-KR', {
+                    dateStyle: 'medium',
+                  }).format(new Date(saved.updatedAt)),
+                })}
+              </p>
+            )}
+          </Card.Body>
+        </Card>
+      </div>
 
-          {currentLiters !== null && (
-            <p className={styles.volumeRow}>
-              {t('enclosure.yourVolume', { liters: currentLiters })}
+      <div aria-live="polite">
+        <Card padding="lg" className={styles.verdictCard}>
+          <Card.Body>
+            <div className={styles.cardHead}>
+              <div>
+                <p className={styles.sectionKicker}>{t('enclosure.compareKicker')}</p>
+                <h2 className={styles.cardTitle}>{t('enclosure.verdictTitle')}</h2>
+              </div>
+              <Badge
+                variant={
+                  result === 'adequate' ? 'primary' : result === 'upgrade' ? 'warning' : 'default'
+                }
+              >
+                {t(`enclosure.verdict.${result}`)}
+              </Badge>
+            </div>
+            <p className={styles.verdictMsg}>
+              {result === 'unknown'
+                ? t('enclosure.verdict.unknownHint')
+                : result === 'adequate'
+                  ? t('enclosure.verdict.adequateMsg')
+                  : t('enclosure.verdict.upgradeMsg')}
             </p>
-          )}
 
-          <p className={styles.floorNote}>{t('enclosure.floorNote')}</p>
-        </Card.Body>
-      </Card>
+            <div className={styles.tableScroll}>
+              <table className={styles.compareTable}>
+                <thead>
+                  <tr>
+                    <th scope="col">{t('enclosure.dimension')}</th>
+                    <th scope="col">{t('enclosure.yourSize')}</th>
+                    <th scope="col">{t('enclosure.minSize')}</th>
+                    <th scope="col">{t('enclosure.status')}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {DIM_KEYS.map((dimension) => {
+                    const value = currentByDimension[dimension]
+                    return (
+                      <tr key={dimension}>
+                        <th scope="row">{dimensionLabel[dimension]}</th>
+                        <td className={styles.numCell}>
+                          {value === null ? '—' : `${value} ${t('enclosure.cm')}`}
+                        </td>
+                        <td className={styles.numCell}>
+                          {referenceByDimension[dimension]} {t('enclosure.cm')}
+                        </td>
+                        <td>
+                          {value === null ? (
+                            <span className={styles.statusMuted}>—</span>
+                          ) : shortfall[dimension] ? (
+                            <Badge variant="warning">{t('enclosure.short')}</Badge>
+                          ) : (
+                            <Badge variant="default">{t('enclosure.ok')}</Badge>
+                          )}
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            {currentLiters !== null && (
+              <p className={styles.volumeRow}>
+                {t('enclosure.yourVolume', { liters: currentLiters })}
+              </p>
+            )}
+            <p className={styles.floorNote}>{t('enclosure.floorNote')}</p>
+          </Card.Body>
+        </Card>
+      </div>
     </section>
   )
 }

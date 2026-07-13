@@ -10,7 +10,7 @@ interface SupplementsState {
   schedule: ScheduleConfig
 
   addLog: (input: {
-    petId?: string | null
+    petId?: string
     speciesId: string | null
     type: SupplementType
     dustedAt: string
@@ -29,11 +29,11 @@ export const useSupplementsStore = create<SupplementsState>()(
       schedule: {},
 
       addLog: ({ petId, speciesId, type, dustedAt, note = '' }) => {
-        const resolvedPetId =
-          petId === undefined ? useOnboardingStore.getState().activePetId : petId
+        const resolvedPetId = petId ?? useOnboardingStore.getState().activePetId
+        if (!resolvedPetId) throw new Error('An active pet is required to add a supplement log.')
         const log: DustingLog = {
           id: crypto.randomUUID(),
-          petId: resolvedPetId ?? null,
+          petId: resolvedPetId,
           speciesId,
           type,
           dustedAt,
@@ -62,19 +62,16 @@ export const useSupplementsStore = create<SupplementsState>()(
       clear: () => set({ logs: [], schedule: {} }),
     }),
     {
-      name: 'pettography.supplements',
+      name: 'pettography.supplements.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
-/**
- * Dusting logs scoped to the active pet. Legacy entries with no petId fall
- * through so existing data keeps showing after the multi-pet migration.
- */
+/** Supplement logs strictly scoped to the active pet. */
 export function useActivePetDustings(): DustingLog[] {
   const logs = useSupplementsStore((s) => s.logs)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return logs
-  return logs.filter((e) => !e.petId || e.petId === activePetId)
+  if (!activePetId) return []
+  return logs.filter((e) => e.petId === activePetId)
 }

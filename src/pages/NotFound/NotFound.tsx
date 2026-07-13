@@ -26,11 +26,11 @@ function NotFound() {
       <p className={styles.description}>{t('notFound.description')}</p>
 
       <div className={styles.actions}>
-        <Button variant="primary" onClick={() => navigate('/')}>
+        <Button type="button" variant="primary" onClick={() => navigate('/')}>
           <Home aria-hidden="true" />
           {t('notFound.goHome')}
         </Button>
-        <Button variant="outline" onClick={() => navigate(-1)}>
+        <Button type="button" variant="outline" onClick={() => navigate(-1)}>
           {t('notFound.goBack')}
         </Button>
       </div>

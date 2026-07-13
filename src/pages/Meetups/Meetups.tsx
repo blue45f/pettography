@@ -10,7 +10,6 @@ import { useToast } from '@components/common/Toast'
 import {
   attendeeCount,
   dDay,
-  isExternalUrl,
   isFull,
   MEETUP_REGIONS,
   meetupFormSchema,
@@ -66,13 +65,26 @@ function Meetups() {
 }
 
 function formatDateTime(iso: string, language: string): string {
-  return new Date(iso).toLocaleString(language.startsWith('ko') ? 'ko' : 'en', {
+  return new Date(iso).toLocaleString(language, {
     month: 'long',
     day: 'numeric',
     weekday: 'short',
     hour: '2-digit',
     minute: '2-digit',
   })
+}
+
+function nowLocalInputValue(): string {
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 16)
+}
+
+function contactHref(contact: string): string | null {
+  const trimmed = contact.trim()
+  if (/^https?:\/\//i.test(trimmed)) return trimmed
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return `mailto:${trimmed}`
+  const phone = trimmed.replace(/[^\d+]/g, '')
+  return /^\+?\d{8,15}$/.test(phone) ? `tel:${phone}` : null
 }
 
 /* ------------------------------- 밋업 tab ------------------------------- */
@@ -109,6 +121,13 @@ function MeetupsTab() {
           icon="📅"
           title={t('meetups.emptyMeetups')}
           description={t('meetups.emptyMeetupsHint')}
+          action={
+            region !== 'all' ? (
+              <Button variant="outline" size="sm" onClick={() => setRegion('all')}>
+                {t('species.resetFilters')}
+              </Button>
+            ) : undefined
+          }
         />
       ) : (
         <ul className={styles.grid}>
@@ -161,6 +180,7 @@ function MeetupCard({
   const { t, i18n } = useTranslation()
   const days = dDay(meetup.datetime)
   const dLabel = days <= 0 ? t('meetups.dDayToday') : t('meetups.dDay', { count: days })
+  const [pendingAction, setPendingAction] = useState<'rsvp' | 'delete' | null>(null)
 
   return (
     <Card padding="md" className={styles.itemCard}>
@@ -186,7 +206,9 @@ function MeetupCard({
             <span aria-hidden="true" className={styles.metaIcon}>
               🕒
             </span>
-            {formatDateTime(meetup.datetime, i18n.language)}
+            <time dateTime={meetup.datetime}>
+              {formatDateTime(meetup.datetime, i18n.resolvedLanguage ?? i18n.language)}
+            </time>
           </span>
           <span className={styles.metaLine}>
             <span aria-hidden="true" className={styles.metaIcon}>
@@ -209,16 +231,50 @@ function MeetupCard({
             size="sm"
             disabled={full && !rsvped}
             aria-pressed={rsvped}
-            onClick={onToggleRsvp}
+            aria-expanded={pendingAction === 'rsvp'}
+            onClick={() => {
+              if (rsvped) setPendingAction('rsvp')
+              else onToggleRsvp()
+            }}
           >
             {rsvped ? t('meetups.rsvpCancel') : t('meetups.rsvpJoin')}
           </Button>
           {owned && (
-            <button type="button" className={styles.dangerLink} onClick={onRemove}>
+            <button
+              type="button"
+              className={styles.dangerLink}
+              aria-expanded={pendingAction === 'delete'}
+              onClick={() => setPendingAction('delete')}
+            >
               {t('meetups.delete')}
             </button>
           )}
         </div>
+        {pendingAction && (
+          <div className={styles.confirmPanel}>
+            <span className={styles.confirmPrompt}>
+              {t(pendingAction === 'delete' ? 'meetups.delete' : 'meetups.rsvpCancel')}?
+            </span>
+            <button
+              type="button"
+              className={styles.cancelButton}
+              onClick={() => setPendingAction(null)}
+            >
+              {t('common.cancel')}
+            </button>
+            <button
+              type="button"
+              className={styles.confirmButton}
+              onClick={() => {
+                if (pendingAction === 'delete') onRemove()
+                else onToggleRsvp()
+                setPendingAction(null)
+              }}
+            >
+              {t(pendingAction === 'delete' ? 'common.delete' : 'meetups.rsvpCancel')}
+            </button>
+          </div>
+        )}
       </Card.Body>
     </Card>
   )
@@ -277,6 +333,7 @@ function MeetupComposer({ onCreated }: MeetupComposerProps) {
         <h2 className={styles.composerTitle}>{t('meetups.createMeetupTitle')}</h2>
         <form onSubmit={onSubmit} className={styles.composerForm} noValidate>
           <Input
+            maxLength={80}
             label={t('meetups.fieldTitle')}
             placeholder={t('meetups.fieldTitlePlaceholder')}
             error={errors.title?.message ? t(errors.title.message) : undefined}
@@ -284,6 +341,7 @@ function MeetupComposer({ onCreated }: MeetupComposerProps) {
           />
           <div className={styles.composerRow}>
             <Input
+              maxLength={40}
               label={t('meetups.fieldHost')}
               placeholder={t('meetups.fieldHostPlaceholder')}
               error={errors.host?.message ? t(errors.host.message) : undefined}
@@ -299,6 +357,7 @@ function MeetupComposer({ onCreated }: MeetupComposerProps) {
           <div className={styles.composerRow}>
             <Input
               type="datetime-local"
+              min={nowLocalInputValue()}
               label={t('meetups.fieldDatetime')}
               error={errors.datetime?.message ? t(errors.datetime.message) : undefined}
               {...register('datetime')}
@@ -313,6 +372,7 @@ function MeetupComposer({ onCreated }: MeetupComposerProps) {
             />
           </div>
           <Input
+            maxLength={80}
             label={t('meetups.fieldVenue')}
             placeholder={t('meetups.fieldVenuePlaceholder')}
             error={errors.venue?.message ? t(errors.venue.message) : undefined}
@@ -321,6 +381,7 @@ function MeetupComposer({ onCreated }: MeetupComposerProps) {
           <Textarea
             label={t('meetups.fieldDescription')}
             rows={3}
+            maxLength={500}
             placeholder={t('meetups.fieldDescriptionPlaceholder')}
             error={errors.description?.message ? t(errors.description.message) : undefined}
             {...register('description')}
@@ -366,6 +427,13 @@ function MentorsTab() {
           icon="🤝"
           title={t('meetups.emptyMentors')}
           description={t('meetups.emptyMentorsHint')}
+          action={
+            focus !== 'all' ? (
+              <Button variant="outline" size="sm" onClick={() => setFocus('all')}>
+                {t('species.resetFilters')}
+              </Button>
+            ) : undefined
+          }
         />
       ) : (
         <ul className={styles.grid}>
@@ -397,7 +465,9 @@ interface MentorCardProps {
 
 function MentorCard({ mentor, owned, onRemove }: MentorCardProps) {
   const { t } = useTranslation()
-  const external = isExternalUrl(mentor.contact)
+  const href = contactHref(mentor.contact)
+  const external = Boolean(href?.startsWith('http'))
+  const [pendingRemove, setPendingRemove] = useState(false)
 
   return (
     <Card padding="md" className={styles.itemCard}>
@@ -425,12 +495,12 @@ function MentorCard({ mentor, owned, onRemove }: MentorCardProps) {
         <p className={styles.bio}>{mentor.bio}</p>
 
         <div className={styles.cardFooter}>
-          {external ? (
+          {href ? (
             <a
               className={styles.contactLink}
-              href={mentor.contact}
-              target="_blank"
-              rel="noreferrer"
+              href={href}
+              target={external ? '_blank' : undefined}
+              rel={external ? 'noopener noreferrer' : undefined}
             >
               {t('meetups.contactCta')} <span aria-hidden="true">↗</span>
             </a>
@@ -440,11 +510,38 @@ function MentorCard({ mentor, owned, onRemove }: MentorCardProps) {
             </span>
           )}
           {owned && (
-            <button type="button" className={styles.dangerLink} onClick={onRemove}>
+            <button
+              type="button"
+              className={styles.dangerLink}
+              aria-expanded={pendingRemove}
+              onClick={() => setPendingRemove((current) => !current)}
+            >
               {t('meetups.delete')}
             </button>
           )}
         </div>
+        {owned && pendingRemove && (
+          <div className={styles.confirmPanel}>
+            <span className={styles.confirmPrompt}>{t('meetups.delete')}?</span>
+            <button
+              type="button"
+              className={styles.cancelButton}
+              onClick={() => setPendingRemove(false)}
+            >
+              {t('common.cancel')}
+            </button>
+            <button
+              type="button"
+              className={styles.confirmButton}
+              onClick={() => {
+                onRemove()
+                setPendingRemove(false)
+              }}
+            >
+              {t('common.delete')}
+            </button>
+          </div>
+        )}
       </Card.Body>
     </Card>
   )
@@ -503,6 +600,7 @@ function MentorComposer({ onCreated }: MentorComposerProps) {
         <form onSubmit={onSubmit} className={styles.composerForm} noValidate>
           <div className={styles.composerRow}>
             <Input
+              maxLength={40}
               label={t('meetups.fieldName')}
               placeholder={t('meetups.fieldNamePlaceholder')}
               error={errors.name?.message ? t(errors.name.message) : undefined}
@@ -566,11 +664,13 @@ function MentorComposer({ onCreated }: MentorComposerProps) {
           <Textarea
             label={t('meetups.fieldBio')}
             rows={3}
+            maxLength={400}
             placeholder={t('meetups.fieldBioPlaceholder')}
             error={errors.bio?.message ? t(errors.bio.message) : undefined}
             {...register('bio')}
           />
           <Input
+            maxLength={120}
             label={t('meetups.fieldContact')}
             placeholder={t('meetups.fieldContactPlaceholder')}
             helperText={t('meetups.fieldContactHelper')}

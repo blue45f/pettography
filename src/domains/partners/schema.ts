@@ -18,6 +18,21 @@ export const partnerApplicationSchema = z.object({
 
 export type PartnerApplication = z.infer<typeof partnerApplicationSchema>
 
+/**
+ * The inquiry-draft tool is intentionally broader than the persisted partner
+ * application contract. Drafts are never submitted or stored, so adding a
+ * drafting category must not silently widen the API/admin contract.
+ */
+export const partnerInquiryKindSchema = z.enum([
+  'shop',
+  'hospital',
+  'treat-shop',
+  'breeder',
+  'funeral',
+  'other',
+])
+export type PartnerInquiryKind = z.infer<typeof partnerInquiryKindSchema>
+
 export const partnerFormSchema = z.object({
   kind: partnerKindSchema,
   name: z.string().trim().min(1, 'partners.errors.nameRequired').max(80),
@@ -32,3 +47,8 @@ export const partnerFormSchema = z.object({
 })
 
 export type PartnerFormValues = z.infer<typeof partnerFormSchema>
+
+export const partnerInquiryFormSchema = partnerFormSchema.extend({
+  kind: partnerInquiryKindSchema,
+})
+export type PartnerInquiryFormValues = z.infer<typeof partnerInquiryFormSchema>

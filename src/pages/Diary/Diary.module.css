@@ -29,16 +29,20 @@
   color: var(--color-text-secondary);
   cursor: pointer;
   user-select: none;
+  min-height: 44px;
 }
 
 .showAllToggle input {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   accent-color: var(--color-primary);
 }
 
 .statsCard {
+  padding: var(--spacing-md);
   border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
 }
 
 .statsTitle {
@@ -49,18 +53,33 @@
 
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
-  gap: var(--spacing-md);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.statsGrid > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  text-align: center;
+}
+
+.statsGrid > div + div {
+  border-inline-start: 1px solid var(--color-border);
 }
 
 .statsGrid dt {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
-  margin-bottom: var(--spacing-xs);
 }
 
 .statsGrid dd {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: 700;
 }
 
@@ -76,10 +95,94 @@
   gap: var(--spacing-md);
 }
 
-.formRow {
+.composerCard {
+  border-color: var(--color-border-strong);
+}
+
+.formTopRow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 220px);
   gap: var(--spacing-md);
+  align-items: end;
+}
+
+.categoryFieldset {
+  min-width: 0;
+  border: 0;
+}
+
+.categoryFieldset legend {
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.categoryChips {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.categoryChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--motion-fast),
+    border-color var(--motion-fast),
+    color var(--motion-fast),
+    transform var(--motion-fast);
+}
+
+.categoryChip:hover,
+.categoryChip:focus-visible {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.categoryChip:active {
+  transform: scale(0.98);
+}
+
+.categoryChipActive {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.dateField {
+  min-width: 0;
+}
+
+.optionalFields {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+}
+
+.optionalFields summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.optionalFieldsBody {
+  padding: 0 var(--spacing-md) var(--spacing-md);
 }
 
 .formActions {
@@ -91,7 +194,22 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+}
+
+.entryItem {
+  padding: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 180px;
+}
+
+.entryItem:first-child {
+  border-top: 0;
 }
 
 .entryHeader {
@@ -116,15 +234,22 @@
 }
 
 .removeButton {
-  background: none;
-  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
   color: var(--color-error);
   cursor: pointer;
   font-size: var(--font-size-sm);
 }
 
 .removeButton:hover {
-  text-decoration: underline;
+  border-color: var(--color-error);
+  background: var(--color-error-alpha);
 }
 
 .entryBody {
@@ -163,4 +288,105 @@
   font-size: var(--font-size-sm);
   color: var(--color-text);
   font-weight: 500;
+}
+
+.deleteConfirm {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.deletePrompt {
+  margin-inline-end: auto;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.confirmDelete,
+.cancelDelete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.confirmDelete {
+  border: 1px solid var(--color-error);
+  background: var(--color-error);
+  color: var(--color-on-brand);
+}
+
+.cancelDelete {
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+}
+
+@container main (max-width: 640px) {
+  .formTopRow {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .categoryChips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: var(--spacing-xs);
+  }
+
+  .categoryChip {
+    flex: 0 0 auto;
+  }
+
+  .formActions > * {
+    width: 100%;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsGrid > div {
+    justify-content: space-between;
+    text-align: start;
+  }
+
+  .statsGrid > div + div {
+    border-inline-start: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .entryItem {
+    padding: var(--spacing-md);
+  }
+
+  .deleteConfirm {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .deletePrompt {
+    flex-basis: 100%;
+  }
+
+  .confirmDelete,
+  .cancelDelete {
+    flex: 1;
+  }
+
+  .draftAlert {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }

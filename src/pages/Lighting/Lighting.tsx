@@ -22,7 +22,7 @@ import { useOnboardingStore } from '@domains/onboarding'
 import { useSpecies } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -71,7 +71,28 @@ function Lighting() {
     },
   })
 
-  const { control, register, handleSubmit, setValue, formState } = form
+  const { control, register, handleSubmit, reset, setValue, formState } = form
+
+  // React Hook Form only consumes defaultValues once. Reset from scalar store
+  // values when the active pet changes so one animal's schedule cannot be
+  // accidentally saved over another animal's record.
+  useEffect(() => {
+    reset({
+      onHour: schedule.onHour,
+      offHour: schedule.offHour,
+      hasUvb: schedule.hasUvb,
+      uvbHours: schedule.uvbHours,
+      notes: schedule.notes,
+    })
+  }, [
+    activePetId,
+    reset,
+    schedule.hasUvb,
+    schedule.notes,
+    schedule.offHour,
+    schedule.onHour,
+    schedule.uvbHours,
+  ])
 
   // Live form values drive the readout + 24h bar so the keeper sees the result
   // before saving. `useWatch` subscribes during render (no effects), matching
@@ -81,22 +102,23 @@ function Lighting() {
   const hasUvb = useWatch({ control, name: 'hasUvb' })
   const uvbHoursValue = useWatch({ control, name: 'uvbHours' })
 
+  const effectiveOnHour = Number.isFinite(onHour) ? Number(onHour) : schedule.onHour
+  const effectiveOffHour = Number.isFinite(offHour) ? Number(offHour) : schedule.offHour
+
   const { dayLength, range, verdict } = useMemo(() => {
-    const onN = Number.isFinite(onHour) ? Number(onHour) : schedule.onHour
-    const offN = Number.isFinite(offHour) ? Number(offHour) : schedule.offHour
-    const len = dayLengthHours(onN, offN)
+    const len = dayLengthHours(effectiveOnHour, effectiveOffHour)
     const r = recommendedRange(category, season)
     return { dayLength: len, range: r, verdict: compareToRecommended(len, r) }
-  }, [onHour, offHour, category, season, schedule.onHour, schedule.offHour])
+  }, [effectiveOnHour, effectiveOffHour, category, season])
 
   // Hours that are lit, as a set, so the 24h bar can shade them regardless of a
   // midnight wrap.
   const litHours = useMemo(() => {
-    const onN = ((Math.trunc(Number(onHour) || 0) % 24) + 24) % 24
+    const onN = ((Math.trunc(effectiveOnHour) % 24) + 24) % 24
     const lit = new Set<number>()
     for (let i = 0; i < dayLength; i += 1) lit.add((onN + i) % 24)
     return lit
-  }, [onHour, dayLength])
+  }, [effectiveOnHour, dayLength])
 
   const numberSetter = (v: unknown) => {
     if (v === '' || v === null || v === undefined) return null
@@ -165,8 +187,8 @@ function Lighting() {
             className={styles.dayBar}
             role="img"
             aria-label={t('lighting.bar.aria', {
-              on: hourLabel(Number(onHour) || 0),
-              off: hourLabel(Number(offHour) || 0),
+              on: hourLabel(effectiveOnHour),
+              off: hourLabel(effectiveOffHour),
             })}
           >
             {Array.from({ length: 24 }, (_, h) => (
@@ -256,6 +278,7 @@ function Lighting() {
             <Textarea
               label={t('lighting.form.notes')}
               rows={2}
+              maxLength={200}
               helperText={t('lighting.form.notesHelper')}
               error={
                 formState.errors.notes?.message ? t(formState.errors.notes.message) : undefined

@@ -35,7 +35,7 @@ interface ModerationRow {
 }
 
 function AdminModeration() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { toast } = useToast()
   useDocumentTitle(t('admin.areaModeration'))
 
@@ -148,7 +148,11 @@ function AdminModeration() {
                         <Badge variant={row.source === 'forum' ? 'primary' : 'default'}>
                           {row.sourceLabel}
                         </Badge>{' '}
-                        {row.author} · {new Date(row.createdAt).toLocaleString('ko')}
+                        {row.author} ·{' '}
+                        {new Intl.DateTimeFormat(i18n.resolvedLanguage ?? 'ko-KR', {
+                          dateStyle: 'medium',
+                          timeStyle: 'short',
+                        }).format(new Date(row.createdAt))}
                       </p>
                     </div>
                     <div className={styles.rowBadges}>
@@ -185,6 +189,12 @@ function AdminModeration() {
                             type="button"
                             className={styles.dangerLink}
                             onClick={() => {
+                              if (
+                                !window.confirm(
+                                  t('admin.confirmAttachmentDelete', { name: attachment.name })
+                                )
+                              )
+                                return
                               row.onRemoveAttachment(attachment.id)
                               toast(t('admin.attachmentRemovedToast'), 'success')
                             }}
@@ -224,6 +234,8 @@ function AdminModeration() {
                       variant="ghost"
                       size="sm"
                       onClick={() => {
+                        if (!window.confirm(t('admin.confirmContentDelete', { title: row.title })))
+                          return
                         row.onRemove()
                         toast(t('admin.deletedToast'), 'success')
                       }}

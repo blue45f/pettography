@@ -9,6 +9,145 @@
   font-weight: 800;
 }
 
+.eyebrow {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.petContext {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
+  padding: 0 var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.sourceLink,
+.aquaticLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  margin-top: var(--spacing-xs);
+  color: inherit;
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+.composerNote,
+.summaryNote {
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.selectionSummary {
+  border-color: color-mix(in srgb, var(--color-primary) 28%, var(--color-border));
+}
+
+.summaryStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.summaryStats > div {
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+}
+
+.summaryStats dt {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.summaryStats dd {
+  margin-top: var(--spacing-2xs);
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.summaryNote {
+  margin-top: var(--spacing-md);
+  margin-bottom: 0;
+  font-size: var(--font-size-xs);
+}
+
+.reviewList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding-left: 1.2rem;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.55;
+}
+
+.petGate {
+  text-align: center;
+}
+
+.gateIcon {
+  display: block;
+  font-size: 2.6rem;
+}
+
+.petGate h2 {
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-xl);
+}
+
+.petGate p {
+  max-width: 52ch;
+  margin: var(--spacing-sm) auto var(--spacing-lg);
+  color: var(--color-text-secondary);
+}
+
+.primaryLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-lg);
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-on-brand);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.sourceLink:focus-visible,
+.aquaticLink:focus-visible,
+.primaryLink:focus-visible,
+.removeButton:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .summaryStats {
+    grid-template-columns: 1fr;
+  }
+
+  .saveActions > *,
+  .buildActions,
+  .buildActions > * {
+    width: 100%;
+  }
+}
+
 .subtitle {
   color: var(--color-text-secondary);
   margin-top: var(--spacing-xs);

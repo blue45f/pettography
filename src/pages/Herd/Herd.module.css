@@ -15,6 +15,23 @@
   letter-spacing: -0.025em;
 }
 
+.eyebrow {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.singleNote {
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
 .subtitle {
   color: var(--color-text-secondary);
   max-width: 65ch;
@@ -47,7 +64,7 @@
 
 .petCardActive {
   border-color: var(--color-primary);
-  background: linear-gradient(135deg, var(--color-primary-soft), var(--color-surface));
+  background: var(--color-primary-soft);
 }
 
 .petHeader {
@@ -141,4 +158,43 @@
 
 .activeLink:hover {
   text-decoration: underline;
+}
+
+.primaryLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-lg);
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-on-brand);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.activeLink:focus-visible,
+.primaryLink:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .metric {
+    grid-template-columns: 1fr;
+  }
+
+  .petActions > * {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petCard {
+    transition: none;
+  }
+
+  .petCard:hover {
+    transform: none;
+  }
 }

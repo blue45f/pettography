@@ -10,6 +10,24 @@
   letter-spacing: -0.01em;
 }
 
+.eyebrow {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sourceLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  margin-top: var(--spacing-xs);
+  color: inherit;
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
 .subtitle {
   color: var(--color-text-secondary);
   margin-top: var(--spacing-xs);
@@ -28,7 +46,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2xs);
-  min-height: 40px;
+  min-height: 44px;
   padding: var(--spacing-2xs) var(--spacing-md);
   border-radius: var(--radius-pill);
   border: 1px solid var(--color-border);
@@ -100,6 +118,12 @@
   color: var(--color-text);
 }
 
+.traitNote {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+}
+
 .segmented {
   display: inline-grid;
   grid-template-columns: repeat(3, 1fr);
@@ -110,7 +134,7 @@
 }
 
 .seg {
-  min-height: 36px;
+  min-height: 44px;
   padding: var(--spacing-2xs) var(--spacing-xs);
   border: none;
   border-radius: var(--radius-sm);
@@ -312,7 +336,7 @@
   color: var(--color-text);
   text-align: left;
   cursor: pointer;
-  min-height: 36px;
+  min-height: 44px;
 }
 
 .pairingLabel {
@@ -326,6 +350,7 @@
 }
 
 .removeButton {
+  min-height: 44px;
   border: none;
   background: transparent;
   color: var(--color-text-muted);
@@ -333,6 +358,23 @@
   cursor: pointer;
   padding: var(--spacing-2xs) var(--spacing-xs);
   border-radius: var(--radius-sm);
+}
+
+.sourceLink:focus-visible,
+.chip:focus-visible,
+.seg:focus-visible,
+.toggle:focus-visible,
+.pairingLoad:focus-visible,
+.removeButton:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip,
+  .seg {
+    transition: none;
+  }
 }
 
 .removeButton:hover {

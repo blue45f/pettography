@@ -1,3 +1,4 @@
+import Alert from '@components/common/Alert'
 import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
@@ -22,7 +23,7 @@ import { useSpeciesList, type Species } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Lineage.module.css'
@@ -104,6 +105,7 @@ function Lineage() {
     resolver: zodResolver(lineageFormSchema),
     defaultValues: defaults,
   })
+  const selectedSpeciesId = useWatch({ control: form.control, name: 'speciesId' })
 
   const onSubmit = form.handleSubmit((values) => {
     const created = addAnimal({
@@ -121,6 +123,10 @@ function Lineage() {
   })
 
   function handleRemove(animal: LineageAnimal) {
+    const childCount = offspringOf(animal.id, animals).length
+    if (!window.confirm(t('lineage.removeConfirm', { name: animal.name, count: childCount }))) {
+      return
+    }
     removeAnimal(animal.id)
     if (selectedId === animal.id) setSelectedId(null)
     toast(t('lineage.toast.removed', { name: animal.name }), 'info')
@@ -136,9 +142,25 @@ function Lineage() {
 
   // Parent options exclude nothing on the add form (a new animal can't be its
   // own parent because it doesn't exist yet); the "unknown" option is first.
-  const parentOptions = [
+  function compatibleParent(animal: LineageAnimal, role: 'sire' | 'dam'): boolean {
+    if (selectedSpeciesId && animal.speciesId && animal.speciesId !== selectedSpeciesId)
+      return false
+    if (role === 'sire' && animal.sex === 'female') return false
+    if (role === 'dam' && animal.sex === 'male') return false
+    return true
+  }
+
+  const sireOptions = [
     { value: '', label: t('lineage.form.parentUnknown') },
-    ...animals.map((a) => ({ value: a.id, label: parentOptionLabel(a) })),
+    ...animals
+      .filter((animal) => compatibleParent(animal, 'sire'))
+      .map((animal) => ({ value: animal.id, label: parentOptionLabel(animal) })),
+  ]
+  const damOptions = [
+    { value: '', label: t('lineage.form.parentUnknown') },
+    ...animals
+      .filter((animal) => compatibleParent(animal, 'dam'))
+      .map((animal) => ({ value: animal.id, label: parentOptionLabel(animal) })),
   ]
 
   function parentOptionLabel(a: LineageAnimal): string {
@@ -150,9 +172,14 @@ function Lineage() {
   return (
     <section className={styles.page}>
       <header className={styles.header}>
+        <p className={styles.eyebrow}>{t('lineage.eyebrow')}</p>
         <h1>{t('lineage.title')}</h1>
         <p className={styles.subtitle}>{t('lineage.subtitle')}</p>
       </header>
+
+      <Alert variant="info" title={t('lineage.provenanceTitle')}>
+        {t('lineage.provenanceBody')}
+      </Alert>
 
       {/* ── Add form ─────────────────────────────────────────── */}
       <Card padding="lg">
@@ -162,6 +189,7 @@ function Lineage() {
             <div className={styles.formRow}>
               <Input
                 label={t('lineage.form.name')}
+                maxLength={60}
                 placeholder={t('lineage.form.namePlaceholder')}
                 error={
                   form.formState.errors.name?.message
@@ -185,6 +213,7 @@ function Lineage() {
             <div className={styles.formRow}>
               <Input
                 label={t('lineage.form.morph')}
+                maxLength={60}
                 placeholder={t('lineage.form.morphPlaceholder')}
                 helperText={t('lineage.form.optional')}
                 error={
@@ -197,13 +226,18 @@ function Lineage() {
               <Select
                 label={t('lineage.form.sire')}
                 helperText={t('lineage.form.sireHelper')}
-                options={parentOptions}
+                options={sireOptions}
                 {...form.register('sireId')}
               />
               <Select
                 label={t('lineage.form.dam')}
                 helperText={t('lineage.form.damHelper')}
-                options={parentOptions}
+                options={damOptions}
+                error={
+                  form.formState.errors.damId?.message
+                    ? t(form.formState.errors.damId.message)
+                    : undefined
+                }
                 {...form.register('damId')}
               />
             </div>
@@ -211,6 +245,7 @@ function Lineage() {
             <Textarea
               label={t('lineage.form.notes')}
               rows={2}
+              maxLength={300}
               helperText={t('lineage.form.notesHelper')}
               error={
                 form.formState.errors.notes?.message

@@ -26,13 +26,15 @@ import { buildCsv } from '@utils/csv'
 import { downloadTextFile } from '@utils/download'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Vitals.module.css'
 
 type Phase = 'idle' | 'running' | 'done'
 
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
 }
 
 function Vitals() {
@@ -65,14 +67,17 @@ function Vitals() {
   // --- History view state ---
   const [historyType, setHistoryType] = useState<VitalType>('respiration')
   const [showAllPets, setShowAllPets] = useState(false)
+  const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null)
 
   const readings = showAllPets ? allReadings : activeReadings
   const stats = useMemo(() => vitalsStats(readings), [readings])
 
-  // Live bpm estimate while running uses elapsed time; the finished reading
-  // uses the full globalThis. Derived during render — never via an effect.
+  // A manually stopped session must use its actual elapsed time. Dividing by
+  // the originally selected duration would under-report the saved rate.
   const elapsed = duration - remaining
-  const liveBpm = phase === 'running' ? bpm(taps, elapsed) : bpm(taps, duration)
+  const measurementSeconds = Math.max(0, elapsed)
+  const liveBpm = phase === 'idle' ? 0 : bpm(taps, measurementSeconds)
+  const canSave = phase === 'done' && taps > 0 && measurementSeconds > 0
 
   // Tick once per second only while running.
   useInterval(
@@ -132,13 +137,14 @@ function Vitals() {
   }
 
   const save = () => {
-    const value = bpm(taps, duration)
+    if (!canSave) return
+    const value = bpm(taps, measurementSeconds)
     addReading({
       speciesId: profile.speciesId,
       type,
       bpm: value,
       measuredAt: todayIso(),
-      durationSec: duration,
+      durationSec: measurementSeconds,
       taps,
       note,
     })
@@ -149,7 +155,10 @@ function Vitals() {
 
   const guidanceKey = respGuidanceCategory(profile.category)
 
-  const trendValues = useMemo(() => trend(readings, historyType), [readings, historyType])
+  const trendValues = useMemo(
+    () => trend(activeReadings, historyType),
+    [activeReadings, historyType]
+  )
   const sparkPoints = useMemo(() => trendValues.map((v, i) => ({ x: i, y: v })), [trendValues])
 
   const historyList = useMemo(
@@ -157,12 +166,25 @@ function Vitals() {
     [readings, historyType]
   )
 
+  const petLabels = useMemo(() => {
+    const speciesById = new Map(speciesList.map((item) => [item.id, item]))
+    return new Map(
+      pets.map((pet) => {
+        const petSpecies = pet.speciesId ? speciesById.get(pet.speciesId) : undefined
+        return [
+          pet.id,
+          {
+            name: pet.petName?.trim() || petSpecies?.koreanName || '',
+            emoji: petSpecies?.heroEmoji ?? '🐾',
+          },
+        ] as const
+      })
+    )
+  }, [pets, speciesList])
+
   const petLabel = (petId: string | null | undefined) => {
     if (!petId) return null
-    const pet = pets.find((p) => p.id === petId)
-    if (!pet) return null
-    const sp = speciesList.find((s) => s.id === pet.speciesId)
-    return { name: pet.petName?.trim() || sp?.koreanName || '', emoji: sp?.heroEmoji ?? '🐾' }
+    return petLabels.get(petId) ?? null
   }
   const showPetBadge = showAllPets && pets.length > 1
 
@@ -175,6 +197,12 @@ function Vitals() {
       buildCsv(['date', 'type', 'bpm', 'duration_sec', 'taps', 'note'], rows),
       'text/csv;charset=utf-8'
     )
+  }
+
+  function confirmRemove(id: string) {
+    removeReading(id)
+    setPendingRemoveId(null)
+    toast(t('common.delete'), 'success')
   }
 
   return (
@@ -243,7 +271,7 @@ function Vitals() {
           </div>
 
           {/* Live display */}
-          <div className={styles.display} aria-live="polite">
+          <div className={styles.display}>
             <div className={styles.displayItem}>
               <span className={styles.displayLabel}>{t('vitals.counter.remaining')}</span>
               <span className={styles.displayValue}>
@@ -282,7 +310,7 @@ function Vitals() {
 
           {/* Result + save */}
           {phase === 'done' && (
-            <div className={styles.result}>
+            <div className={styles.result} role="status" aria-live="polite">
               <div className={styles.resultHead}>
                 <span className={styles.resultValue}>
                   {liveBpm}
@@ -291,7 +319,7 @@ function Vitals() {
                 <Badge variant="primary">{t(`vitals.type.${type}`)}</Badge>
               </div>
               <p className={styles.resultMeta}>
-                {t('vitals.counter.resultMeta', { taps, seconds: duration })}
+                {t('vitals.counter.resultMeta', { taps, seconds: measurementSeconds })}
               </p>
               <Textarea
                 label={t('vitals.counter.note')}
@@ -317,7 +345,13 @@ function Vitals() {
             )}
             {phase === 'done' && (
               <>
-                <Button type="button" variant="primary" size="lg" onClick={save}>
+                <Button
+                  type="button"
+                  variant="primary"
+                  size="lg"
+                  disabled={!canSave}
+                  onClick={save}
+                >
                   {t('vitals.counter.save')}
                 </Button>
                 <Button type="button" variant="ghost" size="lg" onClick={() => resetCounter()}>
@@ -334,6 +368,14 @@ function Vitals() {
         <p className={styles.guidanceLine}>{t(guidanceKey)}</p>
         <p className={styles.guidanceCaveat}>{t('vitals.guidance.caveat')}</p>
         <p className={styles.guidanceVet}>{t('vitals.guidance.vet')}</p>
+        <div className={styles.guidanceActions}>
+          <Link to="/hospitals" className={styles.guidanceLink}>
+            {t('nav.hospitals')}
+          </Link>
+          <Link to="/sos" className={styles.guidanceLink}>
+            {t('nav.sos')}
+          </Link>
+        </div>
       </Alert>
 
       {/* History */}
@@ -370,7 +412,7 @@ function Vitals() {
             ))}
           </div>
 
-          {sparkPoints.length >= 3 && (
+          {!showAllPets && sparkPoints.length >= 3 && (
             <div className={styles.trend}>
               <Sparkline
                 points={sparkPoints}
@@ -417,12 +459,35 @@ function Vitals() {
                       <button
                         type="button"
                         className={styles.removeButton}
-                        onClick={() => removeReading(r.id)}
+                        aria-expanded={pendingRemoveId === r.id}
+                        aria-controls={`vitals-remove-${r.id}`}
+                        onClick={() =>
+                          setPendingRemoveId((current) => (current === r.id ? null : r.id))
+                        }
                       >
                         {t('vitals.history.remove')}
                       </button>
                     </div>
                     {r.note && <p className={styles.entryNote}>{r.note}</p>}
+                    {pendingRemoveId === r.id && (
+                      <div id={`vitals-remove-${r.id}`} className={styles.deleteConfirm}>
+                        <span className={styles.deletePrompt}>{t('vitals.history.remove')}?</span>
+                        <button
+                          type="button"
+                          className={styles.cancelButton}
+                          onClick={() => setPendingRemoveId(null)}
+                        >
+                          {t('common.cancel')}
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.confirmButton}
+                          onClick={() => confirmRemove(r.id)}
+                        >
+                          {t('common.delete')}
+                        </button>
+                      </div>
+                    )}
                   </li>
                 )
               })}

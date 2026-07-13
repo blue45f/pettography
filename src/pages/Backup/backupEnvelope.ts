@@ -1,89 +1,87 @@
-const BACKUP_CHECKSUM_ALGORITHM = 'SHA-256'
-const BACKUP_CHECKSUM_CANONICAL = 'pettography-backup-v1'
+export const BACKUP_FORMAT_VERSION = 2 as const
 
-interface BackupChecksum {
-  algorithm: typeof BACKUP_CHECKSUM_ALGORITHM
-  canonical: typeof BACKUP_CHECKSUM_CANONICAL
-  value: string
-}
-
-export interface BackupEnvelope {
+export interface BackupEnvelopeV1 {
   app: 'pettography'
   version: 1
   exportedAt: string
   data: Record<string, string>
-  checksum?: BackupChecksum
+  checksum?: undefined
 }
 
-type ChecksummedBackupEnvelope = BackupEnvelope & {
-  checksum: BackupChecksum
+export interface BackupEnvelopeV2 {
+  app: 'pettography'
+  version: typeof BACKUP_FORMAT_VERSION
+  exportedAt: string
+  data: Record<string, string>
+  checksum: string
 }
 
-export function isBackupData(data: unknown): data is Record<string, unknown> {
-  return typeof data === 'object' && data !== null && !Array.isArray(data)
-}
+export type BackupEnvelope = BackupEnvelopeV1 | BackupEnvelopeV2
 
-function isBackupChecksum(value: unknown): value is BackupChecksum {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) return false
-  const checksum = value as Partial<BackupChecksum>
-  return (
-    checksum.algorithm === BACKUP_CHECKSUM_ALGORITHM &&
-    checksum.canonical === BACKUP_CHECKSUM_CANONICAL &&
-    typeof checksum.value === 'string' &&
-    /^[a-f0-9]{64}$/.test(checksum.value)
+type BackupPayload = Omit<BackupEnvelopeV2, 'checksum'>
+
+function sortData(data: Record<string, string>): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(data).sort(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0))
   )
 }
 
-function sortBackupData(data: Record<string, string>): Record<string, string> {
-  return Object.fromEntries(Object.entries(data).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)))
-}
-
-function canonicalizeBackupPayload(envelope: Omit<BackupEnvelope, 'checksum'>): string {
+function serializePayload(payload: BackupPayload): string {
   return JSON.stringify({
-    app: envelope.app,
-    version: envelope.version,
-    exportedAt: envelope.exportedAt,
-    data: sortBackupData(envelope.data),
+    app: payload.app,
+    version: payload.version,
+    exportedAt: payload.exportedAt,
+    data: sortData(payload.data),
   })
 }
 
-async function computeBackupChecksum(envelope: Omit<BackupEnvelope, 'checksum'>): Promise<string> {
-  const bytes = new TextEncoder().encode(canonicalizeBackupPayload(envelope))
-  const digest = await globalThis.crypto.subtle.digest(BACKUP_CHECKSUM_ALGORITHM, bytes)
-  return Array.from(new Uint8Array(digest))
-    .map((byte) => byte.toString(16).padStart(2, '0'))
-    .join('')
+async function sha256(value: string): Promise<string> {
+  const bytes = new TextEncoder().encode(value)
+  const digest = await globalThis.crypto.subtle.digest('SHA-256', bytes)
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, '0')).join('')
+}
+
+function constantTimeEqual(left: string, right: string): boolean {
+  if (left.length !== right.length) return false
+  let mismatch = 0
+  for (let index = 0; index < left.length; index += 1) {
+    mismatch |= left.charCodeAt(index) ^ right.charCodeAt(index)
+  }
+  return mismatch === 0
+}
+
+export function isBackupData(value: unknown): value is Record<string, string> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return Object.entries(value).every(
+    ([key, item]) => typeof key === 'string' && typeof item === 'string'
+  )
 }
 
 export async function createBackupEnvelope(
   data: Record<string, string>,
   exportedAt = new Date().toISOString()
-): Promise<ChecksummedBackupEnvelope> {
-  const envelope = {
+): Promise<BackupEnvelopeV2> {
+  const payload: BackupPayload = {
     app: 'pettography',
-    version: 1,
+    version: BACKUP_FORMAT_VERSION,
     exportedAt,
-    data: sortBackupData(data),
-  } satisfies Omit<BackupEnvelope, 'checksum'>
-
+    data: sortData(data),
+  }
   return {
-    ...envelope,
-    checksum: {
-      algorithm: BACKUP_CHECKSUM_ALGORITHM,
-      canonical: BACKUP_CHECKSUM_CANONICAL,
-      value: await computeBackupChecksum(envelope),
-    },
+    ...payload,
+    checksum: await sha256(serializePayload(payload)),
   }
 }
 
-export async function verifyBackupEnvelope(envelope: BackupEnvelope): Promise<boolean> {
-  if (!envelope.checksum) return true
-  if (!isBackupChecksum(envelope.checksum)) return false
-  const expected = await computeBackupChecksum({
-    app: envelope.app,
-    version: envelope.version,
-    exportedAt: envelope.exportedAt,
-    data: envelope.data,
-  })
-  return envelope.checksum.value === expected
+export async function verifyBackupEnvelope(envelope: BackupEnvelopeV2): Promise<boolean> {
+  if (!/^[a-f0-9]{64}$/.test(envelope.checksum)) return false
+  const expected = await sha256(
+    serializePayload({
+      app: envelope.app,
+      version: envelope.version,
+      exportedAt: envelope.exportedAt,
+      data: envelope.data,
+    })
+  )
+  return constantTimeEqual(envelope.checksum, expected)
 }

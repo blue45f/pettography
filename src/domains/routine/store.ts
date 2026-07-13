@@ -14,6 +14,20 @@ interface RoutineState {
   resetAll: () => void
 }
 
+const COMPLETION_SEPARATOR = '::'
+
+export function routineCompletionKey(taskId: string, petId: string | null): string {
+  return `${petId ?? 'unassigned'}${COMPLETION_SEPARATOR}${taskId}`
+}
+
+export function routineCompletionsForPet(
+  completions: Record<string, string>,
+  petId: string | null
+): Record<string, string> {
+  const prefix = `${petId ?? 'unassigned'}${COMPLETION_SEPARATOR}`
+  return Object.fromEntries(Object.entries(completions).filter(([key]) => key.startsWith(prefix)))
+}
+
 export const useRoutineStore = create<RoutineState>()(
   persist(
     (set) => ({
@@ -36,23 +50,27 @@ export const useRoutineStore = create<RoutineState>()(
         set((state) => ({
           customTasks: state.customTasks.filter((t) => t.id !== id),
           completions: Object.fromEntries(
-            Object.entries(state.completions).filter(([k]) => k !== id)
+            Object.entries(state.completions).filter(
+              ([key]) => !key.endsWith(`${COMPLETION_SEPARATOR}${id}`)
+            )
           ),
         })),
       markDone: (id) =>
-        set((state) => ({
-          completions: { ...state.completions, [id]: new Date().toISOString() },
-        })),
+        set((state) => {
+          const key = routineCompletionKey(id, useOnboardingStore.getState().activePetId)
+          return { completions: { ...state.completions, [key]: new Date().toISOString() } }
+        }),
       unmark: (id) =>
         set((state) => {
+          const key = routineCompletionKey(id, useOnboardingStore.getState().activePetId)
           const next = { ...state.completions }
-          delete next[id]
+          delete next[key]
           return { completions: next }
         }),
       resetAll: () => set({ completions: {} }),
     }),
     {
-      name: 'pettography.routine',
+      name: 'pettography.routine.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
@@ -71,13 +89,24 @@ export function isDoneWithinWindow(
   now: Date = new Date()
 ): boolean {
   if (!completedAt) return false
-  const done = new Date(completedAt).getTime()
-  const elapsedMs = now.getTime() - done
-  const windowMs =
-    cadence === 'daily'
-      ? 24 * 3600 * 1000
-      : cadence === 'weekly'
-        ? 7 * 24 * 3600 * 1000
-        : 30 * 24 * 3600 * 1000
-  return elapsedMs < windowMs
+  const done = new Date(completedAt)
+  if (!Number.isFinite(done.getTime()) || done.getTime() > now.getTime()) return false
+
+  if (cadence === 'daily') {
+    return (
+      done.getFullYear() === now.getFullYear() &&
+      done.getMonth() === now.getMonth() &&
+      done.getDate() === now.getDate()
+    )
+  }
+
+  if (cadence === 'weekly') {
+    const startOfWeek = new Date(now)
+    startOfWeek.setHours(0, 0, 0, 0)
+    const daysSinceMonday = (startOfWeek.getDay() + 6) % 7
+    startOfWeek.setDate(startOfWeek.getDate() - daysSinceMonday)
+    return done.getTime() >= startOfWeek.getTime()
+  }
+
+  return done.getFullYear() === now.getFullYear() && done.getMonth() === now.getMonth()
 }

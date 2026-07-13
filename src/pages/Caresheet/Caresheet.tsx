@@ -1,9 +1,11 @@
 import Button from '@components/common/Button'
 import EmptyState from '@components/common/EmptyState'
+import Skeleton from '@components/common/Skeleton'
 import { feedingRule, recommendFrequencyDays } from '@domains/feeding'
 import { recommendationFor } from '@domains/habitat'
 import { useActivePetMeds } from '@domains/meds'
 import { isOnboardingComplete, useOnboardingStore } from '@domains/onboarding'
+import { lifeStage, monthsToYears, useActivePetSenior } from '@domains/senior'
 import { useSpecies } from '@domains/species'
 import { useAggregatedAlerts } from '@hooks/useAggregatedAlerts'
 import useDocumentTitle from '@hooks/useDocumentTitle'
@@ -14,7 +16,8 @@ import { Link } from 'react-router'
 import styles from './Caresheet.module.css'
 
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
 }
 
 /**
@@ -32,9 +35,11 @@ function Caresheet() {
   const pets = useOnboardingStore((s) => s.pets)
   const activePetId = useOnboardingStore((s) => s.activePetId)
   const completed = isOnboardingComplete(profile)
-  const { data: species } = useSpecies(profile.speciesId ?? undefined)
+  const speciesQuery = useSpecies(profile.speciesId ?? undefined)
+  const species = speciesQuery.data
   const meds = useActivePetMeds()
   const alerts = useAggregatedAlerts()
+  const seniorProfile = useActivePetSenior()
 
   const activePet = useMemo(
     () => pets.find((p) => p.id === activePetId) ?? null,
@@ -44,7 +49,17 @@ function Caresheet() {
 
   const habitat = recommendationFor(profile.category)
   const rule = feedingRule(species?.slug, profile.category)
-  const feedingFreq = rule ? recommendFrequencyDays(rule, 'adult') : null
+  const feedingStage = useMemo(() => {
+    if (!species || seniorProfile.ageMonths === null) return null
+    const stage = lifeStage(
+      monthsToYears(seniorProfile.ageMonths),
+      species.lifespanMinYears,
+      species.lifespanMaxYears
+    )
+    if (!stage) return null
+    return stage === 'juvenile' ? 'juvenile' : 'adult'
+  }, [seniorProfile.ageMonths, species])
+  const feedingFreq = rule && feedingStage ? recommendFrequencyDays(rule, feedingStage) : null
   const attention = alerts.filter((a) => a.severity !== 'info')
 
   if (!completed) {
@@ -54,6 +69,32 @@ function Caresheet() {
           icon="📋"
           title={t('caresheet.noPetTitle')}
           description={t('caresheet.noPetDesc')}
+          action={
+            <Link to="/onboarding" className={styles.emptyAction}>
+              {t('sos.startOnboarding')}
+            </Link>
+          }
+        />
+      </section>
+    )
+  }
+
+  if (speciesQuery.isLoading) {
+    return <Skeleton variant="rectangular" height={320} lines={4} />
+  }
+
+  if (speciesQuery.isError || !species) {
+    return (
+      <section className={styles.page}>
+        <EmptyState
+          icon="⚠️"
+          title={t('common.error')}
+          description={t('common.loadErrorHint')}
+          action={
+            <Button variant="outline" onClick={() => void speciesQuery.refetch()}>
+              {t('common.retry')}
+            </Button>
+          }
         />
       </section>
     )
@@ -62,9 +103,14 @@ function Caresheet() {
   return (
     <section className={styles.page}>
       <div className={styles.controls}>
-        <Button variant="primary" onClick={() => globalThis.print()}>
-          {t('caresheet.print')}
-        </Button>
+        <div className={styles.controlActions}>
+          <Button variant="primary" onClick={() => globalThis.print()}>
+            {t('caresheet.print')}
+          </Button>
+          <Link to="/health" className={styles.controlLink}>
+            {t('health.title')}
+          </Link>
+        </div>
         <p className={styles.hint}>{t('caresheet.hint')}</p>
       </div>
 
@@ -153,6 +199,7 @@ function Caresheet() {
           <p>{t('caresheet.emergency.note')}</p>
           <p className={styles.emergencyLink}>
             <Link to="/hospitals">{t('caresheet.emergency.findVet')}</Link>
+            <Link to="/sos">{t('nav.sos')}</Link>
           </p>
         </section>
       </article>

@@ -1,5 +1,7 @@
 .page {
   display: flex;
+  max-width: 1040px;
+  margin: 0 auto;
   flex-direction: column;
   gap: var(--spacing-xl);
 }
@@ -10,14 +12,42 @@
   gap: var(--spacing-xs);
 }
 
+.eyebrow,
+.contextKicker {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .header h1 {
-  font-size: var(--font-size-3xl);
-  letter-spacing: -0.025em;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
 }
 
 .subtitle {
+  max-width: 68ch;
   color: var(--color-text-secondary);
-  max-width: 65ch;
+  line-height: 1.65;
+}
+
+.sourceLink,
+.contextLink,
+.learningLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+.sourceLink {
+  margin-top: var(--spacing-xs);
+  color: inherit;
 }
 
 .speciesNav {
@@ -28,135 +58,90 @@
 
 .speciesChip {
   display: inline-flex;
+  min-height: 44px;
   align-items: center;
   gap: var(--spacing-xs);
-  padding: var(--spacing-xs) var(--spacing-md);
-  background: var(--color-surface);
+  padding: 0 var(--spacing-md);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
+  background: var(--color-surface);
   color: var(--color-text);
   cursor: pointer;
-  min-height: 36px;
-}
-
-.speciesChip:hover {
-  border-color: var(--color-primary);
+  font-weight: 700;
 }
 
 .speciesActive {
-  background: var(--color-primary);
   border-color: var(--color-primary);
+  background: var(--color-primary);
   color: var(--color-on-brand);
 }
 
-.contextLine {
-  font-size: var(--font-size-sm);
+.contextHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
 }
 
-.contextLink {
-  color: var(--color-primary);
-  font-weight: 600;
-  text-decoration: none;
+.contextHead h2 {
+  margin-top: var(--spacing-2xs);
+  font-size: var(--font-size-xl);
 }
 
 .morphGrid {
-  list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
   gap: var(--spacing-md);
+  list-style: none;
 }
 
 .morphCard {
   display: flex;
+  min-height: 190px;
   flex-direction: column;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-md);
-  background: var(--color-surface);
+  padding: var(--spacing-lg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-}
-
-.morphHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--spacing-xs);
-  flex-wrap: wrap;
+  background: var(--color-surface);
 }
 
 .morphName {
   font-size: var(--font-size-lg);
-  font-weight: 700;
-  letter-spacing: -0.015em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .morphDesc {
+  margin-top: var(--spacing-sm);
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   line-height: 1.6;
 }
 
-.morphPrice {
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  color: var(--color-primary-700);
-  font-size: var(--font-size-sm);
-}
-
-[data-theme='dark'] .morphPrice {
-  color: var(--color-primary-200);
-}
-
-.breederSection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.sectionTitle {
-  font-size: var(--font-size-xl);
-  letter-spacing: -0.015em;
-}
-
-.breederList {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-  gap: var(--spacing-sm);
-}
-
-.breederLink {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  color: var(--color-text);
-  transition: border-color var(--motion-fast);
-}
-
-.breederLink:hover {
-  border-color: var(--color-primary);
-}
-
-.breederTag {
-  color: var(--color-text-secondary);
+.cardNote {
+  margin-top: auto;
+  padding-top: var(--spacing-md);
+  color: var(--color-text-muted);
   font-size: var(--font-size-xs);
+  line-height: 1.5;
 }
 
-.breederArrow {
-  color: var(--color-primary);
-  margin-left: auto;
+.learningLinkWrap {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .disclaimer {
-  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
-  font-style: italic;
+  font-size: var(--font-size-xs);
+  line-height: 1.6;
+}
+
+.sourceLink:focus-visible,
+.contextLink:focus-visible,
+.learningLink:focus-visible,
+.speciesChip:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
 }

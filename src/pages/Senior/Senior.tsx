@@ -32,6 +32,7 @@ import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Senior.module.css'
 
@@ -116,7 +117,7 @@ function Senior() {
   } = useForm<SeniorFormValues>({
     resolver: zodResolver(seniorFormSchema),
     values: {
-      ageYears: ageYears === null ? 0 : roundYears(ageYears),
+      ageYears: ageYears === null ? null : roundYears(ageYears),
       acquiredAs: seniorProfile.acquiredAs,
       notes: seniorProfile.notes,
     },
@@ -124,7 +125,7 @@ function Senior() {
 
   const onSubmit = handleSubmit((data) => {
     upsertProfile({
-      ageMonths: yearsToMonths(data.ageYears),
+      ageMonths: data.ageYears === null ? null : yearsToMonths(data.ageYears),
       acquiredAs: data.acquiredAs,
       notes: data.notes,
     })
@@ -223,6 +224,16 @@ function Senior() {
                   </div>
                 </dl>
                 <p className={styles.estimateNote}>{t('senior.metric.estimateNote')}</p>
+                {senior && (
+                  <div className={styles.careActions}>
+                    <Link to="/health" className={styles.careLink}>
+                      {t('health.title')}
+                    </Link>
+                    <Link to="/hospitals" className={styles.careLink}>
+                      {t('nav.hospitals')}
+                    </Link>
+                  </div>
+                )}
               </Card.Body>
             </Card>
           ) : (
@@ -255,10 +266,17 @@ function Senior() {
                     inputMode="decimal"
                     step="0.1"
                     min="0"
+                    max="120"
                     label={t('senior.form.age')}
                     helperText={t('senior.form.ageHelper')}
                     error={errors.ageYears?.message ? t(errors.ageYears.message) : undefined}
-                    {...register('ageYears', { valueAsNumber: true })}
+                    {...register('ageYears', {
+                      setValueAs: (value: unknown) => {
+                        if (value === '' || value === null || value === undefined) return null
+                        const parsed = Number(value)
+                        return Number.isFinite(parsed) ? parsed : null
+                      },
+                    })}
                   />
                   <Select
                     label={t('senior.form.acquiredAs')}
@@ -273,6 +291,7 @@ function Senior() {
                 <Textarea
                   label={t('senior.form.notes')}
                   rows={3}
+                  maxLength={300}
                   placeholder={t('senior.form.notesPlaceholder')}
                   error={errors.notes?.message ? t(errors.notes.message) : undefined}
                   {...register('notes')}

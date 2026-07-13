@@ -37,6 +37,8 @@ export interface QuizMatch {
   }
 }
 
+export const MATCH_MAX_SCORE = 155
+
 const DIFFICULTY_RANK: Record<Difficulty, number> = {
   beginner: 0,
   intermediate: 1,

@@ -8,7 +8,11 @@ export type { AdoptionKind } from '@pettography/shared'
 export const adoptionListingSchema = z.object({
   id: z.string(),
   name: z.string(),
-  url: z.string().url(),
+  url: z
+    .string()
+    .trim()
+    .url()
+    .refine((value) => /^https?:\/\//i.test(value)),
   kind: adoptionKindSchema,
   region: z.string(),
   supportedCategories: z.array(speciesCategorySchema).min(1),

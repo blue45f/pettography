@@ -5,8 +5,6 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 import { EMPTY_PET_ID, type PetIdValues } from './schema'
 
 interface PetIdState {
-  /** Legacy single card; kept as a fallback for the active pet. */
-  card: PetIdValues
   /** Per-pet cards keyed by pet id. */
   byPet: Record<string, PetIdValues>
   save: (values: PetIdValues) => void
@@ -20,38 +18,41 @@ function activeId(): string | null {
 export const usePetIdStore = create<PetIdState>()(
   persist(
     (set) => ({
-      card: EMPTY_PET_ID,
       byPet: {},
       save: (values) =>
         set((state) => {
           const id = activeId()
-          if (!id) return { card: values }
+          if (!id) throw new Error('An active pet is required to save a pet ID card.')
           return { byPet: { ...state.byPet, [id]: values } }
         }),
       clear: () =>
         set((state) => {
           const id = activeId()
-          if (!id) return { card: EMPTY_PET_ID }
+          if (!id) return {}
           const next = { ...state.byPet }
           delete next[id]
           return { byPet: next }
         }),
     }),
     {
-      name: 'pettography.petid',
+      name: 'pettography.petid.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
 export function useActivePetIdCard(): PetIdValues {
-  const card = usePetIdStore((s) => s.card)
   const byPet = usePetIdStore((s) => s.byPet)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return card
-  return byPet[activePetId] ?? card
+  if (!activePetId) return EMPTY_PET_ID
+  return byPet[activePetId] ?? EMPTY_PET_ID
 }
 
 export function isCardComplete(card: PetIdValues): boolean {
-  return !!(card.petName && card.speciesLabel && card.ownerName && card.ownerPhone)
+  return !!(
+    card.petName.trim() &&
+    card.speciesLabel.trim() &&
+    card.ownerName.trim() &&
+    card.ownerPhone.trim()
+  )
 }

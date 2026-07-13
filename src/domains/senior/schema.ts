@@ -49,7 +49,8 @@ export const seniorFormSchema = z.object({
   ageYears: z
     .number({ message: 'senior.errors.ageNumber' })
     .nonnegative('senior.errors.ageNonNegative')
-    .max(MAX_AGE_YEARS, 'senior.errors.ageMax'),
+    .max(MAX_AGE_YEARS, 'senior.errors.ageMax')
+    .nullable(),
   acquiredAs: acquiredAsSchema,
   notes: z.string().trim().max(300, 'senior.errors.notesMax'),
 })

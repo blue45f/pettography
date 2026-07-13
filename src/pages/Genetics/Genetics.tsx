@@ -1,3 +1,4 @@
+import Alert from '@components/common/Alert'
 import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
@@ -25,6 +26,8 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Genetics.module.css'
+
+const SPIDER_WELFARE_STUDY_URL = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9377635/'
 
 const ZYGOSITY_STATES: readonly Zygosity[] = [0, 1, 2]
 
@@ -107,11 +110,28 @@ function Genetics() {
   return (
     <section className={styles.page}>
       <header className={styles.header}>
+        <p className={styles.eyebrow}>{t('genetics.eyebrow')}</p>
         <h1>{t('genetics.title')}</h1>
         <p className={styles.subtitle}>{t('genetics.subtitle')}</p>
       </header>
 
-      <div className={styles.speciesChips} role="tablist" aria-label={t('genetics.speciesLabel')}>
+      <Alert variant="warning" title={t('genetics.modelWarningTitle')}>
+        <p>{t('genetics.modelWarningBody')}</p>
+        <a
+          className={styles.sourceLink}
+          href={SPIDER_WELFARE_STUDY_URL}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {t('genetics.sourceLink')}
+        </a>
+      </Alert>
+
+      <div
+        className={styles.speciesChips}
+        role="radiogroup"
+        aria-label={t('genetics.speciesLabel')}
+      >
         {GENETICS_SPECIES.map((slug) => {
           const sp = speciesName(slug)
           const active = slug === speciesSlug
@@ -119,8 +139,8 @@ function Genetics() {
             <button
               key={slug}
               type="button"
-              role="tab"
-              aria-selected={active}
+              role="radio"
+              aria-checked={active}
               className={`${styles.chip} ${active ? styles.chipActive : ''}`}
               onClick={() => selectSpecies(slug)}
             >
@@ -154,6 +174,7 @@ function Genetics() {
                     return (
                       <li key={trait.id} className={styles.traitRow}>
                         <span className={styles.traitName}>{trait.name}</span>
+                        {trait.note && <span className={styles.traitNote}>{trait.note}</span>}
                         <div
                           className={styles.segmented}
                           role="group"
@@ -304,7 +325,12 @@ function Genetics() {
                     <button
                       type="button"
                       className={styles.removeButton}
-                      onClick={() => removePairing(p.id)}
+                      onClick={() => {
+                        if (!window.confirm(t('genetics.save.removeConfirm', { label: p.label })))
+                          return
+                        removePairing(p.id)
+                        toast(t('genetics.save.removed'), 'info')
+                      }}
                       aria-label={t('common.delete')}
                     >
                       {t('common.delete')}

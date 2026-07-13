@@ -46,16 +46,16 @@ export const useGrowthStore = create<GrowthState>()(
       clear: () => set({ entries: [] }),
     }),
     {
-      name: 'pettography.growth',
+      name: 'pettography.growth.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
-/** Growth entries scoped to the active pet (legacy untagged entries fall through). */
+/** Growth entries strictly scoped to the active pet or the pre-onboarding null slot. */
 export function useActivePetGrowth(): GrowthEntry[] {
   const entries = useGrowthStore((s) => s.entries)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return entries
-  return entries.filter((e) => !e.petId || e.petId === activePetId)
+  if (!activePetId) return entries.filter((entry) => !entry.petId)
+  return entries.filter((entry) => entry.petId === activePetId)
 }

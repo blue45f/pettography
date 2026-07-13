@@ -1,5 +1,7 @@
 import { MS_PER_DAY, toUtcDate } from '@utils/date'
 
+import { careFor } from './data'
+
 import type { FeederColony } from './schema'
 
 /**
@@ -63,8 +65,12 @@ const STATUS_URGENCY: Record<FeedStatus, number> = {
  */
 export function sortColonies(colonies: FeederColony[], todayISO: string): FeederColony[] {
   return [...colonies].sort((a, b) => {
-    const ua = STATUS_URGENCY[feedStatus(a.lastFedAt, todayISO)]
-    const ub = STATUS_URGENCY[feedStatus(b.lastFedAt, todayISO)]
+    const ua = careFor(a.type).cleanupCrew
+      ? STATUS_URGENCY.fedRecently
+      : STATUS_URGENCY[feedStatus(a.lastFedAt, todayISO)]
+    const ub = careFor(b.type).cleanupCrew
+      ? STATUS_URGENCY.fedRecently
+      : STATUS_URGENCY[feedStatus(b.lastFedAt, todayISO)]
     if (ua !== ub) return ua - ub
     const byName = a.name.localeCompare(b.name)
     if (byName !== 0) return byName

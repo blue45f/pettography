@@ -29,8 +29,9 @@ function PolicyBody({ blocks }: { blocks: PolicyBlock[] }) {
     <div className={styles.body}>
       {blocks.map((block, index) => {
         if (block.kind === 'heading') {
+          const headingTag = `h${Math.min(4, Math.max(2, block.level))}` as 'h2' | 'h3' | 'h4'
           return createElement(
-            `h${block.level}`,
+            headingTag,
             { key: index, className: styles.bodyHeading },
             block.text
           )
@@ -84,7 +85,7 @@ function Policy() {
       </header>
 
       {isPending && (
-        <div className={styles.skeletonGroup}>
+        <div className={styles.skeletonGroup} aria-busy="true" aria-live="polite">
           <Skeleton variant="text" lines={3} />
           <Skeleton variant="text" lines={4} />
           <Skeleton variant="text" lines={4} />

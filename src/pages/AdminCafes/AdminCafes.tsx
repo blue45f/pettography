@@ -93,6 +93,8 @@ function AdminCafes() {
                           variant="ghost"
                           size="sm"
                           onClick={() => {
+                            if (!window.confirm(t('admin.confirmCafeDelete', { name: cafe.name })))
+                              return
                             removeCafe(cafe.id)
                             toast(t('admin.deletedToast'), 'success')
                           }}

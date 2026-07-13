@@ -1,14 +1,16 @@
 import Badge from '@components/common/Badge'
-import Card from '@components/common/Card'
+import Button from '@components/common/Button'
 import EmptyState from '@components/common/EmptyState'
+import Input from '@components/common/Input'
 import Select from '@components/common/Select'
 import Skeleton from '@components/common/Skeleton'
 import { useOnboardingStore } from '@domains/onboarding'
 import { useShopsList, type ShopKind, type ShopWithDistance } from '@domains/shops'
 import { SPECIES_CATEGORIES, type SpeciesCategory } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Shops.module.css'
 
@@ -16,17 +18,17 @@ const KINDS: readonly (ShopKind | 'all')[] = ['all', 'food', 'equipment', 'both'
 
 type ShopSort = 'distance' | 'name' | 'online'
 
-function sortShops(list: ShopWithDistance[], sort: ShopSort): ShopWithDistance[] {
+function sortShops(list: ShopWithDistance[], sort: ShopSort, locale: string): ShopWithDistance[] {
   const copy = [...list]
   switch (sort) {
     case 'name':
-      return copy.sort((a, b) => a.name.localeCompare(b.name, 'ko'))
+      return copy.sort((a, b) => a.name.localeCompare(b.name, locale))
     case 'online':
       return copy.sort((a, b) => {
         const aOnline = a.online !== null ? 1 : 0
         const bOnline = b.online !== null ? 1 : 0
         if (aOnline !== bOnline) return bOnline - aOnline
-        return a.name.localeCompare(b.name, 'ko')
+        return a.name.localeCompare(b.name, locale)
       })
     case 'distance':
     default:
@@ -38,27 +40,44 @@ function sortShops(list: ShopWithDistance[], sort: ShopSort): ShopWithDistance[]
   }
 }
 
+function isHttpUrl(value: string): boolean {
+  return /^https?:\/\//i.test(value.trim())
+}
+
 function Shops() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const profile = useOnboardingStore((s) => s.profile)
   useDocumentTitle(t('shops.title'))
 
   const [category, setCategory] = useState<SpeciesCategory | 'all'>(profile.category ?? 'all')
   const [kind, setKind] = useState<ShopKind | 'all'>('all')
   const [sort, setSort] = useState<ShopSort>(profile.location ? 'distance' : 'name')
+  const [search, setSearch] = useState('')
+  const deferredSearch = useDeferredValue(search)
 
   const origin = useMemo(
     () => (profile.location ? { lat: profile.location.lat, lng: profile.location.lng } : undefined),
     [profile.location]
   )
 
-  const { data, isLoading } = useShopsList({
+  const { data, isLoading, isError, refetch } = useShopsList({
     category: category === 'all' ? undefined : category,
     kind: kind === 'all' ? undefined : kind,
     origin,
   })
 
-  const sorted = useMemo(() => (data ? sortShops(data, sort) : data), [data, sort])
+  const sorted = useMemo(() => {
+    if (!data) return data
+    const needle = deferredSearch.trim().toLowerCase()
+    const filtered = data.filter(
+      (shop) =>
+        !needle ||
+        [shop.name, shop.district ?? '', shop.address ?? '', shop.notes].some((value) =>
+          value.toLowerCase().includes(needle)
+        )
+    )
+    return sortShops(filtered, sort, i18n.resolvedLanguage ?? i18n.language)
+  }, [data, deferredSearch, i18n.language, i18n.resolvedLanguage, sort])
 
   return (
     <section className={styles.page}>
@@ -66,6 +85,15 @@ function Shops() {
         <h1>{t('shops.title')}</h1>
         <p className={styles.subtitle}>{t('shops.subtitle')}</p>
       </header>
+
+      <Input
+        type="search"
+        value={search}
+        onChange={(event) => setSearch(event.target.value)}
+        placeholder={t('forum.searchPlaceholder')}
+        aria-label={t('forum.searchLabel')}
+        className={styles.searchInput}
+      />
 
       <div className={styles.filterGroups}>
         <div
@@ -118,46 +146,83 @@ function Shops() {
           value={sort}
           onChange={(e) => setSort(e.target.value as ShopSort)}
           options={[
-            { value: 'distance', label: t('shops.sortDistance') },
+            ...(profile.location ? [{ value: 'distance', label: t('shops.sortDistance') }] : []),
             { value: 'name', label: t('shops.sortName') },
             { value: 'online', label: t('shops.sortOnline') },
           ]}
-          disabled={!profile.location && sort === 'distance'}
         />
       </div>
 
       {isLoading && <Skeleton variant="rectangular" height={120} lines={3} />}
+      {isError && (
+        <EmptyState
+          icon="⚠️"
+          title={t('common.error')}
+          description={t('common.loadErrorHint')}
+          action={
+            <Button variant="outline" size="sm" onClick={() => void refetch()}>
+              {t('common.retry')}
+            </Button>
+          }
+        />
+      )}
       {sorted && sorted.length === 0 && (
-        <EmptyState variant="discover" icon="🛒" title={t('shops.noResult')} />
+        <EmptyState
+          variant="discover"
+          icon="🛒"
+          title={t('shops.noResult')}
+          action={
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setCategory('all')
+                setKind('all')
+                setSort(profile.location ? 'distance' : 'name')
+                setSearch('')
+              }}
+            >
+              {t('species.resetFilters')}
+            </Button>
+          }
+        />
       )}
 
       <ul className={styles.list}>
         {sorted?.map((s) => (
-          <li key={s.id}>
-            <Card padding="md">
-              <Card.Body>
-                <div className={styles.itemHeader}>
-                  <h2 className={styles.itemTitle}>{s.name}</h2>
-                  <Badge variant="primary">{t(`shops.kind${capitalize(s.kind)}`)}</Badge>
-                </div>
-                <p className={styles.itemMeta}>
-                  {s.address ? (
-                    <>
-                      {s.district} · {s.address}
-                      {s.distanceKm !== null && ` · ${s.distanceKm}km`}
-                    </>
-                  ) : (
-                    t('shops.online')
-                  )}
-                </p>
-                <p className={styles.itemDesc}>{s.notes}</p>
-                {s.online && (
-                  <a className={styles.linkAction} href={s.online} target="_blank" rel="noreferrer">
-                    {t('shops.visitSite')} ↗
-                  </a>
+          <li key={s.id} className={styles.listItem}>
+            <article>
+              <div className={styles.itemHeader}>
+                <h2 className={styles.itemTitle}>{s.name}</h2>
+                <Badge variant="primary">{t(`shops.kind${capitalize(s.kind)}`)}</Badge>
+              </div>
+              <p className={styles.itemMeta}>
+                {s.address ? (
+                  <>
+                    {s.district} · {s.address}
+                    {s.distanceKm !== null && ` · ${s.distanceKm}km`}
+                  </>
+                ) : (
+                  t('shops.online')
                 )}
-              </Card.Body>
-            </Card>
+              </p>
+              <p className={styles.itemDesc}>{s.notes}</p>
+              {s.online && isHttpUrl(s.online) && (
+                <a
+                  className={styles.linkAction}
+                  href={s.online.trim()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t('shops.visitSite')} ↗
+                </a>
+              )}
+              {!profile.location && s.address && (
+                <Link to="/onboarding" className={styles.locationLink}>
+                  {t('onboarding.locationTitle')}
+                </Link>
+              )}
+            </article>
           </li>
         ))}
       </ul>

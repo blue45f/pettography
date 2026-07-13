@@ -35,11 +35,11 @@ export const useFeedersStore = create<FeedersState>()(
         const colony: FeederColony = {
           id: crypto.randomUUID(),
           type,
-          name,
-          startedAt,
+          name: name.trim().slice(0, 60),
+          startedAt: startedAt.slice(0, 10),
           estimateCount: estimateCount ?? null,
           lastFedAt: null,
-          notes,
+          notes: notes.trim().slice(0, 300),
           createdAt: new Date().toISOString(),
         }
         set((state) => ({
@@ -64,7 +64,7 @@ export const useFeedersStore = create<FeedersState>()(
       clear: () => set({ colonies: [] }),
     }),
     {
-      name: 'pettography.feeders',
+      name: 'pettography.feeders.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )

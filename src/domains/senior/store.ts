@@ -84,7 +84,7 @@ export const useSeniorStore = create<SeniorState>()(
       clear: () => set({ profiles: {} }),
     }),
     {
-      name: 'pettography.senior',
+      name: 'pettography.senior.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )

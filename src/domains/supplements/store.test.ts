@@ -1,3 +1,4 @@
+import { useOnboardingStore } from '@domains/onboarding'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { categoryDusts, defaultIntervalDays } from './data'
@@ -23,19 +24,19 @@ describe('useSupplementsStore', () => {
     expect(useSupplementsStore.getState().logs).toHaveLength(1)
   })
 
-  it('falls back to a null petId when none is provided and no pet is active', () => {
-    // Passing petId: null explicitly keeps it null (no onboarding lookup).
+  it('falls back to the active petId when none is provided', () => {
+    const activePetId = useOnboardingStore.getState().activePetId
     const log = useSupplementsStore
       .getState()
-      .addLog({ petId: null, speciesId: null, type: 'multivitamin', dustedAt: '2024-01-03' })
-    expect(log.petId).toBeNull()
+      .addLog({ speciesId: null, type: 'multivitamin', dustedAt: '2024-01-03' })
+    expect(log.petId).toBe(activePetId)
   })
 
   it('keeps logs sorted by dustedAt descending', () => {
     const add = useSupplementsStore.getState().addLog
-    add({ petId: null, speciesId: null, type: 'calcium', dustedAt: '2024-01-01' })
-    add({ petId: null, speciesId: null, type: 'calcium', dustedAt: '2024-03-01' })
-    add({ petId: null, speciesId: null, type: 'calcium', dustedAt: '2024-02-01' })
+    add({ speciesId: null, type: 'calcium', dustedAt: '2024-01-01' })
+    add({ speciesId: null, type: 'calcium', dustedAt: '2024-03-01' })
+    add({ speciesId: null, type: 'calcium', dustedAt: '2024-02-01' })
     expect(useSupplementsStore.getState().logs.map((l) => l.dustedAt)).toEqual([
       '2024-03-01',
       '2024-02-01',
@@ -46,7 +47,7 @@ describe('useSupplementsStore', () => {
   it('removes a log by id', () => {
     const log = useSupplementsStore
       .getState()
-      .addLog({ petId: null, speciesId: null, type: 'calcium', dustedAt: '2024-01-02' })
+      .addLog({ speciesId: null, type: 'calcium', dustedAt: '2024-01-02' })
     useSupplementsStore.getState().removeLog(log.id)
     expect(useSupplementsStore.getState().logs).toHaveLength(0)
   })
@@ -65,7 +66,7 @@ describe('useSupplementsStore', () => {
 
   it('clears all logs and schedule overrides', () => {
     const state = useSupplementsStore.getState()
-    state.addLog({ petId: null, speciesId: null, type: 'calcium', dustedAt: '2024-01-02' })
+    state.addLog({ speciesId: null, type: 'calcium', dustedAt: '2024-01-02' })
     state.setInterval('calcium', 4)
     useSupplementsStore.getState().clear()
     expect(useSupplementsStore.getState().logs).toHaveLength(0)

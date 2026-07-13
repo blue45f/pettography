@@ -50,19 +50,18 @@ export const useGearStore = create<GearState>()(
       clear: () => set({ items: [] }),
     }),
     {
-      name: 'pettography.gear',
+      name: 'pettography.gear.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
 /**
- * Returns gear scoped to the currently active pet. Items with no petId fall
- * through to the active pet so legacy / unscoped gear keeps showing up.
+ * Returns gear strictly scoped to the currently active pet.
  */
 export function useActivePetGear(): GearItem[] {
   const items = useGearStore((s) => s.items)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return items
-  return items.filter((g) => !g.petId || g.petId === activePetId)
+  if (!activePetId) return []
+  return items.filter((item) => item.petId === activePetId)
 }

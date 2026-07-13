@@ -91,3 +91,21 @@
   gap: var(--spacing-sm);
   flex-wrap: wrap;
 }
+
+.backLink:focus-visible,
+.name:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .meta {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .actions,
+  .actions > * {
+    width: 100%;
+  }
+}

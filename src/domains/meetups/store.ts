@@ -124,7 +124,7 @@ export const useMeetupsStore = create<MeetupsState>()(
         }),
     }),
     {
-      name: 'pettography.meetups',
+      name: 'pettography.meetups.v2',
       version: 1,
       storage: createJSONStorage(() => localStorage),
     }

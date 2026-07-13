@@ -27,15 +27,13 @@ import { useSpecies, useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useToday } from '@hooks/useToday'
+import { buildCsv } from '@utils/csv'
+import { downloadTextFile } from '@utils/download'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Cleaning.module.css'
-
-function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
-}
 
 const STATUS_VARIANT: Record<CleanStatus, 'warning' | 'primary' | 'success' | 'default'> = {
   due: 'warning',
@@ -60,6 +58,7 @@ function Cleaning() {
   const { data: speciesList = [] } = useSpeciesList({})
 
   const [showAllPets, setShowAllPets] = useState(false)
+  const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null)
   const logs = showAllPets ? allLogs : activeLogs
   const showPetBadge = showAllPets && pets.length > 1
   const today = useToday()
@@ -80,25 +79,36 @@ function Cleaning() {
   const rows = useMemo(
     () =>
       CLEAN_TYPES.map((type) => {
-        const latest = latestByType(logs, type)
+        const latest = latestByType(activeLogs, type)
         const interval = defaultIntervalDays(type, category)
         const last = latest?.cleanedAt ?? null
         const status = cleanStatus(last, interval, today)
         const due = last ? nextDue(last, interval) : null
         return { type, last, interval, status, due }
       }),
-    [logs, category, today]
+    [activeLogs, category, today]
   )
+
+  const petLabels = useMemo(() => {
+    const speciesById = new Map(speciesList.map((item) => [item.id, item] as const))
+    return new Map(
+      pets.map((pet) => {
+        const petSpecies = pet.speciesId ? speciesById.get(pet.speciesId) : undefined
+        return [
+          pet.id,
+          {
+            name:
+              pet.petName?.trim() || petSpecies?.koreanName || t('petSwitcher.title', { count: 1 }),
+            emoji: petSpecies?.heroEmoji ?? '🐾',
+          },
+        ] as const
+      })
+    )
+  }, [pets, speciesList, t])
 
   function petLabel(petId: string | null | undefined): { name: string; emoji: string } | null {
     if (!petId) return null
-    const pet = pets.find((p) => p.id === petId)
-    if (!pet) return null
-    const sp = speciesList.find((s) => s.id === pet.speciesId)
-    return {
-      name: pet.petName?.trim() || sp?.koreanName || t('petSwitcher.title', { count: 1 }),
-      emoji: sp?.heroEmoji ?? '🐾',
-    }
+    return petLabels.get(petId) ?? null
   }
 
   function logClean(type: CleanType): void {
@@ -114,8 +124,25 @@ function Cleaning() {
       note: values.note,
     })
     toast(t('common.save'), 'success')
-    reset({ type: values.type, cleanedAt: todayIso(), note: '' })
+    reset({ type: values.type, cleanedAt: today, note: '' })
   })
+
+  function exportCsv() {
+    const rows = [...logs]
+      .sort((a, b) => a.cleanedAt.localeCompare(b.cleanedAt))
+      .map((log) => [log.cleanedAt, log.type, log.note])
+    downloadTextFile(
+      'pettography-cleaning.csv',
+      buildCsv(['date', 'type', 'note'], rows),
+      'text/csv;charset=utf-8'
+    )
+  }
+
+  function confirmRemove(id: string) {
+    removeLog(id)
+    setPendingRemoveId(null)
+    toast(t('common.delete'), 'success')
+  }
 
   function dueLabel(status: CleanStatus, due: string | null): string {
     if (status === 'never' || due === null) return t('cleaning.status.never')
@@ -147,6 +174,11 @@ function Cleaning() {
             />
             {t('cleaning.showAllPets')}
           </label>
+        )}
+        {logs.length > 0 && (
+          <Button variant="secondary" onClick={exportCsv} className={styles.exportButton}>
+            {t('common.exportCsv')}
+          </Button>
         )}
       </header>
 
@@ -207,6 +239,7 @@ function Cleaning() {
               />
               <Input
                 type="date"
+                max={today}
                 label={t('cleaning.cleanedAt')}
                 error={errors.cleanedAt?.message ? t(errors.cleanedAt.message) : undefined}
                 {...register('cleanedAt')}
@@ -215,6 +248,7 @@ function Cleaning() {
             <Textarea
               label={t('cleaning.note')}
               rows={2}
+              maxLength={200}
               placeholder={t('cleaning.notePlaceholder')}
               error={errors.note?.message ? t(errors.note.message) : undefined}
               {...register('note')}
@@ -247,37 +281,60 @@ function Cleaning() {
           />
         ) : (
           <ul className={styles.list}>
-            {logs.map((log) => {
-              const label = petLabel(log.petId)
-              const showBadge = label && (showPetBadge || log.petId !== activePetId)
-              return (
-                <li key={log.id}>
-                  <Card padding="md">
-                    <Card.Body>
-                      <div className={styles.logHeader}>
-                        <div className={styles.logHeaderLeft}>
-                          <Badge variant="primary">{t(`cleaning.types.${log.type}`)}</Badge>
-                          <span className={styles.logDate}>{log.cleanedAt}</span>
-                          {showBadge && (
-                            <Badge variant="default">
-                              <span aria-hidden="true">{label.emoji}</span> {label.name}
-                            </Badge>
-                          )}
-                        </div>
+            {[...logs]
+              .sort((a, b) => b.cleanedAt.localeCompare(a.cleanedAt))
+              .map((log) => {
+                const label = petLabel(log.petId)
+                const showBadge = label && (showPetBadge || log.petId !== activePetId)
+                return (
+                  <li key={log.id} className={styles.historyItem}>
+                    <div className={styles.logHeader}>
+                      <div className={styles.logHeaderLeft}>
+                        <Badge variant="primary">{t(`cleaning.types.${log.type}`)}</Badge>
+                        <time className={styles.logDate} dateTime={log.cleanedAt}>
+                          {log.cleanedAt}
+                        </time>
+                        {showBadge && (
+                          <Badge variant="default">
+                            <span aria-hidden="true">{label.emoji}</span> {label.name}
+                          </Badge>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        className={styles.removeButton}
+                        aria-expanded={pendingRemoveId === log.id}
+                        aria-controls={`cleaning-remove-${log.id}`}
+                        onClick={() =>
+                          setPendingRemoveId((current) => (current === log.id ? null : log.id))
+                        }
+                      >
+                        {t('cleaning.remove')}
+                      </button>
+                    </div>
+                    {log.note && <p className={styles.logNote}>{log.note}</p>}
+                    {pendingRemoveId === log.id && (
+                      <div id={`cleaning-remove-${log.id}`} className={styles.deleteConfirm}>
+                        <span className={styles.deletePrompt}>{t('cleaning.remove')}?</span>
                         <button
                           type="button"
-                          className={styles.removeButton}
-                          onClick={() => removeLog(log.id)}
+                          className={styles.cancelButton}
+                          onClick={() => setPendingRemoveId(null)}
                         >
-                          {t('cleaning.remove')}
+                          {t('common.cancel')}
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.confirmButton}
+                          onClick={() => confirmRemove(log.id)}
+                        >
+                          {t('common.delete')}
                         </button>
                       </div>
-                      {log.note && <p className={styles.logNote}>{log.note}</p>}
-                    </Card.Body>
-                  </Card>
-                </li>
-              )
-            })}
+                    )}
+                  </li>
+                )
+              })}
           </ul>
         )}
       </section>

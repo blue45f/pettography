@@ -156,7 +156,9 @@
 }
 
 .uvbGearLink {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   margin-top: var(--spacing-sm);
   color: var(--color-primary);
   font-size: var(--font-size-sm);
@@ -171,4 +173,10 @@
 .disclaimer {
   color: var(--color-text-muted);
   font-size: var(--font-size-xs);
+}
+
+@media (max-width: 520px) {
+  .formActions button {
+    width: 100%;
+  }
 }

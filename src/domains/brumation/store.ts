@@ -49,20 +49,18 @@ export const useBrumationStore = create<BrumationState>()(
       clear: () => set({ plans: [] }),
     }),
     {
-      name: 'pettography.brumation',
+      name: 'pettography.brumation.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
 /**
- * Brumation plans scoped to the currently active pet. Legacy / unscoped plans
- * (no petId) fall through so existing data stays visible after the multi-pet
- * migration.
+ * Brumation plans strictly scoped to the active pet or pre-onboarding null slot.
  */
 export function useActivePetPlans(): BrumationPlan[] {
   const plans = useBrumationStore((s) => s.plans)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return plans
-  return plans.filter((p) => !p.petId || p.petId === activePetId)
+  if (!activePetId) return plans.filter((plan) => !plan.petId)
+  return plans.filter((plan) => plan.petId === activePetId)
 }

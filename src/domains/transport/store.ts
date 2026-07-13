@@ -53,20 +53,18 @@ export const useTransportStore = create<TransportState>()(
       clear: () => set({ trips: [] }),
     }),
     {
-      name: 'pettography.transport',
+      name: 'pettography.transport.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
 /**
- * Trips scoped to the currently active pet. Legacy rows with no `petId` fall
- * through to the active pet so existing data keeps showing after the multi-pet
- * migration (mirrors `useActivePetDiary`).
+ * Trips strictly scoped to the currently active pet.
  */
 export function useActivePetTrips(): Trip[] {
   const trips = useTransportStore((s) => s.trips)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return trips
-  return trips.filter((t) => !t.petId || t.petId === activePetId)
+  if (!activePetId) return []
+  return trips.filter((trip) => trip.petId === activePetId)
 }

@@ -14,6 +14,25 @@
   margin-top: var(--spacing-xs);
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-top: var(--spacing-sm);
+}
+
+.headerLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: var(--spacing-sm);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
 .tabContent {
   display: flex;
   flex-direction: column;
@@ -61,6 +80,11 @@
   gap: var(--spacing-md);
 }
 
+.list > li {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 320px;
+}
+
 .cardHeader {
   display: flex;
   align-items: flex-start;
@@ -74,6 +98,7 @@
   align-items: center;
   gap: var(--spacing-sm);
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .cardTitle {
@@ -141,6 +166,20 @@
   gap: var(--spacing-xs);
 }
 
+.historyDose {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.historyDose:hover {
+  opacity: 0.8;
+}
+
 .cardNotes {
   margin-top: var(--spacing-md);
   padding-top: var(--spacing-sm);
@@ -158,6 +197,18 @@
   flex-wrap: wrap;
 }
 
+.doseActionLabel {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: var(--leading-snug);
+}
+
+.doseActionLabel small {
+  font-size: var(--font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+
 .removeButton {
   background: none;
   border: none;
@@ -170,4 +221,107 @@
 
 .removeButton:hover {
   text-decoration: underline;
+}
+
+.addDisclosure > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.addDisclosure > summary::after {
+  content: '+';
+  margin-inline-start: auto;
+  font-size: var(--font-size-lg);
+}
+
+.addDisclosure[open] > summary::after {
+  content: '−';
+}
+
+.disclosureBody {
+  margin-top: var(--spacing-md);
+}
+
+.confirmPanel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.confirmPanel > span {
+  margin-inline-end: auto;
+}
+
+.confirmDelete,
+.confirmClear,
+.cancelAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.confirmDelete {
+  border: 1px solid var(--color-error);
+  background: var(--color-error);
+  color: var(--color-on-brand);
+}
+
+.confirmClear {
+  border: 1px solid var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-brand);
+}
+
+.cancelAction {
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+}
+
+@container main (max-width: 560px) {
+  .formActions > * {
+    width: 100%;
+  }
+
+  .cardActions > * {
+    flex: 1;
+  }
+
+  .confirmPanel {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .confirmPanel > span {
+    flex-basis: 100%;
+  }
+
+  .confirmDelete,
+  .confirmClear,
+  .cancelAction {
+    flex: 1;
+  }
 }

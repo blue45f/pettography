@@ -90,8 +90,34 @@
   background-color: var(--color-primary-soft);
 }
 
+.link:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 28%, transparent);
+  outline-offset: 3px;
+}
+
 .linkIcon {
   width: 1em;
   height: 1em;
   flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .actions,
+  .actions button {
+    width: 100%;
+  }
+
+  .actions button {
+    min-height: 44px;
+  }
+
+  .links {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .link {
+    min-height: 44px;
+    justify-content: center;
+  }
 }

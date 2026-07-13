@@ -4,6 +4,17 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 
 import type { VaccinationEntry, VaccinationKind, WeightEntry } from './schema'
 
+function localTodayIso(): string {
+  const now = new Date()
+  const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60_000)
+  return localTime.toISOString().slice(0, 10)
+}
+
+function dateOrdinal(value: string): number {
+  const [year, month, day] = value.slice(0, 10).split('-').map(Number)
+  return Date.UTC(year, month - 1, day)
+}
+
 interface HealthState {
   weights: WeightEntry[]
   vaccinations: VaccinationEntry[]
@@ -111,8 +122,9 @@ export function weightTrend(weights: WeightEntry[]): WeightTrend {
   const sorted = [...weights].sort((a, b) => a.measuredAt.localeCompare(b.measuredAt))
   const latest = sorted[sorted.length - 1].grams
   const cutoff = new Date()
-  cutoff.setUTCDate(cutoff.getUTCDate() - 30)
-  const cutoffIso = cutoff.toISOString().slice(0, 10)
+  cutoff.setDate(cutoff.getDate() - 30)
+  const cutoffTime = new Date(cutoff.getTime() - cutoff.getTimezoneOffset() * 60_000)
+  const cutoffIso = cutoffTime.toISOString().slice(0, 10)
   const before30 = [...sorted].reverse().find((w) => w.measuredAt < cutoffIso)
   const delta30dGrams = before30 ? latest - before30.grams : null
   const min = Math.min(...sorted.map((w) => w.grams))
@@ -126,12 +138,12 @@ export interface UpcomingDue {
 }
 
 export function upcomingDues(vaccinations: VaccinationEntry[], horizonDays = 60): UpcomingDue[] {
-  const todayMs = new Date(`${new Date().toISOString().slice(0, 10)}T00:00:00Z`).getTime()
+  const todayOrdinal = dateOrdinal(localTodayIso())
   return vaccinations
     .filter((v) => v.nextDueAt)
     .map((v) => {
-      const dueMs = new Date(`${(v.nextDueAt as string).slice(0, 10)}T00:00:00Z`).getTime()
-      const daysLeft = Math.round((dueMs - todayMs) / 86_400_000)
+      const dueOrdinal = dateOrdinal(v.nextDueAt as string)
+      const daysLeft = Math.round((dueOrdinal - todayOrdinal) / 86_400_000)
       return { vaccination: v, daysLeft }
     })
     .filter((d) => d.daysLeft <= horizonDays)

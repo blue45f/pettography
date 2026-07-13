@@ -7,7 +7,7 @@ import type { VivariumBuild } from './schema'
 interface VivariumState {
   builds: VivariumBuild[]
   saveBuild: (input: {
-    petId?: string | null
+    petId?: string
     speciesId: string | null
     name: string
     substrateIds: string[]
@@ -38,11 +38,11 @@ export const useVivariumStore = create<VivariumState>()(
         humidityPct = null,
         notes = '',
       }) => {
-        const resolvedPetId =
-          petId === undefined ? useOnboardingStore.getState().activePetId : petId
+        const resolvedPetId = petId ?? useOnboardingStore.getState().activePetId
+        if (!resolvedPetId) throw new Error('An active pet is required to save a vivarium plan.')
         const build: VivariumBuild = {
           id: crypto.randomUUID(),
-          petId: resolvedPetId ?? null,
+          petId: resolvedPetId,
           speciesId,
           name: name.trim().slice(0, 80) || 'Bioactive build',
           substrateIds,
@@ -61,16 +61,16 @@ export const useVivariumStore = create<VivariumState>()(
       clear: () => set({ builds: [] }),
     }),
     {
-      name: 'pettography.vivarium',
+      name: 'pettography.vivarium.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
-/** Saved builds scoped to the active pet (legacy untagged builds fall through). */
+/** Saved builds strictly scoped to the active pet. */
 export function useActivePetBuilds(): VivariumBuild[] {
   const items = useVivariumStore((s) => s.builds)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return items
-  return items.filter((e) => !e.petId || e.petId === activePetId)
+  if (!activePetId) return []
+  return items.filter((e) => e.petId === activePetId)
 }

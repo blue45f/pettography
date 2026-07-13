@@ -25,6 +25,8 @@ import { useOnboardingStore } from '@domains/onboarding'
 import { useSpecies, useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { buildCsv } from '@utils/csv'
+import { downloadTextFile } from '@utils/download'
 import { useMemo, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -33,7 +35,8 @@ import { Link } from 'react-router'
 import styles from './Bcs.module.css'
 
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
 }
 
 const STATUS_BADGE: Record<BcsStatus, 'warning' | 'success'> = {
@@ -58,25 +61,38 @@ function Bcs() {
   const { data: speciesList = [] } = useSpeciesList({})
 
   const [showAllPets, setShowAllPets] = useState(false)
+  const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null)
   const entries = showAllPets ? allEntries : activeEntries
   const showPetBadge = showAllPets && pets.length > 1
 
   const scale = useMemo(() => scaleFor(profile.category), [profile.category])
-  const stats = useMemo(() => bcsStats(entries), [entries])
+  // All-pet mode changes history/export scope only. A body-condition average
+  // or trend that combines different animals is not a valid welfare signal.
+  const stats = useMemo(() => bcsStats(activeEntries), [activeEntries])
   const { weights } = useActivePetHealth()
   const latestWeight = useMemo(() => weightTrend(weights).latest, [weights])
-  const trendValues = useMemo(() => bcsTrend(entries), [entries])
+  const trendValues = useMemo(() => bcsTrend(activeEntries), [activeEntries])
   const sparkPoints = useMemo(() => trendValues.map((v, i) => ({ x: i, y: v })), [trendValues])
+
+  const petLabels = useMemo(() => {
+    const speciesById = new Map(speciesList.map((item) => [item.id, item] as const))
+    return new Map(
+      pets.map((pet) => {
+        const petSpecies = pet.speciesId ? speciesById.get(pet.speciesId) : undefined
+        return [
+          pet.id,
+          {
+            name: pet.petName?.trim() || petSpecies?.koreanName || t('bcs.petFallback'),
+            emoji: petSpecies?.heroEmoji ?? '🐾',
+          },
+        ] as const
+      })
+    )
+  }, [pets, speciesList, t])
 
   function petLabel(petId: string | null | undefined): { name: string; emoji: string } | null {
     if (!petId) return null
-    const pet = pets.find((p) => p.id === petId)
-    if (!pet) return null
-    const sp = speciesList.find((s) => s.id === pet.speciesId)
-    return {
-      name: pet.petName?.trim() || sp?.koreanName || t('bcs.petFallback'),
-      emoji: sp?.heroEmoji ?? '🐾',
-    }
+    return petLabels.get(petId) ?? null
   }
 
   const {
@@ -108,6 +124,23 @@ function Bcs() {
     reset({ assessedAt: todayIso(), score: values.score, note: '' })
   })
 
+  function exportCsv() {
+    const rows = [...entries]
+      .sort((a, b) => a.assessedAt.localeCompare(b.assessedAt))
+      .map((entry) => [entry.assessedAt, entry.score, entry.note])
+    downloadTextFile(
+      'pettography-bcs.csv',
+      buildCsv(['date', 'score', 'note'], rows),
+      'text/csv;charset=utf-8'
+    )
+  }
+
+  function confirmRemove(id: string) {
+    removeEntry(id)
+    setPendingRemoveId(null)
+    toast(t('common.delete'), 'success')
+  }
+
   return (
     <section className={styles.page}>
       <header className={styles.header}>
@@ -127,6 +160,11 @@ function Bcs() {
             />
             {t('bcs.showAllPets')}
           </label>
+        )}
+        {entries.length > 0 && (
+          <Button variant="secondary" onClick={exportCsv} className={styles.exportButton}>
+            {t('common.exportCsv')}
+          </Button>
         )}
       </header>
 
@@ -161,7 +199,7 @@ function Bcs() {
                 )}
               </div>
             </div>
-            {sparkPoints.length >= 3 && (
+            {!showAllPets && sparkPoints.length >= 3 && (
               <div className={styles.trend}>
                 <span className={styles.trendLabel}>{t('bcs.trend.label')}</span>
                 <Sparkline
@@ -213,6 +251,7 @@ function Bcs() {
           <form onSubmit={onSubmit} className={styles.form} noValidate>
             <Input
               type="date"
+              max={todayIso()}
               label={t('bcs.assessedAt')}
               error={errors.assessedAt?.message ? t(errors.assessedAt.message) : undefined}
               {...register('assessedAt')}
@@ -241,6 +280,7 @@ function Bcs() {
             <Textarea
               label={t('bcs.note')}
               rows={3}
+              maxLength={200}
               placeholder={t('bcs.notePlaceholder')}
               error={errors.note?.message ? t(errors.note.message) : undefined}
               {...register('note')}
@@ -272,37 +312,58 @@ function Bcs() {
                 const label = petLabel(entry.petId)
                 const showBadge = label && (showPetBadge || entry.petId !== activePetId)
                 return (
-                  <li key={entry.id}>
-                    <Card padding="md">
-                      <Card.Body>
-                        <div className={styles.entryHeader}>
-                          <div className={styles.entryHeaderLeft}>
-                            <span className={styles.entryScore}>
-                              {entry.score}
-                              <span className={styles.entryScoreMax}>/5</span>
-                            </span>
-                            <Badge variant={status === 'ideal' ? 'success' : 'warning'}>
-                              {t(`bcs.status.${status}`)}
-                            </Badge>
-                            <span className={styles.entryName}>{t(scoreLabel(entry.score))}</span>
-                            <span className={styles.entryDate}>{entry.assessedAt}</span>
-                            {showBadge && label && (
-                              <Badge variant="default">
-                                <span aria-hidden="true">{label.emoji}</span> {label.name}
-                              </Badge>
-                            )}
-                          </div>
-                          <button
-                            type="button"
-                            className={styles.removeButton}
-                            onClick={() => removeEntry(entry.id)}
-                          >
-                            {t('bcs.remove')}
-                          </button>
-                        </div>
-                        {entry.note && <p className={styles.entryNote}>{entry.note}</p>}
-                      </Card.Body>
-                    </Card>
+                  <li key={entry.id} className={styles.historyItem}>
+                    <div className={styles.entryHeader}>
+                      <div className={styles.entryHeaderLeft}>
+                        <span className={styles.entryScore}>
+                          {entry.score}
+                          <span className={styles.entryScoreMax}>/5</span>
+                        </span>
+                        <Badge variant={status === 'ideal' ? 'success' : 'warning'}>
+                          {t(`bcs.status.${status}`)}
+                        </Badge>
+                        <span className={styles.entryName}>{t(scoreLabel(entry.score))}</span>
+                        <time className={styles.entryDate} dateTime={entry.assessedAt}>
+                          {entry.assessedAt}
+                        </time>
+                        {showBadge && label && (
+                          <Badge variant="default">
+                            <span aria-hidden="true">{label.emoji}</span> {label.name}
+                          </Badge>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        className={styles.removeButton}
+                        aria-expanded={pendingRemoveId === entry.id}
+                        aria-controls={`bcs-remove-${entry.id}`}
+                        onClick={() =>
+                          setPendingRemoveId((current) => (current === entry.id ? null : entry.id))
+                        }
+                      >
+                        {t('bcs.remove')}
+                      </button>
+                    </div>
+                    {entry.note && <p className={styles.entryNote}>{entry.note}</p>}
+                    {pendingRemoveId === entry.id && (
+                      <div id={`bcs-remove-${entry.id}`} className={styles.deleteConfirm}>
+                        <span className={styles.deletePrompt}>{t('bcs.remove')}?</span>
+                        <button
+                          type="button"
+                          className={styles.cancelButton}
+                          onClick={() => setPendingRemoveId(null)}
+                        >
+                          {t('common.cancel')}
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.confirmButton}
+                          onClick={() => confirmRemove(entry.id)}
+                        >
+                          {t('common.delete')}
+                        </button>
+                      </div>
+                    )}
                   </li>
                 )
               })}
@@ -310,7 +371,17 @@ function Bcs() {
         )}
       </section>
 
-      <Alert variant="warning">{t('bcs.vetNote')}</Alert>
+      <Alert variant="warning">
+        <p>{t('bcs.vetNote')}</p>
+        <div className={styles.vetActions}>
+          <Link to="/growth" className={styles.vetLink}>
+            {t('growth.title')}
+          </Link>
+          <Link to="/hospitals" className={styles.vetLink}>
+            {t('nav.hospitals')}
+          </Link>
+        </div>
+      </Alert>
     </section>
   )
 }

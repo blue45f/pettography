@@ -4,11 +4,10 @@ import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
-import Sparkline from '@components/common/Sparkline'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
 import { useOnboardingStore } from '@domains/onboarding'
-import { useSpecies, useSpeciesList } from '@domains/species'
+import { useSpecies } from '@domains/species'
 import {
   CALMNESS_LEVELS,
   STRESS_SIGNS,
@@ -18,6 +17,7 @@ import {
   handlingGuidanceCode,
   latestSession,
   progressDelta,
+  sortByDate,
   useActivePetSessions,
   useTamingStore,
   type HandlingFormValues,
@@ -25,89 +25,65 @@ import {
 } from '@domains/taming'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useMemo } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Taming.module.css'
 
-function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+function localTodayIso(): string {
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
 }
 
-const DELTA_THRESHOLD = 0.5
+function numberSetter(value: unknown): number {
+  if (value === '' || value === null || value === undefined) return Number.NaN
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : Number.NaN
+}
 
 function Taming() {
   const { t } = useTranslation()
   const { toast } = useToast()
   useDocumentTitle(t('taming.title'))
 
-  const profile = useOnboardingStore((s) => s.profile)
-  const pets = useOnboardingStore((s) => s.pets)
-  const activePetId = useOnboardingStore((s) => s.activePetId)
-  const activeSessions = useActivePetSessions()
-  const allSessions = useTamingStore((s) => s.sessions)
-  const addSession = useTamingStore((s) => s.addSession)
-  const removeSession = useTamingStore((s) => s.removeSession)
+  const profile = useOnboardingStore((state) => state.profile)
+  const activePetId = useOnboardingStore((state) => state.activePetId)
   const { data: species } = useSpecies(profile.speciesId ?? undefined)
-  const { data: speciesList = [] } = useSpeciesList({})
+  const sessions = useActivePetSessions()
+  const addSession = useTamingStore((state) => state.addSession)
+  const removeSession = useTamingStore((state) => state.removeSession)
+  const today = localTodayIso()
 
-  const [showAllPets, setShowAllPets] = useState(false)
-  const sessions = showAllPets ? allSessions : activeSessions
-  const showPetBadge = showAllPets && pets.length > 1
-
-  const tolerance = species?.handlingTolerance ?? null
-
+  const sorted = useMemo(() => sortByDate(sessions), [sessions])
   const average = useMemo(() => avgCalmness(sessions), [sessions])
   const trend = useMemo(() => calmnessTrend(sessions), [sessions])
   const delta = useMemo(() => progressDelta(sessions), [sessions])
   const latest = useMemo(() => latestSession(sessions), [sessions])
-  const guidance = useMemo(() => handlingGuidanceCode(tolerance, sessions), [tolerance, sessions])
+  const guidance = useMemo(
+    () => handlingGuidanceCode(species?.handlingTolerance, sessions),
+    [sessions, species?.handlingTolerance]
+  )
+  const welfareConcern = guidance === 'highStress' || guidance === 'lowTolerance'
 
-  const sparkPoints = useMemo(() => trend.map((y, x) => ({ x, y })), [trend])
-
-  // delta -> 개선 / 정체 / 악화 badge.
-  const deltaState =
-    delta === null
-      ? null
-      : delta >= DELTA_THRESHOLD
-        ? 'improving'
-        : delta <= -DELTA_THRESHOLD
-          ? 'declining'
-          : 'steady'
-  const deltaVariant =
-    deltaState === 'improving' ? 'success' : deltaState === 'declining' ? 'error' : 'default'
-
-  function petLabel(petId: string | null | undefined): { name: string; emoji: string } | null {
-    if (!petId) return null
-    const pet = pets.find((p) => p.id === petId)
-    if (!pet) return null
-    const sp = speciesList.find((item) => item.id === pet.speciesId)
-    return {
-      name: pet.petName?.trim() || sp?.koreanName || t('petSwitcher.title', { count: 1 }),
-      emoji: sp?.heroEmoji ?? '🐾',
-    }
-  }
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    control,
-    formState: { errors, isSubmitting },
-  } = useForm<HandlingFormValues>({
+  const form = useForm<HandlingFormValues>({
     resolver: zodResolver(handlingFormSchema),
     defaultValues: {
-      sessionAt: todayIso(),
+      sessionAt: today,
       durationMin: 5,
       calmness: 3,
       stressSigns: [],
       note: '',
     },
   })
+  const calmness = useWatch({ control: form.control, name: 'calmness' })
+  const stressSigns = useWatch({ control: form.control, name: 'stressSigns' }) ?? []
 
-  const onSubmit = handleSubmit((values) => {
+  const onSubmit = form.handleSubmit((values) => {
+    if (!activePetId) return
     addSession({
+      petId: activePetId,
       speciesId: profile.speciesId,
       sessionAt: values.sessionAt,
       durationMin: values.durationMin,
@@ -116,161 +92,173 @@ function Taming() {
       note: values.note.trim(),
     })
     toast(t('taming.saved'), 'success')
-    reset({
-      sessionAt: todayIso(),
-      durationMin: values.durationMin,
-      calmness: 3,
+    form.reset({
+      sessionAt: today,
+      durationMin: 5,
+      calmness: values.calmness,
       stressSigns: [],
       note: '',
     })
   })
 
-  // The tolerance guidance card variant: low tolerance is a prominent warning,
-  // medium/high are gentler reminders.
-  const toleranceVariant = tolerance === 'low' ? 'warning' : 'info'
+  function toggleStressSign(sign: StressSign) {
+    const next = stressSigns.includes(sign)
+      ? stressSigns.filter((item) => item !== sign)
+      : [...stressSigns, sign]
+    form.setValue('stressSigns', next, { shouldDirty: true, shouldValidate: true })
+  }
+
+  function handleRemove(id: string) {
+    if (!window.confirm(t('taming.removeConfirm'))) return
+    removeSession(id)
+    toast(t('taming.removed'), 'info')
+  }
+
+  if (!activePetId) {
+    return (
+      <section className={styles.page}>
+        <header className={styles.header}>
+          <p className={styles.eyebrow}>{t('taming.eyebrow')}</p>
+          <h1>{t('taming.title')}</h1>
+          <p className={styles.subtitle}>{t('taming.subtitle')}</p>
+        </header>
+        <Card padding="lg" className={styles.petGate}>
+          <Card.Body>
+            <span className={styles.gateIcon} aria-hidden="true">
+              🐾
+            </span>
+            <h2>{t('taming.petRequiredTitle')}</h2>
+            <p>{t('taming.petRequiredBody')}</p>
+            <Link to="/onboarding" className={styles.primaryLink}>
+              {t('taming.petRequiredAction')}
+            </Link>
+          </Card.Body>
+        </Card>
+      </section>
+    )
+  }
 
   return (
     <section className={styles.page}>
       <header className={styles.header}>
+        <p className={styles.eyebrow}>{t('taming.eyebrow')}</p>
         <h1>{t('taming.title')}</h1>
         <p className={styles.subtitle}>{t('taming.subtitle')}</p>
-        {species && (
-          <span className={styles.speciesNote}>
-            <span aria-hidden="true">{species.heroEmoji}</span> {species.koreanName}
+        <div className={styles.petContext}>
+          <span aria-hidden="true">{species?.heroEmoji ?? '🐾'}</span>
+          <span>
+            {t('taming.activePet', {
+              name: profile.petName?.trim() || species?.koreanName || t('taming.aPet'),
+            })}
           </span>
-        )}
-        {pets.length > 1 && (
-          <label className={styles.showAllToggle}>
-            <input
-              type="checkbox"
-              checked={showAllPets}
-              onChange={(e) => setShowAllPets(e.target.checked)}
-            />
-            {t('taming.showAllPets')}
-          </label>
-        )}
+        </div>
       </header>
 
-      {/* Tolerance guidance (welfare context for the active species) */}
-      {tolerance && (
-        <Alert
-          variant={toleranceVariant}
-          title={t(`taming.tolerance.${tolerance}.title`)}
-          className={styles.toleranceAlert}
-        >
-          {t(`taming.tolerance.${tolerance}.body`)}
-        </Alert>
-      )}
+      <Alert variant={welfareConcern ? 'warning' : 'info'} title={t('taming.welfareTitle')}>
+        {t(`taming.guidance.${guidance}`)}
+      </Alert>
 
-      {/* Log form */}
       <Card padding="lg">
         <Card.Body>
-          <h2 className={styles.sectionTitle}>{t('taming.form.title')}</h2>
+          <div className={styles.sectionHead}>
+            <div>
+              <p className={styles.sectionKicker}>{t('taming.form.kicker')}</p>
+              <h2 className={styles.sectionTitle}>{t('taming.form.title')}</h2>
+            </div>
+            <span className={styles.privatePill}>{t('taming.privatePill')}</span>
+          </div>
+
           <form onSubmit={onSubmit} className={styles.form} noValidate>
             <div className={styles.formRow}>
               <Input
                 type="date"
+                max={today}
                 label={t('taming.form.date')}
-                error={errors.sessionAt?.message ? t(errors.sessionAt.message) : undefined}
-                {...register('sessionAt')}
+                error={
+                  form.formState.errors.sessionAt?.message
+                    ? t(form.formState.errors.sessionAt.message)
+                    : undefined
+                }
+                {...form.register('sessionAt')}
               />
               <Input
                 type="number"
                 inputMode="numeric"
-                min={0}
-                max={600}
+                min="0"
+                max="600"
+                step="1"
                 label={t('taming.form.duration')}
-                helperText={t('taming.form.durationHelp')}
-                error={errors.durationMin?.message ? t(errors.durationMin.message) : undefined}
-                {...register('durationMin', { valueAsNumber: true })}
+                helperText={t('taming.form.durationHelper')}
+                error={
+                  form.formState.errors.durationMin?.message
+                    ? t(form.formState.errors.durationMin.message)
+                    : undefined
+                }
+                {...form.register('durationMin', { setValueAs: numberSetter })}
               />
             </div>
 
-            {/* Calmness 1..5 segmented control */}
-            <Controller
-              control={control}
-              name="calmness"
-              render={({ field }) => (
-                <fieldset className={styles.fieldset}>
-                  <legend className={styles.legend}>{t('taming.form.calmness')}</legend>
-                  <div
-                    className={styles.segments}
-                    role="radiogroup"
-                    aria-label={t('taming.form.calmness')}
+            <fieldset className={styles.fieldset}>
+              <legend>{t('taming.form.calmness')}</legend>
+              <p className={styles.fieldHelp}>{t('taming.form.calmnessHelper')}</p>
+              <div className={styles.segmentGroup}>
+                {CALMNESS_LEVELS.map((level) => (
+                  <button
+                    key={level}
+                    type="button"
+                    className={`${styles.segment} ${calmness === level ? styles.segmentActive : ''}`}
+                    aria-pressed={calmness === level}
+                    onClick={() =>
+                      form.setValue('calmness', level, {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                      })
+                    }
                   >
-                    {CALMNESS_LEVELS.map((level) => {
-                      const active = field.value === level
-                      return (
-                        <button
-                          key={level}
-                          type="button"
-                          role="radio"
-                          aria-checked={active}
-                          className={`${styles.segment} ${active ? styles.segmentActive : ''}`}
-                          onClick={() => field.onChange(level)}
-                        >
-                          <span className={styles.segmentValue}>{level}</span>
-                          <span className={styles.segmentLabel}>
-                            {t(`taming.calmnessScale.${level}`)}
-                          </span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                  {errors.calmness?.message && (
-                    <p className={styles.fieldError}>{t(errors.calmness.message)}</p>
-                  )}
-                </fieldset>
-              )}
-            />
+                    <strong>{level}</strong>
+                    <span>{t(`taming.calmness.${level}`)}</span>
+                  </button>
+                ))}
+              </div>
+            </fieldset>
 
-            {/* Stress signs multi-select chips */}
-            <Controller
-              control={control}
-              name="stressSigns"
-              render={({ field }) => {
-                const selected = field.value
-                const toggle = (sign: StressSign) => {
-                  field.onChange(
-                    selected.includes(sign)
-                      ? selected.filter((s) => s !== sign)
-                      : [...selected, sign]
+            <fieldset className={styles.fieldset}>
+              <legend>{t('taming.form.signs')}</legend>
+              <p className={styles.fieldHelp}>{t('taming.form.signsHelper')}</p>
+              <div className={styles.signGrid}>
+                {STRESS_SIGNS.map((sign) => {
+                  const selected = stressSigns.includes(sign)
+                  return (
+                    <button
+                      key={sign}
+                      type="button"
+                      className={`${styles.signButton} ${selected ? styles.signButtonActive : ''}`}
+                      aria-pressed={selected}
+                      onClick={() => toggleStressSign(sign)}
+                    >
+                      {t(`taming.signs.${sign}`)}
+                    </button>
                   )
-                }
-                return (
-                  <fieldset className={styles.fieldset}>
-                    <legend className={styles.legend}>{t('taming.form.stressSigns')}</legend>
-                    <p className={styles.fieldHint}>{t('taming.form.stressSignsHelp')}</p>
-                    <div className={styles.chips}>
-                      {STRESS_SIGNS.map((sign) => {
-                        const active = selected.includes(sign)
-                        return (
-                          <button
-                            key={sign}
-                            type="button"
-                            aria-pressed={active}
-                            className={`${styles.chip} ${active ? styles.chipActive : ''}`}
-                            onClick={() => toggle(sign)}
-                          >
-                            {t(`taming.signs.${sign}`)}
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </fieldset>
-                )
-              }}
-            />
+                })}
+              </div>
+            </fieldset>
 
             <Textarea
               label={t('taming.form.note')}
-              rows={3}
               placeholder={t('taming.form.notePlaceholder')}
-              error={errors.note?.message ? t(errors.note.message) : undefined}
-              {...register('note')}
+              rows={3}
+              maxLength={200}
+              helperText={t('taming.form.noteHelper')}
+              error={
+                form.formState.errors.note?.message
+                  ? t(form.formState.errors.note.message)
+                  : undefined
+              }
+              {...form.register('note')}
             />
+
             <div className={styles.formActions}>
-              <Button type="submit" variant="primary" isLoading={isSubmitting}>
+              <Button type="submit" variant="primary" isLoading={form.formState.isSubmitting}>
                 {t('taming.form.submit')}
               </Button>
             </div>
@@ -278,118 +266,122 @@ function Taming() {
         </Card.Body>
       </Card>
 
-      {/* Progress summary */}
       {sessions.length > 0 && (
-        <Card padding="lg" className={styles.progressCard}>
+        <Card padding="lg" className={styles.insightCard}>
           <Card.Body>
-            <div className={styles.progressHead}>
-              <h2 className={styles.sectionTitle}>{t('taming.progress.title')}</h2>
-              {deltaState && (
-                <Badge variant={deltaVariant}>{t(`taming.progress.delta.${deltaState}`)}</Badge>
-              )}
+            <div className={styles.sectionHead}>
+              <div>
+                <p className={styles.sectionKicker}>{t('taming.stats.kicker')}</p>
+                <h2 className={styles.sectionTitle}>{t('taming.stats.title')}</h2>
+              </div>
+              <Badge variant={welfareConcern ? 'warning' : 'default'}>
+                {t(
+                  `taming.trend.${delta === null ? 'notEnough' : delta > 0.2 ? 'up' : delta < -0.2 ? 'down' : 'steady'}`
+                )}
+              </Badge>
             </div>
 
             <dl className={styles.metrics}>
               <div>
-                <dt>{t('taming.progress.avgCalmness')}</dt>
-                <dd>
-                  {average === null ? '—' : t('taming.progress.outOfFive', { value: average })}
-                </dd>
-              </div>
-              <div>
-                <dt>{t('taming.progress.sessions')}</dt>
+                <dt>{t('taming.stats.total')}</dt>
                 <dd>{sessions.length}</dd>
               </div>
               <div>
-                <dt>{t('taming.progress.lastSession')}</dt>
-                <dd>{latest ? latest.sessionAt : '—'}</dd>
+                <dt>{t('taming.stats.average')}</dt>
+                <dd>{average === null ? '—' : `${average}/5`}</dd>
+              </div>
+              <div>
+                <dt>{t('taming.stats.latest')}</dt>
+                <dd>{latest ? `${latest.calmness}/5` : '—'}</dd>
               </div>
             </dl>
 
-            {sparkPoints.length >= 2 && (
-              <div className={styles.trendWrap}>
-                <span className={styles.trendLabel}>{t('taming.progress.trendLabel')}</span>
-                <Sparkline
-                  points={sparkPoints}
-                  ariaLabel={t('taming.progress.chartLabel')}
-                  formatValue={(v) => t('taming.progress.outOfFive', { value: v })}
-                />
+            <div className={styles.trendWrap}>
+              <div className={styles.trendHead}>
+                <span>{t('taming.stats.trend')}</span>
+                <span>{t('taming.stats.trendRange')}</span>
               </div>
-            )}
-
-            <div className={styles.recommendation}>
-              <Alert
-                variant={guidance === 'highStress' ? 'warning' : 'info'}
-                title={t('taming.recommendation.title')}
+              <div
+                className={styles.trendPlot}
+                role="img"
+                aria-label={t('taming.stats.trendAria', { count: trend.length })}
               >
-                {t(`taming.guidance.${guidance}`)}
-              </Alert>
+                {trend.map((value, index) => (
+                  <span
+                    key={`${index}-${value}`}
+                    className={styles.trendBar}
+                    style={{ height: `${value * 20}%` }}
+                    title={`${value}/5`}
+                  />
+                ))}
+              </div>
+              <p className={styles.subjectiveNote}>{t('taming.subjectiveNote')}</p>
             </div>
           </Card.Body>
         </Card>
       )}
 
-      {/* History */}
-      {sessions.length === 0 ? (
-        <EmptyState
-          icon="🤲"
-          title={t('taming.empty.title')}
-          description={t('taming.empty.desc')}
-        />
-      ) : (
-        <ul className={styles.historyList}>
-          {sessions.map((entry) => {
-            const label = petLabel(entry.petId)
-            const showBadge = label && (showPetBadge || entry.petId !== activePetId)
-            return (
-              <li key={entry.id}>
+      <section aria-labelledby="taming-history-title">
+        <div className={styles.historyHead}>
+          <h2 id="taming-history-title" className={styles.sectionTitle}>
+            {t('taming.history.title')}
+          </h2>
+          {sessions.length > 0 && (
+            <span className={styles.historyCount}>
+              {t('taming.history.count', { count: sessions.length })}
+            </span>
+          )}
+        </div>
+
+        {sessions.length === 0 ? (
+          <EmptyState
+            variant="log"
+            icon="🤲"
+            title={t('taming.history.emptyTitle')}
+            description={t('taming.history.emptyDesc')}
+            hint={t('taming.history.emptyHint')}
+          />
+        ) : (
+          <ul className={styles.historyList}>
+            {sorted.map((session) => (
+              <li key={session.id}>
                 <Card padding="md">
                   <Card.Body>
                     <div className={styles.entryHeader}>
                       <div className={styles.entryHeaderLeft}>
-                        <span className={styles.entryDate}>{entry.sessionAt}</span>
-                        <Badge variant="primary">
-                          {t('taming.history.calmness', { value: entry.calmness })}
+                        <Badge variant={session.calmness <= 2 ? 'warning' : 'default'}>
+                          {t('taming.history.calmness', { value: session.calmness })}
                         </Badge>
+                        <span className={styles.entryDate}>{session.sessionAt}</span>
                         <span className={styles.entryMeta}>
-                          {t('taming.history.duration', { count: entry.durationMin })}
+                          {t('taming.history.minutes', { count: session.durationMin })}
                         </span>
-                        {showBadge && label && (
-                          <Badge variant="default">
-                            <span aria-hidden="true">{label.emoji}</span> {label.name}
-                          </Badge>
-                        )}
                       </div>
                       <button
                         type="button"
                         className={styles.removeButton}
-                        onClick={() => removeSession(entry.id)}
+                        onClick={() => handleRemove(session.id)}
                       >
-                        {t('taming.history.remove')}
+                        {t('taming.remove')}
                       </button>
                     </div>
-
-                    {entry.stressSigns.length > 0 && (
+                    {session.stressSigns.length > 0 && (
                       <div className={styles.signChips}>
-                        {entry.stressSigns.map((sign) => (
+                        {session.stressSigns.map((sign) => (
                           <span key={sign} className={styles.signChip}>
                             {t(`taming.signs.${sign}`)}
                           </span>
                         ))}
                       </div>
                     )}
-
-                    {entry.note && <p className={styles.entryNote}>{entry.note}</p>}
-                    {!entry.speciesId && (
-                      <p className={styles.entryFooter}>{t('taming.history.speciesUnknown')}</p>
-                    )}
+                    {session.note && <p className={styles.entryNote}>{session.note}</p>}
                   </Card.Body>
                 </Card>
               </li>
-            )
-          })}
-        </ul>
-      )}
+            ))}
+          </ul>
+        )}
+      </section>
     </section>
   )
 }

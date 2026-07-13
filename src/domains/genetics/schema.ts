@@ -49,7 +49,6 @@ export interface OffspringOutcome {
 /** A saved pairing the keeper wants to keep around. */
 export const savedPairingSchema = z.object({
   id: z.string(),
-  petId: z.string().nullable().optional(),
   speciesSlug: z.string(),
   label: z.string().max(80),
   sire: z.record(z.string(), zygositySchema),

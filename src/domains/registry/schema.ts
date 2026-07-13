@@ -21,4 +21,5 @@ export const REGISTRY_LINKS = {
   wildlifeRegistry: 'https://www.wildlife.go.kr/',
   animalRegistry: 'https://www.animal.go.kr/',
   envMinistry: 'https://www.me.go.kr/',
+  law: 'https://www.law.go.kr/법령/야생생물보호및관리에관한법률',
 } as const

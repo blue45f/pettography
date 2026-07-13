@@ -1,7 +1,7 @@
 import { useOnboardingStore } from '@domains/onboarding'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-import { NO_PET_KEY, resolvePetKey, useEnclosureStore } from './store'
+import { resolvePetKey, useEnclosureStore } from './store'
 
 beforeEach(() => {
   localStorage.clear()
@@ -37,12 +37,6 @@ describe('enclosure store', () => {
     expect(check.lengthCm).toBe(120)
     expect(check.widthCm).toBe(45)
     expect(check.heightCm).toBe(45)
-  })
-
-  it('stores a null petId for the no-pet sentinel key', () => {
-    const check = useEnclosureStore.getState().setCheck(NO_PET_KEY, { lengthCm: 60 })
-    expect(check.petId).toBeNull()
-    expect(check.lengthCm).toBe(60)
   })
 
   it('keeps checks isolated per pet key', () => {

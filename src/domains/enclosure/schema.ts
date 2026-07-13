@@ -6,7 +6,7 @@ import { z } from 'zod'
  * may be null while the keeper has not yet filled the field in.
  */
 export const enclosureCheckSchema = z.object({
-  petId: z.string().nullable().optional(),
+  petId: z.string(),
   speciesId: z.string().nullable(),
   lengthCm: z.number().positive().nullable(),
   widthCm: z.number().positive().nullable(),

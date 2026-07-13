@@ -42,20 +42,19 @@ export const useCleaningStore = create<CleaningState>()(
       clear: () => set({ logs: [] }),
     }),
     {
-      name: 'pettography.cleaning',
+      name: 'pettography.cleaning.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
 /**
- * Returns cleaning logs scoped to the currently active pet. Legacy logs with
- * no petId fall through to the active pet so existing data keeps showing up
- * after the multi-pet migration.
+ * Returns cleaning logs strictly scoped to the active pet. The null slot is
+ * retained only for use before onboarding and is never merged into a pet.
  */
 export function useActivePetCleanings(): CleaningLog[] {
   const logs = useCleaningStore((s) => s.logs)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return logs
-  return logs.filter((l) => !l.petId || l.petId === activePetId)
+  if (!activePetId) return logs.filter((log) => !log.petId)
+  return logs.filter((log) => log.petId === activePetId)
 }

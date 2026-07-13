@@ -1,5 +1,12 @@
 import { z } from 'zod'
 
+const ISO_DAY_PATTERN = /^\d{4}-\d{2}-\d{2}$/
+
+function localTodayIso(): string {
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
+}
+
 /**
  * Common stress / defensive signs an exotic may show during a handling
  * session. Each id maps to a label at `taming.signs.<id>`.
@@ -42,7 +49,7 @@ export const CALMNESS_LEVELS: readonly number[] = [1, 2, 3, 4, 5] as const
 
 export const handlingSessionSchema = z.object({
   id: z.string(),
-  petId: z.string().nullable().optional(),
+  petId: z.string(),
   speciesId: z.string().nullable(),
   /** Day-precision date, YYYY-MM-DD. */
   sessionAt: z.string(),
@@ -56,7 +63,11 @@ export const handlingSessionSchema = z.object({
 export type HandlingSession = z.infer<typeof handlingSessionSchema>
 
 export const handlingFormSchema = z.object({
-  sessionAt: z.string().min(1, 'taming.errors.dateRequired'),
+  sessionAt: z
+    .string()
+    .min(1, 'taming.errors.dateRequired')
+    .regex(ISO_DAY_PATTERN, 'taming.errors.dateInvalid')
+    .refine((value) => value <= localTodayIso(), 'taming.errors.dateFuture'),
   durationMin: z
     .number({ message: 'taming.errors.durationNumber' })
     .int('taming.errors.durationNumber')

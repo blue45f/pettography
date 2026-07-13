@@ -33,6 +33,7 @@ import { useToday } from '@hooks/useToday'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Brumation.module.css'
 
@@ -61,6 +62,7 @@ function Brumation() {
   // stored newest-first); a user pick overrides it. Falls back gracefully when
   // the selected plan is removed.
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null)
   const selectedPlan =
     plans.find((p) => p.id === selectedId) ?? (plans.length > 0 ? plans[0] : null)
 
@@ -128,6 +130,8 @@ function Brumation() {
   function handleRemove(id: string) {
     removePlan(id)
     if (selectedId === id) setSelectedId(null)
+    setPendingRemoveId(null)
+    toast(t('common.delete'), 'success')
   }
 
   const phaseError = (id: BrumationPhaseId) => {
@@ -155,6 +159,11 @@ function Brumation() {
             <li key={id}>{t(`brumation.safety.${id}`)}</li>
           ))}
         </ul>
+        <div className={styles.safetyActions}>
+          <Link to="/hospitals" className={styles.safetyLink}>
+            {t('nav.hospitals')}
+          </Link>
+        </div>
       </Alert>
 
       {!isReptile && (
@@ -176,81 +185,87 @@ function Brumation() {
       )}
 
       {/* ── Create a plan ─────────────────────────────────────── */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>{t('brumation.form.title')}</h2>
-        <p className={styles.sectionIntro}>{t('brumation.form.intro')}</p>
+      {isReptile && (
+        <div className={styles.section}>
+          <h2 className={styles.sectionTitle}>{t('brumation.form.title')}</h2>
+          <p className={styles.sectionIntro}>{t('brumation.form.intro')}</p>
 
-        <Card padding="lg">
-          <Card.Body>
-            <h3 className={styles.formTitle}>{t('brumation.form.newTitle')}</h3>
-            <form onSubmit={onCreate} className={styles.form} noValidate>
-              <div className={styles.formRow}>
-                <Input
-                  type="date"
-                  label={t('brumation.form.startDate')}
-                  error={
-                    form.formState.errors.startDate?.message
-                      ? t(form.formState.errors.startDate.message)
-                      : undefined
-                  }
-                  {...form.register('startDate')}
-                />
-                <Input
-                  type="number"
-                  inputMode="decimal"
-                  step="0.5"
-                  label={t('brumation.form.targetTemp')}
-                  helperText={t('brumation.form.targetTempHelper')}
-                  error={
-                    form.formState.errors.targetTempC?.message
-                      ? t(form.formState.errors.targetTempC.message)
-                      : undefined
-                  }
-                  {...form.register('targetTempC', { setValueAs: numberSetter })}
-                />
-              </div>
-
-              <fieldset className={styles.form}>
-                <legend className={styles.fieldsetLegend}>
-                  {t('brumation.form.phasesLegend')}
-                </legend>
-                <div className={styles.phaseGrid}>
-                  {BRUMATION_PHASES.map((phase) => (
-                    <Input
-                      key={phase.id}
-                      type="number"
-                      inputMode="numeric"
-                      step="1"
-                      min="1"
-                      label={t(`brumation.phases.${phase.id}.title`)}
-                      helperText={t('brumation.form.daysUnit')}
-                      error={phaseError(phase.id)}
-                      {...form.register(phase.id, { valueAsNumber: true })}
-                    />
-                  ))}
+          <Card padding="lg">
+            <Card.Body>
+              <h3 className={styles.formTitle}>{t('brumation.form.newTitle')}</h3>
+              <form onSubmit={onCreate} className={styles.form} noValidate>
+                <div className={styles.formRow}>
+                  <Input
+                    type="date"
+                    label={t('brumation.form.startDate')}
+                    error={
+                      form.formState.errors.startDate?.message
+                        ? t(form.formState.errors.startDate.message)
+                        : undefined
+                    }
+                    {...form.register('startDate')}
+                  />
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    step="0.5"
+                    min="0"
+                    max="40"
+                    label={t('brumation.form.targetTemp')}
+                    helperText={t('brumation.form.targetTempHelper')}
+                    error={
+                      form.formState.errors.targetTempC?.message
+                        ? t(form.formState.errors.targetTempC.message)
+                        : undefined
+                    }
+                    {...form.register('targetTempC', { setValueAs: numberSetter })}
+                  />
                 </div>
-              </fieldset>
 
-              <Textarea
-                label={t('brumation.form.notes')}
-                rows={2}
-                helperText={t('brumation.form.notesOptional')}
-                error={
-                  form.formState.errors.notes?.message
-                    ? t(form.formState.errors.notes.message)
-                    : undefined
-                }
-                {...form.register('notes')}
-              />
-              <div className={styles.formActions}>
-                <Button type="submit" variant="primary" isLoading={form.formState.isSubmitting}>
-                  {t('brumation.form.add')}
-                </Button>
-              </div>
-            </form>
-          </Card.Body>
-        </Card>
-      </div>
+                <fieldset className={styles.form}>
+                  <legend className={styles.fieldsetLegend}>
+                    {t('brumation.form.phasesLegend')}
+                  </legend>
+                  <div className={styles.phaseGrid}>
+                    {BRUMATION_PHASES.map((phase) => (
+                      <Input
+                        key={phase.id}
+                        type="number"
+                        inputMode="numeric"
+                        step="1"
+                        min="1"
+                        max="365"
+                        label={t(`brumation.phases.${phase.id}.title`)}
+                        helperText={t('brumation.form.daysUnit')}
+                        error={phaseError(phase.id)}
+                        {...form.register(phase.id, { valueAsNumber: true })}
+                      />
+                    ))}
+                  </div>
+                </fieldset>
+
+                <Textarea
+                  label={t('brumation.form.notes')}
+                  rows={2}
+                  maxLength={300}
+                  helperText={t('brumation.form.notesOptional')}
+                  error={
+                    form.formState.errors.notes?.message
+                      ? t(form.formState.errors.notes.message)
+                      : undefined
+                  }
+                  {...form.register('notes')}
+                />
+                <div className={styles.formActions}>
+                  <Button type="submit" variant="primary" isLoading={form.formState.isSubmitting}>
+                    {t('brumation.form.add')}
+                  </Button>
+                </div>
+              </form>
+            </Card.Body>
+          </Card>
+        </div>
+      )}
 
       {/* ── Saved plans ───────────────────────────────────────── */}
       <div className={styles.section}>
@@ -303,13 +318,38 @@ function Brumation() {
                           <button
                             type="button"
                             className={styles.removeButton}
-                            onClick={() => handleRemove(plan.id)}
+                            aria-expanded={pendingRemoveId === plan.id}
+                            aria-controls={`brumation-remove-${plan.id}`}
+                            onClick={() =>
+                              setPendingRemoveId((current) =>
+                                current === plan.id ? null : plan.id
+                              )
+                            }
                           >
                             {t('brumation.remove')}
                           </button>
                         </div>
                       </div>
                       {plan.notes.trim() && <p className={styles.planNotes}>{plan.notes}</p>}
+                      {pendingRemoveId === plan.id && (
+                        <div id={`brumation-remove-${plan.id}`} className={styles.deleteConfirm}>
+                          <span className={styles.deletePrompt}>{t('brumation.remove')}?</span>
+                          <button
+                            type="button"
+                            className={styles.cancelButton}
+                            onClick={() => setPendingRemoveId(null)}
+                          >
+                            {t('common.cancel')}
+                          </button>
+                          <button
+                            type="button"
+                            className={styles.confirmButton}
+                            onClick={() => handleRemove(plan.id)}
+                          >
+                            {t('common.delete')}
+                          </button>
+                        </div>
+                      )}
                     </Card.Body>
                   </Card>
                 </li>

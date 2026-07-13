@@ -46,17 +46,16 @@ const DIFFICULTY_BADGE: Record<Difficulty, BadgeVariant> = {
 }
 
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
 }
-
-const KRW = new Intl.NumberFormat('ko-KR')
 
 function Wishlist() {
   const { t } = useTranslation()
   const { toast } = useToast()
   useDocumentTitle(t('wishlist.title'))
 
-  const { data: speciesList = [] } = useSpeciesList({})
+  const { data: speciesList = [], isLoading, isError, refetch } = useSpeciesList({})
   const items = useWishlistStore((s) => s.items)
   const addItem = useWishlistStore((s) => s.addItem)
   const toggleReadiness = useWishlistStore((s) => s.toggleReadiness)
@@ -88,6 +87,10 @@ function Wishlist() {
   })
 
   const onSubmit = handleSubmit((values) => {
+    if (items.some((item) => item.speciesId === values.speciesId)) {
+      toast(t('wishlist.duplicate'), 'info')
+      return
+    }
     addItem({
       speciesId: values.speciesId,
       priority: values.priority,
@@ -97,6 +100,12 @@ function Wishlist() {
     toast(t('wishlist.added'), 'success')
     reset({ speciesId: '', priority: 'someday', targetDate: '', notes: '' })
   })
+
+  function handleRemove(item: WishlistItem) {
+    if (!window.confirm(t('wishlist.removeConfirm'))) return
+    removeItem(item.id)
+    toast(t('wishlist.removed'), 'info')
+  }
 
   function dDayLabel(targetDate: string): { text: string; tone: 'past' | 'today' | 'future' } {
     const diff = daysUntil(targetDate, today)
@@ -113,6 +122,15 @@ function Wishlist() {
       </header>
 
       <p className={styles.responsibleNote}>{t('wishlist.responsibleNote')}</p>
+
+      {isError && (
+        <div className={styles.catalogError} role="alert">
+          <span>{t('wishlist.catalogError')}</span>
+          <button type="button" onClick={() => void refetch()}>
+            {t('wishlist.retry')}
+          </button>
+        </div>
+      )}
 
       <Card padding="lg">
         <Card.Body>
@@ -139,6 +157,7 @@ function Wishlist() {
               />
               <Input
                 type="date"
+                min={today}
                 label={t('wishlist.form.targetDate')}
                 helperText={t('wishlist.form.targetDateHelper')}
                 error={errors.targetDate?.message ? t(errors.targetDate.message) : undefined}
@@ -148,12 +167,18 @@ function Wishlist() {
             <Textarea
               label={t('wishlist.form.notes')}
               rows={2}
+              maxLength={300}
               placeholder={t('wishlist.form.notesPlaceholder')}
               error={errors.notes?.message ? t(errors.notes.message) : undefined}
               {...register('notes')}
             />
             <div className={styles.formActions}>
-              <Button type="submit" variant="primary" isLoading={isSubmitting}>
+              <Button
+                type="submit"
+                variant="primary"
+                isLoading={isSubmitting || isLoading}
+                disabled={isError}
+              >
                 {t('wishlist.form.submit')}
               </Button>
             </div>
@@ -177,7 +202,7 @@ function Wishlist() {
               pct={readinessPct(item, totalReadiness)}
               dDay={item.targetDate ? dDayLabel(item.targetDate) : null}
               onToggle={(key) => toggleReadiness(item.id, key)}
-              onRemove={() => removeItem(item.id)}
+              onRemove={() => handleRemove(item)}
             />
           ))}
         </ul>
@@ -196,10 +221,12 @@ interface WishCardProps {
 }
 
 function WishCard({ item, species, pct, dDay, onToggle, onRemove }: WishCardProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const flag = species ? experienceMatch(species.difficulty) : 'ok'
   const regulated = species?.filingStatus === 'regulated'
-  const progressVariant = pct === 100 ? 'success' : 'primary'
+  const formattedBudget = species
+    ? new Intl.NumberFormat(i18n.resolvedLanguage ?? 'ko-KR').format(species.monthlyBudgetKrw)
+    : null
 
   return (
     <li>
@@ -245,7 +272,7 @@ function WishCard({ item, species, pct, dDay, onToggle, onRemove }: WishCardProp
 
           {species && (
             <p className={styles.budgetHint}>
-              {t('wishlist.budgetHint', { amount: KRW.format(species.monthlyBudgetKrw) })}
+              {t('wishlist.budgetHint', { amount: formattedBudget })}
             </p>
           )}
 
@@ -258,11 +285,8 @@ function WishCard({ item, species, pct, dDay, onToggle, onRemove }: WishCardProp
               <span className={styles.readinessTitle}>{t('wishlist.readinessTitle')}</span>
               <span className={styles.readinessPct}>{pct}%</span>
             </div>
-            <Progress
-              value={pct}
-              variant={progressVariant}
-              label={t('wishlist.readinessAria', { pct })}
-            />
+            <Progress value={pct} variant="primary" label={t('wishlist.readinessAria', { pct })} />
+            <p className={styles.readinessNotice}>{t('wishlist.readinessNotice')}</p>
             <ul className={styles.readinessList}>
               {READINESS_ITEMS.map((key) => (
                 <li key={key} className={styles.readinessItem}>

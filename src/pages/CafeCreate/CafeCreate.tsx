@@ -1,5 +1,6 @@
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
+import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
 import Select from '@components/common/Select'
 import Textarea from '@components/common/Textarea'
@@ -25,7 +26,9 @@ function CafeCreate() {
   const navigate = useNavigate()
   useDocumentTitle(t('cafes.createTitle'))
 
-  const { data: speciesList = [], isLoading } = useSpeciesList({})
+  const speciesQuery = useSpeciesList({})
+  const speciesList = speciesQuery.data ?? []
+  const isLoading = speciesQuery.isLoading
   const createCafe = useCafesStore((s) => s.createCafe)
   const lastNickname = useCafesStore((s) => s.lastNickname)
 
@@ -68,6 +71,28 @@ function CafeCreate() {
     void navigate(`/cafes/${cafe.id}`)
   })
 
+  if (speciesQuery.isError) {
+    return (
+      <section className={styles.page}>
+        <EmptyState
+          icon="⚠️"
+          title={t('common.error')}
+          description={t('common.loadErrorHint')}
+          action={
+            <div className={styles.errorActions}>
+              <Button variant="outline" onClick={() => void speciesQuery.refetch()}>
+                {t('common.retry')}
+              </Button>
+              <Link to="/cafes" className={styles.backCta}>
+                {t('cafes.backToList')}
+              </Link>
+            </div>
+          }
+        />
+      </section>
+    )
+  }
+
   return (
     <section className={styles.page}>
       <header className={styles.header}>
@@ -97,6 +122,7 @@ function CafeCreate() {
               {...register('speciesId')}
             />
             <Input
+              maxLength={60}
               label={t('cafes.nameLabel')}
               placeholder={t('cafes.namePlaceholder')}
               error={errors.name?.message ? t(errors.name.message) : undefined}
@@ -104,12 +130,14 @@ function CafeCreate() {
             />
             <Textarea
               rows={4}
+              maxLength={500}
               label={t('cafes.descriptionLabel')}
               placeholder={t('cafes.descriptionPlaceholder')}
               error={errors.description?.message ? t(errors.description.message) : undefined}
               {...register('description')}
             />
             <Input
+              maxLength={40}
               label={t('cafes.nicknameLabel')}
               placeholder={t('cafes.nicknamePlaceholder')}
               error={errors.createdBy?.message ? t(errors.createdBy.message) : undefined}
@@ -139,7 +167,7 @@ function CafeCreate() {
             </fieldset>
 
             <div className={styles.formActions}>
-              <Button type="submit" variant="primary" isLoading={isSubmitting}>
+              <Button type="submit" variant="primary" isLoading={isSubmitting} disabled={isLoading}>
                 {t('cafes.submit')}
               </Button>
             </div>

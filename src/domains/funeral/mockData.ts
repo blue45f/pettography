@@ -46,22 +46,14 @@ export const funeralMock: FuneralService[] = [
   {
     id: 'fn-rainbow',
     name: '무지개다리 직거래 정보',
-    url: 'https://www.animal.go.kr/front/community/show.do?boardId=funeral',
+    url: 'https://www.animal.go.kr/front/awtis/shop/salesList.do?menuNo=6000000130&sWrkCd=F',
     kind: 'directory',
     region: '전국',
     supportedCategories: ['mammal', 'bird', 'reptile', 'amphibian', 'arthropod'],
     description: '농림축산검역본부 동물장묘업 등록 업체 검색 디렉토리.',
     certified: true,
   },
-  {
-    id: 'fn-petspa',
-    name: '24시 펫스파 픽업',
-    url: 'https://24petpickup.kr',
-    kind: 'pickup',
-    region: '수도권 24시',
-    supportedCategories: ['mammal', 'bird'],
-    description: '심야 픽업 + 화장장 인계 + 유골 배송.',
-    certified: false,
-    phone: '1577-0000',
-  },
 ]
+
+export const FUNERAL_REGISTRY_URL =
+  'https://www.animal.go.kr/front/awtis/shop/salesList.do?menuNo=6000000130&sWrkCd=F'

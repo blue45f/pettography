@@ -141,7 +141,7 @@
 .selectField select,
 .controlGrid select {
   width: 100%;
-  min-height: 42px;
+  min-height: 44px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
@@ -161,6 +161,42 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-sm);
+}
+
+.queryError {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-md);
+  background: var(--color-error-soft);
+  color: var(--color-text);
+}
+
+.areaLink:focus-visible,
+.selectField select:focus-visible,
+.controlGrid select:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .queryError {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .areaLink {
+    transition: none;
+  }
+
+  .areaLink:hover {
+    transform: none;
+  }
 }
 
 .tile {

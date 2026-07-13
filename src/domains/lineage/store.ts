@@ -40,13 +40,13 @@ export const useLineageStore = create<LineageState>()(
       }) => {
         const animal: LineageAnimal = {
           id: crypto.randomUUID(),
-          name,
+          name: name.trim().slice(0, 60),
           speciesId: speciesId ?? null,
           sex,
-          morph,
+          morph: morph.trim().slice(0, 60),
           sireId: sireId ?? null,
           damId: damId ?? null,
-          notes,
+          notes: notes.trim().slice(0, 300),
           createdAt: new Date().toISOString(),
         }
         set((state) => ({ animals: sortByCreatedDesc([animal, ...state.animals]) }))
@@ -70,7 +70,7 @@ export const useLineageStore = create<LineageState>()(
       clear: () => set({ animals: [] }),
     }),
     {
-      name: 'pettography.lineage',
+      name: 'pettography.lineage.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )

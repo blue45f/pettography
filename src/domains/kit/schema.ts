@@ -19,6 +19,7 @@ export type KitContact = z.infer<typeof kitContactSchema>
  */
 export const kitStateSchema = z.object({
   checked: z.record(z.string(), z.boolean()),
+  checkedUpdatedAt: z.string().nullable(),
   contacts: z.array(kitContactSchema),
 })
 
@@ -31,7 +32,12 @@ export type KitState = z.infer<typeof kitStateSchema>
  */
 export const kitContactFormSchema = z.object({
   label: z.string().trim().min(1, 'kit.errors.labelRequired').max(40, 'kit.errors.labelMax'),
-  phone: z.string().trim().min(1, 'kit.errors.phoneRequired').max(40, 'kit.errors.phoneMax'),
+  phone: z
+    .string()
+    .trim()
+    .min(1, 'kit.errors.phoneRequired')
+    .max(40, 'kit.errors.phoneMax')
+    .regex(/^[+\d().\s-]+$/, 'kit.errors.phoneInvalid'),
   note: z.string().trim().max(120, 'kit.errors.noteMax'),
 })
 

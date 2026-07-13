@@ -38,9 +38,15 @@
 
 @container main (min-width: 540px) {
   .statusBar {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     align-items: center;
   }
+}
+
+.dataBasis {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
 }
 
 .statusLabel {
@@ -186,6 +192,9 @@
 }
 
 .linkList a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   color: var(--color-primary);
   font-weight: 600;
   text-decoration: none;
@@ -202,6 +211,7 @@
 }
 
 .resetButton {
+  min-height: 44px;
   align-self: flex-start;
   padding: var(--spacing-xs) var(--spacing-md);
   background: transparent;
@@ -210,6 +220,13 @@
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   cursor: pointer;
+}
+
+.filingCheck:focus-within,
+.linkList a:focus-visible,
+.resetButton:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 28%, transparent);
+  outline-offset: 3px;
 }
 
 .resetButton:hover {

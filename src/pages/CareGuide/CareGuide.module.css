@@ -88,6 +88,9 @@
 
 .highlightCard {
   border: 1px solid var(--color-primary-alpha);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  background: var(--color-surface-muted);
 }
 
 .highlightTitle {
@@ -101,19 +104,31 @@
   counter-reset: cl;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
 }
 
 .checklist li {
   counter-increment: cl;
   position: relative;
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) 3.5rem;
+  border-top: 1px solid var(--color-border);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 120px;
+}
+
+.checklist li:first-child {
+  border-top: 0;
 }
 
 .checklist li::before {
   content: counter(cl);
   position: absolute;
-  left: -2.25rem;
-  top: var(--spacing-md);
+  left: var(--spacing-md);
+  top: var(--spacing-lg);
   width: 1.75rem;
   height: 1.75rem;
   display: inline-flex;
@@ -132,21 +147,58 @@
   margin-bottom: var(--spacing-xs);
 }
 
+.guideItem p {
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.summaryActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-md);
+}
+
+.summaryLink,
+.emptyAction {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--spacing-md);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
 .references ul {
-  list-style: disc inside;
+  list-style: none;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
 }
 
 .linkAction {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--color-primary);
   text-decoration: none;
   font-weight: 600;
 }
 
 @media (max-width: 640px) {
-  .checklist li::before {
-    left: -1.75rem;
+  .summaryHeader {
+    align-items: flex-start;
+  }
+
+  .summaryActions > * {
+    width: 100%;
+  }
+
+  .checklist li {
+    padding-inline-end: var(--spacing-md);
   }
 }

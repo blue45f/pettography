@@ -21,6 +21,7 @@
 }
 
 .filterChip {
+  min-height: 44px;
   padding: var(--spacing-xs) var(--spacing-md);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -45,7 +46,22 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.listItem {
+  padding: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 150px;
+}
+
+.listItem:first-child {
+  border-top: 0;
 }
 
 .itemHeader {
@@ -73,8 +89,26 @@
 }
 
 .linkAction {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--spacing-sm);
   color: var(--color-primary);
   text-decoration: none;
   font-weight: 600;
   font-size: var(--font-size-sm);
+}
+
+.searchInput {
+  max-width: 520px;
+}
+
+@media (max-width: 560px) {
+  .searchInput {
+    max-width: none;
+  }
+
+  .listItem {
+    padding: var(--spacing-md);
+  }
 }

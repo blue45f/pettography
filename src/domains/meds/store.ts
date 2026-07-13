@@ -7,7 +7,9 @@ import { QUARANTINE_DEFAULT_DURATION } from './schema'
 import type { DoseRecord, Medication, Quarantine, QuarantineReason } from './schema'
 
 function today(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60_000)
+  return localTime.toISOString().slice(0, 10)
 }
 
 interface MedsState {

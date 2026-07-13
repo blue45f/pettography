@@ -1,350 +1,264 @@
-import Badge from '@components/common/Badge'
-import Button from '@components/common/Button'
-import Card from '@components/common/Card'
-import EmptyState from '@components/common/EmptyState'
-import Input from '@components/common/Input'
-import LazyImage from '@components/common/LazyImage'
-import Select from '@components/common/Select'
-import ShareButton from '@components/common/ShareButton'
-import Textarea from '@components/common/Textarea'
-import { useToast } from '@components/common/Toast'
-import { useOnboardingStore } from '@domains/onboarding'
 import {
   CONTEST_THEMES,
-  CURRENT_THEME_ID,
-  SEED_POSTS,
-  SHOWCASE_SORT_OPTIONS,
   showcaseFormSchema,
-  topPostForTheme,
   useShowcaseStore,
-  voteCount,
   type ShowcaseFormValues,
-  type ShowcasePost,
-  type ShowcaseSort,
   type ShowcaseThemeId,
 } from '@domains/showcase'
-import { useSpeciesList, type Species } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Showcase.module.css'
 
-type ThemeFilter = ShowcaseThemeId | 'all'
+type Filter = ShowcaseThemeId | 'all'
+const COPY = {
+  ko: {
+    title: '로컬 사진 보드',
+    subtitle: '우리 아이 사진과 사육장 아이디어를 이 브라우저 안에서만 모아보세요.',
+    localTitle: '공개 업로드가 아닙니다',
+    local: '사진 주소와 메모는 다른 사용자에게 보이지 않으며 이 브라우저에만 저장됩니다.',
+    privacyTitle: '외부 이미지 주소에 관한 안내',
+    privacy:
+      'HTTPS 이미지 주소를 열 때 해당 이미지 서버에 접속 정보가 전달될 수 있습니다. 개인정보가 포함된 비공개 링크는 사용하지 마세요.',
+    addTitle: '사진 카드 추가',
+    nickname: '구분용 이름',
+    image: 'HTTPS 이미지 주소',
+    caption: '메모',
+    category: '분류',
+    add: '보드에 추가',
+    all: '전체',
+    empty: '아직 저장한 사진 카드가 없습니다.',
+    delete: '삭제',
+    deleteConfirm: '이 사진 카드를 삭제할까요?',
+    broken: '이미지를 불러오지 못했습니다. 주소와 공개 범위를 확인하세요.',
+    required: '입력값을 확인해주세요.',
+    themes: {
+      freestyle: '자유 기록',
+      postShed: '탈피 기록',
+      enclosureFull: '사육장 전경',
+      feedingReaction: '급여 순간',
+      baby: '성장 기록',
+    },
+  },
+  en: {
+    title: 'Local photo board',
+    subtitle: 'Collect pet photos and enclosure ideas only in this browser.',
+    localTitle: 'This is not a public upload',
+    local: 'Photo URLs and notes are visible only in this browser, not to other users.',
+    privacyTitle: 'About external image URLs',
+    privacy:
+      'Loading an HTTPS image can share connection information with its host. Do not use private links containing personal data.',
+    addTitle: 'Add a photo card',
+    nickname: 'Reference name',
+    image: 'HTTPS image URL',
+    caption: 'Note',
+    category: 'Category',
+    add: 'Add to board',
+    all: 'All',
+    empty: 'No saved photo cards yet.',
+    delete: 'Delete',
+    deleteConfirm: 'Delete this photo card?',
+    broken: 'The image could not be loaded. Check its URL and visibility.',
+    required: 'Check this value.',
+    themes: {
+      freestyle: 'Free note',
+      postShed: 'Shed log',
+      enclosureFull: 'Enclosure view',
+      feedingReaction: 'Feeding moment',
+      baby: 'Growth log',
+    },
+  },
+  ja: {
+    title: 'ローカル写真ボード',
+    subtitle: 'ペットの写真と飼育環境のアイデアをこのブラウザ内だけにまとめます。',
+    localTitle: '公開アップロードではありません',
+    local: '写真URLとメモは他のユーザーには表示されず、このブラウザにのみ保存されます。',
+    privacyTitle: '外部画像URLについて',
+    privacy:
+      'HTTPS画像を読み込む際、接続情報が画像サーバーに伝わる場合があります。個人情報を含む非公開リンクは使わないでください。',
+    addTitle: '写真カードを追加',
+    nickname: '識別用の名前',
+    image: 'HTTPS画像URL',
+    caption: 'メモ',
+    category: '分類',
+    add: 'ボードに追加',
+    all: 'すべて',
+    empty: '保存した写真カードはまだありません。',
+    delete: '削除',
+    deleteConfirm: 'この写真カードを削除しますか？',
+    broken: '画像を読み込めません。URLと公開範囲を確認してください。',
+    required: '入力内容を確認してください。',
+    themes: {
+      freestyle: '自由記録',
+      postShed: '脱皮記録',
+      enclosureFull: '飼育環境全景',
+      feedingReaction: '給餌の瞬間',
+      baby: '成長記録',
+    },
+  },
+} as const
 
 function Showcase() {
-  const { t } = useTranslation()
-  const { toast } = useToast()
-  useDocumentTitle(t('showcase.title'))
-
-  const profile = useOnboardingStore((s) => s.profile)
-  const { data: speciesList = [] } = useSpeciesList({})
-
-  const posts = useShowcaseStore((s) => s.posts)
-  const votedIds = useShowcaseStore((s) => s.votedIds)
-  const ownIds = useShowcaseStore((s) => s.ownIds)
-  const lastAuthor = useShowcaseStore((s) => s.lastAuthor)
-  const hydrateSeed = useShowcaseStore((s) => s.hydrateSeed)
-  const addPost = useShowcaseStore((s) => s.addPost)
-  const removePost = useShowcaseStore((s) => s.removePost)
-  const toggleVote = useShowcaseStore((s) => s.toggleVote)
-
-  // Seed once on mount via a lazy initializer — never setState in an effect.
-  useState(() => {
-    hydrateSeed(SEED_POSTS)
-    return true
+  const { i18n } = useTranslation()
+  const language = i18n.resolvedLanguage?.split('-')[0] as keyof typeof COPY
+  const copy = COPY[language] ?? COPY.ko
+  const locale = language === 'ja' ? 'ja-JP' : language === 'en' ? 'en-US' : 'ko-KR'
+  useDocumentTitle(copy.title)
+  const posts = useShowcaseStore((state) => state.posts)
+  const ownIds = useShowcaseStore((state) => state.ownIds)
+  const lastAuthor = useShowcaseStore((state) => state.lastAuthor)
+  const addPost = useShowcaseStore((state) => state.addPost)
+  const removePost = useShowcaseStore((state) => state.removePost)
+  const [filter, setFilter] = useState<Filter>('all')
+  const form = useForm<ShowcaseFormValues>({
+    resolver: zodResolver(showcaseFormSchema),
+    defaultValues: { author: lastAuthor, imageUrl: '', caption: '', themeId: 'freestyle' },
   })
-
-  const [filter, setFilter] = useState<ThemeFilter>('all')
-  const [sort, setSort] = useState<ShowcaseSort>('popular')
-
-  const speciesById = useMemo(() => {
-    const map = new Map<string, Species>()
-    for (const sp of speciesList) map.set(sp.id, sp)
-    return map
-  }, [speciesList])
-
-  const currentTheme = CONTEST_THEMES.find((th) => th.id === CURRENT_THEME_ID)
-  const winner = topPostForTheme(posts, votedIds, CURRENT_THEME_ID)
-  // Posts are client-local (no per-post route), so sharing points at the
-  // gallery itself — enough to invite a friend to the contest.
-  const showcaseUrl = typeof location !== 'undefined' ? `${location.origin}/showcase` : '/showcase'
-
-  const visiblePosts = useMemo(() => {
-    const filtered = posts.filter((p) => filter === 'all' || p.themeId === filter)
-    return [...filtered].sort((a, b) => {
-      if (sort === 'recent') return b.createdAt.localeCompare(a.createdAt)
-      const diff = voteCount(b, votedIds) - voteCount(a, votedIds)
-      return diff !== 0 ? diff : b.createdAt.localeCompare(a.createdAt)
-    })
-  }, [posts, filter, sort, votedIds])
+  const localPosts = useMemo(
+    () =>
+      posts
+        .filter((post) => ownIds[post.id])
+        .filter((post) => filter === 'all' || post.themeId === filter)
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+    [filter, ownIds, posts]
+  )
+  const submit = form.handleSubmit((values) => {
+    addPost(values)
+    form.reset({ author: values.author, imageUrl: '', caption: '', themeId: values.themeId })
+  })
 
   return (
     <section className={styles.page}>
       <header className={styles.header}>
-        <h1>{t('showcase.title')}</h1>
-        <p className={styles.subtitle}>{t('showcase.subtitle')}</p>
+        <p className={styles.eyebrow}>PRIVATE COLLECTION</p>
+        <h1>{copy.title}</h1>
+        <p>{copy.subtitle}</p>
       </header>
-
-      {currentTheme && (
-        <div className={styles.themeBanner}>
-          <span className={styles.themeEmoji} aria-hidden="true">
-            {currentTheme.emoji}
-          </span>
-          <div className={styles.themeText}>
-            <p className={styles.themeLabel}>{t('showcase.banner.eyebrow')}</p>
-            <h2 className={styles.themeName}>{t(`showcase.themes.${currentTheme.id}.name`)}</h2>
-            <p className={styles.themeTagline}>{t(`showcase.themes.${currentTheme.id}.tagline`)}</p>
-          </div>
+      <div className={styles.notices}>
+        <aside>
+          <strong>{copy.localTitle}</strong>
+          <p>{copy.local}</p>
+        </aside>
+        <aside>
+          <strong>{copy.privacyTitle}</strong>
+          <p>{copy.privacy}</p>
+        </aside>
+      </div>
+      <form className={styles.composer} onSubmit={submit} noValidate>
+        <h2>{copy.addTitle}</h2>
+        <div className={styles.formGrid}>
+          <label>
+            <span>{copy.nickname}</span>
+            <input maxLength={40} autoComplete="nickname" {...form.register('author')} />
+            {form.formState.errors.author ? <small>{copy.required}</small> : null}
+          </label>
+          <label>
+            <span>{copy.category}</span>
+            <select {...form.register('themeId')}>
+              {CONTEST_THEMES.map((theme) => (
+                <option key={theme.id} value={theme.id}>
+                  {copy.themes[theme.id]}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className={styles.wide}>
+            <span>{copy.image}</span>
+            <input
+              type="url"
+              inputMode="url"
+              maxLength={500}
+              placeholder="https://example.com/photo.jpg"
+              {...form.register('imageUrl')}
+            />
+            {form.formState.errors.imageUrl ? <small>{copy.required}</small> : null}
+          </label>
+          <label className={styles.wide}>
+            <span>{copy.caption}</span>
+            <textarea rows={3} maxLength={200} {...form.register('caption')} />
+            {form.formState.errors.caption ? <small>{copy.required}</small> : null}
+          </label>
         </div>
-      )}
-
-      {winner && (
-        <Card padding="lg" className={styles.winnerCard}>
-          <Card.Body>
-            <div className={styles.winnerHead}>
-              <Badge variant="warning">{t('showcase.winnerBadge')}</Badge>
-              <span className={styles.winnerVotes}>
-                {t('showcase.voteCount', { count: voteCount(winner, votedIds) })}
-              </span>
-            </div>
-            <div className={styles.winnerBody}>
-              <LazyImage
-                src={winner.imageUrl}
-                alt={winner.caption || t('showcase.photoAlt', { author: winner.author })}
-                className={styles.winnerImage}
-                hoverZoom
-              />
-              <div className={styles.winnerMeta}>
-                <p className={styles.winnerCaption}>{winner.caption}</p>
-                <p className={styles.winnerAuthor}>
-                  {speciesEmoji(winner, speciesById)} {winner.author}
-                </p>
-              </div>
-            </div>
-          </Card.Body>
-        </Card>
-      )}
-
-      <div role="radiogroup" aria-label={t('showcase.filterLabel')} className={styles.filters}>
+        <button type="submit" className={styles.primary}>
+          {copy.add}
+        </button>
+      </form>
+      <div className={styles.filters} aria-label={copy.category}>
         <button
           type="button"
-          role="radio"
-          aria-checked={filter === 'all'}
-          className={[styles.filterChip, filter === 'all' ? styles.filterActive : ''].join(' ')}
+          aria-pressed={filter === 'all'}
+          className={filter === 'all' ? styles.active : undefined}
           onClick={() => setFilter('all')}
         >
-          {t('showcase.filterAll')}
+          {copy.all}
         </button>
-        {CONTEST_THEMES.map((th) => (
+        {CONTEST_THEMES.map((theme) => (
           <button
-            key={th.id}
+            key={theme.id}
             type="button"
-            role="radio"
-            aria-checked={filter === th.id}
-            className={[styles.filterChip, filter === th.id ? styles.filterActive : ''].join(' ')}
-            onClick={() => setFilter(th.id)}
+            aria-pressed={filter === theme.id}
+            className={filter === theme.id ? styles.active : undefined}
+            onClick={() => setFilter(theme.id)}
           >
-            <span aria-hidden="true">{th.emoji}</span> {t(`showcase.themes.${th.id}.name`)}
+            {theme.emoji} {copy.themes[theme.id]}
           </button>
         ))}
       </div>
-
-      <div className={styles.controls}>
-        <Select
-          aria-label={t('showcase.sortLabel')}
-          value={sort}
-          onChange={(e) => setSort(e.target.value as ShowcaseSort)}
-          options={SHOWCASE_SORT_OPTIONS.map((s) => ({
-            value: s,
-            label: t(`showcase.sort.${s}`),
-          }))}
-        />
-      </div>
-
-      <SubmitForm
-        lastAuthor={lastAuthor}
-        defaultThemeId={filter === 'all' ? CURRENT_THEME_ID : filter}
-        onSubmit={(values) => {
-          addPost({ ...values, speciesId: profile.speciesId ?? null })
-          toast(t('showcase.postedToast'), 'success')
-        }}
-      />
-
-      {visiblePosts.length === 0 ? (
-        <EmptyState
-          variant="discover"
-          icon="📷"
-          title={t('showcase.empty')}
-          description={t('showcase.emptyHint')}
-        />
+      {localPosts.length === 0 ? (
+        <div className={styles.empty}>{copy.empty}</div>
       ) : (
         <ul className={styles.grid}>
-          {visiblePosts.map((post, index) => {
-            const voted = Boolean(votedIds[post.id])
-            const owned = Boolean(ownIds[post.id])
-            // Editorial rhythm: the leading photo runs as a wide hero tile, then
-            // every fifth tile takes a taller portrait span so the masonry never
-            // settles into a uniform grid (DESIGN.md: vary affordance by weight).
-            const isLead = index === 0
-            const isTall = !isLead && index % 5 === 2
-            const tileClass = [
-              styles.tile,
-              isLead ? styles.tileLead : '',
-              isTall ? styles.tileTall : '',
-            ]
-              .filter(Boolean)
-              .join(' ')
-            return (
-              <li key={post.id} className={tileClass}>
-                <figure className={styles.figure}>
-                  <LazyImage
-                    src={post.imageUrl}
-                    alt={post.caption || t('showcase.photoAlt', { author: post.author })}
-                    className={styles.photo}
-                    hoverZoom
-                  />
-                  <figcaption className={styles.scrim}>
-                    <span className={styles.themeChip}>
-                      <span aria-hidden="true">{themeEmoji(post.themeId)}</span>{' '}
-                      {t(`showcase.themes.${post.themeId}.name`)}
-                    </span>
-                    {post.caption && <p className={styles.caption}>{post.caption}</p>}
-                    <p className={styles.author}>
-                      <span aria-hidden="true">{speciesEmoji(post, speciesById)}</span>{' '}
-                      {post.author}
-                    </p>
-                  </figcaption>
-                </figure>
-                <div className={styles.tileActions}>
-                  <button
-                    type="button"
-                    className={[styles.voteButton, voted ? styles.voteButtonOn : ''].join(' ')}
-                    aria-pressed={voted}
-                    aria-label={voted ? t('showcase.unvote') : t('showcase.vote')}
-                    onClick={() => toggleVote(post.id)}
-                  >
-                    <span aria-hidden="true">{voted ? '♥' : '♡'}</span> {voteCount(post, votedIds)}
-                  </button>
-                  <ShareButton
-                    variant="ghost"
-                    size="sm"
-                    title={t('showcase.shareTitle', { author: post.author })}
-                    text={post.caption || t(`showcase.themes.${post.themeId}.name`)}
-                    url={showcaseUrl}
-                    aria-label={t('showcase.sharePost')}
-                  >
-                    {t('common.share')}
-                  </ShareButton>
-                  {owned && (
-                    <button
-                      type="button"
-                      className={styles.removeLink}
-                      onClick={() => {
-                        removePost(post.id)
-                        toast(t('showcase.deletedToast'), 'success')
-                      }}
-                    >
-                      {t('showcase.delete')}
-                    </button>
-                  )}
+          {localPosts.map((post) => (
+            <li key={post.id} className={styles.card}>
+              <SafePhoto
+                src={post.imageUrl}
+                alt={post.caption || copy.themes[post.themeId]}
+                fallback={copy.broken}
+              />
+              <div className={styles.cardBody}>
+                <span className={styles.theme}>{copy.themes[post.themeId]}</span>
+                {post.caption ? <p>{post.caption}</p> : null}
+                <div className={styles.meta}>
+                  <span>{post.author}</span>
+                  <time dateTime={post.createdAt}>
+                    {new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(
+                      new Date(post.createdAt)
+                    )}
+                  </time>
                 </div>
-              </li>
-            )
-          })}
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (window.confirm(copy.deleteConfirm)) removePost(post.id)
+                  }}
+                >
+                  {copy.delete}
+                </button>
+              </div>
+            </li>
+          ))}
         </ul>
       )}
     </section>
   )
 }
 
-function themeEmoji(themeId: ShowcaseThemeId): string {
-  return CONTEST_THEMES.find((th) => th.id === themeId)?.emoji ?? '📷'
-}
-
-function speciesEmoji(post: ShowcasePost, speciesById: Map<string, Species>): string {
-  if (!post.speciesId) return '🐾'
-  return speciesById.get(post.speciesId)?.heroEmoji ?? '🐾'
-}
-
-interface SubmitFormProps {
-  lastAuthor: string
-  defaultThemeId: ShowcaseThemeId
-  onSubmit: (values: ShowcaseFormValues) => void
-}
-
-function SubmitForm({ lastAuthor, defaultThemeId, onSubmit }: SubmitFormProps) {
-  const { t } = useTranslation()
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    formState: { errors, isSubmitting, dirtyFields },
-  } = useForm<ShowcaseFormValues>({
-    resolver: zodResolver(showcaseFormSchema),
-    defaultValues: {
-      author: lastAuthor,
-      imageUrl: '',
-      caption: '',
-      themeId: defaultThemeId,
-    },
-  })
-
-  useEffect(() => {
-    if (!dirtyFields.author) setValue('author', lastAuthor)
-  }, [lastAuthor, dirtyFields.author, setValue])
-
-  const submit = handleSubmit((values) => {
-    onSubmit(values)
-    reset({ author: values.author, imageUrl: '', caption: '', themeId: values.themeId })
-  })
-
-  return (
-    <Card padding="lg" className={styles.composerCard}>
-      <Card.Body>
-        <h2 className={styles.composerTitle}>{t('showcase.newPostTitle')}</h2>
-        <p className={styles.composerHint}>{t('showcase.newPostHint')}</p>
-        <form onSubmit={submit} className={styles.composerForm} noValidate>
-          <div className={styles.composerRow}>
-            <Input
-              label={t('showcase.author')}
-              placeholder={t('showcase.authorPlaceholder')}
-              error={errors.author?.message ? t(errors.author.message) : undefined}
-              {...register('author')}
-            />
-            <Select
-              label={t('showcase.theme')}
-              options={CONTEST_THEMES.map((th) => ({
-                value: th.id,
-                label: `${th.emoji} ${t(`showcase.themes.${th.id}.name`)}`,
-              }))}
-              {...register('themeId')}
-            />
-          </div>
-          <Input
-            label={t('showcase.imageUrl')}
-            placeholder={t('showcase.imageUrlPlaceholder')}
-            error={errors.imageUrl?.message ? t(errors.imageUrl.message) : undefined}
-            {...register('imageUrl')}
-          />
-          <Textarea
-            label={t('showcase.caption')}
-            rows={2}
-            placeholder={t('showcase.captionPlaceholder')}
-            error={errors.caption?.message ? t(errors.caption.message) : undefined}
-            {...register('caption')}
-          />
-          <div className={styles.composerActions}>
-            <Button type="submit" variant="primary" isLoading={isSubmitting}>
-              {t('showcase.publish')}
-            </Button>
-          </div>
-        </form>
-      </Card.Body>
-    </Card>
+function SafePhoto({ src, alt, fallback }: { src: string; alt: string; fallback: string }) {
+  const [failed, setFailed] = useState(false)
+  return failed ? (
+    <div className={styles.imageFallback}>{fallback}</div>
+  ) : (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      referrerPolicy="no-referrer"
+      onError={() => setFailed(true)}
+    />
   )
 }
 

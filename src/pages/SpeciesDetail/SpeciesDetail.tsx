@@ -20,7 +20,7 @@ import { useShopsList } from '@domains/shops'
 import { useSpecies, useSpeciesList } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate, useParams } from 'react-router'
@@ -40,9 +40,9 @@ function SpeciesDetail() {
   const profile = useOnboardingStore((s) => s.profile)
   const setCategory = useOnboardingStore((s) => s.setCategory)
   const setSpecies = useOnboardingStore((s) => s.setSpecies)
-  const complete = useOnboardingStore((s) => s.complete)
+  const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null)
 
-  const { data: species, isLoading } = useSpecies(params.idOrSlug)
+  const { data: species, isLoading, isError, refetch } = useSpecies(params.idOrSlug)
   useDocumentTitle(species?.koreanName ?? t('common.appName'))
 
   const origin = useMemo(
@@ -72,16 +72,47 @@ function SpeciesDetail() {
     photoForm.reset({ imageUrl: '', sourceUrl: '', caption: '' })
   })
 
+  function confirmRemovePhoto(id: string) {
+    removePhoto(id)
+    setPendingRemoveId(null)
+    toast(t('common.delete'), 'success')
+  }
+
   if (isLoading) return <Skeleton variant="rectangular" height={200} lines={3} />
-  if (!species) return <EmptyState icon="🐾" title={t('care.notFound')} />
+  if (isError) {
+    return (
+      <EmptyState
+        icon="⚠️"
+        title={t('common.error')}
+        description={t('common.loadErrorHint')}
+        action={
+          <Button variant="outline" onClick={() => void refetch()}>
+            {t('common.retry')}
+          </Button>
+        }
+      />
+    )
+  }
+  if (!species) {
+    return (
+      <EmptyState
+        icon="🐾"
+        title={t('care.notFound')}
+        action={
+          <Button variant="outline" onClick={() => navigate('/species')}>
+            {t('species.catalogTitle')}
+          </Button>
+        }
+      />
+    )
+  }
 
   function handlePick() {
     if (!species) return
     setCategory(species.category)
     setSpecies(species.id)
-    complete()
-    toast(t('onboarding.finish'), 'success')
-    navigate('/dashboard')
+    toast(t('species.selectThis'), 'success')
+    navigate('/onboarding')
   }
 
   const siblings = siblingsQuery.data?.filter((s) => s.id !== species.id) ?? []
@@ -175,6 +206,9 @@ function SpeciesDetail() {
           </Link>
         </header>
         {hospitalsQuery.isLoading && <Skeleton variant="rectangular" height={80} lines={2} />}
+        {hospitalsQuery.isError && (
+          <EmptyState icon="⚠️" title={t('common.error')} description={t('common.loadErrorHint')} />
+        )}
         {hospitalsQuery.data && hospitalsQuery.data.length === 0 && (
           <EmptyState icon="🏥" title={t('species.noRelatedHospitals')} />
         )}
@@ -189,6 +223,11 @@ function SpeciesDetail() {
                 </p>
                 <p className={styles.itemDesc}>{h.hours}</p>
                 {h.hasEmergency && <Badge variant="error">{t('hospitals.emergencyBadge')}</Badge>}
+                {h.phone && (
+                  <a href={`tel:${h.phone}`} className={styles.contactLink}>
+                    {h.phone}
+                  </a>
+                )}
               </Card.Body>
             </Card>
           ))}
@@ -203,6 +242,9 @@ function SpeciesDetail() {
           </Link>
         </header>
         {shopsQuery.isLoading && <Skeleton variant="rectangular" height={80} lines={2} />}
+        {shopsQuery.isError && (
+          <EmptyState icon="⚠️" title={t('common.error')} description={t('common.loadErrorHint')} />
+        )}
         {shopsQuery.data && shopsQuery.data.length === 0 && (
           <EmptyState icon="🛒" title={t('species.noRelatedShops')} />
         )}
@@ -230,12 +272,18 @@ function SpeciesDetail() {
 
         <form className={styles.galleryForm} onSubmit={onAddPhoto} noValidate>
           <Input
+            type="url"
+            inputMode="url"
+            maxLength={2048}
             label={t('species.gallery.imageUrlLabel')}
             placeholder="https://…"
             error={photoForm.formState.errors.imageUrl?.message}
             {...photoForm.register('imageUrl')}
           />
           <Input
+            type="url"
+            inputMode="url"
+            maxLength={2048}
             label={t('species.gallery.sourceUrlLabel')}
             placeholder="https://instagram.com/…"
             error={photoForm.formState.errors.sourceUrl?.message}
@@ -249,7 +297,7 @@ function SpeciesDetail() {
             {...photoForm.register('caption')}
           />
           <div className={styles.galleryFormActions}>
-            <Button type="submit" variant="primary">
+            <Button type="submit" variant="primary" isLoading={photoForm.formState.isSubmitting}>
               {t('species.gallery.add')}
             </Button>
           </div>
@@ -273,9 +321,9 @@ function SpeciesDetail() {
                     {p.sourceUrl && isHttpUrl(p.sourceUrl) ? (
                       <a
                         className={styles.gallerySource}
-                        href={p.sourceUrl}
+                        href={p.sourceUrl.trim()}
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener noreferrer"
                       >
                         {t('species.gallery.source')} ↗
                       </a>
@@ -287,12 +335,34 @@ function SpeciesDetail() {
                     <button
                       type="button"
                       className={styles.galleryRemove}
-                      onClick={() => removePhoto(p.id)}
-                      aria-label={t('species.gallery.remove')}
+                      aria-expanded={pendingRemoveId === p.id}
+                      aria-controls={`gallery-remove-${p.id}`}
+                      onClick={() =>
+                        setPendingRemoveId((current) => (current === p.id ? null : p.id))
+                      }
                     >
-                      ×
+                      {t('species.gallery.remove')}
                     </button>
                   </div>
+                  {pendingRemoveId === p.id && (
+                    <div id={`gallery-remove-${p.id}`} className={styles.deleteConfirm}>
+                      <span className={styles.deletePrompt}>{t('species.gallery.remove')}?</span>
+                      <button
+                        type="button"
+                        className={styles.cancelButton}
+                        onClick={() => setPendingRemoveId(null)}
+                      >
+                        {t('common.cancel')}
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.confirmButton}
+                        onClick={() => confirmRemovePhoto(p.id)}
+                      >
+                        {t('common.delete')}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </li>
             ))}
@@ -305,6 +375,9 @@ function SpeciesDetail() {
           <h2 id="related-species-heading">{t('species.relatedSpeciesTitle')}</h2>
         </header>
         {siblingsQuery.isLoading && <Skeleton variant="rectangular" height={80} lines={2} />}
+        {siblingsQuery.isError && (
+          <EmptyState icon="⚠️" title={t('common.error')} description={t('common.loadErrorHint')} />
+        )}
         {!siblingsQuery.isLoading && siblings.length === 0 && (
           <EmptyState icon="🐾" title={t('species.noRelatedSpecies')} />
         )}

@@ -58,3 +58,19 @@
   gap: var(--spacing-sm);
   flex-wrap: wrap;
 }
+
+.backLink:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .appHeader {
+    flex-direction: column;
+  }
+
+  .appActions,
+  .appActions > * {
+    width: 100%;
+  }
+}

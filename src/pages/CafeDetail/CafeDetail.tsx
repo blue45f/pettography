@@ -48,6 +48,7 @@ function CafeDetail() {
   const removePost = useCafesStore((s) => s.removePost)
   const addComment = useCafesStore((s) => s.addComment)
   const removeComment = useCafesStore((s) => s.removeComment)
+  const [pendingLeave, setPendingLeave] = useState(false)
 
   useDocumentTitle(cafe ? cafe.name : t('cafes.notFound'))
 
@@ -70,16 +71,22 @@ function CafeDetail() {
   }
 
   const isJoined = Boolean(joinedCafeIds[cafe.id])
+  const isOwner = Boolean(ownCafeIds[cafe.id])
   const visiblePosts = posts.filter((p) => !p.hiddenByAdmin || ownPostIds[p.id])
 
   function handleMembership() {
     if (isJoined) {
-      leaveCafe(cafe!.id)
-      toast(t('cafes.leftToast'), 'info')
+      if (!isOwner) setPendingLeave(true)
     } else {
       joinCafe(cafe!.id)
       toast(t('cafes.joinedToast'), 'success')
     }
+  }
+
+  function confirmLeave() {
+    leaveCafe(cafe!.id)
+    setPendingLeave(false)
+    toast(t('cafes.leftToast'), 'info')
   }
 
   return (
@@ -99,7 +106,7 @@ function CafeDetail() {
             <div className={styles.heroMeta}>
               <div className={styles.heroTitleRow}>
                 <h1 className={styles.heroTitle}>{cafe.name}</h1>
-                {ownCafeIds[cafe.id] && <Badge variant="primary">{t('cafes.hostBadge')}</Badge>}
+                {isOwner && <Badge variant="primary">{t('cafes.hostBadge')}</Badge>}
               </div>
               <p className={styles.heroDesc}>{cafe.description}</p>
               <p className={styles.heroStats}>
@@ -114,11 +121,29 @@ function CafeDetail() {
             <Button
               type="button"
               variant={isJoined ? 'outline' : 'primary'}
+              disabled={isOwner}
+              aria-expanded={pendingLeave}
+              title={isOwner ? t('cafes.hostBadge') : undefined}
               onClick={handleMembership}
             >
               {isJoined ? t('cafes.leave') : t('cafes.join')}
             </Button>
           </div>
+          {pendingLeave && !isOwner && (
+            <div className={styles.confirmPanel}>
+              <span className={styles.confirmPrompt}>{t('cafes.confirmLeave')}</span>
+              <button
+                type="button"
+                className={styles.cancelButton}
+                onClick={() => setPendingLeave(false)}
+              >
+                {t('common.cancel')}
+              </button>
+              <button type="button" className={styles.confirmButton} onClick={confirmLeave}>
+                {t('cafes.leave')}
+              </button>
+            </div>
+          )}
         </Card.Body>
       </Card>
 
@@ -220,12 +245,14 @@ function PostComposer({ lastNickname, onSubmit }: PostComposerProps) {
         <form onSubmit={submit} className={styles.composerForm} noValidate>
           <div className={styles.composerRow}>
             <Input
+              maxLength={120}
               label={t('cafes.postTitleLabel')}
               placeholder={t('cafes.postTitlePlaceholder')}
               error={errors.title?.message ? t(errors.title.message) : undefined}
               {...register('title')}
             />
             <Input
+              maxLength={40}
               label={t('cafes.nicknameLabel')}
               placeholder={t('cafes.nicknamePlaceholder')}
               error={errors.author?.message ? t(errors.author.message) : undefined}
@@ -234,6 +261,7 @@ function PostComposer({ lastNickname, onSubmit }: PostComposerProps) {
           </div>
           <Textarea
             rows={3}
+            maxLength={2000}
             label={t('cafes.postBodyLabel')}
             placeholder={t('cafes.postBodyPlaceholder')}
             error={errors.body?.message ? t(errors.body.message) : undefined}
@@ -278,9 +306,10 @@ function PostItem({
   onAddComment,
   onRemoveComment,
 }: PostItemProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [commentsOpen, setCommentsOpen] = useState(false)
   const [replyTarget, setReplyTarget] = useState<string | null>(null)
+  const [pendingDelete, setPendingDelete] = useState(false)
   const threads = buildCommentThreads(comments)
   const commentCount = comments.filter((c) => !c.deleted).length
 
@@ -292,15 +321,45 @@ function PostItem({
             <div>
               <h3 className={styles.postTitle}>{post.title}</h3>
               <p className={styles.postMeta}>
-                {post.author} · {new Date(post.createdAt).toLocaleString('ko')}
+                {post.author} ·{' '}
+                <time dateTime={post.createdAt}>
+                  {new Date(post.createdAt).toLocaleString(i18n.resolvedLanguage ?? i18n.language)}
+                </time>
               </p>
             </div>
             {owned && (
-              <button type="button" className={styles.dangerLink} onClick={onRemovePost}>
+              <button
+                type="button"
+                className={styles.dangerLink}
+                aria-expanded={pendingDelete}
+                onClick={() => setPendingDelete((current) => !current)}
+              >
                 {t('cafes.delete')}
               </button>
             )}
           </div>
+          {pendingDelete && (
+            <div className={styles.confirmPanel}>
+              <span className={styles.confirmPrompt}>{t('cafes.delete')}?</span>
+              <button
+                type="button"
+                className={styles.cancelButton}
+                onClick={() => setPendingDelete(false)}
+              >
+                {t('common.cancel')}
+              </button>
+              <button
+                type="button"
+                className={styles.confirmButton}
+                onClick={() => {
+                  onRemovePost()
+                  setPendingDelete(false)
+                }}
+              >
+                {t('common.delete')}
+              </button>
+            </div>
+          )}
           {post.hiddenByAdmin && (
             <p className={styles.hiddenNotice}>{t('cafes.adminHiddenNotice')}</p>
           )}
@@ -311,13 +370,14 @@ function PostItem({
             type="button"
             className={styles.commentToggle}
             aria-expanded={commentsOpen}
+            aria-controls={`cafe-comments-${post.id}`}
             onClick={() => setCommentsOpen((prev) => !prev)}
           >
             💬 {t('cafes.comments', { count: commentCount })}
           </button>
 
           {commentsOpen && (
-            <div className={styles.commentArea}>
+            <div id={`cafe-comments-${post.id}`} className={styles.commentArea}>
               {threads.length > 0 && (
                 <ul className={styles.commentList}>
                   {threads.map((thread) => (
@@ -398,7 +458,8 @@ function CommentBody({
   onToggleReply,
   onRemove,
 }: CommentBodyProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const [pendingDelete, setPendingDelete] = useState(false)
 
   if (comment.deleted) {
     return <p className={styles.deletedComment}>{t('cafes.deletedComment')}</p>
@@ -407,7 +468,10 @@ function CommentBody({
   return (
     <div>
       <p className={styles.commentMeta}>
-        <strong>{comment.author}</strong> · {new Date(comment.createdAt).toLocaleString('ko')}
+        <strong>{comment.author}</strong> ·{' '}
+        <time dateTime={comment.createdAt}>
+          {new Date(comment.createdAt).toLocaleString(i18n.resolvedLanguage ?? i18n.language)}
+        </time>
       </p>
       <p className={styles.commentBody}>{comment.body}</p>
       <div className={styles.commentActions}>
@@ -422,11 +486,38 @@ function CommentBody({
           </button>
         )}
         {owned && (
-          <button type="button" className={styles.dangerLink} onClick={onRemove}>
+          <button
+            type="button"
+            className={styles.dangerLink}
+            aria-expanded={pendingDelete}
+            onClick={() => setPendingDelete((current) => !current)}
+          >
             {t('cafes.delete')}
           </button>
         )}
       </div>
+      {pendingDelete && (
+        <div className={styles.confirmPanel}>
+          <span className={styles.confirmPrompt}>{t('cafes.delete')}?</span>
+          <button
+            type="button"
+            className={styles.cancelButton}
+            onClick={() => setPendingDelete(false)}
+          >
+            {t('common.cancel')}
+          </button>
+          <button
+            type="button"
+            className={styles.confirmButton}
+            onClick={() => {
+              onRemove()
+              setPendingDelete(false)
+            }}
+          >
+            {t('common.delete')}
+          </button>
+        </div>
+      )}
     </div>
   )
 }
@@ -461,6 +552,7 @@ function CommentComposer({ variant, lastNickname, onSubmit }: CommentComposerPro
       noValidate
     >
       <Input
+        maxLength={40}
         label={t('cafes.nicknameLabel')}
         placeholder={t('cafes.nicknamePlaceholder')}
         error={errors.author?.message ? t(errors.author.message) : undefined}
@@ -468,6 +560,7 @@ function CommentComposer({ variant, lastNickname, onSubmit }: CommentComposerPro
       />
       <Textarea
         rows={2}
+        maxLength={600}
         label={t('cafes.commentLabel')}
         placeholder={t('cafes.commentPlaceholder')}
         error={errors.body?.message ? t(errors.body.message) : undefined}

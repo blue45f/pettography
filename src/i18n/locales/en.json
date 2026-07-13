@@ -440,13 +440,21 @@
   },
   "funeral": {
     "title": "Farewell & memorial",
-    "subtitle": "Government-registered services and memorial options",
+    "subtitle": "Official funeral-business lookup and reference links for farewell and memorial services",
+    "officialKicker": "Official registry first",
+    "officialTitle": "Confirm the funeral-business permit before booking",
+    "officialDesc": "Permit status can change. Search the business name and region again in the National Animal Protection Information System's pet-business directory.",
+    "officialLink": "Open the official funeral-business directory",
+    "dataNotice": "The list below is for discovery only and does not guarantee current permits, operation, or accepted animal types.",
     "kindCremation": "Crematorium",
     "kindMemorial": "Memorial",
     "kindPickup": "Pickup",
     "kindDirectory": "Directory",
-    "certified": "Gov-registered",
-    "uncertified": "Unregistered, caution",
+    "certified": "Registration data listed",
+    "uncertified": "Registration check needed",
+    "verifyRequired": "Recheck official registration",
+    "supportedCategories": "Listed animal types: {{categories}} · confirm directly before booking",
+    "loadFailed": "Could not load the reference funeral-service list.",
     "noResult": "No farewell service registered for this category yet.",
     "inquireCta": "Farewell inquiry"
   },
@@ -470,7 +478,7 @@
   },
   "supplies": {
     "title": "Supply tracker",
-    "subtitle": "Live food lasts 1~2 weeks. We compute days-left from your weekly consumption and warn before stock runs out.",
+    "subtitle": "Track actual restocks and use rate for the active pet so consumable shortages are visible early.",
     "addTitle": "Add item",
     "name": "Name",
     "namePlaceholder": "e.g. Cricket M, Dubia roach, CGD",
@@ -515,12 +523,25 @@
       "qtyPositive": "Quantity must be positive.",
       "consumptionNumber": "Consumption must be a number.",
       "consumptionPositive": "Consumption must be positive.",
-      "vendorMax": "Vendor must be 60 characters or fewer."
-    }
+      "vendorMax": "Vendor must be 60 characters or fewer.",
+      "dateInvalid": "Enter a valid restock date.",
+      "dateFuture": "A restock cannot be recorded in the future.",
+      "qtyMax": "Quantity must be 1,000,000 or less.",
+      "consumptionMax": "Weekly use must be 1,000,000 or less.",
+      "restockRange": "Added quantity must be between 1 and 1,000,000."
+    },
+    "eyebrow": "PER-PET INVENTORY",
+    "petRequiredTitle": "Select the pet whose supplies you are managing",
+    "petRequiredBody": "The same item can have a different use rate per animal, so inventory is not merged into an unscoped total.",
+    "petRequiredAction": "Select a pet",
+    "aPet": "Pet",
+    "estimateNote": "Remaining quantity and days are simple estimates that assume a constant weekly use rate. Update them for waste, loss, seasonality, and actual use.",
+    "removeConfirm": "Delete the supply item “{{name}}”?",
+    "removed": "Supply item deleted."
   },
   "budget": {
     "title": "Budget tracker",
-    "subtitle": "Track this month's husbandry spend by category and compare against your species recommended budget.",
+    "subtitle": "Track actual spending for one pet and compare it neutrally with a catalog estimate.",
     "thisMonth": "{{month}} spend",
     "recommended": "Recommended",
     "remaining": "Remaining",
@@ -556,8 +577,29 @@
       "amountNumber": "Amount must be a number.",
       "amountPositive": "Amount must be positive.",
       "merchantMax": "Merchant must be 80 characters or fewer.",
-      "noteMax": "Note must be 200 characters or fewer."
-    }
+      "noteMax": "Note must be 200 characters or fewer.",
+      "dateInvalid": "Enter a valid expense date.",
+      "dateFuture": "An expense cannot be recorded in the future.",
+      "amountMax": "Enter an amount of KRW 1,000,000,000 or less."
+    },
+    "eyebrow": "PRIVATE COST LOG",
+    "petRequiredTitle": "Select the pet this expense belongs to",
+    "petRequiredBody": "Costs are stored per animal. Use the cost report for the combined household view.",
+    "petRequiredAction": "Select a pet",
+    "activePet": "Individual costs for {{name}}",
+    "aPet": "Pet",
+    "entryCount": "{{count}} records this month",
+    "catalogReference": "Species catalog monthly estimate",
+    "referenceRatio": "{{pct}}% of reference",
+    "referenceRatioAria": "{{pct}} percent of the species catalog monthly estimate",
+    "aboveReference": "{{amount}} above the reference estimate",
+    "belowReference": "{{amount}} below the reference estimate",
+    "referenceNote": "Lower or higher does not mean care is better or worse. Prioritize medical needs, setup costs, local prices, and the animal’s actual needs.",
+    "openReport": "Open household cost report",
+    "formKicker": "NEW EXPENSE",
+    "privateNote": "Cost records stay in this browser. Do not enter card numbers, bank account details, or government identity numbers.",
+    "removeConfirm": "Delete this expense record?",
+    "removed": "Expense record deleted."
   },
   "habitat": {
     "title": "Habitat monitor",
@@ -686,7 +728,21 @@
     "modeLive": "Live mode — syncing with the server periodically",
     "loadFailed": "Could not load the vet list.",
     "sendFailed": "Could not send the message. Please try again.",
-    "syncing": "Loading the conversation..."
+    "syncing": "Loading the conversation...",
+    "subtitleLive": "Sync the vet list and conversations from the connected consult server.",
+    "subtitleDemo": "A consult-screen demo that does not connect you to real medical staff.",
+    "demoNoticeTitle": "This is a demo consult",
+    "demoNoticeBody": "The people, clinics, prices, and replies shown here are sample data, not a real appointment or medical service.",
+    "liveNoticeTitle": "Server-connected consult",
+    "liveNoticeBody": "Connected only describes server status. Confirm credentials, fees, and response time before consulting, and never wait for chat during an emergency.",
+    "emergencyLink": "Open Emergency SOS",
+    "rate": "{{amount}}/hour",
+    "demoRate": "Sample {{amount}}/hour",
+    "noVets": "No consult staff are currently available to display.",
+    "threadFailed": "Could not sync this conversation.",
+    "demoReply": "[Automated demo reply from {{name}}] Message received. This screen is not medical care. Contact a hospital immediately if you see emergency signs.",
+    "privacyNote": "Do not send government IDs, payment details, or other sensitive information.",
+    "messageTooLong": "Messages are limited to {{max}} characters."
   },
   "forum": {
     "title": "Species community forum",
@@ -786,7 +842,7 @@
     "title": "Admin dashboard",
     "subtitle": "Stats, partner reviews and forum moderation.",
     "gateTitle": "Admin sign in",
-    "gateDesc": "Sign in with an admin or moderator account to open operations tools.",
+    "gateDesc": "Sign in with an administrator or moderator account. Stored sessions are revalidated with the server.",
     "email": "Email",
     "password": "Password",
     "login": "Sign in",
@@ -865,7 +921,29 @@
     "cafeArchivedToast": "Cafe archived",
     "cafeRestoredToast": "Cafe restored",
     "partnersSubtitle": "Review incoming partner applications and decide.",
-    "partnersEmpty": "No applications waiting"
+    "partnersEmpty": "No applications waiting",
+    "checkingSession": "Verifying the administrator session with the server.",
+    "backToService": "Return to the main service",
+    "accountsLoadError": "The account list could not be loaded.",
+    "rulesLoadError": "Forbidden-word rules could not be loaded.",
+    "accountRole": {
+      "member": "Member",
+      "moderator": "Moderator",
+      "admin": "Administrator"
+    },
+    "accountStatus": {
+      "active": "Active",
+      "suspended": "Suspended",
+      "withdrawn": "Withdrawn"
+    },
+    "confirmRoleChange": "Change the role for {{name}}? This can immediately change access to administrator features.",
+    "confirmStatusChange": "Change the account status for {{name}}? Suspended or withdrawn accounts may be unable to sign in.",
+    "confirmAccountDelete": "Delete the account for {{name}}? This cannot be undone.",
+    "confirmRuleDelete": "Delete the forbidden-word rule “{{phrase}}”?",
+    "confirmAttachmentDelete": "Delete the attachment “{{name}}”?",
+    "confirmContentDelete": "Permanently delete “{{title}}”? Unlike hiding, this cannot be undone.",
+    "confirmCafeDelete": "Delete the cafe “{{name}}” and its related local data?",
+    "confirmApplicationDelete": "Delete the partnership application “{{name}}”? The record itself will be removed rather than only changing its status."
   },
   "match": {
     "title": "Find your match",
@@ -877,7 +955,15 @@
     "submit": "See results",
     "restart": "Restart",
     "resultTitle": "Top matches",
-    "matchScore": "Match score {{score}}",
+    "matchScore": "Match {{score}} / {{max}}",
+    "monthlyBudget": "{{amount}}/month",
+    "resultDisclaimer": "This is a rule-based reference ranking, not a guarantee of adoption or husbandry suitability. Review habitat, lifespan, and legal requirements on each species page.",
+    "loadingTitle": "Calculating your matches",
+    "loadingDesc": "Loading the latest species data before comparing it with your answers.",
+    "loadFailedTitle": "Could not load match data",
+    "loadFailedDesc": "Your answers are still here. Check your connection and retry.",
+    "emptyTitle": "No species data is available to rank",
+    "emptyDesc": "Try again shortly or browse the species catalog directly.",
     "openSpecies": "Open species details",
     "questions": {
       "experience": {
@@ -1098,11 +1184,26 @@
     "privacy": "Privacy policy",
     "terms": "Terms of service",
     "contact": "Contact",
-    "support": "Support board",
+    "support": "Support",
     "about": "About",
     "faq": "FAQ",
     "reportBug": "Report a bug",
-    "design": "Design system"
+    "design": "Design system",
+    "sitemap": "Sitemap",
+    "navigation": "Footer navigation",
+    "githubLabel": "Open the Pettography GitHub repository in a new tab",
+    "business": {
+      "name": "Business name: Hjun Labs",
+      "operator": "Representative: Hee-jun Kim · Privacy officer: Hee-jun Kim",
+      "registration": "Business registration: 355-07-03473",
+      "address": "Address: 101, 13 Garak-ro 34-gil, Songpa-gu, Seoul, Korea",
+      "email": "Email: blue45f@gmail.com",
+      "phone": "Phone: +82 10-3873-4197",
+      "hosting": "Hosting: Vercel (Frontend)",
+      "platform": "Platform: rare-pet booking and care",
+      "rights": "© {{year}} Pettography (Beta). All rights reserved.",
+      "beta": "Location-based matching beta"
+    }
   },
   "policy": {
     "eyebrow": "Legal",
@@ -1160,7 +1261,7 @@
       },
       "multiPet": {
         "q": "Can I track multiple pets?",
-        "a": "The current build assumes one pet at a time. Multi-pet is on the roadmap; in the meantime, use /backup to keep separate JSON snapshots per animal."
+        "a": "Yes. Add multiple animals in My Portal and switch the active pet as needed. Records and analytics are separated by the selected pet, so check the active pet before entering data."
       },
       "dataLoss": {
         "q": "Will I lose my data if I clear the browser?",
@@ -1207,13 +1308,13 @@
       "backup": "Use /backup to export everything as JSON and restore it on another device.",
       "species": "Species data is summarized from external references (Reptiles Magazine, MorphMarket, Korea National Biological Resources, etc.).",
       "registry": "Wildlife filing guidance summarizes Ministry of Environment material (wildlife.go.kr, animal.go.kr). Official sources remain authoritative.",
-      "external": "32 external links are real Korean sites verified with WebSearch + WebFetch; no affiliation."
+      "external": "External links show their source and are not affiliate links. Recheck the linked official source before making an important decision."
     },
     "limitsTitle": "Limits and follow-ups",
     "limits": {
       "map": "KakaoMap SDK not wired (placeholder). Set VITE_KAKAO_MAP_KEY to enable.",
-      "whiteList": "White-list classification is an estimate; refresh when MoE publishes the official list.",
-      "multiPet": "Multi-pet (one user, many animals) is not yet supported.",
+      "whiteList": "Regulated and white-list classifications can change. Check the Ministry of Environment's official source before any trade or transport.",
+      "multiPet": "Multiple pets are supported, and each record belongs to the pet active at entry time. Confirm the selection before saving.",
       "insurance": "Insurance comparison is dog/cat only. Exotic owners should rely on the reserve workflow."
     },
     "backHome": "Back home",
@@ -1239,8 +1340,8 @@
     "showAll": "Show every pet's records"
   },
   "herd": {
-    "title": "Herd compare",
-    "subtitle": "If you keep multiple animals, see weight, vaccinations, habitat, spend, supplies, diary, photos and filings for every pet side by side.",
+    "title": "Pet overview",
+    "subtitle": "Combine health, habitat, cost, and supply records only when their petId exactly matches each animal.",
     "singlePetTitle": "Only one pet to compare",
     "singlePetDesc": "Use the pet switcher in the header to add a second pet; the compare view lights up once you have at least two.",
     "activeBadge": "Active",
@@ -1259,8 +1360,20 @@
       "noSupplies": "No supplies",
       "filingsDone": "All done",
       "filingsPending": "{{count}} pending",
-      "breach": "{{count}} breach"
-    }
+      "breach": "{{count}} outside app reference"
+    },
+    "eyebrow": "STRICT PER-PET OVERVIEW",
+    "emptyTitle": "No pets are registered",
+    "emptyDesc": "Register a pet to keep every animal’s records safely separated.",
+    "emptyAction": "Register a pet",
+    "singlePetNote": "Showing the summary for one pet. Add another animal to compare the same set of signals side by side.",
+    "unnamed": "Unnamed pet",
+    "due": {
+      "overdue": "{{count}} days overdue",
+      "today": "Due today",
+      "future": "In {{count}} days"
+    },
+    "supplyDays": "About {{count}} days"
   },
   "events": {
     "title": "2026 KR pet fairs",
@@ -1280,17 +1393,63 @@
     "disclaimer": "Dates and venues per organizers. Tentative dates may change — confirm on the official site."
   },
   "food": {
-    "title": "Feeder food guide",
-    "subtitle": "10 common feeder foods used by KR reptile/amphibian/arthropod owners with unit prices, nutrition notes and warnings. Filter by category.",
+    "title": "Diet planning",
+    "subtitle": "Start with the active pet’s species, life stage, and health rather than a product list or category-wide menu.",
     "filterLabel": "Filter by category",
     "allCategories": "All",
     "cautionLabel": "Caution",
     "openShop": "Open shop",
-    "disclaimer": "Prices are 2025–26 KR averages. Nutrition values summarize supplier and research data."
+    "disclaimer": "This screen does not provide product recommendations, feeding prescriptions, or veterinary diagnosis.",
+    "eyebrow": "SPECIES-FIRST FEEDING",
+    "petRequiredTitle": "Select the pet whose diet you are reviewing",
+    "petRequiredBody": "Dietary needs vary widely even within reptiles, amphibians, birds, and mammals, so the app does not recommend by category alone.",
+    "petRequiredAction": "Select a pet",
+    "activePet": "Diet plan for {{name}}",
+    "aPet": "Pet",
+    "safetyKicker": "NO GENERIC MENU",
+    "safetyTitle": "Verify species-specific evidence first",
+    "safetyBody": "Staple food, portions, prey size, supplementation, and UVB interactions vary by species and individual condition. Do not treat an online product description or fixed frequency as a prescription.",
+    "sourceLink": "Read the MSD Veterinary Manual on reptile nutrition",
+    "planKicker": "DECISION FLOW",
+    "planTitle": "Checks before feeding",
+    "openSpeciesCare": "Open this species’ care guide",
+    "plan": {
+      "staple": {
+        "title": "Staple type and evidence",
+        "body": "Confirm whether the staple is a complete diet, whole prey, live invertebrates, or plant matter using a current species guide and veterinarian."
+      },
+      "size": {
+        "title": "Size and amount",
+        "body": "Base food size and amount on the animal’s body size, life stage, body condition, and activity."
+      },
+      "variety": {
+        "title": "Variety and nutrient balance",
+        "body": "Avoid relying on one item alone. Review the staple’s overall nutrients, calcium-to-phosphorus balance, fat, and moisture."
+      },
+      "hygiene": {
+        "title": "Storage, thawing, and hygiene",
+        "body": "Avoid spoiled, refrozen, pesticide-exposed, wild-caught, or long-abandoned food and clean hands and tools."
+      },
+      "response": {
+        "title": "Response and body condition",
+        "body": "Watch weight, stool, vomiting or regurgitation, activity, and the mouth as well as whether food was accepted."
+      }
+    },
+    "actionsLabel": "Diet-related tools",
+    "actions": {
+      "feedingTitle": "Feeding log",
+      "feedingBody": "Record what was actually offered and the animal’s response.",
+      "feedersTitle": "Feeder management",
+      "feedersBody": "Manage feeder nutrition and hygiene.",
+      "supplementsTitle": "Supplement log",
+      "supplementsBody": "Record only actual uses confirmed with a veterinarian.",
+      "vetTitle": "Exotics hospitals",
+      "vetBody": "Find clinical help for appetite, weight, or stool changes."
+    }
   },
   "genetics": {
     "title": "Morph Genetics Calculator",
-    "subtitle": "Pick the morph genotype of both parents and we compute the offspring phenotype odds with a Punnett square. Loci are assumed to be independent.",
+    "subtitle": "Explore theoretical probabilities only for confirmed single-gene traits under an independent-locus assumption.",
     "speciesLabel": "Select species",
     "polygenicNote": "Many popular morphs in this species are line-bred / polygenic and aren't captured by simple Mendelian math. Only single-gene morphs are modelled here.",
     "sire": "Sire",
@@ -1309,19 +1468,25 @@
       "odds": "Odds"
     },
     "save": {
-      "title": "Save pairing",
+      "title": "Saved hypothetical scenarios",
       "label": "Pairing name",
       "placeholder": "e.g. 2026 Pastel × Albino plan",
-      "cta": "Save",
-      "empty": "No saved pairings yet. Save a planned cross to keep it grouped per active pet.",
+      "cta": "Save scenario",
+      "empty": "No hypothetical scenarios saved.",
       "saved": "Pairing saved.",
       "needTrait": "Select at least one morph on a parent first.",
-      "untitled": "Untitled pairing"
+      "untitled": "Untitled pairing",
+      "removeConfirm": "Delete the hypothetical scenario “{{label}}”?",
+      "removed": "Hypothetical scenario deleted."
     },
     "legend": {
-      "title": "Genetics quick reference",
-      "body": "A het (heterozygous) animal carries one recessive copy: it looks normal but passes the trait on. Co-dominant genes show a base morph with one copy and a distinct 'super' form with two. Dominant traits show with a single copy. A '66% het' tag is the chance a normal-looking sibling is a carrier."
-    }
+      "title": "Limits of the simple model",
+      "body": "The displayed probability means each egg independently has the same theoretical chance. It does not guarantee the ratio, health, or survival of an actual clutch."
+    },
+    "eyebrow": "EDUCATIONAL PROBABILITY MODEL",
+    "modelWarningTitle": "Results are not breeding advice or a survival forecast",
+    "modelWarningBody": "This simple model does not handle incompatible strains, allelic complexes, linkage, incomplete penetrance, sex linkage, embryonic lethality, or health and welfare effects. Spider, Lilly White, and other combinations that cannot be represented safely are excluded. Real breeding requires genetic testing, verified lineage, health examinations, and review with an exotics veterinarian.",
+    "sourceLink": "Read the study of inner-ear malformations in spider ball pythons"
   },
   "molt": {
     "title": "Shed / Molt Tracker",
@@ -1384,6 +1549,7 @@
     "history": {
       "sincePrev": "+{{count}} days since previous",
       "remove": "Remove",
+      "removeConfirm": "Delete this molting record?",
       "speciesUnknown": "(logged before species was set)"
     },
     "empty": {
@@ -1398,7 +1564,7 @@
   },
   "vivarium": {
     "title": "Bioactive Vivarium Designer",
-    "subtitle": "Compose substrate layers, a cleanup crew, and plants into a self-cleaning enclosure.",
+    "subtitle": "A manual design note for the active pet’s bioactive materials and measurement targets, without automated readiness or self-cleaning scores.",
     "intro": "A bioactive enclosure is a small ecosystem: a cleanup crew of isopods and springtails plus live plants break down waste and mould on top of a drainage, soil, and leaf-litter base. Dial in the right temperature and humidity gradient and routine maintenance drops dramatically.",
     "loadTemplate": "Load recommended template",
     "templateApplied": "Recommended template loaded.",
@@ -1433,7 +1599,8 @@
       "crew": "Cleanup crew",
       "crewHint": "Isopods, springtails, etc. (multi-select)",
       "plants": "Plants",
-      "plantsHint": "Match light and humidity"
+      "plantsHint": "Match light and humidity",
+      "note": "These are materials for a design note, not automatic recommendations for the active species."
     },
     "gradient": {
       "hot": "Hot side °C",
@@ -1485,17 +1652,46 @@
       "crew": "{{count}} crew",
       "plants": "{{count}} plants",
       "humidity": "{{value}}% humidity",
-      "temp": "{{hot}}/{{cool}}°C"
+      "temp": "{{hot}}/{{cool}}°C",
+      "removeConfirm": "Delete the design “{{name}}”?",
+      "removed": "Vivarium design deleted."
     },
     "aquatic": {
       "title": "This species is fully aquatic",
-      "body": "It needs an aquarium-based setup rather than a terrestrial bioactive vivarium. Cool temperatures, filtration, and the nitrogen cycle are what matter here — land substrate layers don't apply."
+      "body": "It needs an aquarium-based setup rather than a terrestrial bioactive vivarium. Cool temperatures, filtration, and the nitrogen cycle are what matter here — land substrate layers don't apply.",
+      "openWater": "Open water-quality tools"
     },
     "errors": {
       "nameRequired": "Please enter a build name.",
       "nameMax": "Keep the name under 80 characters.",
       "notesMax": "Keep notes under 500 characters.",
-      "emptyBuild": "Select at least one substrate, crew, or plant."
+      "emptyBuild": "Select at least one substrate, crew, or plant.",
+      "numberInvalid": "Enter temperature and humidity as numbers.",
+      "range": "Enter temperatures from -20 to 60°C and humidity from 0 to 100%.",
+      "gradientOrder": "The warm point cannot be lower than the cool point."
+    },
+    "eyebrow": "MANUAL HABITAT DRAFT",
+    "petRequiredTitle": "Select the pet this design belongs to",
+    "petRequiredBody": "Substrate, plants, microfauna, and environmental targets need per-animal review, so plans are never stored without a pet.",
+    "petRequiredAction": "Select a pet",
+    "aPet": "Pet",
+    "safetyTitle": "Bioactive does not mean self-cleaning or maintenance-free",
+    "safetyBody": "Review every plant, substrate, and cleanup organism for ingestion toxicity, pesticides, fertilizer, humidity, ventilation, escape, breeding, and disposal risks. Waste removal, water and equipment cleaning, and health observation remain necessary.",
+    "sourceLink": "Read the MSD Veterinary Manual on reptile husbandry",
+    "summary": {
+      "title": "Selection summary",
+      "layers": "Layers",
+      "crew": "Cleanup crew",
+      "plants": "Plants",
+      "note": "More selected items do not make a habitat safer, more stable, or easier to maintain."
+    },
+    "review": {
+      "title": "Questions to verify before saving",
+      "species": "Is every material safe for this species’ skin, respiratory system, ingestion behavior, and digging habits?",
+      "materials": "Are plants, soil, and litter free from pesticides, fertilizer, sharp fragments, mold, and harmful organisms?",
+      "gradient": "Can temperature and humidity gradients be measured where the animal actually spends time?",
+      "escape": "Can the animal, feeders, and cleanup organisms be prevented from escaping or being released outdoors?",
+      "cleaning": "Is there a plan for waste removal, partial replacement, drainage checks, and periodic deep cleaning?"
     }
   },
   "showcase": {
@@ -2076,10 +2272,10 @@
     }
   },
   "passport": {
-    "title": "Pet Passport",
-    "subtitle": "A personal passport and achievements built from everything you've logged together.",
+    "title": "Care summary card",
+    "subtitle": "Replace competitive achievements with a clear view of which care records exist for the active pet.",
     "card": {
-      "docType": "Keeper Passport",
+      "docType": "PET CARE SUMMARY",
       "unnamed": "Unnamed friend",
       "speciesUnknown": "Species not set",
       "daysTogether": "Days together",
@@ -2087,7 +2283,11 @@
       "badges": "Achievements",
       "shareNote": "Screenshot this passport to share it as-is. Show off your companion's journey.",
       "holder": "Keeper · {{name}}",
-      "aria": "{{name}}'s pet passport card"
+      "aria": "{{name}}'s pet passport card",
+      "localOnly": "This device only",
+      "totalRecords": "Care records",
+      "localReference": "Local reference",
+      "notOfficial": "This is an unofficial summary generated locally by Pettography. It is not a registration certificate, medical record, travel document, quarantine document, or proof of ownership."
     },
     "stats": {
       "aria": "Activity summary",
@@ -2109,10 +2309,11 @@
       "gold": "Gold"
     },
     "empty": {
-      "title": "No achievements yet",
-      "desc": "Write diary entries and log sheds and feedings to unlock achievements one by one. Start with your first entry.",
+      "title": "No care records yet",
+      "desc": "Choose a useful care tool and add the first record. Never repeat unnecessary actions just to increase a count.",
       "noPetTitle": "No pet registered",
-      "noPetDesc": "Register your companion first and the passport starts counting from day one."
+      "noPetDesc": "Register your companion first and the passport starts counting from day one.",
+      "cta": "Open care dashboard"
     },
     "ach": {
       "weight1": {
@@ -2187,6 +2388,39 @@
         "title": "First Clutch",
         "desc": "You logged your first clutch."
       }
+    },
+    "eyebrow": "LOCAL CARE CARD",
+    "petRequiredTitle": "Select a pet to summarize",
+    "petRequiredBody": "Care records stay separate by animal and are never combined without an active pet.",
+    "petRequiredAction": "Select a pet",
+    "privateNote": "This card summarizes records in this browser. It is not a public profile or a document intended for sharing.",
+    "coverage": {
+      "kicker": "CARE COVERAGE",
+      "title": "Care record mix",
+      "total": "{{count}} total",
+      "desc": "More records do not automatically mean better care. Record only what is useful, at an appropriate interval, and with accurate observations.",
+      "groups": {
+        "journal": {
+          "title": "Journal",
+          "desc": "Behavior and daily changes"
+        },
+        "feeding": {
+          "title": "Feeding",
+          "desc": "Food offered and responses"
+        },
+        "health": {
+          "title": "Health observations",
+          "desc": "Weight, body condition, and activity"
+        },
+        "environment": {
+          "title": "Environment",
+          "desc": "Water, growth, and habitat records"
+        },
+        "molt": {
+          "title": "Molt and shed",
+          "desc": "Process notes and warning signs"
+        }
+      }
     }
   },
   "assistant": {
@@ -2196,6 +2430,7 @@
     "disclaimer": "This is rule-based guidance. It does not replace a veterinarian. If anything seems off, contact a clinic.",
     "context": "Guidance is shown for {{name}} ({{category}}). Advice is tuned to this category's needs.",
     "contextGeneric": "No active pet is set, so general guidance is shown. Pick a species in onboarding to tune advice to its category.",
+    "choosePet": "Choose a pet",
     "step1Title": "1. What symptom are you seeing?",
     "step1Hint": "Choose the one that fits best.",
     "step2Title": "2. One more thing to check",
@@ -2532,7 +2767,8 @@
     "title": "Gear Replacement Tracker",
     "subtitle": "Log install dates and replacement intervals for your enclosure gear and see the countdown at a glance. All data stays in this browser only.",
     "uvbAlertTitle": "Replace UVB bulbs even while they still light up",
-    "uvbAlertBody": "A UVB bulb's UV output fades long before its visible light does. It can still glow while emitting almost no UV, so replace it on schedule even if it looks fine. Skipping this is a leading cause of metabolic bone disease (MBD).",
+    "uvbAlertBody": "UVB output can fade before visible light. Service life varies by product, distance, and daily use, so do not rely on whether it still lights up; follow the manufacturer and use UV measurements when available.",
+    "scheduleNote": "The due date is a reminder calculated from the interval you entered, not a measurement of equipment performance. Prioritize the product manual and its actual condition.",
     "newItem": "Add gear",
     "type": "Gear type",
     "name": "Name",
@@ -2546,10 +2782,15 @@
     "added": "Gear added.",
     "dueDate": "Due date",
     "noSchedule": "No schedule",
-    "lifeUsed": "{{pct}}% of life used",
+    "lifeUsed": "{{pct}}% of entered interval elapsed",
     "markReplaced": "Mark replaced",
     "replacedToast": "Logged the replacement and restarted the cycle.",
+    "replaceConfirm": "Record ‘{{name}}’ as replaced today? Its install date and interval restart from today.",
     "remove": "Remove",
+    "removeConfirm": "Delete the gear record for ‘{{name}}’?",
+    "noPetTitle": "Choose the pet you want to manage first",
+    "noPetDesc": "Gear records are separated by active pet. Choose one before adding gear.",
+    "noPetAction": "Choose a pet",
     "emptyTitle": "No gear added yet",
     "emptyDesc": "Add gear like UVB and heat bulbs or filters, and we'll help you never miss a replacement.",
     "types": {
@@ -2745,8 +2986,9 @@
   },
   "cohab": {
     "title": "Cohabitation Checker",
-    "subtitle": "Get a clear, rule-based verdict on whether two species can share an enclosure. Most exotic pets are meant to be kept alone, and this tool explains why.",
-    "empty": "Pick two species to see a cohabitation verdict.",
+    "subtitle": "Run a safety-first rule check for two animals sharing one enclosure. This tool never approves cohabitation, and solo housing is the default for most exotic pets.",
+    "empty": "Choose Species A and Species B separately for a conservative verdict.",
+    "loadFailed": "Species data could not be loaded, so no verdict is available.",
     "disclaimer": "This verdict is general guidance based on common husbandry principles and does not account for every individual situation. If you are considering cohabitation, always pair it with ample space, quarantine, and advice from an expert or vet. When in doubt, keeping animals solo is safest.",
     "principle": {
       "title": "Most exotic pets are meant to be kept alone",
@@ -2756,7 +2998,8 @@
       "title": "Choose two species to check",
       "intro": "Pick the two species to compare. Species A defaults to your active pet. Choose the same species twice to check same-species cohabitation.",
       "speciesA": "Species A",
-      "speciesB": "Species B"
+      "speciesB": "Species B",
+      "choose": "Choose Species B"
     },
     "verdict": {
       "pair": "{{a}} + {{b}}",
@@ -2765,20 +3008,20 @@
       "label": {
         "no": "Not recommended",
         "caution": "Strongly discouraged",
-        "sameSpeciesOnly": "Same species only",
-        "ok": "Recommended together"
+        "sameSpeciesOnly": "Conditional, same species",
+        "ok": "Same-species conditions required"
       },
       "headline": {
         "no": "Do not house these together",
         "caution": "Keep this species alone",
-        "sameSpeciesOnly": "Never mix species — same species only",
-        "ok": "Best kept together"
+        "sameSpeciesOnly": "Check conditions and compatibility even within the same species",
+        "ok": "This cannot be approved automatically"
       },
       "summary": {
         "no": "This pairing is not recommended. Sharing one enclosure brings a high risk of stress, aggression, predation, and disease spread. Keep each animal solo in its own enclosure.",
         "caution": "This species should be kept alone. Even with the same species, sharing a space easily leads to territorial disputes and stress, so keep them separate unless you have a specific purpose such as breeding.",
-        "sameSpeciesOnly": "This species is social enough to be kept in same-species groups. However, never mix it with other species, and provide ample space and an appropriate sex ratio.",
-        "ok": "This is a social animal that risks depression and self-harm when kept alone, so keeping several of the same species together is recommended. Provide ample space and a proper introduction process."
+        "sameSpeciesOnly": "This species has known same-species social needs, but that does not make grouping automatically safe. Never mix species; first verify space, sex ratio, neuter status, quarantine, compatibility, and an immediate separation plan.",
+        "ok": "Even social species can fail to cohabit. Do not begin without expert review and a separate enclosure ready."
       }
     },
     "reasons": {
@@ -2806,29 +3049,29 @@
     },
     "social": {
       "title": "Social species (the exceptions)",
-      "intro": "The species below are exceptions that can or should be kept in same-species groups. Even so, never mix them with other species.",
+      "intro": "The species below are known for same-species social needs, but temperament, sex, neuter status, space, and quarantine still matter. Never mix different species.",
       "empty": "No social species registered.",
-      "tag": "Social species",
+      "tag": "Conditional, same species",
       "notes": {
-        "budgerigar": "Best kept in groups — they get very lonely alone. Needs a roomy cage and flight space.",
-        "cockatiel": "Highly social; can be kept in pairs or groups — provide ample space and interaction time.",
-        "sugar-glider": "Never keep alone — at least two same-sex animals required. Isolation causes depression and self-harm.",
-        "madagascar-hissing-cockroach": "A social, colony-living arthropod — group housing among the same species is natural."
+        "budgerigar": "Same-species social contact matters, but check cage size, individual compatibility, and quarantine first.",
+        "cockatiel": "Same-species contact may help, but ample space, individual observation, and a separation plan are required.",
+        "sugar-glider": "Same-species companionship is often recommended, but confirm sex, neuter status, compatibility, and introduction with an expert.",
+        "madagascar-hissing-cockroach": "Same-species colonies can work, but verify density, sex ratio, hides, and breeding control."
       }
     }
   },
   "wishlist": {
     "title": "Wishlist",
     "subtitle": "Collect species you hope to keep one day, and check your readiness before bringing one home.",
-    "responsibleNote": "Fill in your readiness before bringing one home. A prepared adoption — not an impulse — protects the animal.",
+    "responsibleNote": "A wish list should not rush acquisition. Research regulation, lifetime costs, veterinary access, and backup care.",
     "added": "Added to your wishlist",
     "remove": "Remove",
     "unknownSpecies": "Unknown species",
     "regulatedWarning": "Regulated · check filing",
     "experienceCaution": "This is an advanced species. Build up comparable experience before taking it on.",
     "budgetHint": "Est. monthly upkeep ~ {{amount}} KRW",
-    "readinessTitle": "Readiness checklist",
-    "readinessAria": "Readiness {{pct}}% complete",
+    "readinessTitle": "Self-review completion",
+    "readinessAria": "{{pct}} percent of self-review items recorded",
     "form": {
       "title": "Add to wishlist",
       "species": "Species",
@@ -2870,12 +3113,20 @@
     },
     "errors": {
       "speciesRequired": "Please choose a species.",
-      "notesMax": "Notes can be up to 300 characters."
-    }
+      "notesMax": "Notes can be up to 300 characters.",
+      "dateInvalid": "Enter a valid target date.",
+      "datePast": "Set the target date to today or later."
+    },
+    "duplicate": "That species is already on your list. Continue the review on its existing card.",
+    "removeConfirm": "Delete this wished species and its review history?",
+    "removed": "Removed from the wish list.",
+    "catalogError": "Species information could not be loaded, so new items are temporarily unavailable.",
+    "retry": "Try again",
+    "readinessNotice": "100% is not an adoption approval or a readiness verdict. Recheck the evidence and real-world feasibility of every item."
   },
   "taming": {
     "title": "Taming",
-    "subtitle": "Handling is for the animal's tolerance, not the keeper's wish. Log sessions slowly and briefly, and watch stress signals and acclimation over time.",
+    "subtitle": "Track one animal’s stress signals and recovery without turning handling into a score to maximize.",
     "saved": "Session logged.",
     "showAllPets": "Show all pets",
     "tolerance": {
@@ -2893,16 +3144,22 @@
       }
     },
     "form": {
-      "title": "Log a session",
-      "date": "Date",
-      "duration": "Duration (min)",
+      "title": "Record a handling session",
+      "date": "Session date",
+      "duration": "Duration (minutes)",
       "durationHelp": "Time you actually handled the animal",
-      "calmness": "Calmness (1–5)",
+      "calmness": "Observed calmness",
       "stressSigns": "Stress signs",
       "stressSignsHelp": "Select every behavior shown this session. Leave empty if none.",
-      "note": "Note",
-      "notePlaceholder": "Note the context, environment, or anything notable.",
-      "submit": "Save session"
+      "note": "Context note",
+      "notePlaceholder": "Approach, behavior beforehand, food response, recovery time, and more",
+      "submit": "Save this session",
+      "kicker": "NEW SESSION",
+      "durationHelper": "You can include unavoidable contact for moving or cleaning.",
+      "calmnessHelper": "This is a subjective note, not a diagnosis of health or bonding.",
+      "signs": "Observed stress signals",
+      "signsHelper": "Select every signal you noticed. Freezing may not mean relaxation.",
+      "noteHelper": "Up to 200 characters"
     },
     "calmnessScale": {
       "1": "Very anxious",
@@ -2950,7 +3207,13 @@
       "calmness": "Calmness {{value}}/5",
       "duration": "{{count}} min",
       "remove": "Remove",
-      "speciesUnknown": "Logged without species info"
+      "speciesUnknown": "Logged without species info",
+      "title": "Session history",
+      "count": "{{count}} records",
+      "emptyTitle": "No sessions recorded yet",
+      "emptyDesc": "Start with brief, unforced contact and learn this animal’s limits.",
+      "emptyHint": "End immediately when stress signals appear and allow full recovery.",
+      "minutes": "{{count}} min"
     },
     "empty": {
       "title": "No handling sessions yet",
@@ -2963,17 +3226,57 @@
       "durationMax": "That duration is too long.",
       "calmnessRequired": "Please choose a calmness level.",
       "calmnessRange": "Calmness must be between 1 and 5.",
-      "noteMax": "Note must be 200 characters or fewer."
-    }
+      "noteMax": "Note must be 200 characters or fewer.",
+      "dateInvalid": "Enter a valid date.",
+      "dateFuture": "A handling session cannot be recorded in the future."
+    },
+    "eyebrow": "WELFARE LOG",
+    "petRequiredTitle": "Select a pet before recording",
+    "petRequiredBody": "Handling responses are individual, so observations are never combined across animals.",
+    "petRequiredAction": "Select a pet",
+    "activePet": "Individual log for {{name}}",
+    "aPet": "Pet",
+    "welfareTitle": "Let the animal’s response lead",
+    "privatePill": "Stored on this device",
+    "calmness": {
+      "1": "Very tense",
+      "2": "Tense",
+      "3": "Neutral",
+      "4": "Settled",
+      "5": "Comfortable"
+    },
+    "stats": {
+      "kicker": "PRIVATE PATTERN",
+      "title": "Observation pattern for this pet",
+      "total": "Records",
+      "average": "Average observation",
+      "latest": "Latest observation",
+      "trend": "Observations over time",
+      "trendRange": "1 tense · 5 comfortable",
+      "trendAria": "Subjective calmness across {{count}} sessions"
+    },
+    "trend": {
+      "notEnough": "Not enough to compare",
+      "up": "Recent observations higher",
+      "down": "Recent observations lower",
+      "steady": "No large change"
+    },
+    "subjectiveNote": "Scores are subjective observations. Stop handling and contact an exotics veterinarian for appetite loss, abnormal breathing, lethargy, or repeated defensive behavior.",
+    "removeConfirm": "Delete this handling record?",
+    "removed": "Handling record deleted."
   },
   "kit": {
     "title": "Emergency kit",
     "subtitle": "Power outages, heatwaves, sudden illness. In a crisis, minutes matter. Prepare in advance so you never have to scramble.",
     "readiness": {
-      "title": "Readiness",
-      "desc": "Check off items to build up your household's emergency readiness.",
+      "title": "Supply checklist completion",
+      "desc": "Recheck what you actually have. This does not verify condition, quantity, or usability.",
       "count": "{{done}}/{{total}} ready",
-      "aria": "Readiness {{pct}}%"
+      "aria": "Supply checklist {{pct}}% complete",
+      "updatedAt": "Last changed: {{date}}",
+      "neverReviewed": "No supplies have been confirmed yet",
+      "reset": "Reset supply checks",
+      "resetConfirm": "Reset every emergency-supply check? Saved contacts will remain."
     },
     "quick": {
       "sosTitle": "Emergency SOS",
@@ -3030,6 +3333,7 @@
       "added": "Contact saved",
       "call": "Call",
       "remove": "Remove",
+      "removeConfirm": "Delete this emergency contact?",
       "emptyTitle": "No saved contacts yet",
       "emptyDesc": "Add the numbers of your go-to vet or someone who can help, ahead of time."
     },
@@ -3038,6 +3342,7 @@
       "labelMax": "Name must be 40 characters or fewer",
       "phoneRequired": "Enter a phone number",
       "phoneMax": "Phone number must be 40 characters or fewer",
+      "phoneInvalid": "Use only numbers, spaces, parentheses, +, and - in a phone number",
       "noteMax": "Note must be 120 characters or fewer"
     },
     "disclaimer": "This checklist is guidance to help you prepare in advance. In a real emergency, contact an exotic-animal clinic immediately."
@@ -3081,7 +3386,7 @@
   },
   "supplements": {
     "title": "Supplement Dusting",
-    "subtitle": "Track calcium, D3, and multivitamin dusting to prevent metabolic bone disease (MBD).",
+    "subtitle": "Instead of prescribing a generic cadence, record only supplements confirmed against the product, diet, UVB setup, and veterinary plan.",
     "showAllPets": "Show all pets",
     "aPet": "Pet",
     "guidanceTitle": "Species-specific guidance",
@@ -3097,7 +3402,7 @@
     "quickLog": "Dust {{type}} today",
     "quickLogged": "Logged {{type}} dusting for today.",
     "remove": "Remove",
-    "disclaimer": "This schedule is general guidance. The right plan depends on the individual's age, UVB, and staple diet; consult an exotics vet if you see warning signs.",
+    "disclaimer": "This log does not replace diagnosis or prescribing.",
     "mbd": {
       "title": "MBD prevention",
       "body": "Calcium and UVB deficiency are the leading causes of metabolic bone disease (MBD). Don't skip calcium dusting for insectivorous and herbivorous reptiles."
@@ -3127,35 +3432,51 @@
       "notDusted": "Not dusted"
     },
     "stats": {
-      "title": "Summary",
-      "total": "Total logs",
-      "lastDusted": "Last dusted",
-      "never": "None"
+      "title": "Individual record summary",
+      "total": "Total records",
+      "lastDusted": "Latest record",
+      "never": "No records",
+      "kicker": "RECORD SUMMARY",
+      "recordOnly": "Counts do not determine whether a plan is appropriate. Follow the product label and veterinary instructions."
     },
     "form": {
-      "title": "Log a dusting",
-      "type": "Supplement type",
-      "dustedAt": "Dusting date",
-      "note": "Note",
-      "notePlaceholder": "e.g. light calcium, no refusal",
-      "noteHelper": "Optional - up to 200 characters",
-      "submit": "Add log"
+      "title": "Record a supplement use",
+      "type": "Product type",
+      "dustedAt": "Date given",
+      "note": "Product and amount note",
+      "notePlaceholder": "Product, concentration, amount, diet, or veterinary instruction",
+      "noteHelper": "Up to 200 characters. Avoid entering sensitive clinical information.",
+      "submit": "Save supplement record",
+      "kicker": "CONFIRMED RECORD",
+      "safeHelper": "Log only what was already given. The app does not prescribe the next dose date."
     },
     "history": {
-      "title": "History",
-      "emptyTitle": "No dustings logged yet",
-      "emptyDesc": "Use a quick-log button above or the form to record your first dusting.",
-      "hint": "Tip: log calcium and multivitamins separately to avoid over- or under-dosing."
+      "title": "Supplement records",
+      "emptyTitle": "No supplement uses recorded",
+      "emptyDesc": "Record an actual use after confirming the plan with a veterinarian.",
+      "hint": "UVB, temperature, and the complete diet also need review.",
+      "count": "{{count}} records"
     },
     "errors": {
       "dateRequired": "Please enter a date.",
-      "noteMax": "Notes must be 200 characters or fewer."
-    }
+      "noteMax": "Notes must be 200 characters or fewer.",
+      "dateInvalid": "Enter a valid date given.",
+      "dateFuture": "A supplement use that has not happened yet cannot be recorded."
+    },
+    "eyebrow": "VET-ALIGNED LOG",
+    "petRequiredTitle": "Select a pet before recording",
+    "petRequiredBody": "Supplement needs vary by diet and clinical status as well as species, so records are never combined across animals.",
+    "petRequiredAction": "Select a pet",
+    "safeTitle": "This is a log, not a dosing prescription",
+    "safeBody": "Calcium, vitamin D3, and multivitamin needs vary by species, product concentration, diet, life stage, UVB exposure, and disease. Confirm any new product or cadence with an exotics veterinarian first.",
+    "sourceLink": "Read the MSD Veterinary Manual on reptile nutrition",
+    "removeConfirm": "Delete this supplement record?",
+    "removed": "Supplement record deleted."
   },
   "feeders": {
     "title": "Feeders",
-    "subtitle": "Track your own feeder-insect cultures and bioactive cleanup crews so they stay healthy and well gut-loaded.",
-    "gutLoadNote": "Home-cultured feeders are only as nutritious as what you gut-load them with — feed the feeders veggies, grains, or a dedicated chow on a regular cycle to keep your pets healthy.",
+    "subtitle": "Manage feeder cultures and cleanup crews together while keeping feeding work separate from ecosystem maintenance.",
+    "gutLoadNote": "Feeder cultures need species-appropriate nutrition and a fresh water source. For cleanup crews, record condition checks and substrate maintenance instead.",
     "toastAdded": "Colony added.",
     "toastFed": "Gut-loaded the {{name}} colony.",
     "toastRemoved": "Colony removed.",
@@ -3169,7 +3490,8 @@
       "estimateHelper": "Leave blank to record as unknown.",
       "notes": "Notes",
       "notesPlaceholder": "Bin size, food type, grow-out plans…",
-      "submit": "Add colony"
+      "submit": "Add colony",
+      "kicker": "NEW COLONY"
     },
     "types": {
       "dubia": "Dubia roaches",
@@ -3193,7 +3515,8 @@
       "estimateValue": "~{{count}}",
       "estimateUnknown": "Unknown",
       "lastFed": "Last fed",
-      "lastFedNever": "Never"
+      "lastFedNever": "Never",
+      "lastMaintained": "Last condition check"
     },
     "care": {
       "show": "Show care tips",
@@ -3218,7 +3541,8 @@
     },
     "actions": {
       "markFed": "Feed (gut-load)",
-      "remove": "Remove"
+      "remove": "Remove",
+      "markMaintained": "Condition checked today"
     },
     "empty": {
       "title": "No colonies yet",
@@ -3231,19 +3555,35 @@
       "estimateNumber": "Head-count must be a number.",
       "estimateInt": "Head-count must be a whole number.",
       "estimateNonnegative": "Head-count can't be negative.",
-      "notesMax": "Keep notes under 300 characters."
-    }
+      "notesMax": "Keep notes under 300 characters.",
+      "estimateMax": "Estimated count must be 1,000,000 or less.",
+      "dateInvalid": "Enter a valid start date.",
+      "dateFuture": "A colony start date cannot be in the future."
+    },
+    "eyebrow": "COLONY DESK",
+    "safetyTitle": "Manage nutrition and hygiene together",
+    "safetyNote": "Do not offer wild-caught, moldy, spoiled, or potentially pesticide-exposed invertebrates. Wash hands and tools after handling.",
+    "maintenanceStatus": {
+      "fedRecently": "Checked recently",
+      "feedSoon": "Check soon",
+      "overdue": "Check needed",
+      "never": "No check recorded",
+      "recorded": "Check recorded"
+    },
+    "toastMaintained": "Condition check recorded for {{name}}.",
+    "removeConfirm": "Delete {{name}} and all of its records?"
   },
   "lineage": {
     "title": "Lineage",
-    "subtitle": "Register your animals and their sire/dam links, then view any individual's 3-generation pedigree and offspring. This is a global, per-animal registry.",
+    "subtitle": "Record animals and known parent relationships across the household without presenting entered lineage or morph claims as verified facts.",
     "remove": "Remove",
     "speciesUnspecified": "Species unspecified",
     "errors": {
       "nameRequired": "Enter the animal's name.",
       "nameMax": "Name can be at most 60 characters.",
       "morphMax": "Morph can be at most 60 characters.",
-      "notesMax": "Notes can be at most 300 characters."
+      "notesMax": "Notes can be at most 300 characters.",
+      "sameParent": "The same animal cannot be both sire and dam."
     },
     "sex": {
       "male": "Male",
@@ -3297,11 +3637,15 @@
     "toast": {
       "added": "Added {{name}}.",
       "removed": "Removed {{name}}."
-    }
+    },
+    "eyebrow": "HOUSEHOLD PEDIGREE NOTES",
+    "provenanceTitle": "Lineage information is a user-entered reference",
+    "provenanceBody": "It is not an official pedigree, genetic test, or proof of ownership. Keep source documents and laboratory results separately, and do not guess unknown parents, species, or sex.",
+    "removeConfirm": "Delete “{{name}}”? Parent links will also be detached from {{count}} offspring records."
   },
   "costreport": {
     "title": "Cost report",
-    "subtitle": "Roll up your logged pet costs into an annual total, monthly average, and per-category and per-pet breakdowns.",
+    "subtitle": "Review pet-specific cost records together from a neutral household perspective.",
     "yearLabel": "Select period",
     "allTime": "All time",
     "yearChip": "{{year}}",
@@ -3310,7 +3654,7 @@
       "year": "{{year}} total"
     },
     "perMonth": "Average across recorded months",
-    "projectedHint": "Estimated from {{amount}} spent so far this year",
+    "projectedHint": "Simple estimate based on {{amount}} recorded so far",
     "monthsValue": "{{n}} mo",
     "entriesHint": "{{n}} expenses total",
     "tiles": {
@@ -3327,7 +3671,7 @@
     "petTitle": "Spend by pet",
     "petDesc": "Compare spending across your registered pets.",
     "unscopedPet": "Unassigned",
-    "allPetsNote": "Analysis sums costs across all of your pets.",
+    "allPetsNote": "Combines pet-specific costs stored for the household. It does not guarantee future costs or provide financial advice.",
     "empty": {
       "title": "Nothing to report yet",
       "description": "Log a few costs first and we'll roll up totals and trends for you.",
@@ -3336,7 +3680,10 @@
   },
   "transport": {
     "title": "Transport planner",
-    "subtitle": "Prepare for vet visits, moves, and expos safely. A secure container, steady temperature, and low stress are what matter most.",
+    "subtitle": "Plan vet visits, moves, and expos for the active pet. This tool helps you personally check the carrier, temperature, stress, and paperwork.",
+    "noPetTitle": "Choose the pet that will travel",
+    "noPetDesc": "Trips and checklists are separated by active pet.",
+    "noPetAction": "Choose a pet",
     "tipLabel": "Transport tip",
     "created": "Trip added.",
     "disclaimer": "This checklist is guidance to help you travel safely. Adapt it to your species and individual animal, and consult your vet when in doubt.",
@@ -3351,7 +3698,7 @@
       "tempControl": "Temperature control — heat or cool pack",
       "thermometer": "Check temperature in transit",
       "coverDark": "Cover dark to lower stress",
-      "noFeedBefore": "Skip feeding beforehand — prevents regurgitation",
+      "noFeedBefore": "Check species-specific pre-travel feeding guidance — do not fast by default",
       "water": "Offer water on arrival",
       "secureLid": "Escape-proof latch",
       "paperwork": "Paperwork for regulated species"
@@ -3387,6 +3734,7 @@
       "durationLabel": "Est. time",
       "durationValue": "{{hours}}h",
       "remove": "Remove",
+      "removeConfirm": "Delete this trip and its checklist?",
       "paperworkHint": "For regulated species, confirm filings and paperwork before travel."
     },
     "checklist": {
@@ -3459,24 +3807,32 @@
   },
   "safety": {
     "title": "Safety audit",
-    "subtitle": "A guided enclosure audit to prevent escapes, burns, shocks, drowning, and injury before they happen. Prevention is everything.",
+    "subtitle": "An enclosure checklist to reduce escapes, burns, shocks, drowning, and injury. A checked box does not verify the real environment.",
+    "noPetTitle": "Choose a pet to audit",
+    "noPetDesc": "Safety audit records are separated by active pet.",
+    "noPetAction": "Choose a pet",
+    "verificationTitle": "Completion is not a safety guarantee",
+    "verificationBody": "Inspect again after changing the enclosure, gear, or layout. Stop using damaged electrical or heating equipment immediately.",
     "creed": "Accidents are all about prevention — work through each item and remove the risk in advance.",
     "risksTitle": "Species-specific risks",
     "risksIntro": "Accident types that are especially common for your active pet's category.",
     "risksAlertTitle": "Watch these closely for this category",
     "disclaimer": "This checklist is a general husbandry-safety guide and does not cover every hazard. Add your own checks for your species and individual animal.",
     "levels": {
-      "low": "At risk",
-      "medium": "Fair",
-      "high": "Safe"
+      "low": "Needs review",
+      "medium": "In progress",
+      "high": "Items confirmed"
     },
     "score": {
-      "title": "Safety score",
-      "desc": "Shows your enclosure's overall safety level from the share of items you've confirmed.",
+      "title": "Checklist completion",
+      "desc": "The share of items you marked as confirmed, not a measurement of actual risk.",
       "count": "{{done}} / {{total}} confirmed",
       "aria": "Safety audit {{pct}}% complete",
       "reset": "Reset this audit",
-      "resetDone": "Audit reset."
+      "resetDone": "Audit reset.",
+      "resetConfirm": "Reset every safety check for the active pet?",
+      "updatedAt": "Last changed: {{date}}",
+      "neverReviewed": "No items have been confirmed yet"
     },
     "checklist": {
       "title": "Safety checklist",
@@ -3603,7 +3959,9 @@
     "overview": {
       "title": "All four seasons at a glance",
       "lead": "Key per-season points for {{category}}. The current season is highlighted."
-    }
+    },
+    "contextTitle": "Based on a typical seasonal cycle in South Korea",
+    "contextBody": "Prioritize the animal’s actual location, indoor microclimate, daylight, and condition. Do not induce brumation simply because it is winter. Consider it only when species suitability, a health examination, body weight, and a veterinary plan have all been confirmed."
   },
   "lighting": {
     "title": "Lighting & Photoperiod",
@@ -3773,7 +4131,7 @@
   },
   "enclosure": {
     "title": "Enclosure size checker",
-    "subtitle": "See the recommended minimum enclosure size for your species, then enter your current enclosure's dimensions to check if it measures up.",
+    "subtitle": "Compare current dimensions with an in-app planning reference, then review adult size, behavior, and environmental gradients.",
     "noSpeciesTitle": "No species selected",
     "basis": {
       "species": "Recommended minimum for {{name}}.",
@@ -3785,12 +4143,13 @@
       "arthropod": "Arthropod",
       "bird": "Bird",
       "amphibian": "Amphibian",
-      "mammal": "Mammal"
+      "mammal": "Mammal",
+      "unknown": "Unspecified species"
     },
-    "recommendedTitle": "Recommended minimum",
+    "recommendedTitle": "In-app space planning reference",
     "badge": {
-      "speciesMin": "Species minimum",
-      "categoryMin": "Category minimum"
+      "speciesMin": "Species catalog value",
+      "categoryMin": "Category fallback"
     },
     "cm": "cm",
     "approxLiters": "about {{liters}} L volume",
@@ -3802,30 +4161,30 @@
       "legSpan": "Floor width of 2–3× the leg span is ideal. Too large makes hunting prey harder.",
       "flightWidth": "For birds, side-to-side wing room (width) matters most. Wider is better."
     },
-    "currentTitle": "Your current enclosure",
-    "currentHelp": "Enter the interior dimensions of the enclosure you use now, in centimetres.",
+    "currentTitle": "Current usable dimensions",
+    "currentHelp": "Measure usable interior length, width, and height in centimeters.",
     "length": "Length (cm)",
     "width": "Width (cm)",
     "height": "Height (cm)",
     "save": "Save dimensions",
     "saved": "Saved your enclosure dimensions.",
-    "verdictTitle": "Verdict",
+    "verdictTitle": "Reference comparison",
     "verdict": {
-      "adequate": "Adequate",
-      "upgrade": "Upgrade advised",
-      "unknown": "Not enough info",
-      "adequateMsg": "Meets every recommended minimum. Bigger is even better.",
-      "upgradeMsg": "Some dimensions fall short of the minimum. Check the gaps below and consider upgrading.",
-      "unknownHint": "Enter all three dimensions and we'll judge whether it measures up."
+      "adequate": "All three at or above reference",
+      "upgrade": "Some dimensions below reference",
+      "unknown": "Waiting for measurements",
+      "adequateMsg": "All three entered dimensions meet or exceed the app reference. This alone does not make the enclosure suitable.",
+      "upgradeMsg": "At least one dimension is below the app reference. Recheck species-specific evidence and consider an expansion plan.",
+      "unknownHint": "Enter all three dimensions to compare them with the app reference."
     },
     "dimension": "Dimension",
     "yourSize": "Your enclosure",
-    "minSize": "Minimum",
+    "minSize": "App reference",
     "status": "Status",
-    "ok": "OK",
-    "short": "Short",
+    "ok": "At or above reference",
+    "short": "Below reference",
     "yourVolume": "Your enclosure is about {{liters}} L",
-    "floorNote": "The recommended minimum is a floor, not a target. Most species do better in a larger enclosure.",
+    "floorNote": "Equal volume does not make floor area and height interchangeable. This comparison is not a legal standard, veterinary assessment, or welfare certification.",
     "errors": {
       "lengthNumber": "Enter the length as a number.",
       "lengthPositive": "Length must be greater than 0.",
@@ -3836,7 +4195,21 @@
       "heightNumber": "Enter the height as a number.",
       "heightPositive": "Height must be greater than 0.",
       "heightRange": "That height looks too large. Please double-check."
-    }
+    },
+    "eyebrow": "SPACE PLANNER",
+    "petRequiredTitle": "Select a pet before comparing",
+    "petRequiredBody": "Space needs vary by species and individual, so dimensions are never saved without an active pet.",
+    "petRequiredAction": "Select a pet",
+    "aPet": "Pet",
+    "referenceWarningTitle": "A reference value is not a suitability guarantee",
+    "referenceWarningBody": "These dimensions are initial planning values from the app catalog. Review adult size, activity, arboreal, burrowing, or aquatic behavior, ventilation, temperature and humidity gradients, and hides against a current species-specific care sheet and an exotics professional.",
+    "referenceKicker": "CATALOG REFERENCE",
+    "measureKicker": "YOUR MEASUREMENT",
+    "reset": "Clear measurements",
+    "resetConfirm": "Clear the saved enclosure measurements for this pet?",
+    "resetDone": "Enclosure measurements cleared.",
+    "savedAt": "Last saved: {{date}}",
+    "compareKicker": "REFERENCE CHECK"
   },
   "tools": {
     "title": "Tools",
@@ -3917,22 +4290,29 @@
     }
   },
   "morphs": {
-    "title": "Popular morph catalog",
-    "subtitle": "Common morphs (color and pattern variants) sold in Korea with 2025–26 average price bands. Pick a base species to see morph cards and breeder sites.",
+    "title": "Morph terminology",
+    "subtitle": "Understand appearance terms without prices or rarity rankings, and check health and welfare risks associated with selective breeding first.",
     "pickSpecies": "Pick a species",
     "empty": "No species to show.",
-    "openDetail": "Open species detail",
+    "openDetail": "Open species details",
     "rarity": {
       "common": "Common",
       "mid": "Mid",
       "rare": "Rare"
     },
     "breedersTitle": "Korean breeders & shops",
-    "disclaimer": "Bands are 2025–26 market estimates. Actual prices vary by baby/adult, het/homozygous, and morph combinations."
+    "disclaimer": "Prices, sellers, and breeder recommendations are not provided. Before acquisition, verify health, source, lineage, legal duties, and lifetime care.",
+    "eyebrow": "WELFARE-FIRST TERMINOLOGY",
+    "welfareTitle": "Appearance cannot take priority over health",
+    "welfareBody": "Some color and pattern variants may be neutral, while selected lines can be associated with neurological disease, skin or eye sensitivity, or lethal combinations. Appearance alone cannot establish health or a safe pairing.",
+    "sourceLink": "Read the study of inner-ear malformations in spider ball pythons",
+    "contextKicker": "VISUAL TERMS",
+    "cardNote": "This is an appearance-term reference, not certification of genotype, health, rarity, or value.",
+    "openGenetics": "Open the limited educational genetics model"
   },
   "setup": {
-    "title": "Enclosure setup estimator",
-    "subtitle": "Pick a category and we'll show the 6–8 essentials (enclosure, substrate, UVB, heat, hygrometer, food, etc.) with basic and premium price ranges. Standardizes what KR beginners most often forget.",
+    "title": "Habitat setup sequence",
+    "subtitle": "Confirm species requirements, install and measure the equipment, and complete a dry run before acquisition or transfer.",
     "pickCategory": "Pick a category",
     "empty": "Pick a category",
     "emptyDesc": "Choose the category you want to keep from the chips above.",
@@ -3941,27 +4321,78 @@
     "includeOptional": "Include optional parts",
     "optional": "Optional",
     "shopsTitle": "Korean exotic pet shops",
-    "disclaimer": "We have no affiliation with these shops. Prices and stock are governed by each shop's own listings."
+    "disclaimer": "This is a general preparation sequence. Current species guidance, manufacturer safety instructions, and an exotics professional take priority.",
+    "eyebrow": "SETUP SEQUENCE",
+    "petRequiredTitle": "Select the pet this setup is for",
+    "petRequiredBody": "Space, temperature, lighting, water, and safety needs vary within every category, so equipment is not recommended without an animal context.",
+    "petRequiredAction": "Select a pet",
+    "activePet": "Setup flow for {{name}}",
+    "aPet": "Pet",
+    "principleKicker": "REQUIREMENTS BEFORE SHOPPING",
+    "principleTitle": "Define requirements before buying",
+    "principleBody": "Prices and store links change quickly, and expensive equipment does not automatically create a suitable habitat. Document adult size, thermal, lighting, humidity, and water needs plus failure contingencies first.",
+    "sourceLink": "Read the MSD Veterinary Manual on reptile husbandry",
+    "orderKicker": "SAFE ORDER",
+    "orderTitle": "A safer setup order",
+    "openShops": "Find shops after requirements are fixed",
+    "openStep": "Open",
+    "steps": {
+      "research": {
+        "title": "Confirm current species evidence",
+        "body": "Review adult size, behavior, diet, lifespan, legal duties, and veterinary access first."
+      },
+      "space": {
+        "title": "Design usable interior space",
+        "body": "Consider floor area, height, hides, movement, ventilation, and escape prevention together."
+      },
+      "climate": {
+        "title": "Design heat, lighting, and day cycle",
+        "body": "Set gradients, UVB requirements, photoperiod, and night heat from species-specific evidence."
+      },
+      "monitor": {
+        "title": "Place sensors at meaningful points",
+        "body": "Measure temperature, humidity, and water where the animal actually spends time."
+      },
+      "safety": {
+        "title": "Plan for faults, burns, outages, and escape",
+        "body": "Prepare thermostats, guards, secured wiring, emergency contacts, and a transport kit."
+      },
+      "supplies": {
+        "title": "Plan consumables and replacement",
+        "body": "Estimate real use of food, substrate, filters, lamps, and treatments and choose a reserve amount."
+      },
+      "dryRun": {
+        "title": "Run the habitat without the animal",
+        "body": "Measure day and night conditions for several days and move the animal only after the target range is stable."
+      }
+    }
   },
   "insurance": {
     "title": "Pet insurance & emergency reserve",
-    "subtitle": "Korean pet insurance is dog/cat-only. Owners of reptiles, amphibians and arthropods almost never qualify; we recommend building an emergency reserve instead.",
-    "exoticWarningTitle": "Heads up — exotic pets rarely qualify",
-    "exoticWarningBody": "Your current category is excluded from most Korean pet insurance products. 100% of emergency vet bills are out of pocket, so building a reserve below is strongly recommended.",
+    "subtitle": "Eligibility for Korean pet insurance must be checked product by product. This is not insurance advice; it links to official sites and provides a browser-only reserve planning tool.",
+    "exoticWarningTitle": "Eligibility requires a product-level check",
+    "exoticWarningBody": "Rare pets covered by Pettography may be excluded from dog- and cat-focused products. Check each insurer's current product description and policy terms.",
     "reserveTitle": "Emergency reserve",
-    "reserveDesc": "Set aside a fixed amount each month for unexpected vet bills. Start date and total are stored in this browser.",
-    "reserveSuggestion": "Target ~₩{{amount}} (3× {{name}}'s recommended monthly budget) to cover 1–2 emergency visits.",
+    "reserveDesc": "Record what you plan to set aside each month. This feature does not move money or track a real balance; it stores planning values in this browser.",
+    "reserveSuggestion": "Set your own reserve target after reviewing real veterinary costs and your household budget.",
+    "budgetContext": "The in-app monthly husbandry budget reference for {{name}} is {{amount}}. It is not an estimate of veterinary cost or an appropriate reserve.",
     "monthlyContribution": "Monthly contribution (KRW)",
     "save": "Save",
-    "savedToast": "Contribution saved",
+    "savedToast": "Monthly plan saved",
+    "reset": "Reset plan",
+    "resetConfirm": "Reset the active pet's reserve plan and start date?",
+    "resetToast": "Reserve plan reset",
     "startedAt": "Started",
     "monthsRunning": "Months running",
-    "accumulated": "Total saved",
+    "accumulated": "Planned total",
+    "calculationNote": "The planned total is monthly plan × completed elapsed months. It is not a real savings balance.",
     "errors": {
-      "contribution": "Contribution must be a non-negative number."
+      "contribution": "The monthly plan must be a non-negative number.",
+      "contributionMax": "The monthly plan must be {{amount}} or less."
     },
-    "providersTitle": "5 Korean pet insurers (dog/cat only)",
-    "providersDesc": "Tap a card to open the official site. Actual premiums depend on breed, age and add-ons.",
+    "providersTitle": "Check eligibility on official insurer sites",
+    "providersDesc": "Eligibility and premiums change, so this page does not freeze comparison figures. Confirm your animal's current eligibility in each insurer's official product information.",
+    "providerVerify": "Check eligible animals, age, coverage, and premium on the official site",
     "coversDogCat": "Dog/cat OK",
     "noDogCat": "Not offered",
     "coversExotic": "Exotic OK",
@@ -3969,7 +4400,7 @@
     "perMonth": "/mo",
     "openSite": "Open site",
     "compareLinksTitle": "External comparison resources",
-    "disclaimer": "Premiums and coverage are governed by the insurer's official terms. This page is a curated guide."
+    "disclaimer": "Official product descriptions and terms govern premiums, eligibility, and coverage. The reserve calculator is a personal plan, not a financial product or savings record."
   },
   "calendar": {
     "exportIcs": "Export to calendar (.ics)",
@@ -4052,7 +4483,16 @@
     "wipeButton": "Delete everything",
     "wipeConfirm": "Erase everything? This cannot be undone.",
     "wipedToast": "All data deleted",
-    "empty": "No data stored yet."
+    "empty": "No data stored yet.",
+    "storedCount": "This browser currently has {{count}} data stores.",
+    "formatNote": "Backup format v2 · SHA-256 integrity check",
+    "fileHint": "JSON exported by Pettography · 2 MB maximum",
+    "rollbackNote": "If storage fails, Pettography automatically restores the pre-import data.",
+    "exportFailedToast": "Could not create the backup. Check this browser's storage permissions.",
+    "fileTooLargeToast": "Backup files must be 2 MB or smaller.",
+    "restoreFailedToast": "Restore failed, so the previous data was restored.",
+    "wipeFailedToast": "Deletion failed, so the previous data was restored.",
+    "rollbackFailedToast": "The operation and automatic rollback both failed. Export any remaining data before closing this page."
   },
   "petid": {
     "title": "Pet ID card",
@@ -4060,7 +4500,7 @@
       "petNameRequired": "Enter a name",
       "petNameMax": "Name must be 40 characters or fewer",
       "speciesLabelRequired": "Enter a species",
-      "speciesLabelMax": "Species must be 40 characters or fewer",
+      "speciesLabelMax": "Species information must be 80 characters or fewer.",
       "ownerNameRequired": "Enter the owner's name",
       "ownerNameMax": "Owner name must be 40 characters or fewer",
       "ownerPhoneRequired": "Enter a contact number",
@@ -4068,9 +4508,10 @@
       "regionMax": "Region must be 60 characters or fewer",
       "registrationNumberMax": "Registration number must be 60 characters or fewer",
       "distinctMarksMax": "Distinct marks must be 240 characters or fewer",
-      "foundInstructionsMax": "Instructions must be 240 characters or fewer"
+      "foundInstructionsMax": "Instructions must be 240 characters or fewer",
+      "ownerPhoneInvalid": "Use only digits, spaces, +, -, parentheses, and periods in the phone number."
     },
-    "subtitle": "Printable card for the inside of an enclosure or your wallet, in case your pet escapes. Includes owner contact and finder instructions. All data stays in this browser.",
+    "subtitle": "Create a per-pet printable card containing only the minimum contact details needed if the animal is found.",
     "fillFromOnboarding": "Fill from onboarding",
     "save": "Save card",
     "clear": "Clear",
@@ -4097,7 +4538,15 @@
       "registrationNumber": "MoE filing or RFID number",
       "distinctMarks": "e.g. partial tail loss, white spot on back",
       "foundInstructions": "e.g. Nocturnal, prefers darkness. Avoid direct sunlight; place in a paper box and contact me."
-    }
+    },
+    "eyebrow": "PRINTABLE LOST-PET CARD",
+    "petRequiredTitle": "Select the pet for this card",
+    "petRequiredBody": "The card contains owner contact details, so it is never stored as an unscoped household card.",
+    "petRequiredAction": "Select a pet",
+    "privacyTitle": "Printed copies expose the entered personal information",
+    "privacyBody": "Enter only the name, phone number, and broad region that are needed. Do not add a full address, government ID, or financial information. Confirm the contact is current before distributing copies.",
+    "clearConfirm": "Clear this pet’s card and all entered contact details?",
+    "clearedToast": "Pet ID card details cleared."
   },
   "compare": {
     "title": "Compare species",
@@ -4141,12 +4590,15 @@
   },
   "registry": {
     "title": "Wildlife filing guide (KR)",
-    "subtitle": "Regulated wildlife (mammals, birds, reptiles, amphibians) require Ministry of Environment filings when kept, transferred, or deceased. Track your own filing status here.",
-    "effectiveNote": "Effective: 14 Dec 2025 (Wildlife Protection & Management Act, KR)",
+    "subtitle": "Filing duties for designated managed wildlife depend on the species, how it was acquired, and the action involved, not its broad category alone. Use this personal checklist alongside official law and local authority guidance.",
+    "effectiveNote": "Related amended scheme effective 14 Dec 2025 · confirm applicability by species",
     "categoryStatusLabel": "Your pet category",
     "regulatedBadge": "Filing required",
     "unregulatedBadge": "Not regulated",
     "noCategory": "Pick a category in onboarding first",
+    "categoryCheckRequired": "Official species check required",
+    "speciesDataBasis": "App reference data",
+    "speciesLoadFailed": "Could not load the species reference status",
     "speciesFilingLabel": "Your species' white-list status",
     "filingStatus": {
       "white-list": "White-list (trade allowed)",
@@ -4155,11 +4607,12 @@
       "unknown": "Verify with MoE"
     },
     "checklistProgress": "Checklist progress",
-    "filingsTitle": "4 required filings",
+    "filingsTitle": "Situation-based review checklist",
     "linksTitle": "Official sites",
     "markDone": "Mark done",
     "markedDone": "Done",
     "reset": "Reset checklist",
+    "resetConfirm": "Clear the personal checklist for the active pet? This does not cancel or change any legal filing.",
     "filings": {
       "keeping": {
         "title": "Keeping filing",
@@ -4183,11 +4636,12 @@
       }
     },
     "links": {
+      "law": "Wildlife Protection Act on the official law portal",
       "wildlifeRegistry": "Wildlife portal (wildlife.go.kr)",
       "animalRegistry": "Animal protection system (animal.go.kr)",
       "envMinistry": "Ministry of Environment (me.go.kr) filing guide"
     },
-    "disclaimer": "Ministry of Environment guidance is the final authority. This is a user-facing summary, not legal advice."
+    "disclaimer": "Checklist marks are personal notes, not proof of filing or legal advice. Current law, official portals, and your local authority remain authoritative."
   },
   "pageMeta": {
     "homeDescription": "A location-based lifecycle portal for rare pets — from picking a species to adoption, husbandry, vet care, daily life, and farewell, all set up in one choice.",
@@ -4200,8 +4654,11 @@
   },
   "error": {
     "boundaryTitle": "An error occurred",
-    "boundaryMessage": "An unexpected error has occurred.",
-    "boundaryReset": "Try Again"
+    "boundaryMessage": "Something unexpected happened while displaying this screen. Data entered in this browser remains in place.",
+    "boundaryHint": "If retrying repeats the problem, go home or open Support for the next best path.",
+    "boundaryReset": "Try this screen again",
+    "boundaryHome": "Go home",
+    "boundarySupport": "Open Support"
   },
   "attachments": {
     "label": "Attachments",
@@ -4234,6 +4691,7 @@
     "join": "Join",
     "joined": "Joined",
     "leave": "Leave",
+    "confirmLeave": "Leave this cafe?",
     "members": "{{count}} members",
     "postsCount": "{{count}} posts",
     "noResult": "No cafes match your search",
@@ -4321,15 +4779,25 @@
     "submittedToast": "Inquiry received",
     "failed": "Could not submit the inquiry. Please try again shortly.",
     "receiptTitle": "Your inquiry is in",
-    "receiptDesc": "Keep the receipt id below to follow up on its status.",
+    "receiptDesc": "This browser saves the receipt id for any follow-up you may need.",
     "receiptId": "Receipt id",
     "receiptStatus": "Status",
     "receiptAt": "Received at",
+    "copyReceiptId": "Copy id",
+    "receiptCopied": "Receipt id copied",
+    "receiptCopyFailed": "Could not copy the receipt id",
     "newInquiry": "Write another inquiry",
     "status": {
-      "new": "Received"
+      "new": "Received",
+      "inReview": "In review",
+      "resolved": "Resolved",
+      "closed": "Closed",
+      "unknown": "Status unavailable"
     },
     "historyTitle": "Inquiries sent from this browser",
+    "removeReceipt": "Delete the local receipt for {{title}}",
+    "removeReceiptConfirm": "Delete the local receipt for ‘{{title}}’? This does not cancel the submitted inquiry.",
+    "receiptRemovedToast": "Local receipt deleted",
     "altTitle": "Other channels",
     "channelForum": "Community forum",
     "channelConsult": "Vet consult",
@@ -4339,7 +4807,78 @@
       "titleMax": "The title must be 140 characters or fewer.",
       "bodyMin": "Please describe your inquiry in at least 10 characters.",
       "bodyMax": "The body is limited to 4,000 characters.",
+      "emailMax": "The email address must be 254 characters or fewer.",
       "emailInvalid": "Please enter a valid email address."
     }
+  },
+  "support": {
+    "eyebrow": "Pettography Support",
+    "title": "The shortest path when you get stuck",
+    "subtitle": "Urgent animal care is routed first. Everything else leads to self-service help or a private operations inquiry.",
+    "promise": "Emergency, self-service, and operations help in one place",
+    "urgentKicker": "Emergency first",
+    "urgentTitle": "If your animal may be in danger, do not wait for a support reply",
+    "urgentDesc": "Run the one-minute emergency check and contact a nearby exotic-animal hospital right away.",
+    "openSos": "Open Emergency SOS",
+    "findHospital": "Find a nearby hospital",
+    "selfHelpKicker": "Resolve now",
+    "selfHelpTitle": "Check these before waiting for a reply",
+    "selfHelpDesc": "Common issues and data protection are ordered by the path most likely to solve the problem quickly.",
+    "paths": {
+      "faq": {
+        "title": "Frequently asked questions",
+        "desc": "Quick answers for setup, records, filings, and map issues"
+      },
+      "tools": {
+        "title": "Toolbox",
+        "desc": "Search and run husbandry calculators and checks"
+      },
+      "backup": {
+        "title": "Backup and restore",
+        "desc": "Protect records before changing browsers, resetting, or moving data"
+      }
+    },
+    "trustKicker": "Your privacy",
+    "trustTitle": "What to know before contacting us",
+    "privateTitle": "Your message is not posted publicly",
+    "privateDesc": "Your inquiry and optional reply email go only to the operations inbox.",
+    "receiptTitle": "You receive a receipt id",
+    "receiptDesc": "Successful inquiries keep their receipt id and title in this browser.",
+    "contactKicker": "Still need help?",
+    "contactTitle": "Tell operations when the issue is not resolved",
+    "contactDesc": "Include reproduction steps, the expected result, and what actually happened so we can investigate accurately.",
+    "contactButton": "Write an inquiry",
+    "contactTypeLabel": "Inquiry type shortcuts",
+    "contactTypes": {
+      "bug": "Bug report",
+      "question": "Usage question",
+      "partnership": "Partnership"
+    }
+  },
+  "sitemap": {
+    "eyebrow": "Explore Pettography",
+    "title": "Sitemap",
+    "subtitle": "Find and search every user-facing Pettography screen that you can actually open.",
+    "home": "Home",
+    "searchLabel": "Search pages",
+    "searchPlaceholder": "Try feeding, hospital, or backup",
+    "clear": "Clear search",
+    "resultCount": "{{count}} available pages",
+    "emptyTitle": "No matching pages",
+    "emptyDesc": "Try another feature name or route.",
+    "groups": {
+      "start": "Start and explore",
+      "daily": "Daily records",
+      "planning": "Habitat, cost, and planning",
+      "lifecycle": "Lifecycle",
+      "community": "Vets, community, and services",
+      "learn": "Resources, support, and policies"
+    }
+  },
+  "bgm": {
+    "turnOn": "Turn background music on",
+    "turnOff": "Turn background music off",
+    "credit": "{{title}} · {{artist}} ({{license}})",
+    "openCredit": "Open the music credit for {{title}} in a new tab"
   }
 }

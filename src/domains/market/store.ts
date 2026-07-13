@@ -78,7 +78,7 @@ export const useMarketStore = create<MarketState>()(
       isOwn: (id) => Boolean(get().ownIds[id]),
     }),
     {
-      name: 'pettography.market',
+      name: 'pettography.market.v2',
       version: 1,
       storage: createJSONStorage(() => localStorage),
     }

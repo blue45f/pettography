@@ -9,6 +9,14 @@
   font-weight: 800;
 }
 
+.eyebrow {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .subtitle {
   color: var(--color-text-secondary);
   margin-top: var(--spacing-xs);
@@ -346,4 +354,23 @@
 
 .offspringMorph {
   color: var(--color-text-secondary);
+}
+
+.rosterMain:focus-visible,
+.removeButton:focus-visible,
+.offspringChip:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .rosterRow {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .removeButton,
+  .formActions > * {
+    width: 100%;
+  }
 }

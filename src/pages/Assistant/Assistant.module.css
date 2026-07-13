@@ -26,6 +26,30 @@
   margin: 0;
 }
 
+.contextLink {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-primary);
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+.resultRegion {
+  border-radius: var(--radius-lg);
+  outline: none;
+}
+
+.resultRegion:focus-visible,
+.chip:focus-visible,
+.option:focus-visible,
+.emergencyLink:focus-visible,
+.emergencyLinkOutline:focus-visible,
+.contextLink:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 28%, transparent);
+  outline-offset: 3px;
+}
+
 .stepTitle {
   font-size: var(--font-size-xl);
   font-weight: 700;

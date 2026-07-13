@@ -34,6 +34,7 @@ import { downloadTextFile } from '@utils/download'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Molt.module.css'
 
@@ -44,10 +45,6 @@ const KIND_VARIANT: Record<MoltKind, 'success' | 'warning' | 'error' | 'primary'
   incomplete: 'warning',
   stuck: 'error',
   in_progress: 'primary',
-}
-
-function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
 }
 
 function Molt() {
@@ -66,6 +63,7 @@ function Molt() {
   const { data: speciesList = [] } = useSpeciesList({})
 
   const [showAllPets, setShowAllPets] = useState(false)
+  const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null)
   const events = showAllPets ? allEvents : activeEvents
   const showPetBadge = showAllPets && pets.length > 1
 
@@ -82,6 +80,10 @@ function Molt() {
   const median = useMemo(() => medianCycleDays(activeEvents), [activeEvents])
   const intervals = useMemo(() => completedIntervalsDays(activeEvents), [activeEvents])
   const stats = useMemo(() => moltStats(activeEvents), [activeEvents])
+  const latestActiveEvent = useMemo(
+    () => [...activeEvents].sort((a, b) => b.occurredAt.localeCompare(a.occurredAt))[0] ?? null,
+    [activeEvents]
+  )
 
   // Progress through the current cycle: days elapsed since the last anchor
   // out of the predicted interval. Clamped so an overdue cycle reads 100%.
@@ -96,15 +98,26 @@ function Molt() {
 
   const sparkPoints = useMemo(() => intervals.map((days, i) => ({ x: i, y: days })), [intervals])
 
+  const petLabels = useMemo(() => {
+    const speciesById = new Map(speciesList.map((item) => [item.id, item] as const))
+    return new Map(
+      pets.map((pet) => {
+        const petSpecies = pet.speciesId ? speciesById.get(pet.speciesId) : undefined
+        return [
+          pet.id,
+          {
+            name:
+              pet.petName?.trim() || petSpecies?.koreanName || t('petSwitcher.title', { count: 1 }),
+            emoji: petSpecies?.heroEmoji ?? '🐾',
+          },
+        ] as const
+      })
+    )
+  }, [pets, speciesList, t])
+
   function petLabel(petId: string | null | undefined): { name: string; emoji: string } | null {
     if (!petId) return null
-    const pet = pets.find((p) => p.id === petId)
-    if (!pet) return null
-    const sp = speciesList.find((s) => s.id === pet.speciesId)
-    return {
-      name: pet.petName?.trim() || sp?.koreanName || t('petSwitcher.title', { count: 1 }),
-      emoji: sp?.heroEmoji ?? '🐾',
-    }
+    return petLabels.get(petId) ?? null
   }
 
   const {
@@ -116,7 +129,7 @@ function Molt() {
     resolver: zodResolver(moltFormSchema),
     defaultValues: {
       kind: 'complete',
-      occurredAt: todayIso(),
+      occurredAt: today,
       notes: '',
     },
   })
@@ -129,7 +142,7 @@ function Molt() {
       notes: values.notes.trim(),
     })
     toast(t('molt.saved'), 'success')
-    reset({ kind: values.kind, occurredAt: todayIso(), notes: '' })
+    reset({ kind: values.kind, occurredAt: today, notes: '' })
   })
 
   const confidenceVariant =
@@ -148,6 +161,12 @@ function Molt() {
       buildCsv(['date', 'kind', 'note'], rows),
       'text/csv;charset=utf-8'
     )
+  }
+
+  function confirmRemove(id: string) {
+    removeEvent(id)
+    setPendingRemoveId(null)
+    toast(t('common.delete'), 'success')
   }
 
   return (
@@ -240,7 +259,15 @@ function Molt() {
               {prediction.overdue && (
                 <div className={styles.alertRow}>
                   <Alert variant="warning" title={t('molt.overdue.title', { term })}>
-                    {isArthropod ? t('molt.overdue.arthropod') : t('molt.overdue.generic')}
+                    <p>{isArthropod ? t('molt.overdue.arthropod') : t('molt.overdue.generic')}</p>
+                    <div className={styles.alertActions}>
+                      <Link to="/health" className={styles.alertLink}>
+                        {t('health.title')}
+                      </Link>
+                      <Link to="/hospitals" className={styles.alertLink}>
+                        {t('nav.hospitals')}
+                      </Link>
+                    </div>
                   </Alert>
                 </div>
               )}
@@ -250,6 +277,20 @@ function Molt() {
           )}
         </Card.Body>
       </Card>
+
+      {latestActiveEvent?.kind === 'stuck' && (
+        <Alert variant="error" title={t('molt.kinds.stuck')}>
+          <p>{t('molt.overdue.generic')}</p>
+          <div className={styles.alertActions}>
+            <Link to="/hospitals" className={styles.alertLink}>
+              {t('nav.hospitals')}
+            </Link>
+            <Link to="/sos" className={styles.alertLink}>
+              {t('nav.sos')}
+            </Link>
+          </div>
+        </Alert>
+      )}
 
       {/* Arthropod-specific guidance */}
       {isArthropod && (
@@ -269,6 +310,7 @@ function Molt() {
             <div className={styles.formRow}>
               <Input
                 type="date"
+                max={today}
                 label={t('molt.form.date')}
                 error={errors.occurredAt?.message ? t(errors.occurredAt.message) : undefined}
                 {...register('occurredAt')}
@@ -282,6 +324,7 @@ function Molt() {
             <Textarea
               label={t('molt.form.notes')}
               rows={3}
+              maxLength={300}
               placeholder={t('molt.form.notesPlaceholder')}
               error={errors.notes?.message ? t(errors.notes.message) : undefined}
               {...register('notes')}
@@ -296,7 +339,7 @@ function Molt() {
       </Card>
 
       {/* Interval trend */}
-      {sparkPoints.length >= 3 && (
+      {!showAllPets && sparkPoints.length >= 3 && (
         <Card padding="lg">
           <Card.Body>
             <div className={styles.trendHead}>
@@ -327,7 +370,11 @@ function Molt() {
         <ul className={styles.timeline}>
           {events.map((entry, index) => {
             // events are sorted desc; the next-older event is the previous cycle.
-            const older = events[index + 1] as MoltEvent | undefined
+            const older = events
+              .slice(index + 1)
+              .find(
+                (candidate) => candidate.petId === entry.petId && candidate.kind !== 'in_progress'
+              ) as MoltEvent | undefined
             const gap =
               older &&
               older.petId === entry.petId &&
@@ -346,7 +393,9 @@ function Molt() {
                         <Badge variant={KIND_VARIANT[entry.kind]}>
                           {t(`molt.kinds.${entry.kind}`)}
                         </Badge>
-                        <span className={styles.entryDate}>{entry.occurredAt}</span>
+                        <time className={styles.entryDate} dateTime={entry.occurredAt}>
+                          {entry.occurredAt}
+                        </time>
                         {gap !== null && (
                           <span className={styles.gapNote}>
                             {t('molt.history.sincePrev', { count: gap })}
@@ -361,7 +410,11 @@ function Molt() {
                       <button
                         type="button"
                         className={styles.removeButton}
-                        onClick={() => removeEvent(entry.id)}
+                        aria-expanded={pendingRemoveId === entry.id}
+                        aria-controls={`molt-remove-${entry.id}`}
+                        onClick={() =>
+                          setPendingRemoveId((current) => (current === entry.id ? null : entry.id))
+                        }
                       >
                         {t('molt.history.remove')}
                       </button>
@@ -369,6 +422,25 @@ function Molt() {
                     {entry.notes && <p className={styles.entryNotes}>{entry.notes}</p>}
                     {!entry.speciesId && (
                       <p className={styles.entryFooter}>{t('molt.history.speciesUnknown')}</p>
+                    )}
+                    {pendingRemoveId === entry.id && (
+                      <div id={`molt-remove-${entry.id}`} className={styles.deleteConfirm}>
+                        <span className={styles.deletePrompt}>{t('molt.history.remove')}?</span>
+                        <button
+                          type="button"
+                          className={styles.cancelButton}
+                          onClick={() => setPendingRemoveId(null)}
+                        >
+                          {t('common.cancel')}
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.confirmButton}
+                          onClick={() => confirmRemove(entry.id)}
+                        >
+                          {t('common.delete')}
+                        </button>
+                      </div>
                     )}
                   </Card.Body>
                 </Card>

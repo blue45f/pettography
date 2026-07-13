@@ -33,25 +33,35 @@ export type LightSchedule = z.infer<typeof lightScheduleSchema>
  * the zod `.default()` / `.optional()` friction with the resolver. Error
  * messages are i18n key suffixes resolved in the page via `t(...)`.
  */
-export const lightingFormSchema = z.object({
-  onHour: z
-    .number({ message: 'lighting.errors.hourNumber' })
-    .int('lighting.errors.hourInt')
-    .min(0, 'lighting.errors.hourRange')
-    .max(23, 'lighting.errors.hourRange'),
-  offHour: z
-    .number({ message: 'lighting.errors.hourNumber' })
-    .int('lighting.errors.hourInt')
-    .min(0, 'lighting.errors.hourRange')
-    .max(23, 'lighting.errors.hourRange'),
-  hasUvb: z.boolean(),
-  uvbHours: z
-    .number({ message: 'lighting.errors.uvbNumber' })
-    .int('lighting.errors.uvbInt')
-    .min(0, 'lighting.errors.uvbRange')
-    .max(24, 'lighting.errors.uvbRange')
-    .nullable(),
-  notes: z.string().trim().max(200, 'lighting.errors.notesMax'),
-})
+export const lightingFormSchema = z
+  .object({
+    onHour: z
+      .number({ message: 'lighting.errors.hourNumber' })
+      .int('lighting.errors.hourInt')
+      .min(0, 'lighting.errors.hourRange')
+      .max(23, 'lighting.errors.hourRange'),
+    offHour: z
+      .number({ message: 'lighting.errors.hourNumber' })
+      .int('lighting.errors.hourInt')
+      .min(0, 'lighting.errors.hourRange')
+      .max(23, 'lighting.errors.hourRange'),
+    hasUvb: z.boolean(),
+    uvbHours: z
+      .number({ message: 'lighting.errors.uvbNumber' })
+      .int('lighting.errors.uvbInt')
+      .min(0, 'lighting.errors.uvbRange')
+      .max(24, 'lighting.errors.uvbRange')
+      .nullable(),
+    notes: z.string().trim().max(200, 'lighting.errors.notesMax'),
+  })
+  .superRefine((values, ctx) => {
+    if (values.hasUvb && (values.uvbHours === null || values.uvbHours < 1)) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['uvbHours'],
+        message: 'lighting.errors.uvbRange',
+      })
+    }
+  })
 
 export type LightingFormValues = z.infer<typeof lightingFormSchema>

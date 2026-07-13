@@ -1,44 +1,69 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-xl);
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.eyebrow,
+.sectionKicker {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .header h1 {
-  font-size: var(--font-size-3xl);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
+  letter-spacing: -0.04em;
 }
 
-.subtitle {
+.subtitle,
+.privateNote,
+.sectionDesc {
+  max-width: 68ch;
   color: var(--color-text-secondary);
-  margin-top: var(--spacing-xs);
+  line-height: 1.65;
 }
 
-/* ---------- Passport identity card (hero) ---------- */
 .passport {
   position: relative;
   display: flex;
+  max-width: 680px;
   flex-direction: column;
-  gap: var(--spacing-md);
-  padding: var(--spacing-lg);
-  border-radius: var(--radius-xl);
-  background: var(--gradient-brand);
-  color: var(--color-on-brand);
-  box-shadow: var(--shadow-lg);
+  gap: var(--spacing-lg);
   overflow: hidden;
-  max-width: 540px;
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 38%, var(--color-border));
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(
+      circle at 90% 0%,
+      color-mix(in srgb, var(--color-primary) 18%, transparent),
+      transparent 42%
+    ),
+    var(--color-surface);
+  box-shadow: var(--shadow-lg);
 }
 
-/* Decorative guilloché-style sheen, kept subtle and non-animated. */
 .passport::after {
-  content: '';
   position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 85% -10%,
-    rgba(255, 255, 255, 0.28),
-    rgba(255, 255, 255, 0) 55%
-  );
+  right: -64px;
+  bottom: -72px;
+  width: 190px;
+  height: 190px;
+  border: 28px solid color-mix(in srgb, var(--color-primary) 7%, transparent);
+  border-radius: 50%;
+  content: '';
   pointer-events: none;
 }
 
@@ -47,251 +72,254 @@
   z-index: 1;
 }
 
-.passportTop {
+.passportTop,
+.sectionHead {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
 }
 
 .wordmark {
   font-weight: 800;
   letter-spacing: 0.04em;
-  font-size: var(--font-size-base);
 }
 
-.docType {
+.localOnly,
+.recordPill {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  padding: 0 var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  opacity: 0.85;
+  font-weight: 700;
 }
 
 .passportMain {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
 }
 
 .hero {
-  font-size: 3.25rem;
-  line-height: 1;
-  width: 72px;
-  height: 72px;
   display: inline-flex;
+  width: 88px;
+  height: 88px;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.18);
-  flex-shrink: 0;
+  border-radius: 28px;
+  background: var(--color-primary-soft);
+  font-size: 3.4rem;
 }
 
 .identity {
   display: flex;
+  min-width: 0;
   flex-direction: column;
   gap: var(--spacing-2xs);
-  min-width: 0;
+}
+
+.docType {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .petName {
-  font-size: var(--font-size-2xl);
+  overflow: hidden;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
   font-weight: 800;
-  line-height: 1.15;
+  letter-spacing: -0.04em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .species {
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  opacity: 0.95;
+  color: var(--color-text-secondary);
+  font-weight: 700;
 }
 
 .scientific {
-  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
   font-style: italic;
-  opacity: 0.8;
 }
 
 .passportStats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 110px), 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--spacing-sm);
-  padding: var(--spacing-md) 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
 }
 
-.passportStat dt {
+.passportStats > div {
+  min-width: 0;
+}
+
+.passportStats dt {
+  color: var(--color-text-muted);
   font-size: var(--font-size-xs);
-  opacity: 0.85;
-  margin-bottom: var(--spacing-2xs);
 }
 
-.passportStat dd {
-  font-size: var(--font-size-xl);
+.passportStats dd {
+  margin-top: var(--spacing-2xs);
+  overflow-wrap: anywhere;
+  font-size: var(--font-size-lg);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
-}
-
-.passportFoot {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--spacing-sm);
 }
 
 .passportNo {
-  font-family: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, monospace;
-  font-size: var(--font-size-base);
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  letter-spacing: 0.08em;
 }
 
-.holder {
-  font-size: var(--font-size-xs);
-  opacity: 0.85;
-  text-align: right;
-}
-
-.shareNote {
+.notOfficial {
+  max-width: 58ch;
   color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   line-height: 1.6;
-  margin-top: calc(-1 * var(--spacing-sm));
 }
 
-/* ---------- Stat strip ---------- */
-.statStrip {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr));
-  gap: var(--spacing-sm);
+.privateNote {
+  margin-top: calc(-1 * var(--spacing-md));
+  font-size: var(--font-size-sm);
 }
 
-.statChip {
+.coverageSection {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-2xs);
-  padding: var(--spacing-md);
-  background: var(--color-surface-muted);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  text-align: center;
-}
-
-.statValue {
-  font-size: var(--font-size-2xl);
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  color: var(--color-primary);
-}
-
-.statLabel {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
-}
-
-/* ---------- Achievements ---------- */
-.achHead {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--spacing-sm);
-  flex-wrap: wrap;
-  margin-bottom: var(--spacing-md);
-}
-
-.achTitle {
-  font-size: var(--font-size-lg);
-  font-weight: 700;
-}
-
-.achCount {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  font-variant-numeric: tabular-nums;
-}
-
-.achGrid {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
   gap: var(--spacing-md);
 }
 
-.achCard {
-  height: 100%;
-  transition: transform var(--motion-fast);
+.sectionTitle {
+  margin-top: var(--spacing-2xs);
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
-.achUnlocked {
-  border: 1px solid var(--color-primary);
+.coverageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+  gap: var(--spacing-md);
+  list-style: none;
 }
 
-.achUnlocked:hover {
+.coverageLink {
+  display: flex;
+  min-height: 170px;
+  flex-direction: column;
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-decoration: none;
+  transition:
+    border-color var(--motion-fast),
+    transform var(--motion-fast);
+}
+
+.coverageValue {
+  color: var(--color-primary);
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.coverageName {
+  margin-top: var(--spacing-md);
+  font-weight: 800;
+}
+
+.coverageDesc {
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.55;
+}
+
+.coverageLink:hover {
+  border-color: var(--color-primary);
   transform: translateY(-2px);
 }
 
-.achLocked {
-  opacity: 0.62;
+.petGate {
+  text-align: center;
 }
 
-.achCardTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-sm);
+.gateIcon {
+  display: block;
+  font-size: 2.6rem;
 }
 
-.achIcon {
-  font-size: var(--font-size-2xl);
-  line-height: 1;
+.petGate h2 {
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-xl);
 }
 
-.achLocked .achIcon {
-  filter: grayscale(1);
-}
-
-.achName {
-  font-size: var(--font-size-base);
-  font-weight: 700;
-  margin-bottom: var(--spacing-2xs);
-}
-
-.achDesc {
-  font-size: var(--font-size-sm);
+.petGate p {
+  max-width: 52ch;
+  margin: var(--spacing-sm) auto var(--spacing-lg);
   color: var(--color-text-secondary);
-  line-height: 1.5;
 }
 
-.achDone {
-  display: inline-block;
-  margin-top: var(--spacing-sm);
-  font-size: var(--font-size-sm);
+.primaryLink,
+.secondaryLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-lg);
+  border-radius: var(--radius-md);
   font-weight: 700;
-  color: var(--color-success);
+  text-decoration: none;
 }
 
-.achProgress {
-  margin-top: var(--spacing-sm);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2xs);
+.primaryLink {
+  background: var(--color-primary);
+  color: var(--color-on-brand);
 }
 
-.achProgressLabel {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-  font-variant-numeric: tabular-nums;
-  text-align: right;
+.secondaryLink {
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.coverageLink:focus-visible,
+.primaryLink:focus-visible,
+.secondaryLink:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 620px) {
+  .passportMain {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .passportStats {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .achCard {
+  .coverageLink {
     transition: none;
   }
-  .achUnlocked:hover {
+
+  .coverageLink:hover {
     transform: none;
   }
 }

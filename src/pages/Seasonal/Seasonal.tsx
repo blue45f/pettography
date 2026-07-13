@@ -70,6 +70,13 @@ function Seasonal() {
         )}
       </header>
 
+      <Card padding="md">
+        <Card.Body>
+          <strong>{t('seasonal.contextTitle')}</strong>
+          <p className={styles.subtitle}>{t('seasonal.contextBody')}</p>
+        </Card.Body>
+      </Card>
+
       {/* Category picker — only when there is no onboarded pet to scope to. */}
       {!hasActivePet && (
         <div className={styles.pickerBlock}>

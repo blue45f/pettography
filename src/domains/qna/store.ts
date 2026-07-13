@@ -170,8 +170,8 @@ export const useQnaStore = create<QnaState>()(
       },
     }),
     {
-      name: 'pettography.qna',
-      version: 1,
+      name: 'pettography.qna.v2',
+      version: 2,
       storage: createJSONStorage(() => localStorage),
     }
   )

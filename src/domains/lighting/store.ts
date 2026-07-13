@@ -69,7 +69,7 @@ export const useLightingStore = create<LightingState>()(
       clear: () => set({ schedules: {} }),
     }),
     {
-      name: 'pettography.lighting',
+      name: 'pettography.lighting.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
@@ -77,17 +77,12 @@ export const useLightingStore = create<LightingState>()(
 
 /**
  * The saved lighting schedule for the currently active pet, or a sensible
- * default when nothing is saved yet. A legacy / unkeyed entry under `'default'`
- * is used as a fallback so data saved before a pet existed stays visible.
+ * default when nothing is saved yet. Pet slots are intentionally isolated.
  */
 export function useActivePetLighting(): LightSchedule {
   const schedules = useLightingStore((s) => s.schedules)
   const activePetId = useOnboardingStore((s) => s.activePetId)
   const profile = useOnboardingStore((s) => s.profile)
   const key = petKeyOf(activePetId)
-  return (
-    schedules[key] ??
-    schedules[DEFAULT_KEY] ??
-    defaultSchedule(activePetId ?? null, profile.speciesId ?? null)
-  )
+  return schedules[key] ?? defaultSchedule(activePetId ?? null, profile.speciesId ?? null)
 }

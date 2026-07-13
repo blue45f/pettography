@@ -48,8 +48,8 @@ export const useAuthStore = create<AuthState>()(
         }),
     }),
     {
-      name: 'pettography.auth',
-      storage: createJSONStorage(() => localStorage),
+      name: 'pettography.auth.v2',
+      storage: createJSONStorage(() => sessionStorage),
       partialize: (state) => ({ token: state.token, account: state.account }),
       onRehydrateStorage: () => (state) => {
         if (!state) return

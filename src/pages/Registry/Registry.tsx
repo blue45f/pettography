@@ -1,7 +1,6 @@
 import Badge from '@components/common/Badge'
 import { useOnboardingStore } from '@domains/onboarding'
 import {
-  isRegulated,
   REGISTRY_FILINGS,
   REGISTRY_LINKS,
   useActivePetFilings,
@@ -26,12 +25,12 @@ function Registry() {
 
   const category = useOnboardingStore((s) => s.profile.category)
   const speciesId = useOnboardingStore((s) => s.profile.speciesId)
-  const { data: species } = useSpecies(speciesId ?? undefined)
+  const speciesQuery = useSpecies(speciesId ?? undefined)
+  const species = speciesQuery.data
   const done = useActivePetFilings()
   const toggle = useRegistryStore((s) => s.toggle)
   const clear = useRegistryStore((s) => s.clear)
 
-  const regulated = isRegulated(category)
   const completedCount = Object.keys(done).length
   const speciesFiling = species?.filingStatus ?? 'unknown'
 
@@ -49,16 +48,24 @@ function Registry() {
           {category ? (
             <p className={styles.statusValue}>
               {t(`categories.${category}`)} ·{' '}
-              {regulated ? (
-                <Badge variant="warning">{t('registry.regulatedBadge')}</Badge>
-              ) : (
-                <Badge variant="success">{t('registry.unregulatedBadge')}</Badge>
-              )}
+              <Badge variant="warning">{t('registry.categoryCheckRequired')}</Badge>
             </p>
           ) : (
             <p className={styles.statusValue}>{t('registry.noCategory')}</p>
           )}
         </div>
+        {speciesQuery.isLoading && speciesId && (
+          <div>
+            <p className={styles.statusLabel}>{t('registry.speciesFilingLabel')}</p>
+            <p className={styles.statusValue}>{t('common.loadingShort')}</p>
+          </div>
+        )}
+        {speciesQuery.isError && speciesId && (
+          <div>
+            <p className={styles.statusLabel}>{t('registry.speciesFilingLabel')}</p>
+            <p className={styles.statusValue}>{t('registry.speciesLoadFailed')}</p>
+          </div>
+        )}
         {species && (
           <div>
             <p className={styles.statusLabel}>{t('registry.speciesFilingLabel')}</p>
@@ -67,6 +74,7 @@ function Registry() {
               <Badge variant={FILING_STATUS_VARIANT[speciesFiling]}>
                 {t(`registry.filingStatus.${speciesFiling}`)}
               </Badge>
+              <span className={styles.dataBasis}>{t('registry.speciesDataBasis')}</span>
             </p>
           </div>
         )}
@@ -117,6 +125,11 @@ function Registry() {
         </h2>
         <ul className={styles.linkList}>
           <li>
+            <a href={REGISTRY_LINKS.law} target="_blank" rel="noreferrer">
+              {t('registry.links.law')} ↗
+            </a>
+          </li>
+          <li>
             <a href={REGISTRY_LINKS.wildlifeRegistry} target="_blank" rel="noreferrer">
               {t('registry.links.wildlifeRegistry')} ↗
             </a>
@@ -136,7 +149,13 @@ function Registry() {
       </section>
 
       {completedCount > 0 && (
-        <button type="button" className={styles.resetButton} onClick={clear}>
+        <button
+          type="button"
+          className={styles.resetButton}
+          onClick={() => {
+            if (globalThis.confirm(t('registry.resetConfirm'))) clear()
+          }}
+        >
           {t('registry.reset')}
         </button>
       )}

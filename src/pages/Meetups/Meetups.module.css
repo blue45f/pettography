@@ -174,7 +174,8 @@
 .dangerLink {
   background: none;
   border: none;
-  padding: 0;
+  min-height: 44px;
+  padding: 0 var(--spacing-xs);
   margin-left: auto;
   color: var(--color-error);
   font-size: var(--font-size-xs);
@@ -281,4 +282,54 @@
   margin-top: var(--spacing-2xs);
   color: var(--color-error);
   font-size: var(--font-size-xs);
+}
+
+.confirmPanel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.confirmPrompt {
+  margin-right: auto;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.cancelButton,
+.confirmButton {
+  min-height: 44px;
+  padding: 0 var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancelButton {
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.confirmButton {
+  border: 1px solid var(--color-error);
+  background: var(--color-error);
+  color: var(--color-on-brand);
+}
+
+@media (max-width: 640px) {
+  .composerActions button {
+    width: 100%;
+  }
+
+  .cardFooter > * {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
 }

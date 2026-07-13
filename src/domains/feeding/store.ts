@@ -46,19 +46,21 @@ export const useFeedingStore = create<FeedingState>()(
       clear: () => set({ logs: [] }),
     }),
     {
-      name: 'pettography.feeding',
+      // Existing persisted entries are test data; start from a pet-strict model
+      // instead of carrying ambiguous unscoped records forward.
+      name: 'pettography.feeding.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
 /**
- * Feeding logs scoped to the active pet. Legacy logs with no petId fall through
- * to the active pet so pre-multi-pet data keeps showing up.
+ * Feeding logs scoped strictly to the active pet. The null slot remains usable
+ * before onboarding, but it is never merged into a real pet's care history.
  */
 export function useActivePetFeedings(): FeedLog[] {
   const items = useFeedingStore((s) => s.logs)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return items
-  return items.filter((e) => !e.petId || e.petId === activePetId)
+  if (!activePetId) return items.filter((entry) => !entry.petId)
+  return items.filter((entry) => entry.petId === activePetId)
 }

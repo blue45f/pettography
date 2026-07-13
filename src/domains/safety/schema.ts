@@ -20,6 +20,7 @@ export type AuditMap = z.infer<typeof auditMapSchema>
 /** Persisted shape for the safety store: pet key → that pet's audit map. */
 export const safetyStateSchema = z.object({
   audits: z.record(z.string(), auditMapSchema),
+  updatedAt: z.record(z.string(), z.string()),
 })
 
 export type SafetyState = z.infer<typeof safetyStateSchema>

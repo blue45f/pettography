@@ -7,6 +7,7 @@ import { DEFAULT_PET_KEY, type AuditMap } from './schema'
 interface SafetyStoreState {
   /** Pet key → that pet's audit map (item id → confirmed?). */
   audits: Record<string, AuditMap>
+  updatedAt: Record<string, string>
   /** Toggle one item for one pet key. */
   toggleItem: (petKey: string, itemId: string) => void
   /** Clear a single pet's audit. */
@@ -19,6 +20,7 @@ export const useSafetyStore = create<SafetyStoreState>()(
   persist(
     (set) => ({
       audits: {},
+      updatedAt: {},
       toggleItem: (petKey, itemId) =>
         set((state) => {
           const current = state.audits[petKey] ?? {}
@@ -27,19 +29,22 @@ export const useSafetyStore = create<SafetyStoreState>()(
               ...state.audits,
               [petKey]: { ...current, [itemId]: !current[itemId] },
             },
+            updatedAt: { ...state.updatedAt, [petKey]: new Date().toISOString() },
           }
         }),
       resetAudit: (petKey) =>
         set((state) => {
           if (!(petKey in state.audits)) return {}
           const next = { ...state.audits }
+          const nextUpdatedAt = { ...state.updatedAt }
           delete next[petKey]
-          return { audits: next }
+          delete nextUpdatedAt[petKey]
+          return { audits: next, updatedAt: nextUpdatedAt }
         }),
-      clear: () => set({ audits: {} }),
+      clear: () => set({ audits: {}, updatedAt: {} }),
     }),
     {
-      name: 'pettography.safety',
+      name: 'pettography.safety.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
@@ -63,4 +68,11 @@ export function useActivePetAudit(): AuditMap {
   const activePetId = useOnboardingStore((s) => s.activePetId)
   const key = activePetId ?? DEFAULT_PET_KEY
   return audits[key] ?? {}
+}
+
+export function useActivePetAuditUpdatedAt(): string | null {
+  const updatedAt = useSafetyStore((state) => state.updatedAt)
+  const activePetId = useOnboardingStore((state) => state.activePetId)
+  if (!activePetId) return null
+  return updatedAt[activePetId] ?? null
 }

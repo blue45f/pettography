@@ -4,7 +4,6 @@ import Card from '@components/common/Card'
 import ContentImage from '@components/common/ContentImage'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
-import Select from '@components/common/Select'
 import Textarea from '@components/common/Textarea'
 import { useToast } from '@components/common/Toast'
 import {
@@ -27,7 +26,69 @@ import { useTranslation } from 'react-i18next'
 import styles from './Diary.module.css'
 
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60_000)
+  return localTime.toISOString().slice(0, 10)
+}
+
+const LEGACY_DRAFT_KEY = 'pettography.diary.draft'
+const DRAFT_KEY_PREFIX = `${LEGACY_DRAFT_KEY}.`
+
+function createDefaultFormValues(category: DiaryCategory = 'feeding'): DiaryFormValues {
+  return {
+    category,
+    occurredAt: todayIso(),
+    body: '',
+    weightGram: null,
+    imageUrl: '',
+  }
+}
+
+function normalizeDraft(value: unknown): DiaryFormValues | null {
+  if (!value || typeof value !== 'object') return null
+  const draft = value as Partial<DiaryFormValues>
+  const category = DIARY_CATEGORIES.includes(draft.category as DiaryCategory)
+    ? (draft.category as DiaryCategory)
+    : 'feeding'
+  return {
+    category,
+    occurredAt:
+      typeof draft.occurredAt === 'string' && draft.occurredAt ? draft.occurredAt : todayIso(),
+    body: typeof draft.body === 'string' ? draft.body : '',
+    weightGram:
+      typeof draft.weightGram === 'number' && Number.isFinite(draft.weightGram)
+        ? draft.weightGram
+        : null,
+    imageUrl: typeof draft.imageUrl === 'string' ? draft.imageUrl : '',
+  }
+}
+
+function readDraft(key: string): DiaryFormValues | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const scopedRaw = globalThis.localStorage.getItem(key)
+    const legacyRaw = scopedRaw ? null : globalThis.localStorage.getItem(LEGACY_DRAFT_KEY)
+    const raw = scopedRaw ?? legacyRaw
+    if (!raw) return null
+    const draft = normalizeDraft(JSON.parse(raw))
+    if (draft && legacyRaw) {
+      globalThis.localStorage.setItem(key, JSON.stringify(draft))
+      globalThis.localStorage.removeItem(LEGACY_DRAFT_KEY)
+    }
+    return draft
+  } catch {
+    return null
+  }
+}
+
+function isMeaningfulDraft(draft: DiaryFormValues): boolean {
+  return Boolean(
+    draft.body.trim() ||
+    draft.imageUrl?.trim() ||
+    draft.weightGram !== null ||
+    draft.category !== 'feeding' ||
+    draft.occurredAt !== todayIso()
+  )
 }
 
 function Diary() {
@@ -46,68 +107,62 @@ function Diary() {
   const { data: speciesList = [] } = useSpeciesList({})
 
   const [showAllPets, setShowAllPets] = useState(false)
+  const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null)
   const entries = showAllPets ? allEntries : activeEntries
   const showPetBadge = showAllPets && pets.length > 1
 
-  function petLabel(petId: string | null | undefined): { name: string; emoji: string } | null {
-    if (!petId) return null
-    const pet = pets.find((p) => p.id === petId)
-    if (!pet) return null
-    const sp = speciesList.find((s) => s.id === pet.speciesId)
-    return {
-      name: pet.petName?.trim() || sp?.koreanName || t('petSwitcher.title', { count: 1 }),
-      emoji: sp?.heroEmoji ?? '🐾',
+  const petLabels = useMemo(() => {
+    const labels = new Map<string, { name: string; emoji: string }>()
+    for (const pet of pets) {
+      const matchedSpecies = speciesList.find((item) => item.id === pet.speciesId)
+      labels.set(pet.id, {
+        name:
+          pet.petName?.trim() || matchedSpecies?.koreanName || t('petSwitcher.title', { count: 1 }),
+        emoji: matchedSpecies?.heroEmoji ?? '🐾',
+      })
     }
-  }
+    return labels
+  }, [pets, speciesList, t])
 
-  const DRAFT_KEY = 'pettography.diary.draft'
-  const DEFAULT_FORM_VALUES: DiaryFormValues = useMemo(
-    () => ({
-      category: 'feeding',
-      occurredAt: todayIso(),
-      body: '',
-      weightGram: null,
-      imageUrl: '',
-    }),
-    []
+  const entriesWithLabels = useMemo(
+    () =>
+      entries.map((entry) => ({
+        entry,
+        petLabel: entry.petId ? (petLabels.get(entry.petId) ?? null) : null,
+      })),
+    [entries, petLabels]
   )
 
+  const draftKey = `${DRAFT_KEY_PREFIX}${activePetId ?? 'unassigned'}`
+
   const [initialDraft] = useState<DiaryFormValues>(() => {
-    if (typeof window === 'undefined') return DEFAULT_FORM_VALUES
-    try {
-      const raw = globalThis.localStorage.getItem(DRAFT_KEY)
-      if (!raw) return DEFAULT_FORM_VALUES
-      return JSON.parse(raw) as DiaryFormValues
-    } catch {
-      return DEFAULT_FORM_VALUES
-    }
+    return readDraft(draftKey) ?? createDefaultFormValues()
   })
 
-  const hasSavedDraft = useMemo(() => {
-    if (typeof window === 'undefined') return false
-    try {
-      const raw = globalThis.localStorage.getItem(DRAFT_KEY)
-      if (!raw) return false
-      const parsed = JSON.parse(raw) as DiaryFormValues
-      return (parsed.body?.trim() || '') !== '' || (parsed.imageUrl?.trim() || '') !== ''
-    } catch {
-      return false
-    }
-  }, [])
-
+  const [hasSavedDraft, setHasSavedDraft] = useState(() => isMeaningfulDraft(initialDraft))
   const [draftDismissed, setDraftDismissed] = useState(false)
+  const [showImageField, setShowImageField] = useState(Boolean(initialDraft.imageUrl?.trim()))
 
   const {
     register,
     control,
     handleSubmit,
     reset,
+    setValue,
     watch,
     formState: { errors, isSubmitting },
   } = useForm<DiaryFormValues>({
     resolver: zodResolver(diaryFormSchema),
     defaultValues: initialDraft,
   })
+
+  useEffect(() => {
+    const nextDraft = readDraft(draftKey) ?? createDefaultFormValues()
+    reset(nextDraft)
+    setHasSavedDraft(isMeaningfulDraft(nextDraft))
+    setDraftDismissed(false)
+    setShowImageField(Boolean(nextDraft.imageUrl?.trim()))
+  }, [draftKey, reset])
 
   // Watch and auto-save draft to localStorage with debounce
   useEffect(() => {
@@ -120,7 +175,7 @@ function Diary() {
       }
       timerId = globalThis.setTimeout(() => {
         try {
-          globalThis.localStorage.setItem(DRAFT_KEY, JSON.stringify(data))
+          globalThis.localStorage.setItem(draftKey, JSON.stringify(data))
         } catch {
           // silently ignore quota errors
         }
@@ -132,16 +187,18 @@ function Diary() {
       }
       subscription.unsubscribe()
     }
-  }, [watch])
+  }, [draftKey, watch])
 
   const discardDraft = () => {
     try {
-      globalThis.localStorage.removeItem(DRAFT_KEY)
+      globalThis.localStorage.removeItem(draftKey)
     } catch {
       // ignore
     }
-    reset(DEFAULT_FORM_VALUES)
+    reset(createDefaultFormValues())
+    setHasSavedDraft(false)
     setDraftDismissed(true)
+    setShowImageField(false)
     toast(t('diary.draftDiscarded', '임시 저장된 일지를 초기화했습니다.'), 'info')
   }
 
@@ -159,19 +216,21 @@ function Diary() {
     })
     toast(t('common.save'), 'success')
     try {
-      globalThis.localStorage.removeItem(DRAFT_KEY)
+      globalThis.localStorage.removeItem(draftKey)
     } catch {
       // ignore
     }
-    reset({
-      category: values.category,
-      occurredAt: todayIso(),
-      body: '',
-      weightGram: null,
-      imageUrl: '',
-    })
+    reset(createDefaultFormValues(values.category))
+    setHasSavedDraft(false)
     setDraftDismissed(true)
+    setShowImageField(false)
   })
+
+  function confirmRemove(entryId: string) {
+    removeEntry(entryId)
+    setPendingRemoveId(null)
+    toast(t('common.delete'), 'success')
+  }
 
   return (
     <section className={styles.page}>
@@ -195,27 +254,7 @@ function Diary() {
         )}
       </header>
 
-      <Card padding="lg" className={styles.statsCard}>
-        <Card.Body>
-          <h2 className={styles.statsTitle}>{t('diary.stats.title')}</h2>
-          <dl className={styles.statsGrid}>
-            <div>
-              <dt>{t('diary.stats.total')}</dt>
-              <dd>{stats.total}</dd>
-            </div>
-            <div>
-              <dt>{t('diary.stats.recent30')}</dt>
-              <dd>{stats.recent30}</dd>
-            </div>
-            <div>
-              <dt>{t('diary.stats.latestWeight')}</dt>
-              <dd>{stats.latestWeight ? `${stats.latestWeight} g` : t('diary.stats.noWeight')}</dd>
-            </div>
-          </dl>
-        </Card.Body>
-      </Card>
-
-      <Card padding="lg">
+      <Card padding="lg" className={styles.composerCard}>
         <Card.Body>
           <h2 className={styles.formTitle}>{t('diary.newEntry')}</h2>
           {hasSavedDraft && !draftDismissed && (
@@ -229,21 +268,37 @@ function Diary() {
             </div>
           )}
           <form onSubmit={onSubmit} className={styles.form} noValidate>
-            <div className={styles.formRow}>
-              <Select
-                label={t('diary.category')}
-                options={DIARY_CATEGORIES.map((c) => ({
-                  value: c,
-                  label: t(`diary.categories.${c}`),
-                }))}
-                {...register('category')}
-              />
-              <Input
-                type="date"
-                label={t('diary.occurredAt')}
-                error={errors.occurredAt?.message ? t(errors.occurredAt.message) : undefined}
-                {...register('occurredAt')}
-              />
+            <div className={styles.formTopRow}>
+              <fieldset className={styles.categoryFieldset}>
+                <legend>{t('diary.category')}</legend>
+                <input type="hidden" {...register('category')} />
+                <div className={styles.categoryChips}>
+                  {DIARY_CATEGORIES.map((category) => (
+                    <button
+                      key={category}
+                      type="button"
+                      className={[
+                        styles.categoryChip,
+                        watchedCategory === category ? styles.categoryChipActive : '',
+                      ]
+                        .filter(Boolean)
+                        .join(' ')}
+                      aria-pressed={watchedCategory === category}
+                      onClick={() => setValue('category', category, { shouldDirty: true })}
+                    >
+                      {t(`diary.categories.${category}`)}
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+              <div className={styles.dateField}>
+                <Input
+                  type="date"
+                  label={t('diary.occurredAt')}
+                  error={errors.occurredAt?.message ? t(errors.occurredAt.message) : undefined}
+                  {...register('occurredAt')}
+                />
+              </div>
             </div>
             {watchedCategory === 'weight' && (
               <Input
@@ -266,17 +321,28 @@ function Diary() {
             <Textarea
               label={t('diary.body')}
               rows={3}
+              maxLength={500}
               error={errors.body?.message ? t(errors.body.message) : undefined}
               {...register('body')}
             />
-            <Input
-              type="url"
-              label={t('diary.imageUrl')}
-              placeholder="https://…"
-              helperText={t('diary.imageUrlHelper')}
-              error={errors.imageUrl?.message ? t(errors.imageUrl.message) : undefined}
-              {...register('imageUrl')}
-            />
+            <details
+              className={styles.optionalFields}
+              open={showImageField}
+              onToggle={(event) => setShowImageField(event.currentTarget.open)}
+            >
+              <summary>{t('diary.imageUrl')}</summary>
+              <div className={styles.optionalFieldsBody}>
+                <Input
+                  type="url"
+                  inputMode="url"
+                  label={t('diary.imageUrl')}
+                  placeholder="https://…"
+                  helperText={t('diary.imageUrlHelper')}
+                  error={errors.imageUrl?.message ? t(errors.imageUrl.message) : undefined}
+                  {...register('imageUrl')}
+                />
+              </div>
+            </details>
             <div className={styles.formActions}>
               <Button type="submit" variant="primary" isLoading={isSubmitting}>
                 {t('diary.addEntry')}
@@ -285,6 +351,26 @@ function Diary() {
           </form>
         </Card.Body>
       </Card>
+
+      <section className={styles.statsCard} aria-labelledby="diary-stats-heading">
+        <h2 id="diary-stats-heading" className={styles.statsTitle}>
+          {t('diary.stats.title')}
+        </h2>
+        <dl className={styles.statsGrid}>
+          <div>
+            <dt>{t('diary.stats.total')}</dt>
+            <dd>{stats.total}</dd>
+          </div>
+          <div>
+            <dt>{t('diary.stats.recent30')}</dt>
+            <dd>{stats.recent30}</dd>
+          </div>
+          <div>
+            <dt>{t('diary.stats.latestWeight')}</dt>
+            <dd>{stats.latestWeight ? `${stats.latestWeight} g` : t('diary.stats.noWeight')}</dd>
+          </div>
+        </dl>
+      </section>
 
       {entries.length === 0 ? (
         <EmptyState
@@ -296,53 +382,68 @@ function Diary() {
         />
       ) : (
         <ul className={styles.list}>
-          {entries.map((entry) => (
-            <li key={entry.id}>
-              <Card padding="md">
-                <Card.Body>
-                  <div className={styles.entryHeader}>
-                    <div className={styles.entryHeaderLeft}>
-                      <Badge variant="primary">
-                        {t(`diary.categories.${entry.category as DiaryCategory}`)}
-                      </Badge>
-                      <span className={styles.entryDate}>{entry.occurredAt}</span>
-                      {entry.weightGram !== null && (
-                        <Badge variant="success">{entry.weightGram} g</Badge>
-                      )}
-                      {(() => {
-                        const label = petLabel(entry.petId)
-                        if (!label) return null
-                        // Hide the badge when the active-pet view already
-                        // implies which pet this entry belongs to.
-                        if (!showPetBadge && entry.petId === activePetId) return null
-                        return (
-                          <Badge variant="default">
-                            <span aria-hidden="true">{label.emoji}</span> {label.name}
-                          </Badge>
-                        )
-                      })()}
-                    </div>
-                    <button
-                      type="button"
-                      className={styles.removeButton}
-                      onClick={() => removeEntry(entry.id)}
-                    >
-                      {t('diary.remove')}
-                    </button>
-                  </div>
-                  <p className={styles.entryBody}>{entry.body}</p>
-                  {entry.imageUrl && (
-                    <ContentImage
-                      src={entry.imageUrl}
-                      alt={entry.body.slice(0, 60)}
-                      className={styles.entryImage}
-                    />
+          {entriesWithLabels.map(({ entry, petLabel }) => (
+            <li key={entry.id} className={styles.entryItem}>
+              <div className={styles.entryHeader}>
+                <div className={styles.entryHeaderLeft}>
+                  <Badge variant="primary">
+                    {t(`diary.categories.${entry.category as DiaryCategory}`)}
+                  </Badge>
+                  <span className={styles.entryDate}>{entry.occurredAt}</span>
+                  {entry.weightGram !== null && (
+                    <Badge variant="success">{entry.weightGram} g</Badge>
                   )}
-                  {!entry.speciesId && (
-                    <p className={styles.entryFooter}>{t('diary.speciesUnknown')}</p>
+                  {petLabel && (showPetBadge || entry.petId !== activePetId) && (
+                    <Badge variant="default">
+                      <span aria-hidden="true">{petLabel.emoji}</span> {petLabel.name}
+                    </Badge>
                   )}
-                </Card.Body>
-              </Card>
+                </div>
+                <button
+                  type="button"
+                  className={styles.removeButton}
+                  onClick={() => setPendingRemoveId(entry.id)}
+                  aria-expanded={pendingRemoveId === entry.id}
+                  aria-controls={`remove-entry-${entry.id}`}
+                >
+                  {t('diary.remove')}
+                </button>
+              </div>
+              <p className={styles.entryBody}>{entry.body}</p>
+              {entry.imageUrl && (
+                <ContentImage
+                  src={entry.imageUrl}
+                  alt={entry.body.slice(0, 60)}
+                  className={styles.entryImage}
+                />
+              )}
+              {!entry.speciesId && (
+                <p className={styles.entryFooter}>{t('diary.speciesUnknown')}</p>
+              )}
+              {pendingRemoveId === entry.id && (
+                <div
+                  id={`remove-entry-${entry.id}`}
+                  className={styles.deleteConfirm}
+                  role="group"
+                  aria-label={t('diary.remove')}
+                >
+                  <span className={styles.deletePrompt}>{t('diary.remove')}?</span>
+                  <button
+                    type="button"
+                    className={styles.confirmDelete}
+                    onClick={() => confirmRemove(entry.id)}
+                  >
+                    {t('common.delete')}
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.cancelDelete}
+                    onClick={() => setPendingRemoveId(null)}
+                  >
+                    {t('common.cancel')}
+                  </button>
+                </div>
+              )}
             </li>
           ))}
         </ul>

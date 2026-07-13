@@ -30,7 +30,7 @@ export const useGalleryStore = create<GalleryState>()(
       removePhoto: (id) => set((state) => ({ photos: state.photos.filter((p) => p.id !== id) })),
     }),
     {
-      name: 'pettography.gallery',
+      name: 'pettography.gallery.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
@@ -41,16 +41,14 @@ export function photosForSpecies(photos: GalleryPhoto[], speciesId: string): Gal
 }
 
 /**
- * Filters photos for the active pet (legacy photos without petId fall
- * through). Use after photosForSpecies when you want the active pet's
- * photos of a given species.
+ * Filters photos strictly for the active pet or the pre-onboarding null slot.
  */
 export function useActivePetPhotos(speciesId: string | null | undefined): GalleryPhoto[] {
   const photos = useGalleryStore((s) => s.photos)
   const activePetId = useOnboardingStore((s) => s.activePetId)
   return photos.filter((p) => {
     if (speciesId && p.speciesId !== speciesId) return false
-    if (!activePetId) return true
-    return !p.petId || p.petId === activePetId
+    if (!activePetId) return !p.petId
+    return p.petId === activePetId
   })
 }

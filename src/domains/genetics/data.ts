@@ -372,6 +372,22 @@ export const GENETICS_SPECIES: readonly string[] = [
 /** Species whose hobby morphs are mostly polygenic — surfaced as a caveat. */
 export const POLYGENIC_NOTE_SPECIES: readonly string[] = ['crested-gecko']
 
+/**
+ * Traits excluded from the simple independent-locus model because the catalog
+ * cannot safely represent allelic complexes, incompatible strains, lethal
+ * homozygous outcomes, or a phenotype with a documented welfare disorder.
+ */
+const UNSUPPORTED_SIMPLE_MODEL_TRAITS = new Set([
+  'leo-bell',
+  'leo-rainwater',
+  'bp-mojave',
+  'bp-lesser',
+  'bp-spider',
+  'crest-lilywhite',
+])
+
 export function traitsForSpecies(speciesSlug: string): GeneTrait[] {
-  return GENE_TRAITS.filter((t) => t.speciesSlug === speciesSlug)
+  return GENE_TRAITS.filter(
+    (trait) => trait.speciesSlug === speciesSlug && !UNSUPPORTED_SIMPLE_MODEL_TRAITS.has(trait.id)
+  )
 }

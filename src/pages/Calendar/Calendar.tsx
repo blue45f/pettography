@@ -52,7 +52,18 @@ function addDays(base: Date, days: number): Date {
 }
 
 function formatDate(d: Date): string {
-  return d.toISOString().slice(0, 10)
+  const localTime = new Date(d.getTime() - d.getTimezoneOffset() * 60_000)
+  return localTime.toISOString().slice(0, 10)
+}
+
+function parseLocalDate(value: string): Date {
+  const [year, month, day] = value.slice(0, 10).split('-').map(Number)
+  return new Date(year, month - 1, day)
+}
+
+function dateOrdinal(value: string): number {
+  const [year, month, day] = value.slice(0, 10).split('-').map(Number)
+  return Date.UTC(year, month - 1, day)
 }
 
 function Calendar() {
@@ -80,7 +91,7 @@ function Calendar() {
         id: `vax-${due.vaccination.id}`,
         kind: 'vaccine',
         daysLeft: due.daysLeft,
-        date: new Date(due.vaccination.nextDueAt as string),
+        date: parseLocalDate(due.vaccination.nextDueAt as string),
         title: due.vaccination.name,
         note: due.vaccination.clinic ?? t('calendar.noClinic'),
         link: '/health',
@@ -115,13 +126,9 @@ function Calendar() {
       })
     }
 
-    const today = now.toISOString().slice(0, 10)
+    const today = formatDate(now)
     const dayDiff = (iso: string) =>
-      Math.round(
-        (new Date(`${iso.slice(0, 10)}T00:00:00Z`).getTime() -
-          new Date(`${today}T00:00:00Z`).getTime()) /
-          86_400_000
-      )
+      Math.round((dateOrdinal(iso) - dateOrdinal(today)) / 86_400_000)
     const withinWindow = (daysLeft: number) => daysLeft <= HORIZON_DAYS && daysLeft >= -30
 
     // Gear replacement dates
@@ -134,7 +141,7 @@ function Calendar() {
         id: `gear-${g.id}`,
         kind: 'gear',
         daysLeft,
-        date: new Date(due),
+        date: parseLocalDate(due),
         title: g.name,
         note: '',
         link: '/gear',
@@ -152,7 +159,7 @@ function Calendar() {
         id: `supplement-${type}`,
         kind: 'supplement',
         daysLeft,
-        date: new Date(nextDusting(last, interval)),
+        date: parseLocalDate(nextDusting(last, interval)),
         title: t(`supplements.types.${type}`),
         note: '',
         link: '/supplements',
@@ -170,7 +177,7 @@ function Calendar() {
         id: `cleaning-${type}`,
         kind: 'cleaning',
         daysLeft,
-        date: new Date(due),
+        date: parseLocalDate(due),
         title: t(`cleaning.types.${type}`),
         note: '',
         link: '/cleaning',
@@ -205,11 +212,16 @@ function Calendar() {
             {species.heroEmoji} {species.koreanName}
           </p>
         )}
-        {events.length > 0 && (
-          <Button variant="secondary" onClick={exportIcs} className={styles.exportButton}>
-            {t('calendar.exportIcs')}
-          </Button>
-        )}
+        <div className={styles.headerActions}>
+          {events.length > 0 && (
+            <Button variant="secondary" onClick={exportIcs} className={styles.exportButton}>
+              {t('calendar.exportIcs')}
+            </Button>
+          )}
+          <Link to="/routine" className={styles.routineLink}>
+            {t('routine.title')} →
+          </Link>
+        </div>
       </header>
 
       {events.length === 0 ? (
@@ -264,19 +276,22 @@ function Bucket({ label, tone, events, t }: BucketProps) {
         {events.map((e) => (
           <li key={e.id} className={styles.event}>
             <Link to={e.link} className={styles.eventLink}>
-              <span className={styles.eventDate}>
+              <time className={styles.eventDate} dateTime={formatDate(e.date)}>
                 {formatDate(e.date)}
                 <span className={styles.eventDaysLeft}>
                   {e.daysLeft < 0
                     ? t('calendar.daysOverdue', { days: Math.abs(e.daysLeft) })
                     : t('calendar.daysLeft', { days: e.daysLeft })}
                 </span>
-              </span>
+              </time>
               <span className={styles.eventBody}>
                 <Badge variant={badgeForKind(e.kind, tone)}>{t(`calendar.kind.${e.kind}`)}</Badge>
                 <span className={styles.eventTitle}>{e.title}</span>
               </span>
-              <span className={styles.eventNote}>{e.note}</span>
+              {e.note && <span className={styles.eventNote}>{e.note}</span>}
+              <span className={styles.eventView} aria-hidden="true">
+                ›
+              </span>
             </Link>
           </li>
         ))}

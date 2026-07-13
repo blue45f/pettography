@@ -1,4 +1,5 @@
 import Badge from '@components/common/Badge'
+import Button from '@components/common/Button'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
 import usePageMeta from '@hooks/usePageMeta'
@@ -33,6 +34,10 @@ function Tools() {
         .filter((tool) => !q || tool.label.toLowerCase().includes(q) || tool.path.includes(q)),
     })).filter((group) => group.items.length > 0)
   }, [deferredQuery, t])
+  const visibleCount = useMemo(
+    () => groups.reduce((count, group) => count + group.items.length, 0),
+    [groups]
+  )
 
   return (
     <section className={styles.page}>
@@ -50,10 +55,22 @@ function Tools() {
           onChange={(e) => setQuery(e.target.value)}
           aria-label={t('tools.searchPlaceholder')}
         />
+        <p className={styles.resultCount} aria-live="polite">
+          {t('tools.count', { count: visibleCount })}
+        </p>
       </div>
 
       {groups.length === 0 ? (
-        <EmptyState icon="🔍" title={t('tools.emptyTitle')} description={t('tools.emptyDesc')} />
+        <EmptyState
+          icon="🔍"
+          title={t('tools.emptyTitle')}
+          description={t('tools.emptyDesc')}
+          action={
+            <Button variant="outline" size="sm" onClick={() => setQuery('')}>
+              {t('species.resetFilters')}
+            </Button>
+          }
+        />
       ) : (
         <div className={styles.groups}>
           {groups.map((group) => (
@@ -70,7 +87,7 @@ function Tools() {
               <ul className={styles.grid}>
                 {group.items.map((tool) => (
                   <li key={tool.path}>
-                    <Link to={tool.path} className={styles.tile}>
+                    <Link to={tool.path} className={styles.tile} title={tool.label}>
                       <span className={styles.tileLabel}>{tool.label}</span>
                       <span className={styles.tileArrow} aria-hidden="true">
                         →

@@ -82,7 +82,18 @@ function AdminPartners() {
                     >
                       {t('admin.reject')}
                     </Button>
-                    <Button variant="ghost" size="sm" onClick={() => removeApp(app.id)}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        if (
+                          !window.confirm(t('admin.confirmApplicationDelete', { name: app.name }))
+                        )
+                          return
+                        removeApp(app.id)
+                        toast(t('admin.deletedToast'), 'success')
+                      }}
+                    >
                       {t('admin.delete')}
                     </Button>
                   </div>

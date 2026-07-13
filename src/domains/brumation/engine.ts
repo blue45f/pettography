@@ -99,6 +99,10 @@ export function progressPct(plan: BrumationPlan, todayISO: string): number {
   const total = totalDays(plan)
   if (total <= 0) return 0
   const day = dayInPlan(plan, todayISO)
+  if (total === 1) return day >= 0 ? 100 : 0
+  if (day <= 0) return 0
   const pct = (day / total) * 100
-  return Math.min(Math.max(pct, 0), 100)
+  // Keep the final day at 100% for completed plans.
+  const visiblePct = day >= total - 1 ? 100 : pct
+  return Math.min(Math.max(visiblePct, 0), 100)
 }

@@ -41,7 +41,7 @@ export const useConsultStore = create<ConsultState>()(
         }),
     }),
     {
-      name: 'pettography.consult',
+      name: 'pettography.consult.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )

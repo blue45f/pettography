@@ -34,7 +34,7 @@ export const useRegistryStore = create<RegistryState>()(
             else next[key] = new Date().toISOString()
             return { done: next }
           }
-          const current = state.byPet[id] ?? state.done
+          const current = state.byPet[id] ?? {}
           const next = { ...current }
           if (next[key]) delete next[key]
           else next[key] = new Date().toISOString()
@@ -50,7 +50,7 @@ export const useRegistryStore = create<RegistryState>()(
         }),
     }),
     {
-      name: 'pettography.registry',
+      name: 'pettography.registry.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
@@ -61,5 +61,5 @@ export function useActivePetFilings(): FilingDone {
   const byPet = useRegistryStore((s) => s.byPet)
   const activePetId = useOnboardingStore((s) => s.activePetId)
   if (!activePetId) return done
-  return byPet[activePetId] ?? done
+  return byPet[activePetId] ?? {}
 }

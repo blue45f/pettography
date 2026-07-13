@@ -27,14 +27,16 @@ import { Link } from 'react-router'
 import styles from './Kit.module.css'
 
 function Kit() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { toast } = useToast()
   useDocumentTitle(t('kit.title'))
 
   const profile = useOnboardingStore((s) => s.profile)
   const checked = useKitStore((s) => s.checked)
+  const checkedUpdatedAt = useKitStore((s) => s.checkedUpdatedAt)
   const contacts = useKitStore((s) => s.contacts)
   const toggleItem = useKitStore((s) => s.toggleItem)
+  const resetChecklist = useKitStore((s) => s.resetChecklist)
   const addContact = useKitStore((s) => s.addContact)
   const removeContact = useKitStore((s) => s.removeContact)
 
@@ -58,6 +60,11 @@ function Kit() {
     toast(t('kit.contacts.added'), 'success')
     reset({ label: '', phone: '', note: '' })
   })
+
+  const phoneHref = (phone: string) => {
+    const normalized = phone.replace(/[^+\d]/g, '')
+    return normalized.length >= 3 ? `tel:${normalized}` : null
+  }
 
   return (
     <section className={styles.page}>
@@ -86,6 +93,28 @@ function Kit() {
             size="lg"
             label={t('kit.readiness.aria', { pct: overall.pct })}
           />
+          <div className={styles.readinessMeta}>
+            <span>
+              {checkedUpdatedAt
+                ? t('kit.readiness.updatedAt', {
+                    date: new Date(checkedUpdatedAt).toLocaleString(
+                      i18n.resolvedLanguage ?? i18n.language
+                    ),
+                  })
+                : t('kit.readiness.neverReviewed')}
+            </span>
+            {overall.done > 0 && (
+              <button
+                type="button"
+                className={styles.resetButton}
+                onClick={() => {
+                  if (globalThis.confirm(t('kit.readiness.resetConfirm'))) resetChecklist()
+                }}
+              >
+                {t('kit.readiness.reset')}
+              </button>
+            )}
+          </div>
         </Card.Body>
       </Card>
 
@@ -200,6 +229,7 @@ function Kit() {
                 <Input
                   type="tel"
                   inputMode="tel"
+                  autoComplete="tel"
                   label={t('kit.contacts.phoneField')}
                   placeholder={t('kit.contacts.phonePlaceholder')}
                   maxLength={40}
@@ -235,19 +265,33 @@ function Kit() {
               <li key={contact.id} className={styles.contactItem}>
                 <div className={styles.contactBody}>
                   <p className={styles.contactLabel}>{contact.label}</p>
-                  <a href={`tel:${contact.phone}`} className={styles.contactPhone}>
-                    {contact.phone}
-                  </a>
+                  {phoneHref(contact.phone) ? (
+                    <a href={phoneHref(contact.phone) ?? undefined} className={styles.contactPhone}>
+                      {contact.phone}
+                    </a>
+                  ) : (
+                    <span className={styles.contactPhone}>{contact.phone}</span>
+                  )}
                   {contact.note && <p className={styles.contactNote}>{contact.note}</p>}
                 </div>
                 <div className={styles.contactActions}>
-                  <a href={`tel:${contact.phone}`} className={styles.contactCall}>
-                    {t('kit.contacts.call')}
-                  </a>
+                  {phoneHref(contact.phone) && (
+                    <a href={phoneHref(contact.phone) ?? undefined} className={styles.contactCall}>
+                      {t('kit.contacts.call')}
+                    </a>
+                  )}
                   <button
                     type="button"
                     className={styles.removeButton}
-                    onClick={() => removeContact(contact.id)}
+                    onClick={() => {
+                      if (
+                        globalThis.confirm(
+                          t('kit.contacts.removeConfirm', { label: contact.label })
+                        )
+                      ) {
+                        removeContact(contact.id)
+                      }
+                    }}
                   >
                     {t('kit.contacts.remove')}
                   </button>

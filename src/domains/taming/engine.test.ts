@@ -16,7 +16,7 @@ function s(sessionAt: string, calmness: number, stressSigns: StressSign[] = []):
   seq += 1
   return {
     id: `s${seq}`,
-    petId: null,
+    petId: 'pet-1',
     speciesId: null,
     sessionAt,
     durationMin: 5,

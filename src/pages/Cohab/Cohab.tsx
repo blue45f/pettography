@@ -1,5 +1,6 @@
 import Alert from '@components/common/Alert'
 import Badge from '@components/common/Badge'
+import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Select from '@components/common/Select'
@@ -7,7 +8,7 @@ import { SOCIAL_SLUGS, cohabVerdict, type CohabSpecies, type Verdict } from '@do
 import { useOnboardingStore } from '@domains/onboarding'
 import { useSpeciesList, type Species } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import styles from './Cohab.module.css'
@@ -36,7 +37,9 @@ function Cohab() {
   const { t } = useTranslation()
   useDocumentTitle(t('cohab.title'))
 
-  const { data: speciesList = [], isLoading } = useSpeciesList({})
+  const speciesQuery = useSpeciesList({})
+  const speciesList = useMemo(() => speciesQuery.data ?? [], [speciesQuery.data])
+  const verdictRef = useRef<HTMLDivElement>(null)
   const activeSpeciesId = useOnboardingStore((s) => s.profile.speciesId)
 
   // Selections live in state, seeded lazily (no setState-in-effect). The seed is
@@ -53,12 +56,16 @@ function Cohab() {
       })),
     [speciesList]
   )
+  const optionalOptions = useMemo(
+    () => [{ value: '', label: t('cohab.picker.choose') }, ...options],
+    [options, t]
+  )
 
   // Resolve the effective A/B ids: an explicit pick wins, otherwise default A to
-  // the active pet's species (or the first listed) and B to A.
+  // the active pet's species (or the first listed). B must be chosen explicitly.
   const fallbackA = activeSpeciesId ?? speciesList[0]?.id ?? null
   const resolvedAId = pickA ?? fallbackA
-  const resolvedBId = pickB ?? resolvedAId
+  const resolvedBId = pickB
 
   const speciesA = useMemo(
     () => speciesList.find((s) => s.id === resolvedAId) ?? null,
@@ -79,6 +86,10 @@ function Cohab() {
     [speciesList]
   )
 
+  useEffect(() => {
+    if (result) verdictRef.current?.focus()
+  }, [result])
+
   return (
     <section className={styles.page}>
       <header className={styles.header}>
@@ -89,6 +100,15 @@ function Cohab() {
       <Alert variant="warning" title={t('cohab.principle.title')}>
         {t('cohab.principle.body')}
       </Alert>
+
+      {speciesQuery.isError && (
+        <div className={styles.errorPanel} role="alert">
+          <p>{t('cohab.loadFailed')}</p>
+          <Button type="button" variant="outline" onClick={() => void speciesQuery.refetch()}>
+            {t('common.retry')}
+          </Button>
+        </div>
+      )}
 
       {/* ── Pair picker ───────────────────────────────────────── */}
       <div className={styles.section}>
@@ -101,7 +121,7 @@ function Cohab() {
                 label={t('cohab.picker.speciesA')}
                 options={options}
                 value={resolvedAId ?? ''}
-                disabled={isLoading || options.length === 0}
+                disabled={speciesQuery.isLoading || options.length === 0}
                 onChange={(e) => setPickA(e.target.value)}
               />
               <span className={styles.plus} aria-hidden="true">
@@ -109,9 +129,9 @@ function Cohab() {
               </span>
               <Select
                 label={t('cohab.picker.speciesB')}
-                options={options}
+                options={optionalOptions}
                 value={resolvedBId ?? ''}
-                disabled={isLoading || options.length === 0}
+                disabled={speciesQuery.isLoading || options.length === 0}
                 onChange={(e) => setPickB(e.target.value)}
               />
             </div>
@@ -121,7 +141,9 @@ function Cohab() {
 
       {/* ── Verdict ───────────────────────────────────────────── */}
       {result && speciesA && speciesB ? (
-        <VerdictCard result={result} speciesA={speciesA} speciesB={speciesB} />
+        <div ref={verdictRef} className={styles.verdictRegion} tabIndex={-1} aria-live="polite">
+          <VerdictCard result={result} speciesA={speciesA} speciesB={speciesB} />
+        </div>
       ) : (
         <EmptyState variant="gated" icon="🔎" title={t('cohab.empty')} headingLevel={2} />
       )}
@@ -170,7 +192,7 @@ function Cohab() {
                           {t(`cohab.social.notes.${s.slug}`)}
                         </span>
                       </div>
-                      <Badge variant="success">{t('cohab.social.tag')}</Badge>
+                      <Badge variant="warning">{t('cohab.social.tag')}</Badge>
                     </div>
                   </Card.Body>
                 </Card>

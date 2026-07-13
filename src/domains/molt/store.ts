@@ -42,19 +42,18 @@ export const useMoltStore = create<MoltState>()(
       clear: () => set({ events: [] }),
     }),
     {
-      name: 'pettography.molt',
+      name: 'pettography.molt.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )
 )
 
 /**
- * Molt events scoped to the active pet. Legacy entries with no petId fall
- * through to the active pet so pre-multi-pet data keeps showing up.
+ * Molt events strictly scoped to the active pet or pre-onboarding null slot.
  */
 export function useActivePetMolts(): MoltEvent[] {
   const events = useMoltStore((s) => s.events)
   const activePetId = useOnboardingStore((s) => s.activePetId)
-  if (!activePetId) return events
-  return events.filter((e) => !e.petId || e.petId === activePetId)
+  if (!activePetId) return events.filter((event) => !event.petId)
+  return events.filter((event) => event.petId === activePetId)
 }

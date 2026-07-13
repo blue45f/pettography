@@ -318,7 +318,7 @@ export const useCafesStore = create<CafesState>()(
         })),
     }),
     {
-      name: 'pettography.cafes',
+      name: 'pettography.cafes.v2',
       version: 1,
       storage: createJSONStorage(() => localStorage),
     }

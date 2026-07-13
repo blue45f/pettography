@@ -1,5 +1,12 @@
 import { z } from 'zod'
 
+const ISO_DAY_PATTERN = /^\d{4}-\d{2}-\d{2}$/
+
+function localTodayIso(): string {
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
+}
+
 /**
  * The three dusting products keepers rotate to prevent metabolic bone disease
  * (MBD) in insectivorous/herbivorous exotics:
@@ -19,7 +26,7 @@ export const SUPPLEMENT_TYPES: readonly SupplementType[] = [
 /** A single recorded dusting event for one supplement type. */
 export const dustingLogSchema = z.object({
   id: z.string(),
-  petId: z.string().nullable().optional(),
+  petId: z.string(),
   speciesId: z.string().nullable(),
   type: supplementTypeSchema,
   /** Day the dusting happened, `YYYY-MM-DD`. */
@@ -47,7 +54,11 @@ export type ScheduleConfig = z.infer<typeof scheduleConfigSchema>
  */
 export const dustingFormSchema = z.object({
   type: supplementTypeSchema,
-  dustedAt: z.string().min(1, 'supplements.errors.dateRequired'),
+  dustedAt: z
+    .string()
+    .min(1, 'supplements.errors.dateRequired')
+    .regex(ISO_DAY_PATTERN, 'supplements.errors.dateInvalid')
+    .refine((value) => value <= localTodayIso(), 'supplements.errors.dateFuture'),
   note: z.string().trim().max(200, 'supplements.errors.noteMax'),
 })
 export type DustingFormValues = z.infer<typeof dustingFormSchema>

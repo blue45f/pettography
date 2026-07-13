@@ -24,24 +24,27 @@ import { Link } from 'react-router'
 
 import styles from './CostReport.module.css'
 
-const krw = new Intl.NumberFormat('ko-KR')
-
-function formatKrw(value: number): string {
-  return `${krw.format(Math.round(value))}원`
+function formatKrw(value: number, locale: string): string {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: 'KRW',
+    maximumFractionDigits: 0,
+  }).format(Math.round(value))
 }
 
 /** Compact label for the sparkline axis (e.g. 188,000원 → 18.8만원). */
-function formatCompactKrw(value: number): string {
-  if (value >= 10000) {
-    const man = value / 10000
-    const rounded = man >= 100 ? Math.round(man) : Math.round(man * 10) / 10
-    return `${krw.format(rounded)}만원`
-  }
-  return `${krw.format(Math.round(value))}원`
+function formatCompactKrw(value: number, locale: string): string {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: 'KRW',
+    notation: 'compact',
+    maximumFractionDigits: 1,
+  }).format(Math.round(value))
 }
 
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
 }
 
 interface BreakdownRowProps {
@@ -49,9 +52,10 @@ interface BreakdownRowProps {
   amountKrw: number
   maxKrw: number
   totalKrw: number
+  locale: string
 }
 
-function BreakdownRow({ label, amountKrw, maxKrw, totalKrw }: BreakdownRowProps) {
+function BreakdownRow({ label, amountKrw, maxKrw, totalKrw, locale }: BreakdownRowProps) {
   const scale = maxKrw > 0 ? amountKrw / maxKrw : 0
   const pct = totalKrw > 0 ? Math.round((amountKrw / totalKrw) * 100) : 0
   return (
@@ -65,7 +69,7 @@ function BreakdownRow({ label, amountKrw, maxKrw, totalKrw }: BreakdownRowProps)
         />
       </div>
       <span className={styles.barMeta}>
-        <span className={styles.barAmount}>{formatKrw(amountKrw)}</span>
+        <span className={styles.barAmount}>{formatKrw(amountKrw, locale)}</span>
         <span className={styles.barPct}>{pct}%</span>
       </span>
     </li>
@@ -78,6 +82,7 @@ interface PetBreakdownRowProps {
   maxKrw: number
   totalKrw: number
   fallbackLabel: string
+  locale: string
 }
 
 function PetBreakdownRow({
@@ -86,15 +91,25 @@ function PetBreakdownRow({
   maxKrw,
   totalKrw,
   fallbackLabel,
+  locale,
 }: PetBreakdownRowProps) {
   const petLabel = usePetLabel(petId)
   const label = petLabel ? `${petLabel.emoji} ${petLabel.name}` : fallbackLabel
-  return <BreakdownRow label={label} amountKrw={amountKrw} maxKrw={maxKrw} totalKrw={totalKrw} />
+  return (
+    <BreakdownRow
+      label={label}
+      amountKrw={amountKrw}
+      maxKrw={maxKrw}
+      totalKrw={totalKrw}
+      locale={locale}
+    />
+  )
 }
 
 function CostReport() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   useDocumentTitle(t('costreport.title'))
+  const locale = i18n.resolvedLanguage ?? 'ko-KR'
 
   const entries = useBudgetStore((s) => s.entries)
   const pets = useOnboardingStore((s) => s.pets)
@@ -212,7 +227,7 @@ function CostReport() {
             <Card padding="lg" className={styles.tile}>
               <Card.Body>
                 <p className={styles.tileLabel}>{t('costreport.tiles.total')}</p>
-                <p className={styles.tileValue}>{formatKrw(total)}</p>
+                <p className={styles.tileValue}>{formatKrw(total, locale)}</p>
                 <p className={styles.tileHint}>
                   {effectiveYear === null
                     ? t('costreport.scope.allTime')
@@ -223,7 +238,7 @@ function CostReport() {
             <Card padding="lg" className={styles.tile}>
               <Card.Body>
                 <p className={styles.tileLabel}>{t('costreport.tiles.monthlyAverage')}</p>
-                <p className={styles.tileValue}>{formatKrw(avg)}</p>
+                <p className={styles.tileValue}>{formatKrw(avg, locale)}</p>
                 <p className={styles.tileHint}>{t('costreport.perMonth')}</p>
               </Card.Body>
             </Card>
@@ -232,9 +247,9 @@ function CostReport() {
                 <p className={styles.tileLabel}>
                   {t('costreport.tiles.projected', { year: currentYear })}
                 </p>
-                <p className={styles.tileValue}>{formatKrw(projected)}</p>
+                <p className={styles.tileValue}>{formatKrw(projected, locale)}</p>
                 <p className={styles.tileHint}>
-                  {t('costreport.projectedHint', { amount: formatKrw(thisYearTotal) })}
+                  {t('costreport.projectedHint', { amount: formatKrw(thisYearTotal, locale) })}
                 </p>
               </Card.Body>
             </Card>
@@ -264,6 +279,7 @@ function CostReport() {
                     amountKrw={c.totalKrw}
                     maxKrw={categoryMax}
                     totalKrw={total}
+                    locale={locale}
                   />
                 ))}
               </ul>
@@ -282,7 +298,7 @@ function CostReport() {
                   <Sparkline
                     points={sparkPoints}
                     ariaLabel={t('costreport.trendAria')}
-                    formatValue={formatCompactKrw}
+                    formatValue={(value) => formatCompactKrw(value, locale)}
                   />
                   <div className={styles.trendRange}>
                     <span>{monthTotals[0].month}</span>
@@ -308,6 +324,7 @@ function CostReport() {
                     maxKrw={petMax}
                     totalKrw={total}
                     fallbackLabel={t('costreport.unscopedPet')}
+                    locale={locale}
                   />
                 ))}
               </ul>

@@ -26,7 +26,24 @@
 .controls {
   position: sticky;
   top: var(--spacing-sm);
-  z-index: 1;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: minmax(0, 480px) auto;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs);
+  margin: calc(-1 * var(--spacing-xs));
+  border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.resultCount {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .groups {
@@ -70,7 +87,7 @@
 .grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
   gap: var(--spacing-sm);
 }
 
@@ -131,5 +148,15 @@
 
   .tile:hover .tileArrow {
     transform: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
   }
 }

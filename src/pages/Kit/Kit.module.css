@@ -69,6 +69,28 @@
   font-variant-numeric: tabular-nums;
 }
 
+.readinessMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.resetButton {
+  min-height: 44px;
+  padding: 0 var(--spacing-sm);
+  border: 0;
+  background: transparent;
+  color: var(--color-error);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 /* ── Quick access (SOS / hospitals) ────────────────────────────── */
 .quickRow {
   display: grid;
@@ -351,6 +373,15 @@
 
 .removeButton:hover {
   color: var(--color-error);
+}
+
+.quickLink:focus-visible,
+.contactPhone:focus-visible,
+.contactCall:focus-visible,
+.removeButton:focus-visible,
+.resetButton:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 28%, transparent);
+  outline-offset: 3px;
 }
 
 .disclaimer {

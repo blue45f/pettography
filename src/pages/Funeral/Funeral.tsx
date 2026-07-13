@@ -1,16 +1,26 @@
 import Badge from '@components/common/Badge'
+import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Skeleton from '@components/common/Skeleton'
-import { useFuneralList } from '@domains/funeral'
+import { FUNERAL_REGISTRY_URL, useFuneralList } from '@domains/funeral'
 import { useOnboardingStore } from '@domains/onboarding'
 import { SPECIES_CATEGORIES, type SpeciesCategory } from '@domains/species'
 import usePageMeta from '@hooks/usePageMeta'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 import styles from './Funeral.module.css'
+
+function safeExternalUrl(value: string): string | null {
+  try {
+    const url = new URL(value)
+    return url.protocol === 'https:' || url.protocol === 'http:' ? url.toString() : null
+  } catch {
+    return null
+  }
+}
 
 function Funeral() {
   const { t } = useTranslation()
@@ -22,9 +32,7 @@ function Funeral() {
   })
 
   const [category, setCategory] = useState<SpeciesCategory | 'all'>(profile.category ?? 'all')
-  const { data, isLoading } = useFuneralList({
-    category: category === 'all' ? undefined : category,
-  })
+  const funeralQuery = useFuneralList({ category: category === 'all' ? undefined : category })
 
   return (
     <section className={styles.page}>
@@ -32,6 +40,19 @@ function Funeral() {
         <h1>{t('funeral.title')}</h1>
         <p className={styles.subtitle}>{t('funeral.subtitle')}</p>
       </header>
+
+      <section className={styles.officialPanel} aria-labelledby="funeral-official-title">
+        <div>
+          <p className={styles.officialKicker}>{t('funeral.officialKicker')}</p>
+          <h2 id="funeral-official-title">{t('funeral.officialTitle')}</h2>
+          <p>{t('funeral.officialDesc')}</p>
+        </div>
+        <a href={FUNERAL_REGISTRY_URL} target="_blank" rel="noreferrer">
+          {t('funeral.officialLink')} ↗
+        </a>
+      </section>
+
+      <p className={styles.dataNotice}>{t('funeral.dataNotice')}</p>
 
       <div
         role="radiogroup"
@@ -47,56 +68,76 @@ function Funeral() {
         >
           {t('hospitals.filterAll')}
         </button>
-        {SPECIES_CATEGORIES.map((c) => (
+        {SPECIES_CATEGORIES.map((item) => (
           <button
-            key={c}
+            key={item}
             type="button"
             role="radio"
-            aria-checked={category === c}
-            className={[styles.filterChip, category === c ? styles.filterActive : ''].join(' ')}
-            onClick={() => setCategory(c)}
+            aria-checked={category === item}
+            className={[styles.filterChip, category === item ? styles.filterActive : ''].join(' ')}
+            onClick={() => setCategory(item)}
           >
-            {t(`categories.${c}`)}
+            {t(`categories.${item}`)}
           </button>
         ))}
       </div>
 
-      {isLoading && <Skeleton variant="rectangular" height={100} lines={3} />}
-      {data && data.length === 0 && <EmptyState icon="🌈" title={t('funeral.noResult')} />}
+      {funeralQuery.isLoading && (
+        <div aria-busy="true">
+          <Skeleton variant="rectangular" height={100} lines={3} />
+        </div>
+      )}
+      {funeralQuery.isError && (
+        <div className={styles.errorPanel} role="alert">
+          <p>{t('funeral.loadFailed')}</p>
+          <Button type="button" variant="outline" onClick={() => void funeralQuery.refetch()}>
+            {t('common.retry')}
+          </Button>
+        </div>
+      )}
+      {funeralQuery.data?.length === 0 && <EmptyState icon="🌈" title={t('funeral.noResult')} />}
 
       <ul className={styles.list}>
-        {data?.map((f) => (
-          <li key={f.id}>
-            <Card padding="md">
-              <Card.Body>
-                <div className={styles.itemHeader}>
-                  <h2 className={styles.itemTitle}>{f.name}</h2>
-                  <Badge variant="primary">{t(`funeral.kind${capitalize(f.kind)}`)}</Badge>
-                </div>
-                <p className={styles.itemMeta}>{f.region}</p>
-                <p className={styles.itemDesc}>{f.description}</p>
-                <div className={styles.itemActions}>
-                  {f.certified ? (
-                    <Badge variant="success">{t('funeral.certified')}</Badge>
-                  ) : (
-                    <Badge variant="warning">{t('funeral.uncertified')}</Badge>
-                  )}
-                  {f.phone && (
-                    <a href={`tel:${f.phone}`} className={styles.linkAction}>
-                      {t('common.phone')}: {f.phone}
-                    </a>
-                  )}
-                  <a href={f.url} target="_blank" rel="noreferrer" className={styles.linkAction}>
-                    {t('common.openLink')} ↗
-                  </a>{' '}
-                  <Link to="/contact?category=contact" className={styles.linkAction}>
-                    {t('funeral.inquireCta')}
-                  </Link>
-                </div>
-              </Card.Body>
-            </Card>
-          </li>
-        ))}
+        {funeralQuery.data?.map((service) => {
+          const url = safeExternalUrl(service.url)
+          const telephone = service.phone?.replace(/[^+\d]/g, '')
+          return (
+            <li key={service.id}>
+              <Card padding="md">
+                <Card.Body>
+                  <div className={styles.itemHeader}>
+                    <h2 className={styles.itemTitle}>{service.name}</h2>
+                    <Badge variant="primary">{t(`funeral.kind${capitalize(service.kind)}`)}</Badge>
+                  </div>
+                  <p className={styles.itemMeta}>{service.region}</p>
+                  <p className={styles.itemDesc}>
+                    {t('funeral.supportedCategories', {
+                      categories: service.supportedCategories
+                        .map((item) => t(`categories.${item}`))
+                        .join(', '),
+                    })}
+                  </p>
+                  <div className={styles.itemActions}>
+                    <Badge variant="warning">{t('funeral.verifyRequired')}</Badge>
+                    {service.phone && telephone && (
+                      <a href={`tel:${telephone}`} className={styles.linkAction}>
+                        {t('common.phone')}: {service.phone}
+                      </a>
+                    )}
+                    {url && (
+                      <a href={url} target="_blank" rel="noreferrer" className={styles.linkAction}>
+                        {t('common.openLink')} ↗
+                      </a>
+                    )}
+                    <Link to="/contact?category=contact" className={styles.linkAction}>
+                      {t('funeral.inquireCta')}
+                    </Link>
+                  </div>
+                </Card.Body>
+              </Card>
+            </li>
+          )
+        })}
       </ul>
     </section>
   )

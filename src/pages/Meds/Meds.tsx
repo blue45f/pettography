@@ -35,13 +35,17 @@ import {
 } from '@domains/meds'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
+import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Meds.module.css'
 
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60_000)
+  return localTime.toISOString().slice(0, 10)
 }
 
 const DOSE_STATUS_VARIANT: Record<DoseStatusCode, 'warning' | 'error' | 'primary' | 'success'> = {
@@ -49,6 +53,13 @@ const DOSE_STATUS_VARIANT: Record<DoseStatusCode, 'warning' | 'error' | 'primary
   overdue: 'error',
   upcoming: 'primary',
   done: 'success',
+}
+
+const DOSE_STATUS_ORDER: Record<DoseStatusCode, number> = {
+  overdue: 0,
+  dueToday: 1,
+  upcoming: 2,
+  done: 3,
 }
 
 /** Signed day count → a short Korean D-day label, e.g. D-3 / D-DAY / D+2. */
@@ -128,12 +139,14 @@ function MedicationForm() {
             <Input
               label={t('meds.med.name')}
               placeholder={t('meds.med.namePlaceholder')}
+              maxLength={60}
               error={errors.name?.message ? t(errors.name.message) : undefined}
               {...register('name')}
             />
             <Input
               label={t('meds.med.dosage')}
               placeholder={t('meds.med.dosagePlaceholder')}
+              maxLength={60}
               error={errors.dosage?.message ? t(errors.dosage.message) : undefined}
               {...register('dosage')}
             />
@@ -141,12 +154,14 @@ function MedicationForm() {
           <Input
             label={t('meds.med.reason')}
             placeholder={t('meds.med.reasonPlaceholder')}
+            maxLength={120}
             error={errors.reason?.message ? t(errors.reason.message) : undefined}
             {...register('reason')}
           />
           <div className={styles.formRow}>
             <Input
               type="date"
+              max={todayIso()}
               label={t('meds.med.startedAt')}
               error={errors.startedAt?.message ? t(errors.startedAt.message) : undefined}
               {...register('startedAt')}
@@ -175,6 +190,7 @@ function MedicationForm() {
           <Textarea
             label={t('meds.med.notes')}
             rows={2}
+            maxLength={300}
             placeholder={t('meds.med.notesPlaceholder')}
             error={errors.notes?.message ? t(errors.notes.message) : undefined}
             {...register('notes')}
@@ -195,6 +211,7 @@ function MedicationCard({ med }: { med: Medication }) {
   const { toast } = useToast()
   const markDose = useMedsStore((s) => s.markDose)
   const removeMedication = useMedsStore((s) => s.removeMedication)
+  const [confirmingRemove, setConfirmingRemove] = useState(false)
 
   const today = todayIso()
   const status = doseStatusCode(med, today)
@@ -204,9 +221,18 @@ function MedicationCard({ med }: { med: Medication }) {
   const givenToday = isDoseGiven(med, today)
   const recent = givenDoses(med).slice(0, 4)
 
-  const handleMarkToday = () => {
-    markDose(med.id, today, !givenToday)
+  const actionableDate = givenToday ? today : next
+  const canAct = givenToday || status === 'dueToday' || status === 'overdue'
+
+  const handleMarkDose = () => {
+    if (!actionableDate || !canAct) return
+    markDose(med.id, actionableDate, !givenToday)
     toast(givenToday ? t('meds.med.doseUndone') : t('meds.med.doseDone'), 'success')
+  }
+
+  const handleRemove = () => {
+    removeMedication(med.id)
+    toast(t('common.delete'), 'success')
   }
 
   return (
@@ -257,7 +283,17 @@ function MedicationCard({ med }: { med: Medication }) {
             <ul className={styles.historyList}>
               {recent.map((date) => (
                 <li key={date}>
-                  <Badge variant="success">✓ {date}</Badge>
+                  <button
+                    type="button"
+                    className={styles.historyDose}
+                    onClick={() => {
+                      markDose(med.id, date, false)
+                      toast(t('meds.med.doseUndone'), 'success')
+                    }}
+                    aria-label={`${t('meds.med.doseUndone')}: ${date}`}
+                  >
+                    <Badge variant="success">✓ {date}</Badge>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -267,23 +303,49 @@ function MedicationCard({ med }: { med: Medication }) {
         {med.notes && <p className={styles.cardNotes}>{med.notes}</p>}
 
         <div className={styles.cardActions}>
-          <Button
-            type="button"
-            variant={givenToday ? 'outline' : 'primary'}
-            size="sm"
-            onClick={handleMarkToday}
-            disabled={status === 'done' && !givenToday}
-          >
-            {givenToday ? t('meds.med.markedToday') : t('meds.med.markToday')}
-          </Button>
+          {canAct && (
+            <Button
+              type="button"
+              variant={givenToday ? 'outline' : 'primary'}
+              size="sm"
+              onClick={handleMarkDose}
+            >
+              <span className={styles.doseActionLabel}>
+                <span>{givenToday ? t('meds.med.markedToday') : t('meds.med.markToday')}</span>
+                {!givenToday && actionableDate !== today && <small>{actionableDate}</small>}
+              </span>
+            </Button>
+          )}
           <button
             type="button"
             className={styles.removeButton}
-            onClick={() => removeMedication(med.id)}
+            onClick={() => setConfirmingRemove(true)}
+            aria-expanded={confirmingRemove}
+            aria-controls={`remove-med-${med.id}`}
           >
             {t('meds.remove')}
           </button>
         </div>
+        {confirmingRemove && (
+          <div
+            id={`remove-med-${med.id}`}
+            className={styles.confirmPanel}
+            role="group"
+            aria-label={t('meds.remove')}
+          >
+            <span>{t('meds.remove')}?</span>
+            <button type="button" className={styles.confirmDelete} onClick={handleRemove}>
+              {t('common.delete')}
+            </button>
+            <button
+              type="button"
+              className={styles.cancelAction}
+              onClick={() => setConfirmingRemove(false)}
+            >
+              {t('common.cancel')}
+            </button>
+          </div>
+        )}
       </Card.Body>
     </Card>
   )
@@ -292,13 +354,22 @@ function MedicationCard({ med }: { med: Medication }) {
 function MedicationsTab() {
   const { t } = useTranslation()
   const medications = useActivePetMeds()
+  const today = todayIso()
+  const orderedMedications = useMemo(
+    () =>
+      [...medications].sort((a, b) => {
+        const statusDiff =
+          DOSE_STATUS_ORDER[doseStatusCode(a, today)] - DOSE_STATUS_ORDER[doseStatusCode(b, today)]
+        return statusDiff || b.startedAt.localeCompare(a.startedAt)
+      }),
+    [medications, today]
+  )
 
   return (
     <div className={styles.tabContent}>
       <Alert variant="warning" title={t('meds.disclaimer.title')}>
         {t('meds.disclaimer.body')}
       </Alert>
-      <MedicationForm />
       {medications.length === 0 ? (
         <EmptyState
           variant="log"
@@ -309,13 +380,19 @@ function MedicationsTab() {
         />
       ) : (
         <ul className={styles.list}>
-          {medications.map((med) => (
+          {orderedMedications.map((med) => (
             <li key={med.id}>
               <MedicationCard med={med} />
             </li>
           ))}
         </ul>
       )}
+      <details className={styles.addDisclosure} open={medications.length === 0 ? true : undefined}>
+        <summary>{t('meds.med.newTitle')}</summary>
+        <div className={styles.disclosureBody}>
+          <MedicationForm />
+        </div>
+      </details>
     </div>
   )
 }
@@ -372,12 +449,14 @@ function QuarantineForm() {
           <Input
             label={t('meds.quarantine.animalName')}
             placeholder={t('meds.quarantine.animalNamePlaceholder')}
+            maxLength={60}
             error={errors.animalName?.message ? t(errors.animalName.message) : undefined}
             {...register('animalName')}
           />
           <div className={styles.formRow}>
             <Input
               type="date"
+              max={todayIso()}
               label={t('meds.quarantine.startedAt')}
               error={errors.startedAt?.message ? t(errors.startedAt.message) : undefined}
               {...register('startedAt')}
@@ -430,6 +509,7 @@ function QuarantineForm() {
           <Textarea
             label={t('meds.quarantine.notes')}
             rows={2}
+            maxLength={300}
             placeholder={t('meds.quarantine.notesPlaceholder')}
             error={errors.notes?.message ? t(errors.notes.message) : undefined}
             {...register('notes')}
@@ -458,6 +538,7 @@ function QuarantineCard({ q }: { q: Quarantine }) {
   const { toast } = useToast()
   const clearQuarantine = useMedsStore((s) => s.clearQuarantine)
   const removeQuarantine = useMedsStore((s) => s.removeQuarantine)
+  const [confirmAction, setConfirmAction] = useState<'clear' | 'remove' | null>(null)
 
   const today = todayIso()
   const code = quarantineDoneCode(q, today)
@@ -467,7 +548,13 @@ function QuarantineCard({ q }: { q: Quarantine }) {
 
   const handleClear = () => {
     clearQuarantine(q.id)
+    setConfirmAction(null)
     toast(t('meds.quarantine.cleared'), 'success')
+  }
+
+  const handleRemove = () => {
+    removeQuarantine(q.id)
+    toast(t('common.delete'), 'success')
   }
 
   return (
@@ -525,7 +612,9 @@ function QuarantineCard({ q }: { q: Quarantine }) {
               type="button"
               variant={code === 'readyToClear' ? 'primary' : 'outline'}
               size="sm"
-              onClick={handleClear}
+              onClick={() => setConfirmAction('clear')}
+              aria-expanded={confirmAction === 'clear'}
+              aria-controls={`quarantine-action-${q.id}`}
             >
               {t('meds.quarantine.clear')}
             </Button>
@@ -533,11 +622,39 @@ function QuarantineCard({ q }: { q: Quarantine }) {
           <button
             type="button"
             className={styles.removeButton}
-            onClick={() => removeQuarantine(q.id)}
+            onClick={() => setConfirmAction('remove')}
+            aria-expanded={confirmAction === 'remove'}
+            aria-controls={`quarantine-action-${q.id}`}
           >
             {t('meds.remove')}
           </button>
         </div>
+        {confirmAction && (
+          <div
+            id={`quarantine-action-${q.id}`}
+            className={styles.confirmPanel}
+            role="group"
+            aria-label={confirmAction === 'clear' ? t('meds.quarantine.clear') : t('meds.remove')}
+          >
+            <span>
+              {confirmAction === 'clear' ? t('meds.quarantine.clear') : t('meds.remove')}?
+            </span>
+            <button
+              type="button"
+              className={confirmAction === 'clear' ? styles.confirmClear : styles.confirmDelete}
+              onClick={confirmAction === 'clear' ? handleClear : handleRemove}
+            >
+              {confirmAction === 'clear' ? t('meds.quarantine.clear') : t('common.delete')}
+            </button>
+            <button
+              type="button"
+              className={styles.cancelAction}
+              onClick={() => setConfirmAction(null)}
+            >
+              {t('common.cancel')}
+            </button>
+          </div>
+        )}
       </Card.Body>
     </Card>
   )
@@ -546,13 +663,22 @@ function QuarantineCard({ q }: { q: Quarantine }) {
 function QuarantineTab() {
   const { t } = useTranslation()
   const quarantines = useActivePetQuarantines()
+  const today = todayIso()
+  const orderedQuarantines = useMemo(
+    () =>
+      [...quarantines].sort((a, b) => {
+        const rank = { readyToClear: 0, active: 1, cleared: 2 } as const
+        const statusDiff = rank[quarantineDoneCode(a, today)] - rank[quarantineDoneCode(b, today)]
+        return statusDiff || b.startedAt.localeCompare(a.startedAt)
+      }),
+    [quarantines, today]
+  )
 
   return (
     <div className={styles.tabContent}>
       <Alert variant="info" title={t('meds.quarantine.guideTitle')}>
         {t('meds.quarantine.guideBody')}
       </Alert>
-      <QuarantineForm />
       {quarantines.length === 0 ? (
         <EmptyState
           icon="🧫"
@@ -561,13 +687,19 @@ function QuarantineTab() {
         />
       ) : (
         <ul className={styles.list}>
-          {quarantines.map((q) => (
+          {orderedQuarantines.map((q) => (
             <li key={q.id}>
               <QuarantineCard q={q} />
             </li>
           ))}
         </ul>
       )}
+      <details className={styles.addDisclosure} open={quarantines.length === 0 ? true : undefined}>
+        <summary>{t('meds.quarantine.newTitle')}</summary>
+        <div className={styles.disclosureBody}>
+          <QuarantineForm />
+        </div>
+      </details>
     </div>
   )
 }
@@ -585,6 +717,14 @@ function Meds() {
       <header className={styles.header}>
         <h1>{t('meds.title')}</h1>
         <p className={styles.subtitle}>{t('meds.subtitle')}</p>
+        <div className={styles.headerActions}>
+          <Link to="/hospitals" className={styles.headerLink}>
+            {t('nav.hospitals')} →
+          </Link>
+          <Link to="/sos" className={styles.headerLink}>
+            {t('nav.sos')} →
+          </Link>
+        </div>
       </header>
 
       <Tabs

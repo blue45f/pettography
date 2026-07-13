@@ -61,6 +61,12 @@
   background: var(--color-primary-soft);
 }
 
+.q:focus-visible,
+.aLink:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 28%, transparent);
+  outline-offset: -3px;
+}
+
 .qNo {
   font-family: var(--font-display);
   font-variant-numeric: tabular-nums;
@@ -124,4 +130,28 @@
 
 .aLink:hover {
   text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a {
+    animation: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .q {
+    grid-template-columns: 32px minmax(0, 1fr) 24px;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+  }
+
+  .a {
+    padding: 0 var(--spacing-md) var(--spacing-md);
+  }
+
+  .aLink {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
 }

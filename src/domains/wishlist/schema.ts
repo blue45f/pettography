@@ -1,5 +1,12 @@
 import { z } from 'zod'
 
+const ISO_DAY_PATTERN = /^\d{4}-\d{2}-\d{2}$/
+
+function localTodayIso(): string {
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
+}
+
 /** How keen the keeper is — drives sort order and the priority badge. */
 export const prioritySchema = z.enum(['someday', 'soon', 'next'])
 export type Priority = z.infer<typeof prioritySchema>
@@ -32,7 +39,10 @@ export type WishlistItem = z.infer<typeof wishlistItemSchema>
 export const wishlistFormSchema = z.object({
   speciesId: z.string().min(1, 'wishlist.errors.speciesRequired'),
   priority: prioritySchema,
-  targetDate: z.string(),
+  targetDate: z
+    .string()
+    .refine((value) => value === '' || ISO_DAY_PATTERN.test(value), 'wishlist.errors.dateInvalid')
+    .refine((value) => value === '' || value >= localTodayIso(), 'wishlist.errors.datePast'),
   notes: z.string().trim().max(300, 'wishlist.errors.notesMax'),
 })
 

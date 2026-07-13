@@ -13,7 +13,12 @@ export const shopSchema = z.object({
   district: z.string().nullable(),
   lat: z.number().nullable(),
   lng: z.number().nullable(),
-  online: z.string().url().nullable(),
+  online: z
+    .string()
+    .trim()
+    .url()
+    .refine((value) => /^https?:\/\//i.test(value))
+    .nullable(),
   supportedCategories: z.array(speciesCategorySchema).min(1),
   notes: z.string(),
 })

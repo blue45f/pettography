@@ -15,9 +15,68 @@
   letter-spacing: -0.025em;
 }
 
+.eyebrow {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .subtitle {
   color: var(--color-text-secondary);
   max-width: 65ch;
+}
+
+.privacyCard {
+  border-color: color-mix(in srgb, var(--color-warning) 45%, var(--color-border));
+}
+
+.privacyCard p {
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.petGate {
+  text-align: center;
+}
+
+.gateIcon {
+  display: inline-flex;
+  width: 64px;
+  height: 64px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: 800;
+}
+
+.petGate h2 {
+  margin-top: var(--spacing-md);
+  font-size: var(--font-size-xl);
+}
+
+.petGate > div > p {
+  max-width: 52ch;
+  margin: var(--spacing-sm) auto var(--spacing-lg);
+  color: var(--color-text-secondary);
+}
+
+.primaryLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-lg);
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-on-brand);
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .layout {
@@ -165,6 +224,12 @@
   text-decoration: underline;
 }
 
+.cardPhone:focus-visible,
+.primaryLink:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
 .cardGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -183,6 +248,17 @@
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   text-align: center;
+}
+
+@media (max-width: 560px) {
+  .formFooter > *,
+  .previewSide > button {
+    width: 100%;
+  }
+
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media print {

@@ -1,4 +1,5 @@
 import Badge from '@components/common/Badge'
+import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
@@ -6,7 +7,7 @@ import { cafeMemberCount, useCafesStore, type Cafe } from '@domains/cafes'
 import { useOnboardingStore } from '@domains/onboarding'
 import { SPECIES_CATEGORIES, type SpeciesCategory } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useState } from 'react'
+import { useDeferredValue, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -26,8 +27,10 @@ function Cafes() {
 
   const [category, setCategory] = useState<SpeciesCategory | 'all'>(profile.category ?? 'all')
   const [search, setSearch] = useState('')
+  const [pendingLeaveId, setPendingLeaveId] = useState<string | null>(null)
+  const deferredSearch = useDeferredValue(search)
 
-  const needle = search.trim().toLowerCase()
+  const needle = deferredSearch.trim().toLowerCase()
   const visible = cafes.filter((cafe) => {
     if (cafe.archivedByAdmin) return false
     if (category !== 'all' && cafe.category !== category) return false
@@ -43,6 +46,7 @@ function Cafes() {
 
   function renderCafe(cafe: Cafe) {
     const isJoined = Boolean(joinedCafeIds[cafe.id])
+    const isOwner = Boolean(ownCafeIds[cafe.id])
     const postCount = (postsMap[cafe.id] ?? []).filter((p) => !p.hiddenByAdmin).length
     return (
       <li key={cafe.id}>
@@ -57,7 +61,7 @@ function Cafes() {
                   <Link to={`/cafes/${cafe.id}`} className={styles.cafeName}>
                     {cafe.name}
                   </Link>
-                  {ownCafeIds[cafe.id] && <Badge variant="primary">{t('cafes.myBadge')}</Badge>}
+                  {isOwner && <Badge variant="primary">{t('cafes.myBadge')}</Badge>}
                 </div>
                 <p className={styles.cafeDesc}>{cafe.description}</p>
                 <p className={styles.cafeStats}>
@@ -75,12 +79,40 @@ function Cafes() {
                   type="button"
                   className={[styles.joinButton, isJoined ? styles.joinedButton : ''].join(' ')}
                   aria-pressed={isJoined}
-                  onClick={() => (isJoined ? leaveCafe(cafe.id) : joinCafe(cafe.id))}
+                  aria-expanded={pendingLeaveId === cafe.id}
+                  disabled={isOwner}
+                  title={isOwner ? t('cafes.myBadge') : undefined}
+                  onClick={() => {
+                    if (!isJoined) joinCafe(cafe.id)
+                    else setPendingLeaveId((current) => (current === cafe.id ? null : cafe.id))
+                  }}
                 >
                   {isJoined ? t('cafes.joined') : t('cafes.join')}
                 </button>
               </div>
             </div>
+            {pendingLeaveId === cafe.id && !isOwner && (
+              <div className={styles.confirmPanel}>
+                <span className={styles.confirmPrompt}>{t('cafes.confirmLeave')}</span>
+                <button
+                  type="button"
+                  className={styles.cancelButton}
+                  onClick={() => setPendingLeaveId(null)}
+                >
+                  {t('common.cancel')}
+                </button>
+                <button
+                  type="button"
+                  className={styles.confirmButton}
+                  onClick={() => {
+                    leaveCafe(cafe.id)
+                    setPendingLeaveId(null)
+                  }}
+                >
+                  {t('cafes.leave')}
+                </button>
+              </div>
+            )}
           </Card.Body>
         </Card>
       </li>
@@ -140,9 +172,23 @@ function Cafes() {
           title={needle ? t('cafes.noResult') : t('cafes.emptyTitle')}
           description={needle ? t('cafes.noResultHint') : t('cafes.emptyDesc')}
           action={
-            <Link to="/cafes/new" className={styles.createCta}>
-              {t('cafes.createCta')}
-            </Link>
+            <div className={styles.emptyActions}>
+              {(needle || category !== 'all') && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setSearch('')
+                    setCategory('all')
+                  }}
+                >
+                  {t('species.resetFilters')}
+                </Button>
+              )}
+              <Link to="/cafes/new" className={styles.createCta}>
+                {t('cafes.createCta')}
+              </Link>
+            </div>
           }
         />
       )}

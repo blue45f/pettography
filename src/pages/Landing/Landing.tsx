@@ -24,14 +24,13 @@ const PROOF_CHIPS = [
 ] as const
 
 /**
- * Hero collage shots. Real keeper photography drops in here later; picsum
- * seeds keep the layout honest and working today. `emoji` is the species cue
- * shown as a soft caption tag so the collage still reads as our domain.
+ * Local editorial illustrations for the hero collage. Keeping explicit local
+ * paths here avoids third-party requests and makes every tile deterministic.
  */
 const HERO_SHOTS = [
-  { seed: 'petto-hero-gecko', emoji: '🦎' },
-  { seed: 'petto-hero-vivarium', emoji: '🌿' },
-  { seed: 'petto-hero-tarantula', emoji: '🕷️' },
+  { id: 'care', src: '/landing-care.svg', emoji: '🦎' },
+  { id: 'habitat', src: '/landing-habitat.svg', emoji: '🌿' },
+  { id: 'journal', src: '/landing-journal.svg', emoji: '📝' },
 ] as const
 
 /**
@@ -110,13 +109,8 @@ function Landing() {
         </div>
         <div className={styles.heroCollage} aria-hidden="true">
           {HERO_SHOTS.map((shot, idx) => (
-            <figure key={shot.seed} className={`${styles.shot} ${styles[`shot${idx + 1}`]}`}>
-              <LazyImage
-                src={`https://picsum.photos/seed/${shot.seed}/640/800`}
-                alt=""
-                className={styles.shotImage}
-                hoverZoom
-              />
+            <figure key={shot.id} className={`${styles.shot} ${styles[`shot${idx + 1}`]}`}>
+              <LazyImage src={shot.src} alt="" className={styles.shotImage} hoverZoom />
               <figcaption className={styles.shotTag}>{shot.emoji}</figcaption>
             </figure>
           ))}

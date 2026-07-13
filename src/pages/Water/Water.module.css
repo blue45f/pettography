@@ -37,8 +37,8 @@
 }
 
 .showAllToggle input {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   accent-color: var(--color-primary);
 }
 
@@ -189,7 +189,22 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.entryItem {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 140px;
+}
+
+.entryItem:first-child {
+  border-top: 0;
 }
 
 .entryHeader {
@@ -219,7 +234,9 @@
   cursor: pointer;
   font-size: var(--font-size-sm);
   min-height: 44px;
-  padding: 0 var(--spacing-xs);
+  min-width: 44px;
+  padding: 0 var(--spacing-sm);
+  border-radius: var(--radius-sm);
 }
 
 .removeButton:hover {
@@ -237,6 +254,8 @@
 
 .summary li {
   display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
   gap: var(--spacing-2xs);
 }
 
@@ -254,6 +273,11 @@
   font-weight: 600;
 }
 
+.summaryFlag {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
 .entryNote {
   margin-top: var(--spacing-sm);
   white-space: pre-wrap;
@@ -263,4 +287,71 @@
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
   margin-top: var(--spacing-xs);
+}
+
+.toxicActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+}
+
+.actionLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--spacing-md);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-md);
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.deleteConfirm {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.deletePrompt {
+  margin-right: auto;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.cancelButton,
+.confirmButton {
+  min-height: 44px;
+  padding: 0 var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancelButton {
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.confirmButton {
+  border: 1px solid var(--color-error);
+  background: var(--color-error);
+  color: var(--color-on-brand);
+}
+
+@media (max-width: 520px) {
+  .formActions button {
+    width: 100%;
+  }
+
+  .entryItem {
+    padding-inline: var(--spacing-md);
+  }
 }

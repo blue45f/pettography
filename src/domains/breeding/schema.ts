@@ -49,20 +49,39 @@ export const pairingFormSchema = z.object({
 export type PairingFormValues = z.infer<typeof pairingFormSchema>
 
 /** Clutch creation form — error messages are i18n keys resolved in the page. */
-export const clutchFormSchema = z.object({
-  pairingId: z.string().optional(),
-  laidAt: z.string().min(1, 'breeding.errors.dateRequired'),
-  eggCount: z
-    .number({ message: 'breeding.errors.eggCountNumber' })
-    .int('breeding.errors.eggCountNumber')
-    .min(1, 'breeding.errors.eggCountMin'),
-  fertileCount: z
-    .number({ message: 'breeding.errors.fertileNumber' })
-    .int('breeding.errors.fertileNumber')
-    .min(0, 'breeding.errors.fertileMin')
-    .nullable()
-    .optional(),
-  incubationTempC: z.number({ message: 'breeding.errors.tempNumber' }).nullable().optional(),
-  notes: z.string().trim().max(300, 'breeding.errors.notesMax').optional(),
-})
+export const clutchFormSchema = z
+  .object({
+    pairingId: z.string().optional(),
+    laidAt: z.string().min(1, 'breeding.errors.dateRequired'),
+    eggCount: z
+      .number({ message: 'breeding.errors.eggCountNumber' })
+      .int('breeding.errors.eggCountNumber')
+      .min(1, 'breeding.errors.eggCountMin')
+      .max(1000, 'breeding.errors.eggCountNumber'),
+    fertileCount: z
+      .number({ message: 'breeding.errors.fertileNumber' })
+      .int('breeding.errors.fertileNumber')
+      .min(0, 'breeding.errors.fertileMin')
+      .max(1000, 'breeding.errors.fertileNumber')
+      .nullable()
+      .optional(),
+    incubationTempC: z
+      .number({ message: 'breeding.errors.tempNumber' })
+      .min(0, 'breeding.errors.tempNumber')
+      .max(50, 'breeding.errors.tempNumber')
+      .nullable()
+      .optional(),
+    notes: z.string().trim().max(300, 'breeding.errors.notesMax').optional(),
+  })
+  .superRefine((values, ctx) => {
+    if (values.fertileCount !== null && values.fertileCount !== undefined) {
+      if (values.fertileCount > values.eggCount) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['fertileCount'],
+          message: 'breeding.errors.fertileNumber',
+        })
+      }
+    }
+  })
 export type ClutchFormValues = z.infer<typeof clutchFormSchema>

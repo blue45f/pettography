@@ -31,11 +31,13 @@ import { downloadTextFile } from '@utils/download'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Water.module.css'
 
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
 }
 
 /** Empty number inputs return null so "blank" stays "not measured". */
@@ -88,6 +90,7 @@ function Water() {
   const { data: speciesList = [] } = useSpeciesList({})
 
   const [showAllPets, setShowAllPets] = useState(false)
+  const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null)
   const readings = showAllPets ? allReadings : activeReadings
   const showPetBadge = showAllPets && pets.length > 1
 
@@ -97,20 +100,32 @@ function Water() {
     species?.slug === 'axolotl' ||
     species?.slug === 'pacman-frog'
 
-  const latest = useMemo(() => latestReading(readings), [readings])
+  // All-pet mode affects history/export only. Status and trends must describe
+  // the active animal's enclosure rather than blending unrelated habitats.
+  const latest = useMemo(() => latestReading(activeReadings), [activeReadings])
   const status: CycleStatus = latest ? cycleStatus(latest) : 'unknown'
   const flags = useMemo(() => (latest ? paramFlags(latest) : null), [latest])
-  const nitrateTrend = useMemo(() => trend(readings, 'nitratePpm'), [readings])
+  const nitrateTrend = useMemo(() => trend(activeReadings, 'nitratePpm'), [activeReadings])
+
+  const petLabels = useMemo(() => {
+    const speciesById = new Map(speciesList.map((item) => [item.id, item]))
+    return new Map(
+      pets.map((pet) => {
+        const petSpecies = pet.speciesId ? speciesById.get(pet.speciesId) : undefined
+        return [
+          pet.id,
+          {
+            name: pet.petName?.trim() || petSpecies?.koreanName || t('water.pet'),
+            emoji: petSpecies?.heroEmoji ?? '🐾',
+          },
+        ] as const
+      })
+    )
+  }, [pets, speciesList, t])
 
   function petLabel(petId: string | null | undefined): { name: string; emoji: string } | null {
     if (!petId) return null
-    const pet = pets.find((p) => p.id === petId)
-    if (!pet) return null
-    const sp = speciesList.find((s) => s.id === pet.speciesId)
-    return {
-      name: pet.petName?.trim() || sp?.koreanName || t('water.pet'),
-      emoji: sp?.heroEmoji ?? '🐾',
-    }
+    return petLabels.get(petId) ?? null
   }
 
   const {
@@ -171,6 +186,12 @@ function Water() {
       buildCsv(['date', 'temp_c', 'ph', 'ammonia_ppm', 'nitrite_ppm', 'nitrate_ppm', 'note'], rows),
       'text/csv;charset=utf-8'
     )
+  }
+
+  function confirmRemove(id: string) {
+    removeReading(id)
+    setPendingRemoveId(null)
+    toast(t('common.delete'), 'success')
   }
 
   return (
@@ -243,7 +264,15 @@ function Water() {
 
           {status === 'toxic' && (
             <Alert variant="error" title={t('water.toxicAlertTitle')}>
-              {t('water.toxicAlert')}
+              <p>{t('water.toxicAlert')}</p>
+              <div className={styles.toxicActions}>
+                <Link to="/hospitals" className={styles.actionLink}>
+                  {t('nav.hospitals')}
+                </Link>
+                <Link to="/sos" className={styles.actionLink}>
+                  {t('nav.sos')}
+                </Link>
+              </div>
             </Alert>
           )}
         </Card.Body>
@@ -255,6 +284,7 @@ function Water() {
           <form onSubmit={onSubmit} className={styles.form} noValidate>
             <Input
               type="date"
+              max={todayIso()}
               label={t('water.params.measuredAt')}
               error={errors.measuredAt?.message ? t(errors.measuredAt.message) : undefined}
               {...register('measuredAt')}
@@ -264,6 +294,8 @@ function Water() {
                 type="number"
                 inputMode="decimal"
                 step="0.1"
+                min="0"
+                max="60"
                 label={t('water.params.tempC')}
                 error={errors.tempC?.message ? t(errors.tempC.message) : undefined}
                 {...register('tempC', { setValueAs: nullableNumber })}
@@ -272,6 +304,8 @@ function Water() {
                 type="number"
                 inputMode="decimal"
                 step="0.1"
+                min="0"
+                max="14"
                 label={t('water.params.ph')}
                 error={errors.ph?.message ? t(errors.ph.message) : undefined}
                 {...register('ph', { setValueAs: nullableNumber })}
@@ -280,6 +314,8 @@ function Water() {
                 type="number"
                 inputMode="decimal"
                 step="0.05"
+                min="0"
+                max="100"
                 label={t('water.params.ammoniaPpm')}
                 error={errors.ammoniaPpm?.message ? t(errors.ammoniaPpm.message) : undefined}
                 {...register('ammoniaPpm', { setValueAs: nullableNumber })}
@@ -288,6 +324,8 @@ function Water() {
                 type="number"
                 inputMode="decimal"
                 step="0.05"
+                min="0"
+                max="100"
                 label={t('water.params.nitritePpm')}
                 error={errors.nitritePpm?.message ? t(errors.nitritePpm.message) : undefined}
                 {...register('nitritePpm', { setValueAs: nullableNumber })}
@@ -296,6 +334,8 @@ function Water() {
                 type="number"
                 inputMode="decimal"
                 step="1"
+                min="0"
+                max="500"
                 label={t('water.params.nitratePpm')}
                 error={errors.nitratePpm?.message ? t(errors.nitratePpm.message) : undefined}
                 {...register('nitratePpm', { setValueAs: nullableNumber })}
@@ -304,6 +344,7 @@ function Water() {
             <Textarea
               label={t('water.params.note')}
               rows={2}
+              maxLength={200}
               error={errors.note?.message ? t(errors.note.message) : undefined}
               {...register('note')}
             />
@@ -319,7 +360,7 @@ function Water() {
 
       <h2 className={styles.sectionTitle}>{t('water.historyTitle')}</h2>
 
-      {nitrateTrend.length >= 3 && (
+      {!showAllPets && nitrateTrend.length >= 3 && (
         <Card padding="md" className={styles.trendCard}>
           <Card.Body>
             <p className={styles.trendTitle}>{t('water.nitrateTrend')}</p>
@@ -342,61 +383,85 @@ function Water() {
         />
       ) : (
         <ul className={styles.list}>
-          {readings.map((reading) => {
-            const rowFlags = paramFlags(reading)
-            const label = petLabel(reading.petId)
-            const showLabel = label && (showPetBadge || reading.petId !== activePetId)
-            return (
-              <li key={reading.id}>
-                <Card padding="md">
-                  <Card.Body>
-                    <div className={styles.entryHeader}>
-                      <div className={styles.entryHeaderLeft}>
-                        <span className={styles.entryDate}>{reading.measuredAt}</span>
-                        {showLabel && label && (
-                          <Badge variant="default">
-                            <span aria-hidden="true">{label.emoji}</span> {label.name}
-                          </Badge>
-                        )}
-                      </div>
+          {[...readings]
+            .sort((a, b) => b.measuredAt.localeCompare(a.measuredAt))
+            .map((reading) => {
+              const rowFlags = paramFlags(reading)
+              const label = petLabel(reading.petId)
+              const showLabel = label && (showPetBadge || reading.petId !== activePetId)
+              return (
+                <li key={reading.id} className={styles.entryItem}>
+                  <div className={styles.entryHeader}>
+                    <div className={styles.entryHeaderLeft}>
+                      <time className={styles.entryDate} dateTime={reading.measuredAt}>
+                        {reading.measuredAt}
+                      </time>
+                      {showLabel && label && (
+                        <Badge variant="default">
+                          <span aria-hidden="true">{label.emoji}</span> {label.name}
+                        </Badge>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      className={styles.removeButton}
+                      aria-expanded={pendingRemoveId === reading.id}
+                      aria-controls={`water-remove-${reading.id}`}
+                      onClick={() =>
+                        setPendingRemoveId((current) =>
+                          current === reading.id ? null : reading.id
+                        )
+                      }
+                    >
+                      {t('water.remove')}
+                    </button>
+                  </div>
+                  <ul className={styles.summary}>
+                    {WATER_PARAMS.map((key) => {
+                      const display = formatParam(reading, key)
+                      if (display === null) return null
+                      const flag = rowFlags[key]
+                      const flagClass =
+                        flag === 'danger'
+                          ? styles.summaryDanger
+                          : flag === 'warn'
+                            ? styles.summaryWarn
+                            : ''
+                      return (
+                        <li key={key}>
+                          <span className={styles.summaryKey}>{t(`water.paramsShort.${key}`)}</span>
+                          <span className={flagClass}>{display}</span>
+                          <span className={styles.summaryFlag}>{t(`water.flags.${flag}`)}</span>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                  {reading.note && <p className={styles.entryNote}>{reading.note}</p>}
+                  {!reading.speciesId && (
+                    <p className={styles.entryFooter}>{t('water.speciesUnknown')}</p>
+                  )}
+                  {pendingRemoveId === reading.id && (
+                    <div id={`water-remove-${reading.id}`} className={styles.deleteConfirm}>
+                      <span className={styles.deletePrompt}>{t('water.remove')}?</span>
                       <button
                         type="button"
-                        className={styles.removeButton}
-                        onClick={() => removeReading(reading.id)}
+                        className={styles.cancelButton}
+                        onClick={() => setPendingRemoveId(null)}
                       >
-                        {t('water.remove')}
+                        {t('common.cancel')}
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.confirmButton}
+                        onClick={() => confirmRemove(reading.id)}
+                      >
+                        {t('common.delete')}
                       </button>
                     </div>
-                    <ul className={styles.summary}>
-                      {WATER_PARAMS.map((key) => {
-                        const display = formatParam(reading, key)
-                        if (display === null) return null
-                        const flag = rowFlags[key]
-                        const flagClass =
-                          flag === 'danger'
-                            ? styles.summaryDanger
-                            : flag === 'warn'
-                              ? styles.summaryWarn
-                              : ''
-                        return (
-                          <li key={key}>
-                            <span className={styles.summaryKey}>
-                              {t(`water.paramsShort.${key}`)}
-                            </span>
-                            <span className={flagClass}>{display}</span>
-                          </li>
-                        )
-                      })}
-                    </ul>
-                    {reading.note && <p className={styles.entryNote}>{reading.note}</p>}
-                    {!reading.speciesId && (
-                      <p className={styles.entryFooter}>{t('water.speciesUnknown')}</p>
-                    )}
-                  </Card.Body>
-                </Card>
-              </li>
-            )
-          })}
+                  )}
+                </li>
+              )
+            })}
         </ul>
       )}
     </section>

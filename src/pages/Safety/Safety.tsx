@@ -2,6 +2,7 @@ import Alert from '@components/common/Alert'
 import Badge from '@components/common/Badge'
 import Button from '@components/common/Button'
 import Card from '@components/common/Card'
+import EmptyState from '@components/common/EmptyState'
 import Progress from '@components/common/Progress'
 import Switch from '@components/common/Switch'
 import { useToast } from '@components/common/Toast'
@@ -14,6 +15,7 @@ import {
   safetyLevel,
   SAFETY_ITEMS,
   useActivePetAudit,
+  useActivePetAuditUpdatedAt,
   useSafetyStore,
   type SafetyLevel,
 } from '@domains/safety'
@@ -21,6 +23,7 @@ import { useSpeciesList } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Safety.module.css'
 
@@ -32,7 +35,7 @@ const LEVEL_VARIANT: Record<SafetyLevel, 'error' | 'warning' | 'success'> = {
 }
 
 function Safety() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { toast } = useToast()
   useDocumentTitle(t('safety.title'))
 
@@ -41,10 +44,11 @@ function Safety() {
   const { data: speciesList = [] } = useSpeciesList({})
 
   const checked = useActivePetAudit()
+  const auditUpdatedAt = useActivePetAuditUpdatedAt()
   const toggleItem = useSafetyStore((s) => s.toggleItem)
   const resetAudit = useSafetyStore((s) => s.resetAudit)
 
-  const petKey = activePetId ?? 'default'
+  const petKey = activePetId ?? ''
 
   const activeSpecies = useMemo(
     () => speciesList.find((s) => s.id === profile.speciesId),
@@ -62,8 +66,31 @@ function Safety() {
   }
 
   const handleReset = () => {
+    if (!globalThis.confirm(t('safety.score.resetConfirm'))) return
     resetAudit(petKey)
     toast(t('safety.score.resetDone'), 'success')
+  }
+
+  if (!activePetId) {
+    return (
+      <section className={styles.page}>
+        <header className={styles.header}>
+          <h1>{t('safety.title')}</h1>
+          <p className={styles.subtitle}>{t('safety.subtitle')}</p>
+        </header>
+        <EmptyState
+          variant="gated"
+          icon="🛡️"
+          title={t('safety.noPetTitle')}
+          description={t('safety.noPetDesc')}
+          action={
+            <Link to="/onboarding" className={styles.gateLink}>
+              {t('safety.noPetAction')}
+            </Link>
+          }
+        />
+      </section>
+    )
   }
 
   return (
@@ -103,8 +130,21 @@ function Safety() {
             label={t('safety.score.aria', { pct: overall.pct })}
           />
           <p className={styles.creed}>{t('safety.creed')}</p>
+          <p className={styles.lastUpdated}>
+            {auditUpdatedAt
+              ? t('safety.score.updatedAt', {
+                  date: new Date(auditUpdatedAt).toLocaleString(
+                    i18n.resolvedLanguage ?? i18n.language
+                  ),
+                })
+              : t('safety.score.neverReviewed')}
+          </p>
         </Card.Body>
       </Card>
+
+      <Alert variant="info" title={t('safety.verificationTitle')}>
+        {t('safety.verificationBody')}
+      </Alert>
 
       <section aria-labelledby="safety-risks" className={styles.section}>
         <header className={styles.sectionHeader}>

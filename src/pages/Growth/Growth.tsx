@@ -40,7 +40,8 @@ const H = 150
 const PAD = 12
 
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
 }
 
 function Growth() {
@@ -66,10 +67,13 @@ function Growth() {
   const removeEntry = useGrowthStore((s) => s.removeEntry)
 
   const [showAllPets, setShowAllPets] = useState(false)
+  const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null)
   const entries = showAllPets ? allEntries : activeEntries
 
-  const stats = useMemo(() => growthStats(entries, norm), [entries, norm])
-  const chart = useMemo(() => chartPoints(entries, norm), [entries, norm])
+  // All-pet mode is for history/export only. Combining different animals in a
+  // growth curve or rate would produce clinically meaningless results.
+  const stats = useMemo(() => growthStats(activeEntries, norm), [activeEntries, norm])
+  const chart = useMemo(() => chartPoints(activeEntries, norm), [activeEntries, norm])
 
   const {
     register,
@@ -93,12 +97,25 @@ function Growth() {
     reset({ measuredAt: todayIso(), weightGram: undefined, lengthCm: null, note: '' })
   })
 
+  const petLabels = useMemo(() => {
+    const speciesById = new Map(speciesList.map((item) => [item.id, item] as const))
+    return new Map(
+      pets.map((pet) => {
+        const petSpecies = pet.speciesId ? speciesById.get(pet.speciesId) : undefined
+        return [
+          pet.id,
+          {
+            name: pet.petName?.trim() || petSpecies?.koreanName || '',
+            emoji: petSpecies?.heroEmoji ?? '🐾',
+          },
+        ] as const
+      })
+    )
+  }, [pets, speciesList])
+
   const petLabel = (petId: string | null | undefined) => {
     if (!petId) return null
-    const pet = pets.find((p) => p.id === petId)
-    if (!pet) return null
-    const sp = speciesList.find((s) => s.id === pet.speciesId)
-    return { name: pet.petName?.trim() || sp?.koreanName || '', emoji: sp?.heroEmoji ?? '🐾' }
+    return petLabels.get(petId) ?? null
   }
   const showPetBadge = showAllPets && pets.length > 1
 
@@ -119,6 +136,12 @@ function Growth() {
       buildCsv(['date', 'weight_g', 'length_cm', 'note'], rows),
       'text/csv;charset=utf-8'
     )
+  }
+
+  function confirmRemove(id: string) {
+    removeEntry(id)
+    setPendingRemoveId(null)
+    toast(t('common.delete'), 'success')
   }
 
   return (
@@ -198,7 +221,7 @@ function Growth() {
         </Card.Body>
       </Card>
 
-      {chart && (
+      {!showAllPets && chart && (
         <Card padding="lg">
           <Card.Body>
             <h2 className={styles.cardTitle}>{t('growth.chart.title')}</h2>
@@ -225,8 +248,14 @@ function Growth() {
               {chart.points.length > 1 && (
                 <polyline points={polyline} className={styles.line} fill="none" />
               )}
-              {chart.points.map((p) => (
-                <circle key={p.measuredAt} cx={px(p.x)} cy={py(p.y)} r={3} className={styles.dot} />
+              {chart.points.map((p, index) => (
+                <circle
+                  key={`${p.measuredAt}-${index}`}
+                  cx={px(p.x)}
+                  cy={py(p.y)}
+                  r={3}
+                  className={styles.dot}
+                />
               ))}
             </svg>
             {norm && (
@@ -246,6 +275,7 @@ function Growth() {
             <div className={styles.formRow}>
               <Input
                 type="date"
+                max={todayIso()}
                 label={t('growth.form.date')}
                 error={errors.measuredAt?.message ? t(errors.measuredAt.message) : undefined}
                 {...register('measuredAt')}
@@ -254,7 +284,8 @@ function Growth() {
                 type="number"
                 inputMode="decimal"
                 step="0.1"
-                min="0"
+                min="0.1"
+                max="1000000"
                 label={t('growth.form.weight')}
                 error={errors.weightGram?.message ? t(errors.weightGram.message) : undefined}
                 {...register('weightGram', { valueAsNumber: true })}
@@ -263,7 +294,8 @@ function Growth() {
                 type="number"
                 inputMode="decimal"
                 step="0.1"
-                min="0"
+                min="0.1"
+                max="1000"
                 label={t('growth.form.length')}
                 helperText={t('growth.form.lengthOptional')}
                 error={errors.lengthCm?.message ? t(errors.lengthCm.message) : undefined}
@@ -279,6 +311,7 @@ function Growth() {
             <Textarea
               label={t('growth.form.note')}
               rows={2}
+              maxLength={200}
               error={errors.note?.message ? t(errors.note.message) : undefined}
               {...register('note')}
             />
@@ -306,33 +339,54 @@ function Growth() {
             .map((entry) => {
               const label = petLabel(entry.petId)
               return (
-                <li key={entry.id}>
-                  <Card padding="md">
-                    <Card.Body>
-                      <div className={styles.entryHead}>
-                        <div className={styles.entryLeft}>
-                          <span className={styles.entryWeight}>{entry.weightGram} g</span>
-                          {entry.lengthCm !== null && (
-                            <Badge variant="default">{entry.lengthCm} cm</Badge>
-                          )}
-                          <span className={styles.entryDate}>{entry.measuredAt}</span>
-                          {showPetBadge && label && (
-                            <Badge variant="default">
-                              <span aria-hidden="true">{label.emoji}</span> {label.name}
-                            </Badge>
-                          )}
-                        </div>
-                        <button
-                          type="button"
-                          className={styles.removeButton}
-                          onClick={() => removeEntry(entry.id)}
-                        >
-                          {t('growth.remove')}
-                        </button>
-                      </div>
-                      {entry.note && <p className={styles.entryNote}>{entry.note}</p>}
-                    </Card.Body>
-                  </Card>
+                <li key={entry.id} className={styles.historyItem}>
+                  <div className={styles.entryHead}>
+                    <div className={styles.entryLeft}>
+                      <span className={styles.entryWeight}>{entry.weightGram} g</span>
+                      {entry.lengthCm !== null && (
+                        <Badge variant="default">{entry.lengthCm} cm</Badge>
+                      )}
+                      <time className={styles.entryDate} dateTime={entry.measuredAt}>
+                        {entry.measuredAt}
+                      </time>
+                      {showPetBadge && label && (
+                        <Badge variant="default">
+                          <span aria-hidden="true">{label.emoji}</span> {label.name}
+                        </Badge>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      className={styles.removeButton}
+                      aria-expanded={pendingRemoveId === entry.id}
+                      aria-controls={`growth-remove-${entry.id}`}
+                      onClick={() =>
+                        setPendingRemoveId((current) => (current === entry.id ? null : entry.id))
+                      }
+                    >
+                      {t('growth.remove')}
+                    </button>
+                  </div>
+                  {entry.note && <p className={styles.entryNote}>{entry.note}</p>}
+                  {pendingRemoveId === entry.id && (
+                    <div id={`growth-remove-${entry.id}`} className={styles.deleteConfirm}>
+                      <span className={styles.deletePrompt}>{t('growth.remove')}?</span>
+                      <button
+                        type="button"
+                        className={styles.cancelButton}
+                        onClick={() => setPendingRemoveId(null)}
+                      >
+                        {t('common.cancel')}
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.confirmButton}
+                        onClick={() => confirmRemove(entry.id)}
+                      >
+                        {t('common.delete')}
+                      </button>
+                    </div>
+                  )}
                 </li>
               )
             })}

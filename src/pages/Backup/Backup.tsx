@@ -6,282 +6,420 @@ import { useTranslation } from 'react-i18next'
 
 import styles from './Backup.module.css'
 import {
-  type BackupEnvelope,
+  BACKUP_FORMAT_VERSION,
   createBackupEnvelope,
   isBackupData,
   verifyBackupEnvelope,
+  type BackupEnvelope,
 } from './backupEnvelope'
+
+import type { ChangeEvent } from 'react'
 
 const BACKUP_KEY_PREFIXES = ['pettography.', 'onboarding-store']
 const MAX_BACKUP_FILE_BYTES = 2 * 1024 * 1024
+const MAX_BACKUP_KEY_COUNT = 500
 
-interface PendingImport {
+type Operation = 'idle' | 'exporting' | 'reading' | 'restoring' | 'wiping'
+
+interface PendingRestore {
   exportedAt: string
   data: Record<string, string>
   checksum?: string
 }
 
-function collectKeys(): string[] {
-  const keys: string[] = []
-  for (let i = 0; i < localStorage.length; i++) {
-    const k = localStorage.key(i)
-    if (!k) continue
-    if (isBackupKey(k)) {
-      keys.push(k)
-    }
+class BackupMutationError extends Error {
+  constructor(readonly rolledBack: boolean) {
+    super('Backup storage mutation failed')
   }
-  return keys.sort((a, b) => a.localeCompare(b))
 }
 
 function isBackupKey(key: string): boolean {
   return BACKUP_KEY_PREFIXES.some((prefix) => key.startsWith(prefix))
 }
 
-async function buildEnvelope(): Promise<BackupEnvelope> {
-  const data: Record<string, string> = {}
-  for (const k of collectKeys()) {
-    const v = localStorage.getItem(k)
-    if (v !== null) data[k] = v
+function getBackupKeys(): string[] {
+  const keys: string[] = []
+  for (let index = 0; index < localStorage.length; index += 1) {
+    const key = localStorage.key(index)
+    if (key && isBackupKey(key)) keys.push(key)
   }
-  return createBackupEnvelope(data)
+  return keys.sort()
+}
+
+function collectBackupData(): Record<string, string> {
+  const data: Record<string, string> = {}
+  getBackupKeys().forEach((key) => {
+    const value = localStorage.getItem(key)
+    if (value !== null) data[key] = value
+  })
+  return data
+}
+
+function replaceBackupData(nextData: Record<string, string>): void {
+  const previousData = collectBackupData()
+  try {
+    getBackupKeys().forEach((key) => localStorage.removeItem(key))
+    Object.entries(nextData).forEach(([key, value]) => localStorage.setItem(key, value))
+  } catch {
+    try {
+      getBackupKeys().forEach((key) => localStorage.removeItem(key))
+      Object.entries(previousData).forEach(([key, value]) => localStorage.setItem(key, value))
+      throw new BackupMutationError(true)
+    } catch {
+      throw new BackupMutationError(false)
+    }
+  }
+}
+
+function isBackupEnvelope(value: unknown): value is BackupEnvelope {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  const candidate = value as Record<string, unknown>
+  return (
+    candidate.app === 'pettography' &&
+    (candidate.version === 1 || candidate.version === BACKUP_FORMAT_VERSION) &&
+    typeof candidate.exportedAt === 'string' &&
+    !Number.isNaN(Date.parse(candidate.exportedAt)) &&
+    isBackupData(candidate.data) &&
+    (candidate.version === BACKUP_FORMAT_VERSION ? typeof candidate.checksum === 'string' : true)
+  )
+}
+
+function focusById(id: string): void {
+  globalThis.requestAnimationFrame(() => document.getElementById(id)?.focus())
 }
 
 function Backup() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { toast } = useToast()
   useDocumentTitle(t('backup.title'))
 
-  const fileInput = useRef<HTMLInputElement | null>(null)
-  const [keys, setKeys] = useState<string[]>(() => collectKeys())
-  const [pending, setPending] = useState<PendingImport | null>(null)
-  const [wipePending, setWipePending] = useState(false)
-  const confirmRef = useRef<HTMLDivElement | null>(null)
-  const wipeConfirmRef = useRef<HTMLDivElement | null>(null)
+  const [keys, setKeys] = useState<string[]>(() => getBackupKeys())
+  const [pendingRestore, setPendingRestore] = useState<PendingRestore | null>(null)
+  const [wipeOpen, setWipeOpen] = useState(false)
+  const [operation, setOperation] = useState<Operation>('idle')
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const restoreDialogRef = useRef<HTMLDivElement>(null)
+  const wipeDialogRef = useRef<HTMLDivElement>(null)
+  const isBusy = operation !== 'idle'
 
-  // Move focus into the restore-confirmation dialog when it opens (WAI-ARIA alertdialog).
   useEffect(() => {
-    if (pending) confirmRef.current?.focus()
-  }, [pending])
+    const activeDialog = pendingRestore
+      ? restoreDialogRef.current
+      : wipeOpen
+        ? wipeDialogRef.current
+        : null
+    if (!activeDialog) return
+    activeDialog.focus()
 
-  // Same focus handling for the wipe-confirmation dialog.
-  useEffect(() => {
-    if (wipePending) wipeConfirmRef.current?.focus()
-  }, [wipePending])
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || isBusy) return
+      if (pendingRestore) {
+        setPendingRestore(null)
+        focusById('backup-import-trigger')
+      } else {
+        setWipeOpen(false)
+        focusById('backup-wipe-trigger')
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [isBusy, pendingRestore, wipeOpen])
 
-  async function handleExport() {
-    const envelope = await buildEnvelope()
-    const blob = new Blob([JSON.stringify(envelope, null, 2)], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)
-    a.download = `pettography-backup-${stamp}.json`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
-    toast(t('backup.exportedToast'), 'success')
+  const formatDate = (value: string) => {
+    const date = new Date(value)
+    return Number.isNaN(date.getTime())
+      ? value
+      : date.toLocaleString(i18n.resolvedLanguage ?? i18n.language)
   }
 
-  async function handleFile(file: File) {
+  const handleExport = async () => {
+    if (keys.length === 0 || isBusy) return
+    setOperation('exporting')
     try {
-      if (file.size > MAX_BACKUP_FILE_BYTES) {
-        throw new Error('too-large')
+      const envelope = await createBackupEnvelope(collectBackupData())
+      const blob = new Blob([JSON.stringify(envelope, null, 2)], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const anchor = document.createElement('a')
+      anchor.href = url
+      anchor.download = `pettography-backup-${envelope.exportedAt.slice(0, 10)}.json`
+      document.body.appendChild(anchor)
+      anchor.click()
+      anchor.remove()
+      URL.revokeObjectURL(url)
+      toast(t('backup.exportedToast'), 'success')
+    } catch {
+      toast(t('backup.exportFailedToast'), 'error')
+    } finally {
+      setOperation('idle')
+    }
+  }
+
+  const handleImportFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    if (!file || isBusy) return
+    if (file.size > MAX_BACKUP_FILE_BYTES) {
+      toast(t('backup.fileTooLargeToast'), 'error')
+      return
+    }
+
+    setOperation('reading')
+    try {
+      const parsed: unknown = JSON.parse(await file.text())
+      if (!isBackupEnvelope(parsed)) throw new Error('Invalid backup envelope')
+
+      const filteredEntries = Object.entries(parsed.data).filter(([key]) => isBackupKey(key))
+
+      if (
+        filteredEntries.length === 0 ||
+        filteredEntries.length > MAX_BACKUP_KEY_COUNT ||
+        (parsed.version === BACKUP_FORMAT_VERSION && !(await verifyBackupEnvelope(parsed)))
+      ) {
+        throw new Error('Invalid backup contents')
       }
-      const text = await file.text()
-      const parsed = JSON.parse(text) as Partial<BackupEnvelope>
-      if (parsed.app !== 'pettography' || parsed.version !== 1 || !isBackupData(parsed.data)) {
-        throw new Error('invalid')
-      }
-      const envelope: BackupEnvelope = {
-        app: parsed.app,
-        version: parsed.version,
-        exportedAt: typeof parsed.exportedAt === 'string' ? parsed.exportedAt : '',
-        data: Object.fromEntries(
-          Object.entries(parsed.data).filter(
-            (entry): entry is [string, string] => typeof entry[1] === 'string'
-          )
-        ),
-        checksum: parsed.checksum,
-      }
-      if (!(await verifyBackupEnvelope(envelope))) {
-        throw new Error('checksum')
-      }
-      const importable: Record<string, string> = {}
-      for (const [k, v] of Object.entries(envelope.data)) {
-        if (isBackupKey(k) && typeof v === 'string') importable[k] = v
-      }
-      setPending({
-        exportedAt: envelope.exportedAt,
-        data: importable,
-        checksum: envelope.checksum?.value,
+
+      setWipeOpen(false)
+      setPendingRestore({
+        exportedAt: parsed.exportedAt,
+        data: Object.fromEntries(filteredEntries),
+        checksum: parsed.version === BACKUP_FORMAT_VERSION ? parsed.checksum : undefined,
       })
     } catch {
       toast(t('backup.invalidFileToast'), 'error')
+    } finally {
+      setOperation('idle')
     }
   }
 
-  function confirmImport() {
-    if (!pending) return
-    for (const k of collectKeys()) {
-      localStorage.removeItem(k)
-    }
-    for (const [k, v] of Object.entries(pending.data)) {
-      localStorage.setItem(k, v)
-    }
-    toast(t('backup.importedToast'), 'success')
-    setPending(null)
-    setTimeout(() => globalThis.location.reload(), 600)
+  const cancelRestore = () => {
+    setPendingRestore(null)
+    focusById('backup-import-trigger')
   }
 
-  function cancelImport() {
-    setPending(null)
-  }
-
-  function confirmWipe() {
-    for (const k of collectKeys()) {
-      localStorage.removeItem(k)
+  const confirmRestore = () => {
+    if (!pendingRestore || isBusy) return
+    setOperation('restoring')
+    try {
+      replaceBackupData(pendingRestore.data)
+      setKeys(Object.keys(pendingRestore.data).sort())
+      setPendingRestore(null)
+      toast(t('backup.importedToast'), 'success')
+      globalThis.setTimeout(() => globalThis.location.reload(), 600)
+    } catch (error) {
+      const messageKey =
+        error instanceof BackupMutationError && !error.rolledBack
+          ? 'backup.rollbackFailedToast'
+          : 'backup.restoreFailedToast'
+      toast(t(messageKey), 'error')
+      setOperation('idle')
     }
-    setKeys([])
-    setWipePending(false)
-    toast(t('backup.wipedToast'), 'success')
-    setTimeout(() => globalThis.location.reload(), 600)
   }
 
-  const pendingKeys = pending ? Object.keys(pending.data).sort((a, b) => a.localeCompare(b)) : []
+  const cancelWipe = () => {
+    setWipeOpen(false)
+    focusById('backup-wipe-trigger')
+  }
+
+  const confirmWipe = () => {
+    if (isBusy) return
+    setOperation('wiping')
+    try {
+      replaceBackupData({})
+      setKeys([])
+      setWipeOpen(false)
+      toast(t('backup.wipedToast'), 'success')
+      globalThis.setTimeout(() => globalThis.location.reload(), 600)
+    } catch (error) {
+      const messageKey =
+        error instanceof BackupMutationError && !error.rolledBack
+          ? 'backup.rollbackFailedToast'
+          : 'backup.wipeFailedToast'
+      toast(t(messageKey), 'error')
+      setOperation('idle')
+    }
+  }
 
   return (
-    <section className={styles.page}>
+    <section className={styles.page} aria-busy={isBusy}>
       <header className={styles.header}>
+        <p className={styles.eyebrow}>{t('backup.formatNote')}</p>
         <h1>{t('backup.title')}</h1>
         <p className={styles.subtitle}>{t('backup.subtitle')}</p>
+        <p className={styles.storageCount} role="status">
+          {keys.length > 0 ? t('backup.storedCount', { count: keys.length }) : t('backup.empty')}
+        </p>
       </header>
 
-      <section className={styles.section} aria-labelledby="export-heading">
-        <h2 id="export-heading" className={styles.sectionTitle}>
-          {t('backup.exportTitle')}
-        </h2>
-        <p className={styles.sectionDesc}>{t('backup.exportDesc')}</p>
-        <ul className={styles.keysList}>
-          {keys.length === 0 ? (
-            <li className={styles.empty}>{t('backup.empty')}</li>
-          ) : (
-            keys.map((k) => <li key={k}>{k}</li>)
-          )}
-        </ul>
-        <Button variant="primary" onClick={() => void handleExport()} disabled={keys.length === 0}>
-          {t('backup.exportButton')}
-        </Button>
-      </section>
+      <div className={styles.workspace}>
+        <section className={styles.actionSection} aria-labelledby="backup-export-heading">
+          <div className={styles.sectionCopy}>
+            <span className={styles.step} aria-hidden="true">
+              01
+            </span>
+            <div>
+              <h2 id="backup-export-heading">{t('backup.exportTitle')}</h2>
+              <p>{t('backup.exportDesc')}</p>
+            </div>
+          </div>
+          <Button
+            type="button"
+            variant="primary"
+            onClick={handleExport}
+            disabled={keys.length === 0 || isBusy}
+            isLoading={operation === 'exporting'}
+          >
+            {t('backup.exportButton')}
+          </Button>
+        </section>
 
-      <section className={styles.section} aria-labelledby="import-heading">
-        <h2 id="import-heading" className={styles.sectionTitle}>
-          {t('backup.importTitle')}
-        </h2>
-        <p className={styles.sectionDesc}>{t('backup.importDesc')}</p>
-        <input
-          ref={fileInput}
-          type="file"
-          accept="application/json"
-          className={styles.hiddenInput}
-          onChange={(e) => {
-            const f = e.target.files?.[0]
-            if (f) {
-              void handleFile(f)
-              e.target.value = ''
-            }
-          }}
-        />
-        <Button variant="outline" onClick={() => fileInput.current?.click()}>
-          {t('backup.importButton')}
-        </Button>
+        <section className={styles.actionSection} aria-labelledby="backup-import-heading">
+          <div className={styles.sectionCopy}>
+            <span className={styles.step} aria-hidden="true">
+              02
+            </span>
+            <div>
+              <h2 id="backup-import-heading">{t('backup.importTitle')}</h2>
+              <p>{t('backup.importDesc')}</p>
+              <span className={styles.fileHint}>{t('backup.fileHint')}</span>
+            </div>
+          </div>
+          <input
+            ref={fileInputRef}
+            className={styles.fileInput}
+            type="file"
+            accept=".json,application/json"
+            onChange={handleImportFile}
+          />
+          <Button
+            id="backup-import-trigger"
+            type="button"
+            variant="outline"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isBusy}
+            isLoading={operation === 'reading'}
+          >
+            {t('backup.importButton')}
+          </Button>
+        </section>
 
-        {pending && (
+        {pendingRestore && (
           <div
-            ref={confirmRef}
-            tabIndex={-1}
+            ref={restoreDialogRef}
             className={styles.confirmPanel}
             role="alertdialog"
-            aria-labelledby="restore-confirm-heading"
+            aria-labelledby="backup-restore-title"
+            aria-describedby="backup-restore-description"
+            tabIndex={-1}
           >
-            <h3 id="restore-confirm-heading" className={styles.confirmTitle}>
-              {t('backup.confirmTitle')}
-            </h3>
-            {pending.exportedAt && (
-              <p className={styles.confirmMeta}>
-                {t('backup.confirmBackupDate', {
-                  date: new Date(pending.exportedAt).toLocaleString(),
-                })}
-              </p>
+            <div className={styles.confirmHead}>
+              <span className={styles.confirmLabel}>SHA-256</span>
+              <h2 id="backup-restore-title">{t('backup.confirmTitle')}</h2>
+            </div>
+            <dl className={styles.restoreMeta}>
+              <div>
+                <dt>{t('backup.confirmBackupDate', { date: '' }).replace(': ', '')}</dt>
+                <dd>{formatDate(pendingRestore.exportedAt)}</dd>
+              </div>
+              <div>
+                <dt>
+                  {t('backup.confirmIncludes', { count: Object.keys(pendingRestore.data).length })}
+                </dt>
+                <dd>{Object.keys(pendingRestore.data).length}</dd>
+              </div>
+            </dl>
+            {pendingRestore.checksum && (
+              <code className={styles.checksum}>
+                {t('backup.confirmChecksum', { hash: pendingRestore.checksum })}
+              </code>
             )}
-            <p className={styles.confirmMeta}>
-              {t('backup.confirmIncludes', { count: pendingKeys.length })}
-            </p>
-            {pending.checksum && (
-              <p className={styles.confirmMeta}>
-                {t('backup.confirmChecksum', { hash: pending.checksum.slice(0, 12) })}
-              </p>
-            )}
-            <ul className={styles.confirmKeys}>
-              {pendingKeys.map((k) => (
-                <li key={k}>{k.replace('pettography.', '')}</li>
-              ))}
+            <ul
+              className={styles.keyList}
+              aria-label={t('backup.confirmIncludes', {
+                count: Object.keys(pendingRestore.data).length,
+              })}
+            >
+              {Object.keys(pendingRestore.data)
+                .sort()
+                .map((key) => (
+                  <li key={key}>{key}</li>
+                ))}
             </ul>
-            <p className={styles.confirmWarning}>
-              <span aria-hidden="true">⚠️ </span>
-              {t('backup.confirmWarning')}
-            </p>
+            <div id="backup-restore-description" className={styles.warningCopy}>
+              <p>{t('backup.confirmWarning')}</p>
+              <p>{t('backup.rollbackNote')}</p>
+            </div>
             <div className={styles.confirmActions}>
-              <Button variant="primary" onClick={confirmImport}>
+              <Button
+                type="button"
+                variant="primary"
+                onClick={confirmRestore}
+                isLoading={operation === 'restoring'}
+              >
                 {t('backup.confirmRestore')}
               </Button>
-              <Button variant="ghost" onClick={cancelImport}>
+              <Button type="button" variant="outline" onClick={cancelRestore} disabled={isBusy}>
                 {t('common.cancel')}
               </Button>
             </div>
           </div>
         )}
-      </section>
 
-      <section className={styles.section} aria-labelledby="wipe-heading">
-        <h2 id="wipe-heading" className={styles.sectionTitle}>
-          {t('backup.wipeTitle')}
-        </h2>
-        <p className={styles.sectionDesc}>{t('backup.wipeDesc')}</p>
-        <Button
-          variant="ghost"
-          onClick={() => setWipePending(true)}
-          disabled={keys.length === 0 || wipePending}
+        <section
+          className={`${styles.actionSection} ${styles.dangerSection}`}
+          aria-labelledby="backup-wipe-heading"
         >
-          {t('backup.wipeButton')}
-        </Button>
-
-        {wipePending && (
-          <div
-            ref={wipeConfirmRef}
-            tabIndex={-1}
-            className={styles.confirmPanel}
-            role="alertdialog"
-            aria-labelledby="wipe-confirm-heading"
+          <div className={styles.sectionCopy}>
+            <span className={styles.step} aria-hidden="true">
+              03
+            </span>
+            <div>
+              <h2 id="backup-wipe-heading">{t('backup.wipeTitle')}</h2>
+              <p>{t('backup.wipeDesc')}</p>
+            </div>
+          </div>
+          <Button
+            id="backup-wipe-trigger"
+            type="button"
+            variant="outline"
+            className={styles.dangerTrigger}
+            onClick={() => {
+              setPendingRestore(null)
+              setWipeOpen(true)
+            }}
+            disabled={keys.length === 0 || isBusy}
           >
-            <h3 id="wipe-confirm-heading" className={styles.confirmTitle}>
-              {t('backup.wipeTitle')}
-            </h3>
-            <p className={styles.confirmWarning}>
-              <span aria-hidden="true">⚠️ </span>
-              {t('backup.wipeConfirm')}
-            </p>
+            {t('backup.wipeButton')}
+          </Button>
+        </section>
+
+        {wipeOpen && (
+          <div
+            ref={wipeDialogRef}
+            className={`${styles.confirmPanel} ${styles.wipePanel}`}
+            role="region"
+            aria-labelledby="backup-wipe-confirm-title"
+            aria-describedby="backup-wipe-confirm-description"
+            tabIndex={-1}
+          >
+            <h2 id="backup-wipe-confirm-title">{t('backup.wipeTitle')}</h2>
+            <p id="backup-wipe-confirm-description">{t('backup.wipeConfirm')}</p>
             <div className={styles.confirmActions}>
-              <Button variant="primary" onClick={confirmWipe}>
+              <Button type="button" variant="outline" onClick={cancelWipe} disabled={isBusy}>
+                {t('common.cancel')}
+              </Button>
+              <Button
+                type="button"
+                variant="primary"
+                className={styles.dangerButton}
+                onClick={confirmWipe}
+                isLoading={operation === 'wiping'}
+              >
                 {t('backup.wipeButton')}
               </Button>
-              <Button variant="ghost" onClick={() => setWipePending(false)}>
-                {t('common.cancel')}
-              </Button>
             </div>
           </div>
         )}
-      </section>
+      </div>
     </section>
   )
 }

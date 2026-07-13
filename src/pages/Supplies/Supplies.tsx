@@ -3,9 +3,10 @@ import Button from '@components/common/Button'
 import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import Input from '@components/common/Input'
-import PetBadge, { ShowAllPetsToggle } from '@components/common/PetBadge'
 import Select from '@components/common/Select'
 import { useToast } from '@components/common/Toast'
+import { useOnboardingStore } from '@domains/onboarding'
+import { useSpecies } from '@domains/species'
 import {
   SUPPLY_KINDS,
   supplyFormSchema,
@@ -19,11 +20,13 @@ import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Supplies.module.css'
 
-function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+function localTodayIso(): string {
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
 }
 
 const LEVEL_VARIANT = {
@@ -38,59 +41,108 @@ function Supplies() {
   const { toast } = useToast()
   useDocumentTitle(t('supplies.title'))
 
-  const activeItems = useActivePetSupplies()
-  const allItems = useSuppliesStore((s) => s.items)
-  const [showAllPets, setShowAllPets] = useState(false)
-  const items = showAllPets ? allItems : activeItems
-  const addItem = useSuppliesStore((s) => s.addItem)
-  const restock = useSuppliesStore((s) => s.restock)
-  const removeItem = useSuppliesStore((s) => s.removeItem)
-
+  const profile = useOnboardingStore((state) => state.profile)
+  const activePetId = useOnboardingStore((state) => state.activePetId)
+  const { data: species } = useSpecies(profile.speciesId ?? undefined)
+  const items = useActivePetSupplies()
+  const addItem = useSuppliesStore((state) => state.addItem)
+  const restock = useSuppliesStore((state) => state.restock)
+  const removeItem = useSuppliesStore((state) => state.removeItem)
   const [restockDrafts, setRestockDrafts] = useState<Record<string, string>>({})
+  const today = localTodayIso()
 
   const form = useForm<SupplyFormValues>({
     resolver: zodResolver(supplyFormSchema),
     defaultValues: {
       name: '',
       kind: 'live-food',
-      unit: '마리',
-      lastRestockedAt: todayIso(),
+      unit: '',
+      lastRestockedAt: today,
       lastQuantity: 0,
       weeklyConsumption: 0,
       preferredVendor: '',
     },
   })
 
+  function numberSetter(value: unknown): number {
+    if (value === '' || value === null || value === undefined) return 0
+    const parsed = Number(value)
+    return Number.isFinite(parsed) ? parsed : 0
+  }
+
   const onSubmit = form.handleSubmit((values) => {
-    addItem(values)
+    if (!activePetId) return
+    addItem({ ...values, petId: activePetId })
     toast(t('supplies.save'), 'success')
     form.reset({
       name: '',
       kind: values.kind,
       unit: values.unit,
-      lastRestockedAt: todayIso(),
+      lastRestockedAt: today,
       lastQuantity: 0,
       weeklyConsumption: 0,
       preferredVendor: values.preferredVendor,
     })
   })
 
-  function numberSetter(value: unknown): number {
-    if (value === '' || value === null || value === undefined) return 0
-    const n = Number(value)
-    return Number.isFinite(n) ? n : 0
+  function handleRestock(id: string) {
+    const raw = restockDrafts[id] ?? ''
+    const quantity = Number(raw)
+    if (!raw || !Number.isFinite(quantity) || quantity <= 0 || quantity > 1_000_000) {
+      toast(t('supplies.errors.restockRange'), 'error')
+      return
+    }
+    restock(id, today, Math.round(quantity))
+    toast(t('supplies.restockShort'), 'success')
+    setRestockDrafts((drafts) => ({ ...drafts, [id]: '' }))
+  }
+
+  function handleRemove(id: string, name: string) {
+    if (!window.confirm(t('supplies.removeConfirm', { name }))) return
+    removeItem(id)
+    toast(t('supplies.removed'), 'info')
+  }
+
+  if (!activePetId) {
+    return (
+      <section className={styles.page}>
+        <header className={styles.heroHeader}>
+          <p className={styles.eyebrow}>{t('supplies.eyebrow')}</p>
+          <h1>{t('supplies.title')}</h1>
+          <p className={styles.subtitle}>{t('supplies.subtitle')}</p>
+        </header>
+        <Card padding="lg" className={styles.petGate}>
+          <Card.Body>
+            <span className={styles.gateIcon} aria-hidden="true">
+              📦
+            </span>
+            <h2>{t('supplies.petRequiredTitle')}</h2>
+            <p>{t('supplies.petRequiredBody')}</p>
+            <Link to="/onboarding" className={styles.primaryLink}>
+              {t('supplies.petRequiredAction')}
+            </Link>
+          </Card.Body>
+        </Card>
+      </section>
+    )
   }
 
   return (
     <section className={styles.page}>
       <header className={styles.heroHeader}>
+        <p className={styles.eyebrow}>{t('supplies.eyebrow')}</p>
         <h1>{t('supplies.title')}</h1>
         <p className={styles.subtitle}>{t('supplies.subtitle')}</p>
-        <ShowAllPetsToggle checked={showAllPets} onChange={setShowAllPets} />
+        <span className={styles.petPill}>
+          <span aria-hidden="true">{species?.heroEmoji ?? '🐾'}</span>
+          {profile.petName?.trim() || species?.koreanName || t('supplies.aPet')}
+        </span>
       </header>
 
+      <p className={styles.estimateNote}>{t('supplies.estimateNote')}</p>
+
       {items.length === 0 ? (
-        <EmptyState icon="🦗" title={t('supplies.empty')} />
+        <EmptyState icon="📦" title={t('supplies.empty')} />
       ) : (
         <ul className={styles.itemList}>
           {items.map((item) => {
@@ -106,14 +158,10 @@ function Supplies() {
                       {item.preferredVendor && ` · ${item.preferredVendor}`}
                     </p>
                   </div>
-                  <div className={styles.itemHeaderBadges}>
-                    <Badge variant={LEVEL_VARIANT[status.level]}>
-                      {t(`supplies.level.${status.level}`)}
-                    </Badge>
-                    <PetBadge petId={item.petId} hideWhenActive={!showAllPets} />
-                  </div>
+                  <Badge variant={LEVEL_VARIANT[status.level]}>
+                    {t(`supplies.level.${status.level}`)}
+                  </Badge>
                 </header>
-
                 <dl className={styles.statsRow}>
                   <div>
                     <dt>{t('supplies.remaining')}</dt>
@@ -143,44 +191,38 @@ function Supplies() {
                     </dd>
                   </div>
                 </dl>
-
-                <form
-                  className={styles.restockForm}
-                  onSubmit={(e) => {
-                    e.preventDefault()
-                    const raw = restockDrafts[item.id] ?? ''
-                    const qty = Number(raw)
-                    if (!raw || !Number.isFinite(qty) || qty <= 0) return
-                    restock(item.id, todayIso(), Math.round(qty))
-                    toast(t('supplies.restockShort'), 'success')
-                    setRestockDrafts((d) => ({ ...d, [item.id]: '' }))
-                  }}
-                >
+                <div className={styles.restockForm}>
                   <label className={styles.restockLabel}>
                     <span>{t('supplies.addRestock')}</span>
                     <input
                       type="number"
                       inputMode="numeric"
                       min="1"
+                      max="1000000"
                       step="1"
                       className={styles.restockInput}
                       value={restockDrafts[item.id] ?? ''}
-                      onChange={(e) =>
-                        setRestockDrafts((d) => ({ ...d, [item.id]: e.target.value }))
+                      onChange={(event) =>
+                        setRestockDrafts((drafts) => ({ ...drafts, [item.id]: event.target.value }))
                       }
                     />
                   </label>
-                  <Button type="submit" variant="outline" size="sm">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleRestock(item.id)}
+                  >
                     {t('supplies.restockShort')}
                   </Button>
                   <button
                     type="button"
                     className={styles.removeBtn}
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => handleRemove(item.id, item.name)}
                   >
                     {t('supplies.remove')}
                   </button>
-                </form>
+                </div>
               </li>
             )
           })}
@@ -193,6 +235,7 @@ function Supplies() {
           <form onSubmit={onSubmit} className={styles.formGrid} noValidate>
             <Input
               label={t('supplies.name')}
+              maxLength={60}
               placeholder={t('supplies.namePlaceholder')}
               error={
                 form.formState.errors.name?.message
@@ -203,14 +246,15 @@ function Supplies() {
             />
             <Select
               label={t('supplies.kind')}
-              options={SUPPLY_KINDS.map((k) => ({
-                value: k,
-                label: t(`supplies.kinds.${k}`),
+              options={SUPPLY_KINDS.map((kind) => ({
+                value: kind,
+                label: t(`supplies.kinds.${kind}`),
               }))}
               {...form.register('kind')}
             />
             <Input
               label={t('supplies.unit')}
+              maxLength={20}
               placeholder={t('supplies.unitPlaceholder')}
               error={
                 form.formState.errors.unit?.message
@@ -221,6 +265,7 @@ function Supplies() {
             />
             <Input
               type="date"
+              max={today}
               label={t('supplies.lastRestockedAt')}
               error={
                 form.formState.errors.lastRestockedAt?.message
@@ -233,6 +278,7 @@ function Supplies() {
               type="number"
               inputMode="numeric"
               min="1"
+              max="1000000"
               step="1"
               label={t('supplies.lastQuantity')}
               error={
@@ -246,7 +292,8 @@ function Supplies() {
               type="number"
               inputMode="decimal"
               min="0.1"
-              step="0.5"
+              max="1000000"
+              step="0.1"
               label={t('supplies.weeklyConsumption')}
               error={
                 form.formState.errors.weeklyConsumption?.message
@@ -257,7 +304,14 @@ function Supplies() {
             />
             <Input
               label={t('supplies.preferredVendor')}
+              maxLength={60}
+              autoComplete="off"
               placeholder={t('supplies.preferredVendorPlaceholder')}
+              error={
+                form.formState.errors.preferredVendor?.message
+                  ? t(form.formState.errors.preferredVendor.message)
+                  : undefined
+              }
               {...form.register('preferredVendor')}
             />
             <div className={styles.formActions}>

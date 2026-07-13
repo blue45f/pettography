@@ -1,11 +1,18 @@
 import { z } from 'zod'
 
+const httpUrlSchema = z
+  .string()
+  .trim()
+  .max(2048)
+  .url()
+  .refine((value) => /^https?:\/\//i.test(value))
+
 export const galleryPhotoSchema = z.object({
   id: z.string(),
   petId: z.string().nullable().optional(),
   speciesId: z.string(),
-  imageUrl: z.string().url(),
-  sourceUrl: z.string().url().optional(),
+  imageUrl: httpUrlSchema,
+  sourceUrl: httpUrlSchema.optional(),
   caption: z.string().max(120).optional(),
   addedAt: z.string(),
 })
@@ -13,9 +20,9 @@ export const galleryPhotoSchema = z.object({
 export type GalleryPhoto = z.infer<typeof galleryPhotoSchema>
 
 export const photoInputSchema = z.object({
-  imageUrl: z.string().url(),
-  sourceUrl: z.string().url().optional().or(z.literal('')),
-  caption: z.string().max(120).optional(),
+  imageUrl: httpUrlSchema,
+  sourceUrl: httpUrlSchema.optional().or(z.literal('')),
+  caption: z.string().trim().max(120).optional(),
 })
 
 export type PhotoInput = z.infer<typeof photoInputSchema>

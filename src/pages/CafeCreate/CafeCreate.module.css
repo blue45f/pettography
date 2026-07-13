@@ -14,6 +14,9 @@
 }
 
 .backLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   text-decoration: none;
@@ -87,4 +90,39 @@
 .formActions {
   display: flex;
   justify-content: flex-end;
+}
+
+.errorActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.backCta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--spacing-md);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 560px) {
+  .formActions button,
+  .errorActions > * {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .emojiChip {
+    transition: none;
+  }
+
+  .emojiChip:hover {
+    transform: none;
+  }
 }

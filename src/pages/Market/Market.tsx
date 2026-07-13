@@ -29,14 +29,14 @@ import {
 } from '@domains/species'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useEffect, useMemo, useState } from 'react'
+import { useDeferredValue, useEffect, useMemo, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
 import styles from './Market.module.css'
 
-export const MARKET_LISTING_DRAFT_KEY = 'pettography.market.listingDraft'
+export const MARKET_LISTING_DRAFT_KEY = 'pettography.market.listingDraft.v2'
 
 const MARKET_DRAFT_SAVE_DELAY_MS = 500
 
@@ -44,8 +44,17 @@ function isExternalContact(contact: string): boolean {
   return /^https?:\/\//i.test(contact.trim())
 }
 
-function formatPrice(priceKrw: number): string {
-  return new Intl.NumberFormat('ko-KR').format(priceKrw)
+function contactHref(contact: string): string | null {
+  const trimmed = contact.trim()
+  if (isExternalContact(trimmed)) return trimmed
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return `mailto:${trimmed}`
+  const phone = trimmed.replace(/[^\d+]/g, '')
+  if (/^\+?\d{8,15}$/.test(phone)) return `tel:${phone}`
+  return null
+}
+
+function formatPrice(priceKrw: number, locale: string): string {
+  return new Intl.NumberFormat(locale).format(priceKrw)
 }
 
 function createDefaultListingValues(lastAuthor = ''): ListingFormValues {
@@ -147,7 +156,8 @@ function Market() {
   useDocumentTitle(t('market.title'))
 
   const profile = useOnboardingStore((s) => s.profile)
-  const { data: species = [] } = useSpeciesList({})
+  const speciesQuery = useSpeciesList({})
+  const species = useMemo(() => speciesQuery.data ?? [], [speciesQuery.data])
 
   const listings = useMarketStore((s) => s.listings)
   const ownIds = useMarketStore((s) => s.ownIds)
@@ -171,10 +181,12 @@ function Market() {
   const [region, setRegion] = useState<MarketRegion | 'all'>('all')
   const [freeOnly, setFreeOnly] = useState(false)
   const [sort, setSort] = useState<MarketSort>('recent')
+  const [search, setSearch] = useState('')
+  const deferredSearch = useDeferredValue(search)
 
   const visibleListings = useMemo(
-    () => selectListings(listings, { category, region, freeOnly, sort }),
-    [listings, category, region, freeOnly, sort]
+    () => selectListings(listings, { category, region, freeOnly, sort, query: deferredSearch }),
+    [listings, category, region, freeOnly, sort, deferredSearch]
   )
 
   return (
@@ -204,6 +216,14 @@ function Market() {
       </Card>
 
       <div className={styles.controls}>
+        <Input
+          type="search"
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          placeholder={t('forum.searchPlaceholder')}
+          aria-label={t('forum.searchLabel')}
+          className={styles.searchInput}
+        />
         <div
           role="radiogroup"
           aria-label={t('market.filterCategoryLabel')}
@@ -258,6 +278,19 @@ function Market() {
         </div>
       </div>
 
+      {speciesQuery.isError && (
+        <EmptyState
+          icon="⚠️"
+          title={t('common.error')}
+          description={t('common.loadErrorHint')}
+          action={
+            <Button variant="outline" size="sm" onClick={() => void speciesQuery.refetch()}>
+              {t('common.retry')}
+            </Button>
+          }
+        />
+      )}
+
       <ListingComposer lastAuthor={lastAuthor} species={species} />
 
       {visibleListings.length === 0 ? (
@@ -266,6 +299,21 @@ function Market() {
           icon="🪧"
           title={t('market.empty')}
           description={t('market.emptyHint')}
+          action={
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setCategory('all')
+                setRegion('all')
+                setFreeOnly(false)
+                setSort('recent')
+                setSearch('')
+              }}
+            >
+              {t('species.resetFilters')}
+            </Button>
+          }
         />
       ) : (
         <ul className={styles.grid}>
@@ -316,9 +364,11 @@ interface ListingCardProps {
 }
 
 function ListingCard({ listing, species, isOwn, onRemove }: ListingCardProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const isRegulated = species?.filingStatus === 'regulated'
-  const external = isExternalContact(listing.contact)
+  const href = contactHref(listing.contact)
+  const external = Boolean(href?.startsWith('http'))
+  const [pendingRemove, setPendingRemove] = useState(false)
 
   return (
     <Card padding="md" className={styles.listingCard}>
@@ -329,7 +379,9 @@ function ListingCard({ listing, species, isOwn, onRemove }: ListingCardProps) {
             <Badge variant="success">{t('market.free')}</Badge>
           ) : (
             <span className={styles.price}>
-              {t('market.priceWon', { price: formatPrice(listing.priceKrw ?? 0) })}
+              {t('market.priceWon', {
+                price: formatPrice(listing.priceKrw ?? 0, i18n.resolvedLanguage ?? i18n.language),
+              })}
             </span>
           )}
         </div>
@@ -362,28 +414,61 @@ function ListingCard({ listing, species, isOwn, onRemove }: ListingCardProps) {
         <div className={styles.listingFooter}>
           <p className={styles.contact}>
             <span className={styles.contactLabel}>{t('market.contactLabel')}</span>{' '}
-            {external ? (
+            {href ? (
               <a
-                href={listing.contact}
-                target="_blank"
-                rel="noreferrer"
+                href={href}
+                target={external ? '_blank' : undefined}
+                rel={external ? 'noopener noreferrer' : undefined}
                 className={styles.contactLink}
               >
-                {listing.contact} <span aria-hidden="true">↗</span>
+                {listing.contact} {external && <span aria-hidden="true">↗</span>}
               </a>
             ) : (
               <span className={styles.contactText}>{listing.contact}</span>
             )}
           </p>
           <span className={styles.author}>
-            {listing.author} · {new Date(listing.createdAt).toLocaleDateString('ko')}
+            {listing.author} ·{' '}
+            <time dateTime={listing.createdAt}>
+              {new Date(listing.createdAt).toLocaleDateString(
+                i18n.resolvedLanguage ?? i18n.language
+              )}
+            </time>
           </span>
         </div>
 
         {isOwn && (
           <div className={styles.ownActions}>
-            <button type="button" className={styles.dangerLink} onClick={onRemove}>
+            <button
+              type="button"
+              className={styles.dangerLink}
+              aria-expanded={pendingRemove}
+              aria-controls={`market-remove-${listing.id}`}
+              onClick={() => setPendingRemove((current) => !current)}
+            >
               {t('market.remove')}
+            </button>
+          </div>
+        )}
+        {isOwn && pendingRemove && (
+          <div id={`market-remove-${listing.id}`} className={styles.confirmPanel}>
+            <span className={styles.confirmPrompt}>{t('market.remove')}?</span>
+            <button
+              type="button"
+              className={styles.cancelButton}
+              onClick={() => setPendingRemove(false)}
+            >
+              {t('common.cancel')}
+            </button>
+            <button
+              type="button"
+              className={styles.confirmButton}
+              onClick={() => {
+                onRemove()
+                setPendingRemove(false)
+              }}
+            >
+              {t('common.delete')}
             </button>
           </div>
         )}
@@ -526,7 +611,7 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
       previewAuthor,
       previewTitle,
       previewSpeciesId,
-      selectedSpecies?.category,
+      selectedSpecies,
       previewMorph,
       isFree,
       previewPriceKrw,
@@ -605,6 +690,7 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
 
           <form key={formKey} onSubmit={onSubmit} className={styles.composerForm} noValidate>
             <Input
+              maxLength={80}
               label={t('market.titleLabel')}
               placeholder={t('market.titlePlaceholder')}
               error={errors.title?.message ? t(errors.title.message) : undefined}
@@ -618,6 +704,7 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
                 {...register('speciesId')}
               />
               <Input
+                maxLength={60}
                 label={t('market.morphLabel')}
                 placeholder={t('market.morphPlaceholder')}
                 error={errors.morph?.message ? t(errors.morph.message) : undefined}
@@ -664,6 +751,7 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
                     <Input
                       type="number"
                       min={0}
+                      max={1000000000}
                       inputMode="numeric"
                       label={t('market.priceLabel')}
                       placeholder={t('market.pricePlaceholder')}
@@ -684,6 +772,7 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
             {isFree && <p className={styles.freeHint}>{t('market.freeHint')}</p>}
 
             <Input
+              maxLength={120}
               label={t('market.contactLabel')}
               placeholder={t('market.contactPlaceholder')}
               helperText={t('market.contactHelper')}
@@ -694,12 +783,14 @@ function ListingComposer({ lastAuthor, species }: ListingComposerProps) {
             <Textarea
               label={t('market.descriptionLabel')}
               rows={3}
+              maxLength={600}
               placeholder={t('market.descriptionPlaceholder')}
               error={errors.description?.message ? t(errors.description.message) : undefined}
               {...register('description')}
             />
 
             <Input
+              maxLength={40}
               label={t('market.author')}
               placeholder={t('market.authorPlaceholder')}
               error={errors.author?.message ? t(errors.author.message) : undefined}
@@ -733,14 +824,24 @@ interface SelectListingsOptions {
   region: MarketRegion | 'all'
   freeOnly: boolean
   sort: MarketSort
+  query: string
 }
 
 function selectListings(listings: Listing[], options: SelectListingsOptions): Listing[] {
-  const { category, region, freeOnly, sort } = options
+  const { category, region, freeOnly, sort, query } = options
+  const normalizedQuery = query.trim().toLowerCase()
   const filtered = listings.filter((l) => {
     if (category !== 'all' && l.category !== category) return false
     if (region !== 'all' && l.region !== region) return false
     if (freeOnly && !l.isFree) return false
+    if (
+      normalizedQuery &&
+      ![l.title, l.description, l.morph, l.author].some((value) =>
+        value.toLowerCase().includes(normalizedQuery)
+      )
+    ) {
+      return false
+    }
     return true
   })
   return filtered.sort((a, b) => {

@@ -1,7 +1,9 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-xl);
+  max-width: 1120px;
+  margin: 0 auto;
 }
 
 .header {
@@ -10,14 +12,25 @@
   gap: var(--spacing-xs);
 }
 
+.eyebrow,
+.sectionKicker {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .header h1 {
-  font-size: var(--font-size-3xl);
-  letter-spacing: -0.025em;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
 }
 
 .subtitle {
+  max-width: 68ch;
   color: var(--color-text-secondary);
-  max-width: 65ch;
+  line-height: 1.65;
 }
 
 .context {
@@ -25,26 +38,27 @@
   align-items: center;
   gap: var(--spacing-md);
   padding: var(--spacing-md) var(--spacing-lg);
-  background: var(--color-surface-muted);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
+  background: var(--color-surface-muted);
 }
 
 .contextEmoji {
   font-size: var(--font-size-2xl);
-  line-height: 1;
 }
 
 .contextText {
   display: flex;
+  min-width: 0;
   flex-direction: column;
   gap: var(--spacing-2xs);
-  min-width: 0;
 }
 
 .contextName {
-  font-weight: 700;
-  font-size: var(--font-size-md);
+  overflow: hidden;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .contextMeta {
@@ -52,99 +66,166 @@
   font-size: var(--font-size-sm);
 }
 
-.cardTitle {
-  font-size: var(--font-size-lg);
-  letter-spacing: -0.015em;
+.petGate {
+  text-align: center;
 }
 
-.minHead,
-.verdictHead {
-  display: flex;
+.gateIcon {
+  display: block;
+  font-size: 2.5rem;
+}
+
+.petGate h2 {
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-xl);
+}
+
+.petGate p {
+  max-width: 52ch;
+  margin: var(--spacing-sm) auto var(--spacing-lg);
+  color: var(--color-text-secondary);
+}
+
+.primaryLink {
+  display: inline-flex;
+  min-height: 44px;
   align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-lg);
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+.referenceCard {
+  border-color: color-mix(in srgb, var(--color-primary) 28%, var(--color-border));
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
   justify-content: space-between;
   gap: var(--spacing-md);
   flex-wrap: wrap;
-  margin-bottom: var(--spacing-sm);
 }
 
-.minDims {
-  font-size: var(--font-size-3xl);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
+.cardTitle {
+  margin-top: var(--spacing-2xs);
+  font-size: var(--font-size-xl);
+  font-weight: 800;
   letter-spacing: -0.02em;
-  margin-bottom: var(--spacing-2xs);
 }
 
-.minLiters {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-md);
+.referenceDims {
+  margin-top: var(--spacing-lg);
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
-  margin-bottom: var(--spacing-sm);
+  letter-spacing: -0.03em;
+}
+
+.referenceLiters,
+.helpText,
+.verdictMsg,
+.savedAt,
+.volumeRow {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.referenceLiters {
+  margin-top: var(--spacing-2xs);
+  font-variant-numeric: tabular-nums;
 }
 
 .ruleNote {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--color-surface-muted);
-  border-radius: var(--radius-md);
+  line-height: 1.6;
 }
 
 .helpText {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  margin-bottom: var(--spacing-md);
+  margin-top: var(--spacing-xs);
 }
 
 .dimForm {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
 }
 
 .formActions {
   grid-column: 1 / -1;
   display: flex;
   justify-content: flex-end;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.savedAt {
+  margin-top: var(--spacing-md);
+  text-align: right;
 }
 
 .verdictCard {
-  background: var(--color-surface);
+  overflow: hidden;
 }
 
 .verdictMsg {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  margin-bottom: var(--spacing-md);
-  max-width: 65ch;
+  max-width: 68ch;
+  margin-top: var(--spacing-sm);
+}
+
+.tableScroll {
+  margin-top: var(--spacing-lg);
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
 }
 
 .compareTable {
   width: 100%;
+  min-width: 620px;
   border-collapse: collapse;
   font-size: var(--font-size-sm);
 }
 
 .compareTable th,
 .compareTable td {
-  text-align: left;
-  padding: var(--spacing-sm) var(--spacing-xs);
+  padding: var(--spacing-md);
   border-bottom: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.compareTable tr:last-child th,
+.compareTable tr:last-child td {
+  border-bottom: 0;
 }
 
 .compareTable thead th {
+  background: var(--color-surface-muted);
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
-  font-weight: 600;
-}
-
-.compareTable tbody th {
-  font-weight: 600;
 }
 
 .numCell {
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
-  font-weight: 600;
 }
 
 .statusMuted {
@@ -153,16 +234,49 @@
 
 .volumeRow {
   margin-top: var(--spacing-md);
-  font-size: var(--font-size-sm);
   font-variant-numeric: tabular-nums;
-  color: var(--color-text-secondary);
 }
 
 .floorNote {
+  max-width: 72ch;
   margin-top: var(--spacing-md);
   padding-top: var(--spacing-md);
   border-top: 1px solid var(--color-border);
   color: var(--color-text-muted);
   font-size: var(--font-size-xs);
-  max-width: 65ch;
+  line-height: 1.65;
+}
+
+.primaryLink:focus-visible,
+.tableScroll:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 860px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .page {
+    gap: var(--spacing-lg);
+  }
+
+  .context {
+    padding: var(--spacing-md);
+  }
+
+  .dimForm {
+    grid-template-columns: 1fr;
+  }
+
+  .formActions > * {
+    width: 100%;
+  }
+
+  .savedAt {
+    text-align: left;
+  }
 }

@@ -31,11 +31,13 @@ import { downloadTextFile } from '@utils/download'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Feeding.module.css'
 
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
 }
 
 function Feeding() {
@@ -55,6 +57,7 @@ function Feeding() {
   const [showAllPets, setShowAllPets] = useState(false)
   const [ageStage, setAgeStage] = useState<AgeStage>('adult')
   const [bodyWeight, setBodyWeight] = useState('')
+  const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null)
 
   const logs = showAllPets ? allLogs : activeLogs
   const showPetBadge = showAllPets && pets.length > 1
@@ -77,8 +80,10 @@ function Feeding() {
     return recommendPreyForSnake(grams)
   }, [snakeSizing, bodyWeight])
 
-  const stats = useMemo(() => feedingStats(logs), [logs])
-  const streak = useMemo(() => refusalStreak(logs), [logs])
+  // All-pet mode changes history/export scope only. Care timing and refusal
+  // streaks must always describe the active animal.
+  const stats = useMemo(() => feedingStats(activeLogs), [activeLogs])
+  const streak = useMemo(() => refusalStreak(activeLogs), [activeLogs])
 
   const nextDate = stats.lastFed && freqDays ? nextFeedingDate(stats.lastFed, freqDays) : null
   const daysUntil = nextDate ? daysBetween(todayIso(), nextDate) : null
@@ -86,23 +91,34 @@ function Feeding() {
 
   // Sparkline of gaps (days) between consecutive feedings, oldest -> newest.
   const sparkPoints = useMemo<SparklinePoint[]>(() => {
-    const asc = [...logs].sort((a, b) => a.fedAt.localeCompare(b.fedAt))
+    const asc = [...activeLogs].sort((a, b) => a.fedAt.localeCompare(b.fedAt))
     const points: SparklinePoint[] = []
     for (let i = 1; i < asc.length; i += 1) {
       points.push({ x: i - 1, y: daysBetween(asc[i - 1].fedAt, asc[i].fedAt), label: asc[i].fedAt })
     }
     return points
-  }, [logs])
+  }, [activeLogs])
+
+  const petLabels = useMemo(() => {
+    const speciesById = new Map(speciesList.map((item) => [item.id, item] as const))
+    return new Map(
+      pets.map((pet) => {
+        const petSpecies = pet.speciesId ? speciesById.get(pet.speciesId) : undefined
+        return [
+          pet.id,
+          {
+            name:
+              pet.petName?.trim() || petSpecies?.koreanName || t('petSwitcher.title', { count: 1 }),
+            emoji: petSpecies?.heroEmoji ?? '🐾',
+          },
+        ] as const
+      })
+    )
+  }, [pets, speciesList, t])
 
   function petLabel(petId: string | null | undefined): { name: string; emoji: string } | null {
     if (!petId) return null
-    const pet = pets.find((p) => p.id === petId)
-    if (!pet) return null
-    const sp = speciesList.find((s) => s.id === pet.speciesId)
-    return {
-      name: pet.petName?.trim() || sp?.koreanName || t('petSwitcher.title', { count: 1 }),
-      emoji: sp?.heroEmoji ?? '🐾',
-    }
+    return petLabels.get(petId) ?? null
   }
 
   const {
@@ -149,6 +165,12 @@ function Feeding() {
       buildCsv(['date', 'item', 'quantity', 'accepted', 'notes'], rows),
       'text/csv;charset=utf-8'
     )
+  }
+
+  function confirmRemove(id: string) {
+    removeLog(id)
+    setPendingRemoveId(null)
+    toast(t('common.delete'), 'success')
   }
 
   return (
@@ -202,9 +224,10 @@ function Feeding() {
                 <div className={styles.weightRow}>
                   <Input
                     type="number"
-                    inputMode="numeric"
+                    inputMode="decimal"
                     step="1"
-                    min="0"
+                    min="1"
+                    max="1000000"
                     label={t('feeding.calc.bodyWeight')}
                     helperText={t('feeding.calc.bodyWeightHelper')}
                     value={bodyWeight}
@@ -285,6 +308,14 @@ function Feeding() {
               {activeSpecies?.category === 'arthropod' && (
                 <p className={styles.warnNote}>{t('feeding.refusal.arthropodNote')}</p>
               )}
+              <div className={styles.warnActions}>
+                <Link to="/health" className={styles.warnLink}>
+                  {t('health.title')}
+                </Link>
+                <Link to="/hospitals" className={styles.warnLink}>
+                  {t('nav.hospitals')}
+                </Link>
+              </div>
             </div>
           )}
         </Card.Body>
@@ -298,12 +329,14 @@ function Feeding() {
             <div className={styles.formRow}>
               <Input
                 type="date"
+                max={todayIso()}
                 label={t('feeding.log.fedAt')}
                 error={errors.fedAt?.message ? t(errors.fedAt.message) : undefined}
                 {...register('fedAt')}
               />
               <Input
                 type="text"
+                maxLength={60}
                 label={t('feeding.log.item')}
                 placeholder={t('feeding.log.itemPlaceholder')}
                 error={errors.item?.message ? t(errors.item.message) : undefined}
@@ -335,6 +368,7 @@ function Feeding() {
             <Textarea
               label={t('feeding.log.notes')}
               rows={3}
+              maxLength={300}
               error={errors.notes?.message ? t(errors.notes.message) : undefined}
               {...register('notes')}
             />
@@ -348,7 +382,7 @@ function Feeding() {
       </Card>
 
       {/* Feeding-gap trend */}
-      {sparkPoints.length >= 3 && (
+      {!showAllPets && sparkPoints.length >= 3 && (
         <Card padding="lg">
           <Card.Body>
             <h2 className={styles.sectionTitle}>{t('feeding.trend.title')}</h2>
@@ -379,44 +413,65 @@ function Feeding() {
               const label = petLabel(log.petId)
               const showBadge = label && (showPetBadge || log.petId !== activePetId)
               return (
-                <li key={log.id}>
-                  <Card padding="md">
-                    <Card.Body>
-                      <div className={styles.entryHeader}>
-                        <div className={styles.entryHeaderLeft}>
-                          <Badge variant={log.accepted ? 'success' : 'warning'}>
-                            {log.accepted ? t('feeding.log.ate') : t('feeding.log.refused')}
-                          </Badge>
-                          <span className={styles.entryDate}>{log.fedAt}</span>
-                          {showBadge && label && (
-                            <Badge variant="default">
-                              <span aria-hidden="true">{label.emoji}</span> {label.name}
-                            </Badge>
-                          )}
-                        </div>
-                        <button
-                          type="button"
-                          className={styles.removeButton}
-                          onClick={() => removeLog(log.id)}
-                        >
-                          {t('feeding.log.remove')}
-                        </button>
-                      </div>
-                      <p className={styles.entryItem}>
-                        {log.item}
-                        {log.quantity !== null && (
-                          <span className={styles.entryQuantity}>
-                            {' '}
-                            {t('feeding.log.quantityCount', { count: log.quantity })}
-                          </span>
-                        )}
-                      </p>
-                      {log.notes && <p className={styles.entryNotes}>{log.notes}</p>}
-                      {!log.speciesId && (
-                        <p className={styles.entryFooter}>{t('feeding.log.speciesUnknown')}</p>
+                <li key={log.id} className={styles.historyItem}>
+                  <div className={styles.entryHeader}>
+                    <div className={styles.entryHeaderLeft}>
+                      <Badge variant={log.accepted ? 'success' : 'warning'}>
+                        {log.accepted ? t('feeding.log.ate') : t('feeding.log.refused')}
+                      </Badge>
+                      <time className={styles.entryDate} dateTime={log.fedAt}>
+                        {log.fedAt}
+                      </time>
+                      {showBadge && label && (
+                        <Badge variant="default">
+                          <span aria-hidden="true">{label.emoji}</span> {label.name}
+                        </Badge>
                       )}
-                    </Card.Body>
-                  </Card>
+                    </div>
+                    <button
+                      type="button"
+                      className={styles.removeButton}
+                      aria-expanded={pendingRemoveId === log.id}
+                      aria-controls={`feeding-remove-${log.id}`}
+                      onClick={() =>
+                        setPendingRemoveId((current) => (current === log.id ? null : log.id))
+                      }
+                    >
+                      {t('feeding.log.remove')}
+                    </button>
+                  </div>
+                  <p className={styles.entryItem}>
+                    {log.item}
+                    {log.quantity !== null && (
+                      <span className={styles.entryQuantity}>
+                        {' '}
+                        {t('feeding.log.quantityCount', { count: log.quantity })}
+                      </span>
+                    )}
+                  </p>
+                  {log.notes && <p className={styles.entryNotes}>{log.notes}</p>}
+                  {!log.speciesId && (
+                    <p className={styles.entryFooter}>{t('feeding.log.speciesUnknown')}</p>
+                  )}
+                  {pendingRemoveId === log.id && (
+                    <div id={`feeding-remove-${log.id}`} className={styles.deleteConfirm}>
+                      <span className={styles.deletePrompt}>{t('feeding.log.remove')}?</span>
+                      <button
+                        type="button"
+                        className={styles.cancelButton}
+                        onClick={() => setPendingRemoveId(null)}
+                      >
+                        {t('common.cancel')}
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.confirmButton}
+                        onClick={() => confirmRemove(log.id)}
+                      >
+                        {t('common.delete')}
+                      </button>
+                    </div>
+                  )}
                 </li>
               )
             })}

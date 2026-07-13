@@ -17,7 +17,7 @@ function log(type: SupplementType, dustedAt: string, createdAt?: string): Dustin
   seq += 1
   return {
     id: `d${seq}`,
-    petId: null,
+    petId: 'pet-1',
     speciesId: null,
     type,
     dustedAt,

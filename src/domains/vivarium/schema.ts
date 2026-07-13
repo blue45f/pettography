@@ -71,7 +71,7 @@ export interface SpeciesTemplate {
 /** A saved bioactive enclosure design. */
 export const vivariumBuildSchema = z.object({
   id: z.string(),
-  petId: z.string().nullable().optional(),
+  petId: z.string(),
   speciesId: z.string().nullable(),
   name: z.string().max(80),
   substrateIds: z.array(z.string()),

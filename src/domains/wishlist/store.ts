@@ -71,7 +71,7 @@ export const useWishlistStore = create<WishlistState>()(
       clear: () => set({ items: [] }),
     }),
     {
-      name: 'pettography.wishlist',
+      name: 'pettography.wishlist.v2',
       storage: createJSONStorage(() => localStorage),
     }
   )

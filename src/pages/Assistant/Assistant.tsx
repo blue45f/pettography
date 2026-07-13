@@ -14,7 +14,7 @@ import {
 import { useOnboardingStore } from '@domains/onboarding'
 import { useSpeciesList } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -40,6 +40,7 @@ function Assistant() {
 
   const [topicId, setTopicId] = useState<string | null>(null)
   const [optionId, setOptionId] = useState<string | null>(null)
+  const resultRef = useRef<HTMLDivElement>(null)
 
   // Derive everything from state during render — no setState in effects.
   const topics = useMemo(() => topicsForCategory(category, ASSISTANT_DATA), [category])
@@ -47,6 +48,10 @@ function Assistant() {
   const question = decision?.questions[0] ?? null
   const result = topicId && optionId ? resolveTriage(topicId, optionId, ASSISTANT_DATA) : null
   const note = topicId ? categoryNote(topicId, category, ASSISTANT_DATA) : null
+
+  useEffect(() => {
+    if (result) resultRef.current?.focus()
+  }, [result])
 
   function selectTopic(id: string) {
     setTopicId(id)
@@ -77,7 +82,12 @@ function Assistant() {
           })}
         </p>
       ) : (
-        <p className={styles.context}>{t('assistant.contextGeneric')}</p>
+        <p className={styles.context}>
+          {t('assistant.contextGeneric')}{' '}
+          <Link to="/onboarding" className={styles.contextLink}>
+            {t('assistant.choosePet')}
+          </Link>
+        </p>
       )}
 
       {/* Step 1 — choose a symptom topic */}
@@ -144,50 +154,52 @@ function Assistant() {
 
       {/* Result */}
       {result && (
-        <Card padding="lg">
-          <Card.Body>
-            <div className={styles.resultHead}>
-              <Badge variant={SEVERITY_BADGE[result.severity]}>
-                {t(`assistant.severity.${result.severity}`)}
-              </Badge>
-              <h2 className={styles.resultTitle}>{t('assistant.resultTitle')}</h2>
-            </div>
+        <div ref={resultRef} className={styles.resultRegion} tabIndex={-1} aria-live="polite">
+          <Card padding="lg">
+            <Card.Body>
+              <div className={styles.resultHead}>
+                <Badge variant={SEVERITY_BADGE[result.severity]}>
+                  {t(`assistant.severity.${result.severity}`)}
+                </Badge>
+                <h2 className={styles.resultTitle}>{t('assistant.resultTitle')}</h2>
+              </div>
 
-            <p className={styles.advice}>{t(`assistant.advice.${result.adviceKey}`)}</p>
+              <p className={styles.advice}>{t(`assistant.advice.${result.adviceKey}`)}</p>
 
-            {note && (
-              <p className={styles.note}>
-                <span className={styles.noteLabel}>{t('assistant.categoryNoteLabel')}</span>{' '}
-                {t(`assistant.categoryNotes.${note}`)}
-              </p>
-            )}
+              {note && (
+                <p className={styles.note}>
+                  <span className={styles.noteLabel}>{t('assistant.categoryNoteLabel')}</span>{' '}
+                  {t(`assistant.categoryNotes.${note}`)}
+                </p>
+              )}
 
-            {species?.commonProblem && (
-              <p className={styles.note}>
-                <span className={styles.noteLabel}>
-                  {t('assistant.speciesTipLabel', { name: species.koreanName })}
-                </span>{' '}
-                {species.commonProblem}
-              </p>
-            )}
+              {species?.commonProblem && (
+                <p className={styles.note}>
+                  <span className={styles.noteLabel}>
+                    {t('assistant.speciesTipLabel', { name: species.koreanName })}
+                  </span>{' '}
+                  {species.commonProblem}
+                </p>
+              )}
 
-            <p className={styles.reminder}>{t('assistant.reminder')}</p>
+              <p className={styles.reminder}>{t('assistant.reminder')}</p>
 
-            {result.emergency && (
-              <Alert variant="error" title={t('assistant.emergencyTitle')}>
-                <p className={styles.emergencyText}>{t('assistant.emergencyBody')}</p>
-                <div className={styles.emergencyLinks}>
-                  <Link to="/sos" className={styles.emergencyLink}>
-                    {t('assistant.emergencySos')}
-                  </Link>
-                  <Link to="/hospitals" className={styles.emergencyLinkOutline}>
-                    {t('assistant.emergencyHospitals')}
-                  </Link>
-                </div>
-              </Alert>
-            )}
-          </Card.Body>
-        </Card>
+              {result.emergency && (
+                <Alert variant="error" title={t('assistant.emergencyTitle')}>
+                  <p className={styles.emergencyText}>{t('assistant.emergencyBody')}</p>
+                  <div className={styles.emergencyLinks}>
+                    <Link to="/sos" className={styles.emergencyLink}>
+                      {t('assistant.emergencySos')}
+                    </Link>
+                    <Link to="/hospitals" className={styles.emergencyLinkOutline}>
+                      {t('assistant.emergencyHospitals')}
+                    </Link>
+                  </div>
+                </Alert>
+              )}
+            </Card.Body>
+          </Card>
+        </div>
       )}
 
       {!topicId && (

@@ -37,7 +37,9 @@ import { useTranslation } from 'react-i18next'
 import type { TFunction } from 'i18next'
 
 function todayIso(): string {
-  return new Date().toISOString().slice(0, 10)
+  const now = new Date()
+  const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60_000)
+  return localTime.toISOString().slice(0, 10)
 }
 
 /**

@@ -1,5 +1,12 @@
 import { z } from 'zod'
 
+const ISO_DAY_PATTERN = /^\d{4}-\d{2}-\d{2}$/
+
+function localTodayIso(): string {
+  const now = new Date()
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60_000).toISOString().slice(0, 10)
+}
+
 /**
  * Feeder culture tracker schemas.
  *
@@ -53,11 +60,16 @@ export type FeederColony = z.infer<typeof feederColonySchema>
 export const feederFormSchema = z.object({
   type: feederTypeSchema,
   name: z.string().trim().min(1, 'feeders.errors.nameRequired').max(60, 'feeders.errors.nameMax'),
-  startedAt: z.string().min(1, 'feeders.errors.startedAtRequired'),
+  startedAt: z
+    .string()
+    .min(1, 'feeders.errors.startedAtRequired')
+    .regex(ISO_DAY_PATTERN, 'feeders.errors.dateInvalid')
+    .refine((value) => value <= localTodayIso(), 'feeders.errors.dateFuture'),
   estimateCount: z
     .number({ message: 'feeders.errors.estimateNumber' })
     .int('feeders.errors.estimateInt')
     .nonnegative('feeders.errors.estimateNonnegative')
+    .max(1_000_000, 'feeders.errors.estimateMax')
     .nullable(),
   notes: z.string().trim().max(300, 'feeders.errors.notesMax'),
 })

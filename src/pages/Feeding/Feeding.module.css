@@ -33,11 +33,12 @@
   color: var(--color-text-secondary);
   cursor: pointer;
   user-select: none;
+  min-height: 44px;
 }
 
 .showAllToggle input {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   accent-color: var(--color-primary);
 }
 
@@ -54,6 +55,7 @@
 
 .stageToggle {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: var(--spacing-2xs);
   padding: var(--spacing-2xs);
   background: var(--color-surface-muted);
@@ -182,6 +184,25 @@
   line-height: 1.6;
 }
 
+.warnActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+}
+
+.warnLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--spacing-md);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-md);
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+
 /* ── Log form ─────────────────────────────────────────────────── */
 .form {
   display: flex;
@@ -229,7 +250,22 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.historyItem {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 116px;
+}
+
+.historyItem:first-child {
+  border-top: 0;
 }
 
 .entryHeader {
@@ -255,8 +291,11 @@
 
 .removeButton {
   min-height: 44px;
+  min-width: 44px;
+  padding: 0 var(--spacing-sm);
   background: none;
   border: none;
+  border-radius: var(--radius-sm);
   color: var(--color-error);
   cursor: pointer;
   font-size: var(--font-size-sm);
@@ -285,4 +324,52 @@
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   margin-top: var(--spacing-xs);
+}
+
+.deleteConfirm {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.deletePrompt {
+  margin-right: auto;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.cancelButton,
+.confirmButton {
+  min-height: 44px;
+  padding: 0 var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancelButton {
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.confirmButton {
+  border: 1px solid var(--color-error);
+  background: var(--color-error);
+  color: var(--color-on-brand);
+}
+
+@media (max-width: 520px) {
+  .formActions button {
+    width: 100%;
+  }
+
+  .historyItem {
+    padding-inline: var(--spacing-md);
+  }
 }

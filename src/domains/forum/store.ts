@@ -311,7 +311,7 @@ export const useForumStore = create<ForumState>()(
         }),
     }),
     {
-      name: 'pettography.forum',
+      name: 'pettography.forum.v2',
       version: 7,
       storage: createJSONStorage(() => localStorage),
       migrate: (persisted: unknown, version) => {

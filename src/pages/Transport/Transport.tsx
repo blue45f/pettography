@@ -33,7 +33,13 @@ import { Link } from 'react-router'
 
 import styles from './Transport.module.css'
 
-const todayISO = () => new Date().toISOString().slice(0, 10)
+const todayISO = () => {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
 
 type BadgeVariant = 'default' | 'primary' | 'success' | 'warning' | 'error'
 
@@ -49,6 +55,7 @@ function Transport() {
   useDocumentTitle(t('transport.title'))
 
   const profile = useOnboardingStore((s) => s.profile)
+  const activePetId = useOnboardingStore((s) => s.activePetId)
   const trips = useActivePetTrips()
   const addTrip = useTransportStore((s) => s.addTrip)
   const toggleChecklistItem = useTransportStore((s) => s.toggleChecklistItem)
@@ -102,6 +109,28 @@ function Transport() {
     return t('transport.dday.ago', { count: Math.abs(delta) })
   }
 
+  if (!activePetId) {
+    return (
+      <section className={styles.page}>
+        <header className={styles.header}>
+          <h1>{t('transport.title')}</h1>
+          <p className={styles.subtitle}>{t('transport.subtitle')}</p>
+        </header>
+        <EmptyState
+          variant="gated"
+          icon="🧳"
+          title={t('transport.noPetTitle')}
+          description={t('transport.noPetDesc')}
+          action={
+            <Link to="/onboarding" className={styles.gateLink}>
+              {t('transport.noPetAction')}
+            </Link>
+          }
+        />
+      </section>
+    )
+  }
+
   return (
     <section className={styles.page}>
       <header className={styles.header}>
@@ -151,6 +180,7 @@ function Transport() {
                 />
                 <Input
                   type="date"
+                  min={today}
                   label={t('transport.form.date')}
                   error={errors.date?.message ? t(errors.date.message) : undefined}
                   {...register('date')}
@@ -160,6 +190,7 @@ function Transport() {
                   inputMode="decimal"
                   step="0.5"
                   min="0"
+                  max="240"
                   label={t('transport.form.duration')}
                   helperText={t('transport.form.durationHelper')}
                   error={
@@ -219,7 +250,10 @@ function Transport() {
                         <button
                           type="button"
                           className={styles.removeButton}
-                          onClick={() => removeTrip(trip.id)}
+                          onClick={() => {
+                            if (globalThis.confirm(t('transport.list.removeConfirm')))
+                              removeTrip(trip.id)
+                          }}
                         >
                           {t('transport.list.remove')}
                         </button>

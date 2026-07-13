@@ -84,16 +84,13 @@ export function cohabVerdict(speciesA: CohabSpecies, speciesB: CohabSpecies): Co
 
   // ── 2. Same species, social ──────────────────────────────────────
   if (isSocial(slug)) {
-    const codes: ReasonCode[] = ['socialNeedsGroup', 'spaceRequired']
+    const codes: ReasonCode[] = ['socialNeedsGroup', 'spaceRequired', 'sexRatio']
 
-    // Sugar gliders MUST be kept in company; isolation is harmful. They are the
-    // clearest "house together" case, so we return `ok`.
+    // Some social species are actively harmed by solitary housing.
     if (SOLITARY_HARMFUL_SLUGS.includes(slug)) {
-      codes.push('sexRatio')
       return { verdict: 'ok', reasonCodes: uniq(codes) }
     }
 
-    // Other social species can be grouped, but with same-species caveats.
     codes.push('sameSpeciesGroupOk')
     return { verdict: 'sameSpeciesOnly', reasonCodes: uniq(codes) }
   }
@@ -107,8 +104,8 @@ export function cohabVerdict(speciesA: CohabSpecies, speciesB: CohabSpecies): Co
     }
   }
 
-  // Other solitary species (most reptiles): aggression and stress; strongly
-  // discouraged even with the same species.
+  // Other solitary species (most reptiles): same-species housing still risks
+  // aggression and chronic stress, so the safety-first result is caution.
   return {
     verdict: 'caution',
     reasonCodes: uniq(['soloMandatory', 'territorial', 'stress']),

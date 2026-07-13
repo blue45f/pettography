@@ -227,6 +227,14 @@ function Admin() {
               {accountsQuery.isLoading && (
                 <p className={styles.localNotice}>{t('common.loading')}</p>
               )}
+              {accountsQuery.isError && (
+                <div className={styles.queryError} role="alert">
+                  <span>{t('admin.accountsLoadError')}</span>
+                  <Button variant="outline" onClick={() => void accountsQuery.refetch()}>
+                    {t('common.retry')}
+                  </Button>
+                </div>
+              )}
               {accountsQuery.data?.map((member) => (
                 <Card key={member.id} padding="md" className={styles.managementCard}>
                   <Card.Body>
@@ -236,7 +244,7 @@ function Admin() {
                         <p className={styles.managementMeta}>{member.email}</p>
                       </div>
                       <Badge variant={member.status === 'active' ? 'success' : 'warning'}>
-                        {member.status}
+                        {t(`admin.accountStatus.${member.status}`)}
                       </Badge>
                     </div>
                     <div className={styles.controlGrid}>
@@ -244,42 +252,49 @@ function Admin() {
                         <span>{t('admin.role')}</span>
                         <select
                           value={member.role}
-                          onChange={(event) =>
-                            accountMutation.mutate({
-                              id: member.id,
-                              input: {
-                                role: event.currentTarget.value as AdminUpdateAccountInput['role'],
-                              },
-                            })
-                          }
+                          onChange={(event) => {
+                            const role = event.currentTarget
+                              .value as AdminUpdateAccountInput['role']
+                            if (
+                              !window.confirm(t('admin.confirmRoleChange', { name: member.name }))
+                            )
+                              return
+                            accountMutation.mutate({ id: member.id, input: { role } })
+                          }}
                         >
-                          <option value="member">member</option>
-                          <option value="moderator">moderator</option>
-                          <option value="admin">admin</option>
+                          <option value="member">{t('admin.accountRole.member')}</option>
+                          <option value="moderator">{t('admin.accountRole.moderator')}</option>
+                          <option value="admin">{t('admin.accountRole.admin')}</option>
                         </select>
                       </label>
                       <label>
                         <span>{t('admin.statusLabel')}</span>
                         <select
                           value={member.status}
-                          onChange={(event) =>
-                            accountMutation.mutate({
-                              id: member.id,
-                              input: {
-                                status: event.currentTarget
-                                  .value as AdminUpdateAccountInput['status'],
-                              },
-                            })
-                          }
+                          onChange={(event) => {
+                            const status = event.currentTarget
+                              .value as AdminUpdateAccountInput['status']
+                            if (
+                              !window.confirm(t('admin.confirmStatusChange', { name: member.name }))
+                            )
+                              return
+                            accountMutation.mutate({ id: member.id, input: { status } })
+                          }}
                         >
-                          <option value="active">active</option>
-                          <option value="suspended">suspended</option>
-                          <option value="withdrawn">withdrawn</option>
+                          <option value="active">{t('admin.accountStatus.active')}</option>
+                          <option value="suspended">{t('admin.accountStatus.suspended')}</option>
+                          <option value="withdrawn">{t('admin.accountStatus.withdrawn')}</option>
                         </select>
                       </label>
                       <Button
                         variant="outline"
-                        onClick={() => removeAccountMutation.mutate(member.id)}
+                        onClick={() => {
+                          if (
+                            !window.confirm(t('admin.confirmAccountDelete', { name: member.name }))
+                          )
+                            return
+                          removeAccountMutation.mutate(member.id)
+                        }}
                         disabled={member.id === account?.id}
                       >
                         {t('admin.withdraw')}
@@ -300,6 +315,7 @@ function Admin() {
             <Input
               label={t('admin.forbiddenPhrase')}
               name="phrase"
+              maxLength={80}
               value={ruleDraft.phrase}
               onChange={onRuleDraftChange}
               required
@@ -321,6 +337,7 @@ function Admin() {
             <Input
               label={t('admin.note')}
               name="note"
+              maxLength={200}
               value={ruleDraft.note ?? ''}
               onChange={onRuleDraftChange}
             />
@@ -331,6 +348,14 @@ function Admin() {
           <div className={styles.managementList}>
             {forbiddenWordsQuery.isLoading && (
               <p className={styles.localNotice}>{t('common.loading')}</p>
+            )}
+            {forbiddenWordsQuery.isError && (
+              <div className={styles.queryError} role="alert">
+                <span>{t('admin.rulesLoadError')}</span>
+                <Button variant="outline" onClick={() => void forbiddenWordsQuery.refetch()}>
+                  {t('common.retry')}
+                </Button>
+              </div>
             )}
             {forbiddenWordsQuery.data?.map((rule) => (
               <Card key={rule.id} padding="md" className={styles.managementCard}>
@@ -359,7 +384,14 @@ function Admin() {
                     >
                       {rule.enabled ? t('admin.disableRule') : t('admin.enableRule')}
                     </Button>
-                    <Button variant="ghost" onClick={() => removeRuleMutation.mutate(rule.id)}>
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        if (!window.confirm(t('admin.confirmRuleDelete', { phrase: rule.phrase })))
+                          return
+                        removeRuleMutation.mutate(rule.id)
+                      }}
+                    >
                       {t('admin.delete')}
                     </Button>
                   </div>

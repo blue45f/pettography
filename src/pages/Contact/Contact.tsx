@@ -16,7 +16,7 @@ import {
 } from '@domains/inquiry'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useDocumentTitle from '@hooks/useDocumentTitle'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router'
@@ -26,7 +26,16 @@ import styles from './Contact.module.css'
 const STATUS_BADGE: Record<string, 'warning' | 'primary' | 'success'> = {
   new: 'warning',
   'in-review': 'primary',
+  in_review: 'primary',
   resolved: 'success',
+}
+
+const STATUS_LABEL_KEY: Record<string, string> = {
+  new: 'new',
+  'in-review': 'inReview',
+  in_review: 'inReview',
+  resolved: 'resolved',
+  closed: 'closed',
 }
 
 /** Older deep links used the previous local-form category ids. */
@@ -34,6 +43,8 @@ const LEGACY_CATEGORY_MAP: Record<string, InquiryCategory> = {
   general: 'contact',
   feature: 'question',
   safety: 'question',
+  feedback: 'contact',
+  usage: 'question',
   other: 'contact',
 }
 
@@ -44,16 +55,22 @@ function resolveInitialCategory(raw: string | null): InquiryCategory {
 }
 
 function Contact() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { toast } = useToast()
   useDocumentTitle(t('inquiry.title'))
   const [searchParams] = useSearchParams()
 
   const receipts = useInquiryStore((s) => s.receipts)
   const addReceipt = useInquiryStore((s) => s.addReceipt)
+  const removeReceipt = useInquiryStore((s) => s.removeReceipt)
 
   const [latestReceipt, setLatestReceipt] = useState<StoredInquiryReceipt | null>(null)
   const [submitError, setSubmitError] = useState(false)
+  const receiptHeadingRef = useRef<HTMLHeadingElement>(null)
+
+  useEffect(() => {
+    if (latestReceipt) receiptHeadingRef.current?.focus()
+  }, [latestReceipt])
 
   const {
     register,
@@ -104,11 +121,35 @@ function Contact() {
   })
 
   function statusBadge(status: string) {
+    const labelKey = STATUS_LABEL_KEY[status]
     return (
       <Badge variant={STATUS_BADGE[status] ?? 'default'}>
-        {status === 'new' ? t('inquiry.status.new') : status}
+        {labelKey ? t(`inquiry.status.${labelKey}`) : t('inquiry.status.unknown')}
       </Badge>
     )
+  }
+
+  const formatReceiptDate = (value: string) => {
+    const date = new Date(value)
+    return Number.isNaN(date.getTime())
+      ? value
+      : date.toLocaleString(i18n.resolvedLanguage ?? i18n.language)
+  }
+
+  const copyReceiptId = async (id: string) => {
+    try {
+      await navigator.clipboard.writeText(id)
+      toast(t('inquiry.receiptCopied'), 'success')
+    } catch {
+      toast(t('inquiry.receiptCopyFailed'), 'error')
+    }
+  }
+
+  const deleteLocalReceipt = (receipt: StoredInquiryReceipt) => {
+    if (!globalThis.confirm(t('inquiry.removeReceiptConfirm', { title: receipt.title }))) return
+    removeReceipt(receipt.id)
+    if (latestReceipt?.id === receipt.id) setLatestReceipt(null)
+    toast(t('inquiry.receiptRemovedToast'), 'success')
   }
 
   return (
@@ -123,17 +164,28 @@ function Contact() {
           <Card.Body>
             <div className={styles.receiptHead}>
               <span className={styles.receiptIcon} aria-hidden="true">
-                ✅
+                OK
               </span>
               <div>
-                <h2 className={styles.receiptTitle}>{t('inquiry.receiptTitle')}</h2>
+                <h2 ref={receiptHeadingRef} className={styles.receiptTitle} tabIndex={-1}>
+                  {t('inquiry.receiptTitle')}
+                </h2>
                 <p className={styles.receiptDesc}>{t('inquiry.receiptDesc')}</p>
               </div>
             </div>
             <dl className={styles.receiptGrid}>
               <div className={styles.receiptRow}>
                 <dt>{t('inquiry.receiptId')}</dt>
-                <dd className={styles.receiptId}>{latestReceipt.id}</dd>
+                <dd className={styles.receiptValue}>
+                  <code className={styles.receiptId}>{latestReceipt.id}</code>
+                  <button
+                    type="button"
+                    className={styles.copyButton}
+                    onClick={() => copyReceiptId(latestReceipt.id)}
+                  >
+                    {t('inquiry.copyReceiptId')}
+                  </button>
+                </dd>
               </div>
               <div className={styles.receiptRow}>
                 <dt>{t('inquiry.receiptStatus')}</dt>
@@ -141,7 +193,7 @@ function Contact() {
               </div>
               <div className={styles.receiptRow}>
                 <dt>{t('inquiry.receiptAt')}</dt>
-                <dd>{new Date(latestReceipt.createdAt).toLocaleString('ko')}</dd>
+                <dd>{formatReceiptDate(latestReceipt.createdAt)}</dd>
               </div>
             </dl>
             <div className={styles.receiptActions}>
@@ -168,6 +220,8 @@ function Contact() {
                   type="email"
                   label={t('inquiry.emailLabel')}
                   placeholder={t('inquiry.emailPlaceholder')}
+                  maxLength={254}
+                  autoComplete="email"
                   error={errors.contactEmail?.message ? t(errors.contactEmail.message) : undefined}
                   {...register('contactEmail')}
                 />
@@ -175,6 +229,7 @@ function Contact() {
               <Input
                 label={t('inquiry.titleLabel')}
                 placeholder={t('inquiry.titlePlaceholder')}
+                maxLength={140}
                 error={errors.title?.message ? t(errors.title.message) : undefined}
                 {...register('title')}
               />
@@ -182,6 +237,7 @@ function Contact() {
                 rows={6}
                 label={t('inquiry.bodyLabel')}
                 placeholder={t('inquiry.bodyPlaceholder')}
+                maxLength={4000}
                 error={errors.body?.message ? t(errors.body.message) : undefined}
                 {...register('body')}
               />
@@ -196,7 +252,11 @@ function Contact() {
                   {...register('website')}
                 />
               </div>
-              {submitError && <p className={styles.submitError}>{t('inquiry.failed')}</p>}
+              {submitError && (
+                <p className={styles.submitError} role="alert">
+                  {t('inquiry.failed')}
+                </p>
+              )}
               <p className={styles.privacyNote}>{t('inquiry.privacyNote')}</p>
               <div className={styles.formActions}>
                 <Button type="submit" variant="primary" isLoading={isSubmitting}>
@@ -233,11 +293,21 @@ function Contact() {
                   <strong className={styles.historyItemTitle}>{receipt.title}</strong>
                   <span className={styles.historySub}>
                     {t(`inquiry.categories.${receipt.category}`)} ·{' '}
-                    {new Date(receipt.createdAt).toLocaleString('ko')} ·{' '}
+                    {formatReceiptDate(receipt.createdAt)} ·{' '}
                     <code className={styles.historyId}>{receipt.id.slice(0, 8)}</code>
                   </span>
                 </div>
-                {statusBadge(receipt.status)}
+                <div className={styles.historyActions}>
+                  {statusBadge(receipt.status)}
+                  <button
+                    type="button"
+                    className={styles.historyRemove}
+                    onClick={() => deleteLocalReceipt(receipt)}
+                    aria-label={t('inquiry.removeReceipt', { title: receipt.title })}
+                  >
+                    {t('common.delete')}
+                  </button>
+                </div>
               </li>
             ))}
           </ul>

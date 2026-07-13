@@ -54,6 +54,7 @@ export const listingFormSchema = z
       .number()
       .int('market.errors.priceInvalid')
       .nonnegative('market.errors.priceInvalid')
+      .max(1000000000, 'market.errors.priceInvalid')
       .nullable(),
     contact: z
       .string()

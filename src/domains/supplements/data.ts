@@ -2,11 +2,9 @@ import type { SupplementType } from './schema'
 import type { SpeciesCategory } from '@domains/species'
 
 /**
- * Conservative, widely-cited supplement dusting cadences (ReptiFiles, Reptiles
- * Magazine, Allen Repashy / Arcadia guidance, axolotl/amphibian care sheets).
- * Values are general starting points expressed as "days between dustings"; the
- * page always reminds keepers that the real schedule depends on UVB exposure,
- * the staple diet, and life stage, and to confirm with an exotics vet.
+ * No automatic supplementation cadence is prescribed. Requirements vary by
+ * species, product, diet, life stage, UVB exposure, and clinical status, so a
+ * schedule must be confirmed with an exotics veterinarian.
  *
  * A `null` interval means "this type is not routinely used for this category"
  * (e.g. arthropods, where gut-loading the feeders replaces dusting). The page
@@ -23,9 +21,9 @@ export interface CategoryCadence {
 }
 
 /**
- * Per-category defaults. Insectivore reptiles (leopard gecko, juvenile bearded
- * dragon) anchor the reptile row: plain calcium nearly every feeding (~2 days),
- * calcium+D3 once or twice weekly (~4 days), multivitamin weekly (~7 days).
+ * All defaults are intentionally disabled. The persisted schedule shape remains
+ * available for compatibility with calendar/alert consumers, but new users do
+ * not receive a medical cadence from category alone.
  */
 export const CATEGORY_CADENCE: Record<SpeciesCategory, CategoryCadence> = {
   reptile: {
@@ -33,9 +31,8 @@ export const CATEGORY_CADENCE: Record<SpeciesCategory, CategoryCadence> = {
     dusts: true,
   },
   amphibian: {
-    // Pacman frogs etc.: calcium most feedings, multivitamin weekly; D3 lightly.
-    intervalDays: { calcium: 3, calciumD3: 7, multivitamin: 7 },
-    dusts: true,
+    intervalDays: { calcium: null, calciumD3: null, multivitamin: null },
+    dusts: false,
   },
   arthropod: {
     // Tarantulas/scorpions are not dusted — gut-load the feeders instead.
@@ -43,13 +40,11 @@ export const CATEGORY_CADENCE: Record<SpeciesCategory, CategoryCadence> = {
     dusts: false,
   },
   bird: {
-    // Diet-driven; a balanced pellet/veg diet beats heavy supplementation.
-    intervalDays: { calcium: 7, calciumD3: null, multivitamin: null },
+    intervalDays: { calcium: null, calciumD3: null, multivitamin: null },
     dusts: false,
   },
   mammal: {
-    // Diet-driven (e.g. sugar gliders/hedgehogs); supplement only on vet advice.
-    intervalDays: { calcium: 7, calciumD3: null, multivitamin: null },
+    intervalDays: { calcium: null, calciumD3: null, multivitamin: null },
     dusts: false,
   },
 }

@@ -40,12 +40,8 @@ describe('Backup', () => {
       exportedAt
     )
 
-    expect(first.checksum).toEqual({
-      algorithm: 'SHA-256',
-      canonical: 'pettography-backup-v1',
-      value: expect.stringMatching(/^[a-f0-9]{64}$/),
-    })
-    expect(second.checksum.value).toBe(first.checksum.value)
+    expect(first.checksum).toMatch(/^[a-f0-9]{64}$/)
+    expect(second.checksum).toBe(first.checksum)
   })
 
   it('previews an import and only applies Pettography-owned keys after confirmation', async () => {
@@ -117,7 +113,7 @@ describe('Backup', () => {
       if (!el) throw new Error('preview not shown')
       return el
     })
-    expect(within(dialog).getByText(new RegExp(envelope.checksum.value.slice(0, 12)))).toBeVisible()
+    expect(within(dialog).getByText(new RegExp(envelope.checksum.slice(0, 12)))).toBeVisible()
   })
 
   it('rejects a checksummed backup whose data was modified after export', async () => {

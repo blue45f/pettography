@@ -4,114 +4,69 @@ export interface PetEvent {
   startDate: string
   endDate: string
   venue: string
-  region: '서울' | '부산' | '인천' | '수원' | '대전' | '대구' | '기타'
-  kind: 'expo' | 'reptile' | 'community' | 'adoption'
+  region: '서울' | '고양' | '수원'
+  kind: 'expo'
   url: string
   note: string
+  sourceCheckedAt: string
 }
 
+/**
+ * 공식 주최사 페이지에서 확인된 일정만 노출합니다.
+ * 행사 일정은 수시로 바뀔 수 있으므로 화면에서도 공식 페이지 재확인을 안내합니다.
+ */
 export const PET_EVENTS_2026: readonly PetEvent[] = [
   {
-    id: 'petnmore-seoul-q1',
-    name: '2026 펫앤모어 서울 반려동물 박람회',
-    startDate: '2026-02-27',
-    endDate: '2026-03-01',
-    venue: '코엑스 마곡 컨벤션센터',
+    id: 'kpet-seoul-2026',
+    name: '2026 케이펫페어 서울',
+    startDate: '2026-07-17',
+    endDate: '2026-07-19',
+    venue: '코엑스',
     region: '서울',
     kind: 'expo',
-    url: 'https://coexmagok.co.kr/exhibitions/2026-petmore-%EC%84%9C%EC%9A%B8-%EB%B0%98%EB%A0%A4%EB%8F%99%EB%AC%BC-%EB%B0%95%EB%9E%8C%ED%9A%8C/',
-    note: 'PET&MORE 시리즈. 사료/용품/입양 부스 + 일부 파충류 분양.',
+    url: 'https://k-pet.co.kr/information/exhibition-scheduled-all/26pet_seoul/',
+    note: '반려견 동반 규정과 입장 방법은 공식 관람 안내에서 확인하세요.',
+    sourceCheckedAt: '2026-07-13',
   },
   {
-    id: 'petnmore-busan-q1',
-    name: '2026 PET&MORE 부산 (봄)',
-    startDate: '2026-03-13',
-    endDate: '2026-03-15',
-    venue: '벡스코',
-    region: '부산',
+    id: 'mypet-ilsan-part2-2026',
+    name: '마이펫페어 2026 일산 Part 2',
+    startDate: '2026-08-28',
+    endDate: '2026-08-30',
+    venue: '킨텍스 제2전시장 10홀',
+    region: '고양',
     kind: 'expo',
-    url: 'https://ilovepets.co.kr/board/?id=sub12_0',
-    note: '부산권 사용자 우선. 입양 부스 + 의료 상담.',
+    url: 'https://www.mypetfair.co.kr/overview',
+    note: '공식 일정 페이지에서 행사 규모와 최신 관람 정보를 함께 확인하세요.',
+    sourceCheckedAt: '2026-07-13',
   },
   {
-    id: 'kpetfair-magok',
-    name: '2026 케이펫페어 마곡',
-    startDate: '2026-06-19',
-    endDate: '2026-06-21',
-    venue: '코엑스 마곡 컨벤션센터',
-    region: '서울',
-    kind: 'expo',
-    url: 'https://k-pet.co.kr/information/exhibition-scheduled-all/26pet_magok/',
-    note: '한국펫사료협회 주관. 사료·간식·용품 중심.',
-  },
-  {
-    id: 'petnmore-busan-q3',
-    name: '2026 PET&MORE 부산 (여름)',
-    startDate: '2026-07-10',
-    endDate: '2026-07-12',
-    venue: '벡스코',
-    region: '부산',
-    kind: 'expo',
-    url: 'https://ilovepets.co.kr/board/?id=sub12_0',
-    note: '여름 시즌. 휴양·이동 케이지 위주.',
-  },
-  {
-    id: 'mypetfair-songdo',
-    name: '2026 마이펫페어 송도',
-    startDate: '2026-08-21',
-    endDate: '2026-08-23',
-    venue: '송도 컨벤시아',
-    region: '인천',
-    kind: 'expo',
-    url: 'https://www.showala.com/ex/ex_detail.php?idx=3216',
-    note: '인천권 박람회. 예정 일정은 매년 변경 가능.',
-  },
-  {
-    id: 'petnmore-suwon',
-    name: '2026 PET&MORE 수원',
-    startDate: '2026-12-18',
-    endDate: '2026-12-20',
-    venue: '수원 컨벤션센터',
+    id: 'mypet-gwanggyo-2026',
+    name: '마이펫페어 2026 광교',
+    startDate: '2026-10-23',
+    endDate: '2026-10-25',
+    venue: '수원컨벤션센터 전홀',
     region: '수원',
     kind: 'expo',
-    url: 'https://ilovepets.co.kr/board/?id=sub12_0',
-    note: '연말 박람회.',
-  },
-  {
-    id: 'reptilefair-2026',
-    name: '렙타일페어 2026',
-    startDate: '2026-09-12',
-    endDate: '2026-09-13',
-    venue: '서울 양재 aT센터 (예정)',
-    region: '서울',
-    kind: 'reptile',
-    url: 'https://expo.am/en/exhibitions/1281/all/1',
-    note: '국내 최대 파충류 전문 박람회. 일정 확정은 공식 사이트 확인.',
-  },
-  {
-    id: 'megazoo-2026',
-    name: '메가주 (Mega Zoo) 2026',
-    startDate: '2026-10-10',
-    endDate: '2026-10-12',
-    venue: '서울 양재 aT센터 (예정)',
-    region: '서울',
-    kind: 'reptile',
-    url: 'https://expo.am/en/exhibitions/1281/all/1',
-    note: '파충류·이색 반려동물 박람회. 일정 확정은 공식 사이트.',
+    url: 'https://www.mypetfair.co.kr/overview',
+    note: '교통·입장·동반 규정은 방문 직전에 공식 페이지에서 다시 확인하세요.',
+    sourceCheckedAt: '2026-07-13',
   },
 ]
 
 export function eventsByMonth(events: readonly PetEvent[]): Map<string, PetEvent[]> {
   const map = new Map<string, PetEvent[]>()
-  for (const e of events) {
-    const key = e.startDate.slice(0, 7)
+  for (const event of events) {
+    const key = event.startDate.slice(0, 7)
     if (!map.has(key)) map.set(key, [])
-    map.get(key)!.push(e)
+    map.get(key)!.push(event)
   }
   return map
 }
 
 export function daysUntil(dateStr: string, now: Date = new Date()): number {
-  const d = new Date(dateStr)
-  return Math.round((d.getTime() - now.getTime()) / 86_400_000)
+  const [year, month, day] = dateStr.split('-').map(Number)
+  const target = new Date(year, month - 1, day)
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  return Math.round((target.getTime() - today.getTime()) / 86_400_000)
 }

@@ -1,5 +1,4 @@
 import Badge from '@components/common/Badge'
-import Card from '@components/common/Card'
 import EmptyState from '@components/common/EmptyState'
 import KakaoMap, { type KakaoMapMarker } from '@components/common/KakaoMap'
 import Select from '@components/common/Select'
@@ -11,6 +10,7 @@ import { SPECIES_CATEGORIES, type SpeciesCategory } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import styles from './Hospitals.module.css'
 
@@ -78,83 +78,102 @@ function Hospitals() {
           {t(profile.location ? 'hospitals.subtitleWithLocation' : 'hospitals.subtitle')}
         </p>
         {profile.location && (
-          <p className={styles.locationNote}>
-            {t('dashboard.locationNote', { label: profile.location.label })}
-          </p>
+          <div className={styles.locationBar}>
+            <span>{t('dashboard.locationNote', { label: profile.location.label })}</span>
+            <Link to="/onboarding" className={styles.locationLink}>
+              {t('dashboard.changeLocation')} →
+            </Link>
+          </div>
+        )}
+        {!profile.location && (
+          <Link to="/onboarding" className={styles.locationLink}>
+            {t('dashboard.changeLocation')} →
+          </Link>
         )}
       </header>
 
-      <div
-        role="radiogroup"
-        aria-label={t('hospitals.filterByCategory')}
-        className={styles.filters}
-      >
-        <button
-          type="button"
-          role="radio"
-          aria-checked={category === 'all'}
-          className={[styles.filterChip, category === 'all' ? styles.filterActive : ''].join(' ')}
-          onClick={() => setCategory('all')}
-        >
-          {t('hospitals.filterAll')}
-        </button>
-        {SPECIES_CATEGORIES.map((c) => (
-          <button
-            key={c}
-            type="button"
-            role="radio"
-            aria-checked={category === c}
-            className={[styles.filterChip, category === c ? styles.filterActive : ''].join(' ')}
-            onClick={() => setCategory(c)}
+      <div className={styles.toolbar}>
+        <div className={styles.filterGroup}>
+          <p id="hospital-category-filter" className={styles.filterLabel}>
+            {t('hospitals.filterByCategory')}
+          </p>
+          <div
+            role="radiogroup"
+            aria-labelledby="hospital-category-filter"
+            className={styles.filters}
           >
-            {t(`categories.${c}`)}
-          </button>
-        ))}
+            <button
+              type="button"
+              role="radio"
+              aria-checked={category === 'all'}
+              className={[styles.filterChip, category === 'all' ? styles.filterActive : ''].join(
+                ' '
+              )}
+              onClick={() => setCategory('all')}
+            >
+              {t('hospitals.filterAll')}
+            </button>
+            {SPECIES_CATEGORIES.map((c) => (
+              <button
+                key={c}
+                type="button"
+                role="radio"
+                aria-checked={category === c}
+                className={[styles.filterChip, category === c ? styles.filterActive : ''].join(' ')}
+                onClick={() => setCategory(c)}
+              >
+                {t(`categories.${c}`)}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.sortRow}>
+          <Select
+            label={t('hospitals.sortLabel')}
+            value={sort}
+            onChange={(e) => setSort(e.target.value as HospitalSort)}
+            options={[
+              ...(profile.location
+                ? [{ value: 'distance', label: t('hospitals.sortDistance') }]
+                : []),
+              { value: 'name', label: t('hospitals.sortName') },
+              { value: 'emergency', label: t('hospitals.sortEmergency') },
+            ]}
+          />
+        </div>
       </div>
 
-      <div className={styles.sortRow}>
-        <Select
-          label={t('hospitals.sortLabel')}
-          value={sort}
-          onChange={(e) => setSort(e.target.value as HospitalSort)}
-          options={[
-            ...(profile.location
-              ? [{ value: 'distance', label: t('hospitals.sortDistance') }]
-              : []),
-            { value: 'name', label: t('hospitals.sortName') },
-            { value: 'emergency', label: t('hospitals.sortEmergency') },
-          ]}
-        />
-      </div>
+      <div className={styles.resultsLayout}>
+        <div className={styles.resultsPanel} aria-live="polite">
+          {isLoading && <Skeleton variant="rectangular" height={120} lines={3} />}
+          {isError && (
+            <EmptyState
+              variant="discover"
+              icon="⚠️"
+              title={t('common.error')}
+              description={t('common.loadErrorHint')}
+            />
+          )}
+          {!isError && sorted && sorted.length === 0 && (
+            <EmptyState variant="discover" icon="🏥" title={t('hospitals.noResult')} />
+          )}
 
-      <KakaoMap center={mapCenter} markers={mapMarkers} height={320} />
-
-      {isLoading && <Skeleton variant="rectangular" height={120} lines={3} />}
-      {isError && (
-        <EmptyState
-          variant="discover"
-          icon="⚠️"
-          title={t('common.error')}
-          description={t('common.loadErrorHint')}
-        />
-      )}
-      {!isError && sorted && sorted.length === 0 && (
-        <EmptyState variant="discover" icon="🏥" title={t('hospitals.noResult')} />
-      )}
-
-      <ul className={styles.list}>
-        {sorted?.map((h) => (
-          <li key={h.id}>
-            <Card padding="md">
-              <Card.Body>
+          <ul className={styles.list}>
+            {sorted?.map((h) => (
+              <li key={h.id} className={styles.hospitalItem}>
                 <div className={styles.itemHeader}>
                   <h2 className={styles.itemTitle}>{h.name}</h2>
-                  {h.hasEmergency && <Badge variant="error">{t('hospitals.emergencyBadge')}</Badge>}
+                  <div className={styles.itemBadges}>
+                    {Number.isFinite(h.distanceKm) && (
+                      <span className={styles.distanceBadge}>{h.distanceKm}km</span>
+                    )}
+                    {h.hasEmergency && (
+                      <Badge variant="error">{t('hospitals.emergencyBadge')}</Badge>
+                    )}
+                  </div>
                 </div>
-                <p className={styles.itemMeta}>
-                  {h.address}
-                  {Number.isFinite(h.distanceKm) && ` · ${h.distanceKm}km`}
-                </p>
+                <p className={styles.itemMeta}>{h.address}</p>
                 <p className={styles.itemDesc}>
                   <strong>{t('hospitals.hours')}:</strong> {h.hours}
                 </p>
@@ -163,18 +182,32 @@ function Hospitals() {
                   {h.supportedCategories.map((c) => t(`categories.${c}`)).join(', ')}
                 </p>
                 <div className={styles.itemActions}>
-                  <a href={`tel:${h.phone}`} className={styles.linkAction}>
-                    {t('common.phone')}: {h.phone}
+                  <a
+                    href={`tel:${h.phone}`}
+                    className={`${styles.linkAction} ${styles.callAction}`}
+                    aria-label={`${h.name}, ${t('common.phone')}, ${h.phone}`}
+                  >
+                    <span aria-hidden="true">☎</span>
+                    <span>{h.phone}</span>
                   </a>
-                  <a href={h.mapUrl} target="_blank" rel="noreferrer" className={styles.linkAction}>
+                  <a
+                    href={h.mapUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`${styles.linkAction} ${styles.mapAction}`}
+                  >
                     {t('common.openMap')} ↗
                   </a>
                 </div>
-              </Card.Body>
-            </Card>
-          </li>
-        ))}
-      </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <aside className={styles.mapPanel} aria-label={t('common.openMap')}>
+          <KakaoMap center={mapCenter} markers={mapMarkers} height={360} />
+        </aside>
+      </div>
     </section>
   )
 }

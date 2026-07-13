@@ -1,14 +1,21 @@
 import { useEffect, useSyncExternalStore } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import styles from './BgmDock.module.css'
 
 import { ensurePlaylist, getBgmSnapshot, subscribeBgm, toggleBgm } from '@/lib/bgm'
 
-/**
- * 푸터 BGM 토글 + 크레딧. /audio/playlist.json이 없으면 스스로 완전히 숨어요.
- * 기본 OFF — 재생은 사용자가 토글할 때만 시작해요(자동재생 없음).
- */
+function safeCreditUrl(value: string): string | null {
+  try {
+    const url = new URL(value)
+    return url.protocol === 'https:' || url.protocol === 'http:' ? url.toString() : null
+  } catch {
+    return null
+  }
+}
+
 function BgmDock() {
+  const { t } = useTranslation()
   const snapshot = useSyncExternalStore(subscribeBgm, getBgmSnapshot)
   const track = snapshot.track
 
@@ -18,6 +25,11 @@ function BgmDock() {
 
   if (snapshot.available !== true) return null
 
+  const credit = track
+    ? t('bgm.credit', { title: track.title, artist: track.artist, license: track.license })
+    : ''
+  const creditUrl = track ? safeCreditUrl(track.creditUrl) : null
+
   return (
     <div className={styles.dock}>
       <button
@@ -26,13 +38,24 @@ function BgmDock() {
         aria-pressed={snapshot.enabled}
         onClick={() => void toggleBgm()}
       >
-        <span aria-hidden="true">♪</span> 배경 음악 {snapshot.enabled ? '끄기' : '켜기'}
+        <span aria-hidden="true">♪</span>
+        {snapshot.enabled ? t('bgm.turnOff') : t('bgm.turnOn')}
       </button>
-      {snapshot.enabled && track && (
-        <a className={styles.credit} href={track.creditUrl} target="_blank" rel="noreferrer">
-          {track.title} — {track.artist} ({track.license}) ↗
-        </a>
-      )}
+      {snapshot.enabled &&
+        track &&
+        (creditUrl ? (
+          <a
+            className={styles.credit}
+            href={creditUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={t('bgm.openCredit', { title: track.title })}
+          >
+            {credit} <span aria-hidden="true">↗</span>
+          </a>
+        ) : (
+          <span className={styles.credit}>{credit}</span>
+        ))}
     </div>
   )
 }

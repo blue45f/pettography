@@ -1,6 +1,6 @@
-import Badge from '@components/common/Badge'
+import Alert from '@components/common/Alert'
 import EmptyState from '@components/common/EmptyState'
-import { MORPHS, MORPH_BREEDERS, type Morph } from '@domains/morphs'
+import { MORPHS } from '@domains/morphs'
 import { useSpeciesList } from '@domains/species'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { useMemo, useState } from 'react'
@@ -9,107 +9,93 @@ import { Link } from 'react-router'
 
 import styles from './Morphs.module.css'
 
+const SPIDER_WELFARE_STUDY_URL = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9377635/'
+
 function Morphs() {
   const { t } = useTranslation()
   useDocumentTitle(t('morphs.title'))
 
   const { data: allSpecies = [] } = useSpeciesList({})
   const availableSpecies = useMemo(() => {
-    const slugs = new Set(MORPHS.map((m) => m.speciesSlug))
-    return allSpecies.filter((s) => slugs.has(s.slug))
+    const slugs = new Set(MORPHS.map((morph) => morph.speciesSlug))
+    return allSpecies.filter((species) => slugs.has(species.slug))
   }, [allSpecies])
-
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(availableSpecies[0]?.slug ?? null)
-
-  const morphs = useMemo(() => MORPHS.filter((m) => m.speciesSlug === selectedSlug), [selectedSlug])
-  const selectedSpecies = useMemo(
-    () => availableSpecies.find((s) => s.slug === selectedSlug),
-    [availableSpecies, selectedSlug]
+  const [chosenSlug, setChosenSlug] = useState<string | null>(null)
+  const selectedSlug = chosenSlug ?? availableSpecies[0]?.slug ?? null
+  const morphs = useMemo(
+    () => MORPHS.filter((morph) => morph.speciesSlug === selectedSlug),
+    [selectedSlug]
   )
+  const selectedSpecies = availableSpecies.find((species) => species.slug === selectedSlug)
 
   return (
     <section className={styles.page}>
       <header className={styles.header}>
+        <p className={styles.eyebrow}>{t('morphs.eyebrow')}</p>
         <h1>{t('morphs.title')}</h1>
         <p className={styles.subtitle}>{t('morphs.subtitle')}</p>
       </header>
 
-      <nav className={styles.speciesNav} aria-label={t('morphs.pickSpecies')}>
-        {availableSpecies.map((s) => (
+      <Alert variant="warning" title={t('morphs.welfareTitle')}>
+        <p>{t('morphs.welfareBody')}</p>
+        <a
+          className={styles.sourceLink}
+          href={SPIDER_WELFARE_STUDY_URL}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {t('morphs.sourceLink')}
+        </a>
+      </Alert>
+
+      <div className={styles.speciesNav} role="radiogroup" aria-label={t('morphs.pickSpecies')}>
+        {availableSpecies.map((species) => (
           <button
-            key={s.id}
+            key={species.id}
             type="button"
-            onClick={() => setSelectedSlug(s.slug)}
-            className={[styles.speciesChip, selectedSlug === s.slug ? styles.speciesActive : '']
-              .filter(Boolean)
-              .join(' ')}
+            role="radio"
+            aria-checked={selectedSlug === species.slug}
+            onClick={() => setChosenSlug(species.slug)}
+            className={`${styles.speciesChip} ${selectedSlug === species.slug ? styles.speciesActive : ''}`}
           >
-            <span aria-hidden="true">{s.heroEmoji}</span>
-            <span>{s.koreanName}</span>
+            <span aria-hidden="true">{species.heroEmoji}</span>
+            <span>{species.koreanName}</span>
           </button>
         ))}
-      </nav>
+      </div>
 
       {!selectedSpecies ? (
         <EmptyState icon="🎨" title={t('morphs.empty')} />
       ) : (
         <>
-          {selectedSpecies && (
-            <p className={styles.contextLine}>
-              <Link to={`/species/${selectedSpecies.slug}`} className={styles.contextLink}>
-                {selectedSpecies.koreanName} {t('morphs.openDetail')} →
-              </Link>
-            </p>
-          )}
-
+          <div className={styles.contextHead}>
+            <div>
+              <p className={styles.contextKicker}>{t('morphs.contextKicker')}</p>
+              <h2>{selectedSpecies.koreanName}</h2>
+            </div>
+            <Link to={`/species/${selectedSpecies.slug}`} className={styles.contextLink}>
+              {t('morphs.openDetail')}
+            </Link>
+          </div>
           <ul className={styles.morphGrid}>
-            {morphs.map((m) => (
-              <MorphCard key={m.id} morph={m} t={t} />
+            {morphs.map((morph) => (
+              <li key={morph.id} className={styles.morphCard}>
+                <h3 className={styles.morphName}>{morph.name}</h3>
+                <p className={styles.morphDesc}>{morph.description}</p>
+                <p className={styles.cardNote}>{t('morphs.cardNote')}</p>
+              </li>
             ))}
           </ul>
-
-          <section className={styles.breederSection} aria-labelledby="breeders-heading">
-            <h2 id="breeders-heading" className={styles.sectionTitle}>
-              {t('morphs.breedersTitle')}
-            </h2>
-            <ul className={styles.breederList}>
-              {MORPH_BREEDERS.map((b) => (
-                <li key={b.id}>
-                  <a className={styles.breederLink} href={b.url} target="_blank" rel="noreferrer">
-                    <strong>{b.name}</strong>
-                    <span className={styles.breederTag}>{b.tag}</span>
-                    <span className={styles.breederArrow}>↗</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <p className={styles.disclaimer}>{t('morphs.disclaimer')}</p>
-          </section>
+          <div className={styles.learningLinkWrap}>
+            <Link to="/genetics" className={styles.learningLink}>
+              {t('morphs.openGenetics')}
+            </Link>
+          </div>
         </>
       )}
-    </section>
-  )
-}
 
-function MorphCard({ morph, t }: { morph: Morph; t: (k: string) => string }) {
-  return (
-    <li className={styles.morphCard}>
-      <header className={styles.morphHeader}>
-        <h3 className={styles.morphName}>{morph.name}</h3>
-        <Badge
-          variant={
-            morph.rarity === 'rare' ? 'warning' : morph.rarity === 'mid' ? 'primary' : 'default'
-          }
-        >
-          {t(`morphs.rarity.${morph.rarity}`)}
-        </Badge>
-      </header>
-      <p className={styles.morphDesc}>{morph.description}</p>
-      <p className={styles.morphPrice}>
-        ₩{morph.approxPriceMinKrw.toLocaleString('ko')}~₩
-        {morph.approxPriceMaxKrw.toLocaleString('ko')}
-      </p>
-    </li>
+      <p className={styles.disclaimer}>{t('morphs.disclaimer')}</p>
+    </section>
   )
 }
 
