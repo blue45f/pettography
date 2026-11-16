@@ -30,6 +30,7 @@ allowBuilds:
   # 불필요하다 — 실행하지 않도록 false 로 명시해 ERR_PNPM_IGNORED_BUILDS 를 잠재운다.
   '@firebase/util': false
   '@nestjs/core': true
+  '@parcel/watcher': false
   '@scarf/scarf': false
   '@sentry/cli': true
   '@swc/core': true
@@ -43,6 +44,7 @@ minimumReleaseAgeExclude:
   - '@heejun/eslint-config@4.0.0'
   - '@heejun/prettier-config@3.0.0'
   - '@heejun/deskcloud@0.1.0'
+  - '@nestjs/throttler@6.8.0'
 
 auditConfig:
   ignoreGhsas:
