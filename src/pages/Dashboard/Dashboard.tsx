@@ -378,7 +378,9 @@ function Dashboard() {
                   <span className={styles.attentionSeverity}>
                     {t(`alerts.severity.${item.severity}`)}
                   </span>
-                  <span className={styles.attentionLabel}>{t(item.titleKey, item.params)}</span>
+                  <span className={styles.attentionLabel}>
+                    {t(item.titleKey, item.params ?? {})}
+                  </span>
                   {item.dateISO && <span className={styles.attentionDate}>{item.dateISO}</span>}
                 </Link>
               </li>

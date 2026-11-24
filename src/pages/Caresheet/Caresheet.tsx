@@ -186,7 +186,7 @@ function Caresheet() {
             <ul className={styles.facts}>
               {attention.map((a) => (
                 <li key={a.id}>
-                  {t(a.titleKey, a.params)}
+                  {t(a.titleKey, a.params ?? {})}
                   {a.dateISO ? ` (${a.dateISO})` : ''}
                 </li>
               ))}

@@ -25,6 +25,7 @@ import { supplyStatus, useActivePetSupplies } from '@domains/supplies'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { downloadTextFile } from '@utils/download'
 import { buildIcs, type IcsEvent } from '@utils/ics'
+import type { TFunction } from 'i18next'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
@@ -262,7 +263,7 @@ interface BucketProps {
   label: string
   tone: 'error' | 'warning' | 'info' | 'default'
   events: CalendarEvent[]
-  t: (key: string, opts?: Record<string, unknown>) => string
+  t: TFunction
 }
 
 function Bucket({ label, tone, events, t }: BucketProps) {
