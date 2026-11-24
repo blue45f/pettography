@@ -271,12 +271,7 @@ export interface RegistryLinks {
 }
 
 export type CompareDimensionType =
-  | 'category'
-  | 'difficulty'
-  | 'range'
-  | 'enum'
-  | 'currency'
-  | 'text'
+  'category' | 'difficulty' | 'range' | 'enum' | 'currency' | 'text'
 
 export interface CompareDimension {
   key: string
