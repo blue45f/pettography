@@ -10,11 +10,7 @@ import type { SpeciesCategory } from '@domains/species'
  * sizing rule of thumb renders in the keeper's language.
  */
 export type PreySizeRuleCode =
-  | 'betweenEyes'
-  | 'bodyWeightPct'
-  | 'girthMatch'
-  | 'bodyLength'
-  | 'greensPlusInsects'
+  'betweenEyes' | 'bodyWeightPct' | 'girthMatch' | 'bodyLength' | 'greensPlusInsects'
 
 export interface FeedingRule {
   preySizeRuleCode: PreySizeRuleCode
