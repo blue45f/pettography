@@ -99,7 +99,9 @@ function Alerts() {
                         {SOURCE_EMOJI[item.source] ?? '🔔'}
                       </span>
                       <span className={styles.itemBody}>
-                        <span className={styles.itemTitle}>{t(item.titleKey, item.params)}</span>
+                        <span className={styles.itemTitle}>
+                          {t(item.titleKey, item.params ?? {})}
+                        </span>
                         {item.dateISO && (
                           <time className={styles.itemDate} dateTime={item.dateISO}>
                             {item.dateISO}

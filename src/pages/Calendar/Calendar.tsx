@@ -31,6 +31,8 @@ import { Link } from 'react-router'
 
 import styles from './Calendar.module.css'
 
+import type { TFunction } from 'i18next'
+
 type EventKind = 'vaccine' | 'supply' | 'registry' | 'gear' | 'supplement' | 'cleaning'
 
 interface CalendarEvent {
@@ -262,7 +264,7 @@ interface BucketProps {
   label: string
   tone: 'error' | 'warning' | 'info' | 'default'
   events: CalendarEvent[]
-  t: (key: string, opts?: Record<string, unknown>) => string
+  t: TFunction
 }
 
 function Bucket({ label, tone, events, t }: BucketProps) {
