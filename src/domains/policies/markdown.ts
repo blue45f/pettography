@@ -31,10 +31,7 @@ export interface PolicyDividerBlock {
 }
 
 export type PolicyBlock =
-  | PolicyHeadingBlock
-  | PolicyParagraphBlock
-  | PolicyListBlock
-  | PolicyDividerBlock
+  PolicyHeadingBlock | PolicyParagraphBlock | PolicyListBlock | PolicyDividerBlock
 
 const MD_HEADING_RE = /^(#{1,6})\s+(.+)$/
 const DIVIDER_RE = /^(?:-{3,}|\*{3,}|_{3,})$/
