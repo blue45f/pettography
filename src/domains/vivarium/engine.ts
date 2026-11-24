@@ -14,13 +14,7 @@ export type MaintenanceLevel = 'low' | 'medium' | 'high'
 
 /** Stable factor codes; the page maps each to a t('vivarium.factors.*') string. */
 export type MaintenanceFactor =
-  | 'hasCrew'
-  | 'hasPlants'
-  | 'goodLitter'
-  | 'balancedCrew'
-  | 'noDrainage'
-  | 'noCrew'
-  | 'noPlants'
+  'hasCrew' | 'hasPlants' | 'goodLitter' | 'balancedCrew' | 'noDrainage' | 'noCrew' | 'noPlants'
 
 export interface MaintenanceResult {
   score: number

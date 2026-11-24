@@ -53,24 +53,22 @@ function AdminModeration() {
   const [filter, setFilter] = useState<ModerationFilter>('all')
 
   const rows: ModerationRow[] = [
-    ...forumPosts.map(
-      (post): ModerationRow => ({
-        key: `forum-${post.id}`,
-        source: 'forum',
-        sourceLabel: t('admin.forumSection'),
-        title: post.title,
-        author: post.author,
-        createdAt: post.createdAt,
-        body: post.body,
-        reportCount: post.reportCount,
-        autoHidden: post.autoHidden,
-        hiddenByAdmin: post.hiddenByAdmin,
-        attachments: post.attachments,
-        onToggleHidden: (hidden) => setForumHidden(post.id, hidden),
-        onRemove: () => removeForumPost(post.id),
-        onRemoveAttachment: (attachmentId) => removeForumAttachment(post.id, attachmentId),
-      })
-    ),
+    ...forumPosts.map((post): ModerationRow => ({
+      key: `forum-${post.id}`,
+      source: 'forum',
+      sourceLabel: t('admin.forumSection'),
+      title: post.title,
+      author: post.author,
+      createdAt: post.createdAt,
+      body: post.body,
+      reportCount: post.reportCount,
+      autoHidden: post.autoHidden,
+      hiddenByAdmin: post.hiddenByAdmin,
+      attachments: post.attachments,
+      onToggleHidden: (hidden) => setForumHidden(post.id, hidden),
+      onRemove: () => removeForumPost(post.id),
+      onRemoveAttachment: (attachmentId) => removeForumAttachment(post.id, attachmentId),
+    })),
     ...Object.entries(cafePostsMap).flatMap(([cafeId, posts]) =>
       posts.map((post): ModerationRow => {
         const cafe = cafes.find((c) => c.id === cafeId)

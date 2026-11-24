@@ -58,12 +58,7 @@ export function progressDelta(sessions: HandlingSession[]): number | null {
 }
 
 export type GuidanceCode =
-  | 'noData'
-  | 'lowTolerance'
-  | 'highStress'
-  | 'goodProgress'
-  | 'declining'
-  | 'steady'
+  'noData' | 'lowTolerance' | 'highStress' | 'goodProgress' | 'declining' | 'steady'
 
 /** How many of the most recent sessions feed the stress / trend check. */
 const RECENT_WINDOW = 3
