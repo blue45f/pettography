@@ -25,12 +25,13 @@ import { supplyStatus, useActivePetSupplies } from '@domains/supplies'
 import useDocumentTitle from '@hooks/useDocumentTitle'
 import { downloadTextFile } from '@utils/download'
 import { buildIcs, type IcsEvent } from '@utils/ics'
-import type { TFunction } from 'i18next'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
 import styles from './Calendar.module.css'
+
+import type { TFunction } from 'i18next'
 
 type EventKind = 'vaccine' | 'supply' | 'registry' | 'gear' | 'supplement' | 'cleaning'
 
